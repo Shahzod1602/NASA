@@ -1,0 +1,21 @@
+# Unreal-generated build files and local caches
+/Binaries/
+/DerivedDataCache/
+/Intermediate/
+/Saved/
+/Backups/
+/.vs/
+/.idea/
+*.sln
+*.suo
+*.user
+*.VC.db
+*.VC.opendb
+__pycache__/
+*.pyc
+.env
+.env.*
+
+# Local test artifacts; verification notes stay in version control
+/Reports/*
+!/Reports/STORY_UPDATE.md
