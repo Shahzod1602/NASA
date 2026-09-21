@@ -1,0 +1,73 @@
+{
+  "audit_date": "2026-09-21",
+  "timezone": "Asia/Tashkent",
+  "baseline_commit": "20b4b4be2b53f0dc08585d259bc7ee42d6493e44",
+  "test_start": "2026-09-21T07:01:27.3487102+05:00",
+  "binary_sha256": "a52838d9196f26469e146d6c4bc21f6e44bb9b3a1ac55c65e2b752a414cb53f0",
+  "command": "Tools/verify_planets.ps1 -Packaged -Graphics -Walkthrough",
+  "suite_exit_code": 0,
+  "suite_output": "menu: exit 0\nmoon-gameplay: exit 0\nmars-gameplay: exit 0\nmars-movement: exit 0\nmars-ledge: exit 0\nmoon-walk: exit 0\nmars-walk: exit 0\n",
+  "editor_build": "Succeeded; target up to date; 0 actions; 4.03 seconds",
+  "local_source_snapshot_sha256": {
+    "faq.html": "116d859cc6fef0ae91ed937b8a0c808a0d193e608ee300a07cc5142f9c3bf878",
+    "legal.html": "884ff252ed1cd5b4080c8cea2c20065779ca0303e18830d8eb9f1f804512db13",
+    "candidate.lbl": "b9973d9566090555a566537e0f86ee9e959138cc42504228bab7515b7d3e6b0f",
+    "editor-build.log": "463ffd4029e08d2c1e333259049ac23f4e580f99b06b1cc1d66d00a393dc72d2",
+    "baseline-suite.log": "2f3bf2da89cac0a0d123d725e801a2b21dd448d22d1189c5e5f6c690775cc8d8"
+  },
+  "reports": {
+    "gameplay-checks.txt": {
+      "sha256": "ed82bfc279bf7046d8bb9af8b75aa28cdd7bfb482eb583c0f4fc24e0d965885d",
+      "text": "PASS All four mission actors loaded\nPASS Story recorder and repair visuals spawned\nPASS Repair visuals belong to visible world actors\nPASS Seven English story radio clips loaded\nPASS Player spawned and possessed\nPASS Selected planet gravity is applied\nPASS Briefing does not consume oxygen\nPASS Start enters module search\nPASS Long pause preserves radio subtitle\nPASS Radio subtitle countdown resumes\nPASS Cannot interact remotely\nPASS Pause stops oxygen\nPASS Oxygen decrements by elapsed seconds\nPASS Target 0 is reachable and visible\nPASS Power cell picked up without enabling station\nPASS Mission transition 0\nPASS Target 1 is reachable and visible\nPASS Power cell visibly inserted\nPASS Cable connected as separate repair step\nPASS Released hold resets restart progress\nPASS Paused hold does not advance\nPASS Mission transition 1\nPASS Station restart begins after module installation\nPASS Pause freezes every power sound including contact\nPASS Resume restores every power sound\nPASS Science terminal waits for completed restart\nPASS Station restart freezes during pause\nPASS Station restart completes once\nPASS Science terminal screen powers on\nPASS Antenna points toward the relay\nPASS Station roof lights are energized\nPASS Station restart does not replay\nPASS Target 2 is reachable and visible\nPASS Looking away cancels download\nPASS Mission transition 2\nPASS Target 3 is reachable and visible\nPASS Mission transition 3\nPASS Optional recorder may be skipped for normal victory\nPASS Lander prompt works while recorder marker is selected\nPASS Lander completes mission without changing Q route\nPASS Q selects optional recorder\nPASS Optional detour can be abandoned\nPASS Recorder requires reaching the survey ledge\nPASS Recorder usable even with lander marker selected\nPASS Recorder reachable from survey ledge\nPASS Recorder reveals crew fate and restores home marker\nPASS Recovered recorder cannot be collected twice\nPASS Full story ending completes at lander\nPASS Victory freezes oxygen\nPASS Oxygen depletion causes failure\nPASS Oxygen loss has correct reason\nPASS Out-of-bounds fall has distinct reason with oxygen remaining\nRESULT: 0 failures\n"
+    },
+    "mars-gameplay-checks.txt": {
+      "sha256": "26bc4f2650d69a0fe246491986b773c1abbdf06cb29463075a556813db7a1819",
+      "text": "PASS All four mission actors loaded\nPASS Story recorder and repair visuals spawned\nPASS Repair visuals belong to visible world actors\nPASS Seven English story radio clips loaded\nPASS Player spawned and possessed\nPASS Selected planet gravity is applied\nPASS Briefing does not consume oxygen\nPASS Start enters module search\nPASS Long pause preserves radio subtitle\nPASS Radio subtitle countdown resumes\nPASS Cannot interact remotely\nPASS Pause stops oxygen\nPASS Oxygen decrements by elapsed seconds\nPASS Target 0 is reachable and visible\nPASS Power cell picked up without enabling station\nPASS Mission transition 0\nPASS Target 1 is reachable and visible\nPASS Power cell visibly inserted\nPASS Cable connected as separate repair step\nPASS Released hold resets restart progress\nPASS Paused hold does not advance\nPASS Mission transition 1\nPASS Station restart begins after module installation\nPASS Pause freezes every power sound including contact\nPASS Resume restores every power sound\nPASS Science terminal waits for completed restart\nPASS Station restart freezes during pause\nPASS Station restart completes once\nPASS Science terminal screen powers on\nPASS Antenna points toward the relay\nPASS Station roof lights are energized\nPASS Station restart does not replay\nPASS Target 2 is reachable and visible\nPASS Looking away cancels download\nPASS Mission transition 2\nPASS Target 3 is reachable and visible\nPASS Relay alignment pauses\nPASS Mars orbital relay aligned\nPASS Mission transition 3\nPASS Target 4 is reachable and visible\nPASS Mission transition 4\nPASS Optional recorder may be skipped for normal victory\nPASS Lander prompt works while recorder marker is selected\nPASS Lander completes mission without changing Q route\nPASS Q selects optional recorder\nPASS Optional detour can be abandoned\nPASS Recorder requires reaching the survey ledge\nPASS Recorder usable even with lander marker selected\nPASS Recorder reachable from survey ledge\nPASS Recorder reveals crew fate and restores home marker\nPASS Recovered recorder cannot be collected twice\nPASS Full story ending completes at lander\nPASS Victory freezes oxygen\nPASS Oxygen depletion causes failure\nPASS Oxygen loss has correct reason\nPASS Out-of-bounds fall has distinct reason with oxygen remaining\nRESULT: 0 failures\n"
+    },
+    "mars-ledge-checks.txt": {
+      "sha256": "7c34c4bad8ae43a6e63f28a1f30c314143c0fec290699770994a0ff1b313ea2c",
+      "text": "PASS Real Space + W jump lands on survey ledge\nPASS Recorder is visible and usable after landing\nPASS Optional log recovered\nPlayer: X=18481.489 Y=0.000 Z=178.408\nRecorder: X=18600.000 Y=0.000 Z=95.000\nRESULT: 0 failures\n"
+    },
+    "mars-movement-checks.txt": {
+      "sha256": "578f02ae65583b7d5d36abff83b02393e00e360a38bd796d31e3c2f02ee6ee28",
+      "text": "Spawn: X=-7350.000 Y=900.000 Z=90.150, pawn=BP_Astronaut_C, movement mode=1\nPASS W held 1.5 seconds: 457.7 cm along intended direction, delta=X=457.660 Y=0.000 Z=0.000 velocity=X=320.000 Y=0.000 Z=0.000 mode=1\nPASS D held 1.5 seconds: 457.7 cm along intended direction, delta=X=0.000 Y=457.654 Z=0.000 velocity=X=0.000 Y=320.000 Z=0.000 mode=1\nPASS S held 1.5 seconds: 457.6 cm along intended direction, delta=X=-457.612 Y=0.000 Z=0.000 velocity=X=-320.000 Y=0.000 Z=0.000 mode=1\nPASS A held 1.5 seconds: 457.6 cm along intended direction, delta=X=0.000 Y=-457.629 Z=0.000 velocity=X=0.000 Y=-320.000 Z=0.000 mode=1\nPASS Space jump: 92.6 cm rise\nPASS Grounded walking leaves bootprints: 14\nPASS Suit meshes, decal and step sounds loaded\nPASS Jump landing emits bounded grain particles\nPASS Pause freezes footprints, particles and oxygen\nRESULT: 0 failures\n"
+    },
+    "mars-walkthrough-checks.txt": {
+      "sha256": "613a5389c32dd28fcab5b4c4965e700c0039ac16bf772dd380b4f30f10f3e473",
+      "text": "Traversal starts at actual player spawn; no teleports.\nPASS route step 0 at 3.58s (X=-7350.000 Y=1932.389 Z=90.150)\nPASS route step 1 at 63.10s (X=11582.482 Y=1949.988 Z=90.150)\nPASS route step 2 at 74.19s (X=11699.414 Y=-1482.245 Z=90.150)\nPASS route step 3 at 74.20s (X=11699.432 Y=-1482.784 Z=90.150)\nPASS route step 4 at 85.24s (X=11600.519 Y=1932.113 Z=90.150)\nPASS route step 5 at 123.68s (X=-582.921 Y=1949.981 Z=90.150)\nPASS route step 6 at 139.45s (X=-599.952 Y=-2982.331 Z=90.150)\nPASS route step 7 at 140.32s (X=-437.370 Y=-2998.753 Z=90.150)\nPASS route step 8 at 146.56s (X=-436.656 Y=-2998.805 Z=90.150)\nPASS route step 9 at 151.58s (X=-598.068 Y=-4482.241 Z=90.150)\nPASS route step 10 at 152.45s (X=-437.116 Y=-4498.768 Z=90.150)\nPASS route step 11 at 155.46s (X=-436.420 Y=-4498.818 Z=90.150)\nPASS route step 12 at 175.93s (X=-599.564 Y=1932.805 Z=90.150)\nPASS route step 13 at 184.97s (X=2182.501 Y=1949.915 Z=90.150)\nPASS route step 14 at 187.62s (X=2219.220 Y=1217.298 Z=90.150)\nPASS route step 15 at 191.64s (X=2219.252 Y=1216.590 Z=90.150)\nPASS route step 16 at 194.24s (X=2200.454 Y=1932.716 Z=90.150)\nPASS route step 17 at 244.81s (X=18272.775 Y=1949.986 Z=90.150)\nPASS route step 18 at 251.21s (X=18289.880 Y=17.199 Z=90.150)\nPASS route step 19 at 254.21s (X=18470.762 Y=-22.216 Z=178.608)\nPASS route step 20 at 256.23s (X=18470.762 Y=-22.216 Z=178.608)\nPASS route step 21 at 262.73s (X=18291.560 Y=1932.980 Z=90.150)\nPASS route step 22 at 343.14s (X=-7332.930 Y=1949.992 Z=90.150)\nPASS route step 23 at 352.34s (X=-7349.915 Y=-882.080 Z=90.150)\nPASS route step 24 at 353.96s (X=-6947.340 Y=-899.422 Z=90.150)\nPASS route step 25 at 353.98s (X=-6946.818 Y=-899.440 Z=90.150)\nPASS Full walked rescue including optional recorder and lander return\nMission seconds: 353.99; oxygen remaining: 126.08\nFrames: 21239; mean frame ms: 16.67; p95 frame ms: 16.82; mean FPS: 59.99\nPeak process physical memory MiB: 530.1\nRenderer: Graphics enabled\nRESULT: 0 failures\n"
+    },
+    "menu-travel-checks.txt": {
+      "sha256": "08612f01c55a06f88f8d0a3b0e165b0405417948da8692bb1b147589958b1754",
+      "text": "PASS travel phase 0: MissionSelect\nPASS travel phase 1: MoonBase\nPASS travel phase 2: MoonBase\nPASS travel phase 3: MissionSelect\nPASS travel phase 4: MarsBase\nPASS travel phase 5: MarsBase\nPASS travel phase 6: MissionSelect\nRESULT: 0 failures\n"
+    },
+    "walkthrough-checks.txt": {
+      "sha256": "feba80009502711319f19c6520098a6d049033627b4ec6aa26149858087c4cb4",
+      "text": "Traversal starts at actual player spawn; no teleports.\nPASS route step 0 at 1.40s (X=-2450.000 Y=632.618 Z=89.790)\nPASS route step 1 at 20.92s (X=3682.358 Y=649.961 Z=92.289)\nPASS route step 2 at 24.82s (X=3778.545 Y=-482.186 Z=92.436)\nPASS route step 3 at 24.83s (X=3778.589 Y=-482.728 Z=92.439)\nPASS route step 4 at 28.68s (X=3701.242 Y=632.115 Z=92.687)\nPASS route step 5 at 41.95s (X=-432.162 Y=649.940 Z=90.433)\nPASS route step 6 at 47.40s (X=-449.847 Y=-982.071 Z=88.823)\nPASS route step 7 at 48.27s (X=-287.351 Y=-998.738 Z=87.849)\nPASS route step 8 at 54.52s (X=-286.638 Y=-998.790 Z=87.849)\nPASS route step 9 at 56.42s (X=-376.825 Y=-1482.954 Z=92.230)\nPASS route step 10 at 57.09s (X=-277.677 Y=-1498.462 Z=93.103)\nPASS route step 11 at 60.10s (X=-276.942 Y=-1498.533 Z=93.103)\nPASS route step 12 at 60.95s (X=-432.786 Y=-1499.854 Z=92.627)\nPASS route step 13 at 67.97s (X=-449.888 Y=632.336 Z=90.691)\nPASS route step 14 at 88.09s (X=5872.766 Y=649.962 Z=138.184)\nPASS route step 15 at 90.43s (X=5889.634 Y=17.475 Z=146.445)\nPASS route step 16 at 93.43s (X=6086.545 Y=-35.707 Z=246.818)\nPASS route step 17 at 95.44s (X=6086.545 Y=-35.707 Z=246.818)\nPASS route step 18 at 97.98s (X=5894.822 Y=633.177 Z=139.970)\nPASS route step 19 at 124.35s (X=-2432.108 Y=649.972 Z=89.803)\nPASS route step 20 at 127.62s (X=-2449.737 Y=-282.306 Z=91.448)\nPASS route step 21 at 127.64s (X=-2449.745 Y=-282.843 Z=91.448)\nPASS Full walked rescue including optional recorder and lander return\nMission seconds: 127.65; oxygen remaining: 172.42\nFrames: 7657; mean frame ms: 16.67; p95 frame ms: 16.81; mean FPS: 60.00\nPeak process physical memory MiB: 707.3\nRenderer: Graphics enabled\nRESULT: 0 failures\n"
+    }
+  },
+  "documentation_validation": {
+    "git_diff_check_exit": 0,
+    "missing_local_links": [],
+    "trailing_whitespace": [],
+    "checked_markdown_files": [
+      "README.md",
+      "CHANGELOG.md",
+      "COMPETITION_READINESS.md",
+      "CREDITS.md",
+      "DEVELOPMENT_PLAN.md",
+      "PLAYTEST_PROTOCOL.md",
+      "PRESENTATION_OUTLINE.md",
+      "SCIENCE_AND_SOURCES.md",
+      "TECHNICAL_AUDIT.md",
+      "TEST_REPORT.md"
+    ]
+  },
+  "limitations": [
+    "Existing binary only; no new gameplay implemented",
+    "No raster downloaded or integrated",
+    "No clean rebuild or new packaging",
+    "No disconnected-network test",
+    "No human playtest",
+    "Competition eligibility unconfirmed"
+  ]
+}

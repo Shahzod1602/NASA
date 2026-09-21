@@ -35,6 +35,7 @@ public:
  virtual void SetupPlayerInputComponent(UInputComponent* Input) override;
  void Forward(float V); void Right(float V); void Turn(float V); void Look(float V);
  void Leap(); void Interact(); void StartMission(); void RestartMission(); void PauseMission();
+ void PrimaryClick();
  void ZoomVisor();
  void ChooseMoon(); void ChooseMars(); void MissionMenu();
  void ReleaseInteract(); void ToggleRoute();

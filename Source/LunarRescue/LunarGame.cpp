@@ -23,6 +23,12 @@
 #include "HAL/FileManager.h"
 #include "GameFramework/WorldSettings.h"
 
+// Canvas and pointer input share the same viewport-pixel card bounds.
+static FBox2D MissionCardBounds(int32 Index,float Width,float Height) {
+ const FVector2D Min(Width*(Index==1?.53f:.1f),Height*.32f);
+ return FBox2D(Min,Min+FVector2D(Width*.37f,Height*.43f));
+}
+
 ALunarCharacter::ALunarCharacter() {
  PrimaryActorTick.bCanEverTick=true;
  GetCapsuleComponent()->InitCapsuleSize(34,88);
@@ -148,6 +154,7 @@ void ALunarCharacter::SetupPlayerInputComponent(UInputComponent* I) {
  I->BindAction("Interact",IE_Released,this,&ALunarCharacter::ReleaseInteract);
  I->BindAction("Route",IE_Pressed,this,&ALunarCharacter::ToggleRoute);
  I->BindAction("Start",IE_Pressed,this,&ALunarCharacter::StartMission);
+ I->BindAction("PrimaryClick",IE_Pressed,this,&ALunarCharacter::PrimaryClick);
  I->BindAction("Restart",IE_Pressed,this,&ALunarCharacter::RestartMission);
  I->BindAction("Pause",IE_Pressed,this,&ALunarCharacter::PauseMission);
  I->BindKey(EKeys::One,IE_Pressed,this,&ALunarCharacter::ChooseMoon);
@@ -166,10 +173,22 @@ void ALunarCharacter::ReleaseInteract() {if(auto* G=Mission(this))G->ReleaseInte
 void ALunarCharacter::ToggleRoute() {if(auto* G=Mission(this))G->ToggleRoute();}
 void ALunarCharacter::StartMission() {
  if(auto* G=Mission(this)) {
-  if(G->Menu) {float X=0,Y=0;auto* PC=Cast<APlayerController>(GetController());int W=0,H=0;PC->GetViewportSize(W,H);PC->GetMousePosition(X,Y);G->SelectPlanet(PC->IsInputKeyDown(EKeys::LeftMouseButton)&&X>W*.5f);}
+  if(G->Menu) G->SelectPlanet(false);
   else if(G->Paused) PauseMission();
   else if(G->Stage==ELunarStage::Won||G->Stage==ELunarStage::Lost) RestartMission();
   else G->StartMission();
+ }
+}
+void ALunarCharacter::PrimaryClick() {
+ auto* G=Mission(this);if(!G)return;
+ if(!G->Menu){StartMission();return;}
+ auto* PC=Cast<APlayerController>(GetController());if(!PC)return;
+ float X=0,Y=0;int32 W=0,H=0;PC->GetViewportSize(W,H);
+ if(W<=0||H<=0||!PC->GetMousePosition(X,Y))return;
+ for(int32 Index=0;Index<2;++Index) {
+  if(MissionCardBounds(Index,W,H).IsInside(FVector2D(X,Y))) {
+   G->SelectPlanet(Index==1);return;
+  }
  }
 }
 // Keep ACharacter::Restart intact: possession calls it to enable walking physics.
@@ -459,8 +478,8 @@ void ALunarHUD::DrawHUD() {
  if(G->Menu){
   Panel(0,0,W,H,1);Label("RESCUE / EXPEDITIONS",W*.1f,H*.12f,.95f*S,White);
   Label("CHOOSE YOUR DESTINATION",W*.1f,H*.21f,.45f*S,Muted);
-  for(int I=0;I<2;++I){float X=W*(I?.53f:.1f),Y=H*.32f;FLinearColor C=I?Orange:Cyan;
-   Panel(X,Y,W*.37f,H*.43f,1);DrawRect(C,X,Y,W*.37f,3*S);
+  for(int I=0;I<2;++I){const FBox2D Bounds=MissionCardBounds(I,W,H);float X=Bounds.Min.X,Y=Bounds.Min.Y;FLinearColor C=I?Orange:Cyan;
+   Panel(X,Y,Bounds.GetSize().X,Bounds.GetSize().Y,1);DrawRect(C,X,Y,Bounds.GetSize().X,3*S);
    Label(I?"02 / MARS":"01 / MOON",X+24*S,Y+28*S,.95f*S,C);
    Label(I?"ARES / CANYON OUTPOST":"SELENE / THE LAST SIGNAL",X+24*S,Y+93*S,.43f*S,White);
    Label(I?"8 MIN OXYGEN   /   3.71 m/s2":"5 MIN OXYGEN   /   1.62 m/s2",X+24*S,Y+136*S,.4f*S,Muted);

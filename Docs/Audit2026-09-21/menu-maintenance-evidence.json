@@ -1,0 +1,44 @@
+{
+  "date": "2026-09-21",
+  "purpose": "Existing menu maintenance; not challenge implementation",
+  "source_sha256": {
+    "Source/LunarRescue/LunarGame.cpp": "e5897af6c7f117513dbe64281defb31d93d88af4daff8059db312d73cba60f07",
+    "Source/LunarRescue/LunarGame.h": "f18c43ed701ca6045b92ad28d929f549e307b994c463c0474062736924a7f669",
+    "Config/DefaultInput.ini": "fd2802c81204fbe35441d3442f14fbc2bb9b800a9eede3db5dfec7bc330c2aa0"
+  },
+  "build_exit_code": 0,
+  "build_actions": 5,
+  "build_seconds": 74.37,
+  "suite_command": "Tools/verify_planets.ps1",
+  "suite_exit_code": 0,
+  "suite_output": "menu: exit 0\nmoon-gameplay: exit 0\nmars-gameplay: exit 0\nmars-movement: exit 0\nmars-ledge: exit 0\n",
+  "reports": {
+    "menu-travel-checks.txt": {
+      "sha256": "08612f01c55a06f88f8d0a3b0e165b0405417948da8692bb1b147589958b1754",
+      "text": "PASS travel phase 0: MissionSelect\nPASS travel phase 1: MoonBase\nPASS travel phase 2: MoonBase\nPASS travel phase 3: MissionSelect\nPASS travel phase 4: MarsBase\nPASS travel phase 5: MarsBase\nPASS travel phase 6: MissionSelect\nRESULT: 0 failures\n"
+    },
+    "gameplay-checks.txt": {
+      "sha256": "6b4f590b824979b6e5dbaa629e5e4fc16fa4e2ec4d8050a432dbab8150846886",
+      "text": "PASS All four mission actors loaded\nPASS Story recorder and repair visuals spawned\nPASS Repair visuals belong to visible world actors\nPASS Seven English story radio clips loaded\nPASS Player spawned and possessed\nPASS Selected planet gravity is applied\nPASS Briefing does not consume oxygen\nPASS Start enters module search\nPASS Long pause preserves radio subtitle\nPASS Radio subtitle countdown resumes\nPASS Cannot interact remotely\nPASS Pause stops oxygen\nPASS Oxygen decrements by elapsed seconds\nPASS Target 0 is reachable and visible\nPASS Power cell picked up without enabling station\nPASS Mission transition 0\nPASS Target 1 is reachable and visible\nPASS Power cell visibly inserted\nPASS Cable connected as separate repair step\nPASS Released hold resets restart progress\nPASS Paused hold does not advance\nPASS Mission transition 1\nPASS Station restart begins after module installation\nPASS Science terminal waits for completed restart\nPASS Station restart freezes during pause\nPASS Station restart completes once\nPASS Science terminal screen powers on\nPASS Antenna points toward the relay\nPASS Station roof lights are energized\nPASS Station restart does not replay\nPASS Target 2 is reachable and visible\nPASS Looking away cancels download\nPASS Mission transition 2\nPASS Target 3 is reachable and visible\nPASS Mission transition 3\nPASS Optional recorder may be skipped for normal victory\nPASS Lander prompt works while recorder marker is selected\nPASS Lander completes mission without changing Q route\nPASS Q selects optional recorder\nPASS Optional detour can be abandoned\nPASS Recorder requires reaching the survey ledge\nPASS Recorder usable even with lander marker selected\nPASS Recorder reachable from survey ledge\nPASS Recorder reveals crew fate and restores home marker\nPASS Recovered recorder cannot be collected twice\nPASS Full story ending completes at lander\nPASS Victory freezes oxygen\nPASS Oxygen depletion causes failure\nPASS Oxygen loss has correct reason\nPASS Out-of-bounds fall has distinct reason with oxygen remaining\nRESULT: 0 failures\n"
+    },
+    "mars-gameplay-checks.txt": {
+      "sha256": "fa5e80fd8a9073604fedda210da7ca12626bacbf5955d98d7302b97f53390de3",
+      "text": "PASS All four mission actors loaded\nPASS Story recorder and repair visuals spawned\nPASS Repair visuals belong to visible world actors\nPASS Seven English story radio clips loaded\nPASS Player spawned and possessed\nPASS Selected planet gravity is applied\nPASS Briefing does not consume oxygen\nPASS Start enters module search\nPASS Long pause preserves radio subtitle\nPASS Radio subtitle countdown resumes\nPASS Cannot interact remotely\nPASS Pause stops oxygen\nPASS Oxygen decrements by elapsed seconds\nPASS Target 0 is reachable and visible\nPASS Power cell picked up without enabling station\nPASS Mission transition 0\nPASS Target 1 is reachable and visible\nPASS Power cell visibly inserted\nPASS Cable connected as separate repair step\nPASS Released hold resets restart progress\nPASS Paused hold does not advance\nPASS Mission transition 1\nPASS Station restart begins after module installation\nPASS Science terminal waits for completed restart\nPASS Station restart freezes during pause\nPASS Station restart completes once\nPASS Science terminal screen powers on\nPASS Antenna points toward the relay\nPASS Station roof lights are energized\nPASS Station restart does not replay\nPASS Target 2 is reachable and visible\nPASS Looking away cancels download\nPASS Mission transition 2\nPASS Target 3 is reachable and visible\nPASS Relay alignment pauses\nPASS Mars orbital relay aligned\nPASS Mission transition 3\nPASS Target 4 is reachable and visible\nPASS Mission transition 4\nPASS Optional recorder may be skipped for normal victory\nPASS Lander prompt works while recorder marker is selected\nPASS Lander completes mission without changing Q route\nPASS Q selects optional recorder\nPASS Optional detour can be abandoned\nPASS Recorder requires reaching the survey ledge\nPASS Recorder usable even with lander marker selected\nPASS Recorder reachable from survey ledge\nPASS Recorder reveals crew fate and restores home marker\nPASS Recovered recorder cannot be collected twice\nPASS Full story ending completes at lander\nPASS Victory freezes oxygen\nPASS Oxygen depletion causes failure\nPASS Oxygen loss has correct reason\nPASS Out-of-bounds fall has distinct reason with oxygen remaining\nRESULT: 0 failures\n"
+    },
+    "mars-movement-checks.txt": {
+      "sha256": "ab09a6b7f35e10a0d57bad1ae2efb8b7f70d4eb794b0b8fab69c02094f62fa60",
+      "text": "Spawn: X=-7350.000 Y=900.000 Z=90.150, pawn=BP_Astronaut_C, movement mode=1\nPASS W held 1.5 seconds: 455.3 cm along intended direction, delta=X=455.297 Y=0.000 Z=0.000 velocity=X=320.000 Y=0.000 Z=0.000 mode=1\nPASS D held 1.5 seconds: 455.1 cm along intended direction, delta=X=0.000 Y=455.127 Z=0.000 velocity=X=0.000 Y=320.000 Z=0.000 mode=1\nPASS S held 1.5 seconds: 455.3 cm along intended direction, delta=X=-455.273 Y=0.000 Z=0.000 velocity=X=-320.000 Y=0.000 Z=0.000 mode=1\nPASS A held 1.5 seconds: 455.3 cm along intended direction, delta=X=0.000 Y=-455.325 Z=0.000 velocity=X=0.000 Y=-320.000 Z=0.000 mode=1\nPASS Space jump: 92.6 cm rise\nPASS Grounded walking leaves bootprints: 14\nPASS Suit meshes, decal and step sounds loaded\nPASS Jump landing emits bounded grain particles\nPASS Pause freezes footprints, particles and oxygen\nRESULT: 0 failures\n"
+    },
+    "mars-ledge-checks.txt": {
+      "sha256": "811eb0503eb98f0eb49e00c817e6d988fb2627fa1b30e8bd0b73146fd80523d3",
+      "text": "PASS Real Space + W jump lands on survey ledge\nPASS Recorder is visible and usable after landing\nPASS Optional log recovered\nPlayer: X=18479.707 Y=0.000 Z=178.478\nRecorder: X=18600.000 Y=0.000 Z=95.000\nRESULT: 0 failures\n"
+    }
+  },
+  "limits": [
+    "NullRHI; no graphics performance measurement",
+    "No manual click/visual QA",
+    "No new packaged build or release",
+    "No new full walkthrough"
+  ],
+  "git_diff_check_exit": 0
+}

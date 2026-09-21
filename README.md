@@ -2,6 +2,28 @@
 
 A first-person rescue prototype with separate Moon and Mars expeditions. All in-game text is in English.
 
+## 2026-09-21 audit holati
+
+Auditdan keyin mavjud menu click xatosi source darajasida tuzatildi:
+endi faqat planet kartasini bosish missiyani boshlaydi.
+[Maintenance qaydi](MAINTENANCE_FOLLOWUP.md). Tarqatilgan v0.2.0 bu tuzatishni hali o‘z ichiga olmaydi.
+
+Mavjud Moon/Mars o‘yini qayta tekshirildi. NASA terrain, route planner va ta’limiy
+debrief hozircha **amalga oshirilmagan**. Joriy 2026 Space Apps qoidasi challenge
+ustida hakatondan oldin ishlashni taqiqlagani uchun yangi implementatsiya backlogda.
+Oldingi v0.2.0 kodini tanlovda qayta ishlatish huquqi tasdiqlanmagan.
+
+- [Texnik audit](TECHNICAL_AUDIT.md) va [yangi test natijalari](TEST_REPORT.md).
+- [Ilmiy manbalar va LOLA nomzodi](SCIENCE_AND_SOURCES.md).
+- [Tanlovga tayyorlik](COMPETITION_READINESS.md) va [rivojlantirish rejasi](DEVELOPMENT_PLAN.md).
+- [Credits/litsenziya](CREDITS.md), [o‘zgarishlar](CHANGELOG.md), [playtest](PLAYTEST_PROTOCOL.md).
+- [Shartli inglizcha taqdimot](PRESENTATION_OUTLINE.md); tayyor submission emas.
+
+Rejalashtirilgan mahsulot yo‘nalishi: “LunarRescue is an educational exploration
+game that uses real planetary data to help players understand how terrain,
+limited resources, and mission priorities affect decisions on the Moon and Mars.”
+Bu kelajak maqsadi; joriy build hali haqiqiy planetary elevation ishlatmaydi.
+
 ## Play the standalone Windows build
 
 Download the tested Windows ZIP from the [GitHub release](https://github.com/Shahzod1602/NASA/releases/tag/mars-expedition-v0.2.0),
@@ -65,7 +87,8 @@ The editor fallback uses the installed Unreal Engine 5.8.2.
 
 Find the power module beside the stranded rover, install it at SELENE's external power port,
 download the research data from the nearby terminal, and return to the lander console.
-You have 300 seconds of oxygen. The briefing and pause screen do not consume oxygen.
+You have a 300-second gameplay oxygen budget, not a modeled real suit endurance.
+The briefing and pause screen do not consume this budget.
 
 Repair has three steps: insert the cell, connect the cable, then hold E for two
 seconds to start a 4.2-second station restart. The emergency red signal
@@ -107,7 +130,9 @@ a station interior and fully rigged interaction animations are not implemented.
 
 - Map: Content/Lunar/Maps/MoonBase.
 - Astronaut: Content/Lunar/Blueprints/BP_Astronaut. Adjust speed and jumping under Character Movement.
-- Mission: Content/Lunar/Blueprints/BP_LunarGameMode. Adjust Oxygen Capacity in Class Defaults.
+- Mission: Content/Lunar/Blueprints/BP_LunarGameMode. The current C++ BeginPlay overrides
+  Oxygen Capacity with 300 seconds for Moon or 480 for Mars; changing Class Defaults alone
+  does not change the runtime budget. Configurable mission profiles remain planned work.
 - Mission tags: Module, Power, Data, Home. Place exactly one actor with each tag.
 - Gameplay and interface: Source/LunarRescue/LunarGame.cpp.
 - This project combines editable Blueprint child classes with C++ gameplay.
