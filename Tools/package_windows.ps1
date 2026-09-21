@@ -4,7 +4,7 @@ $projectRoot = Split-Path $PSScriptRoot -Parent
 $automation = Join-Path $EngineRoot 'Engine\Build\BatchFiles\RunUAT.bat'
 if (-not (Test-Path -LiteralPath $automation)) { throw "Engine not found: $automation" }
 & $automation BuildCookRun "-project=$projectRoot\LunarRescue.uproject" -noP4 -platform=Win64 `
-    -clientconfig=Development -build -cook -map=/Game/Lunar/Maps/MoonBase -stage -pak -archive `
+    -clientconfig=Development -build -cook -map=/Game/Rescue/Maps/MissionSelect+/Game/Lunar/Maps/MoonBase+/Game/Mars/Maps/MarsBase -stage -pak -archive `
     "-archivedirectory=$projectRoot\Dist" -unattended -utf8output '-UbtArgs=-MaxParallelActions=2'
 if ($LASTEXITCODE -ne 0) { throw "Packaging failed: $LASTEXITCODE" }
 $sourceArt = Join-Path $projectRoot 'SourceArt'

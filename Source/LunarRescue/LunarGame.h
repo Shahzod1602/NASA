@@ -6,7 +6,7 @@
 #include "LunarGame.generated.h"
 
 UENUM(BlueprintType)
-enum class ELunarStage : uint8 { Briefing, FindModule, RestorePower, CollectData, ReturnHome, Won, Lost };
+enum class ELunarStage : uint8 { Briefing, FindModule, RestorePower, CollectData, AlignRelay, ReturnHome, Won, Lost };
 
 UCLASS(Blueprintable)
 class LUNARRESCUE_API ALunarCharacter : public ACharacter {
@@ -36,6 +36,7 @@ public:
  void Forward(float V); void Right(float V); void Turn(float V); void Look(float V);
  void Leap(); void Interact(); void StartMission(); void RestartMission(); void PauseMission();
  void ZoomVisor();
+ void ChooseMoon(); void ChooseMars(); void MissionMenu();
  void ReleaseInteract(); void ToggleRoute();
  UPROPERTY() TObjectPtr<class UStaticMeshComponent> CarriedModule;
  FVector PausedVelocity=FVector::ZeroVector;
@@ -47,6 +48,13 @@ class LUNARRESCUE_API ALunarGameMode : public AGameModeBase {
  GENERATED_BODY()
 public:
  ALunarGameMode();
+ bool Mars=false, Menu=false;
+ float SurfaceGravity=162;
+ UPROPERTY() TObjectPtr<AActor> RelayActor;
+ UPROPERTY() TObjectPtr<AActor> RelayDish;
+ void SelectPlanet(bool SelectMars);
+ void TravelCheck();
+ FString ReportPath(const TCHAR* Name) const;
  virtual void BeginPlay() override;
  virtual void Tick(float Delta) override;
  UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Mission") float OxygenCapacity=300.f;

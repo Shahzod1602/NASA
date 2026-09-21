@@ -1,10 +1,10 @@
 # Lunar Rescue
 
-A short first-person lunar rescue prototype. All in-game text is in English.
+A first-person rescue prototype with separate Moon and Mars expeditions. All in-game text is in English.
 
 ## Play the standalone Windows build
 
-Download the tested Windows ZIP from the [GitHub release](https://github.com/Shahzod1602/NASA/releases/tag/audit-fixes-2026-09-21),
+Download the tested Windows ZIP from the [GitHub release](https://github.com/Shahzod1602/NASA/releases/tag/mars-expedition-v0.2.0),
 extract the complete folder, and run `LunarRescue.exe`.
 
 Open **Play Lunar Rescue.cmd**. When `Dist/Windows/LunarRescue.exe` is present,
@@ -32,7 +32,7 @@ git lfs pull
 Open `LunarRescue.uproject` with Unreal Engine 5.8 and allow it to build the
 missing C++ modules. If needed, generate Visual Studio project files and build
 the `LunarRescueEditor` target in **Development Editor / Win64** first.
-Open `/Game/Lunar/Maps/MoonBase`, then use Play in the editor.
+Open `/Game/Rescue/Maps/MissionSelect`, then use Play in the editor.
 
 The `.cmd` launchers currently expect the engine under
 `D:\UnrealEngine\UE_5.8`; edit that engine path for another installation.
@@ -151,3 +151,26 @@ See [story update notes](Reports/STORY_UPDATE.md) for the implemented scope.
 
 ## Imported free models
 The map now uses an Apollo lander, two habitat parts, a Lunokhod rover, solar arrays, a power cell and a science terminal from the user's downloaded files. Existing procedural rocks use Poly Haven Moon Rock 01/06 diffuse textures at 2K. Asset sources and licenses are in SourceArt/ExternalModels/CREDITS.md. Import scripts are in Tools; their staging paths refer to this workstation. The mission actors and English UI remain intact.
+
+## Moon and Mars
+
+The startup menu offers **1 / Moon** and **2 / Mars**. Click the corresponding
+card or press its number. Enter starts Moon. Press **M** from a briefing, paused
+mission, or result screen to return to selection. **R** on a result screen
+restarts the current planet.
+
+Moon retains its five-minute SELENE rescue. Mars has eight minutes of oxygen,
+3.71 m/s? gravity, a separate authored canyon map and ARES outpost. Retrieve the
+rover cell, insert it, connect the cable, hold E to restart the station, download
+the ice survey, and hold E for four seconds at the orbital relay. Return to the
+ascent lander; Q optionally routes to the crew recorder after relay alignment.
+All terrain is fictional; no surveyed planetary elevations are claimed.
+
+`Tools/build_mars.py` regenerates only Mars and the menu using Unreal Python.
+`Tools/import_mars_audio.py` imports the supplied English radio WAV files.
+`Tools/verify_planets.ps1` tests map travel, both gameplay sequences, Mars movement
+and the recorder ledge. Add `-Walkthrough -Graphics` for complete traversals with
+rendering and performance reports, or `-Packaged` to test the standalone binary.
+Tests are sequential to fit a 16 GB development machine.
+
+See [MARS_UPDATE.md](MARS_UPDATE.md) for implementation and measured standalone validation.
