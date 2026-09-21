@@ -54,7 +54,12 @@ public:
  UPROPERTY(BlueprintReadOnly, Category="Mission") ELunarStage Stage=ELunarStage::Briefing;
  UPROPERTY(BlueprintReadOnly, Category="Mission") bool Paused=false;
  UPROPERTY(BlueprintReadOnly, Category="Mission") FString Radio;
- UPROPERTY(BlueprintReadOnly, Category="Mission") float RadioUntil=0;
+ UPROPERTY(BlueprintReadOnly, Category="Mission") float RadioRemaining=0;
+ UPROPERTY(BlueprintReadOnly, Category="Mission") FString FailureReason;
+ void AdvanceRadio(float Delta);
+ void UpdateAudioPause();
+ class UAudioComponent* PlayPowerSound(const TCHAR* Name,float Volume);
+ UPROPERTY() TArray<TObjectPtr<class UAudioComponent>> PowerSounds;
  UPROPERTY() TObjectPtr<AActor> ModuleActor;
  UPROPERTY() TObjectPtr<AActor> PowerActor;
  UPROPERTY() TObjectPtr<AActor> DataActor;
@@ -76,6 +81,13 @@ public:
  void PowerReview();
  void StoryReview();
  void LedgeCheck();
+ void WalkthroughTick(float Delta);
+ bool WalkthroughEnabled=false;
+ int32 WalkStep=0;
+ float WalkSeconds=0, WalkStepSeconds=0;
+ double WalkLastFrame=0;
+ TArray<float> WalkFrameTimes;
+ FString WalkReport;
  void BuildStoryProps();
  void ReleaseInteract();
  void ToggleRoute();
@@ -95,6 +107,8 @@ public:
  UFUNCTION(BlueprintPure) FString Objective() const;
  UFUNCTION(BlueprintPure) FString Prompt() const;
  bool CanInteract() const;
+ bool CanInteractWith(AActor* Actor) const;
+ AActor* InteractionTarget() const;
  void Message(const FString& Text);
  void RunChecks();
  void MovementCheck();

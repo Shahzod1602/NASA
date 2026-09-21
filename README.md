@@ -2,6 +2,20 @@
 
 A short first-person lunar rescue prototype. All in-game text is in English.
 
+## Play the standalone Windows build
+
+Download the tested Windows ZIP from the [GitHub release](https://github.com/Shahzod1602/NASA/releases/tag/audit-fixes-2026-09-21),
+extract the complete folder, and run `LunarRescue.exe`.
+
+Open **Play Lunar Rescue.cmd**. When `Dist/Windows/LunarRescue.exe` is present,
+the launcher uses the standalone build, which does not require Unreal Editor.
+Keep the entire `Dist/Windows` folder together when copying the game, including
+its Engine, LunarRescue and Credits subfolders.
+
+To regenerate the package after source or content changes, run
+`Tools/package_windows.ps1` (`-EngineRoot` selects a different engine installation).
+If no standalone package is present, the launchers fall back to the editor game build.
+
 ## Get the project
 
 Requires Unreal Engine **5.8.2**, Git LFS, and the Visual Studio C++/Windows SDK
@@ -24,12 +38,14 @@ The `.cmd` launchers currently expect the engine under
 `D:\UnrealEngine\UE_5.8`; edit that engine path for another installation.
 They resolve the project relative to the launcher location. The low-memory
 launcher limits the texture streaming pool to 384 MB and uses shadow quality 2.
+The project now uses that conservative profile by default, with a 60 FPS cap and
+texture residency limited to available VRAM. The low-memory launcher remains compatible.
 Generated build files, caches, local backups, and test screenshots are excluded.
 Use Git LFS when cloning: the large binary assets must be downloaded, not left
 as pointer files. Asset credits are included under `SourceArt`.
 
 Open **Play Lunar Rescue.cmd** to play, or **Open Lunar Editor.cmd** to edit the project.
-The launcher uses the installed Unreal Engine 5.8.2; this is not a standalone packaged build.
+The editor fallback uses the installed Unreal Engine 5.8.2.
 
 ## Controls
 
@@ -39,6 +55,7 @@ The launcher uses the installed Unreal Engine 5.8.2; this is not a standalone pa
 - Space: jump.
 - E: interact; hold for station restart, science download, and crew recorder.
 - Q: after collecting science data, switch between the optional recorder and lander route.
+  This changes the navigation marker only: a nearby lander or recorder remains usable.
 - F: toggle visor zoom to inspect Earth and the night sky.
 - Escape: pause or resume.
 - R or Enter: restart after winning or losing.
@@ -56,6 +73,8 @@ fades, four roof lights switch on in order, the relay dish turns, and the scienc
 comes online. The suit plays short switching cues and English radio confirms restored power.
 Movement and oxygen continue during the restart; pause freezes its progress. The science
 terminal can be used as soon as the restart finishes.
+Pause also preserves the radio subtitle and pauses all station switching sounds.
+Falling outside the mission area shows a distinct failure reason from oxygen depletion.
 
 After downloading the science data, return directly to the lander or follow
 the optional crew recorder marker. Jump onto the survey ledge and hold E to
@@ -116,9 +135,17 @@ environment actors, so back up the map before rerunning it after manual environm
 Build the LunarRescueEditor Win64 Development target using the installed engine's Build.bat.
 Run UnrealEditor-Cmd with the project and /Game/Lunar/Maps/MoonBase -game -nullrhi -unattended -LunarTest
 for the mission checks, or -LunarMovementTest for sustained keyboard movement and jump checks.
+`-LunarWalkthroughTest` walks from the actual spawn through all objectives, including the
+optional recorder ledge and the return to the lander, using normal movement and collision.
+It writes route progress, oxygen remaining, frame timing and peak process memory to
+`Reports/walkthrough-checks.txt`. NullRHI results do not measure graphics performance.
+Run `Tools/verify_audit_fixes.ps1` for the complete suite, or add `-Graphics` for an
+offscreen 1280x720 DX11 run with the low-memory settings. Set `-EngineRoot` if needed.
+`-LunarMissingLedgeMesh -LunarTest` exercises the safe fallback for a missing ledge mesh.
 Reports are saved under Reports.
 `-LunarLedgeTest` checks the optional ledge using simulated keyboard movement and
-jumping. The latest mission and ledge runs passed 43 and 3 checks respectively.
+jumping. The updated mission suite passes 50 checks without sound or 52 with sound;
+the ledge suite passes 3 checks. See [audit fixes and measured results](AUDIT_FIXES.md).
 Mission checks teleport between objectives and are not a timed full playthrough.
 See [story update notes](Reports/STORY_UPDATE.md) for the implemented scope.
 

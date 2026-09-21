@@ -19,6 +19,7 @@
 #include "Materials/MaterialInterface.h"
 #include "Math/RotationMatrix.h"
 #include "Engine/StaticMesh.h"
+#include "HAL/PlatformMemory.h"
 
 ALunarCharacter::ALunarCharacter() {
  PrimaryActorTick.bCanEverTick=true;
@@ -44,7 +45,7 @@ void ALunarCharacter::BeginPlay() {
  CarriedModule=NewObject<UStaticMeshComponent>(this);
  CarriedModule->SetupAttachment(Camera);
  CarriedModule->SetStaticMesh(LoadObject<UStaticMesh>(nullptr,TEXT("/Game/Lunar/Imported/PowerCell/PowerCell.PowerCell")));
- CarriedModule->SetRelativeLocation(FVector(48,0,-31));CarriedModule->SetRelativeScale3D(FVector(.32));
+ CarriedModule->SetRelativeLocation(FVector(52,0,-33));CarriedModule->SetRelativeScale3D(FVector(.23));
  CarriedModule->SetCollisionEnabled(ECollisionEnabled::NoCollision);CarriedModule->SetCastShadow(false);
  CarriedModule->SetOnlyOwnerSee(true);CarriedModule->RegisterComponent();CarriedModule->SetVisibility(false);
 }
@@ -54,7 +55,7 @@ void ALunarCharacter::BuildGloves() {
  UMaterialInterface* Mats[3];
  for(int I=0;I<3;++I) Mats[I]=LoadObject<UMaterialInterface>(nullptr,*FString::Printf(TEXT("/Game/Lunar/Immersion/Materials/%s.%s"),Names[I],Names[I]));
  auto Part=[&](FVector Location,FVector Scale,int Mat) {
-  Location.Z+=6;
+  Location.X+=5; Location.Y*=.9f; Location.Z-=2; Scale*=.76f;
   auto* C=NewObject<UStaticMeshComponent>(this);C->SetupAttachment(Camera);C->SetStaticMesh(Sphere);C->SetMaterial(0,Mats[Mat]);
   C->SetCollisionEnabled(ECollisionEnabled::NoCollision);C->SetCastShadow(false);C->SetOnlyOwnerSee(true);C->SetReceivesDecals(false);
   C->SetRelativeLocation(Location);C->SetRelativeScale3D(Scale);C->RegisterComponent();Gloves.Add(C);GloveRest.Add(Location);
@@ -75,8 +76,6 @@ void ALunarCharacter::Tick(float D) {
   else BreathAudio->SetPaused(true);
  }
  if(StepAudio)StepAudio->SetPaused(!Active);
- if(G&&G->RadioAudio)G->RadioAudio->SetPaused(G->Paused);
- if(G&&G->PowerAudio)G->PowerAudio->SetPaused(G->Paused);
  const FVector Here=GetActorLocation();float Travel=FVector::Dist2D(Here,LastStepPosition);LastStepPosition=Here;
  if(Active) {
   SuitTime+=D;
@@ -174,6 +173,7 @@ void ALunarCharacter::PauseMission() {
   if(!G->IsActive())return;
   auto* Move=GetCharacterMovement();
   G->Paused=!G->Paused; G->ReleaseInteract();
+  G->UpdateAudioPause();
   if(G->Paused) { PausedVelocity=Move->Velocity; Move->StopMovementImmediately();Move->SetComponentTickEnabled(false); }
   else { Move->SetComponentTickEnabled(true);Move->Velocity=PausedVelocity; }
  }
@@ -200,6 +200,7 @@ void ALunarGameMode::BeginPlay() {
  }
  if(auto* PC=UGameplayStatics::GetPlayerController(this,0)) { PC->SetInputMode(FInputModeGameOnly()); PC->bShowMouseCursor=false; }
  BuildStoryProps();
+ WalkthroughEnabled=FParse::Param(FCommandLine::Get(),TEXT("LunarWalkthroughTest"));
  if(FParse::Param(FCommandLine::Get(),TEXT("LunarLedgeTest"))) {FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::LedgeCheck,3,false);}
  Message("SIGNAL LOST. SELENE, do you copy? There should be someone here.");
  if(FParse::Param(FCommandLine::Get(),TEXT("LunarStoryReview"))) {FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::StoryReview,8,false);}
@@ -209,16 +210,28 @@ void ALunarGameMode::BeginPlay() {
  if(FParse::Param(FCommandLine::Get(),TEXT("LunarPowerReview"))) { FTimerHandle H; GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::PowerReview,10,false); }
 }
 bool ALunarGameMode::IsActive() const { return Stage>=ELunarStage::FindModule&&Stage<=ELunarStage::ReturnHome; }
-void ALunarGameMode::Tick(float D) { Super::Tick(D); AdvanceTime(D); AdvancePowerSequence(D); AdvanceInteraction(D); }
+void ALunarGameMode::Tick(float D) {
+ Super::Tick(D); AdvanceRadio(D); UpdateAudioPause(); AdvanceTime(D); AdvancePowerSequence(D); AdvanceInteraction(D);
+ if(WalkthroughEnabled)WalkthroughTick(D);
+}
+void ALunarGameMode::AdvanceRadio(float D) {
+ if(!Paused)RadioRemaining=FMath::Max(0.f,RadioRemaining-FMath::Max(0.f,D));
+}
+void ALunarGameMode::UpdateAudioPause() {
+ if(IsValid(RadioAudio))RadioAudio->SetPaused(Paused);
+ PowerSounds.RemoveAll([](const TObjectPtr<UAudioComponent>& C){return !IsValid(C.Get());});
+ for(const auto& C:PowerSounds)C->SetPaused(Paused);
+}
+UAudioComponent* ALunarGameMode::PlayPowerSound(const TCHAR* Name,float Volume) {
+ auto* Sound=LoadObject<USoundBase>(nullptr,*FString::Printf(TEXT("/Game/Lunar/Immersion/Audio/%s.%s"),Name,Name));
+ auto* C=Sound?UGameplayStatics::SpawnSound2D(this,Sound,Volume):nullptr;
+ if(C){PowerSounds.Add(C);C->SetPaused(Paused);}return C;
+}
 void ALunarGameMode::BeginPowerSequence() {
  if(PowerSequenceActive||StationRebootComplete)return;
  PowerSequenceSeconds=0;PowerSequenceActive=true;
  Message("LINK ESTABLISHED. Station restart in progress.");
- auto Play=[&](const TCHAR* Name,float Volume) {
-  auto* Sound=LoadObject<USoundBase>(nullptr,*FString::Printf(TEXT("/Game/Lunar/Immersion/Audio/%s.%s"),Name,Name));
-  if(Sound)PowerAudio=UGameplayStatics::SpawnSound2D(this,Sound,Volume);
- };
- Play(TEXT("PowerContact"),.55f);Play(TEXT("PowerSequence"),.27f);
+ PlayPowerSound(TEXT("PowerContact"),.55f);PowerAudio=PlayPowerSound(TEXT("PowerSequence"),.27f);
 }
 void ALunarGameMode::AdvancePowerSequence(float D) {
  if(Paused||!IsActive())return;
@@ -245,8 +258,7 @@ void ALunarGameMode::AdvancePowerSequence(float D) {
  if(PowerWarningLight)PowerWarningLight->SetIntensity(0);
  for(TActorIterator<AActor> It(GetWorld());It;++It) if(It->ActorHasTag("StationLight")) {TArray<UPointLightComponent*> Lights;It->GetComponents(Lights);for(auto* L:Lights){L->SetIntensity(300);L->SetAttenuationRadius(650);}}
  if(PowerAudio)PowerAudio->Stop();
- auto* Chime=LoadObject<USoundBase>(nullptr,TEXT("/Game/Lunar/Immersion/Audio/PowerReady.PowerReady"));
- if(Chime)PowerAudio=UGameplayStatics::SpawnSound2D(this,Chime,.4f);
+ PowerAudio=PlayPowerSound(TEXT("PowerReady"),.4f);
  Message("POWER RESTORED. Crew log: The rover did not fail. We shut it down.");
 }
 void ALunarGameMode::AdvanceTime(float D) {
@@ -254,7 +266,10 @@ void ALunarGameMode::AdvanceTime(float D) {
  Oxygen=FMath::Max(0.f,Oxygen-FMath::Max(0.f,D));
  if(Oxygen>0&&Oxygen<60&&!LowOxygenWarned) {LowOxygenWarned=true;Message("CAUTION. One minute of oxygen. Return to the lander.");}
  auto* P=UGameplayStatics::GetPlayerPawn(this,0);
- if(Oxygen<=0||(P&&P->GetActorLocation().Z < -1500)) { Stage=ELunarStage::Lost; if(P) P->DisableInput(UGameplayStatics::GetPlayerController(this,0)); if(P) P->EnableInput(UGameplayStatics::GetPlayerController(this,0)); Message("Oxygen depleted. Restart the mission to try again."); }
+ if(Oxygen<=0||(P&&P->GetActorLocation().Z < -1500)) {
+  FailureReason=Oxygen<=0?TEXT("Your oxygen ran out. Follow the objective markers next time."):TEXT("You fell beyond the mission area. Stay on the lunar surface.");
+  Stage=ELunarStage::Lost;ReleaseInteract();Message(FailureReason);
+ }
 }
 void ALunarGameMode::StartMission() { if(Stage==ELunarStage::Briefing) { Stage=ELunarStage::FindModule; Message("NAV: Find the rover power cell. SELENE has stopped responding."); } }
 AActor* ALunarGameMode::Target() const {
@@ -268,12 +283,23 @@ FString ALunarGameMode::Objective() const {
 }
 FString ALunarGameMode::Prompt() const {
  if(PowerSequenceActive)return "";
- switch(Stage) { case ELunarStage::FindModule:return "[ E ]  Pick up power module"; case ELunarStage::RestorePower:return RepairStep==0?"[ E ]  Insert power cell":RepairStep==1?"[ E ]  Connect power cable":"[ HOLD E ]  Restart station"; case ELunarStage::CollectData:return "[ HOLD E ]  Download science data"; case ELunarStage::ReturnHome:return TrackRecorder&&!RecorderRecovered?"[ HOLD E ]  Read crew recorder":"[ E ]  Complete mission"; default:return ""; }
+ switch(Stage) { case ELunarStage::FindModule:return "[ E ]  Pick up power module"; case ELunarStage::RestorePower:return RepairStep==0?"[ E ]  Insert power cell":RepairStep==1?"[ E ]  Connect power cable":"[ HOLD E ]  Restart station"; case ELunarStage::CollectData:return "[ HOLD E ]  Download science data"; case ELunarStage::ReturnHome:return InteractionTarget()==RecorderActor&&!RecorderRecovered?"[ HOLD E ]  Read crew recorder":"[ E ]  Complete mission"; default:return ""; }
 }
 bool ALunarGameMode::CanInteract() const {
+ return CanInteractWith(InteractionTarget());
+}
+AActor* ALunarGameMode::InteractionTarget() const {
+ // Q selects navigation only. Nearby usable objectives remain interactive.
+ if(Stage==ELunarStage::ReturnHome) {
+  if(CanInteractWith(HomeActor))return HomeActor;
+  if(!RecorderRecovered&&CanInteractWith(RecorderActor))return RecorderActor;
+ }
+ return Target();
+}
+bool ALunarGameMode::CanInteractWith(AActor* T) const {
  if(PowerSequenceActive)return false;
- auto* T=Target(); auto* P=UGameplayStatics::GetPlayerPawn(this,0);
- if(!T||!P||Paused||!IsActive()||FVector::Dist(P->GetActorLocation(),T->GetActorLocation())>300) return false;
+ auto* P=UGameplayStatics::GetPlayerPawn(this,0);
+ if(!IsValid(T)||!P||Paused||!IsActive()||FVector::Dist(P->GetActorLocation(),T->GetActorLocation())>300) return false;
  if(T==RecorderActor&&P->GetActorLocation().Z<T->GetActorLocation().Z+65.f)return false;
  FVector Eye; FRotator Rot; P->GetActorEyesViewPoint(Eye,Rot);
  if(FVector::DotProduct(Rot.Vector(),(T->GetActorLocation()-Eye).GetSafeNormal())<0.35) return false;
@@ -281,13 +307,13 @@ bool ALunarGameMode::CanInteract() const {
  return !GetWorld()->LineTraceSingleByChannel(Hit,Eye,T->GetActorLocation(),ECC_Visibility,Q);
 }
 void ALunarGameMode::Message(const FString& T) {
- Radio=T; RadioUntil=GetWorld()->GetTimeSeconds()+10;
+ Radio=T; RadioRemaining=10;
  FString Name=T.StartsWith(TEXT("SIGNAL LOST"))?TEXT("StoryIntro"):T.StartsWith(TEXT("NAV:"))?TEXT("StoryStart"):T.StartsWith(TEXT("MODULE"))?TEXT("Module"):T.StartsWith(TEXT("POWER RESTORED"))?TEXT("StoryPower"):T.StartsWith(TEXT("DATA RECOVERED"))?TEXT("StoryData"):T.StartsWith(TEXT("CREW LOG"))?TEXT("StoryTruth"):T.StartsWith(TEXT("SIGNAL RESTORED"))?TEXT("StoryWin"):T.StartsWith(TEXT("CAUTION"))?TEXT("StoryWarning"):TEXT("");
  if(RadioAudio)RadioAudio->Stop();
  if(!Name.IsEmpty()) {
   if(RadioAudio)RadioAudio->Stop();
   auto* Sound=LoadObject<USoundBase>(nullptr,*FString::Printf(TEXT("/Game/Lunar/Immersion/Audio/Radio_%s.Radio_%s"),*Name,*Name));
-  if(Sound)RadioAudio=UGameplayStatics::SpawnSound2D(this,Sound,.8f);
+  if(Sound){RadioRemaining=FMath::Max(10.f,Sound->GetDuration()+.5f);RadioAudio=UGameplayStatics::SpawnSound2D(this,Sound,.8f);}
  }
 }
 void ALunarGameMode::BuildStoryProps() {
@@ -302,8 +328,18 @@ void ALunarGameMode::BuildStoryProps() {
   const FVector Port=PowerActor->GetActorLocation();
   InstalledModule=Make(TEXT("/Game/Lunar/Imported/PowerCell/PowerCell.PowerCell"),nullptr,Port+FVector(-69,0,-45),FVector(.5));
   InstalledModule->SetVisibility(false);
-  PowerCable=Make(TEXT("/Engine/BasicShapes/Cylinder.Cylinder"),TEXT("/Game/Lunar/Materials/M_Warning.M_Warning"),Port+FVector(-59,40,0),FVector(.035,.035,1.1));
-  PowerCable->SetVisibility(false);
+  const FVector Start=Port+FVector(-77,0,-25), End=Port+FVector(-57,28,35);
+  PowerCable=Make(TEXT("/Engine/BasicShapes/Sphere.Sphere"),TEXT("/Game/Lunar/Materials/M_Graphite.M_Graphite"),Start,FVector(.085));
+  auto Point=[&](float T){const float U=1-T;return U*U*U*Start+3*U*U*T*(Start+FVector(-28,40,-20))+3*U*T*T*(End+FVector(-30,30,-15))+T*T*T*End;};
+  for(int I=0;I<18;++I) {
+   const FVector A=Point(I/18.f),B=Point((I+1)/18.f);
+   auto* Segment=Make(TEXT("/Engine/BasicShapes/Cylinder.Cylinder"),TEXT("/Game/Lunar/Materials/M_ThermalFoil.M_ThermalFoil"),(A+B)*.5f,FVector(.026,.026,FVector::Distance(A,B)/100.f+.008f));
+   Segment->SetWorldRotation(FRotationMatrix::MakeFromZ(B-A).Rotator());
+   Segment->AttachToComponent(PowerCable,FAttachmentTransformRules::KeepWorldTransform);
+  }
+  auto* Connector=Make(TEXT("/Engine/BasicShapes/Sphere.Sphere"),TEXT("/Game/Lunar/Materials/M_Graphite.M_Graphite"),End,FVector(.085));
+  Connector->AttachToComponent(PowerCable,FAttachmentTransformRules::KeepWorldTransform);
+  PowerCable->SetVisibility(false,true);
  }
  // The optional recorder sits on a low survey ledge: a lunar jump reaches its top.
  FVector Site(6200,0,0);FHitResult Ground;FCollisionQueryParams Q;Q.bTraceComplex=true;
@@ -314,8 +350,14 @@ void ALunarGameMode::BuildStoryProps() {
  if(GetWorld()->LineTraceSingleByChannel(Ground,Site+FVector(0,0,2500),Site-FVector(0,0,1400),ECC_Visibility,Q))Site.Z=Ground.ImpactPoint.Z;
  auto* Ledge=GetWorld()->SpawnActor<AActor>();
  auto* Rock=NewObject<UStaticMeshComponent>(Ledge);Ledge->SetRootComponent(Rock);
- Rock->SetStaticMesh(LoadObject<UStaticMesh>(nullptr,TEXT("/Game/Lunar/V3/Meshes/SM_Basalt_0.SM_Basalt_0")));
- Rock->SetMaterial(0,LoadObject<UMaterialInterface>(nullptr,TEXT("/Game/Lunar/Imported/Rocks/M_MoonRock01.M_MoonRock01")));
+ auto* LedgeMesh=FParse::Param(FCommandLine::Get(),TEXT("LunarMissingLedgeMesh"))?nullptr:LoadObject<UStaticMesh>(nullptr,TEXT("/Game/Lunar/V3/Meshes/SM_Basalt_0.SM_Basalt_0"));
+ if(!LedgeMesh||LedgeMesh->GetBoundingBox().GetSize().GetMin()<=KINDA_SMALL_NUMBER) {
+  UE_LOG(LogTemp,Warning,TEXT("Lunar ledge mesh unavailable or degenerate; using safe fallback."));
+  LedgeMesh=LoadObject<UStaticMesh>(nullptr,TEXT("/Engine/BasicShapes/Cube.Cube"));
+ }
+ if(!LedgeMesh){UE_LOG(LogTemp,Error,TEXT("No ledge mesh available; optional recorder disabled."));Ledge->Destroy();return;}
+ Rock->SetStaticMesh(LedgeMesh);
+ Rock->SetMaterial(0,LoadObject<UMaterialInterface>(nullptr,TEXT("/Game/Lunar/V3/Materials/M_LunarRegolith.M_LunarRegolith")));
  const FBox Bounds=Rock->GetStaticMesh()->GetBoundingBox();
  const FVector RockScale=FVector(400,400,140)/Bounds.GetSize();
  Rock->SetCollisionProfileName(TEXT("BlockAll"));Rock->RegisterComponent();
@@ -328,12 +370,12 @@ void ALunarGameMode::BuildStoryProps() {
 float ALunarGameMode::HoldDuration() const {
  if(Stage==ELunarStage::RestorePower&&RepairStep==2)return 2.f;
  if(Stage==ELunarStage::CollectData)return 3.f;
- if(Stage==ELunarStage::ReturnHome&&TrackRecorder&&!RecorderRecovered)return 2.f;
+ if(Stage==ELunarStage::ReturnHome&&InteractionTarget()==RecorderActor&&!RecorderRecovered)return 2.f;
  return 0;
 }
 void ALunarGameMode::ReleaseInteract() {Holding=false;HoldProgress=0;}
 void ALunarGameMode::ToggleRoute() {
- if(Stage!=ELunarStage::ReturnHome||Paused||RecorderRecovered)return;
+ if(Stage!=ELunarStage::ReturnHome||Paused||RecorderRecovered||!RecorderActor)return;
  ReleaseInteract();TrackRecorder=!TrackRecorder;
  Message(TrackRecorder?"NAVIGATION: Crew recorder selected. Jump onto the survey ledge. Q returns to the lander route.":"NAVIGATION: Lander selected. The crew recorder is optional.");
 }
@@ -346,7 +388,7 @@ void ALunarGameMode::AdvanceInteraction(float D) {
  ReleaseInteract();
  if(Stage==ELunarStage::RestorePower) {Stage=ELunarStage::CollectData;BeginPowerSequence();}
  else if(Stage==ELunarStage::CollectData) {Stage=ELunarStage::ReturnHome;Message("DATA RECOVERED. A crew recorder is on the survey ledge. Q selects the optional route.");}
- else if(Stage==ELunarStage::ReturnHome&&TrackRecorder) {
+ else if(Stage==ELunarStage::ReturnHome&&!RecorderRecovered) {
   RecorderRecovered=true;TrackRecorder=false;
   Message("CREW LOG: Cooling failed. We cut rover power to save the samples. Crew safe at the relay.");
  }
@@ -358,8 +400,8 @@ void ALunarGameMode::Interact() {
  case ELunarStage::FindModule: ModuleActor->SetActorHiddenInGame(true);ModuleActor->SetActorEnableCollision(false);Stage=ELunarStage::RestorePower;Message("MODULE SECURED. Install it in the station's external power port.");break;
  case ELunarStage::RestorePower:
   if(RepairStep==0) {RepairStep=1;if(InstalledModule)InstalledModule->SetVisibility(true);Message("CELL SEATED. Connect the orange power cable.");}
-  else if(RepairStep==1) {RepairStep=2;if(PowerCable)PowerCable->SetVisibility(true);Message("CABLE CONNECTED. Hold E to restart the station.");}
-  if(auto* Click=LoadObject<USoundBase>(nullptr,TEXT("/Game/Lunar/Immersion/Audio/PowerContact.PowerContact")))UGameplayStatics::PlaySound2D(this,Click,.5f);
+  else if(RepairStep==1) {RepairStep=2;if(PowerCable)PowerCable->SetVisibility(true,true);Message("CABLE CONNECTED. Hold E to restart the station.");}
+  PlayPowerSound(TEXT("PowerContact"),.5f);
   break;
  case ELunarStage::ReturnHome:Stage=ELunarStage::Won;Message("SIGNAL RESTORED. We have your signal. Bring yourself home.");break;
  default:break;
@@ -429,7 +471,7 @@ void ALunarHUD::DrawHUD() {
   }
   DrawLine(W/2-7*S,H/2,W/2+7*S,H/2,FLinearColor(1,1,1,.65),1); DrawLine(W/2,H/2-7*S,W/2,H/2+7*S,FLinearColor(1,1,1,.65),1);
   if(G->CanInteract()) { Panel(W/2-240*S,H-205*S,480*S,50*S); Label(G->Prompt(),W/2-218*S,H-191*S,.6*S,Cyan); }
-  if(GetWorld()->GetTimeSeconds()<G->RadioUntil) { Panel(24*S,H-138*S,W-48*S,62*S,.88); Label("RADIO / "+G->Radio,40*S,H-118*S,.44*S,White); }
+  if(G->RadioRemaining>0) { Panel(24*S,H-138*S,W-48*S,62*S,.88); Label("RADIO / "+G->Radio,40*S,H-118*S,.44*S,White); }
  }
  Panel(0,H-48*S,W,48*S,.9); Label("WASD / ARROWS  Move     MOUSE  Look     SPACE  Jump     E  Interact     F  Zoom     Q  Route     ESC  Pause",32*S,H-31*S,.43*S,Muted);
  if(G->Stage==ELunarStage::Briefing||G->Stage==ELunarStage::Won||G->Stage==ELunarStage::Lost||G->Paused) {
@@ -446,7 +488,7 @@ void ALunarHUD::DrawHUD() {
    Label("[ ENTER / CLICK ]  START MISSION",X+36*S,Y+298*S,.65*S,Cyan);
   } else if(G->Paused) { Label("Movement and oxygen are paused.",X+36*S,Y+150*S,.6*S,White); Label("[ ESC / ENTER / CLICK ]  RESUME",X+36*S,Y+280*S,.65*S,Cyan); }
   else {
-   Label(G->Stage==ELunarStage::Won?"We have your signal. Bring yourself home.":"Your oxygen ran out. Follow the objective markers on your next attempt.",X+36*S,Y+145*S,.5*S,White);
+   Label(G->Stage==ELunarStage::Won?FString("We have your signal. Bring yourself home."):G->FailureReason,X+36*S,Y+145*S,.5*S,White);
    Label(G->Stage==ELunarStage::Won?FString::Printf(TEXT("O2 REMAINING  %02d:%02d   /   POWER ONLINE   /   SCIENCE SECURED"),FMath::CeilToInt(G->Oxygen)/60,FMath::CeilToInt(G->Oxygen)%60):FString("Tip: hold E during restart and data download."),X+36*S,Y+195*S,.42*S,Muted);
    if(G->Stage==ELunarStage::Won) Label(G->RecorderRecovered?"LOGS 2/2 - Crew evacuated safely. Samples saved by emergency shutdown.":"LOGS 1/2 - The crew recorder remains on the survey ledge.",X+36*S,Y+224*S,.4*S,Muted);
    Label("[ R / ENTER ]  PLAY AGAIN",X+36*S,Y+290*S,.65*S,Cyan);
@@ -468,6 +510,9 @@ void ALunarGameMode::RunChecks() {
  Check(FMath::IsNearlyEqual(GetWorld()->GetGravityZ(),-162.f,0.1f),TEXT("Lunar gravity is -162 cm/s2"));
  AdvanceTime(10); Check(Oxygen==OxygenCapacity,TEXT("Briefing does not consume oxygen"));
  StartMission(); Check(Stage==ELunarStage::FindModule,TEXT("Start enters module search"));
+ const float RadioSaved=RadioRemaining;Paused=true;AdvanceRadio(30);
+ Check(FMath::IsNearlyEqual(RadioRemaining,RadioSaved),TEXT("Long pause preserves radio subtitle"));
+ Paused=false;AdvanceRadio(1);Check(FMath::IsNearlyEqual(RadioRemaining,RadioSaved-1),TEXT("Radio subtitle countdown resumes"));
  Interact(); Check(Stage==ELunarStage::FindModule,TEXT("Cannot interact remotely"));
  Paused=true; AdvanceTime(20); Check(Oxygen==OxygenCapacity,TEXT("Pause stops oxygen")); Paused=false;
  AdvanceTime(5); Check(FMath::IsNearlyEqual(Oxygen,OxygenCapacity-5),TEXT("Oxygen decrements by elapsed seconds"));
@@ -498,6 +543,14 @@ void ALunarGameMode::RunChecks() {
    Check(Stage==Expected[I],*FString::Printf(TEXT("Mission transition %d"),I));
    if(I==1) {
     Check(PowerSequenceActive&&!StationRebootComplete,TEXT("Station restart begins after module installation"));
+    if(!FParse::Param(FCommandLine::Get(),TEXT("nosound"))) {
+     Paused=true;UpdateAudioPause();bool AllPaused=PowerSounds.Num()>=2;
+     for(const auto& C:PowerSounds)AllPaused&=IsValid(C.Get())&&C->bIsPaused;
+     Check(AllPaused,TEXT("Pause freezes every power sound including contact"));
+     Paused=false;UpdateAudioPause();bool AllResumed=PowerSounds.Num()>=2;
+     for(const auto& C:PowerSounds)AllResumed&=IsValid(C.Get())&&!C->bIsPaused;
+     Check(AllResumed,TEXT("Resume restores every power sound"));
+    }
     Check(!CanInteract()&&Target()==nullptr,TEXT("Science terminal waits for completed restart"));
     const float SavedSequence=PowerSequenceSeconds;
     Paused=true;AdvancePowerSequence(2);Check(FMath::IsNearlyEqual(PowerSequenceSeconds,SavedSequence),TEXT("Station restart freezes during pause"));Paused=false;
@@ -511,6 +564,9 @@ void ALunarGameMode::RunChecks() {
    }
   }
   Check(!RecorderRecovered&&Stage==ELunarStage::Won,TEXT("Optional recorder may be skipped for normal victory"));
+  Stage=ELunarStage::ReturnHome;TrackRecorder=true;
+  Check(Target()==RecorderActor&&InteractionTarget()==HomeActor&&Prompt().Contains(TEXT("Complete mission")),TEXT("Lander prompt works while recorder marker is selected"));
+  Interact();Check(Stage==ELunarStage::Won&&!RecorderRecovered,TEXT("Lander completes mission without changing Q route"));TrackRecorder=false;
   Stage=ELunarStage::ReturnHome;ToggleRoute();Check(Target()==RecorderActor,TEXT("Q selects optional recorder"));
   ToggleRoute();Check(Target()==HomeActor,TEXT("Optional detour can be abandoned"));ToggleRoute();
   if(RecorderActor) {
@@ -518,6 +574,7 @@ void ALunarGameMode::RunChecks() {
    Check(!CanInteract(),TEXT("Recorder requires reaching the survey ledge"));
    P->SetActorLocation(RecorderActor->GetActorLocation()+FVector(-100,0,100),false,nullptr,ETeleportType::TeleportPhysics);
    FVector Eye;FRotator Rot;P->GetActorEyesViewPoint(Eye,Rot);PC->SetControlRotation((RecorderActor->GetActorLocation()-Eye).Rotation());
+   TrackRecorder=false;Check(CanInteract()&&InteractionTarget()==RecorderActor,TEXT("Recorder usable even with lander marker selected"));
    Check(CanInteract(),TEXT("Recorder reachable from survey ledge"));Interact();AdvanceInteraction(2.1f);
    Check(RecorderRecovered&&!TrackRecorder&&Target()==HomeActor,TEXT("Recorder reveals crew fate and restores home marker"));
    ToggleRoute();Check(!TrackRecorder,TEXT("Recovered recorder cannot be collected twice"));
@@ -527,6 +584,9 @@ void ALunarGameMode::RunChecks() {
   }
   float Saved=Oxygen; AdvanceTime(500); Check(Stage==ELunarStage::Won&&Oxygen==Saved,TEXT("Victory freezes oxygen"));
   Stage=ELunarStage::FindModule; Oxygen=1; AdvanceTime(2); Check(Stage==ELunarStage::Lost&&Oxygen==0,TEXT("Oxygen depletion causes failure"));
+  Check(FailureReason.Contains(TEXT("oxygen")),TEXT("Oxygen loss has correct reason"));
+  Stage=ELunarStage::FindModule;Oxygen=100;P->SetActorLocation(FVector(0,0,-1600),false,nullptr,ETeleportType::TeleportPhysics);AdvanceTime(0);
+  Check(Stage==ELunarStage::Lost&&Oxygen==100&&FailureReason.Contains(TEXT("fell"))&&!FailureReason.Contains(TEXT("oxygen")),TEXT("Out-of-bounds fall has distinct reason with oxygen remaining"));
  }
  Report+=FString::Printf(TEXT("RESULT: %d failures\n"),Fail);
  FFileHelper::SaveStringToFile(Report,*(FPaths::ProjectDir()/TEXT("Reports/gameplay-checks.txt")));
@@ -628,7 +688,7 @@ void ALunarGameMode::StoryReview() {
  Oxygen=240;
  if(MovementPhase==0) {Stage=ELunarStage::RestorePower;RepairStep=0;P->SetActorLocation(FVector(-320,-1000,95));PC->SetControlRotation(FRotator(-10,0,0));PC->SetIgnoreMoveInput(true);PC->SetIgnoreLookInput(true);}
  if(MovementPhase==1)FScreenshotRequest::RequestScreenshot(FPaths::ProjectDir()/TEXT("Reports/story-carry.png"),true,false);
- if(MovementPhase==2) {RepairStep=2;InstalledModule->SetVisibility(true);PowerCable->SetVisibility(true);}
+ if(MovementPhase==2) {RepairStep=2;InstalledModule->SetVisibility(true);PowerCable->SetVisibility(true,true);}
  if(MovementPhase==3)FScreenshotRequest::RequestScreenshot(FPaths::ProjectDir()/TEXT("Reports/story-repair.png"),true,false);
  if(MovementPhase==4) {Stage=ELunarStage::ReturnHome;TrackRecorder=true;P->SetActorLocation(RecorderActor->GetActorLocation()+FVector(-550,0,180));PC->SetControlRotation(FRotator(-10,0,0));Message("DATA RECOVERED. A crew recorder is on the survey ledge. Q selects the optional route.");}
  if(MovementPhase==5)FScreenshotRequest::RequestScreenshot(FPaths::ProjectDir()/TEXT("Reports/story-recorder.png"),true,false);
@@ -657,4 +717,59 @@ void ALunarGameMode::LedgeCheck() {
   FFileHelper::SaveStringToFile(R,*(FPaths::ProjectDir()/TEXT("Reports/ledge-checks.txt")));FPlatformMisc::RequestExitWithStatus(false,Grounded&&Reach&&RecorderRecovered?0:1);return;
  }
  ++MovementPhase;FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::LedgeCheck,1,false);
+}
+
+// End-to-end traversal uses the character movement component, normal collision,
+// real mission time and held interactions. No teleport or direct stage changes.
+void ALunarGameMode::WalkthroughTick(float D) {
+ auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));
+ auto* PC=UGameplayStatics::GetPlayerController(this,0);
+ if(!P||!PC||GetWorld()->GetTimeSeconds()<3)return;
+ struct FStop {float X,Y;int Action;};
+ const FStop Route[]={
+  {-2450,650,0},{3700,650,0},{3780,-500,0},{0,0,1},
+  {3700,650,0},{-450,650,0},{-450,-1000,0},{-270,-1000,0},{0,0,2},
+  {-380,-1500,0},{-260,-1500,0},{0,0,3},
+  {-450,-1500,0},{-450,650,0},{5890,650,0},{5890,0,0},{0,0,4},{0,0,5},
+  {5890,650,0},{-2450,650,0},{-2450,-300,0},{0,0,6}
+ };
+ const double Now=FPlatformTime::Seconds();
+ if(WalkLastFrame==0){StartMission();WalkReport=TEXT("Traversal starts at actual player spawn; no teleports.\n");}
+ else WalkFrameTimes.Add(float((Now-WalkLastFrame)*1000));
+ WalkLastFrame=Now;WalkSeconds+=D;WalkStepSeconds+=D;
+ auto Finish=[&](bool Good,const FString& Reason) {
+  WalkthroughEnabled=false;ReleaseInteract();P->StopJumping();
+  WalkFrameTimes.Sort();double Sum=0;for(float V:WalkFrameTimes)Sum+=V;
+  const float Mean=WalkFrameTimes.Num()?Sum/WalkFrameTimes.Num():0;
+  const float P95=WalkFrameTimes.Num()?WalkFrameTimes[FMath::Min(WalkFrameTimes.Num()-1,int(WalkFrameTimes.Num()*.95f))]:0;
+  const auto Memory=FPlatformMemory::GetStats();
+  WalkReport+=FString::Printf(TEXT("%s %s\nMission seconds: %.2f; oxygen remaining: %.2f\nFrames: %d; mean frame ms: %.2f; p95 frame ms: %.2f; mean FPS: %.2f\nPeak process physical memory MiB: %.1f\nRenderer: %s\nRESULT: %d failures\n"),Good?TEXT("PASS"):TEXT("FAIL"),*Reason,WalkSeconds,Oxygen,WalkFrameTimes.Num(),Mean,P95,Mean>0?1000/Mean:0,Memory.PeakUsedPhysical/1048576.0,FParse::Param(FCommandLine::Get(),TEXT("nullrhi"))?TEXT("NullRHI - no GPU performance claim"):TEXT("Graphics enabled"),Good?0:1);
+  FFileHelper::SaveStringToFile(WalkReport,*(FPaths::ProjectDir()/TEXT("Reports/walkthrough-checks.txt")));
+  UE_LOG(LogTemp,Display,TEXT("LUNAR_WALKTHROUGH %s"),*WalkReport);
+  FPlatformMisc::RequestExitWithStatus(false,Good?0:1);
+ };
+ if(Stage==ELunarStage::Lost||WalkSeconds>295||WalkStepSeconds>45) {
+  Finish(false,FString::Printf(TEXT("Route step %d at %s: %s"),WalkStep,*P->GetActorLocation().ToString(),*FailureReason));return;
+ }
+ if(WalkStep>=UE_ARRAY_COUNT(Route)){Finish(Stage==ELunarStage::Won&&RecorderRecovered,TEXT("Full walked rescue including optional recorder and lander return"));return;}
+ const auto& Stop=Route[WalkStep];bool Done=false;
+ if(Stop.Action==0) {
+  FVector Direction=FVector(Stop.X,Stop.Y,P->GetActorLocation().Z)-P->GetActorLocation();
+  const float Distance=Direction.Size2D();
+  if(Distance<18)Done=true;
+  else {PC->SetControlRotation(Direction.Rotation());P->Forward(FMath::Clamp(Distance/100.f,.15f,1.f));}
+ } else if(Stop.Action==4) {
+  PC->SetControlRotation(FRotator(0,0,0));
+  if(WalkStepSeconds<1){P->Jump();P->Forward(1);}
+  else if(WalkStepSeconds<2){P->StopJumping();P->Forward(-1);}
+  else Done=WalkStepSeconds>3&&P->GetCharacterMovement()->IsMovingOnGround();
+ } else {
+  AActor* T=Stop.Action==1?ModuleActor.Get():Stop.Action==2?PowerActor.Get():Stop.Action==3?DataActor.Get():Stop.Action==5?RecorderActor.Get():HomeActor.Get();
+  if(!T){Finish(false,TEXT("Missing mission target"));return;}
+  FVector Eye;FRotator Rot;P->GetActorEyesViewPoint(Eye,Rot);PC->SetControlRotation((T->GetActorLocation()-Eye).Rotation());
+  if(Stop.Action==6)TrackRecorder=true; // Landing must not depend on marker selection.
+  if(!Holding)Interact();
+  Done=Stop.Action==1?Stage==ELunarStage::RestorePower:Stop.Action==2?StationRebootComplete:Stop.Action==3?Stage==ELunarStage::ReturnHome:Stop.Action==5?RecorderRecovered:Stage==ELunarStage::Won;
+ }
+ if(Done){WalkReport+=FString::Printf(TEXT("PASS route step %d at %.2fs (%s)\n"),WalkStep,WalkSeconds,*P->GetActorLocation().ToString());UE_LOG(LogTemp,Display,TEXT("Walk step %d complete at %.2fs"),WalkStep,WalkSeconds);++WalkStep;WalkStepSeconds=0;}
 }

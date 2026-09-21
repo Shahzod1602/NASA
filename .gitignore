@@ -4,6 +4,8 @@
 /Intermediate/
 /Saved/
 /Backups/
+/Dist/
+/Build/Windows/FileOpenOrder/
 /.vs/
 /.idea/
 *.sln
