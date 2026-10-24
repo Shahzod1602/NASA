@@ -1,5 +1,7 @@
 # Rivojlantirish rejasi
 
+> **Yangi asosiy reja:** [2026-10-24 — LunarRescue to‘liq rivojlantirish rejasi](GAME_MASTER_PLAN.md). Quyidagi matn 2026-09-21 holatining tarixiy qaydidir; hozirgi Apollo 12 funksiyalari va keyingi ishlar yangi hujjatda ajratilgan.
+
 2026-09-21 holati. **Bu backlog; quyidagi yangi funksiyalar bajarilmagan.** [2026 vaqt cheklovi](COMPETITION_READINESS.md) sabab challenge implementatsiyasi hakatonga qoldirildi. Oldingi v0.2.0 va ushbu tayyorgarlikning qayta ishlatilishi ham tasdiqlanishi kerak.
 
 ## Bajarilgan

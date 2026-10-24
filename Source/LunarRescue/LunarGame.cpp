@@ -1,12 +1,16 @@
 #include "LunarGame.h"
+#include "LunarApolloText.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/InputComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/PointLightComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "Engine/Canvas.h"
 #include "Engine/Engine.h"
+#include "Engine/World.h"
+#include "TimerManager.h"
 #include "EngineUtils.h"
 #include "Kismet/GameplayStatics.h"
 #include "Misc/FileHelper.h"
@@ -57,26 +61,6 @@ void ALunarCharacter::BeginPlay() {
  CarriedModule->SetCollisionEnabled(ECollisionEnabled::NoCollision);CarriedModule->SetCastShadow(false);
  CarriedModule->SetOnlyOwnerSee(true);CarriedModule->RegisterComponent();CarriedModule->SetVisibility(false);
 }
-void ALunarCharacter::BuildGloves() {
- auto* Sphere=LoadObject<UStaticMesh>(nullptr,TEXT("/Engine/BasicShapes/Sphere.Sphere"));
- const TCHAR* Names[]={TEXT("M_SuitCloth"),TEXT("M_SuitJoint"),TEXT("M_SuitTrim")};
- UMaterialInterface* Mats[3];
- for(int I=0;I<3;++I) Mats[I]=LoadObject<UMaterialInterface>(nullptr,*FString::Printf(TEXT("/Game/Lunar/Immersion/Materials/%s.%s"),Names[I],Names[I]));
- auto Part=[&](FVector Location,FVector Scale,int Mat) {
-  Location.X+=5; Location.Y*=.9f; Location.Z-=2; Scale*=.76f;
-  auto* C=NewObject<UStaticMeshComponent>(this);C->SetupAttachment(Camera);C->SetStaticMesh(Sphere);C->SetMaterial(0,Mats[Mat]);
-  C->SetCollisionEnabled(ECollisionEnabled::NoCollision);C->SetCastShadow(false);C->SetOnlyOwnerSee(true);C->SetReceivesDecals(false);
-  C->SetRelativeLocation(Location);C->SetRelativeScale3D(Scale);C->RegisterComponent();Gloves.Add(C);GloveRest.Add(Location);
- };
- for(float Side:{-1.f,1.f}) {
-  Part(FVector(22,Side*22,-23),FVector(.30,.105,.12),0);
-  Part(FVector(32,Side*21,-22),FVector(.065,.12,.125),1);
-  Part(FVector(34,Side*21,-22),FVector(.025,.123,.126),2);
-  Part(FVector(39,Side*20,-21),FVector(.13,.11,.085),0);
-  for(int F=0;F<4;++F) Part(FVector(44.5,Side*(16.5+F*2.1),-20.5-F*.2),FVector(.075,.022,.032),0);
-  Part(FVector(39,Side*14.8,-23),FVector(.075,.033,.037),1);
- }
-}
 void ALunarCharacter::Tick(float D) {
  Super::Tick(D);auto* G=Mission(this);const bool Active=G&&G->IsActive()&&!G->Paused;
  if(BreathAudio) {
@@ -87,7 +71,7 @@ void ALunarCharacter::Tick(float D) {
  const FVector Here=GetActorLocation();float Travel=FVector::Dist2D(Here,LastStepPosition);LastStepPosition=Here;
  if(Active) {
   SuitTime+=D;
-  if(GetCharacterMovement()->IsMovingOnGround()&&Travel<100) { StepTravel+=Travel;if(StepTravel>=125) {StepTravel=0;StampFootstep();} }
+  if(GetCharacterMovement()->IsMovingOnGround()&&Travel<100) { StepTravel+=Travel;if(StepTravel>=(FastStride?80.f:64.f)) {StepTravel=0;StampFootstep();} }
   if(GrainLife>0) {
    GrainLife-=D;
    for(int I=0;I<LandingGrains.Num();++I) {
@@ -100,15 +84,9 @@ void ALunarCharacter::Tick(float D) {
   }
  }
  if(CarriedModule)CarriedModule->SetVisibility(G&&G->Stage==ELunarStage::RestorePower&&G->RepairStep==0&&Camera->FieldOfView>60);
- // A few millimetres of hand sway; camera and aiming remain stable.
- for(int I=0;I<Gloves.Num();++I) if(auto* C=Gloves[I].Get()) {
-  C->SetVisibility(G&&G->IsActive()&&Camera->FieldOfView>60);
-  float Sway=FMath::Sin(SuitTime*4.5f+(GloveRest[I].Y>0?PI:0))*.4f*FMath::Clamp(GetVelocity().Size2D()/320.f,0.f,1.f);
-  const bool Carry=G&&G->Stage==ELunarStage::RestorePower&&G->RepairStep==0;
-  const float Reach=G&&G->Holding?FMath::Clamp(G->HoldProgress/.3f,0.f,1.f):0.f;
-  C->SetRelativeLocation(GloveRest[I]+FVector(Reach*7,Carry?-GloveRest[I].Y*.15f:0,Sway+(Carry?4.f:Reach*3)));
- }
+ UpdateSuit(D);
 }
+
 void ALunarCharacter::StampFootstep() {
  LeftFoot=!LeftFoot;
  if(StepSounds.Num()==3&&StepSounds[FootprintCount%3]) StepAudio=UGameplayStatics::SpawnSound2D(this,StepSounds[FootprintCount%3],.7f,FMath::FRandRange(.94f,1.06f));
@@ -126,7 +104,7 @@ void ALunarCharacter::StampFootstep() {
 }
 void ALunarCharacter::Landed(const FHitResult& Hit) {
  Super::Landed(Hit);auto* G=Mission(this);if(!G||!G->IsActive()||G->Paused)return;
- StampFootstep();StepTravel=0;
+ StampFootstep();StepTravel=0;LandBlend=2.2f;
  auto* Ground=Cast<UStaticMeshComponent>(Hit.GetComponent());
  if(!Ground||!Ground->GetStaticMesh()||!Ground->GetStaticMesh()->GetName().Contains(TEXT("Terrain")))return;
  if(LandingGrains.IsEmpty()) for(int I=0;I<16;++I) {
@@ -160,17 +138,38 @@ void ALunarCharacter::SetupPlayerInputComponent(UInputComponent* I) {
  I->BindKey(EKeys::One,IE_Pressed,this,&ALunarCharacter::ChooseMoon);
  I->BindKey(EKeys::Two,IE_Pressed,this,&ALunarCharacter::ChooseMars);
  I->BindKey(EKeys::M,IE_Pressed,this,&ALunarCharacter::MissionMenu);
+ I->BindKey(EKeys::J,IE_Pressed,this,&ALunarCharacter::ToggleJournal);
+ I->BindKey(EKeys::Tab,IE_Pressed,this,&ALunarCharacter::ToggleJournal);
+ I->BindKey(EKeys::L,IE_Pressed,this,&ALunarCharacter::ToggleLanguage);
+ I->BindKey(EKeys::C,IE_Pressed,this,&ALunarCharacter::ContinueMission);
+ I->BindKey(EKeys::V,IE_Pressed,this,&ALunarCharacter::ToggleSuitView);
+ I->BindKey(EKeys::LeftShift,IE_Pressed,this,&ALunarCharacter::BeginFastStride);
+ I->BindKey(EKeys::LeftShift,IE_Released,this,&ALunarCharacter::EndFastStride);
+ I->BindKey(EKeys::LeftAlt,IE_Pressed,this,&ALunarCharacter::BeginSuitOrbit);
+ I->BindKey(EKeys::LeftAlt,IE_Released,this,&ALunarCharacter::EndSuitOrbit);
  I->BindAction("Zoom",IE_Pressed,this,&ALunarCharacter::ZoomVisor);
 }
 void ALunarCharacter::Forward(float V) { auto* G=Mission(this); if(G&&G->IsActive()&&!G->Paused) AddMovementInput(FRotationMatrix(FRotator(0,GetControlRotation().Yaw,0)).GetUnitAxis(EAxis::X),V); }
 void ALunarCharacter::Right(float V) { auto* G=Mission(this); if(G&&G->IsActive()&&!G->Paused) AddMovementInput(FRotationMatrix(FRotator(0,GetControlRotation().Yaw,0)).GetUnitAxis(EAxis::Y),V); }
 void ALunarCharacter::Turn(float V) { auto* G=Mission(this); if(G&&!G->Menu&&!G->Paused) AddControllerYawInput(V*0.65f*Camera->FieldOfView/85.f); }
 void ALunarCharacter::Look(float V) { auto* G=Mission(this); if(G&&!G->Menu&&!G->Paused) AddControllerPitchInput(V*0.65f*Camera->FieldOfView/85.f); }
-void ALunarCharacter::ZoomVisor() { auto* G=Mission(this);if(G&&G->IsActive()&&!G->Paused) Camera->SetFieldOfView(Camera->FieldOfView<60?85.f:18.f); }
+void ALunarCharacter::ZoomVisor() { auto* G=Mission(this);if(G&&G->IsActive()&&!G->Paused) {if(ThirdPerson)ToggleSuitView();Camera->SetFieldOfView(Camera->FieldOfView<60?85.f:18.f);} }
 void ALunarCharacter::Leap() { auto* G=Mission(this); if(G&&G->IsActive()&&!G->Paused) Jump(); }
 void ALunarCharacter::Interact() { if(auto* G=Mission(this)) G->Interact(); }
 void ALunarCharacter::ReleaseInteract() {if(auto* G=Mission(this))G->ReleaseInteract();}
 void ALunarCharacter::ToggleRoute() {if(auto* G=Mission(this))G->ToggleRoute();}
+void ALunarCharacter::ToggleJournal() {
+ if(auto* G=Mission(this))if(G->Apollo&&G->IsActive()) {
+  if(G->Journal){G->Journal=false;if(G->Paused)PauseMission();}
+  else {if(!G->Paused)PauseMission();G->Journal=true;}
+ }
+}
+void ALunarCharacter::ToggleLanguage(){
+ auto* G=Mission(this);if(!G||(!G->Apollo&&!G->Menu))return;
+ ApolloText::SetUzbek(!ApolloText::IsUzbek());
+ if(G->IsActive())G->Message(G->ApolloInstruction());
+ if(G->Stage==ELunarStage::Lost)G->FailureReason=ApolloText::Get(G->Oxygen<=0?TEXT("TimeEnded"):TEXT("LeftArea"));
+}
 void ALunarCharacter::StartMission() {
  if(auto* G=Mission(this)) {
   if(G->Menu) G->SelectPlanet(false);
@@ -181,7 +180,7 @@ void ALunarCharacter::StartMission() {
 }
 void ALunarCharacter::PrimaryClick() {
  auto* G=Mission(this);if(!G)return;
- if(!G->Menu){StartMission();return;}
+ if(!G->Menu){if(!G->ApolloConfirmNew)StartMission();return;}
  auto* PC=Cast<APlayerController>(GetController());if(!PC)return;
  float X=0,Y=0;int32 W=0,H=0;PC->GetViewportSize(W,H);
  if(W<=0||H<=0||!PC->GetMousePosition(X,Y))return;
@@ -192,13 +191,18 @@ void ALunarCharacter::PrimaryClick() {
  }
 }
 // Keep ACharacter::Restart intact: possession calls it to enable walking physics.
-void ALunarCharacter::RestartMission() { auto* G=Mission(this); if(G&&(G->Stage==ELunarStage::Won||G->Stage==ELunarStage::Lost)) UGameplayStatics::OpenLevel(this,FName(*UGameplayStatics::GetCurrentLevelName(this,true))); }
+void ALunarCharacter::ContinueMission(){if(auto* G=Mission(this))G->ContinueApollo();}
+void ALunarCharacter::RestartMission() {
+ auto* G=Mission(this);if(!G)return;
+ if(G->Apollo&&G->Paused&&G->ApolloCachedCheckpoint){G->RestoreApolloCheckpoint();return;}
+ if(G->Stage==ELunarStage::Won||G->Stage==ELunarStage::Lost)UGameplayStatics::OpenLevel(this,FName(*UGameplayStatics::GetCurrentLevelName(this,true)));
+}
 void ALunarCharacter::ChooseMoon(){if(auto* G=Mission(this))if(G->Menu)G->SelectPlanet(false);}
 void ALunarCharacter::ChooseMars(){if(auto* G=Mission(this))if(G->Menu)G->SelectPlanet(true);}
 void ALunarCharacter::MissionMenu(){if(auto* G=Mission(this))if(G->Paused||!G->IsActive())UGameplayStatics::OpenLevel(this,TEXT("/Game/Rescue/Maps/MissionSelect"));}
 void ALunarGameMode::TravelCheck(){
  static int Phase=0;static FString Report;
- const TCHAR* Expected[]={TEXT("MissionSelect"),TEXT("MoonBase"),TEXT("MoonBase"),TEXT("MissionSelect"),TEXT("MarsBase"),TEXT("MarsBase"),TEXT("MissionSelect")};
+ const TCHAR* Expected[]={TEXT("MissionSelect"),TEXT("Apollo12"),TEXT("Apollo12"),TEXT("MissionSelect"),TEXT("MarsBase"),TEXT("MarsBase"),TEXT("MissionSelect")};
  const FString Map=UGameplayStatics::GetCurrentLevelName(this,true);auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));
  const bool Good=P&&Map==Expected[Phase]&&(Menu||FMath::IsNearlyEqual(GetWorld()->GetGravityZ(),-SurfaceGravity,.1f));
  Report+=FString::Printf(TEXT("%s travel phase %d: %s\n"),Good?TEXT("PASS"):TEXT("FAIL"),Phase,*Map);
@@ -206,13 +210,14 @@ void ALunarGameMode::TravelCheck(){
  int Step=Phase++;
  if(Step==0)P->ChooseMoon();else if(Step==3)P->ChooseMars();else if(Step==1||Step==4){Stage=ELunarStage::Won;P->RestartMission();}else P->MissionMenu();
 }
-void ALunarGameMode::SelectPlanet(bool SelectMars){UGameplayStatics::OpenLevel(this,SelectMars?TEXT("/Game/Mars/Maps/MarsBase"):TEXT("/Game/Lunar/Maps/MoonBase"));}
+void ALunarGameMode::SelectPlanet(bool SelectMars){UGameplayStatics::OpenLevel(this,SelectMars?TEXT("/Game/Mars/Maps/MarsBase"):TEXT("/Game/Lunar/Maps/Apollo12"));}
 FString ALunarGameMode::ReportPath(const TCHAR* Name) const{return FPaths::ProjectDir()/TEXT("Reports")/((Mars?FString("mars-"):FString())+Name);}
 void ALunarCharacter::PauseMission() {
  if(auto* G=Mission(this)) {
+  if(G->ApolloConfirmNew){G->ApolloConfirmNew=false;return;}
   if(!G->IsActive())return;
   auto* Move=GetCharacterMovement();
-  G->Paused=!G->Paused; G->ReleaseInteract();
+  G->Paused=!G->Paused; G->ReleaseInteract();if(!G->Paused)G->Journal=false;
   G->UpdateAudioPause();
   if(G->Paused) { PausedVelocity=Move->Velocity; Move->StopMovementImmediately();Move->SetComponentTickEnabled(false); }
   else { Move->SetComponentTickEnabled(true);Move->Velocity=PausedVelocity; }
@@ -223,13 +228,19 @@ ALunarGameMode::ALunarGameMode() { DefaultPawnClass=ALunarCharacter::StaticClass
 void ALunarGameMode::BeginPlay() {
  Super::BeginPlay();
  const FString Map=UGameplayStatics::GetCurrentLevelName(this,true);Mars=Map==TEXT("MarsBase");Menu=Map==TEXT("MissionSelect");
- SurfaceGravity=Mars?371.f:162.f;OxygenCapacity=Mars?480.f:300.f;Oxygen=OxygenCapacity;
+ Apollo=Map==TEXT("Apollo12");
+ SurfaceGravity=Mars?371.f:162.f;OxygenCapacity=480.f;Oxygen=OxygenCapacity;
  GetWorld()->GetWorldSettings()->bGlobalGravitySet=true;GetWorld()->GetWorldSettings()->GlobalGravityZ=-SurfaceGravity;
  if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0)))P->GetCharacterMovement()->JumpZVelocity=Mars?340.f:230.f;
  IFileManager::Get().MakeDirectory(*(FPaths::ProjectDir()/TEXT("Reports")),true);
  if(FParse::Param(FCommandLine::Get(),TEXT("LunarMenuTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::TravelCheck,3,false);}
  if(Menu&&FParse::Param(FCommandLine::Get(),TEXT("LunarReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,[this](){FScreenshotRequest::RequestScreenshot(ReportPath(TEXT("mission-select.png")),true,false);FTimerHandle End;GetWorldTimerManager().SetTimer(End,[](){FPlatformMisc::RequestExitWithStatus(false,0);},3,false);},8,false);}
- if(Menu){if(auto* PC=UGameplayStatics::GetPlayerController(this,0)){PC->SetInputMode(FInputModeGameAndUI());PC->bShowMouseCursor=true;}return;}
+ if(Menu){
+  RefreshApolloCheckpoint();if(auto* PC=UGameplayStatics::GetPlayerController(this,0)){PC->SetInputMode(FInputModeGameAndUI());PC->bShowMouseCursor=true;}
+  if(FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveReadTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ApolloSaveChecks,3,false);}
+  return;
+ }
+ if(Apollo){BuildApollo();return;}
  PowerBulbs.SetNum(4);PowerLights.SetNum(4);
  for(TActorIterator<AActor> It(GetWorld());It;++It) {
   if(It->ActorHasTag("Relay")) RelayActor=*It;
@@ -249,7 +260,8 @@ void ALunarGameMode::BeginPlay() {
   }
  }
  if(auto* PC=UGameplayStatics::GetPlayerController(this,0)) { PC->SetInputMode(FInputModeGameOnly()); PC->bShowMouseCursor=false; }
- BuildStoryProps();
+ BuildStoryProps();BuildMoonExpedition();
+ if(!Mars&&FParse::Param(FCommandLine::Get(),TEXT("LunarExpeditionReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ExpeditionReview,8,false);}
  WalkthroughEnabled=FParse::Param(FCommandLine::Get(),TEXT("LunarWalkthroughTest"));
  if(FParse::Param(FCommandLine::Get(),TEXT("LunarLedgeTest"))) {FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::LedgeCheck,3,false);}
  Message("SIGNAL LOST. SELENE, do you copy? There should be someone here.");
@@ -259,9 +271,10 @@ void ALunarGameMode::BeginPlay() {
  if(FParse::Param(FCommandLine::Get(),TEXT("LunarReview"))) { FTimerHandle H; GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ReviewVisuals,10,false); }
  if(FParse::Param(FCommandLine::Get(),TEXT("LunarPowerReview"))) { FTimerHandle H; GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::PowerReview,10,false); }
 }
-bool ALunarGameMode::IsActive() const { return Stage>=ELunarStage::FindModule&&Stage<=ELunarStage::ReturnHome; }
+bool ALunarGameMode::IsActive() const { return (Stage>=ELunarStage::FindModule&&Stage<=ELunarStage::ReturnHome)||Stage==ELunarStage::SurveySamples||Stage==ELunarStage::RecoverDrone||Stage==ELunarStage::ActivateBeacon||(Stage>=ELunarStage::ApolloCheckout&&Stage<=ELunarStage::ApolloReturn); }
 void ALunarGameMode::Tick(float D) {
- Super::Tick(D); AdvanceRadio(D); UpdateAudioPause(); AdvanceTime(D); AdvancePowerSequence(D); AdvanceInteraction(D);
+ Super::Tick(D); AdvanceRadio(D); UpdateAudioPause(); AdvanceTime(D); AdvancePowerSequence(D); AdvanceExpedition(D); AdvanceInteraction(D);
+ if(Apollo)TickApollo(D);
  if(WalkthroughEnabled)WalkthroughTick(D);
 }
 void ALunarGameMode::AdvanceRadio(float D) {
@@ -313,6 +326,14 @@ void ALunarGameMode::AdvancePowerSequence(float D) {
 }
 void ALunarGameMode::AdvanceTime(float D) {
  if(!IsActive()||Paused) return;
+ if(Apollo){
+  Oxygen=FMath::Max(0.f,Oxygen-FMath::Max(0.f,D));
+  if(Oxygen>0&&Oxygen<180&&!LowOxygenWarned){LowOxygenWarned=true;Message(ApolloText::Get(TEXT("TimeWarning")));}
+  auto* Player=UGameplayStatics::GetPlayerPawn(this,0);
+  if(Oxygen<=0||(Player&&(Player->GetActorLocation().Z < -10000||Player->GetActorLocation().X < -59000||Player->GetActorLocation().X > 44000||Player->GetActorLocation().Y < -39000||Player->GetActorLocation().Y > 44000))){
+   FailureReason=ApolloText::Get(Oxygen<=0?TEXT("TimeEnded"):TEXT("LeftArea"));Stage=ELunarStage::Lost;ReleaseInteract();Message(FailureReason);
+  }return;
+ }
  Oxygen=FMath::Max(0.f,Oxygen-FMath::Max(0.f,D));
  if(Oxygen>0&&Oxygen<60&&!LowOxygenWarned) {LowOxygenWarned=true;Message("CAUTION. One minute of oxygen. Return to the lander.");}
  auto* P=UGameplayStatics::GetPlayerPawn(this,0);
@@ -321,17 +342,29 @@ void ALunarGameMode::AdvanceTime(float D) {
   Stage=ELunarStage::Lost;ReleaseInteract();Message(FailureReason);
  }
 }
-void ALunarGameMode::StartMission() { if(!Menu&&Stage==ELunarStage::Briefing) { Stage=ELunarStage::FindModule; Message("NAV: Find the rover power cell. SELENE has stopped responding."); } }
+void ALunarGameMode::StartMission() { if(!Menu&&Stage==ELunarStage::Briefing) { if(Apollo){StartApollo(ApolloConfirmNew);return;} Stage=ELunarStage::FindModule; Message("NAV: Find the rover power cell. SELENE has stopped responding."); } }
 AActor* ALunarGameMode::Target() const {
+ if(Apollo)return ApolloTarget();
  if(PowerSequenceActive)return nullptr;
+ if(Stage==ELunarStage::SurveySamples){if(SampleAvailable(SelectedSample))return SampleActors[SelectedSample];for(int32 I=0;I<SampleActors.Num();++I)if(SampleAvailable(I))return SampleActors[I];return nullptr;}
+ if(Stage==ELunarStage::RecoverDrone)return DroneActor;
+ if(Stage==ELunarStage::ActivateBeacon)return BeaconActor;
  switch(Stage) { case ELunarStage::FindModule:return ModuleActor; case ELunarStage::RestorePower:return PowerActor; case ELunarStage::CollectData:return DataActor; case ELunarStage::AlignRelay:return RelayActor; case ELunarStage::ReturnHome:return TrackRecorder&&!RecorderRecovered?RecorderActor.Get():HomeActor.Get(); default:return nullptr; }
 }
 FString ALunarGameMode::Objective() const {
+ if(Apollo)return ApolloObjective();
+ if(Stage==ELunarStage::SurveySamples)return FString::Printf(TEXT("04 / LUNAR SAMPLES  %d / 3"),SampleCount());
+ if(Stage==ELunarStage::RecoverDrone)return "05 / RESCUE NOMAD-7 MEMORY";
+ if(Stage==ELunarStage::ActivateBeacon)return "06 / RESTORE EARTHLINK";
  if(PowerSequenceActive)return "03 / STATION STARTING UP";
  if(Stage==ELunarStage::ReturnHome&&TrackRecorder&&!RecorderRecovered)return "OPTIONAL / RECOVER THE CREW RECORDER";
- switch(Stage) { case ELunarStage::FindModule:return "01 / FIND THE POWER MODULE"; case ELunarStage::RestorePower:return "02 / RESTORE STATION POWER"; case ELunarStage::CollectData:return "03 / RECOVER THE SCIENCE DATA"; case ELunarStage::AlignRelay:return "04 / ALIGN THE ORBITAL RELAY"; case ELunarStage::ReturnHome:return Mars?"05 / RETURN TO THE LANDER":"04 / RETURN TO THE LANDER"; default:return "SELENE / RESCUE MISSION"; }
+ switch(Stage) { case ELunarStage::FindModule:return "01 / FIND THE POWER MODULE"; case ELunarStage::RestorePower:return "02 / RESTORE STATION POWER"; case ELunarStage::CollectData:return "03 / RECOVER THE SCIENCE DATA"; case ELunarStage::AlignRelay:return "04 / ALIGN THE ORBITAL RELAY"; case ELunarStage::ReturnHome:return Mars?"05 / RETURN TO THE LANDER":"07 / RETURN TO THE LANDER"; default:return "SELENE / RESCUE MISSION"; }
 }
 FString ALunarGameMode::Prompt() const {
+ if(Apollo)return ApolloPrompt();
+ if(Stage==ELunarStage::SurveySamples)return "[ HOLD E ]  Seal sample canister";
+ if(Stage==ELunarStage::RecoverDrone)return "[ HOLD E ]  Recover robot memory";
+ if(Stage==ELunarStage::ActivateBeacon)return BeaconInWindow()?"[ E ]  LOCK SIGNAL NOW":"Wait for green, then tap E";
  if(PowerSequenceActive)return "";
  switch(Stage) { case ELunarStage::FindModule:return "[ E ]  Pick up power module"; case ELunarStage::RestorePower:return RepairStep==0?"[ E ]  Insert power cell":RepairStep==1?"[ E ]  Connect power cable":"[ HOLD E ]  Restart station"; case ELunarStage::CollectData:return "[ HOLD E ]  Download science data"; case ELunarStage::AlignRelay:return "[ HOLD E ]  Align orbital antenna"; case ELunarStage::ReturnHome:return InteractionTarget()==RecorderActor&&!RecorderRecovered?"[ HOLD E ]  Read crew recorder":"[ E ]  Complete mission"; default:return ""; }
 }
@@ -339,7 +372,9 @@ bool ALunarGameMode::CanInteract() const {
  return CanInteractWith(InteractionTarget());
 }
 AActor* ALunarGameMode::InteractionTarget() const {
+ if(Apollo)return ApolloTarget(true);
  // Q selects navigation only. Nearby usable objectives remain interactive.
+ if(Stage==ELunarStage::SurveySamples)for(int32 I=0;I<SampleActors.Num();++I)if(SampleAvailable(I)&&CanInteractWith(SampleActors[I]))return SampleActors[I];
  if(Stage==ELunarStage::ReturnHome) {
   if(CanInteractWith(HomeActor))return HomeActor;
   if(!RecorderRecovered&&CanInteractWith(RecorderActor))return RecorderActor;
@@ -358,6 +393,7 @@ bool ALunarGameMode::CanInteractWith(AActor* T) const {
 }
 void ALunarGameMode::Message(const FString& T) {
  Radio=T; RadioRemaining=10;
+ if(Apollo){if(RadioAudio)RadioAudio->Stop();return;}
  if(Mars){
  if(T.StartsWith(TEXT("SIGNAL LOST")))Radio="ARES is silent. A dust storm damaged the station power and relay.";
  if(T.StartsWith(TEXT("NAV:")))Radio="NAV: Recover the spare power cell beside the survey rover.";
@@ -426,14 +462,19 @@ void ALunarGameMode::BuildStoryProps() {
  Make(TEXT("/Engine/BasicShapes/Cylinder.Cylinder"),TEXT("/Game/Lunar/Materials/M_Signal.M_Signal"),Site+FVector(110,0,165),FVector(.055,.055,1.5));
 }
 float ALunarGameMode::HoldDuration() const {
+ if(Apollo)return ApolloHoldDuration();
+ if(Stage==ELunarStage::SurveySamples)return 2.5f;
+ if(Stage==ELunarStage::RecoverDrone)return 4.f;
  if(Stage==ELunarStage::RestorePower&&RepairStep==2)return 2.f;
  if(Stage==ELunarStage::AlignRelay)return 4.f;
  if(Stage==ELunarStage::CollectData)return 3.f;
  if(Stage==ELunarStage::ReturnHome&&InteractionTarget()==RecorderActor&&!RecorderRecovered)return 2.f;
  return 0;
 }
-void ALunarGameMode::ReleaseInteract() {Holding=false;HoldProgress=0;}
+void ALunarGameMode::ReleaseInteract() {Holding=false;HoldProgress=0;HeldTarget=nullptr;}
 void ALunarGameMode::ToggleRoute() {
+ if(Apollo){CycleApollo();return;}
+ if(Stage==ELunarStage::SurveySamples&&!Paused){ReleaseInteract();for(int32 Step=1;Step<=SampleActors.Num();++Step){int32 I=(SelectedSample+Step)%SampleActors.Num();if(SampleAvailable(I)){SelectedSample=I;Message(FString::Printf(TEXT("SURVEY: Site %c selected. Recover samples in any order."),TCHAR('A'+I)));return;}}return;}
  if(Stage!=ELunarStage::ReturnHome||Paused||RecorderRecovered||!RecorderActor)return;
  ReleaseInteract();TrackRecorder=!TrackRecorder;
  Message(TrackRecorder?"NAVIGATION: Crew recorder selected. Jump onto the survey ledge. Q returns to the lander route.":"NAVIGATION: Lander selected. The crew recorder is optional.");
@@ -441,13 +482,25 @@ void ALunarGameMode::ToggleRoute() {
 void ALunarGameMode::AdvanceInteraction(float D) {
  if(Paused)return;
  if(!Holding)return;
- if(!CanInteract()||HoldDuration()<=0) {ReleaseInteract();return;}
+ if(!CanInteract()||InteractionTarget()!=HeldTarget||HoldDuration()<=0) {ReleaseInteract();return;}
  HoldProgress+=FMath::Max(0.f,D);
  if(Stage==ELunarStage::AlignRelay&&RelayDish){const float T=FMath::Clamp(HoldProgress/4.f,0.f,1.f);RelayDish->SetActorRotation(FRotator(FMath::Lerp(15.f,-35.f,T),FMath::Lerp(-40.f,65.f,T),0));}
  if(HoldProgress<HoldDuration())return;
+ AActor* CompletedTarget=HeldTarget;
  ReleaseInteract();
+ if(Apollo){CompleteApolloInteraction(CompletedTarget);return;}
+ if(Stage==ELunarStage::SurveySamples){
+  const int32 I=SampleActors.IndexOfByPredicate([CompletedTarget](const TObjectPtr<AActor>& A){return A.Get()==CompletedTarget;});
+  if(!SampleAvailable(I))return;SamplesCollected|=1<<I;
+  SampleActors[I]->SetActorHiddenInGame(true);
+  PlayPowerSound(TEXT("PowerContact"),.4f);
+  if(SampleCount()==3){Stage=ELunarStage::RecoverDrone;Message("SURVEY COMPLETE. NOMAD-7 is stranded nearby. Recover its memory and emergency O2 reserve.");}
+  else {for(int32 N=0;N<SampleActors.Num();++N)if(SampleAvailable(N)){SelectedSample=N;break;}Message(FString::Printf(TEXT("SAMPLE %d/3 SEALED. Follow the next marker, or use Q to select another site."),SampleCount()));}
+  return;
+ }
+ if(Stage==ELunarStage::RecoverDrone){DroneRecovered=true;Oxygen=FMath::Min(OxygenCapacity,Oxygen+60.f);LowOxygenWarned=Oxygen<60;Stage=ELunarStage::ActivateBeacon;BeaconCycleSeconds=0;Message("NOMAD-7 MEMORY SAFE. Emergency O2 transferred (+60s, capacity limited). Activate Earthlink.");return;}
  if(Stage==ELunarStage::RestorePower) {Stage=ELunarStage::CollectData;BeginPowerSequence();}
- else if(Stage==ELunarStage::CollectData) {Stage=Mars?ELunarStage::AlignRelay:ELunarStage::ReturnHome;Message("DATA RECOVERED. A crew recorder is on the survey ledge. Q selects the optional route.");}
+ else if(Stage==ELunarStage::CollectData) {Stage=Mars?ELunarStage::AlignRelay:ELunarStage::SurveySamples;Message(Mars?"DATA RECOVERED. Align the orbital antenna.":"SURVEY UNLOCKED. Three canisters remain outside. Hold E to seal each; Q selects a site.");}
  else if(Stage==ELunarStage::AlignRelay) {Stage=ELunarStage::ReturnHome;if(RelayDish)RelayDish->SetActorRotation(FRotator(-35,65,0));Message("RELAY ALIGNED. Signal acquired. Return to the lander. Q selects the optional crew recorder.");}
  else if(Stage==ELunarStage::ReturnHome&&!RecorderRecovered) {
   RecorderRecovered=true;TrackRecorder=false;
@@ -456,7 +509,9 @@ void ALunarGameMode::AdvanceInteraction(float D) {
 }
 void ALunarGameMode::Interact() {
  if(!CanInteract()||Holding)return;
- if(HoldDuration()>0) {Holding=true;HoldProgress=0;return;}
+ if(Apollo){InteractApollo();return;}
+ if(Stage==ELunarStage::ActivateBeacon){LockBeacon();return;}
+ if(HoldDuration()>0) {Holding=true;HoldProgress=0;HeldTarget=InteractionTarget();return;}
  switch(Stage) {
  case ELunarStage::FindModule: ModuleActor->SetActorHiddenInGame(true);ModuleActor->SetActorEnableCollision(false);Stage=ELunarStage::RestorePower;Message("MODULE SECURED. Install it in the station's external power port.");break;
  case ELunarStage::RestorePower:
@@ -473,20 +528,27 @@ void ALunarHUD::Label(const FString& T,float X,float Y,float S,FLinearColor C) {
 void ALunarHUD::Panel(float X,float Y,float W,float H,float A) { DrawRect(FLinearColor(0.008,0.019,0.032,A),X,Y,W,H); }
 void ALunarHUD::DrawHUD() {
  Super::DrawHUD(); auto* G=Mission(this); if(!G||!Canvas) return;
+ if(G->Apollo){DrawApollo(G);return;}
  float W=Canvas->SizeX,H=Canvas->SizeY; float S=FMath::Min(W/1280.f,H/720.f);
  FLinearColor White(.87,.94,1),Muted(.46,.63,.73),Cyan(.12,.86,.92),Orange(1,.53,.17);
  if(G->Menu){
-  Panel(0,0,W,H,1);Label("RESCUE / EXPEDITIONS",W*.1f,H*.12f,.95f*S,White);
-  Label("CHOOSE YOUR DESTINATION",W*.1f,H*.21f,.45f*S,Muted);
+  Panel(0,0,W,H,1);Label(ApolloText::Get(TEXT("MenuTitle")),W*.1f,H*.12f,.95f*S,White);
+  Label(ApolloText::Get(TEXT("MenuChoose")),W*.1f,H*.21f,.60f*S,Muted);
   for(int I=0;I<2;++I){const FBox2D Bounds=MissionCardBounds(I,W,H);float X=Bounds.Min.X,Y=Bounds.Min.Y;FLinearColor C=I?Orange:Cyan;
    Panel(X,Y,Bounds.GetSize().X,Bounds.GetSize().Y,1);DrawRect(C,X,Y,Bounds.GetSize().X,3*S);
-   Label(I?"02 / MARS":"01 / MOON",X+24*S,Y+28*S,.95f*S,C);
-   Label(I?"ARES / CANYON OUTPOST":"SELENE / THE LAST SIGNAL",X+24*S,Y+93*S,.43f*S,White);
-   Label(I?"8 MIN OXYGEN   /   3.71 m/s2":"5 MIN OXYGEN   /   1.62 m/s2",X+24*S,Y+136*S,.4f*S,Muted);
-   Label(I?"Restore the orbital relay and recover ice survey data.":"Restore the station and uncover the crew's story.",X+24*S,Y+180*S,.32f*S,White);
-   Label(I?"[ 2 / CLICK ]  EXPLORE MARS":"[ 1 / ENTER / CLICK ]  EXPLORE MOON",X+24*S,Y+245*S,.43f*S,C);
+   Label(ApolloText::Get(I?TEXT("MenuMars"):TEXT("MenuMoon")),X+24*S,Y+28*S,.95f*S,C);
+   Label(ApolloText::Get(I?TEXT("MenuMarsTitle"):TEXT("MenuMoonTitle")),X+24*S,Y+93*S,.47f*S,White);
+   Label(ApolloText::Get(I?TEXT("MenuMarsInfo"):TEXT("MenuMoonInfo")),X+24*S,Y+136*S,.44f*S,Muted);
+   Label(ApolloText::Get(I?TEXT("MenuMarsDescription"):TEXT("MenuMoonDescription")),X+24*S,Y+180*S,.43f*S,White);
+   Label(ApolloText::Get(I?TEXT("MenuMarsBegin"):TEXT("MenuMoonBegin")),X+24*S,Y+245*S,.45f*S,C);
   }
-  Label("WASD  MOVE   /   SPACE  JUMP   /   E  INTERACT",W*.1f,H*.85f,.43f*S,Muted);return;
+  if(G->ApolloCachedCheckpoint){
+   const bool Complete=G->ApolloCachedCheckpoint->Step()==6;
+   Label(ApolloText::Get(Complete?TEXT("CheckpointResult"):TEXT("CheckpointContinue")),W*.1f,H*.79f,.64f*S,Cyan);
+  }else if(G->ApolloSaveStatus==EApolloSaveStatus::Incompatible||G->ApolloSaveStatus==EApolloSaveStatus::Corrupt){
+   Label(ApolloText::Get(G->ApolloSaveStatus==EApolloSaveStatus::Incompatible?TEXT("CheckpointIncompatible"):TEXT("CheckpointCorrupt")),W*.1f,H*.79f,.48f*S,Orange);
+  }
+  Label(ApolloText::Get(TEXT("MenuHelp")),W*.1f,H*.85f,.49f*S,Muted);return;
  }
  // Thin curved helmet seal around the periphery, behind all readable HUD elements.
  if(G->IsActive()) for(int I=0;I<128;++I) {
@@ -524,6 +586,28 @@ void ALunarHUD::DrawHUD() {
    Label(G->RecorderRecovered?"CREW LOG RECOVERED / CREW SAFE":G->TrackRecorder?"[ Q ]  SWITCH BACK TO LANDER":"[ Q ]  OPTIONAL: INVESTIGATE CREW RECORDER",42*S,203*S,.43*S,Cyan);
    if(!G->RecorderRecovered)Label("Extra travel uses oxygen. Returning now still completes the mission.",42*S,233*S,.35*S,Muted);
   }
+  if(!G->Mars){
+   const int32 Step=G->Stage==ELunarStage::FindModule?0:G->Stage==ELunarStage::RestorePower?1:G->Stage==ELunarStage::CollectData?2:G->Stage==ELunarStage::SurveySamples?3:G->Stage==ELunarStage::RecoverDrone?4:G->Stage==ELunarStage::ActivateBeacon?5:6;
+   Panel(W-280*S,110*S,256*S,207*S,.84);Label("EXPEDITION CHECKLIST",W-264*S,122*S,.36*S,Cyan);
+   const TCHAR* Tasks[]={TEXT("Recover power cell"),TEXT("Restart SELENE"),TEXT("Download research"),TEXT("Seal 3 lunar samples"),TEXT("Recover NOMAD-7"),TEXT("Lock Earthlink signal"),TEXT("Return to lander")};
+   for(int32 I=0;I<7;++I)Label(FString(I<Step?"[+] ":I==Step?">  ":"    ")+Tasks[I],W-264*S,(151+22*I)*S,.34*S,I==Step?White:I<Step?Cyan:Muted);
+  }
+  if(G->Stage==ELunarStage::SurveySamples){
+   Panel(24*S,191*S,520*S,75*S,.83);Label("[ Q ]  CYCLE SAMPLE SITES",42*S,203*S,.43*S,Cyan);
+   Label("Regolith / basalt / impact glass. Hold E at each canister.",42*S,233*S,.35*S,Muted);
+  }
+  if(G->Stage==ELunarStage::RecoverDrone){
+   Panel(24*S,191*S,520*S,75*S,.83);Label("NOMAD-7 / EMERGENCY RECOVERY",42*S,203*S,.43*S,Cyan);
+   Label("Hold E: save its memory and transfer reserve O2 (+60s).",42*S,233*S,.35*S,Muted);
+  }
+  if(G->Stage==ELunarStage::ActivateBeacon){
+   Panel(24*S,191*S,520*S,104*S,.9);
+   Label(FString::Printf(TEXT("EARTHLINK  /  CHANNELS %d / 3"),G->BeaconLocks),42*S,203*S,.45*S,Cyan);
+   Label("Stand near the beacon. Tap E while the cursor is green.",42*S,233*S,.34*S,Muted);
+   DrawRect(FLinearColor(.09,.18,.23),42*S,266*S,473*S,12*S);
+   DrawRect(FLinearColor(.15,.65,.35),42*S+473*S*.34f,266*S,473*S*.32f,12*S);
+   DrawRect(G->BeaconInWindow()?FLinearColor(.4,1,.5):Orange,42*S+473*S*G->BeaconPhase()-2*S,262*S,4*S,20*S);
+  }
   if(G->Holding) {
    const float Progress=FMath::Clamp(G->HoldProgress/G->HoldDuration(),0.f,1.f);
    Panel(W/2-220*S,H-243*S,440*S,28*S,.9);
@@ -551,21 +635,22 @@ void ALunarHUD::DrawHUD() {
  if(G->Stage==ELunarStage::Briefing||G->Stage==ELunarStage::Won||G->Stage==ELunarStage::Lost||G->Paused) {
   Panel(0,90*S,W,H-138*S,.6); float X=W/2-365*S,Y=H/2-180*S;
   Panel(X,Y,730*S,360*S,.96); DrawRect(Cyan,X,Y,730*S,3*S);
-  FString Title=G->Paused?"MISSION PAUSED":G->Stage==ELunarStage::Won?(G->RecorderRecovered?"THE TRUTH RECOVERED":"MISSION COMPLETE"):G->Stage==ELunarStage::Lost?"SIGNAL LOST":"THE LAST SIGNAL";
+  FString Title=G->Paused?"MISSION PAUSED":G->Stage==ELunarStage::Won?(G->RecorderRecovered?"THE TRUTH RECOVERED":"MISSION COMPLETE"):G->Stage==ELunarStage::Lost?"SIGNAL LOST":G->Mars?"THE LAST SIGNAL":"THE LOST EXPEDITION";
   Label(G->Mars?"MARS RESCUE  /  MISSION 02":"LUNAR RESCUE  /  MISSION 01",X+36*S,Y+30*S,.44*S,Cyan);
   Label("[ M ] MISSION SELECT",X+465*S,Y+31*S,.35*S,Muted);
   Label(Title,X+36*S,Y+69*S,.95*S,White);
   if(G->Stage==ELunarStage::Briefing) {
-   Label(G->Mars?"ARES is offline. You have eight minutes of oxygen.":"SELENE is offline. You have five minutes of oxygen.",X+36*S,Y+132*S,.49*S,White);
-   Label(G->Mars?"Restore power. Download data. Align the relay. Return home.":"Find the module. Restore power. Recover the data and return.",X+36*S,Y+164*S,.49*S,White);
-   Label(G->Mars?"Mars gravity: 3.71 m/s2. Explore the canyon survey outpost.":"Lunar gravity: 1.62 m/s2. Expect longer jumps and slower falls.",X+36*S,Y+212*S,.43*S,Muted);
-   Label(G->Mars?"Fictional terrain. Science objective: recover subsurface ice records.":"Fictional terrain. Science objective: monitor regolith temperature.",X+36*S,Y+238*S,.4*S,Muted);
+   Label(G->Mars?"ARES is offline. You have eight minutes of oxygen.":"SELENE is offline. Eight minutes. Seven objectives.",X+36*S,Y+132*S,.49*S,White);
+   Label(G->Mars?"Restore power. Download data. Align the relay. Return home.":"Power the base. Seal samples. Rescue NOMAD-7 memory.",X+36*S,Y+164*S,.49*S,White);
+   Label(G->Mars?"Mars gravity: 3.71 m/s2. Explore the canyon survey outpost.":"Lock the Earthlink signal, then reach the lander. Q changes route.",X+36*S,Y+212*S,.43*S,Muted);
+   Label(G->Mars?"Fictional terrain. Science objective: recover subsurface ice records.":"Optional crew log: jump to the survey ledge. Gravity: 1.62 m/s2.",X+36*S,Y+238*S,.4*S,Muted);
    Label("[ ENTER / CLICK ]  START MISSION",X+36*S,Y+298*S,.65*S,Cyan);
   } else if(G->Paused) { Label("Movement and oxygen are paused.",X+36*S,Y+150*S,.6*S,White); Label("[ ESC / ENTER / CLICK ]  RESUME",X+36*S,Y+280*S,.65*S,Cyan); }
   else {
    Label(G->Stage==ELunarStage::Won?FString("We have your signal. Bring yourself home."):G->FailureReason,X+36*S,Y+145*S,.5*S,White);
    Label(G->Stage==ELunarStage::Won?FString::Printf(TEXT("O2 REMAINING  %02d:%02d   /   POWER ONLINE   /   SCIENCE SECURED"),FMath::CeilToInt(G->Oxygen)/60,FMath::CeilToInt(G->Oxygen)%60):FString("Tip: hold E during restart and data download."),X+36*S,Y+195*S,.42*S,Muted);
    if(G->Stage==ELunarStage::Won) Label(G->RecorderRecovered?"LOGS 2/2 - Crew evacuated safely. Samples saved by emergency shutdown.":"LOGS 1/2 - The crew recorder remains on the survey ledge.",X+36*S,Y+224*S,.4*S,Muted);
+   if(!G->Mars&&G->Stage==ELunarStage::Won)Label("RANK: "+G->ExpeditionRank()+FString::Printf(TEXT("   /   SAMPLES %d/3   /   NOMAD %s   /   LINK %d/3"),G->SampleCount(),G->DroneRecovered?TEXT("SAFE"):TEXT("LOST"),G->BeaconLocks),X+36*S,Y+251*S,.37*S,Cyan);
    Label("[ R / ENTER ]  PLAY AGAIN",X+36*S,Y+290*S,.65*S,Cyan);
   }
  }
@@ -592,7 +677,7 @@ void ALunarGameMode::RunChecks() {
  Paused=true; AdvanceTime(20); Check(Oxygen==OxygenCapacity,TEXT("Pause stops oxygen")); Paused=false;
  AdvanceTime(5); Check(FMath::IsNearlyEqual(Oxygen,OxygenCapacity-5),TEXT("Oxygen decrements by elapsed seconds"));
  if(P&&PC&&ModuleActor&&PowerActor&&DataActor&&HomeActor) {
-  TArray<ELunarStage> Expected={ELunarStage::RestorePower,ELunarStage::CollectData};if(Mars)Expected.Add(ELunarStage::AlignRelay);Expected.Add(ELunarStage::ReturnHome);Expected.Add(ELunarStage::Won);
+  TArray<ELunarStage> Expected={ELunarStage::RestorePower,ELunarStage::CollectData};if(Mars){Expected.Add(ELunarStage::AlignRelay);Expected.Add(ELunarStage::ReturnHome);}else Expected.Add(ELunarStage::SurveySamples);Expected.Add(ELunarStage::Won);
   for(int I=0;I<Expected.Num();++I) {
    auto* T=Target(); if(!T) {Check(false,TEXT("Target unavailable"));break;}
    FVector L=T->GetActorLocation()+FVector(-180,0,40); P->SetActorLocation(L,false,nullptr,ETeleportType::TeleportPhysics);
@@ -617,6 +702,7 @@ void ALunarGameMode::RunChecks() {
    }
    if(Mars&&I==3){AdvanceInteraction(1);Paused=true;AdvanceInteraction(10);Check(HoldProgress==1,TEXT("Relay alignment pauses"));Paused=false;AdvanceInteraction(3.1f);Check(RelayDish&&Stage==ELunarStage::ReturnHome,TEXT("Mars orbital relay aligned"));}
    Check(Stage==Expected[I],*FString::Printf(TEXT("Mission transition %d"),I));
+   if(!Mars&&I==2)Fail+=ExpeditionChecks();
    if(I==1) {
     Check(PowerSequenceActive&&!StationRebootComplete,TEXT("Station restart begins after module installation"));
     if(!FParse::Param(FCommandLine::Get(),TEXT("nosound"))) {
@@ -701,7 +787,7 @@ void ALunarGameMode::MovementCheck() {
   bool Good=Height>50;if(!Good)++MovementFailures;
   MovementReport+=FString::Printf(TEXT("%s Space jump: %.1f cm rise\n"),Good?TEXT("PASS"):TEXT("FAIL"),Height);
   bool Prints=P->FootprintCount>=8&&P->Footprints.Num()<=160;
-  bool Assets=P->BootMaterial&&P->StepSounds.Num()==3&&P->StepSounds[0]&&P->StepSounds[1]&&P->StepSounds[2]&&P->Gloves.Num()==18;
+  bool Assets=P->BootMaterial&&P->StepSounds.Num()==3&&P->StepSounds[0]&&P->StepSounds[1]&&P->StepSounds[2]&&P->Gloves.Num()==16&&P->SuitBody.Num()==10&&P->SuitArms.Num()==18&&P->Gloves[0]->GetStaticMesh()!=nullptr;
   if(!Prints)++MovementFailures;if(!Assets)++MovementFailures;
   MovementReport+=FString::Printf(TEXT("%s Grounded walking leaves bootprints: %d\n%s Suit meshes, decal and step sounds loaded\n"),Prints?TEXT("PASS"):TEXT("FAIL"),P->FootprintCount,Assets?TEXT("PASS"):TEXT("FAIL"));
  } else if(MovementPhase==6) {
@@ -819,7 +905,11 @@ void ALunarGameMode::WalkthroughTick(float D) {
   {-2450,650,0},{3700,650,0},{3780,-500,0},{0,0,1},
   {3700,650,0},{-450,650,0},{-450,-1000,0},{-270,-1000,0},{0,0,2},
   {-380,-1500,0},{-260,-1500,0},{0,0,3},
-  {-450,-1500,0},{-450,650,0},{5890,650,0},{5890,0,0},{0,0,4},{0,0,5},
+  {-450,-1500,0},{-450,650,0},{-820,650,0},{0,0,8},
+  {2030,650,0},{0,0,9},{4730,650,0},{0,0,10},
+  {5230,650,0},{5230,-350,0},{0,0,11},
+  {5230,650,0},{5530,650,0},{0,0,12},
+  {5890,650,0},{5890,0,0},{0,0,4},{0,0,5},
   {5890,650,0},{-2450,650,0},{-2450,-300,0},{0,0,6}
  };
  if(Mars)Route={
@@ -861,11 +951,16 @@ void ALunarGameMode::WalkthroughTick(float D) {
   else Done=WalkStepSeconds>3&&P->GetCharacterMovement()->IsMovingOnGround();
  } else {
   AActor* T=Stop.Action==1?ModuleActor.Get():Stop.Action==2?PowerActor.Get():Stop.Action==3?DataActor.Get():Stop.Action==5?RecorderActor.Get():Stop.Action==7?RelayActor.Get():HomeActor.Get();
+  if(Stop.Action>=8&&Stop.Action<=10)T=SampleActors.IsValidIndex(Stop.Action-8)?SampleActors[Stop.Action-8].Get():nullptr;
+  if(Stop.Action==11)T=DroneActor;if(Stop.Action==12)T=BeaconActor;
   if(!T){Finish(false,TEXT("Missing mission target"));return;}
   FVector Eye;FRotator Rot;P->GetActorEyesViewPoint(Eye,Rot);PC->SetControlRotation((T->GetActorLocation()-Eye).Rotation());
   if(Stop.Action==6)TrackRecorder=true; // Landing must not depend on marker selection.
-  if(!Holding)Interact();
-  Done=Stop.Action==1?Stage==ELunarStage::RestorePower:Stop.Action==2?StationRebootComplete:Stop.Action==3?Stage==(Mars?ELunarStage::AlignRelay:ELunarStage::ReturnHome):Stop.Action==5?RecorderRecovered:Stop.Action==7?Stage==ELunarStage::ReturnHome:Stage==ELunarStage::Won;
+  if(!Holding&&(Stop.Action!=12||BeaconInWindow()))Interact();
+  Done=Stop.Action==1?Stage==ELunarStage::RestorePower:Stop.Action==2?StationRebootComplete:Stop.Action==3?Stage==(Mars?ELunarStage::AlignRelay:ELunarStage::SurveySamples):Stop.Action==5?RecorderRecovered:Stop.Action==7?Stage==ELunarStage::ReturnHome:Stage==ELunarStage::Won;
+  if(Stop.Action>=8&&Stop.Action<=10)Done=!SampleAvailable(Stop.Action-8);
+  if(Stop.Action==11)Done=DroneRecovered;
+  if(Stop.Action==12)Done=BeaconLocks==3;
  }
  if(Done){WalkReport+=FString::Printf(TEXT("PASS route step %d at %.2fs (%s)\n"),WalkStep,WalkSeconds,*P->GetActorLocation().ToString());UE_LOG(LogTemp,Display,TEXT("Walk step %d complete at %.2fs"),WalkStep,WalkSeconds);++WalkStep;WalkStepSeconds=0;}
 }

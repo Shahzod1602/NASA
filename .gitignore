@@ -15,6 +15,7 @@
 *.VC.opendb
 __pycache__/
 *.pyc
+/Tools/pydeps/
 .env
 .env.*
 

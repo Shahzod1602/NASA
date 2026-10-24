@@ -1,4 +1,12 @@
 @echo off
+if exist "%~dp0Dist\Apollo12\Windows\LunarRescue.exe" (
+    start "Lunar Rescue - Apollo 12" "%~dp0Dist\Apollo12\Windows\LunarRescue.exe" -windowed -ResX=1280 -ResY=720 -dx11 -ExecCmds="r.Streaming.PoolSize 384,r.ShadowQuality 2"
+    exit /b
+)
+if exist "%~dp0Dist\MoonExpedition\Windows\LunarRescue.exe" (
+    start "Lunar Rescue - The Lost Expedition" "%~dp0Dist\MoonExpedition\Windows\LunarRescue.exe" -windowed -ResX=1280 -ResY=720 -dx11 -ExecCmds="r.Streaming.PoolSize 384,r.ShadowQuality 2"
+    exit /b
+)
 if exist "%~dp0Dist\Windows\LunarRescue.exe" (
     start "Lunar Rescue" "%~dp0Dist\Windows\LunarRescue.exe" -windowed -ResX=1280 -ResY=720 -dx11 -ExecCmds="r.Streaming.PoolSize 384,r.ShadowQuality 2"
     exit /b

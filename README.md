@@ -1,46 +1,50 @@
 # Lunar Rescue
 
-A first-person rescue prototype with separate Moon and Mars expeditions. All in-game text is in English.
+## Checkpoint update — 0.4.3
 
-## 2026-09-21 audit holati
+Apollo 12 now saves committed work automatically. **C** continues the saved expedition from mission selection or the Apollo briefing; **Esc**, then **R** reloads the last checkpoint. Starting a new expedition asks before replacing existing progress. Samples, photographs, Surveyor hardware and exercise telemetry survive a restart. See [save locations, recovery and validation](CHECKPOINT_UPDATE.md). Walking after the last completed task is not saved on exit.
 
-Auditdan keyin mavjud menu click xatosi source darajasida tuzatildi:
-endi faqat planet kartasini bosish missiyani boshlaydi.
-[Maintenance qaydi](MAINTENANCE_FOLLOWUP.md). Tarqatilgan v0.2.0 bu tuzatishni hali o‘z ichiga olmaydi.
+## Onboarding update — 0.4.2
 
-Mavjud Moon/Mars o‘yini qayta tekshirildi. NASA terrain, route planner va ta’limiy
-debrief hozircha **amalga oshirilmagan**. Joriy 2026 Space Apps qoidasi challenge
-ustida hakatondan oldin ishlashni taqiqlagani uchun yangi implementatsiya backlogda.
-Oldingi v0.2.0 kodini tanlovda qayta ishlatish huquqi tasdiqlanmagan.
+Apollo 12 and mission selection now default to Uzbek, with **L** switching to English. The Apollo HUD shows one current task with its purpose; the full checklist is in the paused **Tab / J** journal. A short look/walk/work guide introduces the controls. Surveyor can be reached along a player-chosen route; the historical traverse remains on the map. See [the update and validation notes](ONBOARDING_UPDATE.md).
 
-- [Texnik audit](TECHNICAL_AUDIT.md) va [yangi test natijalari](TEST_REPORT.md).
-- [Ilmiy manbalar va LOLA nomzodi](SCIENCE_AND_SOURCES.md).
-- [Tanlovga tayyorlik](COMPETITION_READINESS.md) va [rivojlantirish rejasi](DEVELOPMENT_PLAN.md).
-- [Credits/litsenziya](CREDITS.md), [o‘zgarishlar](CHANGELOG.md), [playtest](PLAYTEST_PROTOCOL.md).
-- [Shartli inglizcha taqdimot](PRESENTATION_OUTLINE.md); tayyor submission emas.
+## Current development plan — 2026-10-24
 
-Rejalashtirilgan mahsulot yo‘nalishi: “LunarRescue is an educational exploration
-game that uses real planetary data to help players understand how terrain,
-limited resources, and mission priorities affect decisions on the Moon and Mars.”
-Bu kelajak maqsadi; joriy build hali haqiqiy planetary elevation ishlatmaydi.
+The [full game improvement plan in Uzbek](GAME_MASTER_PLAN.md) covers onboarding, a rigged astronaut and hand animations, distinct science interactions, saving, NASA source accuracy, performance, testing and an estimated 8–12 week roadmap. It describes future work, not completed features.
+
+## Historical Moon expedition — 2026-10-24
+
+The Moon selection now opens **Apollo 12: Surveyor's Legacy**, a playable chapter based on Apollo 12's surface work. NASA/LROC terrain, mapped sample sites and EVA traverse points support a route from Intrepid to Surveyor 3 and back. See [Apollo 12 implementation and sources](APOLLO12.md). The earlier fictional SELENE expedition remains in the project as a separate map.
+
+A first-person expedition prototype with separate Moon and Mars missions. Apollo 12 and the menu have Uzbek/English text; the older Moon/Mars mission interfaces remain English.
+
+The 0.4.1 [astronaut update](SUIT_UPDATE.md) adds fitted suit meshes, articulated gloves, visible boots and legs, Shift fast stride and a V following-camera view. Hold Alt in that view to inspect the suit. Apollo instructions now name the destination and explain the next action.
+
+## Old audit snapshot (2026-09-21)
+
+This section records the project state before the Apollo 12 update. Its statements about planned NASA terrain and deferred implementation are historical; Apollo 12 now uses NASA/LROC data described in [APOLLO12.md](APOLLO12.md).
+
+Auditdan keyin mavjud menu click xatosi source darajasida tuzatildi: endi faqat planet kartasini bosish missiyani boshlaydi. [Maintenance qaydi](MAINTENANCE_FOLLOWUP.md). Tarqatilgan v0.2.0 bu tuzatishni hali o'z ichiga olmaydi.
+
+Oldingi Moon/Mars o'yini va audit yozuvlari o'sha sanada bo'lgan holatni aks ettiradi. Tafsilotlar: [texnik audit](TECHNICAL_AUDIT.md), [ilmiy manbalar](SCIENCE_AND_SOURCES.md), [credits](CREDITS.md), [o'zgarishlar](CHANGELOG.md) va [playtest protokoli](PLAYTEST_PROTOCOL.md).
 
 ## Play the standalone Windows build
 
-Download the tested Windows ZIP from the [GitHub release](https://github.com/Shahzod1602/NASA/releases/tag/mars-expedition-v0.2.0),
-extract the complete folder, and run `LunarRescue.exe`.
+Download the Windows ZIP from the [Apollo 12 v0.4.3 release](https://github.com/Shahzod1602/NASA/releases/tag/apollo12-v0.4.3), extract the entire archive, and run **LunarRescue.exe**. Unreal Editor is not required. The package includes its asset credits; keep the Engine, LunarRescue and Credits folders together. The earlier [v0.2.0 Mars release](https://github.com/Shahzod1602/NASA/releases/tag/mars-expedition-v0.2.0) remains available.
 
-Open **Play Lunar Rescue.cmd**. When `Dist/Windows/LunarRescue.exe` is present,
-the launcher uses the standalone build, which does not require Unreal Editor.
-Keep the entire `Dist/Windows` folder together when copying the game, including
+The local Apollo 12 package is under `Dist/Apollo12/Windows`.
+
+Open **Play Lunar Rescue.cmd**. It prefers `Dist/Apollo12/Windows/LunarRescue.exe`, then `Dist/MoonExpedition/Windows/LunarRescue.exe`, then the previous `Dist/Windows` package or editor game build. The standalone build does not require Unreal Editor.
+Keep the entire `Dist/Apollo12/Windows` folder together when copying the historical chapter, including
 its Engine, LunarRescue and Credits subfolders.
 
 To regenerate the package after source or content changes, run
-`Tools/package_windows.ps1` (`-EngineRoot` selects a different engine installation).
+`Tools/package_apollo12.ps1` (`-EngineRoot` selects a different engine installation). This writes `Dist/Apollo12/Windows` and preserves the earlier packages.
 If no standalone package is present, the launchers fall back to the editor game build.
 
 ## Get the project
 
-Requires Unreal Engine **5.8.2**, Git LFS, and the Visual Studio C++/Windows SDK
+Requires Unreal Engine **5.8.3**, Git LFS, and the Visual Studio C++/Windows SDK
 toolchain for Unreal projects on Windows. This repository contains the editable
 project and assets, not a standalone executable.
 
@@ -67,7 +71,7 @@ Use Git LFS when cloning: the large binary assets must be downloaded, not left
 as pointer files. Asset credits are included under `SourceArt`.
 
 Open **Play Lunar Rescue.cmd** to play, or **Open Lunar Editor.cmd** to edit the project.
-The editor fallback uses the installed Unreal Engine 5.8.2.
+The editor fallback uses the installed Unreal Engine 5.8.3.
 
 ## Controls
 
@@ -75,40 +79,26 @@ The editor fallback uses the installed Unreal Engine 5.8.2.
 - WASD or arrow keys: move.
 - Mouse: look around.
 - Space: jump.
-- E: interact; hold for station restart, science download, and crew recorder.
-- Q: after collecting science data, switch between the optional recorder and lander route.
-  This changes the navigation marker only: a nearby lander or recorder remains usable.
-- F: toggle visor zoom to inspect Earth and the night sky.
+- Shift: hold for a faster stride in Apollo 12.
+- V: toggle helmet/following view; hold Alt and move the mouse to orbit the suit.
+- E: document a site, interact, or hold to work and stow cargo.
+- Q: select the next Apollo sample or turn the ALSEP antenna. In the legacy SELENE map, Q cycles its markers.
+- F: toggle visor zoom.
+- Tab / J: open the Apollo field journal; it pauses movement and the exercise clock.
+- L: switch Uzbek/English in Apollo 12 or mission selection; the choice is saved.
 - Escape: pause or resume.
 - R or Enter: restart after winning or losing.
 - Alt+F4: close the game.
 
-## Mission
+## Apollo 12: Surveyor's Legacy
 
-Find the power module beside the stranded rover, install it at SELENE's external power port,
-download the research data from the nearby terminal, and return to the lander console.
-You have a 300-second gameplay oxygen budget, not a modeled real suit endurance.
-The briefing and pause screen do not consume this budget.
+This condensed educational route covers selected work from Apollo 12's two historical EVAs. Check out at Intrepid, deploy a simplified ALSEP station, document three mapped samples, follow Conrad's reconstructed traverse to Surveyor 3, photograph it, recover its camera, scoop and cable, and return the evidence to Intrepid. The real crew later returned the samples and hardware to Earth. The playable chapter ends at cargo stowage; ascent, rendezvous and Earth return remain historical context.
 
-Repair has three steps: insert the cell, connect the cable, then hold E for two
-seconds to start a 4.2-second station restart. The emergency red signal
-fades, four roof lights switch on in order, the relay dish turns, and the science terminal
-comes online. The suit plays short switching cues and English radio confirms restored power.
-Movement and oxygen continue during the restart; pause freezes its progress. The science
-terminal can be used as soon as the restart finishes.
-Pause also preserves the radio subtitle and pauses all station switching sounds.
-Falling outside the mission area shows a distinct failure reason from oxygen depletion.
+NASA/LROC terrain and mapped work locations retain their source coordinates. The chapter combines historical activities into one single-player route. Models, interaction durations, the 30-minute exercise clock and paraphrased messages are gameplay adaptations. The clock is not suit endurance. See [APOLLO12.md](APOLLO12.md) for details and sources.
 
-After downloading the science data, return directly to the lander or follow
-the optional crew recorder marker. Jump onto the survey ledge and hold E to
-recover the crew's story. The detour uses the same oxygen budget. Both routes
-can win; recovering the recorder unlocks a different ending. Results show
-remaining oxygen, restored power, secured science, and recovered logs.
+The earlier fictional SELENE chapter, **The Lost Expedition**, remains documented in [MOON_EXPEDITION.md](MOON_EXPEDITION.md) and is retained as a separate legacy map.
 
-The lunar ambience uses hard sunlight, dark unlit terrain, a restrained emergency beacon,
-and local work lights. In a vacuum there is no wind, airborne dust cloud, or atmospheric fog.
-
-## Suit feedback
+## Legacy SELENE suit feedback
 
 The first-person view includes procedural glove geometry, gentle hand sway and a peripheral
 helmet seal. Visor zoom hides the hands. Grounded movement leaves alternating tread decals
@@ -128,11 +118,9 @@ a station interior and fully rigged interaction animations are not implemented.
 
 ## Editing
 
-- Map: Content/Lunar/Maps/MoonBase.
+- Default Moon map: Content/Lunar/Maps/Apollo12. Legacy SELENE map: Content/Lunar/Maps/MoonBase.
 - Astronaut: Content/Lunar/Blueprints/BP_Astronaut. Adjust speed and jumping under Character Movement.
-- Mission: Content/Lunar/Blueprints/BP_LunarGameMode. The current C++ BeginPlay overrides
-  Oxygen Capacity with 300 seconds for Moon or 480 for Mars; changing Class Defaults alone
-  does not change the runtime budget. Configurable mission profiles remain planned work.
+- Mission: Content/Lunar/Blueprints/BP_LunarGameMode. C++ sets 480 seconds for Mars and the legacy SELENE map; Apollo 12 sets a separate 1,800-second exercise window. Changing Class Defaults alone does not change these runtime budgets.
 - Mission tags: Module, Power, Data, Home. Place exactly one actor with each tag.
 - Gameplay and interface: Source/LunarRescue/LunarGame.cpp.
 - This project combines editable Blueprint child classes with C++ gameplay.
@@ -140,17 +128,13 @@ a station interior and fully rigged interaction animations are not implemented.
 
 ## Scientific scope
 
-Gravity is -162 cm/s2 (1.62 m/s2). Movement and jumping are simplified for gameplay.
-The terrain is procedural, Earth uses a cloud/continent texture, the stars use a real catalog,
-and the research records are a narrative objective,
-not an actual measurement dataset. VR, NASA terrain data, and competition-specific requirements are not implemented.
+Moon gravity is -162 cm/s2 (1.62 m/s2); Mars gravity is -371 cm/s2 (3.71 m/s2). Movement and jumping are simplified for gameplay. Apollo 12 uses LROC stereo-derived elevation data described in [APOLLO12.md](APOLLO12.md); the legacy SELENE and Mars terrain remain authored scenery. Legacy research records are narrative objectives, not measurements. VR is not implemented.
 Environment sources and rendering compromises are recorded in SourceArt/LunarV2/CREDITS.md.
 
 The V3 surface adds irregular overlapping impact bowls, scalloped rims and radial ejecta relief,
 denser near-field terrain, fractured rock variants, clustered debris and layered regolith shading.
 The station area retains shallow relief for accessible movement. Small debris casts shadows but
-does not obstruct the astronaut or interaction traces. This is authored procedural scenery,
-not a reconstruction of a surveyed landing site.
+does not obstruct the astronaut or interaction traces. On the legacy SELENE map this is authored procedural scenery, not a reconstruction of a surveyed landing site.
 Rebuild V3 assets with Tools/prepare_lunar_v3.py, then run Tools/import_lunar_v3.py and
 Tools/upgrade_lunar_v3.py through the Unreal Python commandlet. The upgrade replaces generated
 environment actors, so back up the map before rerunning it after manual environment edits.
@@ -174,8 +158,8 @@ the ledge suite passes 3 checks. See [audit fixes and measured results](AUDIT_FI
 Mission checks teleport between objectives and are not a timed full playthrough.
 See [story update notes](Reports/STORY_UPDATE.md) for the implemented scope.
 
-## Imported free models
-The map now uses an Apollo lander, two habitat parts, a Lunokhod rover, solar arrays, a power cell and a science terminal from the user's downloaded files. Existing procedural rocks use Poly Haven Moon Rock 01/06 diffuse textures at 2K. Asset sources and licenses are in SourceArt/ExternalModels/CREDITS.md. Import scripts are in Tools; their staging paths refer to this workstation. The mission actors and English UI remain intact.
+## Legacy SELENE imported models
+The legacy map uses an Apollo lander, two habitat parts, a Lunokhod rover, solar arrays, a power cell and a science terminal from the user's downloaded files. Existing procedural rocks use Poly Haven Moon Rock 01/06 diffuse textures at 2K. Asset sources and licenses are in SourceArt/ExternalModels/CREDITS.md. Import scripts are in Tools; their staging paths refer to this workstation.
 
 ## Moon and Mars
 
@@ -184,12 +168,12 @@ card or press its number. Enter starts Moon. Press **M** from a briefing, paused
 mission, or result screen to return to selection. **R** on a result screen
 restarts the current planet.
 
-Moon retains its five-minute SELENE rescue. Mars has eight minutes of oxygen,
-3.71 m/s? gravity, a separate authored canyon map and ARES outpost. Retrieve the
+Moon opens Apollo 12: Surveyor's Legacy. Mars has eight minutes of oxygen,
+3.71 m/s2 gravity, a separate authored canyon map and ARES outpost. Retrieve the
 rover cell, insert it, connect the cable, hold E to restart the station, download
 the ice survey, and hold E for four seconds at the orbital relay. Return to the
 ascent lander; Q optionally routes to the crew recorder after relay alignment.
-All terrain is fictional; no surveyed planetary elevations are claimed.
+Mars terrain is fictional; no surveyed Mars elevations are claimed.
 
 `Tools/build_mars.py` regenerates only Mars and the menu using Unreal Python.
 `Tools/import_mars_audio.py` imports the supplied English radio WAV files.

@@ -1,5 +1,42 @@
 # Changelog
 
+## 0.4.3 - 2026-10-24
+
+- Added versioned Apollo checkpoints using stable work/site IDs, evidence metadata, exercise telemetry and a grounded player position.
+- Added C Continue from the menu/briefing/timeout, R checkpoint reload while paused, and explicit confirmation before a new expedition replaces saved progress.
+- Added verified temporary writes, CRC and semantic validation, previous-copy recovery, and separate photograph folders per expedition.
+- Added isolated save fault tests and a two-process menu-to-mission resume check; packaging now backs up player saves and photos.
+
+## 0.4.2 - 2026-10-24
+
+- Replaced the Apollo HUD's simultaneous mission checklist with one readable objective, next action and science purpose; moved all six tasks into the journal.
+- Added 139 stable bilingual string-table entries for Apollo and mission selection, Uzbek defaults, L language switching and a saved language preference.
+- Added contextual look/walk/work guidance and Tab as a journal shortcut, preserving J and Escape behavior.
+- Removed mandatory traversal of twelve hidden waypoints. Surveyor arrival now depends on reaching its work area; the historical route remains visible and separately testable.
+- Expanded input/progression and visual review checks, and added reproducible rendered frame-time captures with explicit warmup exclusion.
+
+## 0.4.1 - 2026-10-24
+
+- Replaced sphere-based hands with authored suit sleeves, wrist rings, padded palms and individually posed fingers; added a visible full suit, boots, helmet and pack.
+- Added travel-driven gait, terrain-aware leg posing, blended work reach, Shift fast stride and V camera switching with Alt orbit.
+- Added named destination markers and immediate next-action instructions to the Apollo HUD.
+- Added reproducible suit mesh/material authoring and import, and explicit cook inclusion for standalone builds.
+
+## 0.4.0 — 2026-10-24
+
+- Added Apollo 12: Surveyor's Legacy as the Moon's menu-selected expedition, grounded in LROC terrain and mapped EVA work sites.
+- Added a six-stage surface route: Intrepid checkout, ALSEP deployment, documented samples, mapped Surveyor approach, hardware recovery, and return.
+- Added a paused field journal with sources, map, traverse, sample identifiers and adaptations; preserved MoonBase, Mars and mission-selection maps in the package.
+- Added NASA/LROC source manifest, credits, data-preparation/import scripts, and a standalone Apollo 12 package workflow.
+
+## 0.3.0 — 2026-10-24
+
+- Expanded Moon to seven linked objectives with three sample sites, NOMAD-7 memory recovery and a three-channel Earthlink timing challenge.
+- Added eight-minute oxygen, a one-time robot reserve, sample navigation, expedition checklist and ending ranks.
+- Preserved existing Blueprint enum values, Mars progression and optional crew recorder.
+- Added progression, pause, duplicate-reward and out-of-order checks plus a full movement-based expedition walkthrough.
+
+
 ## Chiqarilmagan — mavjud menyu maintenance
 
 - Planet tanlashda sarlavha, footer va kartalar orasidagi tasodifiy click missiyani boshlashi tuzatildi.

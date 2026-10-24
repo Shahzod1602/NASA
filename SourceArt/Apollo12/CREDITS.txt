@@ -1,0 +1,21 @@
+Apollo 12 historical chapter data
+
+NASA/GSFC/Arizona State University; LROC science team.
+NASA Apollo Lunar Surface Journal.
+Traverse mapping: Gonzales et al. (2020), LPSC LI, Abstract #1578.
+https://www.hou.usra.edu/meetings/lpsc2020/pdf/1578.pdf
+
+Terrain: NAC_DTM_APOLLO12 (v1.9), 2 m grid spacing.
+Orthophoto: NAC_DTM_APOLLO12_M120005333_2M.TIF, 2 m/pixel.
+Mission mapping: APOLLO_12.ZIP, LROC spatio-temporal mapping archive.
+Dataset index: https://data.lroc.im-ldi.com/lroc/view_rdr/NAC_DTM_APOLLO12
+Mapping index: https://data.lroc.im-ldi.com/lroc/view_rdr/SHAPEFILE_APOLLO_12
+
+See manifest.json for exact downloaded source URLs, SHA-256 hashes,
+coordinate transformations, crop, work locations and uncertainty notes.
+See APOLLO12.md for historical references and gameplay adaptations.
+
+Small rocks, simplified Surveyor and ALSEP models, timing rules and radio
+paraphrases are authored game content. Existing Apollo lander and Earth
+image credits remain in the other package Credits folders.
+NASA names identify historical missions and data sources; no endorsement.

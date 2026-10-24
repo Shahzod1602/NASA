@@ -3,10 +3,12 @@
 #include "GameFramework/Character.h"
 #include "GameFramework/GameModeBase.h"
 #include "GameFramework/HUD.h"
+#include "LunarCheckpoint.h"
 #include "LunarGame.generated.h"
 
 UENUM(BlueprintType)
-enum class ELunarStage : uint8 { Briefing, FindModule, RestorePower, CollectData, AlignRelay, ReturnHome, Won, Lost };
+// Append new values to preserve the existing Blueprint enum indices.
+enum class ELunarStage : uint8 { Briefing, FindModule, RestorePower, CollectData, AlignRelay, ReturnHome, Won, Lost, SurveySamples, RecoverDrone, ActivateBeacon, ApolloCheckout, ApolloDeploy, ApolloSamples, ApolloTraverse, ApolloRecover, ApolloReturn };
 
 UCLASS(Blueprintable)
 class LUNARRESCUE_API ALunarCharacter : public ACharacter {
@@ -18,6 +20,18 @@ public:
  virtual void Landed(const FHitResult& Hit) override;
  void StampFootstep();
  void BuildGloves();
+ void UpdateSuit(float Delta);
+ void ToggleSuitView();
+ void BeginFastStride(); void EndFastStride();
+ void BeginSuitOrbit(); void EndSuitOrbit();
+ void SuitReview();
+ void SuitChecks();
+ virtual void GetActorEyesViewPoint(FVector& Location, FRotator& Rotation) const override;
+ bool ThirdPerson=false, FastStride=false, SuitOrbit=false;
+ float GaitPhase=0, GaitBlend=0, WorkBlend=0, LandBlend=0;
+ int32 SuitReviewFrame=0;
+ UPROPERTY() TArray<TObjectPtr<class UStaticMeshComponent>> SuitBody;
+ UPROPERTY() TArray<TObjectPtr<class UStaticMeshComponent>> SuitArms;
  int32 FootprintCount=0;
  float StepTravel=0, SuitTime=0;
  bool LeftFoot=false;
@@ -39,6 +53,9 @@ public:
  void ZoomVisor();
  void ChooseMoon(); void ChooseMars(); void MissionMenu();
  void ReleaseInteract(); void ToggleRoute();
+ void ToggleJournal();
+ void ToggleLanguage();
+ void ContinueMission();
  UPROPERTY() TObjectPtr<class UStaticMeshComponent> CarriedModule;
  FVector PausedVelocity=FVector::ZeroVector;
  UPROPERTY(VisibleAnywhere, BlueprintReadOnly) TObjectPtr<class UCameraComponent> Camera;
@@ -50,6 +67,58 @@ class LUNARRESCUE_API ALunarGameMode : public AGameModeBase {
 public:
  ALunarGameMode();
  bool Mars=false, Menu=false;
+ bool Apollo=false, Journal=false;
+ int32 ApolloAction=0, ApolloRouteIndex=0, JournalPage=0;
+ uint8 ApolloPhotos=0, ApolloInstruments=0, ApolloParts=0;
+ bool SurveyorPhotographed=false, ApolloWalking=false;
+ bool ApolloLookLearned=false, ApolloMoveLearned=false;
+ FVector ApolloTutorialOrigin=FVector::ZeroVector;
+ FRotator ApolloTutorialAim=FRotator::ZeroRotator;
+ float ApolloAntennaAngle=-82.f, ApolloElapsed=0, ApolloDistance=0;
+ FGuid ApolloRunId;
+ UPROPERTY() TArray<FApolloEvidence> ApolloEvidence;
+ UPROPERTY() TObjectPtr<UApolloCheckpoint> ApolloCachedCheckpoint;
+ EApolloSaveStatus ApolloSaveStatus=EApolloSaveStatus::Missing;
+ bool ApolloStarted=false, ApolloConfirmNew=false, ApolloHasSafePosition=false;
+ FVector ApolloSafePosition=FVector::ZeroVector;
+ FRotator ApolloSafeView=FRotator::ZeroRotator;
+ FString ApolloSaveNotice;
+ float ApolloSaveNoticeRemaining=0;
+ bool ApolloSaveError=false;
+ FString ApolloSaveDirectory() const;
+ bool ApolloSaveEnabled() const;
+ void RefreshApolloCheckpoint();
+ UApolloCheckpoint* CaptureApolloCheckpoint();
+ bool SaveApolloCheckpoint();
+ bool RestoreApolloCheckpoint();
+ void ContinueApollo();
+ bool ApolloSafeGround(FVector Position,FVector& Grounded) const;
+ void RecordApolloEvidence(int32 Index,const FString& RelativePath);
+ void ApolloSaveChecks();
+ FVector ApolloLastPosition=FVector::ZeroVector;
+ UPROPERTY() TArray<TObjectPtr<AActor>> ApolloInstrumentActors;
+ UPROPERTY() TArray<TObjectPtr<AActor>> ApolloRouteActors;
+ UPROPERTY() TArray<TObjectPtr<AActor>> ApolloPartActors;
+ UPROPERTY() TObjectPtr<class UStaticMeshComponent> ApolloAntenna;
+ UPROPERTY() TObjectPtr<class UTexture2D> ApolloMapTexture;
+ void BuildApollo();
+ void StartApollo(bool Confirmed=false);
+ void TickApollo(float Delta);
+ void InteractApollo();
+ void CompleteApolloInteraction(AActor* CompletedTarget);
+ void CycleApollo();
+ AActor* ApolloTarget(bool Nearby=false) const;
+ FString ApolloObjective() const;
+ FString ApolloPrompt() const;
+ FString ApolloSiteName() const;
+ FString ApolloInstruction() const;
+ FString ApolloPurpose() const;
+ FString ApolloTutorial() const;
+ float ApolloHoldDuration() const;
+ int32 ApolloStep() const;
+ void ApolloChecks();
+ void ApolloReview();
+ void ApolloWalkTick(float Delta);
  float SurfaceGravity=162;
  UPROPERTY() TObjectPtr<AActor> RelayActor;
  UPROPERTY() TObjectPtr<AActor> RelayDish;
@@ -106,6 +175,25 @@ public:
  bool Holding=false, TrackRecorder=false, RecorderRecovered=false, LowOxygenWarned=false;
  float HoldProgress=0;
  UPROPERTY() TObjectPtr<AActor> RecorderActor;
+ UPROPERTY() TArray<TObjectPtr<AActor>> SampleActors;
+ UPROPERTY() TObjectPtr<AActor> DroneActor;
+ UPROPERTY() TObjectPtr<AActor> BeaconActor;
+ UPROPERTY() TObjectPtr<AActor> HeldTarget;
+ UPROPERTY() TObjectPtr<class UStaticMeshComponent> BeaconLamp;
+ uint8 SamplesCollected=0;
+ int32 SelectedSample=0, BeaconLocks=0;
+ bool DroneRecovered=false;
+ float BeaconCycleSeconds=0;
+ void BuildMoonExpedition();
+ void AdvanceExpedition(float Delta);
+ void LockBeacon();
+ int32 ExpeditionChecks();
+ void ExpeditionReview();
+ int32 SampleCount() const;
+ bool SampleAvailable(int32 Index) const;
+ float BeaconPhase() const;
+ bool BeaconInWindow() const;
+ FString ExpeditionRank() const;
  UPROPERTY() TObjectPtr<class UStaticMeshComponent> InstalledModule;
  UPROPERTY() TObjectPtr<class UStaticMeshComponent> PowerCable;
  UFUNCTION(BlueprintCallable) void StartMission();
@@ -135,4 +223,5 @@ public:
  virtual void DrawHUD() override;
  void Label(const FString& Text,float X,float Y,float Size,FLinearColor Color);
  void Panel(float X,float Y,float W,float H,float Alpha=0.85f);
+ void DrawApollo(ALunarGameMode* G);
 };

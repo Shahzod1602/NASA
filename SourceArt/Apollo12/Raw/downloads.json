@@ -1,0 +1,26 @@
+[
+  {
+    "file": "NAC_DTM_APOLLO12.TIF",
+    "url": "https://pds.mcp.nasa.gov/data/store/img/lunar_reconnaissance_orbiter/pds4/lroc/lro-l-lroc-5-rdr/LROLRC_2001/DATA/SDP/NAC_DTM/APOLLO12/NAC_DTM_APOLLO12.TIF",
+    "bytes": 13506631,
+    "sha256": "d19ddf661a8675d1c3faed5e15574a220bb5976ce463034375cfefcde33f3103"
+  },
+  {
+    "file": "NAC_DTM_APOLLO12.LBL",
+    "url": "https://pds.mcp.nasa.gov/data/store/img/lunar_reconnaissance_orbiter/pds4/lroc/lro-l-lroc-5-rdr/LROLRC_2001/DATA/SDP/NAC_DTM/APOLLO12/NAC_DTM_APOLLO12.LBL",
+    "bytes": 3559,
+    "sha256": "4e6d8cafe404bd3feda366c9b3b70af37566fb54152b514359bb785e4d3a0457"
+  },
+  {
+    "file": "NAC_DTM_APOLLO12_README.TXT",
+    "url": "https://pds.mcp.nasa.gov/data/store/img/lunar_reconnaissance_orbiter/pds4/lroc/lro-l-lroc-5-rdr/LROLRC_2001/DATA/SDP/NAC_DTM/APOLLO12/NAC_DTM_APOLLO12_README.TXT",
+    "bytes": 8564,
+    "sha256": "4c0b005dd6aa0135c68b8d915eff43e5c2cc5c543d69409c55bc88977fd14da3"
+  },
+  {
+    "file": "APOLLO_12.ZIP",
+    "url": "https://pds.mcp.nasa.gov/data/store/img/lunar_reconnaissance_orbiter/pds4/lroc/lro-l-lroc-5-rdr/LROLRC_2001/EXTRAS/SHAPEFILE/APOLLO_12/APOLLO_12.ZIP",
+    "bytes": 313003,
+    "sha256": "f37d068ccc628226bff6068a48555722de659bedfc64b3fb994039a61f727591"
+  }
+]
