@@ -1,0 +1,329 @@
+{
+  "units": "Unreal centimetres",
+  "bones": [
+    {
+      "name": "root",
+      "parent": -1,
+      "position": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "pelvis",
+      "parent": 0,
+      "position": [
+        0,
+        0,
+        -12
+      ]
+    },
+    {
+      "name": "chest",
+      "parent": 1,
+      "position": [
+        0,
+        0,
+        30
+      ]
+    },
+    {
+      "name": "head",
+      "parent": 2,
+      "position": [
+        0,
+        0,
+        64
+      ]
+    },
+    {
+      "name": "thigh_l",
+      "parent": 1,
+      "position": [
+        0,
+        -12,
+        -12
+      ]
+    },
+    {
+      "name": "calf_l",
+      "parent": 4,
+      "position": [
+        4,
+        -12,
+        -47
+      ]
+    },
+    {
+      "name": "foot_l",
+      "parent": 5,
+      "position": [
+        3,
+        -12,
+        -78
+      ]
+    },
+    {
+      "name": "upperarm_l",
+      "parent": 2,
+      "position": [
+        0,
+        -25,
+        40
+      ]
+    },
+    {
+      "name": "lowerarm_l",
+      "parent": 7,
+      "position": [
+        3,
+        -34,
+        14
+      ]
+    },
+    {
+      "name": "hand_l",
+      "parent": 8,
+      "position": [
+        6,
+        -38,
+        -9
+      ]
+    },
+    {
+      "name": "finger0_l",
+      "parent": 9,
+      "position": [
+        6,
+        -34.85,
+        -18
+      ]
+    },
+    {
+      "name": "tip0_l",
+      "parent": 10,
+      "position": [
+        6,
+        -34.85,
+        -22
+      ]
+    },
+    {
+      "name": "finger1_l",
+      "parent": 9,
+      "position": [
+        6,
+        -36.95,
+        -18
+      ]
+    },
+    {
+      "name": "tip1_l",
+      "parent": 12,
+      "position": [
+        6,
+        -36.95,
+        -22
+      ]
+    },
+    {
+      "name": "finger2_l",
+      "parent": 9,
+      "position": [
+        6,
+        -39.05,
+        -18
+      ]
+    },
+    {
+      "name": "tip2_l",
+      "parent": 14,
+      "position": [
+        6,
+        -39.05,
+        -22
+      ]
+    },
+    {
+      "name": "finger3_l",
+      "parent": 9,
+      "position": [
+        6,
+        -41.15,
+        -18
+      ]
+    },
+    {
+      "name": "tip3_l",
+      "parent": 16,
+      "position": [
+        6,
+        -41.15,
+        -22
+      ]
+    },
+    {
+      "name": "finger4_l",
+      "parent": 9,
+      "position": [
+        6,
+        -34,
+        -13
+      ]
+    },
+    {
+      "name": "tip4_l",
+      "parent": 18,
+      "position": [
+        6,
+        -34,
+        -17
+      ]
+    },
+    {
+      "name": "thigh_r",
+      "parent": 1,
+      "position": [
+        0,
+        12,
+        -12
+      ]
+    },
+    {
+      "name": "calf_r",
+      "parent": 20,
+      "position": [
+        4,
+        12,
+        -47
+      ]
+    },
+    {
+      "name": "foot_r",
+      "parent": 21,
+      "position": [
+        3,
+        12,
+        -78
+      ]
+    },
+    {
+      "name": "upperarm_r",
+      "parent": 2,
+      "position": [
+        0,
+        25,
+        40
+      ]
+    },
+    {
+      "name": "lowerarm_r",
+      "parent": 23,
+      "position": [
+        3,
+        34,
+        14
+      ]
+    },
+    {
+      "name": "hand_r",
+      "parent": 24,
+      "position": [
+        6,
+        38,
+        -9
+      ]
+    },
+    {
+      "name": "finger0_r",
+      "parent": 25,
+      "position": [
+        6,
+        34.85,
+        -18
+      ]
+    },
+    {
+      "name": "tip0_r",
+      "parent": 26,
+      "position": [
+        6,
+        34.85,
+        -22
+      ]
+    },
+    {
+      "name": "finger1_r",
+      "parent": 25,
+      "position": [
+        6,
+        36.95,
+        -18
+      ]
+    },
+    {
+      "name": "tip1_r",
+      "parent": 28,
+      "position": [
+        6,
+        36.95,
+        -22
+      ]
+    },
+    {
+      "name": "finger2_r",
+      "parent": 25,
+      "position": [
+        6,
+        39.05,
+        -18
+      ]
+    },
+    {
+      "name": "tip2_r",
+      "parent": 30,
+      "position": [
+        6,
+        39.05,
+        -22
+      ]
+    },
+    {
+      "name": "finger3_r",
+      "parent": 25,
+      "position": [
+        6,
+        41.15,
+        -18
+      ]
+    },
+    {
+      "name": "tip3_r",
+      "parent": 32,
+      "position": [
+        6,
+        41.15,
+        -22
+      ]
+    },
+    {
+      "name": "finger4_r",
+      "parent": 25,
+      "position": [
+        6,
+        34,
+        -13
+      ]
+    },
+    {
+      "name": "tip4_r",
+      "parent": 34,
+      "position": [
+        6,
+        34,
+        -17
+      ]
+    }
+  ]
+}

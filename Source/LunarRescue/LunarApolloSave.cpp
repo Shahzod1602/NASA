@@ -1,5 +1,6 @@
 #include "LunarGame.h"
 #include "LunarApolloText.h"
+#include "LunarSettings.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/StaticMeshComponent.h"
@@ -16,6 +17,7 @@
 namespace {
 bool SaveTest(){return FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveTest"))||FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveWriteTest"))||FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveReadTest"))||FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveMenuReview"))||FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveProfile"));}
 bool Automation(){
+ if(ULunarSettings::IsAutomation())return true;
  const TCHAR* Flags[]={TEXT("ApolloTest"),TEXT("ApolloReview"),TEXT("ApolloWalkTest"),TEXT("SuitTest"),TEXT("SuitReview"),TEXT("LunarTest"),TEXT("LunarMenuTest"),TEXT("LunarReview"),TEXT("LunarMovementTest"),TEXT("LunarWalkthroughTest"),TEXT("LunarExpeditionReview")};
  for(const TCHAR* Flag:Flags)if(FParse::Param(FCommandLine::Get(),Flag))return true;
  return SaveTest();
@@ -58,6 +60,7 @@ UApolloCheckpoint* ALunarGameMode::CaptureApolloCheckpoint(){
  if(!ApolloSafeGround(Grounded?P->GetActorLocation():ApolloHasSafePosition?ApolloSafePosition:ApolloLastPosition,Safe))return nullptr;
  auto* Save=Cast<UApolloCheckpoint>(UGameplayStatics::CreateSaveGameObject(UApolloCheckpoint::StaticClass()));
  Save->RunId=ApolloRunId;Save->SavedAtUtc=FDateTime::UtcNow().GetTicks();Save->Position=Safe;
+ Save->Mode=ApolloTimed?TEXT("timed-exercise"):TEXT("historical-exploration");
  Save->View=(P?P->GetControlRotation():ApolloSafeView).GetNormalized();Save->Elapsed=ApolloElapsed;Save->Distance=ApolloDistance;Save->Remaining=Oxygen;Save->AntennaAngle=ApolloAntennaAngle;
  Save->LookLearned=ApolloLookLearned;Save->MoveLearned=ApolloMoveLearned;Save->Evidence=ApolloEvidence;
  auto Add=[&](const TCHAR* Task){Save->CompletedTasks.Add(FName(Task));};
@@ -91,7 +94,8 @@ bool ALunarGameMode::RestoreApolloCheckpoint(){
   ApolloSaveError=true;ApolloSaveNotice=TEXT("CheckpointLoadFailed");ApolloSaveNoticeRemaining=30;return false;
  }
  // Validate position before changing progress. In-progress work is never restored.
- ReleaseInteract();Paused=false;Journal=false;ApolloConfirmNew=false;ApolloStarted=true;
+ CancelApolloTool();Paused=false;Journal=false;ApolloConfirmNew=false;ApolloStarted=true;
+ ApolloTimed=Save->Mode==TEXT("timed-exercise");
  ApolloRunId=Save->RunId;ApolloEvidence=Save->Evidence;ApolloElapsed=Save->Elapsed;ApolloDistance=Save->Distance;Oxygen=Save->Remaining;
  ApolloAntennaAngle=Save->AntennaAngle;ApolloLookLearned=Save->LookLearned;ApolloMoveLearned=Save->MoveLearned;ApolloRouteIndex=0;
  SamplesCollected=0;ApolloPhotos=0;ApolloParts=0;ApolloInstruments=0;SelectedSample=0;
@@ -107,7 +111,7 @@ bool ALunarGameMode::RestoreApolloCheckpoint(){
  const ELunarStage Stages[]={ELunarStage::ApolloCheckout,ELunarStage::ApolloDeploy,ELunarStage::ApolloSamples,ELunarStage::ApolloTraverse,ELunarStage::ApolloRecover,ELunarStage::ApolloReturn,ELunarStage::Won};
  Stage=Stages[Save->Step()];ApolloAction=Stage==ELunarStage::ApolloCheckout?int32(Save->Has(ApolloTasks::Checkout[0]))+int32(Save->Has(ApolloTasks::Checkout[1])):Stage==ELunarStage::ApolloDeploy?int32(Save->Has(ApolloTasks::Instruments[0])):2;
  if(ApolloAntenna)ApolloAntenna->SetRelativeRotation(FRotator(-65,ApolloAntennaAngle,0));
- P->FastStride=false;P->SuitOrbit=false;if(P->ThirdPerson)P->ToggleSuitView();P->Camera->SetFieldOfView(85);
+ P->FastStride=false;P->SuitOrbit=false;if(P->ThirdPerson)P->ToggleSuitView();P->Camera->SetFieldOfView(ULunarSettings::Get()->FieldOfView);
  P->GetCharacterMovement()->SetComponentTickEnabled(true);P->GetCharacterMovement()->StopMovementImmediately();
  P->SetActorLocation(Ground,false,nullptr,ETeleportType::TeleportPhysics);P->GetCharacterMovement()->SetMovementMode(MOVE_Walking);PC->SetControlRotation(Save->View);
  P->LastStepPosition=Ground;P->PausedVelocity=FVector::ZeroVector;P->StepTravel=0;P->GaitBlend=0;P->WorkBlend=0;

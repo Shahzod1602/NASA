@@ -54,7 +54,10 @@ c.set_intensity(4.2);c.set_light_color(u.LinearColor(1,.98,.94));c.set_editor_pr
 c.set_editor_property('dynamic_shadow_distance_movable_light',35000)
 fill=actors.spawn_actor_from_class(u.DirectionalLight,u.Vector(0,0,9000),u.Rotator(pitch=-65,yaw=0,roll=0))
 fill.set_actor_label('Readability fill');fill.light_component.set_mobility(u.ComponentMobility.MOVABLE)
-fill.light_component.set_intensity(.12);fill.light_component.set_cast_shadows(False)
+fill.light_component.set_intensity(.35);fill.light_component.set_cast_shadows(False)
+bounce=actors.spawn_actor_from_class(u.DirectionalLight,u.Vector(0,0,9000),u.Rotator(pitch=-35,yaw=180,roll=0))
+bounce.set_actor_label('Readability bounce');bounce.light_component.set_mobility(u.ComponentMobility.MOVABLE)
+bounce.light_component.set_intensity(.25);bounce.light_component.set_cast_shadows(False)
 # Approximate sub-Earth geometry at the landing latitude/longitude; not a 1969 ephemeris.
 dist=900000;az=math.radians(-7);el=math.radians(66)
 p=(dist*math.cos(el)*math.cos(az),dist*math.cos(el)*math.sin(az),dist*math.sin(el))

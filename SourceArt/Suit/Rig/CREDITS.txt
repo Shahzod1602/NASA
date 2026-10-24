@@ -1,0 +1,1 @@
+Original project-authored A7L-inspired geometry, skin weights, skeleton and reference stride. Rebuild with Tools/prepare_suit.py and Tools/prepare_suit_rig.py. Not a scanned or dimensionally exact historical suit. No third-party model or animation. Runtime poses are procedural, not motion capture.

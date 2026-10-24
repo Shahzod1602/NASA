@@ -1,10 +1,13 @@
 #include "LunarGame.h"
 #include "LunarApolloText.h"
+#include "LunarSettings.h"
+#include "LunarPanels.h"
 #include "ApolloData.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
 #include "Camera/CameraComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/PoseableMeshComponent.h"
 #include "Components/TextRenderComponent.h"
 #include "Engine/StaticMesh.h"
 #include "Engine/Texture2D.h"
@@ -15,6 +18,7 @@
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
 #include "Misc/Paths.h"
+#include "Misc/FileHelper.h"
 #include "Misc/App.h"
 #include "HAL/FileManager.h"
 #include "UnrealClient.h"
@@ -40,6 +44,7 @@ int32 Bits(uint8 Mask){int32 N=0;for(int32 I=0;I<8;++I)if(Mask&(1<<I))++N;return
 }
 
 void ALunarGameMode::BuildApollo() {
+ ApolloTimed=FParse::Param(FCommandLine::Get(),TEXT("ApolloTimed"));
  OxygenCapacity=1800;Oxygen=OxygenCapacity;
  auto* PC=UGameplayStatics::GetPlayerController(this,0);
  if(PC){PC->SetInputMode(FInputModeGameOnly());PC->bShowMouseCursor=false;}
@@ -77,10 +82,13 @@ void ALunarGameMode::BuildApollo() {
  for(int32 I=0;I<3;++I){
   auto* A=Site(ApolloData::Samples[I]);A->Tags.Add(FName(ApolloTasks::Sites[I]));SampleActors.Add(A);
   auto* Rock=Part(A,TEXT("Sphere"),TEXT("M_Graphite"),FVector(0,0,-55),FVector(.25,.2,.16));
-  if(auto* M=LoadObject<UStaticMesh>(nullptr,*FString::Printf(TEXT("/Game/Lunar/V3/Meshes/SM_Basalt_%d.SM_Basalt_%d"),I,I)))Rock->SetStaticMesh(M);
+  if(I==0)if(auto* M=LoadObject<UStaticMesh>(nullptr,TEXT("/Game/Lunar/V3/Meshes/SM_Basalt_0.SM_Basalt_0")))Rock->SetStaticMesh(M);
+  if(I==1)Rock->SetRelativeScale3D(FVector(.35,.3,.035)); // Bench 12032 is fines, not a rock.
   if(I==2)Part(A,TEXT("Cylinder"),TEXT("M_Ceramic"),FVector(0,0,-35),FVector(.04,.04,.6));
   // Small virtual gnomon identifies the work area; it is not a permanent historical flag.
   for(int J=0;J<3;++J){float T=J*2*PI/3;Strut(A,FVector(35,0,-30),FVector(35+22*FMath::Cos(T),22*FMath::Sin(T),-64),.8);}
+  // Aim at the sample near the ground; preserve every visual's world position.
+  A->AddActorWorldOffset(FVector(0,0,-45));TArray<USceneComponent*> Attachments;A->GetRootComponent()->GetChildrenComponents(false,Attachments);for(auto* C:Attachments)C->AddRelativeLocation(FVector(0,0,45));
  }
  DroneActor=Site(ApolloData::Surveyor);DroneActor->Tags.Add(TEXT("Surveyor3"));
  // Stationary three-legged Surveyor silhouette: open truss, solar panel, camera and scoop.
@@ -105,18 +113,39 @@ void ALunarGameMode::BuildApollo() {
   else if(I==1)Part(A,TEXT("Cube"),TEXT("M_Ceramic"),FVector::ZeroVector,FVector(.3,.2,.12),FRotator(0,0,20));
   else for(int32 J=0;J<4;++J)Part(A,TEXT("Cylinder"),TEXT("M_Graphite"),FVector(0,J*3,0),FVector(.018,.018,.4),FRotator(0,0,25));
  }
+ // Authored visual detail and pawn collision are separate from NASA terrain data.
+ for(int I=0;I<2;++I){auto* A=ApolloInstrumentActors[I].Get();
+  for(int J=0;J<3;++J){const float Angle=J*2*PI/3;Part(A,TEXT("Cylinder"),TEXT("M_Ceramic"),FVector(42*FMath::Cos(Angle),42*FMath::Sin(Angle),-62),FVector(.13,.13,.025));}
+  for(int J=0;J<6;++J)Part(A,TEXT("Cube"),TEXT("M_Graphite"),FVector(-24+J*9,-33,-24),FVector(.035,.035,.08));
+ }
+ for(int I=0;I<3;++I){const float A=I*2*PI/3;FVector P(60*FMath::Cos(A),60*FMath::Sin(A),5);Part(DroneActor,TEXT("Cube"),TEXT("M_Ceramic"),P,FVector(.38,.28,.3),FRotator(0,FMath::RadiansToDegrees(A),0));}
+ auto* SurveyorCore=Part(DroneActor,TEXT("Cylinder"),TEXT("M_Graphite"),FVector(0,0,-25),FVector(.7,.7,.6));
+ SurveyorCore->SetCollisionEnabled(ECollisionEnabled::QueryOnly);SurveyorCore->SetCollisionResponseToAllChannels(ECR_Ignore);SurveyorCore->SetCollisionResponseToChannel(ECC_Pawn,ECR_Block);
  for(const FVector& P:ApolloData::Approach)ApolloRouteActors.Add(Site(P));
  Message(ApolloText::Get(TEXT("ReadyMessage")));
  if(FParse::Param(FCommandLine::Get(),TEXT("ApolloTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ApolloChecks,3,false);}
+ if(FParse::Param(FCommandLine::Get(),TEXT("ApolloPolishTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ApolloPolishChecks,3,false);}
  if(FParse::Param(FCommandLine::Get(),TEXT("ApolloReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ApolloReview,7,false);}
  ApolloWalking=FParse::Param(FCommandLine::Get(),TEXT("ApolloWalkTest"));
  RefreshApolloCheckpoint();
  if(UGameplayStatics::ParseOption(OptionsString,TEXT("ResumeApollo"))==TEXT("1")){
   FTimerHandle H;GetWorldTimerManager().SetTimer(H,[this](){RestoreApolloCheckpoint();},.2f,false);
  }
+ if(FParse::Param(FCommandLine::Get(),TEXT("ApolloEvidenceReview"))){
+  FTimerHandle H;GetWorldTimerManager().SetTimer(H,[this](){
+   bool Good=Stage==ELunarStage::Won&&!ApolloTimed&&ApolloEvidence.Num()==4;
+   for(const auto& E:ApolloEvidence)Good&=!E.PhotoPath.IsEmpty()&&IFileManager::Get().FileExists(*(FPaths::ProjectSavedDir()/E.PhotoPath));
+   auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));if(Good&&P){P->OpenEvidence();Good=P->ActivePanel&&P->ActivePanel->Photo!=nullptr;}
+   FFileHelper::SaveStringToFile(Good?TEXT("PASS Fresh process restores completed historical mode\nPASS Four actual photo files survive the restart\nPASS Evidence panel decodes the selected photograph\nRESULT: 0 failures\n"):TEXT("FAIL Actual historical evidence resume\nRESULT: 1 failures\n"),*ReportPath(TEXT("actual-evidence-checks.txt")));
+   if(!Good){FPlatformMisc::RequestExitWithStatus(false,1);return;}
+   FTimerHandle Shot,End;GetWorldTimerManager().SetTimer(Shot,[this](){FScreenshotRequest::RequestScreenshot(ReportPath(TEXT("apollo12-actual-album.png")),true,false);},2,false);
+   GetWorldTimerManager().SetTimer(End,[](){FPlatformMisc::RequestExitWithStatus(false,0);},4,false);
+  },4,false);
+ }
  if(FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveTest"))||FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveWriteTest"))||FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveReadTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ApolloSaveChecks,3,false);}
 }
 void ALunarGameMode::StartApollo(bool Confirmed){
+ CancelApolloTool();ApolloLevel=FVector2D(.4f,-.3f);ApolloTranscript.Reset();
  if(!Confirmed&&ApolloSaveStatus!=EApolloSaveStatus::Missing){ApolloConfirmNew=true;return;}
  ApolloConfirmNew=false;ApolloStarted=true;ApolloRunId=FGuid::NewGuid();ApolloEvidence.Reset();
  ApolloElapsed=0;ApolloDistance=0;Oxygen=OxygenCapacity;ApolloPhotos=0;ApolloParts=0;ApolloInstruments=0;SamplesCollected=0;SelectedSample=0;SurveyorPhotographed=false;
@@ -164,6 +193,7 @@ FString ALunarGameMode::ApolloObjective() const {
  }
 }
 float ALunarGameMode::ApolloHoldDuration() const {
+ if(ApolloToolsEnabled)return 0;
  if(Stage==ELunarStage::ApolloCheckout)return 2.5f;
  if(Stage==ELunarStage::ApolloDeploy)return 4;
  if(Stage==ELunarStage::ApolloSamples){int32 I=IndexOf(SampleActors,ApolloTarget(true));return I>=0&&(ApolloPhotos&(1<<I))?4.f:0.f;}
@@ -172,6 +202,7 @@ float ALunarGameMode::ApolloHoldDuration() const {
  return 0;
 }
 FString ALunarGameMode::ApolloPrompt() const {
+ if(ApolloToolsEnabled)return FString::Printf(TEXT("[ %s ]  %s"),*ULunarSettings::Get()->Key(TEXT("Interact")).GetDisplayName().ToString(),ApolloTool?TEXT("Tool in use - left click to work"):Stage==ELunarStage::ApolloSamples&&!(ApolloPhotos&(1<<FMath::Clamp(SelectedSample,0,2)))?TEXT("Prepare context camera"):TEXT("Open work tool"));
  if(Stage==ELunarStage::ApolloCheckout){const TCHAR* Tasks[]={TEXT("PromptCheckout0"),TEXT("PromptCheckout1"),TEXT("PromptCheckout2")};return ApolloText::Get(Tasks[FMath::Clamp(ApolloAction,0,2)]);}
  if(Stage==ELunarStage::ApolloDeploy)return ApolloText::Get(ApolloAction==0?TEXT("PromptSeismometer"):TEXT("PromptAntenna"));
  if(Stage==ELunarStage::ApolloSamples)return ApolloText::Get(ApolloHoldDuration()>0?TEXT("PromptSample"):TEXT("PromptPhoto"));
@@ -213,9 +244,10 @@ FString ALunarGameMode::ApolloTutorial() const {
  return ApolloText::Get(!ApolloLookLearned?TEXT("TutorialLook"):!ApolloMoveLearned?TEXT("TutorialMove"):TEXT("TutorialWork"));
 }
 void ALunarGameMode::CycleApollo(){
+ if(ApolloTool)return;
  if(Journal){JournalPage=(JournalPage+1)%4;return;}
  if(Paused||!IsActive())return;ReleaseInteract();
- if(Stage==ELunarStage::ApolloDeploy&&ApolloAction==1){
+ if(!ApolloToolsEnabled&&Stage==ELunarStage::ApolloDeploy&&ApolloAction==1){
   ApolloAntennaAngle=FMath::UnwindDegrees(ApolloAntennaAngle+15);if(ApolloAntenna)ApolloAntenna->SetRelativeRotation(FRotator(-65,ApolloAntennaAngle,0));return;
  }
  const bool Samples=Stage==ELunarStage::ApolloSamples;
@@ -224,6 +256,7 @@ void ALunarGameMode::CycleApollo(){
  for(int32 I=1;I<=3;++I){int32 Next=(SelectedSample+I)%3;if(!(Mask&(1<<Next))){SelectedSample=Next;return;}}
 }
 void ALunarGameMode::InteractApollo(){
+ if(ApolloToolsEnabled){OpenApolloTool();return;}
  if(Stage==ELunarStage::ApolloTraverse)return;
  if(Stage==ELunarStage::ApolloDeploy&&ApolloAction==1&&FMath::Abs(FMath::FindDeltaAngleDegrees(ApolloAntennaAngle,-7.f))>8){Message(ApolloText::Get(TEXT("AntennaWrong")));return;}
  if(ApolloHoldDuration()>0){Holding=true;HoldProgress=0;HeldTarget=InteractionTarget();return;}
@@ -234,7 +267,7 @@ void ALunarGameMode::InteractApollo(){
   FString RelativePath;
   if(FApp::CanEverRender()&&!FParse::Param(FCommandLine::Get(),TEXT("ApolloTest"))&&!FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveTest"))&&!FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveWriteTest"))&&!FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveReadTest"))){
    RelativePath=FString(TEXT("Apollo12/Photos/"))+ApolloRunId.ToString(EGuidFormats::Digits)+TEXT("/")+PhotoName+TEXT(".png");
-   IFileManager::Get().MakeDirectory(*FPaths::GetPath(FPaths::ProjectSavedDir()/RelativePath),true);FScreenshotRequest::RequestScreenshot(FPaths::ProjectSavedDir()/RelativePath,false,false);
+   IFileManager::Get().MakeDirectory(*FPaths::GetPath(FPaths::ProjectSavedDir()/RelativePath),true);if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0))){P->PhotoCaptureFrames=2;if(P->HandRig)P->HandRig->SetVisibility(false);if(P->WorkTool)P->WorkTool->SetVisibility(false);}FScreenshotRequest::RequestScreenshot(FPaths::ProjectSavedDir()/RelativePath,false,false);
   }
   RecordApolloEvidence(EvidenceIndex,RelativePath);SaveApolloCheckpoint();
  }
@@ -261,6 +294,14 @@ void ALunarGameMode::CompleteApolloInteraction(AActor* A){
  SaveApolloCheckpoint();
 }
 void ALunarGameMode::TickApollo(float D){
+ if(!Paused){
+  ApolloToolCooldown=FMath::Max(0.f,ApolloToolCooldown-FMath::Max(0.f,D));
+  if(ApolloTool==2||ApolloTool==3)if(auto* PC=UGameplayStatics::GetPlayerController(this,0)){
+   const float X=(PC->IsInputKeyDown(EKeys::Right)?1.f:0.f)-(PC->IsInputKeyDown(EKeys::Left)?1.f:0.f);
+   const float Y=(PC->IsInputKeyDown(EKeys::Up)?1.f:0.f)-(PC->IsInputKeyDown(EKeys::Down)?1.f:0.f);
+   ApolloToolAxis(X*D*30,Y*D*30);
+  }
+ }
  auto* P=UGameplayStatics::GetPlayerPawn(this,0);
  if(!Paused)ApolloSaveNoticeRemaining=FMath::Max(0.f,ApolloSaveNoticeRemaining-FMath::Max(0.f,D));
  if(IsActive()&&!Paused&&P){

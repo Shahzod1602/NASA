@@ -1,5 +1,6 @@
 #include "LunarGame.h"
 #include "LunarApolloText.h"
+#include "LunarSettings.h"
 #include "ApolloData.h"
 #include "Engine/Canvas.h"
 #include "Engine/Engine.h"
@@ -15,6 +16,7 @@ void ALunarHUD::DrawApollo(ALunarGameMode* G){
  auto Text=[&](const FString& Value,float X,float Y,float Size,FLinearColor Color){Label(Value,X*S,Y*S,Size*S,Color);};
  auto Box=[&](float X,float Y,float BW,float BH,float Alpha=.92f){Panel(X*S,Y*S,BW*S,BH*S,Alpha);};
  auto Wrap=[&](const FString& Value,float X,float Y,float Width,float Size,FLinearColor Color,bool Draw=true){
+  Size*=ULunarSettings::Get()->TextScale;
   TArray<FString> Words;Value.ParseIntoArray(Words,TEXT(" "),true);FString Line;float TY=Y;
   float Unused,FontHeight;GetTextSize(TEXT("Ag"),Unused,FontHeight,GEngine->GetLargeFont(),Size*S*2.3f);
   const float LineHeight=FMath::Max(20.f,FontHeight/S+6.f);
@@ -30,12 +32,37 @@ void ALunarHUD::DrawApollo(ALunarGameMode* G){
 
  Box(0,0,SW,84,.97f);DrawRect(Gold,26*S,21*S,3*S,39*S);
  Text(TEXT("APOLLO 12"),43,14,.9,Ink);Text(T(TEXT("Subtitle")),44,51,.38,Dim);
- Text(ApolloText::Format(TEXT("Window"),{{TEXT("Time"),Time(G->Oxygen)}}),SW-330,19,.62,G->Oxygen<180?Gold:Cyan);
- Text(T(TEXT("WindowNote")),SW-329,50,.36,Dim);
+ Text(G->ApolloTimed?ApolloText::Format(TEXT("Window"),{{TEXT("Time"),Time(G->Oxygen)}}):TEXT("HISTORICAL EXPLORATION"),SW-390,19,.52,G->ApolloTimed&&G->Oxygen<180?Gold:Cyan);
+ Text(G->ApolloTimed?T(TEXT("WindowNote")):TEXT("Untimed - explore at your own pace"),SW-389,50,.36,Dim);
  if(G->ApolloSaveNoticeRemaining>0&&!G->ApolloSaveNotice.IsEmpty())Text(T(*G->ApolloSaveNotice),44,67,.40,G->ApolloSaveError?Gold:Cyan);
  Box(0,SH-42,SW,42,.97f);Text(T(TEXT("Footer")),26,SH-30,.48,Dim);
 
  auto* P=UGameplayStatics::GetPlayerPawn(this,0);auto* PC=GetOwningPlayerController();
+ if(G->ApolloTool&&!G->Paused){
+  const float X=24,Y=104,ToolWidth=G->ApolloTool==1?400.f:560.f,HelpEnd=Wrap(G->ApolloToolHelp(),44,161,ToolWidth-40,.57,Ink,false);
+  Box(X,Y,ToolWidth,HelpEnd-Y+18,.97f);Text(G->ApolloToolTitle(),X+20,Y+16,.52,Gold);
+  Wrap(G->ApolloToolHelp(),X+20,Y+57,ToolWidth-40,.57,Ink);
+  if(G->ApolloTool==1){
+   const float CX=W*.5f,CY=H*.5f,FX=W*.40f,FY=H*.39f;
+   DrawLine(CX-FX,CY-FY,CX+FX,CY-FY,Cyan,2);DrawLine(CX-FX,CY+FY,CX+FX,CY+FY,Cyan,2);
+   DrawLine(CX-FX,CY-FY,CX-FX,CY+FY,Cyan,2);DrawLine(CX+FX,CY-FY,CX+FX,CY+FY,Cyan,2);
+   DrawLine(CX-8*S,CY,CX+8*S,CY,Ink,1);DrawLine(CX,CY-8*S,CX,CY+8*S,Ink,1);
+  }
+  if(G->ApolloTool==2){
+   const float CX=W*.5f,CY=H*.40f,Size=80*S;
+   Box(SW*.5f-110,SH*.40f-110,220,220,.95f);
+   DrawLine(CX-Size,CY,CX+Size,CY,Dim,2);DrawLine(CX,CY-Size,CX,CY+Size,Dim,2);
+   DrawRect(Cyan,CX-8*S,CY-8*S,16*S,16*S);
+   DrawRect(G->ApolloLevel.Size()<.09f?Cyan:Gold,CX+G->ApolloLevel.X*Size-5*S,CY-G->ApolloLevel.Y*Size-5*S,10*S,10*S);
+  }
+  if(G->ApolloTool==3){
+   const float Signal=1-FMath::Clamp(FMath::Abs(FMath::FindDeltaAngleDegrees(G->ApolloAntennaAngle,-7.f))/90.f,0.f,1.f);
+   Box(SW*.5f-200,SH*.36f,400,100,.97f);Text(FString::Printf(TEXT("EARTH LINK  %.0f%%"),Signal*100),SW*.5f-178,SH*.36f+15,.60,Signal>.91?Cyan:Gold);
+   DrawRect(Dim,W*.5f-178*S,(SH*.36f+65)*S,356*S,12*S);DrawRect(Cyan,W*.5f-178*S,(SH*.36f+65)*S,356*S*Signal,12*S);
+  }
+  if(G->RadioRemaining>0){const float RadioSize=.51f*ULunarSettings::Get()->SubtitleScale/ULunarSettings::Get()->TextScale;const float RadioHeight=Wrap(G->Radio,40,0,SW-80,RadioSize,Ink,false)+40;Box(24,SH-50-RadioHeight,SW-48,RadioHeight,.97f);Text(T(TEXT("RadioLabel")),40,SH-44-RadioHeight,.32,Gold);Wrap(G->Radio,40,SH-24-RadioHeight,SW-80,RadioSize,Ink);}
+  return;
+ }
  if(G->IsActive()&&!G->Journal&&!G->Paused){
   // One current task. The full checklist belongs to the paused journal.
   const float Width=560,ContentWidth=Width-32;
@@ -84,8 +111,10 @@ void ALunarHUD::DrawApollo(ALunarGameMode* G){
    Text(ApolloText::Format(TEXT("Working"),{{TEXT("Percent"),FMath::RoundToInt(Progress*100)}}),SW*.5f-362,SH-146,.40,Dim);
   }
   if(G->RadioRemaining>0){
-   Box(24,SH-119,SW-48,68,.95f);Text(T(TEXT("RadioLabel")),40,SH-111,.32,Gold);
-   Wrap(G->Radio,40,SH-92,SW-80,.51,Ink);
+   const float RadioSize=.51f*ULunarSettings::Get()->SubtitleScale/ULunarSettings::Get()->TextScale;
+   const float RadioHeight=Wrap(G->Radio,40,0,SW-80,RadioSize,Ink,false)+40;
+   Box(24,SH-50-RadioHeight,SW-48,RadioHeight,.95f);Text(T(TEXT("RadioLabel")),40,SH-44-RadioHeight,.32,Gold);
+   Wrap(G->Radio,40,SH-24-RadioHeight,SW-80,RadioSize,Ink);
   }
  }
 
@@ -135,23 +164,24 @@ void ALunarHUD::DrawApollo(ALunarGameMode* G){
    if(G->ApolloCachedCheckpoint){Text(ContinueLabel(),X+30,Y+284,.64,Cyan);Text(Summary(),X+30,Y+325,.48,Dim);}
    Text(T(TEXT("CheckpointConfirmKeys")),X+30,Y+423,.63,Gold);
   }else if(G->Stage==ELunarStage::Briefing){
+   Text(G->ApolloTimed?TEXT("T  Mode: timed exercise (30 minutes)"):TEXT("T  Mode: historical exploration (no time limit)"),X+30,Y+110,.46,Cyan);
    float TY=Wrap(T(TEXT("BriefStory")),X+30,Y+132,860,.67,Ink);
    TY=Wrap(T(TEXT("BriefRoute")),X+30,TY+17,860,.61,Ink);
    TY=Wrap(T(TEXT("BriefAdaptation")),X+30,TY+17,860,.49,Dim);
    if(G->ApolloCachedCheckpoint){Text(ContinueLabel(),X+30,Y+365,.62,Cyan);Text(Summary(),X+30,Y+398,.43,Dim);}
    else Text(T(G->ApolloSaveStatus==EApolloSaveStatus::Incompatible?TEXT("CheckpointIncompatible"):G->ApolloSaveStatus==EApolloSaveStatus::Corrupt?TEXT("CheckpointCorrupt"):TEXT("BriefHelp")),X+30,Y+369,.49,Cyan);
-   Text(T(TEXT("Begin")),X+30,Y+423,.66,Gold);
+   Text(T(TEXT("Begin"))+TEXT("     F1 Settings"),X+30,Y+423,.60,Gold);
   }else if(G->Paused){
    Wrap(T(TEXT("PauseText")),X+30,Y+149,860,.67,Ink);
    Text(T(TEXT("PauseMap")),X+30,Y+231,.62,Cyan);
    if(G->ApolloCachedCheckpoint){Text(T(TEXT("CheckpointReload")),X+30,Y+282,.58,Gold);Text(Summary(),X+30,Y+320,.43,Dim);}
-   Text(T(TEXT("Resume")),X+30,Y+423,.66,Gold);
+   Text(T(TEXT("Resume"))+TEXT("     F1 Settings  |  I Evidence"),X+30,Y+423,.52,Gold);
   }else if(G->Stage==ELunarStage::Won){
    Wrap(T(TEXT("WinText")),X+30,Y+132,860,.65,Ink);
    Text(T(TEXT("WinCargo")),X+30,Y+231,.47,Cyan);
    Text(ApolloText::Format(TEXT("WinStats"),{{TEXT("Time"),Time(G->ApolloElapsed)},{TEXT("Distance"),FMath::RoundToInt(G->ApolloDistance)}}),X+30,Y+274,.53,Ink);
    Wrap(T(TEXT("WinContext")),X+30,Y+322,860,.48,Dim);
-   Text(T(TEXT("Again")),X+30,Y+423,.66,Gold);
+   Text(TEXT("I  Cargo, photographs and debrief     ")+T(TEXT("Again")),X+30,Y+423,.49,Gold);
   }else{
    Wrap(G->FailureReason,X+30,Y+149,860,.65,Ink);
    Wrap(T(TEXT("LostHelp")),X+30,Y+259,860,.55,Dim);

@@ -7,15 +7,28 @@ beside the executable.
 
 Press 1 or Enter to choose the Moon, or 2 to choose Mars.
 At the Apollo briefing, Enter begins a new expedition.
+T selects historical exploration (untimed) or a 30-minute exercise.
 All game text and guidance are in English.
 
 CONTROLS
 WASD / arrows: move             Mouse: look around
-E: interact or hold to work     Q: select a site / turn the antenna
-Tab / J: map and field journal  Esc: pause
+E: open work tool              Left click: use the open tool
+Q: select a site / journal page Esc: cancel tool, then pause
+Tab / J: map and field journal  F1: settings and key bindings
+I: photograph album and cargo   Mouse / arrows: level or antenna adjustment
 Space: hop                     Shift: faster stride
 V: change camera               Alt: orbit in the following view
 F: zoom                        M: mission selection from pause/results
+
+SCIENCE TOOLS
+Photograph: open the camera, center the work site and left click the shutter.
+ALSEP: center the level bubble, then find and verify the strongest radio signal.
+Head: lift the rock with tongs, then seal its pouch.
+Bench: scoop fine soil, then seal and label it.
+Sharp: place the core tube, tap with the hammer four times, extract and cap it.
+Surveyor: release two fittings/cable ends, then remove and pack the component.
+Intrepid: open the manifest and confirm cargo stowage to finish.
+Esc safely cancels unfinished work. Cargo is committed only at the final action.
 
 SAVING
 Completed work creates an automatic checkpoint.
@@ -28,7 +41,9 @@ Keep LunarRescue/Saved when moving the game to retain saves and photographs.
 HISTORY
 This is an educational adaptation of Apollo 12 surface work using NASA/LROC
 terrain and mapped work sites. Two historical EVAs are condensed into one
-chapter. The 30-minute exercise limit is not actual suit oxygen endurance.
+chapter. Historical exploration has no time limit. The separate 30-minute
+exercise is not actual suit oxygen endurance. Tool actions are simplified.
+Radio narration is original synthesized English game dialogue, not NASA audio.
 Sources and asset attributions are included in Credits.
 
 RUNTIME HELP

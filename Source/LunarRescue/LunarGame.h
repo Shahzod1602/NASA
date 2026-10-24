@@ -55,6 +55,16 @@ public:
  void ReleaseInteract(); void ToggleRoute();
  void ToggleJournal();
  void ContinueMission();
+ void OpenSettings(); void OpenEvidence(); void ClosePanel(); void ToggleApolloMode();
+ UPROPERTY() TObjectPtr<class ULunarPanel> ActivePanel;
+ bool PanelWasPaused=false;
+ UPROPERTY() TObjectPtr<class UPoseableMeshComponent> SuitRig;
+ UPROPERTY() TObjectPtr<class UPoseableMeshComponent> HandRig;
+ UPROPERTY() TObjectPtr<class UStaticMeshComponent> WorkTool;
+ FQuat SuitCoordinate=FQuat::Identity;
+ int32 PhotoCaptureFrames=0;
+ void PoseSuitRig();
+ FVector PlantedFeet[2]; bool FootPlanted[2]={false,false};
  UPROPERTY() TObjectPtr<class UStaticMeshComponent> CarriedModule;
  FVector PausedVelocity=FVector::ZeroVector;
  UPROPERTY(VisibleAnywhere, BlueprintReadOnly) TObjectPtr<class UCameraComponent> Camera;
@@ -67,6 +77,19 @@ public:
  ALunarGameMode();
  bool Mars=false, Menu=false;
  bool Apollo=false, Journal=false;
+ bool ApolloTimed=false;
+ bool ApolloToolsEnabled=true;
+ // Transient tool progress is intentionally outside checkpoint state.
+ int32 ApolloTool=0, ApolloToolPhase=0;
+ float ApolloToolCooldown=0;
+ FVector2D ApolloLevel=FVector2D(.4f,-.3f);
+ UPROPERTY() TObjectPtr<AActor> ApolloWorkTarget;
+ UPROPERTY() TArray<FString> ApolloTranscript;
+ bool OpenApolloTool();
+ void ApolloToolClick(); void CancelApolloTool();
+ void ApolloToolAxis(float X,float Y);
+ FString ApolloToolTitle() const; FString ApolloToolHelp() const;
+ void ApolloPolishChecks();
  int32 ApolloAction=0, ApolloRouteIndex=0, JournalPage=0;
  uint8 ApolloPhotos=0, ApolloInstruments=0, ApolloParts=0;
  bool SurveyorPhotographed=false, ApolloWalking=false;

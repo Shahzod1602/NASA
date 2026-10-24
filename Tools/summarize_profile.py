@@ -10,6 +10,7 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("capture", type=Path)
 parser.add_argument("--warmup", type=int, default=600)
 parser.add_argument("--expected-frames", type=int, default=4200)
+parser.add_argument("--full-mission", action="store_true")
 parser.add_argument("--output", type=Path, required=True)
 args = parser.parse_args()
 csv.field_size_limit(20 * 1024 * 1024)  # Unreal's EVENTS column can be large.
@@ -25,7 +26,7 @@ with args.capture.open(encoding="utf-8-sig", newline="") as handle:
             continue  # Repeated header and metadata footer are not frames.
         if math.isfinite(value) and value > 0:
             frames.append(value)
-if len(frames) != args.expected_frames:
+if args.expected_frames and len(frames) != args.expected_frames:
     raise SystemExit(f"Expected {args.expected_frames} frames; found {len(frames)}")
 sample = frames[args.warmup:]
 if len(sample) < 60:
@@ -44,7 +45,7 @@ result = {
     "p99_frame_ms": ordered[math.ceil(len(ordered) * 0.99) - 1],
     "largest_frame_ms": max(sample),
     "method": "1% low = 1000 / mean frame ms of the slowest 1% of sampled frames",
-    "limitations": "Rendered offscreen opening route, normal delta time, 60 FPS cap; not full-mission or human playtest evidence. VRAM is not inferred from zero DX11 CSV counters.",
+    "limitations": ("Rendered offscreen full automated mission" if args.full_mission else "Rendered offscreen opening route") + ", normal delta time, 60 FPS cap; not human playtest or on-screen presentation evidence. VRAM is not inferred from zero DX11 CSV counters.",
 }
 args.output.parent.mkdir(parents=True, exist_ok=True)
 args.output.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")

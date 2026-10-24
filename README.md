@@ -1,5 +1,15 @@
 # Lunar Rescue
 
+## Suit and science tools - 0.5.0
+
+The Apollo chapter adds a 36-bone skinned astronaut and hands, separate photo,
+leveling, antenna, rock/soil, drive-core and hardware tools, UMG settings, a photo
+album and a cargo debrief. Historical exploration is untimed; **T** selects the
+separate exercise before starting. **F1** opens settings and **I** opens evidence.
+See [implementation and validation](POLISH_UPDATE.md), [historical audit](HISTORICAL_AUDIT.md)
+and the [pending first-time player protocol](PLAYTEST_GUIDE.md). Earlier update
+sections below are historical milestone records.
+
 ## English edition - 0.4.4
 
 The entire game interface is English: menus, objectives, instructions, journal, radio messages, results and save notices. The former L language switch is removed, and old language preferences cannot switch the game back. See [the English edition notes](ENGLISH_UPDATE.md).
@@ -14,7 +24,7 @@ The Apollo HUD shows one current task with its purpose; the full checklist is in
 
 ## Current development plan — 2026-10-24
 
-The [full game improvement plan in Uzbek](GAME_MASTER_PLAN.md) covers onboarding, a rigged astronaut and hand animations, distinct science interactions, saving, NASA source accuracy, performance, testing and an estimated 8–12 week roadmap. It describes future work, not completed features.
+The [full game improvement plan in Uzbek](GAME_MASTER_PLAN.md) records the original roadmap, historical milestone status and the v0.5 implementation. Current results and remaining human acceptance work are listed in [the v0.5 validation record](POLISH_UPDATE.md).
 
 ## Historical Moon expedition — 2026-10-24
 
@@ -85,11 +95,15 @@ The editor fallback uses the installed Unreal Engine 5.8.3.
 - Space: jump.
 - Shift: hold for a faster stride in Apollo 12.
 - V: toggle helmet/following view; hold Alt and move the mouse to orbit the suit.
-- E: document a site, interact, or hold to work and stow cargo.
-- Q: select the next Apollo sample or turn the ALSEP antenna. In the legacy SELENE map, Q cycles its markers.
+- E: open an Apollo work tool. Left click performs the current tool action.
+- Mouse / arrows: adjust a level or antenna while its tool is open.
+- Q: select the next site or journal page. Legacy SELENE retains its original controls.
 - F: toggle visor zoom.
 - Tab / J: open the Apollo field journal; it pauses movement and the exercise clock.
-- Escape: pause or resume.
+- Escape: cancel the current tool, then pause or resume.
+- F1: settings, including key bindings, text size, audio and graphics.
+- I: evidence album and the actual cargo debrief.
+- T: choose historical exploration or timed exercise at the Apollo briefing.
 - R or Enter: restart after winning or losing.
 - Alt+F4: close the game.
 

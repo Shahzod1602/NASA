@@ -33,10 +33,10 @@ int32 UApolloCheckpoint::Step() const {
 }
 bool UApolloCheckpoint::Validate(FString& Reason) const {
  auto Reject=[&](const TCHAR* Why){Reason=Why;return false;};
- if(FormatVersion!=1||MissionId!=TEXT("apollo12-surveyor-legacy")||DataProfile!=TEXT("lroc-apollo12-v1.9")||Mode!=TEXT("timed-exercise"))return Reject(TEXT("incompatible"));
+ if(FormatVersion!=1||MissionId!=TEXT("apollo12-surveyor-legacy")||DataProfile!=TEXT("lroc-apollo12-v1.9")||(Mode!=TEXT("timed-exercise")&&Mode!=TEXT("historical-exploration")))return Reject(TEXT("incompatible"));
  if(!RunId.IsValid()||CompletedTasks.Num()>17||Evidence.Num()>4)return Reject(TEXT("invalid identifiers"));
  if(Position.ContainsNaN()||View.ContainsNaN()||!FMath::IsFinite(Position.X)||!FMath::IsFinite(Position.Y)||!FMath::IsFinite(Position.Z)||Position.X < -59000||Position.X > 44000||Position.Y < -39000||Position.Y > 44000||FMath::Abs(Position.Z)>50000)return Reject(TEXT("invalid position"));
- if(!FMath::IsFinite(Elapsed)||!FMath::IsFinite(Distance)||!FMath::IsFinite(Remaining)||!FMath::IsFinite(AntennaAngle)||Elapsed<0||Elapsed>1830||Distance<0||Distance>50000||Remaining<0||Remaining>1800||FMath::Abs(AntennaAngle)>180||FMath::Abs(View.Pitch)>360||FMath::Abs(View.Yaw)>360||FMath::Abs(View.Roll)>360)return Reject(TEXT("invalid telemetry"));
+ if(!FMath::IsFinite(Elapsed)||!FMath::IsFinite(Distance)||!FMath::IsFinite(Remaining)||!FMath::IsFinite(AntennaAngle)||Elapsed<0||Elapsed>(Mode==TEXT("timed-exercise")?1830.f:604800.f)||Distance<0||Distance>50000||Remaining<0||Remaining>1800||FMath::Abs(AntennaAngle)>180||FMath::Abs(View.Pitch)>360||FMath::Abs(View.Yaw)>360||FMath::Abs(View.Roll)>360)return Reject(TEXT("invalid telemetry"));
  TSet<FName> Allowed,Seen;
  for(const TCHAR* Id:ApolloTasks::Checkout)Allowed.Add(FName(Id));
  for(const TCHAR* Id:ApolloTasks::Instruments)Allowed.Add(FName(Id));

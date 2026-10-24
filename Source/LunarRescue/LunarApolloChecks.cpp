@@ -1,5 +1,6 @@
 #include "LunarGame.h"
 #include "LunarApolloText.h"
+#include "LunarSettings.h"
 #include "ApolloData.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
@@ -13,6 +14,8 @@
 #include "UnrealClient.h"
 
 void ALunarGameMode::ApolloChecks(){
+ // Preserve legacy completion invariants; ApolloPolishTest exercises the actual tool contexts.
+ ApolloToolsEnabled=false;ApolloTimed=true;
  int32 Fail=0;FString Report;
  auto Check=[&](bool Good,const TCHAR* Name){Report+=FString(Good?TEXT("PASS "):TEXT("FAIL "))+Name+TEXT("\n");if(!Good)++Fail;};
  auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));auto* PC=UGameplayStatics::GetPlayerController(this,0);
@@ -120,6 +123,21 @@ void ALunarGameMode::ApolloReview(){
  case 38:Shot(TEXT("apollo12-retry-checkpoint.png"));break;
  case 39:Stage=ELunarStage::ApolloSamples;ApolloSaveNotice=TEXT("CheckpointRecovered");ApolloSaveNoticeRemaining=20;break;
  case 40:Shot(TEXT("apollo12-recovered.png"));break;
+ case 41:Stage=ELunarStage::ApolloDeploy;Paused=false;ApolloAction=0;ApolloSaveNoticeRemaining=0;View(ApolloInstrumentActors[0],FVector(-170,0,50));OpenApolloTool();break;
+ case 42:Shot(TEXT("apollo12-tool-level.png"));break;
+ case 43:CancelApolloTool();ApolloAction=1;View(ApolloInstrumentActors[1],FVector(-170,0,50));OpenApolloTool();break;
+ case 44:Shot(TEXT("apollo12-tool-antenna.png"));break;
+ case 45:CancelApolloTool();Stage=ELunarStage::ApolloSamples;ApolloPhotos=7;SamplesCollected=0;View(SampleActors[2],FVector(-170,0,50));OpenApolloTool();ApolloToolPhase=3;break;
+ case 46:Shot(TEXT("apollo12-tool-core.png"));break;
+ case 47:CancelApolloTool();ApolloPhotos=0;View(SampleActors[0],FVector(-170,0,50));OpenApolloTool();break;
+ case 48:Shot(TEXT("apollo12-tool-camera.png"));break;
+ case 49:CancelApolloTool();P->OpenSettings();break;
+ case 50:Shot(TEXT("apollo12-settings.png"));break;
+ case 51:P->ClosePanel();P->OpenEvidence();break;
+ case 52:Shot(TEXT("apollo12-album.png"));break;
+ case 53:P->ClosePanel();ULunarSettings::Get()->TextScale=1.5f;ULunarSettings::Get()->SubtitleScale=1.f;Stage=ELunarStage::ApolloSamples;Paused=false;Journal=false;RadioRemaining=0;break;
+ case 54:Shot(TEXT("apollo12-text150.png"));break;
+ case 55:ULunarSettings::Get()->Reset();break;
  default:FPlatformMisc::RequestExitWithStatus(false,0);return;
  }
  ++MovementPhase;FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ApolloReview,2,false);
@@ -133,7 +151,8 @@ void ALunarGameMode::ApolloWalkTick(float D){
  if(Stage==ELunarStage::Won||Stage==ELunarStage::Lost||WalkSeconds>1700||WalkStepSeconds>500){
   const bool Good=Stage==ELunarStage::Won&&SamplesCollected==7&&ApolloParts==7&&ApolloInstruments==3;
   FString Report=FString::Printf(TEXT("%s real movement Apollo 12 expedition\nElapsed %.2f s\nWalked %.2f m\nRemaining exercise time %.2f s\nSamples %d/3; hardware mask %d; ALSEP mask %d\nPeak memory %.2f MiB\nRESULT: %d failures\n"),Good?TEXT("PASS"):TEXT("FAIL"),ApolloElapsed,ApolloDistance,Oxygen,SampleCount(),ApolloParts,ApolloInstruments,FPlatformMemory::GetStats().PeakUsedPhysical/1048576.0,Good?0:1);
-  FFileHelper::SaveStringToFile(Report,*ReportPath(TEXT("apollo12-walkthrough.txt")));UE_LOG(LogTemp,Display,TEXT("APOLLO12_WALK %s"),*Report);ApolloWalking=false;FPlatformMisc::RequestExitWithStatus(false,Good?0:1);return;
+  FFileHelper::SaveStringToFile(Report,*ReportPath(TEXT("apollo12-walkthrough.txt")));UE_LOG(LogTemp,Display,TEXT("APOLLO12_WALK %s"),*Report);ApolloWalking=false;
+  if(FParse::Param(FCommandLine::Get(),TEXT("ApolloFullProfile"))){PC->ConsoleCommand(TEXT("csvprofile stop"),false);FTimerHandle End;GetWorldTimerManager().SetTimer(End,[Good](){FPlatformMisc::RequestExitWithStatus(false,Good?0:1);},8,false);}else FPlatformMisc::RequestExitWithStatus(false,Good?0:1);return;
  }
  auto* T=Target();if(!T)return;
  if(Stage==ELunarStage::ApolloTraverse&&FParse::Param(FCommandLine::Get(),TEXT("ApolloHistoricalRoute"))){
@@ -142,12 +161,18 @@ void ALunarGameMode::ApolloWalkTick(float D){
  }
  const int Key=1000*ApolloStep()+100*ApolloAction+10*ApolloRouteIndex+SelectedSample;
  if(Key!=WalkStep){WalkStep=Key;WalkStepSeconds=0;UE_LOG(LogTemp,Display,TEXT("APOLLO12_WALK step %d %s target %s"),WalkStep,*Objective(),*T->GetActorLocation().ToString());}
- FVector Eye;FRotator R;P->GetActorEyesViewPoint(Eye,R);PC->SetControlRotation((T->GetActorLocation()-Eye).Rotation());
+ FVector Eye;FRotator R;P->GetActorEyesViewPoint(Eye,R);const FVector PhotoOffset=ApolloToolsEnabled&&Stage==ELunarStage::ApolloRecover&&!SurveyorPhotographed?FVector(0,0,90):FVector::ZeroVector;PC->SetControlRotation((T->GetActorLocation()+PhotoOffset-Eye).Rotation());
  float Dist=FVector::Dist2D(P->GetActorLocation(),T->GetActorLocation());
  if(Stage!=ELunarStage::ApolloTraverse&&CanInteract()){
   P->GetCharacterMovement()->StopMovementImmediately();
+  if(ApolloToolsEnabled){
+   if(!ApolloTool)Interact();
+   if(ApolloTool==2)ApolloToolAxis(-ApolloLevel.X/.035f,-ApolloLevel.Y/.035f);
+   if(ApolloTool==3)ApolloToolAxis(FMath::FindDeltaAngleDegrees(ApolloAntennaAngle,-7.f)/.6f,0);
+   if(ApolloTool)P->PrimaryClick();return;
+  }
   if(Stage==ELunarStage::ApolloDeploy&&ApolloAction==1&&FMath::Abs(FMath::FindDeltaAngleDegrees(ApolloAntennaAngle,-7.f))>8){CycleApollo();return;}
   if(!Holding)Interact();return;
  }
- if(Dist>100){P->Forward(1);if(P->GetVelocity().Size2D()<15&&WalkStepSeconds>3&&FMath::Fmod(WalkSeconds,3)<D)P->Leap();}
+ if(Dist>100){if(FParse::Param(FCommandLine::Get(),TEXT("ApolloProfileFastStride")))P->BeginFastStride();P->Forward(1);if(P->GetVelocity().Size2D()<15&&WalkStepSeconds>3&&FMath::Fmod(WalkSeconds,3)<D)P->Leap();}
 }

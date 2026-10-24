@@ -1,6 +1,8 @@
 param(
  [ValidatePattern('^[A-Za-z0-9_-]+$')][string]$Label='current',
  [ValidateRange(1200,12000)][int]$Frames=4200,
+ [ValidateRange(-1,2)][int]$Quality=-1,
+ [switch]$FastStride,
  [ValidateSet('en')][string]$Language='en'
 )
 $ErrorActionPreference='Stop'
@@ -12,13 +14,28 @@ New-Item -ItemType Directory -Path $report -Force | Out-Null
 $env:TEMP=Join-Path $root 'Intermediate\ApolloTemp';$env:TMP=$env:TEMP
 $log=Join-Path $report 'capture.log'
 $captureArgs=@('/Game/Lunar/Maps/Apollo12','-game','-unattended','-ApolloWalkTest','-ApolloSaveProfile','-dx11','-RenderOffscreen','-ForceRes','-ResX=1280','-ResY=720','-nosound','-ExecCmds="t.MaxFPS 60,r.VSync 0"',"-csvCaptureFrames=$Frames",'-csvGpuStats','-ExitAfterCsvProfiling',"-abslog=`"$log`"")
+if($Quality -ge 0){$captureArgs+="-ApolloQuality=$Quality"}
+if($FastStride){$captureArgs+='-ApolloProfileFastStride'}
+$configPath=Join-Path $gameRoot 'Saved\Config\Windows\GameUserSettings.ini'
+$configExisted=Test-Path -LiteralPath $configPath
+$configBytes=if($configExisted){[System.IO.File]::ReadAllBytes($configPath)}else{$null}
+$profilePath=Join-Path $gameRoot 'Saved\AutomatedTests\ApolloProfile'
+$profileBackup=Join-Path $report 'CheckpointBefore'
+New-Item -ItemType Directory -Force -Path $profileBackup | Out-Null
+if(Test-Path -LiteralPath $profilePath){Get-ChildItem -LiteralPath $profilePath -File | ForEach-Object {Copy-Item -LiteralPath $_.FullName -Destination $profileBackup -Force}}
 $started=Get-Date
+try {
 $capture=Start-Process -FilePath $exe -ArgumentList $captureArgs -WindowStyle Hidden -PassThru
 $peakWorkingSet=0L
 $deadline=$started.AddMinutes(10)
 while(-not $capture.WaitForExit(1000)){
  if((Get-Date) -gt $deadline){Stop-Process -Id $capture.Id;throw 'Graphics capture timed out'}
  $capture.Refresh();$peakWorkingSet=[Math]::Max($peakWorkingSet,$capture.WorkingSet64)
+}
+} finally {
+ if($configExisted){New-Item -ItemType Directory -Force -Path (Split-Path $configPath) | Out-Null;[System.IO.File]::WriteAllBytes($configPath,$configBytes)}
+ elseif(Test-Path -LiteralPath $configPath){Remove-Item -LiteralPath $configPath}
+ if(Test-Path -LiteralPath $profilePath){Get-ChildItem -LiteralPath $profileBackup -File | ForEach-Object {Copy-Item -LiteralPath $_.FullName -Destination $profilePath -Force}}
 }
 # Unreal can report a nonzero shutdown status after a successful CSV capture.
 # Require a fresh complete capture and a clean log instead of relying on exit code.
@@ -38,6 +55,8 @@ if($LASTEXITCODE -ne 0){throw 'CSV capture validation failed'}
  process_peak_sampled_working_set_bytes=$peakWorkingSet
  renderer='DX11 / rendered offscreen / 1280x720 / current configured scalability'
  fps_cap=60
+ quality=if($Quality -ge 0){$Quality}else{'existing configuration'}
+ fast_stride=[bool]$FastStride
  command_arguments=$captureArgs
  process_exit_code=$capture.ExitCode
 } | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath (Join-Path $report 'environment.json') -Encoding UTF8

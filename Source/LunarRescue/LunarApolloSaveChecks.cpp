@@ -28,6 +28,7 @@ UApolloCheckpoint* Clone(UApolloCheckpoint* Save){TArray<uint8> Bytes;UGameplayS
 }
 
 void ALunarGameMode::ApolloSaveChecks(){
+ ApolloToolsEnabled=false;ApolloTimed=true;
  int Fail=0;FString Report;
  const bool ReadTest=FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveReadTest")),WriteTest=FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveWriteTest"));
  const TCHAR* ReportName=ReadTest?TEXT("checkpoint-read-checks.txt"):WriteTest?TEXT("checkpoint-write-checks.txt"):TEXT("checkpoint-checks.txt");

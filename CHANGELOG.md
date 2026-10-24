@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.0 - 2026-10-25
+
+- Added a 36-bone skinned suit and hands, articulated fingers, terrain-aware stance and tool poses, with three mesh LODs.
+- Added distinct camera, ALSEP leveling, antenna, tongs, soil scoop, hammer-driven core and Surveyor recovery actions with cancellable work and committed cargo.
+- Added English UMG settings with key rebinding and accessibility controls, a real-photo evidence album, radio transcript and cargo debrief.
+- Made historical exploration untimed by default; retained the separate timed exercise and existing checkpoint compatibility.
+- Improved work-site details, collision and shadow readability; added seven original synthetic English radio messages and documented NASA source corrections.
+- Passed 300 Editor and 303 packaged checks, repeated 129 packaged checks after the photo fix, and completed a rendered full-mission profile. See POLISH_UPDATE.md for measurements and limitations; the real first-time-player study remains pending.
+
 ## 0.4.4 - 2026-10-24
 
 - Made all player-facing game text English, including the menu, Apollo journal, task guidance, radio, endings and checkpoint notices.

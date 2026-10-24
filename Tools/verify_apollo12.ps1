@@ -1,4 +1,4 @@
-param([string]$EngineRoot='D:\UnrealEngine\UE_5.8',[switch]$Packaged,[switch]$Graphics,[switch]$Walkthrough,[switch]$HistoricalRoute,[switch]$Suit,[switch]$Checkpoints,[switch]$Review,[switch]$Regression,[switch]$LegacyLanguage,[ValidateSet('en')][string]$Language='en',[int]$Width=1280,[int]$Height=720)
+param([string]$EngineRoot='D:\UnrealEngine\UE_5.8',[switch]$Packaged,[switch]$Graphics,[switch]$Walkthrough,[switch]$HistoricalRoute,[switch]$Suit,[switch]$Checkpoints,[switch]$Polish,[switch]$Review,[switch]$Regression,[switch]$LegacyLanguage,[ValidateSet('en')][string]$Language='en',[int]$Width=1280,[int]$Height=720)
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 $env:TEMP=Join-Path $root 'Intermediate\ApolloTemp';$env:TMP=$env:TEMP
@@ -8,6 +8,7 @@ if($Regression){$cases+=,@('/Game/Lunar/Maps/MoonBase','LunarTest','legacy-moon'
 if($Walkthrough){$cases+=,@('/Game/Lunar/Maps/Apollo12','ApolloWalkTest','walk')}
 if($HistoricalRoute){$cases+=,@('/Game/Lunar/Maps/Apollo12','ApolloWalkTest','historical-walk')}
 if($Suit){$cases+=,@('/Game/Lunar/Maps/Apollo12','SuitTest','suit')}
+if($Polish){$cases+=,@('/Game/Lunar/Maps/Apollo12','ApolloPolishTest','polish')}
 if($Checkpoints){$cases+=,@('/Game/Lunar/Maps/Apollo12','ApolloSaveTest','save');$cases+=,@('/Game/Lunar/Maps/Apollo12','ApolloSaveWriteTest','save-write');$cases+=,@('/Game/Rescue/Maps/MissionSelect','ApolloSaveReadTest','save-read')}
 if($Review){$cases=,@('/Game/Lunar/Maps/Apollo12','ApolloReview','visuals');$Graphics=$true}
 foreach($case in $cases){
@@ -17,6 +18,7 @@ foreach($case in $cases){
   'ApolloTest' {'apollo12-checks.txt'}
   'ApolloWalkTest' {'apollo12-walkthrough.txt'}
   'SuitTest' {'suit-checks.txt'}
+  'ApolloPolishTest' {'polish-checks.txt'}
   'ApolloSaveTest' {'checkpoint-checks.txt'}
   'ApolloSaveWriteTest' {'checkpoint-write-checks.txt'}
   'ApolloSaveReadTest' {'checkpoint-read-checks.txt'}
@@ -24,7 +26,7 @@ foreach($case in $cases){
   'LunarTest' {if($case[0] -like '*Mars*'){'mars-gameplay-checks.txt'}else{'gameplay-checks.txt'}}
  }
  $resultRoot=if($Packaged){Join-Path $root 'Dist\Apollo12\Windows\LunarRescue\Reports'}else{Join-Path $root 'Reports'}
- $reviewNames=@('briefing','intrepid','alsep','sample','surveyor','map','sources','result','approach','hardware','return','history','evidence','tutorial','work-prompt','work-progress','continue','new-confirm','reload','retry-checkpoint','recovered')
+ $reviewNames=@('briefing','intrepid','alsep','sample','surveyor','map','sources','result','approach','hardware','return','history','evidence','tutorial','work-prompt','work-progress','continue','new-confirm','reload','retry-checkpoint','recovered','tool-level','tool-antenna','tool-core','tool-camera','settings','album','text150')
  if($case[1] -eq 'ApolloReview'){
   foreach($name in $reviewNames){$imagePath=Join-Path $resultRoot "apollo12-$name.png";if(Test-Path -LiteralPath $imagePath){Remove-Item -LiteralPath $imagePath}}
  }

@@ -4,6 +4,19 @@
 
 Bu hujjat keyingi ishlar uchun asosiy reja. Bo‘limlardagi talablar yakuniy maqsadni bildiradi; barchasi bajarilgan degani emas. Amalga oshirish holati quyidagi jadvalda ajratilgan. [2026-09-21 rejasi](DEVELOPMENT_PLAN.md) avvalgi holatni saqlaydi.
 
+## Yangi amalga oshirish — 2026-10-25 / v0.5
+
+Olti yo‘nalish bo‘yicha yangi kod va aktivlar qo‘shildi:
+
+- **ART/ANIM:** 36 suyakli skafandr va birinchi shaxs qo‘llari, yumshoq bo‘g‘im og‘irliklari, barmoq uchlari, tayanch oyoqni yerga mahkamlash, burilish qadami, asbobga mos qo‘l holatlari va uchta LOD. GLB/OBJ/JSON hamda qayta yaratish skriptlari loyihada. Runtime holatlar skelet suyaklarini boshqaruvchi kod orqali bajariladi; tayyor motion capture yoki muzey skani deb ko‘rsatilmaydi.
+- **PLAY:** alohida foto, asbob tekislash, antenna, tosh/tuproq, bolg‘ali kern va detal yechish oqimlari. E asbobni ochadi, chap bosish uning amalini bajaradi; Esc tugallanmagan ishni bekor qiladi. Ish kamerasi nishonga yaqinlashadi. Yakuniy qadoqlashgacha yuk qo‘shilmaydi.
+- **UX/settings:** UMG sozlamalar va dalillar albomi; qayta biriktiriladigan tugmalar, sezgirlik, yorqinlik, FOV, matn/subtitr kattaligi, ovoz, qo‘l harakati, tez qadamni almashtirish va grafik presetlar. Asosiy Canvas HUD/jurnal hali mavjud; butun UI UMG ga ko‘chdi deb belgilanmaydi.
+- **WORLD/AUDIO:** qo‘shimcha ALSEP/Surveyor detali, qo‘l asboblari, Surveyor tanasiga pawn collision, soyadagi o‘qilishni yaxshilovchi fill va subtitrga mos yettita original inglizcha radio xabari.
+- **PLAY/HIST:** odatiy rejim vaqtsiz, 30 daqiqalik mashq alohida. Eski checkpoint o‘z rejimini saqlaydi. Bench/12032 tuproq sifatida, Sharp/12027 esa zamonaviy burg‘i o‘rniga drive tube sifatida ishlanadi. NASA/LROC ning oltita xom manba fayli hash bilan o‘zgarmagani tekshirildi.
+- **QA/REL:** Editor’da 300, Windows paketida 303 tekshiruv xatosiz o‘tdi; foto tuzatishidan keyin 129 paket tekshiruvi qaytarildi. Barcha asboblar bilan to‘liq avtomatik missiya 1 238,01 metr / 570,52 soniyada tugadi. 720p Medium profilida o‘rtacha 59,90 FPS, 1% low 51,18 FPS; 206 ms uzun kadr qayd etildi. Natijalar va chegaralar [v0.5 qaydi](POLISH_UPDATE.md) da. [5–8 yangi o‘yinchi sinov yo‘riqnomasi](PLAYTEST_GUIDE.md) tayyor; haqiqiy insonlar bilan sinov hali bajarilmagan.
+
+Quyidagi jadval v0.4.4 gacha bo‘lgan tarixiy holatni saqlaydi.
+
 ## Amalga oshirish holati — 2026-10-24
 
 | Reja vazifasi | Joriy holat |
