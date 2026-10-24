@@ -146,13 +146,11 @@ void ALunarCharacter::SuitReview(){
  if(N>=16){FPlatformMisc::RequestExit(false);return;}FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarCharacter::SuitReview,1.4f,false);
 }
 void ALunarCharacter::SuitChecks(){
- static bool OriginalLanguage=true;
  auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));auto* PC=Cast<APlayerController>(GetController());if(!G||!PC){FPlatformMisc::RequestExitWithStatus(false,1);return;}
  auto Check=[&](bool Good,const TCHAR* Name){G->MovementReport+=FString(Good?TEXT("PASS "):TEXT("FAIL "))+Name+TEXT("\n");if(!Good)++G->MovementFailures;};
  auto Key=[&](FKey K,EInputEvent E){PC->InputKey(FInputKeyEventArgs::CreateSimulated(K,E,E==IE_Released?0.f:1.f));};
  const int N=SuitReviewFrame++;
  if(N==0){
-  OriginalLanguage=ApolloText::IsUzbek();
   G->StartMission();G->MovementReport.Reset();G->MovementFailures=0;PC->SetControlRotation(FRotator(0,0,0));SetActorLocation(GetActorLocation()+FVector(0,-700,0));G->MovementOrigin=GetActorLocation();
   bool Assets=Gloves.Num()==16&&SuitBody.Num()==10&&SuitArms.Num()==18;
   for(const auto& C:Gloves)Assets&=C&&C->GetStaticMesh()!=nullptr;
@@ -183,7 +181,7 @@ void ALunarCharacter::SuitChecks(){
  }else if(N==9){
   Check(!G->Journal&&!G->Paused,TEXT("Escape input closes the journal and resumes play"));Key(EKeys::Escape,IE_Released);Key(EKeys::L,IE_Pressed);
  }else{
-  Check(ApolloText::IsUzbek()!=OriginalLanguage,TEXT("L input changes the Apollo display language"));Key(EKeys::L,IE_Released);ApolloText::SetUzbek(OriginalLanguage,false);
+  Check(G->ApolloObjective().Contains(TEXT("PREPARE"))&&ApolloText::Get(TEXT("MenuHelp"))==TEXT("Controls are introduced as you play."),TEXT("Former L language shortcut leaves the game in English"));Key(EKeys::L,IE_Released);
   G->MovementReport+=FString::Printf(TEXT("RESULT: %d failures\n"),G->MovementFailures);
   FFileHelper::SaveStringToFile(G->MovementReport,*(FPaths::ProjectDir()/TEXT("Reports/suit-checks.txt")));UE_LOG(LogTemp,Display,TEXT("SUIT_CHECKS\n%s"),*G->MovementReport);FPlatformMisc::RequestExitWithStatus(false,G->MovementFailures?1:0);return;
  }

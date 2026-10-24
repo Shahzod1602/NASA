@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.4 - 2026-10-24
+
+- Made all player-facing game text English, including the menu, Apollo journal, task guidance, radio, endings and checkpoint notices.
+- Removed the Uzbek text table, L language switch and language hint; old settings/launcher arguments cannot restore another language.
+- Updated packaged help to English while preserving mission and checkpoint identifiers.
+- Replaced language-switch checks with English-only input and legacy-launcher regressions.
+
 ## 0.4.3 - 2026-10-24
 
 - Added versioned Apollo checkpoints using stable work/site IDs, evidence metadata, exercise telemetry and a grounded player position.

@@ -1,12 +1,16 @@
 # Lunar Rescue
 
+## English edition - 0.4.4
+
+The entire game interface is English: menus, objectives, instructions, journal, radio messages, results and save notices. The former L language switch is removed, and old language preferences cannot switch the game back. See [the English edition notes](ENGLISH_UPDATE.md).
+
 ## Checkpoint update — 0.4.3
 
 Apollo 12 now saves committed work automatically. **C** continues the saved expedition from mission selection or the Apollo briefing; **Esc**, then **R** reloads the last checkpoint. Starting a new expedition asks before replacing existing progress. Samples, photographs, Surveyor hardware and exercise telemetry survive a restart. See [save locations, recovery and validation](CHECKPOINT_UPDATE.md). Walking after the last completed task is not saved on exit.
 
 ## Onboarding update — 0.4.2
 
-Apollo 12 and mission selection now default to Uzbek, with **L** switching to English. The Apollo HUD shows one current task with its purpose; the full checklist is in the paused **Tab / J** journal. A short look/walk/work guide introduces the controls. Surveyor can be reached along a player-chosen route; the historical traverse remains on the map. See [the update and validation notes](ONBOARDING_UPDATE.md).
+The Apollo HUD shows one current task with its purpose; the full checklist is in the paused **Tab / J** journal. A short look/walk/work guide introduces controls. Surveyor can be reached along a player-chosen route; the historical traverse remains on the map. The former bilingual UI from this milestone was superseded by the English edition. See [the historical validation notes](ONBOARDING_UPDATE.md).
 
 ## Current development plan — 2026-10-24
 
@@ -16,7 +20,7 @@ The [full game improvement plan in Uzbek](GAME_MASTER_PLAN.md) covers onboarding
 
 The Moon selection now opens **Apollo 12: Surveyor's Legacy**, a playable chapter based on Apollo 12's surface work. NASA/LROC terrain, mapped sample sites and EVA traverse points support a route from Intrepid to Surveyor 3 and back. See [Apollo 12 implementation and sources](APOLLO12.md). The earlier fictional SELENE expedition remains in the project as a separate map.
 
-A first-person expedition prototype with separate Moon and Mars missions. Apollo 12 and the menu have Uzbek/English text; the older Moon/Mars mission interfaces remain English.
+A first-person expedition prototype with separate Moon and Mars missions, all with English player-facing text and guidance.
 
 The 0.4.1 [astronaut update](SUIT_UPDATE.md) adds fitted suit meshes, articulated gloves, visible boots and legs, Shift fast stride and a V following-camera view. Hold Alt in that view to inspect the suit. Apollo instructions now name the destination and explain the next action.
 
@@ -24,13 +28,13 @@ The 0.4.1 [astronaut update](SUIT_UPDATE.md) adds fitted suit meshes, articulate
 
 This section records the project state before the Apollo 12 update. Its statements about planned NASA terrain and deferred implementation are historical; Apollo 12 now uses NASA/LROC data described in [APOLLO12.md](APOLLO12.md).
 
-Auditdan keyin mavjud menu click xatosi source darajasida tuzatildi: endi faqat planet kartasini bosish missiyani boshlaydi. [Maintenance qaydi](MAINTENANCE_FOLLOWUP.md). Tarqatilgan v0.2.0 bu tuzatishni hali o'z ichiga olmaydi.
+The post-audit menu click fix starts a mission only when its planet card is clicked. See [the maintenance record](MAINTENANCE_FOLLOWUP.md). The old v0.2.0 package predates this fix.
 
-Oldingi Moon/Mars o'yini va audit yozuvlari o'sha sanada bo'lgan holatni aks ettiradi. Tafsilotlar: [texnik audit](TECHNICAL_AUDIT.md), [ilmiy manbalar](SCIENCE_AND_SOURCES.md), [credits](CREDITS.md), [o'zgarishlar](CHANGELOG.md) va [playtest protokoli](PLAYTEST_PROTOCOL.md).
+The older Moon/Mars missions and audit notes describe the project at their recorded dates. See [technical audit](TECHNICAL_AUDIT.md), [sources](SCIENCE_AND_SOURCES.md), [credits](CREDITS.md), [changelog](CHANGELOG.md) and [playtest protocol](PLAYTEST_PROTOCOL.md).
 
 ## Play the standalone Windows build
 
-Download the Windows ZIP from the [Apollo 12 v0.4.3 release](https://github.com/Shahzod1602/NASA/releases/tag/apollo12-v0.4.3), extract the entire archive, and run **LunarRescue.exe**. Unreal Editor is not required. The package includes its asset credits; keep the Engine, LunarRescue and Credits folders together. The earlier [v0.2.0 Mars release](https://github.com/Shahzod1602/NASA/releases/tag/mars-expedition-v0.2.0) remains available.
+Download the Windows ZIP from the [latest English Windows release](https://github.com/Shahzod1602/NASA/releases/latest), extract the entire archive, and run **LunarRescue.exe**. Unreal Editor is not required. The package includes its asset credits; keep the Engine, LunarRescue and Credits folders together. The earlier [v0.2.0 Mars release](https://github.com/Shahzod1602/NASA/releases/tag/mars-expedition-v0.2.0) remains available.
 
 The local Apollo 12 package is under `Dist/Apollo12/Windows`.
 
@@ -85,7 +89,6 @@ The editor fallback uses the installed Unreal Engine 5.8.3.
 - Q: select the next Apollo sample or turn the ALSEP antenna. In the legacy SELENE map, Q cycles its markers.
 - F: toggle visor zoom.
 - Tab / J: open the Apollo field journal; it pauses movement and the exercise clock.
-- L: switch Uzbek/English in Apollo 12 or mission selection; the choice is saved.
 - Escape: pause or resume.
 - R or Enter: restart after winning or losing.
 - Alt+F4: close the game.

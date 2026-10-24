@@ -140,7 +140,6 @@ void ALunarCharacter::SetupPlayerInputComponent(UInputComponent* I) {
  I->BindKey(EKeys::M,IE_Pressed,this,&ALunarCharacter::MissionMenu);
  I->BindKey(EKeys::J,IE_Pressed,this,&ALunarCharacter::ToggleJournal);
  I->BindKey(EKeys::Tab,IE_Pressed,this,&ALunarCharacter::ToggleJournal);
- I->BindKey(EKeys::L,IE_Pressed,this,&ALunarCharacter::ToggleLanguage);
  I->BindKey(EKeys::C,IE_Pressed,this,&ALunarCharacter::ContinueMission);
  I->BindKey(EKeys::V,IE_Pressed,this,&ALunarCharacter::ToggleSuitView);
  I->BindKey(EKeys::LeftShift,IE_Pressed,this,&ALunarCharacter::BeginFastStride);
@@ -163,12 +162,6 @@ void ALunarCharacter::ToggleJournal() {
   if(G->Journal){G->Journal=false;if(G->Paused)PauseMission();}
   else {if(!G->Paused)PauseMission();G->Journal=true;}
  }
-}
-void ALunarCharacter::ToggleLanguage(){
- auto* G=Mission(this);if(!G||(!G->Apollo&&!G->Menu))return;
- ApolloText::SetUzbek(!ApolloText::IsUzbek());
- if(G->IsActive())G->Message(G->ApolloInstruction());
- if(G->Stage==ELunarStage::Lost)G->FailureReason=ApolloText::Get(G->Oxygen<=0?TEXT("TimeEnded"):TEXT("LeftArea"));
 }
 void ALunarCharacter::StartMission() {
  if(auto* G=Mission(this)) {

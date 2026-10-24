@@ -1,4 +1,4 @@
-param([string]$EngineRoot='D:\UnrealEngine\UE_5.8',[switch]$Packaged,[switch]$Graphics,[switch]$Walkthrough,[switch]$HistoricalRoute,[switch]$Suit,[switch]$Checkpoints,[switch]$Review,[switch]$Regression,[ValidateSet('uz','en')][string]$Language='uz',[int]$Width=1280,[int]$Height=720)
+param([string]$EngineRoot='D:\UnrealEngine\UE_5.8',[switch]$Packaged,[switch]$Graphics,[switch]$Walkthrough,[switch]$HistoricalRoute,[switch]$Suit,[switch]$Checkpoints,[switch]$Review,[switch]$Regression,[switch]$LegacyLanguage,[ValidateSet('en')][string]$Language='en',[int]$Width=1280,[int]$Height=720)
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 $env:TEMP=Join-Path $root 'Intermediate\ApolloTemp';$env:TMP=$env:TEMP
@@ -30,7 +30,9 @@ foreach($case in $cases){
  }
  $resultFile=if($resultName){Join-Path $resultRoot $resultName}
  if($resultFile -and (Test-Path -LiteralPath $resultFile)){Remove-Item -LiteralPath $resultFile}
- $arguments=@($case[0],'-game','-unattended',"-$($case[1])","-ApolloLanguage=$Language","-abslog=`"$logPath`"")
+ $arguments=@($case[0],'-game','-unattended',"-$($case[1])","-abslog=`"$logPath`"")
+ # An obsolete launcher argument must not restore the former Uzbek UI.
+ if($LegacyLanguage){$arguments+='-ApolloLanguage=uz'}
  if($case[2] -eq 'historical-walk'){$arguments+='-ApolloHistoricalRoute'}
  if(-not $Packaged){$arguments=@("`"$root\LunarRescue.uproject`"")+$arguments}
  if($Graphics){$arguments+=@('-dx11','-RenderOffscreen','-ForceRes',"-ResX=$Width","-ResY=$Height")}else{$arguments+=@('-nullrhi','-nosound')}

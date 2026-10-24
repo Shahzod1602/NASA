@@ -11,7 +11,7 @@ Bu hujjat keyingi ishlar uchun asosiy reja. Bo‘limlardagi talablar yakuniy maq
 | BASE-01 | v0.4.1 fayllari/paketi, hash manifesti va yangi baseline tekshiruvlari saqlandi |
 | UX-01 | Bitta vazifa + harakat + maqsad HUD i yozildi, 720p ko‘rib chiqildi; Canvas dan UMG ga o‘tish keyingi ish |
 | UX-02 | Qarash/yurish/ishlash yordami ishlaydi; yangi foydalanuvchi bilan qabul sinovi hali kerak |
-| UX-03 | Apollo va menyu uchun 154 ta ikki tilli String Table yozuvi; eski boblar va to‘liq localization jarayoni hali navbatda |
+| UX-03 | v0.4.4: foydalanuvchi tanloviga binoan butun interfeys inglizcha; 153 ta barqaror English String Table yozuvi |
 | UX-05 | Majburiy 12 nuqta qulfi olindi; bevosita va tarixiy yo‘l bilan to‘liq avtomatik yurish o‘tdi |
 | PERF-01 | v0.4.1–0.4.3 uchun boshlang‘ich 60 soniyalik render profillari olindi; v0.4.3 da saqlash I/O si yoqilgan. Butun missiya profili hali navbatda |
 | SYS-01 | Checkpoint chegarasida barqaror missiya/ish/joy ID lari qo‘shildi; gameplay ichidagi umumiy holat refaktori hali navbatda |
@@ -29,7 +29,7 @@ Birinchi tugallangan versiya: Windows uchun internet talab qilmaydigan, bir kish
 Asosiy qarorlar:
 
 - Birinchi navbatda tushunarlilik, skafandr, qo‘l va yurish, so‘ng missiyalardagi harakatlar yaxshilanadi.
-- Asosiy til — o‘zbek lotin; inglizcha tanlov ham bo‘ladi. Ilmiy nomlar izoh bilan beriladi.
+- Asosiy til - English. 2026-10-24 dagi foydalanuvchi talabi avvalgi ikki tilli rejani almashtiradi.
 - Asosiy tarixiy rejimda vaqt tugab qolishi yo‘q. Alohida mashq rejimida hozirgi 30 daqiqalik cheklov qolishi mumkin; u skafandrning haqiqiy kislorod sig‘imi deb ko‘rsatilmaydi.
 - Apollo 12 ning ikki EVA sidagi tanlangan ishlar bitta bobga jamlanganligi boshida tushuntiriladi. Bu aniq ketma-ketlikdagi to‘liq tarixiy rekonstruksiya emas.
 - NASA ma’lumoti, hisoblangan natija va o‘yin uchun yaratilgan detal bir-biridan ajratib ko‘rsatiladi.
@@ -267,7 +267,7 @@ Modelda LOD, yaqin/uzoq tekstura o‘lchami va kamroq material bo‘limi ishlati
 | BASE-01 | P0 | v0.4.1 source/content/package holatini qayta tiklanadigan baseline qilish | Yo‘q | Versiya, LFS va asset ro‘yxati; mavjud natijalar bog‘langan |
 | UX-01 | P0 | Bir topshiriqli HUD va aniq E ko‘rsatmasi | BASE-01 | 720p da ustma-ust tushmaydigan barcha olti bosqich suratlari |
 | UX-02 | P0 | Dastlabki 90 soniya tutoriali | UX-01 | Kamida 4/5 yangi o‘yinchi birinchi ishni yordamsiz bajaradi |
-| UX-03 | P0 | O‘zbekcha matn, string table va inglizcha tanlov | UX-01 | To‘liq yo‘l ikki tilda; kesilgan matn va yo‘q glif yo‘q |
+| UX-03 | P0 | English matn va barqaror string table | UX-01 | Butun missiya inglizcha; kesilgan matn yoki yoqolgan glif yoq |
 | UX-04 | P0 | Input kontekstlari, Esc va hold/toggle | UX-02 | Asbob/menyu/yurish to‘qnashmaydi; almashtirilgan tugma ishlaydi |
 | UX-05 | P0 | 12 majburiy yo‘l nuqtasi o‘rniga yumshoq navigatsiya | UX-01 | Tarixiy yo‘l va bevosita yo‘l bilan Surveyor bosqichi ochiladi |
 | UX-06 | P0 | Matn/subtitr, kamera va ovoz sozlamalari | UX-03, UX-04 | 100–150% matn, kamera tebranishi o‘chiq holatda bob tugaydi |

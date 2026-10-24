@@ -29,10 +29,7 @@ void ALunarGameMode::ApolloChecks(){
  Check(Oxygen==1800&&Stage==ELunarStage::Briefing,TEXT("Briefing starts with 30-minute exercise budget"));
  AdvanceTime(100);Check(Oxygen==1800,TEXT("Briefing does not consume time"));
  StartMission();Check(Stage==ELunarStage::ApolloCheckout,TEXT("Expedition starts with checkout"));
- const bool OriginalLanguage=ApolloText::IsUzbek();
- ApolloText::SetUzbek(true,false);const FString UzbekObjective=ApolloObjective();
- ApolloText::SetUzbek(false,false);Check(UzbekObjective!=ApolloObjective()&&ApolloObjective().Contains(TEXT("PREPARE")),TEXT("Apollo objectives switch between shipped Uzbek and English tables"));
- ApolloText::SetUzbek(OriginalLanguage,false);
+ Check(ApolloObjective()==TEXT("1 / 6   PREPARE FOR THE EXPEDITION")&&ApolloText::Get(TEXT("CheckpointContinue"))==TEXT("C  Continue expedition"),TEXT("Apollo objectives and checkpoint controls use English"));
  Check(!ApolloTutorial().IsEmpty()&&!ApolloLookLearned&&!ApolloMoveLearned,TEXT("Checkout starts with nonblocking look and movement guidance"));
  PC->SetControlRotation(ApolloTutorialAim+FRotator(0,30,0));Paused=true;TickApollo(0);Check(!ApolloLookLearned,TEXT("Paused tutorial does not advance"));Paused=false;TickApollo(0);
  Check(ApolloLookLearned&&!ApolloMoveLearned,TEXT("Looking around advances guidance without requiring a key"));

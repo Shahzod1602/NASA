@@ -42,8 +42,15 @@ Get-ChildItem -LiteralPath $sourceArt -Recurse -File | Where-Object { $_.Name -l
  Copy-Item -LiteralPath $_.FullName -Destination $dest
 }
 New-Item -ItemType Directory -Force -Path "$credits\Apollo12" | Out-Null
-Copy-Item -LiteralPath "$root\SourceArt\Apollo12\manifest.json","$root\APOLLO12.md","$root\ONBOARDING_UPDATE.md","$root\CHECKPOINT_UPDATE.md","$root\SUIT_UPDATE.md" -Destination "$credits\Apollo12"
+Copy-Item -LiteralPath "$root\SourceArt\Apollo12\manifest.json","$root\APOLLO12.md","$root\ONBOARDING_UPDATE.md","$root\CHECKPOINT_UPDATE.md","$root\SUIT_UPDATE.md","$root\ENGLISH_UPDATE.md" -Destination "$credits\Apollo12"
 Copy-Item -LiteralPath "$root\SourceArt\Apollo12\Raw\NAC_DTM_APOLLO12_README.TXT","$root\SourceArt\Apollo12\Raw\NAC_DTM_APOLLO12.LBL" -Destination "$credits\Apollo12"
 New-Item -ItemType Directory -Force -Path "$credits\Suit" | Out-Null
 Copy-Item -LiteralPath "$root\SUIT_UPDATE.md" -Destination "$credits\Suit"
+Copy-Item -LiteralPath "$root\PLAYING.txt" -Destination "$root\Dist\Apollo12\Windows\READ_ME.txt"
+$runtime=Join-Path $EngineRoot 'Engine\Extras\Redist\en-us\vc_redist.x64.exe'
+if(Test-Path -LiteralPath $runtime){
+ $runtimeFolder=Join-Path $root 'Dist\Apollo12\Windows\Engine\Extras\Redist\en-us'
+ New-Item -ItemType Directory -Force -Path $runtimeFolder | Out-Null
+ Copy-Item -LiteralPath $runtime -Destination $runtimeFolder
+}
 Write-Output "Apollo 12 package: $root\Dist\Apollo12\Windows\LunarRescue.exe"

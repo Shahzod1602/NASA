@@ -54,7 +54,6 @@ public:
  void ChooseMoon(); void ChooseMars(); void MissionMenu();
  void ReleaseInteract(); void ToggleRoute();
  void ToggleJournal();
- void ToggleLanguage();
  void ContinueMission();
  UPROPERTY() TObjectPtr<class UStaticMeshComponent> CarriedModule;
  FVector PausedVelocity=FVector::ZeroVector;

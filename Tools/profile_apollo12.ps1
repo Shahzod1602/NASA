@@ -1,7 +1,7 @@
 param(
  [ValidatePattern('^[A-Za-z0-9_-]+$')][string]$Label='current',
  [ValidateRange(1200,12000)][int]$Frames=4200,
- [ValidateSet('uz','en')][string]$Language='uz'
+ [ValidateSet('en')][string]$Language='en'
 )
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
@@ -11,7 +11,7 @@ $report=Join-Path $root "Reports\Performance\$Label"
 New-Item -ItemType Directory -Path $report -Force | Out-Null
 $env:TEMP=Join-Path $root 'Intermediate\ApolloTemp';$env:TMP=$env:TEMP
 $log=Join-Path $report 'capture.log'
-$captureArgs=@('/Game/Lunar/Maps/Apollo12','-game','-unattended','-ApolloWalkTest','-ApolloSaveProfile',"-ApolloLanguage=$Language",'-dx11','-RenderOffscreen','-ForceRes','-ResX=1280','-ResY=720','-nosound','-ExecCmds="t.MaxFPS 60,r.VSync 0"',"-csvCaptureFrames=$Frames",'-csvGpuStats','-ExitAfterCsvProfiling',"-abslog=`"$log`"")
+$captureArgs=@('/Game/Lunar/Maps/Apollo12','-game','-unattended','-ApolloWalkTest','-ApolloSaveProfile','-dx11','-RenderOffscreen','-ForceRes','-ResX=1280','-ResY=720','-nosound','-ExecCmds="t.MaxFPS 60,r.VSync 0"',"-csvCaptureFrames=$Frames",'-csvGpuStats','-ExitAfterCsvProfiling',"-abslog=`"$log`"")
 $started=Get-Date
 $capture=Start-Process -FilePath $exe -ArgumentList $captureArgs -WindowStyle Hidden -PassThru
 $peakWorkingSet=0L

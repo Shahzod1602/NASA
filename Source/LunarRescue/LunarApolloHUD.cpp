@@ -32,7 +32,6 @@ void ALunarHUD::DrawApollo(ALunarGameMode* G){
  Text(TEXT("APOLLO 12"),43,14,.9,Ink);Text(T(TEXT("Subtitle")),44,51,.38,Dim);
  Text(ApolloText::Format(TEXT("Window"),{{TEXT("Time"),Time(G->Oxygen)}}),SW-330,19,.62,G->Oxygen<180?Gold:Cyan);
  Text(T(TEXT("WindowNote")),SW-329,50,.36,Dim);
- Text(T(TEXT("Language")),SW-110,65,.36,Gold);
  if(G->ApolloSaveNoticeRemaining>0&&!G->ApolloSaveNotice.IsEmpty())Text(T(*G->ApolloSaveNotice),44,67,.40,G->ApolloSaveError?Gold:Cyan);
  Box(0,SH-42,SW,42,.97f);Text(T(TEXT("Footer")),26,SH-30,.48,Dim);
 

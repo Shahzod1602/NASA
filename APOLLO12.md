@@ -1,10 +1,10 @@
-# Apollo 12: Surveyor's Legacy — v0.4.3
+# Apollo 12: Surveyor's Legacy — v0.4.4
 
 LunarRescue's default Moon destination is now a historical surface expedition at the Apollo 12 landing site. The previous MoonBase and MarsBase missions remain available in the project and package. No public deployment or release upload is performed by the local build.
 
 ## Play
 
-Run `Play Lunar Rescue.cmd`, choose Moon, then press Enter. The new package is `Dist/Apollo12/Windows/LunarRescue.exe`. Keep its entire Windows folder together. Keyboard: WASD/arrows move, mouse looks, Space hops, E interacts or holds to work, Q cycles sample/hardware markers or turns the ALSEP antenna, F zooms, Shift holds a faster stride, V switches helmet/following view (hold Alt to orbit), Tab/J opens the field journal, Escape pauses, M returns to mission selection from briefing/pause/results. The journal pauses movement and the exercise clock; Q changes its page. Apollo and mission selection default to Uzbek; L switches to English and saves the choice. Older Moon/Mars mission text remains English. See [the onboarding update](ONBOARDING_UPDATE.md) and [the suit update](SUIT_UPDATE.md).
+Run `Play Lunar Rescue.cmd`, choose Moon, then press Enter. The new package is `Dist/Apollo12/Windows/LunarRescue.exe`. Keep its entire Windows folder together. Keyboard: WASD/arrows move, mouse looks, Space hops, E interacts or holds to work, Q cycles sample/hardware markers or turns the ALSEP antenna, F zooms, Shift holds a faster stride, V switches helmet/following view (hold Alt to orbit), Tab/J opens the field journal, Escape pauses, M returns to mission selection from briefing/pause/results. The journal pauses movement and the exercise clock; Q changes its page. All menus, mission guidance and journal text are English. Previous language preferences and the former L shortcut do not change the interface. See [the onboarding update](ONBOARDING_UPDATE.md) and [the suit update](SUIT_UPDATE.md).
 
 ## Playable scenario
 
@@ -46,7 +46,7 @@ The lander is an existing credited visual asset. Surveyor and ALSEP are authored
 2. Unreal Python commandlet: `-run=pythonscript -script=Tools/build_apollo12.py`, using the project. This writes only the separate Apollo12 map and assets, leaving MoonBase/MarsBase intact.
 3. Build `LunarRescueEditor Win64 Development -gather` after adding the new C++ files.
 4. `Tools/verify_apollo12.ps1 -Regression -Walkthrough -HistoricalRoute -Suit` verifies terrain registration, mission gates, tutorial guidance, input, interaction cancellation, photo prerequisites, antenna aiming, journal pause, hardware recovery, timeout, both route choices and prior Moon/Mars/menu behavior.
-5. `Tools/verify_apollo12.ps1 -Review -Language uz` renders sixteen UI/world screenshots. Repeat with `-Language en`, or `-Width 1920 -Height 1080`, for manual inspection.
+5. `Tools/verify_apollo12.ps1 -Review` renders 21 English UI/world screenshots. Add `-Width 1920 -Height 1080` for a larger viewport, or `-LegacyLanguage` to check that an obsolete language argument cannot change the text.
 6. `Tools/package_apollo12.ps1` builds the separate standalone package; repeat checks with `-Packaged` and rendering with `-Graphics`.
 
 The movement walkthrough uses the real character input and collision at fixed 1/60-second simulation steps, accelerated by uncapped headless execution. Its elapsed value measures simulated gameplay duration, not a human playtest or benchmark FPS. Onboarding v0.4.2 results are recorded in [ONBOARDING_UPDATE.md](ONBOARDING_UPDATE.md); current v0.4.3 save, movement and rendered performance validation is in [CHECKPOINT_UPDATE.md](CHECKPOINT_UPDATE.md). Generated semantic reports remain under `Reports`.
