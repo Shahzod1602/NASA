@@ -1,5 +1,16 @@
 # Lunar Rescue
 
+## Photo and animation optimization - 0.6.1
+
+Mission photographs are encoded and written on a background queue. Evidence
+is committed after a successful file write, with retry if writing fails. The
+work camera, tool contact and glove pose now update in that order once per
+normal frame. The album retains its three most recently viewed photographs.
+
+The audio-enabled 720p Medium mission capture averaged 59.99 FPS; its largest
+frame fell from 169.85 ms to 27.45 ms in the measured build pair. The Windows
+build passed 383 checks. See [measurement limits](FIELDWORK_UPDATE.md).
+
 ## Contact and coating investigation - 0.6.0
 
 Animated tool jaws meet the actual rock or fitting. Samples lift into a labeled

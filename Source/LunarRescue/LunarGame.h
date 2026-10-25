@@ -58,6 +58,9 @@ public:
  void OpenSettings(); void OpenEvidence(); void ClosePanel(); void ToggleApolloMode(); void ToggleApolloGuide();
  UPROPERTY() TObjectPtr<class ULunarPanel> ActivePanel;
  bool PanelWasPaused=false;
+ UPROPERTY() TMap<FString,TObjectPtr<class UTexture2D>> EvidencePhotoCache;
+ TArray<FString> EvidencePhotoRecency;
+ class UTexture2D* LoadEvidencePhoto(const FString& RelativePath);
  UPROPERTY() TObjectPtr<class UPoseableMeshComponent> SuitRig;
  UPROPERTY() TObjectPtr<class UPoseableMeshComponent> HandRig;
  UPROPERTY() TObjectPtr<class UStaticMeshComponent> WorkTool;
@@ -119,6 +122,9 @@ public:
  float ApolloPackedPartRemaining=0;
  bool ApolloDustMode=false, ApolloDustCompared=false;
  uint8 ApolloDustPhotos=0;
+ bool ApolloPhotoPending=false;
+ bool RequestApolloPhoto(int32 EvidenceIndex,const FString& RelativePath);
+ void ApolloOptimizationChecks();
  int32 ApolloDustChoice=0;
  UPROPERTY() TArray<TObjectPtr<AActor>> ApolloDustActors;
  UPROPERTY() TArray<TObjectPtr<class UMaterialInterface>> DustMaterials;

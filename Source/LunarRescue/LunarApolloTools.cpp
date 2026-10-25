@@ -12,7 +12,7 @@ namespace {
 int Index(const TArray<TObjectPtr<AActor>>& A,AActor* V){return A.IndexOfByPredicate([V](const auto& P){return P.Get()==V;});}
 }
 bool ALunarGameMode::OpenApolloTool(){
- if(!Apollo||!IsActive()||Paused||ApolloTool||!CanInteract()||Stage==ELunarStage::ApolloTraverse)return false;
+ if(!Apollo||!IsActive()||Paused||ApolloTool||ApolloPhotoPending||!CanInteract()||Stage==ELunarStage::ApolloTraverse)return false;
  if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));P&&P->ThirdPerson)P->ToggleSuitView();
  ApolloWorkTarget=InteractionTarget();if(!ApolloWorkTarget)return false;
  ApolloToolPhase=0;ApolloToolCooldown=0;ApolloConfirmationRemaining=0;ApolloPackedPreviewRemaining=0;ApolloPackedPartRemaining=0;

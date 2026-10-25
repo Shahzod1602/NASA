@@ -107,6 +107,25 @@ void ALunarCharacter::UpdateSuit(float D){
  const float Crouch=GaitBlend*((FastStride?6.f:3.f)+FMath::Cos(GaitPhase*2)*(FastStride?1.8f:1.f));
  SuitBody[0]->SetRelativeLocation(FVector(0,0,Breath-Crouch));SuitBody[1]->SetRelativeLocation(FVector(0,0,-Crouch));
  SuitBody[2]->SetRelativeLocation(FVector(0,0,64+Breath-Crouch));SuitBody[3]->SetRelativeLocation(FVector(0,0,Breath-Crouch));
+ if(ThirdPerson){
+  FVector Target=GetActorLocation()+FVector(0,0,40);FRotator R=GetControlRotation();
+  FVector Desired=Target+R.RotateVector(FVector(-265,42,55));FHitResult Hit;FCollisionQueryParams Q;Q.AddIgnoredActor(this);
+  if(GetWorld()->SweepSingleByChannel(Hit,Target,Desired,FQuat::Identity,ECC_Visibility,FCollisionShape::MakeSphere(12),Q))Desired=Hit.Location;
+  Camera->SetWorldLocation(D>0?FMath::VInterpTo(Camera->GetComponentLocation(),Desired,D,12):Desired);
+  Camera->SetWorldRotation((Target+R.Vector()*70-Camera->GetComponentLocation()).Rotation());
+ }
+ else if(G&&G->ApolloTool>1&&G->ApolloWorkTarget){
+  const FVector Target=(G->ApolloTool==4||G->ApolloTool==5||G->ApolloTool==6)?G->ApolloContactPoint():G->ApolloWorkTarget->GetActorLocation();
+  const bool Kit=G->ApolloTool==7||G->ApolloTool==8;
+  const float WorkDistance=Kit?125.f:G->ApolloTool==6?105.f:95.f;
+  const FVector WorkDirection=G->ApolloTool==6&&G->SelectedSample==2?FVector(0,1,0):GetControlRotation().Vector().GetSafeNormal2D();
+  FVector Desired=Target-WorkDirection*WorkDistance+FVector(0,0,Kit?70.f:G->ApolloTool==6?30.f:(G->ApolloTool==4||G->ApolloTool==5)?85.f:25.f);
+  FHitResult Hit;FCollisionQueryParams Q;Q.AddIgnoredActor(this);
+  if(GetWorld()->SweepSingleByChannel(Hit,Target+FVector(0,0,30),Desired,FQuat::Identity,ECC_Visibility,FCollisionShape::MakeSphere(6),Q))Desired=Hit.Location;
+  Camera->SetWorldLocation(D>0?FMath::VInterpTo(Camera->GetComponentLocation(),Desired,D,10):Desired);
+  Camera->SetWorldRotation((Target-Camera->GetComponentLocation()).Rotation());
+ }
+ // Camera first, tool contacts second, glove pose last: all use one view transform.
  FVector Direction=GetActorTransform().InverseTransformVectorNoScale(Paused?PausedVelocity:GetVelocity()).GetSafeNormal2D();
  UpdateApolloWorkVisuals();
  for(int S=0;S<2;++S){
@@ -138,24 +157,6 @@ void ALunarCharacter::UpdateSuit(float D){
   if(G&&G->ApolloTool==6)ViewWrist=FVector(30,Side*7,-16);
   if(WorkGripActive){ViewWrist=WorkGrip[S]-FVector(5,0,0);ViewElbow=FVector(8,Side*25,-32);}
   Hand(Gloves,S*8,ViewElbow,ViewWrist,Side,WorkBlend);
- }
- if(ThirdPerson){
-  FVector Target=GetActorLocation()+FVector(0,0,40);FRotator R=GetControlRotation();
-  FVector Desired=Target+R.RotateVector(FVector(-265,42,55));FHitResult Hit;FCollisionQueryParams Q;Q.AddIgnoredActor(this);
-  if(GetWorld()->SweepSingleByChannel(Hit,Target,Desired,FQuat::Identity,ECC_Visibility,FCollisionShape::MakeSphere(12),Q))Desired=Hit.Location;
-  Camera->SetWorldLocation(D>0?FMath::VInterpTo(Camera->GetComponentLocation(),Desired,D,12):Desired);
-  Camera->SetWorldRotation((Target+R.Vector()*70-Camera->GetComponentLocation()).Rotation());
- }
- else if(G&&G->ApolloTool>1&&G->ApolloWorkTarget){
-  const FVector Target=(G->ApolloTool==4||G->ApolloTool==5||G->ApolloTool==6)?G->ApolloContactPoint():G->ApolloWorkTarget->GetActorLocation();
-  const bool Kit=G->ApolloTool==7||G->ApolloTool==8;
-  const float WorkDistance=Kit?125.f:G->ApolloTool==6?105.f:95.f;
-  const FVector WorkDirection=G->ApolloTool==6&&G->SelectedSample==2?FVector(0,1,0):GetControlRotation().Vector().GetSafeNormal2D();
-  FVector Desired=Target-WorkDirection*WorkDistance+FVector(0,0,Kit?70.f:G->ApolloTool==6?30.f:(G->ApolloTool==4||G->ApolloTool==5)?85.f:25.f);
-  FHitResult Hit;FCollisionQueryParams Q;Q.AddIgnoredActor(this);
-  if(GetWorld()->SweepSingleByChannel(Hit,Target+FVector(0,0,30),Desired,FQuat::Identity,ECC_Visibility,FCollisionShape::MakeSphere(6),Q))Desired=Hit.Location;
-  Camera->SetWorldLocation(D>0?FMath::VInterpTo(Camera->GetComponentLocation(),Desired,D,10):Desired);
-  Camera->SetWorldRotation((Target-Camera->GetComponentLocation()).Rotation());
  }
  PoseSuitRig();
 }

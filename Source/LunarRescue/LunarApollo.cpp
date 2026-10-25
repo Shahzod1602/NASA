@@ -1,4 +1,5 @@
 #include "LunarGame.h"
+#include "LunarPhotos.h"
 #include "LunarApolloText.h"
 #include "LunarSettings.h"
 #include "LunarPanels.h"
@@ -47,6 +48,8 @@ int32 Bits(uint8 Mask){int32 N=0;for(int32 I=0;I<8;++I)if(Mask&(1<<I))++N;return
 }
 
 void ALunarGameMode::BuildApollo() {
+ LunarPhotos::Initialize();
+ if(FParse::Param(FCommandLine::Get(),TEXT("ApolloOptimizationTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ApolloOptimizationChecks,3,false);}
  ApolloTimed=FParse::Param(FCommandLine::Get(),TEXT("ApolloTimed"));
  OxygenCapacity=1800;Oxygen=OxygenCapacity;
  auto* PC=UGameplayStatics::GetPlayerController(this,0);
@@ -181,7 +184,7 @@ void ALunarGameMode::StartApollo(bool Confirmed){
  CancelApolloTool();ApolloLevel=FVector2D(.4f,-.3f);ApolloTranscript.Reset();
  if(!Confirmed&&ApolloSaveStatus!=EApolloSaveStatus::Missing){ApolloConfirmNew=true;return;}
  ApolloConfirmationRemaining=0;ApolloPackedPreviewRemaining=0;ApolloPackedSample=INDEX_NONE;ApolloGuideEnabled=true;ApolloDustMode=false;ApolloDustCompared=false;ApolloDustPhotos=0;ApolloPackedPartRemaining=0;
- ApolloConfirmNew=false;ApolloStarted=true;ApolloRunId=FGuid::NewGuid();ApolloEvidence.Reset();
+ ApolloConfirmNew=false;ApolloStarted=true;ApolloRunId=FGuid::NewGuid();ApolloPhotoPending=false;ApolloEvidence.Reset();
  ApolloElapsed=0;ApolloDistance=0;Oxygen=OxygenCapacity;ApolloPhotos=0;ApolloParts=0;ApolloInstruments=0;SamplesCollected=0;SelectedSample=0;SurveyorPhotographed=false;
  for(auto& Actor:SampleActors)Actor->SetActorHiddenInGame(false);for(auto& Actor:ApolloPartActors)Actor->SetActorHiddenInGame(false);
  Stage=ELunarStage::ApolloCheckout;ApolloAction=0;
@@ -273,21 +276,20 @@ void ALunarGameMode::CycleApollo(){
  for(int32 I=1;I<=3;++I){int32 Next=(SelectedSample+I)%3;if(!(Mask&(1<<Next))){SelectedSample=Next;return;}}
 }
 void ALunarGameMode::InteractApollo(){
+ if(ApolloPhotoPending)return;
  if(ApolloToolsEnabled){OpenApolloTool();return;}
  if(Stage==ELunarStage::ApolloTraverse)return;
  if(Stage==ELunarStage::ApolloDeploy&&ApolloAction==1&&FMath::Abs(FMath::FindDeltaAngleDegrees(ApolloAntennaAngle,-7.f))>8){Message(ApolloText::Get(TEXT("AntennaWrong")));return;}
  if(ApolloHoldDuration()>0){Holding=true;HoldProgress=0;HeldTarget=InteractionTarget();return;}
  FString PhotoName;int32 EvidenceIndex=INDEX_NONE;
- if(Stage==ELunarStage::ApolloSamples){int32 I=IndexOf(SampleActors,InteractionTarget());if(I<0)return;ApolloPhotos|=1<<I;EvidenceIndex=I;const TCHAR* IDs[]={TEXT("12031"),TEXT("12032"),TEXT("12027")};PhotoName=FString(TEXT("Sample-"))+IDs[I];PlayPowerSound(TEXT("PowerContact"),.3);Message(ApolloText::Get(TEXT("PhotoMessage")));}
- else if(Stage==ELunarStage::ApolloRecover&&!SurveyorPhotographed){SurveyorPhotographed=true;SelectedSample=0;EvidenceIndex=3;PhotoName=TEXT("Surveyor3-before-recovery");PlayPowerSound(TEXT("PowerContact"),.3);Message(ApolloText::Get(TEXT("SurveyorPhotoMessage"))+TEXT(" K: optional coating investigation."));}
+ if(Stage==ELunarStage::ApolloSamples){int32 I=IndexOf(SampleActors,InteractionTarget());if(I<0)return;EvidenceIndex=I;const TCHAR* IDs[]={TEXT("12031"),TEXT("12032"),TEXT("12027")};PhotoName=FString(TEXT("Sample-"))+IDs[I];PlayPowerSound(TEXT("PowerContact"),.3);Message(ApolloText::Get(TEXT("PhotoMessage")));}
+ else if(Stage==ELunarStage::ApolloRecover&&!SurveyorPhotographed){EvidenceIndex=3;PhotoName=TEXT("Surveyor3-before-recovery");PlayPowerSound(TEXT("PowerContact"),.3);Message(ApolloText::Get(TEXT("SurveyorPhotoMessage"))+TEXT(" K: optional coating investigation."));}
  if(EvidenceIndex!=INDEX_NONE){
   FString RelativePath;
   if(FApp::CanEverRender()&&!FParse::Param(FCommandLine::Get(),TEXT("ApolloTest"))&&!FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveTest"))&&!FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveWriteTest"))&&!FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveReadTest"))){
    RelativePath=FString(TEXT("Apollo12/Photos/"))+ApolloRunId.ToString(EGuidFormats::Digits)+TEXT("/")+PhotoName+TEXT(".png");
-   IFileManager::Get().MakeDirectory(*FPaths::GetPath(FPaths::ProjectSavedDir()/RelativePath),true);if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0))){P->PhotoCaptureFrames=2;if(P->HandRig)P->HandRig->SetVisibility(false);if(P->WorkTool)P->WorkTool->SetVisibility(false);}if(auto* PC=UGameplayStatics::GetPlayerController(this,0);PC&&PC->PlayerCameraManager)PC->PlayerCameraManager->SetGameCameraCutThisFrame();
-  FScreenshotRequest::RequestScreenshot(FPaths::ProjectSavedDir()/RelativePath,false,false);
   }
-  RecordApolloEvidence(EvidenceIndex,RelativePath);ConfirmApolloWork(TEXT("Photo saved. I: view your photograph."));SaveApolloCheckpoint();
+  RequestApolloPhoto(EvidenceIndex,RelativePath);
  }
 }
 void ALunarGameMode::CompleteApolloInteraction(AActor* A){

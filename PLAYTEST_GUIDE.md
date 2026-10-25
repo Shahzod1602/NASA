@@ -62,3 +62,20 @@ The optional study must not block primary cargo or mission completion.
 No recruitment or human sessions have been completed by automation. Keep the
 table empty until real participants supply observations. Do not count scripted
 checks, renders or performance captures as human test results.
+
+For v0.6.1, record these observations per participant. Keep the cells empty until
+a real session; scripted checks do not supply these values. Use the first
+90 seconds without coaching and count clicks that do not advance work.
+
+| Participant | Next action/destination correct at 60 s | Wrong work clicks | Help requests | Photo pause noticed | Motion discomfort 0-5 |
+|---|---|---:|---:|---|---:|
+| P01 | | | | | |
+| P02 | | | | | |
+| P03 | | | | | |
+| P04 | | | | | |
+| P05 | | | | | |
+
+Open the album, move through four photographs, then return to the previous two.
+Note pauses or incorrect images. After a context photo, wait for Photo saved
+before closing the application; reopen it and verify that its task and photo
+agree. The five-person study remains pending real participants.

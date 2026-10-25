@@ -33,14 +33,14 @@ void ALunarGameMode::ApolloGuidanceChecks(){
  Check(Stage==ELunarStage::ApolloDeploy&&ApolloConfirmation.Contains(TEXT("3 / 3")),TEXT("All three actual confirmations finish onboarding"));
  Stage=ELunarStage::ApolloSamples;SelectedSample=0;SamplesCollected=0;ApolloPhotos=2;Aim(SampleActors[1]);
  Check(ApolloGuidanceTarget()==SampleActors[1]&&ApolloSiteName().Contains(TEXT("BENCH"))&&ApolloPrompt().Contains(TEXT("soil"))&&ApolloInstruction().Contains(TEXT("Scoop")),TEXT("Prompt, destination and action describe the aimed soil site rather than the selected rock"));
- P->Interact();Click();P->PoseSuitRig();
+ P->Interact();Click();P->UpdateSuit(0);
  Check(ApolloTool==4&&ApolloToolPhase==1&&!SamplesCollected&&P->SamplePouch&&P->SamplePouch->IsVisible(),TEXT("A pending soil pouch is visible before sealing and is not cargo"));
- CancelApolloTool();P->PoseSuitRig();Check(!SamplesCollected&&!P->SamplePouch->IsVisible(),TEXT("Cancelling hides the pending pouch and keeps cargo unchanged"));
- P->Interact();Click();Click();P->PoseSuitRig();
+ CancelApolloTool();P->UpdateSuit(0);Check(!SamplesCollected&&!P->SamplePouch->IsVisible(),TEXT("Cancelling hides the pending pouch and keeps cargo unchanged"));
+ P->Interact();Click();Click();P->UpdateSuit(0);
  Check(SamplesCollected==2&&ApolloConfirmation.Contains(TEXT("12032"))&&ApolloConfirmation.Contains(TEXT("1 / 3"))&&P->SamplePouch->IsVisible(),TEXT("Final seal adds the correct labeled cargo, confirmation and brief physical preview"));
  const float Remaining=ApolloConfirmationRemaining,Preview=ApolloPackedPreviewRemaining;Paused=true;TickApollo(1);
  Check(ApolloConfirmationRemaining==Remaining&&ApolloPackedPreviewRemaining==Preview,TEXT("Pausing freezes success feedback and the stow preview"));Paused=false;
- TickApollo(6);P->PoseSuitRig();Check(!P->SamplePouch->IsVisible()&&ApolloConfirmationRemaining==0,TEXT("Temporary stow feedback ends without altering cargo"));
+ TickApollo(6);P->UpdateSuit(0);Check(!P->SamplePouch->IsVisible()&&ApolloConfirmationRemaining==0,TEXT("Temporary stow feedback ends without altering cargo"));
  Check(ApolloGuidanceTarget()!=SampleActors[1],TEXT("Completed sample no longer receives navigation guidance"));
  ApolloEvidence.AddDefaulted();Check(ApolloFooter().Contains(TEXT("I:")),TEXT("Album access is disclosed once evidence exists"));
  Stage=ELunarStage::ApolloRecover;SurveyorPhotographed=true;ApolloParts=0;SelectedSample=1;Aim(ApolloPartActors[0]);P->Interact();
@@ -71,7 +71,7 @@ void ALunarGameMode::ApolloGuidanceReview(){
  case 8:ApolloPhotos=2;View(SampleActors[1],FVector(-170,0,50));OpenApolloTool();ApolloToolPhase=1;break;
  case 9:Shot(TEXT("guide-pouch.png"));break;
  case 10:CancelApolloTool();CompleteApolloInteraction(SampleActors[1]);RadioRemaining=0;break;
- case 11:ApolloPackedPreviewRemaining=1.8f;P->PoseSuitRig();Shot(TEXT("guide-sealed.png"));break;
+ case 11:ApolloPackedPreviewRemaining=1.8f;P->UpdateSuit(0);Shot(TEXT("guide-sealed.png"));break;
  case 12:Stage=ELunarStage::ApolloRecover;SurveyorPhotographed=true;ApolloParts=0;SelectedSample=0;ApolloConfirmationRemaining=0;ApolloPackedPreviewRemaining=0;RadioRemaining=0;View(ApolloPartActors[0],FVector(-170,0,50));OpenApolloTool();break;
  case 13:Shot(TEXT("guide-fitting-first.png"));break;
  case 14:ApolloToolPhase=1;break;

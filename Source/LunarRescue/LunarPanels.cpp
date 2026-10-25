@@ -28,6 +28,21 @@ UTextBlock* Text(UWidgetTree* W,const FString& T,int Size=22){auto* L=W->Constru
 UButton* Button(UWidgetTree* W,const FString& T){auto* B=W->ConstructWidget<UButton>();B->SetBackgroundColor(FLinearColor(.055,.14,.18));B->AddChild(Text(W,T,20));return B;}
 FString Title(FName K){static const TMap<FName,FString> Titles={{TEXT("Sensitivity"),TEXT("Mouse sensitivity")},{TEXT("TextScale"),TEXT("Interface text size")},{TEXT("SubtitleScale"),TEXT("Subtitle size")},{TEXT("EffectsVolume"),TEXT("Suit and tool volume")},{TEXT("RadioVolume"),TEXT("Radio volume")},{TEXT("Brightness"),TEXT("Brightness")},{TEXT("FieldOfView"),TEXT("Field of view")},{TEXT("InvertY"),TEXT("Invert mouse Y")},{TEXT("CameraMotion"),TEXT("Hand motion")},{TEXT("ToggleSprint"),TEXT("Toggle fast stride")},{TEXT("Quality"),TEXT("Graphics quality")},{TEXT("MoveForward"),TEXT("Move forward")},{TEXT("MoveBack"),TEXT("Move backward")},{TEXT("MoveLeft"),TEXT("Move left")},{TEXT("MoveRight"),TEXT("Move right")},{TEXT("Interact"),TEXT("Open work tool")},{TEXT("Jump"),TEXT("Hop")},{TEXT("Route"),TEXT("Next site / journal page")},{TEXT("Journal"),TEXT("Field journal")},{TEXT("View"),TEXT("Camera view")},{TEXT("Sprint"),TEXT("Fast stride")},{TEXT("Zoom"),TEXT("Visor zoom")}};const FString* T=Titles.Find(K);return T?*T:K.ToString();}
 }
+UTexture2D* ALunarCharacter::LoadEvidencePhoto(const FString& Relative){
+ auto* G=Game(this);if(!G)return nullptr;
+ const FString Prefix=TEXT("Apollo12/Photos/")+G->ApolloRunId.ToString(EGuidFormats::Digits)+TEXT("/");
+ if(!Relative.StartsWith(Prefix)||Relative.Contains(TEXT("..")))return nullptr;
+ if(auto* Cached=EvidencePhotoCache.Find(Relative)){
+  EvidencePhotoRecency.Remove(Relative);EvidencePhotoRecency.Add(Relative);
+  UE_LOG(LogTemp,Display,TEXT("APOLLO_ALBUM cache hit %s"),*Relative);return Cached->Get();
+ }
+ const double Started=FPlatformTime::Seconds();
+ auto* Loaded=FImageUtils::ImportFileAsTexture2D(FPaths::ProjectSavedDir()/Relative);if(!Loaded)return nullptr;
+ while(EvidencePhotoRecency.Num()>=3){EvidencePhotoCache.Remove(EvidencePhotoRecency[0]);EvidencePhotoRecency.RemoveAt(0);}
+ EvidencePhotoCache.Add(Relative,Loaded);EvidencePhotoRecency.Add(Relative);
+ UE_LOG(LogTemp,Display,TEXT("APOLLO_ALBUM disk load %.3f ms cached=%d"),(FPlatformTime::Seconds()-Started)*1000,EvidencePhotoCache.Num());
+ return Loaded;
+}
 TSharedRef<SWidget> ULunarSettingRow::RebuildWidget(){
  auto* Row=WidgetTree->ConstructWidget<UHorizontalBox>();WidgetTree->RootWidget=Row;
  auto* Label=Text(WidgetTree,Title(Setting),20);Row->AddChildToHorizontalBox(Label)->SetSize(FSlateChildSize(ESlateSizeRule::Fill));
@@ -94,6 +109,7 @@ void ULunarPanel::Rebuild(){
   return;
  }
  if(!G)return;
+ if(G->ApolloPhotoPending)Add(Text(WidgetTree,TEXT("Your latest photograph is still being saved."),20));
  int Parts=0;for(int i=0;i<3;++i)if(G->ApolloParts&(1<<i))++Parts;
  Add(Text(WidgetTree,FString::Printf(TEXT("%s  |  %.0f m walked  |  %02d:%02d elapsed\nCargo: %d/3 samples, %d/3 Surveyor components. Evidence photographs: %d.\n%s"),G->ApolloTimed?TEXT("Timed exercise"):TEXT("Untimed historical exploration"),G->ApolloDistance,int(G->ApolloElapsed)/60,int(G->ApolloElapsed)%60,G->SampleCount(),Parts,G->ApolloEvidence.Num(),G->Stage==ELunarStage::Won?TEXT("Cargo stowed at Intrepid. The real crew reunited with Richard Gordon in Yankee Clipper and returned to Earth on 24 November 1969."):TEXT("Only committed work is listed. Cancelled work is never added to cargo.")),21));
  const TCHAR* Cargo[]={TEXT("12031 / Head: basalt rock; helps study lunar volcanic history."),TEXT("12032 / Bench: fine soil; records the surface regolith."),TEXT("12027 / Sharp: drive-tube core; preserves a shallow soil column."),TEXT("Surveyor TV camera: materials and mechanisms after lunar exposure."),TEXT("Surveyor scoop: returned hardware and adhering soil."),TEXT("Surveyor cable segment: returned material for laboratory examination.")};
@@ -105,7 +121,7 @@ void ULunarPanel::Rebuild(){
   const FString Caption=Dust?(E.PhotoId==FName(ApolloTasks::DustPhotos[0])?TEXT("Surveyor / exposed coating illustration"):TEXT("Surveyor / shielded coating illustration")):E.PhotoId==FName(ApolloTasks::SurveyorPhoto)?TEXT("Surveyor 3 / before hardware removal"):FString::Printf(TEXT("Sample %s / %s Crater"),*Id,*Site.ToUpper());
   Add(Text(WidgetTree,FString::Printf(TEXT("%s  |  captured %02d:%02d"),*Caption,int(E.CapturedAt)/60,int(E.CapturedAt)%60),20));
   const FString Prefix=TEXT("Apollo12/Photos/")+G->ApolloRunId.ToString(EGuidFormats::Digits)+TEXT("/");
-  if(E.PhotoPath.StartsWith(Prefix)&&!E.PhotoPath.Contains(TEXT("..")))Photo=FImageUtils::ImportFileAsTexture2D(FPaths::ProjectSavedDir()/E.PhotoPath);
+  if(E.PhotoPath.StartsWith(Prefix)&&!E.PhotoPath.Contains(TEXT("..")))if(auto* P=Player(this))Photo=P->LoadEvidencePhoto(E.PhotoPath);
   if(Photo){auto* Image=WidgetTree->ConstructWidget<UImage>();Image->SetBrushFromTexture(Photo,true);auto* Size=WidgetTree->ConstructWidget<USizeBox>();Size->SetHeightOverride(320);auto* Scale=WidgetTree->ConstructWidget<UScaleBox>();Scale->SetStretch(EStretch::ScaleToFit);Scale->AddChild(Image);Size->AddChild(Scale);Add(Size);}
   else Add(Text(WidgetTree,TEXT("Photo file unavailable. The saved evidence metadata and completed work are preserved."),20));
  }else Add(Text(WidgetTree,TEXT("No context photographs yet. At a sample site, open the camera and frame the target before releasing the shutter."),20));

@@ -92,18 +92,15 @@ void ALunarGameMode::ToggleDustStudy(){
 }
 
 bool ALunarGameMode::CaptureDustPhoto(){
- if(!ApolloDustMode||!CanStudyDust()||ApolloDustCompared)return false;
+ if(ApolloPhotoPending||!ApolloDustMode||!CanStudyDust()||ApolloDustCompared)return false;
  const int I=ApolloDustActors.IndexOfByPredicate([&](const auto& A){return A==ApolloWorkTarget;});
  if(I<0||ApolloDustPhotos&(1<<I))return false;
  const FString Filename=I?TEXT("Surveyor-shielded-coating"):TEXT("Surveyor-exposed-coating");FString Relative;
  if(FApp::CanEverRender()){
   Relative=TEXT("Apollo12/Photos/")+ApolloRunId.ToString(EGuidFormats::Digits)+TEXT("/")+Filename+TEXT(".png");
-  IFileManager::Get().MakeDirectory(*FPaths::GetPath(FPaths::ProjectSavedDir()/Relative),true);
-  if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0))){P->PhotoCaptureFrames=2;if(P->HandRig)P->HandRig->SetVisibility(false);if(P->WorkTool)P->WorkTool->SetVisibility(false);}
-  if(auto* PC=UGameplayStatics::GetPlayerController(this,0);PC&&PC->PlayerCameraManager)PC->PlayerCameraManager->SetGameCameraCutThisFrame();
-  FScreenshotRequest::RequestScreenshot(FPaths::ProjectSavedDir()/Relative,false,false);
  }
- ApolloDustPhotos|=1<<I;RecordApolloEvidence(4+I,Relative);CancelApolloTool();ConfirmApolloWork(FString::Printf(TEXT("Coating photo saved. %d / 2"),ApolloDustPhotos==3?2:1));SaveApolloCheckpoint();return true;
+ if(!RequestApolloPhoto(4+I,Relative))return false;
+ CancelApolloTool();return true;
 }
 
 FString ALunarGameMode::ApolloDustExplanation() const {

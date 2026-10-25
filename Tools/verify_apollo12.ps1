@@ -1,4 +1,4 @@
-param([string]$EngineRoot='D:\UnrealEngine\UE_5.8',[switch]$Packaged,[switch]$Graphics,[switch]$Walkthrough,[switch]$HistoricalRoute,[switch]$Suit,[switch]$Checkpoints,[switch]$Polish,[switch]$Guidance,[switch]$Fieldwork,[switch]$FieldworkReview,[switch]$GuideReview,[switch]$Review,[switch]$Regression,[switch]$LegacyLanguage,[ValidateSet('en')][string]$Language='en',[int]$Width=1280,[int]$Height=720)
+param([string]$EngineRoot='D:\UnrealEngine\UE_5.8',[switch]$Packaged,[switch]$Graphics,[switch]$Walkthrough,[switch]$HistoricalRoute,[switch]$Suit,[switch]$Checkpoints,[switch]$Polish,[switch]$Guidance,[switch]$Fieldwork,[switch]$Optimizations,[switch]$FieldworkReview,[switch]$GuideReview,[switch]$Review,[switch]$Regression,[switch]$LegacyLanguage,[ValidateSet('en')][string]$Language='en',[int]$Width=1280,[int]$Height=720)
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 $env:TEMP=Join-Path $root 'Intermediate\ApolloTemp';$env:TMP=$env:TEMP
@@ -11,10 +11,16 @@ if($Suit){$cases+=,@('/Game/Lunar/Maps/Apollo12','SuitTest','suit')}
 if($Polish){$cases+=,@('/Game/Lunar/Maps/Apollo12','ApolloPolishTest','polish')}
 if($Guidance){$cases+=,@('/Game/Lunar/Maps/Apollo12','ApolloGuidanceTest','guidance')}
 if($Fieldwork){$cases+=,@('/Game/Lunar/Maps/Apollo12','ApolloFieldworkTest','fieldwork')}
+if($Optimizations){if(-not($Graphics -or $Review -or $GuideReview -or $FieldworkReview)){throw 'Optimization integration checks require -Graphics'};$cases+=,@('/Game/Lunar/Maps/Apollo12','ApolloOptimizationTest','optimization')}
 if($Checkpoints){$cases+=,@('/Game/Lunar/Maps/Apollo12','ApolloSaveTest','save');$cases+=,@('/Game/Lunar/Maps/Apollo12','ApolloSaveWriteTest','save-write');$cases+=,@('/Game/Rescue/Maps/MissionSelect','ApolloSaveReadTest','save-read')}
-if($Review){$cases=,@('/Game/Lunar/Maps/Apollo12','ApolloReview','visuals');$Graphics=$true}
-if($GuideReview){$cases=,@('/Game/Lunar/Maps/Apollo12','ApolloGuidanceReview','guidance-visuals');$Graphics=$true}
-if($FieldworkReview){$cases=,@('/Game/Lunar/Maps/Apollo12','ApolloFieldworkReview','fieldwork-visuals');$Graphics=$true}
+$reviewCases=@()
+if($Review){$reviewCases+=,@('/Game/Lunar/Maps/Apollo12','ApolloReview','visuals')}
+if($GuideReview){$reviewCases+=,@('/Game/Lunar/Maps/Apollo12','ApolloGuidanceReview','guidance-visuals')}
+if($FieldworkReview){$reviewCases+=,@('/Game/Lunar/Maps/Apollo12','ApolloFieldworkReview','fieldwork-visuals')}
+if($reviewCases.Count){
+ $cases=$reviewCases;$Graphics=$true
+ if($Optimizations){$cases+=,@('/Game/Lunar/Maps/Apollo12','ApolloOptimizationTest','optimization')}
+}
 foreach($case in $cases){
  $prefix=if($Packaged){'package'}else{'editor'}
  $logPath=Join-Path $root "Reports\$prefix-apollo12-$($case[2]).log"
@@ -25,6 +31,7 @@ foreach($case in $cases){
   'ApolloPolishTest' {'polish-checks.txt'}
   'ApolloGuidanceTest' {'guidance-checks.txt'}
   'ApolloFieldworkTest' {'fieldwork-checks.txt'}
+  'ApolloOptimizationTest' {'optimization-checks.txt'}
   'ApolloSaveTest' {'checkpoint-checks.txt'}
   'ApolloSaveWriteTest' {'checkpoint-write-checks.txt'}
   'ApolloSaveReadTest' {'checkpoint-read-checks.txt'}
@@ -33,9 +40,9 @@ foreach($case in $cases){
  }
  $resultRoot=if($Packaged){Join-Path $root 'Dist\Apollo12\Windows\LunarRescue\Reports'}else{Join-Path $root 'Reports'}
  $reviewNames=@('briefing','intrepid','alsep','sample','surveyor','map','sources','result','approach','hardware','return','history','evidence','tutorial','work-prompt','work-progress','continue','new-confirm','reload','retry-checkpoint','recovered','tool-level','tool-antenna','tool-core','tool-camera','settings','album','text150')
- if($GuideReview){$reviewNames=@('look','walk','first-check','rock','pouch','sealed','fitting-first','fitting-second','help','large-text','help-large','map-large')}
- if($FieldworkReview){$reviewNames=@('contact','lift','pouch','core','cable','surveyor','exposed','shielded','compare','large','album','intrepid')}
- $imagePrefix=if($FieldworkReview){'fieldwork'}elseif($GuideReview){'guide'}else{'apollo12'}
+ if($case[1] -eq 'ApolloGuidanceReview'){$reviewNames=@('look','walk','first-check','rock','pouch','sealed','fitting-first','fitting-second','help','large-text','help-large','map-large')}
+ if($case[1] -eq 'ApolloFieldworkReview'){$reviewNames=@('contact','lift','pouch','core','cable','surveyor','exposed','shielded','compare','large','album','intrepid')}
+ $imagePrefix=if($case[1] -eq 'ApolloFieldworkReview'){'fieldwork'}elseif($case[1] -eq 'ApolloGuidanceReview'){'guide'}else{'apollo12'}
  if($case[1] -in @('ApolloReview','ApolloGuidanceReview','ApolloFieldworkReview')){
   foreach($name in $reviewNames){$imagePath=Join-Path $resultRoot "$imagePrefix-$name.png";if(Test-Path -LiteralPath $imagePath){Remove-Item -LiteralPath $imagePath}}
  }

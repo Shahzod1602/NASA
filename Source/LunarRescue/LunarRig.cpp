@@ -67,5 +67,4 @@ void ALunarCharacter::PoseSuitRig(){
   Arms(SuitRig,false);SuitRig->RefreshBoneTransforms();
  }
  if(!ThirdPerson&&Show){Set(HandRig,TEXT("root"),FVector::ZeroVector);Set(HandRig,TEXT("pelvis"),FVector(0,0,-12));Set(HandRig,TEXT("chest"),FVector(0,0,30));Arms(HandRig,true);HandRig->RefreshBoneTransforms();}
- UpdateApolloWorkVisuals();
 }

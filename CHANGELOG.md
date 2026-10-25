@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6.1 - 2026-10-26
+
+- Passed 383 packaged checks and 32 rendered review states; the measured audio-enabled 720p Medium route reduced the largest frame from 169.85 ms to 27.45 ms, with 59.99 mean FPS.
+
+- Encode and write mission photographs on the engine image-write queue; award evidence only after a successful file write, with retry on failure.
+- Update the work camera before tool contacts and glove poses, removing the second tool-visual update from each normal frame.
+- Retain the three most recently viewed album textures with bounded, mission-path-checked caching.
+- Add rendered integration checks for photo completion, failure/retry and cache retention; extend opening-route profiles with explicit resolution and frame cap.
+
 ## 0.6.0 - 2026-10-26
 
 - Added source-contact tongs/cutter jaws, moving sample payloads, a soft labeled pouch and a persistent driven core tube.
