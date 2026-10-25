@@ -1,4 +1,4 @@
-param([string]$EngineRoot='D:\UnrealEngine\UE_5.8',[switch]$Packaged,[switch]$Graphics,[switch]$Walkthrough,[switch]$HistoricalRoute,[switch]$Suit,[switch]$Checkpoints,[switch]$Polish,[switch]$Review,[switch]$Regression,[switch]$LegacyLanguage,[ValidateSet('en')][string]$Language='en',[int]$Width=1280,[int]$Height=720)
+param([string]$EngineRoot='D:\UnrealEngine\UE_5.8',[switch]$Packaged,[switch]$Graphics,[switch]$Walkthrough,[switch]$HistoricalRoute,[switch]$Suit,[switch]$Checkpoints,[switch]$Polish,[switch]$Guidance,[switch]$GuideReview,[switch]$Review,[switch]$Regression,[switch]$LegacyLanguage,[ValidateSet('en')][string]$Language='en',[int]$Width=1280,[int]$Height=720)
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 $env:TEMP=Join-Path $root 'Intermediate\ApolloTemp';$env:TMP=$env:TEMP
@@ -9,8 +9,10 @@ if($Walkthrough){$cases+=,@('/Game/Lunar/Maps/Apollo12','ApolloWalkTest','walk')
 if($HistoricalRoute){$cases+=,@('/Game/Lunar/Maps/Apollo12','ApolloWalkTest','historical-walk')}
 if($Suit){$cases+=,@('/Game/Lunar/Maps/Apollo12','SuitTest','suit')}
 if($Polish){$cases+=,@('/Game/Lunar/Maps/Apollo12','ApolloPolishTest','polish')}
+if($Guidance){$cases+=,@('/Game/Lunar/Maps/Apollo12','ApolloGuidanceTest','guidance')}
 if($Checkpoints){$cases+=,@('/Game/Lunar/Maps/Apollo12','ApolloSaveTest','save');$cases+=,@('/Game/Lunar/Maps/Apollo12','ApolloSaveWriteTest','save-write');$cases+=,@('/Game/Rescue/Maps/MissionSelect','ApolloSaveReadTest','save-read')}
 if($Review){$cases=,@('/Game/Lunar/Maps/Apollo12','ApolloReview','visuals');$Graphics=$true}
+if($GuideReview){$cases=,@('/Game/Lunar/Maps/Apollo12','ApolloGuidanceReview','guidance-visuals');$Graphics=$true}
 foreach($case in $cases){
  $prefix=if($Packaged){'package'}else{'editor'}
  $logPath=Join-Path $root "Reports\$prefix-apollo12-$($case[2]).log"
@@ -19,6 +21,7 @@ foreach($case in $cases){
   'ApolloWalkTest' {'apollo12-walkthrough.txt'}
   'SuitTest' {'suit-checks.txt'}
   'ApolloPolishTest' {'polish-checks.txt'}
+  'ApolloGuidanceTest' {'guidance-checks.txt'}
   'ApolloSaveTest' {'checkpoint-checks.txt'}
   'ApolloSaveWriteTest' {'checkpoint-write-checks.txt'}
   'ApolloSaveReadTest' {'checkpoint-read-checks.txt'}
@@ -27,8 +30,10 @@ foreach($case in $cases){
  }
  $resultRoot=if($Packaged){Join-Path $root 'Dist\Apollo12\Windows\LunarRescue\Reports'}else{Join-Path $root 'Reports'}
  $reviewNames=@('briefing','intrepid','alsep','sample','surveyor','map','sources','result','approach','hardware','return','history','evidence','tutorial','work-prompt','work-progress','continue','new-confirm','reload','retry-checkpoint','recovered','tool-level','tool-antenna','tool-core','tool-camera','settings','album','text150')
- if($case[1] -eq 'ApolloReview'){
-  foreach($name in $reviewNames){$imagePath=Join-Path $resultRoot "apollo12-$name.png";if(Test-Path -LiteralPath $imagePath){Remove-Item -LiteralPath $imagePath}}
+ if($GuideReview){$reviewNames=@('look','walk','first-check','rock','pouch','sealed','fitting-first','fitting-second','help','large-text','help-large','map-large')}
+ $imagePrefix=if($GuideReview){'guide'}else{'apollo12'}
+ if($case[1] -in @('ApolloReview','ApolloGuidanceReview')){
+  foreach($name in $reviewNames){$imagePath=Join-Path $resultRoot "$imagePrefix-$name.png";if(Test-Path -LiteralPath $imagePath){Remove-Item -LiteralPath $imagePath}}
  }
  $resultFile=if($resultName){Join-Path $resultRoot $resultName}
  if($resultFile -and (Test-Path -LiteralPath $resultFile)){Remove-Item -LiteralPath $resultFile}
@@ -53,9 +58,9 @@ foreach($case in $cases){
   if($resultText -notmatch '(?m)^RESULT: 0 failures\r?$' -or $resultText -match '(?m)^FAIL '){throw "$($case[2]) reported a failed check; see $resultFile"}
   Copy-Item -LiteralPath $resultFile -Destination (Join-Path $root "Reports\$prefix-apollo12-$($case[2])-result.txt")
  }
- if($case[1] -eq 'ApolloReview'){
+ if($case[1] -in @('ApolloReview','ApolloGuidanceReview')){
   foreach($name in $reviewNames){
-   $imagePath=Join-Path $resultRoot "apollo12-$name.png"
+   $imagePath=Join-Path $resultRoot "$imagePrefix-$name.png"
    if(-not(Test-Path -LiteralPath $imagePath)){throw "Missing fresh review screenshot: $imagePath"}
    $png=[System.IO.File]::ReadAllBytes($imagePath)
    if($png.Length -lt 24 -or [System.Text.Encoding]::ASCII.GetString($png,1,3) -ne 'PNG'){throw "Invalid screenshot: $imagePath"}

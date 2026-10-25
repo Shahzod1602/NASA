@@ -134,7 +134,7 @@ void ALunarCharacter::UpdateSuit(float D){
   if(G&&(G->ApolloTool==1||G->ApolloTool==4||G->ApolloTool==5||G->ApolloTool==6)){ViewElbow=FVector(7,Side*24,-28);ViewWrist=FVector(35,Side*10,-15);}
   if(G&&G->ApolloTool==4)ViewWrist=G->SelectedSample==1?(S?FVector(25,4,-11):FVector(42,-8,-18)):FVector(29,Side*8,-10);
   if(G&&G->ApolloTool==5)ViewWrist=FVector(38,Side*6,S?-20.f:-10.f);
-  if(G&&G->ApolloTool==6)ViewWrist=FVector(25,Side*7,-10);
+  if(G&&G->ApolloTool==6)ViewWrist=FVector(30,Side*7,-16);
   Hand(Gloves,S*8,ViewElbow,ViewWrist,Side,WorkBlend);
  }
  if(ThirdPerson){
@@ -147,7 +147,8 @@ void ALunarCharacter::UpdateSuit(float D){
  else if(G&&G->ApolloTool>1&&G->ApolloWorkTarget){
   const FVector Target=G->ApolloWorkTarget->GetActorLocation();
   const bool Kit=G->ApolloTool==7||G->ApolloTool==8;
-  FVector Desired=Target-GetControlRotation().Vector().GetSafeNormal2D()*(Kit?125.f:55.f)+FVector(0,0,Kit?70.f:25.f);
+  const float WorkDistance=Kit?125.f:G->ApolloTool==6?110.f:55.f;
+  FVector Desired=Target-GetControlRotation().Vector().GetSafeNormal2D()*WorkDistance+FVector(0,0,Kit?70.f:G->ApolloTool==6?30.f:25.f);
   FHitResult Hit;FCollisionQueryParams Q;Q.AddIgnoredActor(this);
   if(GetWorld()->SweepSingleByChannel(Hit,Target+FVector(0,0,30),Desired,FQuat::Identity,ECC_Visibility,FCollisionShape::MakeSphere(6),Q))Desired=Hit.Location;
   Camera->SetWorldLocation(D>0?FMath::VInterpTo(Camera->GetComponentLocation(),Desired,D,10):Desired);

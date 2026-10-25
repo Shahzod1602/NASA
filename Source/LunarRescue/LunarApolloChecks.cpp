@@ -46,7 +46,7 @@ void ALunarGameMode::ApolloChecks(){
  Aim(ApolloInstrumentActors[0]);Work();Check(ApolloInstruments==1&&ApolloAction==1,TEXT("Seismometer deploys before central station"));
  Aim(ApolloInstrumentActors[1]);Work();Check(Stage==ELunarStage::ApolloDeploy&&ApolloInstruments==1&&!Holding,TEXT("Antenna rejects wrong Earth bearing"));
  for(int I=0;I<5;++I)CycleApollo();Work();Check(Stage==ELunarStage::ApolloSamples&&ApolloInstruments==3,TEXT("Aimed antenna and verified link unlock samples"));
- P->ToggleJournal();const float Budget=Oxygen;AdvanceTime(40);AdvanceInteraction(40);const int Page=JournalPage;CycleApollo();Check(Paused&&Journal&&Oxygen==Budget&&JournalPage==(Page+1)%4,TEXT("Journal pauses play and Q changes history page"));P->ToggleJournal();Check(!Paused&&!Journal,TEXT("Closing journal resumes play"));
+ P->ToggleJournal();const float Budget=Oxygen;AdvanceTime(40);AdvanceInteraction(40);const int Page=JournalPage;CycleApollo();Check(Paused&&Journal&&Oxygen==Budget&&JournalPage==(Page+1)%5,TEXT("Journal pauses play and Q changes history page"));P->ToggleJournal();Check(!Paused&&!Journal,TEXT("Closing journal resumes play"));
  AActor* Before=Target();CycleApollo();Check(Target()!=Before,TEXT("Q cycles sample navigation"));
  for(int I:{1,0,2}){
   Aim(SampleActors[I]);Check(CanInteract(),TEXT("Sample can be selected by proximity independently of marker"));

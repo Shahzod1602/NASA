@@ -26,7 +26,7 @@ ULunarSettings* ULunarSettings::Get(){
 FKey ULunarSettings::Key(FName Action) const {const FKey* K=Bindings.Find(Action);if(K&&K->IsValid())return *K;K=Defaults().Find(Action);return K?*K:EKeys::Invalid;}
 bool ULunarSettings::Rebind(FName Action,FKey NewKey){
  if(!Defaults().Contains(Action)||!NewKey.IsValid()||NewKey.IsMouseButton()||NewKey==EKeys::Escape||NewKey==EKeys::F1||NewKey==EKeys::Enter||NewKey==EKeys::C||NewKey==EKeys::R||NewKey==EKeys::M||NewKey==EKeys::T||NewKey==EKeys::J||NewKey==EKeys::LeftAlt)return false;
- if(NewKey==EKeys::I||NewKey==EKeys::Up||NewKey==EKeys::Down||NewKey==EKeys::Left||NewKey==EKeys::Right)return false;
+ if(NewKey==EKeys::H||NewKey==EKeys::I||NewKey==EKeys::Up||NewKey==EKeys::Down||NewKey==EKeys::Left||NewKey==EKeys::Right)return false;
  for(const auto& Pair:Defaults())if(Pair.Key!=Action&&Key(Pair.Key)==NewKey)return false;
  Bindings.Add(Action,NewKey);return true;
 }

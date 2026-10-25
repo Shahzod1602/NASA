@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.2 - 2026-10-25
+
+- Guided the initial equipment check through looking, walking, facing the kit, opening and confirming; added H to hide/revisit help.
+- Shortened active instructions and made prompts match the nearby aimed object and current key bindings.
+- Added physical fitting markers, visible pending sample pouches and labeled committed-cargo confirmations.
+- Stacked contextual work prompts above radio subtitles and introduced the evidence shortcut after evidence exists.
+- Added a fifth journal help page, behavioral guidance checks and twelve rendered review states. The human novice study remains pending.
+- Passed 325 final packaged checks and verified the original source-data hashes. Windows packaging now uses bounded IoStore concurrency and omits standalone debug symbols on the low-memory development machine.
+
 ## 0.5.1 - 2026-10-25
 
 - Revised suit folds and hardware details, added bind-space cloth dust masks and rebuilt suit LODs.

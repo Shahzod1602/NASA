@@ -19,6 +19,13 @@ I: photograph album and cargo   Mouse / arrows: level or antenna adjustment
 Space: hop                     Shift: faster stride
 V: change camera               Alt: orbit in the following view
 F: zoom                        M: mission selection from pause/results
+H: show/hide guidance           Pause, then H: how-to page
+
+FIRST MINUTE
+Follow the single instruction: look, walk to the gold marker, and face the kit.
+Press the displayed work key to open the equipment check, then left click.
+Opening a tool does not finish its action. Follow its current step to commit it.
+The album shortcut appears after you have photographs or cargo.
 
 SCIENCE TOOLS
 Photograph: open the camera, center the work site and left click the shutter.

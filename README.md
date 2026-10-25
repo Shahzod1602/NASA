@@ -1,5 +1,12 @@
 # Lunar Rescue
 
+## Guided first expedition - 0.5.2
+
+The first field-kit check introduces one action at a time. Shorter work prompts,
+precise fitting markers, sample sealing feedback and a revisitable how-to page
+make the Apollo workflow easier to follow. H toggles guidance; pause, then H opens
+the guide. See [scope and validation](CLARITY_UPDATE.md).
+
 ## Realism pass - 0.5.1
 
 Revised cloth folds, garment dust and seams, equipment paint and crumpled foil,

@@ -150,6 +150,7 @@ void ALunarCharacter::SetupPlayerInputComponent(UInputComponent* I) {
  I->BindKey(EKeys::F1,IE_Pressed,this,&ALunarCharacter::OpenSettings);
  I->BindKey(EKeys::I,IE_Pressed,this,&ALunarCharacter::OpenEvidence);
  I->BindKey(EKeys::T,IE_Pressed,this,&ALunarCharacter::ToggleApolloMode);
+ I->BindKey(EKeys::H,IE_Pressed,this,&ALunarCharacter::ToggleApolloGuide);
  I->BindKey(EKeys::LeftAlt,IE_Pressed,this,&ALunarCharacter::BeginSuitOrbit);
  I->BindKey(EKeys::LeftAlt,IE_Released,this,&ALunarCharacter::EndSuitOrbit);
  I->BindAction("Zoom",IE_Pressed,this,&ALunarCharacter::ZoomVisor);

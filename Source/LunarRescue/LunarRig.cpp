@@ -5,6 +5,7 @@
 #include "Camera/CameraComponent.h"
 #include "Engine/SkeletalMesh.h"
 #include "Engine/StaticMesh.h"
+#include "Materials/MaterialInterface.h"
 #include "Kismet/GameplayStatics.h"
 
 void ALunarCharacter::PoseSuitRig(){
@@ -66,11 +67,20 @@ void ALunarCharacter::PoseSuitRig(){
  }
  if(!ThirdPerson&&Show){Set(HandRig,TEXT("root"),FVector::ZeroVector);Set(HandRig,TEXT("pelvis"),FVector(0,0,-12));Set(HandRig,TEXT("chest"),FVector(0,0,30));Arms(HandRig,true);HandRig->RefreshBoneTransforms();}
  if(!WorkTool){WorkTool=NewObject<UStaticMeshComponent>(this);WorkTool->SetupAttachment(Camera);WorkTool->SetCollisionEnabled(ECollisionEnabled::NoCollision);WorkTool->SetCastShadow(false);WorkTool->SetOnlyOwnerSee(true);WorkTool->RegisterComponent();}
- const bool UseTool=Show&&!ThirdPerson&&G->ApolloTool&&(G->ApolloTool==1||G->ApolloTool==4||G->ApolloTool==5||G->ApolloTool==6);
+ const bool PackedCore=G->ApolloPackedPreviewRemaining>0&&G->ApolloPackedSample==2;
+ const bool UseTool=Show&&!ThirdPerson&&PhotoCaptureFrames<=0&&(PackedCore||(G->ApolloTool&&(G->ApolloTool==1||G->ApolloTool==4||G->ApolloTool==5||G->ApolloTool==6)));
  WorkTool->SetVisibility(UseTool);
  if(UseTool){
-  const TCHAR* Name=G->ApolloTool==1?TEXT("SM_ContextCamera"):G->ApolloTool==4?(G->SelectedSample==1?TEXT("SM_SoilScoop"):TEXT("SM_SampleTongs")):G->ApolloTool==5?(G->ApolloToolPhase>=1&&G->ApolloToolPhase<5?TEXT("SM_GeologyHammer"):TEXT("SM_DriveTube")):TEXT("SM_Cutters");
+  const TCHAR* Name=PackedCore?TEXT("SM_DriveTube"):G->ApolloTool==1?TEXT("SM_ContextCamera"):G->ApolloTool==4?(G->SelectedSample==1?TEXT("SM_SoilScoop"):TEXT("SM_SampleTongs")):G->ApolloTool==5?(G->ApolloToolPhase>=1&&G->ApolloToolPhase<5?TEXT("SM_GeologyHammer"):TEXT("SM_DriveTube")):TEXT("SM_Cutters");
   auto* ToolAsset=LoadObject<UStaticMesh>(nullptr,*FString::Printf(TEXT("/Game/Lunar/Apollo12/Tools/%s.%s"),Name,Name));if(WorkTool->GetStaticMesh()!=ToolAsset)WorkTool->SetStaticMesh(ToolAsset);
-  WorkTool->SetRelativeLocation(FVector(48,0,-15+FMath::Sin(G->ApolloToolCooldown/.3f*PI)*3));WorkTool->SetRelativeRotation(FRotator::ZeroRotator);
+  WorkTool->SetRelativeLocation(FVector(48,0,(G->ApolloTool==6?-21.f:-15.f)+FMath::Sin(G->ApolloToolCooldown/.3f*PI)*3-(PackedCore?FMath::Max(0.f,1-G->ApolloPackedPreviewRemaining)*30:0)));WorkTool->SetRelativeRotation(FRotator::ZeroRotator);
  }
+ if(!SamplePouch){
+  SamplePouch=NewObject<UStaticMeshComponent>(this);SamplePouch->SetupAttachment(Camera);SamplePouch->SetCollisionEnabled(ECollisionEnabled::NoCollision);SamplePouch->SetCastShadow(false);SamplePouch->SetOnlyOwnerSee(true);
+  SamplePouch->SetStaticMesh(LoadObject<UStaticMesh>(nullptr,TEXT("/Engine/BasicShapes/Cube.Cube")));
+  SamplePouch->SetMaterial(0,LoadObject<UMaterialInterface>(nullptr,TEXT("/Game/Lunar/Suit/Materials/M_Cloth.M_Cloth")));SamplePouch->RegisterComponent();SamplePouch->SetRelativeScale3D(FVector(.035,.14,.18));
+ }
+ const bool PackedPouch=G->ApolloPackedPreviewRemaining>0&&G->ApolloPackedSample>=0&&G->ApolloPackedSample<2;
+ SamplePouch->SetVisibility(Show&&!ThirdPerson&&PhotoCaptureFrames<=0&&(PackedPouch||(G->ApolloTool==4&&G->ApolloToolPhase==1)));
+ SamplePouch->SetRelativeLocation(FVector(43,-8,-17-(PackedPouch?FMath::Max(0.f,1-G->ApolloPackedPreviewRemaining)*30:0)));SamplePouch->SetRelativeRotation(FRotator(0,-12,8));
 }

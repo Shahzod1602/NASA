@@ -1,4 +1,4 @@
-param([string]$EngineRoot='D:\UnrealEngine\UE_5.8')
+param([string]$EngineRoot='D:\UnrealEngine\UE_5.8',[switch]$StageOnly)
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 New-Item -ItemType Directory -Force -Path "$root\Intermediate\ApolloTemp" | Out-Null
@@ -17,9 +17,14 @@ foreach($file in $playerFiles){
  Copy-Item -LiteralPath $file.FullName -Destination $dest
 }
 try{
+ if(-not $StageOnly){
  # Separate UBT processes keep the editor rules out of memory during the game link.
  foreach($target in @('LunarRescueEditor','LunarRescue')){
-  & "$EngineRoot\Engine\Build\BatchFiles\Build.bat" $target Win64 Development "-Project=$root\LunarRescue.uproject" -WaitMutex -MaxParallelActions=1 -NoUBA -NoPCH -NoSharedPCH
+  $buildFlags=@('-WaitMutex','-MaxParallelActions=1','-NoUBA','-NoPCH','-NoSharedPCH')
+  # The monolithic Windows symbol link exceeds this machine's commit budget.
+  # Keep editor symbols for development; the distributed game omits symbols.
+  if($target -eq 'LunarRescue'){$buildFlags+=@('-NoDebugInfo','-NoLinkerDebugInfo')}
+  & "$EngineRoot\Engine\Build\BatchFiles\Build.bat" $target Win64 Development "-Project=$root\LunarRescue.uproject" @buildFlags
   if($LASTEXITCODE -ne 0){throw "$target build failed: $LASTEXITCODE"}
  }
  # Verify persisted shared materials after importing/reducing skeletal assets.
@@ -28,7 +33,11 @@ try{
  $binding=Start-Process -FilePath "$EngineRoot\Engine\Binaries\Win64\UnrealEditor-Cmd.exe" -ArgumentList $bindingArgs -WindowStyle Hidden -PassThru
  if(-not $binding.WaitForExit(120000)){Stop-Process -Id $binding.Id;throw 'Suit material binding timed out'}
  if($binding.ExitCode -ne 0 -or (Get-Content -LiteralPath $bindingLog -Raw) -notmatch 'REALISM_SUIT_BINDINGS_VERIFIED'){throw 'Suit material binding failed'}
- & "$EngineRoot\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun "-project=$root\LunarRescue.uproject" -noP4 -platform=Win64 -clientconfig=Development -skipbuild -nocompileeditor -cook -map=/Game/Rescue/Maps/MissionSelect+/Game/Lunar/Maps/Apollo12+/Game/Lunar/Maps/MoonBase+/Game/Mars/Maps/MarsBase -stage -pak -archive "-archivedirectory=$root\Dist\Apollo12" -unattended -utf8output
+ }
+ elseif(-not(Test-Path -LiteralPath "$root\Binaries\Win64\LunarRescue.exe") -or -not(Test-Path -LiteralPath "$root\Saved\Cooked\Windows\ue.projectstore")){throw 'StageOnly requires an existing compiled game and completed Windows cook'}
+ $cookFlag=if($StageOnly){'-skipcook'}else{'-cook'}
+ # Bound IoStore reads/compression instead of reserving gigabytes in parallel.
+ & "$EngineRoot\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun "-project=$root\LunarRescue.uproject" -noP4 -platform=Win64 -clientconfig=Development -skipbuild -nocompileeditor $cookFlag -map=/Game/Rescue/Maps/MissionSelect+/Game/Lunar/Maps/Apollo12+/Game/Lunar/Maps/MoonBase+/Game/Mars/Maps/MarsBase -stage -pak -archive "-archivedirectory=$root\Dist\Apollo12" -unattended -utf8output '-AdditionalIoStoreOptions="-MaxConcurrentSourceReads=1 -MaxSourceBufferMemory=536870912 -MaxCompressionBufferMemory=268435456"'
  $packageCode=$LASTEXITCODE
 }finally{
  # Restore files removed by staging; retain any newer copy already in the package.
@@ -51,6 +60,7 @@ New-Item -ItemType Directory -Force -Path "$credits\Apollo12" | Out-Null
 Copy-Item -LiteralPath "$root\SourceArt\Apollo12\manifest.json","$root\APOLLO12.md","$root\ONBOARDING_UPDATE.md","$root\CHECKPOINT_UPDATE.md","$root\SUIT_UPDATE.md","$root\ENGLISH_UPDATE.md" -Destination "$credits\Apollo12"
 Copy-Item -LiteralPath "$root\POLISH_UPDATE.md","$root\HISTORICAL_AUDIT.md","$root\PLAYTEST_GUIDE.md" -Destination "$credits\Apollo12"
 Copy-Item -LiteralPath "$root\REALISM_UPDATE.md" -Destination "$credits\Apollo12"
+Copy-Item -LiteralPath "$root\CLARITY_UPDATE.md" -Destination "$credits\Apollo12"
 Copy-Item -LiteralPath "$root\SourceArt\Apollo12\Raw\NAC_DTM_APOLLO12_README.TXT","$root\SourceArt\Apollo12\Raw\NAC_DTM_APOLLO12.LBL" -Destination "$credits\Apollo12"
 New-Item -ItemType Directory -Force -Path "$credits\Suit" | Out-Null
 Copy-Item -LiteralPath "$root\SUIT_UPDATE.md" -Destination "$credits\Suit"

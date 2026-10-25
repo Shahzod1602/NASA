@@ -15,7 +15,7 @@ bool ALunarGameMode::OpenApolloTool(){
  if(!Apollo||!IsActive()||Paused||ApolloTool||!CanInteract()||Stage==ELunarStage::ApolloTraverse)return false;
  if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));P&&P->ThirdPerson)P->ToggleSuitView();
  ApolloWorkTarget=InteractionTarget();if(!ApolloWorkTarget)return false;
- ApolloToolPhase=0;ApolloToolCooldown=0;
+ ApolloToolPhase=0;ApolloToolCooldown=0;ApolloConfirmationRemaining=0;ApolloPackedPreviewRemaining=0;
  if(Stage==ELunarStage::ApolloCheckout)ApolloTool=8;
  else if(Stage==ELunarStage::ApolloDeploy)ApolloTool=ApolloAction==0?2:3;
  else if(Stage==ELunarStage::ApolloSamples){const int I=Index(SampleActors,ApolloWorkTarget);if(I<0)return false;SelectedSample=I;ApolloTool=(ApolloPhotos&(1<<I))?(I==2?5:4):1;}
@@ -35,26 +35,26 @@ FString ALunarGameMode::ApolloToolTitle() const {
 }
 FString ALunarGameMode::ApolloToolHelp() const {
  switch(ApolloTool){
- case 1:return ApolloWorkTarget==DroneActor?TEXT("Walk back until all of Surveyor fits inside the frame. Center the spacecraft. Left click: shutter. Esc: put camera away."):TEXT("Walk and look to compose the sample with its surroundings. Center the work site. Left click: shutter. Esc: put camera away.");
- case 2:return TEXT("Move the mouse or use arrow keys to center the level bubble. Left click: confirm level. Esc: cancel.");
- case 3:return TEXT("Move the mouse left/right, or use arrow keys, for the strongest signal. Left click: verify link. Esc: cancel.");
- case 4:return ApolloToolPhase==0?(SelectedSample==1?TEXT("Left click: scoop fine soil into the sample pouch."):TEXT("Left click: lift the rock using the sample tongs.")):TEXT("Left click: seal the pouch and attach the site label. Esc: return the uncommitted sample.");
- case 5:return ApolloToolPhase==0?TEXT("Left click: place the drive tube upright in the soil."):ApolloToolPhase<5?FString::Printf(TEXT("Left click: tap with the geology hammer (%d/4). A short pause separates strokes."),ApolloToolPhase-1):ApolloToolPhase==5?TEXT("Left click: withdraw the filled core tube."):TEXT("Left click: cap both ends and label 12027. Esc: cancel uncommitted work.");
- case 6:return ApolloToolPhase==0?(SelectedSample==2?TEXT("Left click: cut the first end of the selected cable segment."):TEXT("Left click: release the first fitting with the cutters.")):ApolloToolPhase==1?(SelectedSample==2?TEXT("Left click: cut the other end of the cable segment."):TEXT("Left click: release the remaining fitting.")):TEXT("Left click: remove and pack this component. Esc: cancel without taking it.");
- case 7:return TEXT("Check the sample and hardware list in the album (I). Left click: stow the complete cargo and finish.");
- case 8:return ApolloAction==0?TEXT("Left click: check suit connections and pressure indicators."):ApolloAction==1?TEXT("Left click: secure camera, tongs, scoop, drive tube and cutters."):TEXT("Left click: confirm Intrepid as the return point on your field map.");
+ case 1:return ApolloWorkTarget==DroneActor?TEXT("Fit the whole spacecraft in the frame. Left click: take photo."):TEXT("Center the sample and nearby ground. Left click: take photo.");
+ case 2:return TEXT("Mouse / arrows: center the bubble. Left click: confirm.");
+ case 3:return TEXT("Mouse / arrows: find the strongest signal. Left click: confirm.");
+ case 4:return ApolloToolPhase==0?(SelectedSample==1?TEXT("Left click: scoop the soil."):TEXT("Left click: lift the rock with tongs.")):TEXT("Left click: seal and label the pouch.");
+ case 5:return ApolloToolPhase==0?TEXT("Left click: place the tube upright."):ApolloToolPhase<5?FString::Printf(TEXT("Left click: hammer stroke %d / 4."),ApolloToolPhase):ApolloToolPhase==5?TEXT("Left click: withdraw the filled tube."):TEXT("Left click: cap and label the tube.");
+ case 6:return ApolloToolPhase==0?(SelectedSample==2?TEXT("Left click: cut the first marked cable end."):TEXT("Left click: release the first marked fitting.")):ApolloToolPhase==1?(SelectedSample==2?TEXT("Left click: cut the second marked cable end."):TEXT("Left click: release the second marked fitting.")):TEXT("Left click: remove and pack this part.");
+ case 7:return TEXT("Left click: stow all samples and parts to finish. I: cargo list.");
+ case 8:return ApolloAction==0?TEXT("Left click: confirm the suit check."):ApolloAction==1?TEXT("Left click: confirm the camera and tools."):TEXT("Left click: confirm Intrepid as your return point.");
  default:return FString();
  }
 }
 void ALunarGameMode::ApolloToolClick(){
  if(!ApolloTool||Paused||!IsActive()||ApolloToolCooldown>0)return;
- if(!ApolloWorkTarget||!CanInteractWith(ApolloWorkTarget)){Message(TEXT("TOOL: face the selected work site and stay within reach. No work has been committed."));return;}
+ if(!ApolloWorkTarget||!CanInteractWith(ApolloWorkTarget)){Message(TEXT("Face the work site and move closer. Your unfinished work is safe to cancel."));return;}
  auto* A=ApolloWorkTarget.Get();const int Tool=ApolloTool;
  if(Tool==1){
   auto* P=UGameplayStatics::GetPlayerPawn(this,0);FVector Eye;FRotator Aim;P->GetActorEyesViewPoint(Eye,Aim);
   const FVector Center=A->GetActorLocation()+(A==DroneActor?FVector(0,0,90):FVector::ZeroVector);
   const float Dot=FVector::DotProduct(Aim.Vector(),(Center-Eye).GetSafeNormal());
-  if(Dot<.985f){Message(TEXT("CAMERA: center the sample or Surveyor in the guide before taking the context photograph."));return;}
+  if(Dot<.985f){Message(TEXT("Center the target inside the frame, then left click."));return;}
   if(A==DroneActor){
    int W=0,Height=0;if(auto* PC=UGameplayStatics::GetPlayerController(this,0))PC->GetViewportSize(W,Height);
    const float Aspect=W>0&&Height>0?float(W)/Height:16.f/9.f,Tangent=FMath::Tan(FMath::DegreesToRadians(ULunarSettings::Get()->FieldOfView*.5f));
