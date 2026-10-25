@@ -24,6 +24,7 @@ AActor* ALunarGameMode::ApolloGuidanceTarget() const {
 }
 
 FString ALunarGameMode::ApolloPrompt() const {
+ if(ApolloDustMode)return FString::Printf(TEXT("[ %s ]  %s"),*Key(TEXT("Interact")),ApolloDustPhotos==3?TEXT("Compare coating evidence"):TEXT("Photograph the marked coating"));
  if(!ApolloToolsEnabled){
   if(Stage==ELunarStage::ApolloCheckout)return ApolloText::Get(ApolloAction==0?TEXT("PromptCheckout0"):ApolloAction==1?TEXT("PromptCheckout1"):TEXT("PromptCheckout2"));
   if(Stage==ELunarStage::ApolloDeploy)return ApolloText::Get(ApolloAction==0?TEXT("PromptSeismometer"):TEXT("PromptAntenna"));
@@ -44,6 +45,7 @@ FString ALunarGameMode::ApolloPrompt() const {
 }
 
 FString ALunarGameMode::ApolloInstruction() const {
+ if(ApolloDustMode)return ApolloDustPhotos==3?TEXT("Compare the coating photos. Explain the pattern."):TEXT("Photograph exposed and shielded coating. K: main task.");
  if(Stage==ELunarStage::ApolloCheckout)return ApolloText::Get(ApolloAction==0?TEXT("InstructionCheckout0"):ApolloAction==1?TEXT("InstructionCheckout1"):TEXT("InstructionCheckout2"));
  if(Stage==ELunarStage::ApolloDeploy)return ApolloText::Get(ApolloAction==0?TEXT("InstructionSeismometer"):TEXT("InstructionAntenna"));
  if(Stage==ELunarStage::ApolloSamples){
@@ -74,11 +76,13 @@ FString ALunarGameMode::ApolloTutorial() const {
 FString ALunarGameMode::ApolloFooter() const {
  if(Journal)return Key(TEXT("Route"))+TEXT(": next page     ")+Key(TEXT("Journal"))+TEXT(" / Esc: close     H: how to play     F1: settings");
  if(Paused)return TEXT("Esc: resume     H: how to play     F1: settings");
+ if(ApolloTool==9)return Key(TEXT("Route"))+TEXT(": choose explanation     Left click: confirm     Esc: cancel");
  if(ApolloTool)return TEXT("Left click: work     Esc: cancel unfinished work     H: guide     F1: settings");
  if(!IsActive())return TEXT("F1 Settings     H Guide during play     Esc Pause");
  FString Result=Key(TEXT("Journal"))+TEXT(": map / help     H: ")+(ApolloGuideEnabled?TEXT("hide guide"):TEXT("show guide"));
  if(ApolloEvidence.Num()>0||SamplesCollected||ApolloParts)Result+=TEXT("     I: photos / cargo");
  if(Stage==ELunarStage::ApolloSamples||(Stage==ELunarStage::ApolloRecover&&SurveyorPhotographed))Result+=TEXT("     ")+Key(TEXT("Route"))+TEXT(": next site");
+ if(CanStudyDust())if(auto* Player=UGameplayStatics::GetPlayerPawn(this,0);Player&&FVector::Dist2D(Player->GetActorLocation(),DroneActor->GetActorLocation())<=1000)Result+=TEXT("     K: dust study");
  return Result+TEXT("     Esc: pause     F1: settings");
 }
 
@@ -94,15 +98,16 @@ FString ALunarGameMode::ApolloToolProgress() const {
 void ALunarGameMode::ConfirmApolloWork(const FString& Value){ApolloConfirmation=Value;ApolloConfirmationRemaining=5.f;}
 
 bool ALunarGameMode::ApolloWorkCue(FVector& Position,FString& Label) const {
+ if(ApolloTool==4&&ApolloToolPhase>0)return false;
  if(Paused||Journal||!IsActive()||ApolloTool==1||ApolloTool==2||ApolloTool==3||ApolloTool==7||ApolloTool==8)return false;
  AActor* A=ApolloGuidanceTarget();if(!IsValid(A)||A->IsHidden()||!CanInteractWith(A))return false;
  const int Sample=Find(SampleActors,A),Part=Find(ApolloPartActors,A);
  if(Sample==INDEX_NONE&&Part==INDEX_NONE)return false;
  Position=A->GetActorLocation();
- const FName Tag=Part>=0&&ApolloTool==6&&ApolloToolPhase<2?FName(ApolloToolPhase==0?TEXT("work.0"):TEXT("work.1")):FName(TEXT("work.focus"));
+ const FName Tag=Part>=0&&ApolloTool==6&&ApolloVisualPhase()<2?FName(ApolloVisualPhase()==0?TEXT("work.0"):TEXT("work.1")):FName(TEXT("work.focus"));
  TArray<UStaticMeshComponent*> Meshes;A->GetComponents(Meshes);
  for(auto* C:Meshes)if(C->ComponentHasTag(Tag)){Position=C->Bounds.Origin;break;}
- if(Part>=0)Label=ApolloTool==6?(ApolloToolPhase==0?(Part==2?TEXT("FIRST CABLE END"):TEXT("FIRST FITTING")):ApolloToolPhase==1?(Part==2?TEXT("SECOND CABLE END"):TEXT("SECOND FITTING")):TEXT("PACK THIS PART")):TEXT("WORK ON THIS PART");
+ if(Part>=0)Label=ApolloTool==6?(ApolloVisualPhase()==0?(Part==2?TEXT("FIRST CABLE END"):TEXT("FIRST FITTING")):ApolloVisualPhase()==1?(Part==2?TEXT("SECOND CABLE END"):TEXT("SECOND FITTING")):TEXT("PACK THIS PART")):TEXT("WORK ON THIS PART");
  else Label=Sample==0?TEXT("ROCK"):Sample==1?TEXT("SOIL"):TEXT("CORE SITE");
  return true;
 }

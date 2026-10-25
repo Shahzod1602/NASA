@@ -7,8 +7,10 @@
 #include "Engine/Texture2D.h"
 #include "GameFramework/PlayerController.h"
 #include "Kismet/GameplayStatics.h"
+#include "UnrealClient.h"
 
 void ALunarHUD::DrawApollo(ALunarGameMode* G){
+ if(FScreenshotRequest::IsScreenshotRequested()&&!FScreenshotRequest::ShouldShowUI())return;
  const float W=Canvas->SizeX,H=Canvas->SizeY,S=FMath::Min(W/1280.f,H/720.f);
  const float SW=W/S,SH=H/S;
  const FLinearColor Ink(.92,.95,.94),Dim(.64,.72,.74),Gold(.98,.73,.35),Cyan(.39,.87,.84);
@@ -71,6 +73,11 @@ void ALunarHUD::DrawApollo(ALunarGameMode* G){
   Box(X,Y,ToolWidth,HelpEnd-Y+16,.97f);Text(G->ApolloToolTitle(),X+20,Y+14,.46,Gold);
   Text(G->ApolloToolProgress(),X+20,Y+43,.42,Cyan);
   Wrap(G->ApolloToolHelp(),X+20,Y+70,ToolWidth-40,.60,Ink);
+  if(G->ApolloTool==9){
+   const float AnswerX=SW*.5f-430,AnswerY=SH*.46f;Box(AnswerX,AnswerY,860,168,.98f);
+   const TCHAR* Answers[]={TEXT("Intrepid landing exhaust moved the dust."),TEXT("Rain washed the coating."),TEXT("Earth-like wind eroded the surface.")};
+   for(int I=0;I<3;++I)Wrap(FString(I==G->ApolloDustChoice?TEXT("> "):TEXT("   "))+Answers[I],AnswerX+20,AnswerY+18+I*46,820,.55,I==G->ApolloDustChoice?Cyan:Ink);
+  }
   if(G->ApolloTool==1){
    const float CX=W*.5f,CY=H*.5f,FX=W*.40f,FY=H*.39f;
    DrawLine(CX-FX,CY-FY,CX+FX,CY-FY,Cyan,2);DrawLine(CX-FX,CY+FY,CX+FX,CY+FY,Cyan,2);
@@ -159,7 +166,7 @@ void ALunarHUD::DrawApollo(ALunarGameMode* G){
    const TCHAR* Names[]={TEXT("HEAD"),TEXT("BENCH"),TEXT("SHARP")};
    for(int I=0;I<3;++I)Dot(ApolloData::Samples[I],Names[I],G->SamplesCollected&(1<<I)?Cyan:Gold);
   }
-  if(P)Dot(P->GetActorLocation(),T(TEXT("MapYou")),FLinearColor(1,.4,.25));
+  if(P){auto M=MapPoint(P->GetActorLocation());DrawRect(FLinearColor(1,.4,.25),M.X-3*S,M.Y-3*S,6*S,6*S);Label(T(TEXT("MapYou")),M.X-37*S,M.Y+7*S,.31*S,FLinearColor(1,.4,.25));}
   if(auto* Target=G->ApolloGuidanceTarget()){auto A=MapPoint(Target->GetActorLocation());DrawLine(A.X-7*S,A.Y,A.X+7*S,A.Y,Gold,2);DrawLine(A.X,A.Y-7*S,A.X,A.Y+7*S,Gold,2);}
   Box(MX,MY,MW,29,.75f);Text(T(TEXT("MapNorth")),MX+10,MY+6,.35,Ink);
   }
@@ -220,7 +227,7 @@ void ALunarHUD::DrawApollo(ALunarGameMode* G){
   }else if(G->Stage==ELunarStage::Won){
    Wrap(T(TEXT("WinText")),X+30,Y+132,860,.65,Ink);
    Text(T(TEXT("WinCargo")),X+30,Y+231,.47,Cyan);
-   Text(ApolloText::Format(TEXT("WinStats"),{{TEXT("Time"),Time(G->ApolloElapsed)},{TEXT("Distance"),FMath::RoundToInt(G->ApolloDistance)}}),X+30,Y+274,.53,Ink);
+   Text(ApolloText::Format(TEXT("WinStats"),{{TEXT("Time"),Time(G->ApolloElapsed)},{TEXT("Distance"),FMath::RoundToInt(G->ApolloDistance)},{TEXT("Count"),G->ApolloEvidence.Num()}}),X+30,Y+274,.53,Ink);
    Wrap(T(TEXT("WinContext")),X+30,Y+322,860,.48,Dim);
    Text(TEXT("I  Cargo, photographs and debrief     ")+T(TEXT("Again")),X+30,Y+423,.49,Gold);
   }else{

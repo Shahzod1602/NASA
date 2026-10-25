@@ -20,6 +20,8 @@ const TCHAR* const Sites[]={TEXT("head.12031"),TEXT("bench.12032"),TEXT("sharp.1
 const TCHAR* const Arrival=TEXT("surveyor.reached");
 const TCHAR* const SurveyorPhoto=TEXT("photo.surveyor3");
 const TCHAR* const Stowed=TEXT("intrepid.cargo-stowed");
+const TCHAR* const DustPhotos[]={TEXT("photo.surveyor.exposed"),TEXT("photo.surveyor.shielded")};
+const TCHAR* const DustCompared=TEXT("science.surveyor.coating");
 }
 
 bool UApolloCheckpoint::Has(const TCHAR* Task) const {return CompletedTasks.Contains(FName(Task));}
@@ -34,7 +36,7 @@ int32 UApolloCheckpoint::Step() const {
 bool UApolloCheckpoint::Validate(FString& Reason) const {
  auto Reject=[&](const TCHAR* Why){Reason=Why;return false;};
  if(FormatVersion!=1||MissionId!=TEXT("apollo12-surveyor-legacy")||DataProfile!=TEXT("lroc-apollo12-v1.9")||(Mode!=TEXT("timed-exercise")&&Mode!=TEXT("historical-exploration")))return Reject(TEXT("incompatible"));
- if(!RunId.IsValid()||CompletedTasks.Num()>17||Evidence.Num()>4)return Reject(TEXT("invalid identifiers"));
+ if(!RunId.IsValid()||CompletedTasks.Num()>20||Evidence.Num()>6)return Reject(TEXT("invalid identifiers"));
  if(Position.ContainsNaN()||View.ContainsNaN()||!FMath::IsFinite(Position.X)||!FMath::IsFinite(Position.Y)||!FMath::IsFinite(Position.Z)||Position.X < -59000||Position.X > 44000||Position.Y < -39000||Position.Y > 44000||FMath::Abs(Position.Z)>50000)return Reject(TEXT("invalid position"));
  if(!FMath::IsFinite(Elapsed)||!FMath::IsFinite(Distance)||!FMath::IsFinite(Remaining)||!FMath::IsFinite(AntennaAngle)||Elapsed<0||Elapsed>(Mode==TEXT("timed-exercise")?1830.f:604800.f)||Distance<0||Distance>50000||Remaining<0||Remaining>1800||FMath::Abs(AntennaAngle)>180||FMath::Abs(View.Pitch)>360||FMath::Abs(View.Yaw)>360||FMath::Abs(View.Roll)>360)return Reject(TEXT("invalid telemetry"));
  TSet<FName> Allowed,Seen;
@@ -43,6 +45,7 @@ bool UApolloCheckpoint::Validate(FString& Reason) const {
  for(const TCHAR* Id:ApolloTasks::Photos)Allowed.Add(FName(Id));
  for(const TCHAR* Id:ApolloTasks::Samples)Allowed.Add(FName(Id));
  for(const TCHAR* Id:ApolloTasks::Parts)Allowed.Add(FName(Id));
+ for(const TCHAR* Id:ApolloTasks::DustPhotos)Allowed.Add(FName(Id));Allowed.Add(FName(ApolloTasks::DustCompared));
  Allowed.Add(FName(ApolloTasks::Arrival));Allowed.Add(FName(ApolloTasks::SurveyorPhoto));Allowed.Add(FName(ApolloTasks::Stowed));
  for(FName Id:CompletedTasks){if(!Allowed.Contains(Id)||Seen.Contains(Id))return Reject(TEXT("unknown or duplicate task"));Seen.Add(Id);}
  if((Has(ApolloTasks::Checkout[1])&&!Has(ApolloTasks::Checkout[0]))||(Has(ApolloTasks::Checkout[2])&&!Has(ApolloTasks::Checkout[1])))return Reject(TEXT("checkout prerequisite"));
@@ -56,13 +59,17 @@ bool UApolloCheckpoint::Validate(FString& Reason) const {
   if(Has(ApolloTasks::Stowed)&&!Has(ApolloTasks::Parts[I]))return Reject(TEXT("cargo prerequisite"));
  }
  if(Has(ApolloTasks::SurveyorPhoto)&&!Has(ApolloTasks::Arrival))return Reject(TEXT("Surveyor arrival prerequisite"));
+ for(const TCHAR* Id:ApolloTasks::DustPhotos)if(Has(Id)&&!Has(ApolloTasks::SurveyorPhoto))return Reject(TEXT("dust photo prerequisite"));
+ if(Has(ApolloTasks::DustCompared)&&(!Has(ApolloTasks::DustPhotos[0])||!Has(ApolloTasks::DustPhotos[1])))return Reject(TEXT("dust comparison prerequisite"));
  if(Remaining<=0&&Step()!=6)return Reject(TEXT("expired checkpoint"));
  TSet<FName> PhotoIds;
  for(const FApolloEvidence& Item:Evidence){
   int Index=INDEX_NONE;for(int I=0;I<3;++I)if(Item.PhotoId==FName(ApolloTasks::Photos[I]))Index=I;
   const bool Surveyor=Item.PhotoId==FName(ApolloTasks::SurveyorPhoto);
-  if((Index==INDEX_NONE&&!Surveyor)||PhotoIds.Contains(Item.PhotoId)||!CompletedTasks.Contains(Item.PhotoId))return Reject(TEXT("invalid evidence identifier"));
-  if(Item.SiteId!=FName(Surveyor?TEXT("surveyor3"):ApolloTasks::Sites[Index]))return Reject(TEXT("evidence site mismatch"));
+  int Dust=INDEX_NONE;for(int I=0;I<2;++I)if(Item.PhotoId==FName(ApolloTasks::DustPhotos[I]))Dust=I;
+  if((Index==INDEX_NONE&&!Surveyor&&Dust==INDEX_NONE)||PhotoIds.Contains(Item.PhotoId)||!CompletedTasks.Contains(Item.PhotoId))return Reject(TEXT("invalid evidence identifier"));
+  const FName Site=Dust>=0?FName(Dust?TEXT("surveyor.shielded"):TEXT("surveyor.exposed")):FName(Surveyor?TEXT("surveyor3"):ApolloTasks::Sites[Index]);
+  if(Item.SiteId!=Site)return Reject(TEXT("evidence site mismatch"));
   if(!FMath::IsFinite(Item.CapturedAt)||Item.CapturedAt<0||Item.CapturedAt>Elapsed+.1f)return Reject(TEXT("invalid evidence time"));
   if(!Item.PhotoPath.IsEmpty()){
    const FString Prefix=FString(TEXT("Apollo12/Photos/"))+RunId.ToString(EGuidFormats::Digits)+TEXT("/");
@@ -72,6 +79,7 @@ bool UApolloCheckpoint::Validate(FString& Reason) const {
  }
  for(const TCHAR* Id:ApolloTasks::Photos)if(Has(Id)&&!PhotoIds.Contains(FName(Id)))return Reject(TEXT("missing evidence metadata"));
  if(Has(ApolloTasks::SurveyorPhoto)&&!PhotoIds.Contains(FName(ApolloTasks::SurveyorPhoto)))return Reject(TEXT("missing Surveyor metadata"));
+ for(const TCHAR* Id:ApolloTasks::DustPhotos)if(Has(Id)&&!PhotoIds.Contains(FName(Id)))return Reject(TEXT("missing dust metadata"));
  if(!SelectedSite.IsNone()){
   bool Known=false;for(int I=0;I<3;++I)Known|=SelectedSite==FName(ApolloTasks::Sites[I])||SelectedSite==FName(ApolloTasks::Parts[I]);
   if(!Known)return Reject(TEXT("unknown selection"));

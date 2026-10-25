@@ -1,0 +1,14 @@
+{
+  "photograph": {
+    "id": "AS12-48-7136",
+    "credit": "NASA / Alan L. Bean",
+    "date": "1969-11-20",
+    "url": "https://images-assets.nasa.gov/image/as12-48-7136/as12-48-7136~medium.jpg",
+    "metadata": "https://images-api.nasa.gov/search?q=AS12-48-7136&media_type=image",
+    "sha256": "2db95fc9e6d50b0b31c18d06cdbeadac697106364b3494b3b766a819ed232fb1"
+  },
+  "dust_research": "https://ntrs.nasa.gov/citations/19720019093",
+  "surveyors_camera_analysis": "https://ntrs.nasa.gov/citations/19710024418",
+  "lunar_module_source": "https://science.nasa.gov/3d-resources/apollo-lunar-module/",
+  "note": "Reference media; authored gameplay geometry and surface patterns are not historical measurements."
+}

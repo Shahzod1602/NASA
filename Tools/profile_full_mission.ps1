@@ -1,4 +1,4 @@
-param([ValidatePattern('^[A-Za-z0-9_-]+$')][string]$Label='v050-medium',[ValidateRange(0,2)][int]$Quality=1,[switch]$HistoricalRoute)
+param([ValidatePattern('^[A-Za-z0-9_-]+$')][string]$Label='v050-medium',[ValidateRange(0,2)][int]$Quality=1,[switch]$HistoricalRoute,[switch]$Audio,[ValidateRange(960,3840)][int]$Width=1280,[ValidateRange(540,2160)][int]$Height=720)
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 $gameRoot=Join-Path $root 'Dist\Apollo12\Windows\LunarRescue'
@@ -6,7 +6,8 @@ $report=Join-Path $root "Reports\Performance\$Label"
 New-Item -ItemType Directory -Force -Path $report | Out-Null
 $env:TEMP=Join-Path $root 'Intermediate\ApolloTemp';$env:TMP=$env:TEMP
 $log=Join-Path $report 'capture.log'
-$arguments=@('/Game/Lunar/Maps/Apollo12','-game','-unattended','-ApolloWalkTest','-ApolloSaveProfile','-ApolloFullProfile','-ApolloProfileFastStride','-dx11','-RenderOffscreen','-ForceRes','-ResX=1280','-ResY=720','-nosound',"-ApolloQuality=$Quality",'-ExecCmds="t.MaxFPS 60,r.VSync 0,csvprofile start"',"-abslog=`"$log`"")
+$arguments=@('/Game/Lunar/Maps/Apollo12','-game','-unattended','-ApolloWalkTest','-ApolloSaveProfile','-ApolloFullProfile','-ApolloProfileFastStride','-dx11','-RenderOffscreen','-ForceRes',"-ResX=$Width","-ResY=$Height","-ApolloQuality=$Quality",'-ExecCmds="t.MaxFPS 60,r.VSync 0,csvprofile start"',"-abslog=`"$log`"")
+if(-not $Audio){$arguments+='-nosound'}
 if($HistoricalRoute){$arguments+='-ApolloHistoricalRoute'}
 $started=Get-Date
 $configPath=Join-Path $gameRoot 'Saved\Config\Windows\GameUserSettings.ini'
@@ -40,6 +41,6 @@ $summary=Get-Content (Join-Path $report 'summary.json') -Raw | ConvertFrom-Json
 if($result -notmatch '(?m)^Elapsed ([0-9.]+) s'){throw 'Missing mission elapsed time'}
 $missionSeconds=[double]$Matches[1]
 if($summary.sample_seconds -lt ($missionSeconds-20) -or $summary.sample_seconds -gt ($missionSeconds+60)){throw 'CSV duration does not cover the complete normal-delta mission'}
-[ordered]@{utc=$started.ToUniversalTime().ToString('o');cpu=(Get-CimInstance Win32_Processor).Name;adapters=@((Get-CimInstance Win32_VideoController).Name);ram_bytes=(Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory;process_peak_sampled_working_set_bytes=$peak;process_peak_sampled_dedicated_gpu_bytes=$gpuPeak;gpu_memory_counter_available=$gpuAvailable;quality=$Quality;resolution='1280x720';renderer='DX11 rendered offscreen';fps_cap=60;arguments=$arguments;exit_code=$p.ExitCode} | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $report 'environment.json') -Encoding UTF8
+[ordered]@{utc=$started.ToUniversalTime().ToString('o');cpu=(Get-CimInstance Win32_Processor).Name;adapters=@((Get-CimInstance Win32_VideoController).Name);ram_bytes=(Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory;process_peak_sampled_working_set_bytes=$peak;process_peak_sampled_dedicated_gpu_bytes=$gpuPeak;gpu_memory_counter_available=$gpuAvailable;quality=$Quality;resolution="${Width}x${Height}";audio_enabled=[bool]$Audio;renderer='DX11 rendered offscreen';fps_cap=60;arguments=$arguments;exit_code=$p.ExitCode} | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $report 'environment.json') -Encoding UTF8
 $samples | ConvertTo-Json | Set-Content (Join-Path $report 'memory-samples.json') -Encoding UTF8
 Write-Output "Full rendered mission captured: $report"

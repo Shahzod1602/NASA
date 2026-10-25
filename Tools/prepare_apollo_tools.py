@@ -2,7 +2,7 @@
 from pathlib import Path
 import math
 ROOT=Path(__file__).resolve().parents[1];OUT=ROOT/'SourceArt/Apollo12/Tools';OUT.mkdir(parents=True,exist_ok=True)
-(OUT/'Tools.mtl').write_text('newmtl Metal\nKd .4 .44 .46\nnewmtl Rubber\nKd .055 .065 .07\nnewmtl Blue\nKd .035 .12 .28\n')
+(OUT/'Tools.mtl').write_text('newmtl Metal\nKd .4 .44 .46\nnewmtl Rubber\nKd .055 .065 .07\nnewmtl Blue\nKd .035 .12 .28\nnewmtl Cloth\nKd .78 .79 .75\n')
 class Mesh:
  def __init__(self):self.v=[];self.f=[]
  def box(self,c,s,mat='Metal'):
@@ -39,5 +39,31 @@ m=Mesh();m.rod((0,0,-15),(0,0,8),.8,'Rubber');m.box((0,0,10),(12,5,5));m.save('S
 m=Mesh()
 for sign in (-1,1):m.rod((-14,sign*4,0),(6,sign*1.5,0),.75);m.rod((-14,sign*4,0),(-6,sign*3.5,0),1.1,'Rubber');m.box((9,sign*1.5,0),(6,2,3))
 m.rod((5,-3,0),(5,3,0),1.5);m.save('SM_Cutters')
-(OUT/'CREDITS.txt').write_text('Project-authored visual approximations of a Hasselblad-style context camera, tongs, scoop, drive tube, geology hammer and cutters. Rebuild with Tools/prepare_apollo_tools.py. Not museum scans or engineering models. Apollo 12 core collection is represented as a hammer-driven tube; no powered drill is used. Historical references are in HISTORICAL_AUDIT.md.\n')
-print('Prepared 6 original tool meshes')
+# Separate jaws share a hinge-local origin, so contact animation closes the tool.
+for kind,pivot,reach in [('Tongs',10,12),('Cutters',5,6)]:
+ base=Mesh()
+ for sign in (-1,1):
+  base.rod((-14,sign*4,0),(pivot,sign*1.5,0),.7)
+  base.rod((-14,sign*4,0),(-7,sign*4,0),1.05,'Rubber')
+ base.rod((pivot,-3,0),(pivot,3,0),1.2)
+ base.save('SM_'+kind+'Base')
+ for sign,side in [(-1,'L'),(1,'R')]:
+  jaw=Mesh()
+  if kind=='Tongs':jaw.rod((0,sign*1.5,0),(reach,sign*3,-4),.65)
+  else:jaw.box((3,sign*1.5,0),(6,2,3))
+  jaw.save('SM_'+kind+'Jaw'+side)
+# Soft-sided collection pouch with a defined lip; no external art dependency.
+m=Mesh();n=16;levels=8
+for j in range(levels):
+ t=j/(levels-1);width=6.6*(.78+.22*math.sin(math.pi*t*.8));depth=1.8*(.65+.35*math.sin(math.pi*t))
+ for i in range(n):
+  a=i/n*2*math.pi
+  m.v.append((depth*math.cos(a)*(1+.06*math.sin(t*17+a*3)),width*math.sin(a),t*18-9))
+for j in range(levels-1):
+ for i in range(n):
+  a=j*n+i;b=j*n+(i+1)%n;c=b+n;d=a+n
+  m.f.extend([('Cloth',(a,b,c)),('Cloth',(a,c,d))])
+for x in (-1.8,1.8):m.box((x,0,8.8),(.4,13.2,.9),'Cloth')
+m.save('SM_SamplePouch')
+(OUT/'CREDITS.txt').write_text('Project-authored visual approximations of a Hasselblad-style context camera, tongs, scoop, drive tube, geology hammer, hinged tongs/cutters and a soft collection pouch. Rebuild with Tools/prepare_apollo_tools.py. Not museum scans or engineering models. Apollo 12 core collection is represented as a hammer-driven tube; no powered drill is used. Historical references are in HISTORICAL_AUDIT.md.\n')
+print('Prepared',len(list(OUT.glob('*.obj'))),'project-authored tool/pouch meshes')

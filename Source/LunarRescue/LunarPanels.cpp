@@ -95,13 +95,14 @@ void ULunarPanel::Rebuild(){
  }
  if(!G)return;
  int Parts=0;for(int i=0;i<3;++i)if(G->ApolloParts&(1<<i))++Parts;
- Add(Text(WidgetTree,FString::Printf(TEXT("%s  |  %.0f m walked  |  %02d:%02d elapsed\nCargo: %d/3 samples, %d/3 Surveyor components. Context photographs: %d/4.\n%s"),G->ApolloTimed?TEXT("Timed exercise"):TEXT("Untimed historical exploration"),G->ApolloDistance,int(G->ApolloElapsed)/60,int(G->ApolloElapsed)%60,G->SampleCount(),Parts,G->ApolloEvidence.Num(),G->Stage==ELunarStage::Won?TEXT("Cargo stowed at Intrepid. The real crew reunited with Richard Gordon in Yankee Clipper and returned to Earth on 24 November 1969."):TEXT("Only committed work is listed. Cancelled work is never added to cargo.")),21));
+ Add(Text(WidgetTree,FString::Printf(TEXT("%s  |  %.0f m walked  |  %02d:%02d elapsed\nCargo: %d/3 samples, %d/3 Surveyor components. Evidence photographs: %d.\n%s"),G->ApolloTimed?TEXT("Timed exercise"):TEXT("Untimed historical exploration"),G->ApolloDistance,int(G->ApolloElapsed)/60,int(G->ApolloElapsed)%60,G->SampleCount(),Parts,G->ApolloEvidence.Num(),G->Stage==ELunarStage::Won?TEXT("Cargo stowed at Intrepid. The real crew reunited with Richard Gordon in Yankee Clipper and returned to Earth on 24 November 1969."):TEXT("Only committed work is listed. Cancelled work is never added to cargo.")),21));
  const TCHAR* Cargo[]={TEXT("12031 / Head: basalt rock; helps study lunar volcanic history."),TEXT("12032 / Bench: fine soil; records the surface regolith."),TEXT("12027 / Sharp: drive-tube core; preserves a shallow soil column."),TEXT("Surveyor TV camera: materials and mechanisms after lunar exposure."),TEXT("Surveyor scoop: returned hardware and adhering soil."),TEXT("Surveyor cable segment: returned material for laboratory examination.")};
  auto* Nav=WidgetTree->ConstructWidget<UHorizontalBox>();Add(Nav);auto* Prev=Button(WidgetTree,TEXT("< Previous photo"));auto* NextB=Button(WidgetTree,TEXT("Next photo >"));Prev->OnClicked.AddDynamic(this,&ULunarPanel::Previous);NextB->OnClicked.AddDynamic(this,&ULunarPanel::Next);Nav->AddChild(Prev);Nav->AddChild(NextB);
  EvidenceIndex=FMath::Clamp(EvidenceIndex,0,FMath::Max(0,G->ApolloEvidence.Num()-1));
  if(G->ApolloEvidence.IsValidIndex(EvidenceIndex)){
   const auto& E=G->ApolloEvidence[EvidenceIndex];FString Id=E.PhotoId.ToString(),Site=E.SiteId.ToString();Id.RemoveFromStart(TEXT("photo."));int Dot;if(Site.FindChar(TEXT('.'),Dot))Site=Site.Left(Dot);
-  const FString Caption=E.PhotoId==FName(ApolloTasks::SurveyorPhoto)?TEXT("Surveyor 3 / before hardware removal"):FString::Printf(TEXT("Sample %s / %s Crater"),*Id,*Site.ToUpper());
+  const bool Dust=E.PhotoId==FName(ApolloTasks::DustPhotos[0])||E.PhotoId==FName(ApolloTasks::DustPhotos[1]);
+  const FString Caption=Dust?(E.PhotoId==FName(ApolloTasks::DustPhotos[0])?TEXT("Surveyor / exposed coating illustration"):TEXT("Surveyor / shielded coating illustration")):E.PhotoId==FName(ApolloTasks::SurveyorPhoto)?TEXT("Surveyor 3 / before hardware removal"):FString::Printf(TEXT("Sample %s / %s Crater"),*Id,*Site.ToUpper());
   Add(Text(WidgetTree,FString::Printf(TEXT("%s  |  captured %02d:%02d"),*Caption,int(E.CapturedAt)/60,int(E.CapturedAt)%60),20));
   const FString Prefix=TEXT("Apollo12/Photos/")+G->ApolloRunId.ToString(EGuidFormats::Digits)+TEXT("/");
   if(E.PhotoPath.StartsWith(Prefix)&&!E.PhotoPath.Contains(TEXT("..")))Photo=FImageUtils::ImportFileAsTexture2D(FPaths::ProjectSavedDir()/E.PhotoPath);
@@ -109,6 +110,8 @@ void ULunarPanel::Rebuild(){
   else Add(Text(WidgetTree,TEXT("Photo file unavailable. The saved evidence metadata and completed work are preserved."),20));
  }else Add(Text(WidgetTree,TEXT("No context photographs yet. At a sample site, open the camera and frame the target before releasing the shutter."),20));
  for(int i=0;i<6;++i)Add(Text(WidgetTree,FString(i<3?(G->SamplesCollected&(1<<i)?TEXT("[PACKED] "):TEXT("[PENDING] ")):(G->ApolloParts&(1<<(i-3))?TEXT("[PACKED] "):TEXT("[PENDING] ")))+Cargo[i],18));
+ Add(Text(WidgetTree,G->ApolloDustCompared?TEXT("OPTIONAL DUST STUDY / RECORDED"):FString::Printf(TEXT("OPTIONAL DUST STUDY / %d of 2 photos"),(G->ApolloDustPhotos&1?1:0)+(G->ApolloDustPhotos&2?1:0)),20));
+ if(G->ApolloDustCompared)Add(Text(WidgetTree,G->ApolloDustExplanation(),18));
  Add(Text(WidgetTree,TEXT("Historical note: this chapter combines selected work from two EVAs. Tool motions, single-player operation and simplified ALSEP alignment are authored gameplay. Core 12027 used a drive tube, not a powered drill. Terrain uses modern LROC orbital data. Sources: nasa.gov/history/alsj/a12/ and the bundled Credits/Apollo12 files."),17));
  if(!G->ApolloTranscript.IsEmpty())Add(Text(WidgetTree,TEXT("RECENT RADIO SUBTITLES\n")+FString::Join(G->ApolloTranscript,TEXT("\n")),18));
 }

@@ -32,7 +32,10 @@ for path in (ROOT/'SourceArt/Suit/Rig').glob('*.glb'):
         positions=values('POSITION','3f');normals=values('NORMAL','3f')
         cloth=next(p for p in doc['meshes'][0]['primitives'] if doc['materials'][p['material']]['name']=='Cloth')
         a=doc['accessors'][cloth['indices']];v=doc['bufferViews'][a['bufferView']]
-        ids={i[0] for i in struct.iter_unpack('<I',binary[v['byteOffset']:v['byteOffset']+v['byteLength']]) if joints[i[0]][0]==3}
+        # The new front hood has separate raised rims. Their inward-facing sides
+        # are correct locally, so use the unobstructed rear shell for this radial
+        # winding check instead of assuming all head cloth is a single ellipsoid.
+        ids={i[0] for i in struct.iter_unpack('<I',binary[v['byteOffset']:v['byteOffset']+v['byteLength']]) if joints[i[0]][0]==3 and positions[i[0]][0]<0}
         good=sum(sum((positions[i][j]-(0,.64,0)[j])*normals[i][j] for j in range(3))>0 for i in ids)
         if not ids or good/len(ids)<.95:raise RuntimeError('Helmet outer surface normals point inward')
     result['skins'].append({'file':path.name,'skin_vertices':len(weights),'bones':len(doc['skins'][0]['joints']),'normalized':True,'blended':True,'dust_mask_vertices':len(dust)})

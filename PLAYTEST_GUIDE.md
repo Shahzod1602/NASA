@@ -46,3 +46,19 @@ actual count without an explanation. Record wrong clicks and help requests.
 | P06 | | | | | | |
 | P07 | | | | | | |
 | P08 | | | | | | |
+
+For v0.6.0, use `Tools/start_playtest.ps1 -Participant P01 -Archive <release.zip>`
+to extract an independent installation for each participant. Repeat with P02-P05;
+the launcher refuses to overwrite an existing participant folder. These copies
+have separate saves and photos and do not touch the owner's installation. Resume
+an existing test through its own executable. Participant folders stay local.
+
+Observe whether the moving sample, pouch label and two fitting contacts explain
+the action. After the Surveyor photo, ask the player to find the optional coating
+study without directions. Record discovery, hypothesis choice and whether they
+understand that its illustrative panels are not exact historical measurements.
+The optional study must not block primary cargo or mission completion.
+
+No recruitment or human sessions have been completed by automation. Keep the
+table empty until real participants supply observations. Do not count scripted
+checks, renders or performance captures as human test results.

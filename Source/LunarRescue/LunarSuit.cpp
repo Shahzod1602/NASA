@@ -108,6 +108,7 @@ void ALunarCharacter::UpdateSuit(float D){
  SuitBody[0]->SetRelativeLocation(FVector(0,0,Breath-Crouch));SuitBody[1]->SetRelativeLocation(FVector(0,0,-Crouch));
  SuitBody[2]->SetRelativeLocation(FVector(0,0,64+Breath-Crouch));SuitBody[3]->SetRelativeLocation(FVector(0,0,Breath-Crouch));
  FVector Direction=GetActorTransform().InverseTransformVectorNoScale(Paused?PausedVelocity:GetVelocity()).GetSafeNormal2D();
+ UpdateApolloWorkVisuals();
  for(int S=0;S<2;++S){
   const float Side=S?1.f:-1.f;const float Phase=GaitPhase+S*PI;const float Swing=FMath::Sin(Phase)*GaitBlend;
   const float Cycle=FMath::Fmod(Phase,2*PI)/(2*PI),HalfStride=FastStride?40.f:32.f;
@@ -135,6 +136,7 @@ void ALunarCharacter::UpdateSuit(float D){
   if(G&&G->ApolloTool==4)ViewWrist=G->SelectedSample==1?(S?FVector(25,4,-11):FVector(42,-8,-18)):FVector(29,Side*8,-10);
   if(G&&G->ApolloTool==5)ViewWrist=FVector(38,Side*6,S?-20.f:-10.f);
   if(G&&G->ApolloTool==6)ViewWrist=FVector(30,Side*7,-16);
+  if(WorkGripActive){ViewWrist=WorkGrip[S]-FVector(5,0,0);ViewElbow=FVector(8,Side*25,-32);}
   Hand(Gloves,S*8,ViewElbow,ViewWrist,Side,WorkBlend);
  }
  if(ThirdPerson){
@@ -145,10 +147,11 @@ void ALunarCharacter::UpdateSuit(float D){
   Camera->SetWorldRotation((Target+R.Vector()*70-Camera->GetComponentLocation()).Rotation());
  }
  else if(G&&G->ApolloTool>1&&G->ApolloWorkTarget){
-  const FVector Target=G->ApolloWorkTarget->GetActorLocation();
+  const FVector Target=(G->ApolloTool==4||G->ApolloTool==5||G->ApolloTool==6)?G->ApolloContactPoint():G->ApolloWorkTarget->GetActorLocation();
   const bool Kit=G->ApolloTool==7||G->ApolloTool==8;
-  const float WorkDistance=Kit?125.f:G->ApolloTool==6?110.f:55.f;
-  FVector Desired=Target-GetControlRotation().Vector().GetSafeNormal2D()*WorkDistance+FVector(0,0,Kit?70.f:G->ApolloTool==6?30.f:25.f);
+  const float WorkDistance=Kit?125.f:G->ApolloTool==6?105.f:95.f;
+  const FVector WorkDirection=G->ApolloTool==6&&G->SelectedSample==2?FVector(0,1,0):GetControlRotation().Vector().GetSafeNormal2D();
+  FVector Desired=Target-WorkDirection*WorkDistance+FVector(0,0,Kit?70.f:G->ApolloTool==6?30.f:(G->ApolloTool==4||G->ApolloTool==5)?85.f:25.f);
   FHitResult Hit;FCollisionQueryParams Q;Q.AddIgnoredActor(this);
   if(GetWorld()->SweepSingleByChannel(Hit,Target+FVector(0,0,30),Desired,FQuat::Identity,ECC_Visibility,FCollisionShape::MakeSphere(6),Q))Desired=Hit.Location;
   Camera->SetWorldLocation(D>0?FMath::VInterpTo(Camera->GetComponentLocation(),Desired,D,10):Desired);

@@ -14,6 +14,8 @@ namespace ApolloTasks {
  extern const TCHAR* const Arrival;
  extern const TCHAR* const SurveyorPhoto;
  extern const TCHAR* const Stowed;
+ extern const TCHAR* const DustPhotos[2];
+ extern const TCHAR* const DustCompared;
 }
 
 USTRUCT()

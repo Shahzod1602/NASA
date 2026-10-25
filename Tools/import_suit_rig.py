@@ -1,7 +1,8 @@
 import unreal as u
 from pathlib import Path
 root=Path(u.Paths.project_dir()).resolve()
-for name in ('SK_A7L','SK_A7L_Hands'):
+names=('SK_A7L_Hands',) if '-handrigonly' in u.SystemLibrary.get_command_line().lower() else ('SK_A7L','SK_A7L_Hands')
+for name in names:
     task=u.AssetImportTask();task.filename=str(root/'SourceArt/Suit/Rig'/(name+'.glb'))
     task.destination_path='/Game/Lunar/Suit/Rig';task.automated=True;task.replace_existing=True;task.save=True
     u.AssetToolsHelpers.get_asset_tools().import_asset_tasks([task])
@@ -18,3 +19,7 @@ for path in u.EditorAssetLibrary.list_assets('/Game/Lunar/Suit/Rig',recursive=Tr
         u.EditorAssetLibrary.save_loaded_asset(asset)
         u.log('RIG_READY '+path+' '+str(asset.get_editor_property('skeleton')))
 u.EditorAssetLibrary.save_directory('/Game/Lunar/Suit/Rig')
+
+if '-handrigonly' in u.SystemLibrary.get_command_line().lower():
+    script=root/'Tools/bind_realism_materials.py'
+    exec(compile(script.read_text(encoding='utf-8'),str(script),'exec'),{'__name__':'__main__','__file__':str(script)})

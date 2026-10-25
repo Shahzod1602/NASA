@@ -1,0 +1,15 @@
+Historical reference: NASA image AS12-48-7136, Alan L. Bean, 20 November 1969.
+https://images-assets.nasa.gov/image/as12-48-7136/as12-48-7136~medium.jpg
+The NASA photograph is a source reference, not a screenshot of the game.
+Suit hood, Surveyor frame, tool joints and collection pouch are project-authored
+approximations, not scanned artifacts or dimensionally exact replicas.
+The illustrative coating comparison is informed by NASA report 19720019093:
+https://ntrs.nasa.gov/citations/19720019093
+These two authored panels have illustrative colors and geometry, not measured
+lunar reflectance or a reconstruction of exact camera-coating patch locations.
+NASA 19710024418 also documents dust contamination and radiation changes:
+https://ntrs.nasa.gov/citations/19710024418
+The existing NASA / Michael D. Carbajal lunar module model is retained. Its
+height is normalized to approximately 6.98 metres using LM-6 specifications:
+https://www.nasa.gov/wp-content/uploads/2024/10/apollo-12-comic-book-print-res.pdf
+No NASA endorsement is implied.

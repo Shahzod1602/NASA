@@ -48,10 +48,10 @@ bool ALunarGameMode::ApolloSafeGround(FVector Position,FVector& Grounded) const 
  return false;
 }
 void ALunarGameMode::RecordApolloEvidence(int32 Index,const FString& RelativePath){
- const FName Id=Index<3?FName(ApolloTasks::Photos[Index]):FName(ApolloTasks::SurveyorPhoto);
+ const FName Id=Index<3?FName(ApolloTasks::Photos[Index]):Index==3?FName(ApolloTasks::SurveyorPhoto):FName(ApolloTasks::DustPhotos[FMath::Clamp(Index-4,0,1)]);
  auto* Item=ApolloEvidence.FindByPredicate([&](const FApolloEvidence& E){return E.PhotoId==Id;});
  if(!Item){Item=&ApolloEvidence.AddDefaulted_GetRef();Item->PhotoId=Id;}
- Item->SiteId=Index<3?FName(ApolloTasks::Sites[Index]):FName(TEXT("surveyor3"));Item->PhotoPath=RelativePath;Item->CapturedAt=ApolloElapsed;
+ Item->SiteId=Index<3?FName(ApolloTasks::Sites[Index]):Index==3?FName(TEXT("surveyor3")):FName(Index==4?TEXT("surveyor.exposed"):TEXT("surveyor.shielded"));Item->PhotoPath=RelativePath;Item->CapturedAt=ApolloElapsed;
 }
 UApolloCheckpoint* ALunarGameMode::CaptureApolloCheckpoint(){
  if(!Apollo||!ApolloStarted||(!IsActive()&&Stage!=ELunarStage::Won))return nullptr;
@@ -70,6 +70,8 @@ UApolloCheckpoint* ALunarGameMode::CaptureApolloCheckpoint(){
  for(int I=0;I<3;++I){if(ApolloPhotos&(1<<I))Add(ApolloTasks::Photos[I]);if(SamplesCollected&(1<<I))Add(ApolloTasks::Samples[I]);if(ApolloParts&(1<<I))Add(ApolloTasks::Parts[I]);}
  if(Stage==ELunarStage::ApolloRecover||Stage==ELunarStage::ApolloReturn||Stage==ELunarStage::Won)Add(ApolloTasks::Arrival);
  if(SurveyorPhotographed)Add(ApolloTasks::SurveyorPhoto);
+ for(int I=0;I<2;++I)if(ApolloDustPhotos&(1<<I))Add(ApolloTasks::DustPhotos[I]);
+ if(ApolloDustCompared)Add(ApolloTasks::DustCompared);
  if(Stage==ELunarStage::Won)Add(ApolloTasks::Stowed);
  if(Stage==ELunarStage::ApolloSamples)Save->SelectedSite=FName(ApolloTasks::Sites[FMath::Clamp(SelectedSample,0,2)]);
  else if(Stage==ELunarStage::ApolloRecover&&SurveyorPhotographed)Save->SelectedSite=FName(ApolloTasks::Parts[FMath::Clamp(SelectedSample,0,2)]);
@@ -94,7 +96,7 @@ bool ALunarGameMode::RestoreApolloCheckpoint(){
   ApolloSaveError=true;ApolloSaveNotice=TEXT("CheckpointLoadFailed");ApolloSaveNoticeRemaining=30;return false;
  }
  // Validate position before changing progress. In-progress work is never restored.
- CancelApolloTool();ApolloConfirmationRemaining=0;ApolloPackedPreviewRemaining=0;Paused=false;Journal=false;ApolloConfirmNew=false;ApolloStarted=true;
+ CancelApolloTool();ApolloConfirmationRemaining=0;ApolloPackedPreviewRemaining=0;ApolloPackedPartRemaining=0;ApolloDustMode=false;Paused=false;Journal=false;ApolloConfirmNew=false;ApolloStarted=true;
  ApolloTimed=Save->Mode==TEXT("timed-exercise");
  ApolloRunId=Save->RunId;ApolloEvidence=Save->Evidence;ApolloElapsed=Save->Elapsed;ApolloDistance=Save->Distance;Oxygen=Save->Remaining;
  ApolloAntennaAngle=Save->AntennaAngle;ApolloLookLearned=Save->LookLearned;ApolloMoveLearned=Save->MoveLearned;ApolloRouteIndex=0;
@@ -108,6 +110,7 @@ bool ALunarGameMode::RestoreApolloCheckpoint(){
  }
  for(int I=0;I<2;++I)if(Save->Has(ApolloTasks::Instruments[I]))ApolloInstruments|=1<<I;
  SurveyorPhotographed=Save->Has(ApolloTasks::SurveyorPhoto);
+ ApolloDustPhotos=0;for(int I=0;I<2;++I)if(Save->Has(ApolloTasks::DustPhotos[I]))ApolloDustPhotos|=1<<I;ApolloDustCompared=Save->Has(ApolloTasks::DustCompared);
  const ELunarStage Stages[]={ELunarStage::ApolloCheckout,ELunarStage::ApolloDeploy,ELunarStage::ApolloSamples,ELunarStage::ApolloTraverse,ELunarStage::ApolloRecover,ELunarStage::ApolloReturn,ELunarStage::Won};
  Stage=Stages[Save->Step()];ApolloAction=Stage==ELunarStage::ApolloCheckout?int32(Save->Has(ApolloTasks::Checkout[0]))+int32(Save->Has(ApolloTasks::Checkout[1])):Stage==ELunarStage::ApolloDeploy?int32(Save->Has(ApolloTasks::Instruments[0])):2;
  if(ApolloAntenna)ApolloAntenna->SetRelativeRotation(FRotator(-65,ApolloAntennaAngle,0));

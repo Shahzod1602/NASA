@@ -16,7 +16,7 @@ void ALunarGameMode::ApolloGuidanceChecks(){
  if(!P||!PC){FPlatformMisc::RequestExitWithStatus(false,1);return;}
  StartApollo(true);P->GetCharacterMovement()->DisableMovement();RadioRemaining=0;
  auto Aim=[&](AActor* A){P->SetActorLocation(A->GetActorLocation()+FVector(-170,0,50));FVector Eye;FRotator R;P->GetActorEyesViewPoint(Eye,R);PC->SetControlRotation((A->GetActorLocation()-Eye).Rotation());};
- auto Click=[&](){TickApollo(.31f);P->PrimaryClick();};
+ auto Click=[&](){TickApollo(.85f);P->PrimaryClick();};
  Check(ApolloTutorial().Contains(TEXT("1 / 4"))&&!ApolloFooter().Contains(TEXT("I:")),TEXT("First instruction teaches looking; album is introduced after evidence"));
  P->ToggleApolloGuide();Check(ApolloTutorial().IsEmpty()&&ApolloAction==0,TEXT("Skipping the guide never advances equipment or cargo"));
  P->ToggleApolloGuide();Check(!ApolloTutorial().IsEmpty(),TEXT("The guide can be shown again without restarting"));
@@ -46,7 +46,7 @@ void ALunarGameMode::ApolloGuidanceChecks(){
  Stage=ELunarStage::ApolloRecover;SurveyorPhotographed=true;ApolloParts=0;SelectedSample=1;Aim(ApolloPartActors[0]);P->Interact();
  FVector First,Second;FString Label;
  Check(ApolloWorkCue(First,Label)&&Label.Contains(TEXT("FIRST")),TEXT("Hardware guide points to its first physical fitting"));
- Click();Check(ApolloWorkCue(Second,Label)&&Label.Contains(TEXT("SECOND"))&&!First.Equals(Second,1),TEXT("The next action moves the marker to the second physical fitting"));
+ Click();TickApollo(.8f);Check(ApolloWorkCue(Second,Label)&&Label.Contains(TEXT("SECOND"))&&!First.Equals(Second,1),TEXT("The next action moves the marker to the second physical fitting"));
  CancelApolloTool();Check(ApolloParts==0&&!ApolloPartActors[0]->IsHidden(),TEXT("Aborted guided removal keeps the hardware on Surveyor"));
  Paused=true;P->ToggleApolloGuide();Check(Journal&&JournalPage==4,TEXT("The paused game provides a revisitable how-to page"));CycleApollo();Check(JournalPage==0,TEXT("Journal cycles from help back to the route"));
  S->Reset();S->Apply(P,false);

@@ -19,7 +19,7 @@ void ALunarGameMode::ApolloPolishChecks(){
  Check(!ApolloTimed&&ApolloToolsEnabled,TEXT("Default product mode is untimed exploration with distinct tools"));
  StartApollo(true);AdvanceTime(2000);Check(IsActive()&&Oxygen==1800,TEXT("Historical exploration does not time out after 30 minutes"));
  auto Aim=[&](AActor* A){P->GetCharacterMovement()->StopMovementImmediately();P->SetActorLocation(A->GetActorLocation()+FVector(-170,0,50),false,nullptr,ETeleportType::TeleportPhysics);FVector Eye;FRotator R;P->GetActorEyesViewPoint(Eye,R);PC->SetControlRotation((A->GetActorLocation()-Eye).Rotation());};
- auto Click=[&](){TickApollo(.31f);P->PrimaryClick();};
+ auto Click=[&](){TickApollo(.85f);P->PrimaryClick();};
  Aim(ModuleActor);P->Interact();Check(ApolloTool==8&&ApolloAction==0,TEXT("E opens checkout without committing it"));P->PauseMission();Check(!ApolloTool&&!Paused&&ApolloAction==0,TEXT("Escape cancels a tool before pausing"));
  for(int I=0;I<3;++I){P->Interact();Click();}
  Check(Stage==ELunarStage::ApolloDeploy,TEXT("Equipment checks advance through actual primary-action input"));

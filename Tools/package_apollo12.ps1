@@ -1,8 +1,9 @@
-param([string]$EngineRoot='D:\UnrealEngine\UE_5.8',[switch]$StageOnly)
+param([string]$EngineRoot='D:\UnrealEngine\UE_5.8',[switch]$StageOnly,[ValidateRange(256,2048)][int]$ManagedHeapMB=1024)
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 New-Item -ItemType Directory -Force -Path "$root\Intermediate\ApolloTemp" | Out-Null
 $env:TEMP="$root\Intermediate\ApolloTemp";$env:TMP=$env:TEMP
+$env:DOTNET_GCHeapHardLimit=('{0:X}' -f ($ManagedHeapMB*1MB));$env:DOTNET_GCConserveMemory='9'
 $saved=Join-Path $root 'Dist\Apollo12\Windows\LunarRescue\Saved'
 $preserved=Join-Path $root ('Backups\player-data-'+(Get-Date -Format 'yyyyMMdd-HHmmss'))
 $playerFiles=@()
@@ -61,6 +62,7 @@ Copy-Item -LiteralPath "$root\SourceArt\Apollo12\manifest.json","$root\APOLLO12.
 Copy-Item -LiteralPath "$root\POLISH_UPDATE.md","$root\HISTORICAL_AUDIT.md","$root\PLAYTEST_GUIDE.md" -Destination "$credits\Apollo12"
 Copy-Item -LiteralPath "$root\REALISM_UPDATE.md" -Destination "$credits\Apollo12"
 Copy-Item -LiteralPath "$root\CLARITY_UPDATE.md" -Destination "$credits\Apollo12"
+Copy-Item -LiteralPath "$root\FIELDWORK_UPDATE.md" -Destination "$credits\Apollo12"
 Copy-Item -LiteralPath "$root\SourceArt\Apollo12\Raw\NAC_DTM_APOLLO12_README.TXT","$root\SourceArt\Apollo12\Raw\NAC_DTM_APOLLO12.LBL" -Destination "$credits\Apollo12"
 New-Item -ItemType Directory -Force -Path "$credits\Suit" | Out-Null
 Copy-Item -LiteralPath "$root\SUIT_UPDATE.md" -Destination "$credits\Suit"

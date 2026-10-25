@@ -17,6 +17,9 @@ for name in ('SK_A7L','SK_A7L_Hands'):
     lib.save_loaded_asset(mesh,only_if_is_dirty=False)
     after=[slot.material_interface.get_path_name() for slot in mesh.get_editor_property('materials')]
     if any('/Game/Lunar/Suit/Materials/M_' not in path for path in after):raise RuntimeError('Material assignment did not persist')
-    results.append({'mesh':name,'before':before,'after':after})
+    sub=u.get_editor_subsystem(u.SkeletalMeshEditorSubsystem)
+    vertices=[sub.get_num_verts(mesh,i) for i in range(sub.get_lod_count(mesh))]
+    if len(vertices)!=3 or not vertices[0]>vertices[1]>vertices[2]>0:raise RuntimeError('Invalid suit LODs '+name)
+    results.append({'mesh':name,'before':before,'after':after,'vertices_per_lod':vertices})
 (root/'Reports/realism-material-bindings.json').write_text(json.dumps(results,indent=2))
 u.log('REALISM_SUIT_BINDINGS_VERIFIED')

@@ -97,7 +97,7 @@ def generate(name, hands=False):
         if not hands:
             part('UpperArm',frame(bones[upper][2],bones[lower][2]),fixed(upper))
             collar(upper,lower,bones[lower][2],6.5)
-        part('Forearm',frame(bones[lower][2],bones[hand][2]),fixed(lower))
+        if not hands:part('Forearm',frame(bones[lower][2],bones[hand][2]),fixed(lower))
         part('Cuff',frame(bones[hand][2],add(bones[hand][2],(0,0,-10))),fixed(hand))
         part('Palm',frame(bones[hand][2],add(bones[hand][2],(0,0,-10))),fixed(hand))
         for a,b in digits:

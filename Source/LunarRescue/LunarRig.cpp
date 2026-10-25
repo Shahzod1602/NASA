@@ -7,6 +7,7 @@
 #include "Engine/StaticMesh.h"
 #include "Materials/MaterialInterface.h"
 #include "Kismet/GameplayStatics.h"
+#include "UnrealClient.h"
 
 void ALunarCharacter::PoseSuitRig(){
  auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));if(!G)return;
@@ -17,6 +18,7 @@ void ALunarCharacter::PoseSuitRig(){
   if(auto* RigAsset=Cast<USkeletalMesh>(SuitRig->GetSkinnedAsset())){
    const auto& Ref=RigAsset->GetRefSkeleton();TArray<FTransform> World;World.SetNum(Ref.GetNum());
    for(int I=0;I<Ref.GetNum();++I){World[I]=Ref.GetRefBonePose()[I];const int Parent=Ref.GetParentIndex(I);if(Parent>=0)World[I]*=World[Parent];}
+   for(int I=0;I<Ref.GetNum();++I)SuitBindRotations.Add(Ref.GetBoneName(I),World[I].GetRotation());
    auto Pos=[&](const TCHAR* N){const int I=Ref.FindBoneIndex(N);return I>=0?World[I].GetLocation():FVector::ZeroVector;};
    const FVector Right=(Pos(TEXT("thigh_r"))-Pos(TEXT("thigh_l"))).GetSafeNormal(),Up=(Pos(TEXT("head"))-Pos(TEXT("root"))).GetSafeNormal();
    SuitCoordinate=FRotationMatrix::MakeFromXY(FVector::CrossProduct(Right,Up),Right).ToQuat();
@@ -25,17 +27,16 @@ void ALunarCharacter::PoseSuitRig(){
   SuitRig->SetRelativeRotation(SuitCoordinate.Inverse());HandRig->SetRelativeRotation(SuitCoordinate.Inverse());
  }
  const bool Show=!G->Menu&&(G->IsActive()||G->Stage==ELunarStage::Briefing||G->Stage==ELunarStage::Won);
- SuitRig->SetVisibility(Show&&ThirdPerson);HandRig->SetVisibility(Show&&!ThirdPerson&&Camera->FieldOfView>60&&PhotoCaptureFrames<=0);
+ const bool Capture=PhotoCaptureFrames>0||(FScreenshotRequest::IsScreenshotRequested()&&!FScreenshotRequest::ShouldShowUI());
+ SuitRig->SetVisibility(Show&&ThirdPerson);HandRig->SetVisibility(Show&&!ThirdPerson&&Camera->FieldOfView>60&&!Capture);
  if(PhotoCaptureFrames>0)--PhotoCaptureFrames;
  if(!SuitRig->GetSkinnedAsset()||!HandRig->GetSkinnedAsset())return;
- for(const auto& C:SuitArms){C->SetVisibility(false);C->SetCastShadow(false);}for(const auto& C:Gloves)C->SetVisibility(false);
+ for(const auto& C:SuitArms){C->SetVisibility(false);C->SetCastShadow(false);}for(int I=0;I<Gloves.Num();++I)Gloves[I]->SetVisibility((I==0||I==8)&&Show&&!ThirdPerson&&Camera->FieldOfView>60&&!Capture);
  for(const auto& C:SuitBody)C->SetCastShadow(false);SuitRig->bCastHiddenShadow=true;
  if(ThirdPerson)for(const auto& C:SuitBody)C->SetVisibility(false,true);
  auto Set=[&](UPoseableMeshComponent* C,const FString& Name,FVector P,FQuat R=FQuat::Identity){
-  const auto& Ref=CastChecked<USkeletalMesh>(C->GetSkinnedAsset())->GetRefSkeleton();
-  int I=Ref.FindBoneIndex(FName(*Name));FQuat Bind=FQuat::Identity;
-  while(I>=0){Bind=Ref.GetRefBonePose()[I].GetRotation()*Bind;I=Ref.GetParentIndex(I);}
-  C->SetBoneTransformByName(FName(*Name),FTransform(SuitCoordinate*R*SuitCoordinate.Inverse()*Bind,SuitCoordinate.RotateVector(P)),EBoneSpaces::ComponentSpace);
+  const FQuat* Bind=SuitBindRotations.Find(FName(*Name));if(!Bind)return;
+  C->SetBoneTransformByName(FName(*Name),FTransform(SuitCoordinate*R*SuitCoordinate.Inverse()*(*Bind),SuitCoordinate.RotateVector(P)),EBoneSpaces::ComponentSpace);
  };
  const FQuat RestHand=FRotationMatrix::MakeFromXY(FVector(0,0,-1),FVector(0,1,0)).ToQuat();
  auto Arms=[&](UPoseableMeshComponent* C,bool View){
@@ -66,21 +67,5 @@ void ALunarCharacter::PoseSuitRig(){
   Arms(SuitRig,false);SuitRig->RefreshBoneTransforms();
  }
  if(!ThirdPerson&&Show){Set(HandRig,TEXT("root"),FVector::ZeroVector);Set(HandRig,TEXT("pelvis"),FVector(0,0,-12));Set(HandRig,TEXT("chest"),FVector(0,0,30));Arms(HandRig,true);HandRig->RefreshBoneTransforms();}
- if(!WorkTool){WorkTool=NewObject<UStaticMeshComponent>(this);WorkTool->SetupAttachment(Camera);WorkTool->SetCollisionEnabled(ECollisionEnabled::NoCollision);WorkTool->SetCastShadow(false);WorkTool->SetOnlyOwnerSee(true);WorkTool->RegisterComponent();}
- const bool PackedCore=G->ApolloPackedPreviewRemaining>0&&G->ApolloPackedSample==2;
- const bool UseTool=Show&&!ThirdPerson&&PhotoCaptureFrames<=0&&(PackedCore||(G->ApolloTool&&(G->ApolloTool==1||G->ApolloTool==4||G->ApolloTool==5||G->ApolloTool==6)));
- WorkTool->SetVisibility(UseTool);
- if(UseTool){
-  const TCHAR* Name=PackedCore?TEXT("SM_DriveTube"):G->ApolloTool==1?TEXT("SM_ContextCamera"):G->ApolloTool==4?(G->SelectedSample==1?TEXT("SM_SoilScoop"):TEXT("SM_SampleTongs")):G->ApolloTool==5?(G->ApolloToolPhase>=1&&G->ApolloToolPhase<5?TEXT("SM_GeologyHammer"):TEXT("SM_DriveTube")):TEXT("SM_Cutters");
-  auto* ToolAsset=LoadObject<UStaticMesh>(nullptr,*FString::Printf(TEXT("/Game/Lunar/Apollo12/Tools/%s.%s"),Name,Name));if(WorkTool->GetStaticMesh()!=ToolAsset)WorkTool->SetStaticMesh(ToolAsset);
-  WorkTool->SetRelativeLocation(FVector(48,0,(G->ApolloTool==6?-21.f:-15.f)+FMath::Sin(G->ApolloToolCooldown/.3f*PI)*3-(PackedCore?FMath::Max(0.f,1-G->ApolloPackedPreviewRemaining)*30:0)));WorkTool->SetRelativeRotation(FRotator::ZeroRotator);
- }
- if(!SamplePouch){
-  SamplePouch=NewObject<UStaticMeshComponent>(this);SamplePouch->SetupAttachment(Camera);SamplePouch->SetCollisionEnabled(ECollisionEnabled::NoCollision);SamplePouch->SetCastShadow(false);SamplePouch->SetOnlyOwnerSee(true);
-  SamplePouch->SetStaticMesh(LoadObject<UStaticMesh>(nullptr,TEXT("/Engine/BasicShapes/Cube.Cube")));
-  SamplePouch->SetMaterial(0,LoadObject<UMaterialInterface>(nullptr,TEXT("/Game/Lunar/Suit/Materials/M_Cloth.M_Cloth")));SamplePouch->RegisterComponent();SamplePouch->SetRelativeScale3D(FVector(.035,.14,.18));
- }
- const bool PackedPouch=G->ApolloPackedPreviewRemaining>0&&G->ApolloPackedSample>=0&&G->ApolloPackedSample<2;
- SamplePouch->SetVisibility(Show&&!ThirdPerson&&PhotoCaptureFrames<=0&&(PackedPouch||(G->ApolloTool==4&&G->ApolloToolPhase==1)));
- SamplePouch->SetRelativeLocation(FVector(43,-8,-17-(PackedPouch?FMath::Max(0.f,1-G->ApolloPackedPreviewRemaining)*30:0)));SamplePouch->SetRelativeRotation(FRotator(0,-12,8));
+ UpdateApolloWorkVisuals();
 }

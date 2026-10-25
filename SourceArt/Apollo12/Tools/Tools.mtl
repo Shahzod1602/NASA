@@ -4,3 +4,5 @@ newmtl Rubber
 Kd .055 .065 .07
 newmtl Blue
 Kd .035 .12 .28
+newmtl Cloth
+Kd .78 .79 .75

@@ -20,6 +20,7 @@ Space: hop                     Shift: faster stride
 V: change camera               Alt: orbit in the following view
 F: zoom                        M: mission selection from pause/results
 H: show/hide guidance           Pause, then H: how-to page
+K: optional Surveyor coating investigation (near Surveyor after its context photo)
 
 FIRST MINUTE
 Follow the single instruction: look, walk to the gold marker, and face the kit.
@@ -36,6 +37,16 @@ Sharp: place the core tube, tap with the hammer four times, extract and cap it.
 Surveyor: release two fittings/cable ends, then remove and pack the component.
 Intrepid: open the manifest and confirm cargo stowage to finish.
 Esc safely cancels unfinished work. Cargo is committed only at the final action.
+Let each short tool motion finish before the next input. The tool tip follows
+the marked fitting; a lifted sample moves into its labeled pouch before stowing.
+
+OPTIONAL COATING INVESTIGATION
+After the whole-Surveyor photo, press K near the spacecraft. Photograph each
+illustrative coating panel, then open the comparison. Q cycles explanations;
+left click confirms. K returns to the main task. I retains the two photographs
+and interpretation. This optional study is not required to finish the mission.
+The panels illustrate NASA's returned-camera analysis; their colors and geometry
+are authored and are not measured lunar reflectance or exact historical patches.
 
 SAVING
 Completed work creates an automatic checkpoint.

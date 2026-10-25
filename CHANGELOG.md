@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.0 - 2026-10-26
+
+- Added source-contact tongs/cutter jaws, moving sample payloads, a soft labeled pouch and a persistent driven core tube.
+- Revised the cloth helmet hood, Surveyor truss and solar-cell dividers from NASA image AS12-48-7136; normalized the existing Intrepid model's height.
+- Added the optional K coating investigation, two evidence photos and a selectable interpretation informed by NASA's returned-camera analysis. Panel colors and geometry remain illustrative.
+- Retained checkpoint format 1 and added six-photo validation plus an unchanged v0.5.2 binary compatibility fixture.
+- Cached suit bind rotations and work meshes; added audio-enabled full-route performance capture and isolated participant launch support. Human study results remain pending.
+
 ## 0.5.2 - 2026-10-25
 
 - Guided the initial equipment check through looking, walking, facing the kit, opening and confirming; added H to hide/revisit help.

@@ -1,5 +1,15 @@
 # Lunar Rescue
 
+## Contact and coating investigation - 0.6.0
+
+Animated tool jaws meet the actual rock or fitting. Samples lift into a labeled
+soft pouch; the core tube stays at the surface during hammering. Reference-led
+suit and Surveyor detail accompany a correctly scaled Intrepid model. K opens
+an optional two-photo coating investigation after the Surveyor context photo.
+The illustrated comparison follows NASA's returned-camera study. Old saves
+remain valid. See [scope and limitations](FIELDWORK_UPDATE.md) and the
+[pending five-person study](PLAYTEST_GUIDE.md).
+
 ## Guided first expedition - 0.5.2
 
 The first field-kit check introduces one action at a time. Shorter work prompts,
