@@ -22,6 +22,12 @@ try{
   & "$EngineRoot\Engine\Build\BatchFiles\Build.bat" $target Win64 Development "-Project=$root\LunarRescue.uproject" -WaitMutex -MaxParallelActions=1 -NoUBA -NoPCH -NoSharedPCH
   if($LASTEXITCODE -ne 0){throw "$target build failed: $LASTEXITCODE"}
  }
+ # Verify persisted shared materials after importing/reducing skeletal assets.
+ $bindingLog=Join-Path $root 'Reports\package-realism-bindings.log'
+ $bindingArgs=@("`"$root\LunarRescue.uproject`"",'-run=pythonscript',"-script=`"$root\Tools\bind_realism_materials.py`"",'-unattended','-nop4','-nosound','-nullrhi',"-abslog=`"$bindingLog`"")
+ $binding=Start-Process -FilePath "$EngineRoot\Engine\Binaries\Win64\UnrealEditor-Cmd.exe" -ArgumentList $bindingArgs -WindowStyle Hidden -PassThru
+ if(-not $binding.WaitForExit(120000)){Stop-Process -Id $binding.Id;throw 'Suit material binding timed out'}
+ if($binding.ExitCode -ne 0 -or (Get-Content -LiteralPath $bindingLog -Raw) -notmatch 'REALISM_SUIT_BINDINGS_VERIFIED'){throw 'Suit material binding failed'}
  & "$EngineRoot\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun "-project=$root\LunarRescue.uproject" -noP4 -platform=Win64 -clientconfig=Development -skipbuild -nocompileeditor -cook -map=/Game/Rescue/Maps/MissionSelect+/Game/Lunar/Maps/Apollo12+/Game/Lunar/Maps/MoonBase+/Game/Mars/Maps/MarsBase -stage -pak -archive "-archivedirectory=$root\Dist\Apollo12" -unattended -utf8output
  $packageCode=$LASTEXITCODE
 }finally{
@@ -44,6 +50,7 @@ Get-ChildItem -LiteralPath $sourceArt -Recurse -File | Where-Object { $_.Name -l
 New-Item -ItemType Directory -Force -Path "$credits\Apollo12" | Out-Null
 Copy-Item -LiteralPath "$root\SourceArt\Apollo12\manifest.json","$root\APOLLO12.md","$root\ONBOARDING_UPDATE.md","$root\CHECKPOINT_UPDATE.md","$root\SUIT_UPDATE.md","$root\ENGLISH_UPDATE.md" -Destination "$credits\Apollo12"
 Copy-Item -LiteralPath "$root\POLISH_UPDATE.md","$root\HISTORICAL_AUDIT.md","$root\PLAYTEST_GUIDE.md" -Destination "$credits\Apollo12"
+Copy-Item -LiteralPath "$root\REALISM_UPDATE.md" -Destination "$credits\Apollo12"
 Copy-Item -LiteralPath "$root\SourceArt\Apollo12\Raw\NAC_DTM_APOLLO12_README.TXT","$root\SourceArt\Apollo12\Raw\NAC_DTM_APOLLO12.LBL" -Destination "$credits\Apollo12"
 New-Item -ItemType Directory -Force -Path "$credits\Suit" | Out-Null
 Copy-Item -LiteralPath "$root\SUIT_UPDATE.md" -Destination "$credits\Suit"

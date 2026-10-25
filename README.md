@@ -1,5 +1,12 @@
 # Lunar Rescue
 
+## Realism pass - 0.5.1
+
+Revised cloth folds, garment dust and seams, equipment paint and crumpled foil,
+filtered regolith and instanced surface fragments give the Apollo chapter more
+surface detail. Contact shading, a bounded EVA hop and smaller ballistic landing
+fragments support the new appearance. See [scope, reproduction and validation](REALISM_UPDATE.md).
+
 ## Suit and science tools - 0.5.0
 
 The Apollo chapter adds a 36-bone skinned astronaut and hands, separate photo,

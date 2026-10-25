@@ -104,7 +104,7 @@ void ALunarCharacter::UpdateSuit(float D){
  for(const auto& C:SuitArms)C->SetVisibility(Show&&ThirdPerson);
  for(const auto& C:Gloves)C->SetVisibility(Show&&!ThirdPerson&&Camera->FieldOfView>60);
  const float Breath=FMath::Sin(SuitTime*1.5f)*.18f;
- const float Crouch=GaitBlend*(FastStride?10.f:4.f);
+ const float Crouch=GaitBlend*((FastStride?6.f:3.f)+FMath::Cos(GaitPhase*2)*(FastStride?1.8f:1.f));
  SuitBody[0]->SetRelativeLocation(FVector(0,0,Breath-Crouch));SuitBody[1]->SetRelativeLocation(FVector(0,0,-Crouch));
  SuitBody[2]->SetRelativeLocation(FVector(0,0,64+Breath-Crouch));SuitBody[3]->SetRelativeLocation(FVector(0,0,Breath-Crouch));
  FVector Direction=GetActorTransform().InverseTransformVectorNoScale(Paused?PausedVelocity:GetVelocity()).GetSafeNormal2D();
@@ -188,7 +188,8 @@ void ALunarCharacter::SuitChecks(){
  }else if(N==3){
   Check(GetActorLocation().Y-G->MovementOrigin.Y>75&&!FastStride,TEXT("Strafe follows input and releasing Shift restores walking"));Key(EKeys::D,IE_Released);Key(EKeys::SpaceBar,IE_Pressed);G->MovementOrigin=GetActorLocation();
  }else if(N==4){
-  Check(GetActorLocation().Z-G->MovementOrigin.Z>50&&GetCharacterMovement()->IsFalling(),TEXT("Moon hop rises under lunar gravity"));Key(EKeys::SpaceBar,IE_Released);ToggleSuitView();
+  const float Rise=GetActorLocation().Z-G->MovementOrigin.Z;
+  Check(Rise>25&&Rise<95&&GetCharacterMovement()->IsFalling()&&FMath::IsNearlyEqual(GetCharacterMovement()->JumpZVelocity,140.f),TEXT("Bounded EVA hop rises under lunar gravity"));Key(EKeys::SpaceBar,IE_Released);ToggleSuitView();
   Check(ThirdPerson&&SuitRig&&SuitRig->IsVisible()&&!HandRig->IsVisible()&&FVector::Dist(Camera->GetComponentLocation(),GetActorLocation())>120,TEXT("V exposes skinned suit and moves camera outside capsule"));
  }else if(N==5){
   G->MovementOrigin=FVector(GaitPhase,G->Oxygen,GetActorLocation().Z);PauseMission();

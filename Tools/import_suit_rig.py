@@ -9,11 +9,11 @@ for name in ('SK_A7L','SK_A7L_Hands'):
 for path in u.EditorAssetLibrary.list_assets('/Game/Lunar/Suit/Rig',recursive=True):
     asset=u.EditorAssetLibrary.load_asset(path)
     if isinstance(asset,u.SkeletalMesh):
-        slots=asset.get_editor_property('materials')
+        slots=list(asset.get_editor_property('materials'))
         for i,slot in enumerate(slots):
             key=str(slot.material_slot_name)
             mat=u.EditorAssetLibrary.load_asset('/Game/Lunar/Suit/Materials/M_'+key)
-            if mat:slot.material_interface=mat
+            if mat:slot.material_interface=mat;slots[i]=slot
         asset.set_editor_property('materials',slots)
         u.EditorAssetLibrary.save_loaded_asset(asset)
         u.log('RIG_READY '+path+' '+str(asset.get_editor_property('skeleton')))

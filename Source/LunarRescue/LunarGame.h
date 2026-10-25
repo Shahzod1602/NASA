@@ -90,6 +90,7 @@ public:
  void ApolloToolAxis(float X,float Y);
  FString ApolloToolTitle() const; FString ApolloToolHelp() const;
  void ApolloPolishChecks();
+ void BuildApolloSurfaceDetail();
  int32 ApolloAction=0, ApolloRouteIndex=0, JournalPage=0;
  uint8 ApolloPhotos=0, ApolloInstruments=0, ApolloParts=0;
  bool SurveyorPhotographed=false, ApolloWalking=false;

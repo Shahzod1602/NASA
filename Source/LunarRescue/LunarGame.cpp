@@ -112,7 +112,7 @@ void ALunarCharacter::Landed(const FHitResult& Hit) {
  if(!Ground||!Ground->GetStaticMesh()||!Ground->GetStaticMesh()->GetName().Contains(TEXT("Terrain")))return;
  if(LandingGrains.IsEmpty()) for(int I=0;I<16;++I) {
   auto* Grain=NewObject<UStaticMeshComponent>(this);
-  Grain->SetStaticMesh(LoadObject<UStaticMesh>(nullptr,TEXT("/Engine/BasicShapes/Sphere.Sphere")));
+  Grain->SetStaticMesh(LoadObject<UStaticMesh>(nullptr,G->Apollo?*FString::Printf(TEXT("/Game/Lunar/V3/Meshes/SM_Basalt_%d.SM_Basalt_%d"),I%6,I%6):TEXT("/Engine/BasicShapes/Sphere.Sphere")));
   Grain->SetMaterial(0,LoadObject<UMaterialInterface>(nullptr,G->Mars?TEXT("/Game/Mars/Materials/M_MarsRegolith.M_MarsRegolith"):TEXT("/Game/Lunar/V3/Materials/M_LunarRegolith.M_LunarRegolith")));
   Grain->SetCollisionEnabled(ECollisionEnabled::NoCollision);Grain->SetCastShadow(false);Grain->SetReceivesDecals(false);Grain->RegisterComponent();
   LandingGrains.Add(Grain);GrainVelocity.Add(FVector::ZeroVector);
@@ -121,7 +121,7 @@ void ALunarCharacter::Landed(const FHitResult& Hit) {
  for(int I=0;I<LandingGrains.Num();++I) {
   float Angle=I*2*PI/LandingGrains.Num();FVector Radial(FMath::Cos(Angle),FMath::Sin(Angle),0);
   LandingGrains[I]->SetWorldLocation(Hit.ImpactPoint+Radial*12+FVector(0,0,3));
-  LandingGrains[I]->SetWorldScale3D(FVector(FMath::FRandRange(.012f,.025f)));LandingGrains[I]->SetVisibility(true);
+  LandingGrains[I]->SetWorldScale3D(FVector(G->Apollo?FMath::FRandRange(.002f,.008f):FMath::FRandRange(.012f,.025f)));LandingGrains[I]->SetVisibility(true);
   GrainVelocity[I]=Radial*FMath::FRandRange(35.f,65.f)+FVector(0,0,FMath::FRandRange(40.f,75.f));
  }
 }
@@ -545,6 +545,7 @@ void ALunarGameMode::Interact() {
 void ALunarHUD::Label(const FString& T,float X,float Y,float S,FLinearColor C) { DrawText(T,C,X,Y,GEngine->GetLargeFont(),S*2.3f,false); }
 void ALunarHUD::Panel(float X,float Y,float W,float H,float A) { DrawRect(FLinearColor(0.008,0.019,0.032,A),X,Y,W,H); }
 void ALunarHUD::DrawHUD() {
+ if(!bShowHUD)return;
  Super::DrawHUD(); auto* G=Mission(this); if(!G||!Canvas) return;
  if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));P&&P->PhotoCaptureFrames>0)return;
  if(G->Apollo){DrawApollo(G);return;}

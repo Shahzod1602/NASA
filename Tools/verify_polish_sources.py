@@ -1,7 +1,10 @@
 """Verify immutable science inputs and skin data independently of Unreal."""
-import hashlib,json,struct,subprocess
+import argparse,hashlib,json,math,struct,subprocess
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--output',type=Path,default=ROOT/'Reports/v050-source-validation.json')
+args=parser.parse_args()
 result={'science_sources':[],'skins':[]}
 manifest=json.loads((ROOT/'SourceArt/Apollo12/manifest.json').read_text())
 for source in manifest['sources']:
@@ -22,6 +25,9 @@ for path in (ROOT/'SourceArt/Suit/Rig').glob('*.glb'):
     if any(abs(sum(w)-1)>.00001 or min(w)<0 for w in weights):raise RuntimeError('Unnormalized skin weights')
     if any(max(j)>=len(doc['skins'][0]['joints']) for j in joints):raise RuntimeError('Invalid joint index')
     if not any(sum(wi>0.01 for wi in w)>1 for w in weights):raise RuntimeError('No blended joint weights')
+    dust=values('COLOR_0','4f') if 'COLOR_0' in attrs else []
+    if dust and (len(dust)!=len(weights) or any(not math.isfinite(c) or not 0<=c<=1 for color in dust for c in color)):
+        raise RuntimeError('Invalid garment dust vertex mask')
     if path.stem=='SK_A7L':
         positions=values('POSITION','3f');normals=values('NORMAL','3f')
         cloth=next(p for p in doc['meshes'][0]['primitives'] if doc['materials'][p['material']]['name']=='Cloth')
@@ -29,6 +35,6 @@ for path in (ROOT/'SourceArt/Suit/Rig').glob('*.glb'):
         ids={i[0] for i in struct.iter_unpack('<I',binary[v['byteOffset']:v['byteOffset']+v['byteLength']]) if joints[i[0]][0]==3}
         good=sum(sum((positions[i][j]-(0,.64,0)[j])*normals[i][j] for j in range(3))>0 for i in ids)
         if not ids or good/len(ids)<.95:raise RuntimeError('Helmet outer surface normals point inward')
-    result['skins'].append({'file':path.name,'skin_vertices':len(weights),'bones':len(doc['skins'][0]['joints']),'normalized':True,'blended':True})
-(ROOT/'Reports/v050-source-validation.json').write_text(json.dumps(result,indent=2))
+    result['skins'].append({'file':path.name,'skin_vertices':len(weights),'bones':len(doc['skins'][0]['joints']),'normalized':True,'blended':True,'dust_mask_vertices':len(dust)})
+args.output.write_text(json.dumps(result,indent=2))
 print('Verified',len(result['science_sources']),'unchanged science files and',len(result['skins']),'weighted GLB skins')

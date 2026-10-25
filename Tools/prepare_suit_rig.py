@@ -43,9 +43,13 @@ def frame(a,b):
     return lambda p:add(a,add(mul(x,p[0]),add(mul(y,p[1]),mul(z,p[2]))))
 
 def generate(name, hands=False):
-    vertices=[];uvs=[];joints=[];weights=[];faces={k:[] for k in COLORS}
+    vertices=[];uvs=[];joints=[];weights=[];colors=[];faces={k:[] for k in COLORS}
     def vertex(p,uv,skin):
         vertices.append(convert(p));uvs.append(uv)
+        # Bind-space dust mask stays on the garment as the bones move. Green=0
+        # distinguishes authored masks from a static mesh's default white color.
+        dust=min(.78,max(.035,(-p[2]-12)/100))
+        colors.append((dust,0.,0.,1.))
         joints.append(tuple([i for i,w in skin]+[0]*(4-len(skin))))
         weights.append(tuple([w for i,w in skin]+[0]*(4-len(skin))))
         return len(vertices)-1
@@ -119,10 +123,11 @@ def generate(name, hands=False):
             for p in (a,b,c):normal_sums[p]=add(normal_sums.get(p,(0,0,0)),n)
     normals=acc([norm(normal_sums.get(p,(0,1,0))) for p in vertices],'3f','VEC3',5126)
     uv=acc(uvs,'2f','VEC2',5126);ji=acc(joints,'4H','VEC4',5123);we=acc(weights,'4f','VEC4',5126)
+    vc=acc(colors,'4f','VEC4',5126)
     mats=[];primitives=[]
     for k,color in COLORS.items():
         mats.append({'name':k,'pbrMetallicRoughness':{'baseColorFactor':[*color,1],'metallicFactor':.85 if k in ('Metal','Gold','Blue') else 0,'roughnessFactor':.82 if k=='Cloth' else .4}})
-        if faces[k]:primitives.append({'attributes':{'POSITION':pos,'NORMAL':normals,'TEXCOORD_0':uv,'JOINTS_0':ji,'WEIGHTS_0':we},'indices':acc([(v,) for v in faces[k]],'I','SCALAR',5125),'material':len(mats)-1})
+        if faces[k]:primitives.append({'attributes':{'POSITION':pos,'NORMAL':normals,'TEXCOORD_0':uv,'JOINTS_0':ji,'WEIGHTS_0':we,'COLOR_0':vc},'indices':acc([(v,) for v in faces[k]],'I','SCALAR',5125),'material':len(mats)-1})
     nodes=[];inverse=[]
     for i,(n,parent,p) in enumerate(bones):
         v=convert(p);local=convert(sub(p,bones[parent][2])) if parent>=0 else v

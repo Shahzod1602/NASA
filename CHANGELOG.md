@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.1 - 2026-10-25
+
+- Revised suit folds and hardware details, added bind-space cloth dust masks and rebuilt suit LODs.
+- Added dedicated filtered regolith, fragment, painted equipment and crumpled foil materials, with six collision-free instanced surface batches.
+- Added field-kit handles, hinges and closures; adjusted lunar contact shading and readability fill.
+- Bounded the Apollo EVA hop under the unchanged lunar gravity and reduced landing debris to smaller angular fragments. See REALISM_UPDATE.md for scope and validation.
+
 ## 0.5.0 - 2026-10-25
 
 - Added a 36-bone skinned suit and hands, articulated fingers, terrain-aware stance and tool poses, with three mesh LODs.

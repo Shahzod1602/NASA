@@ -19,7 +19,7 @@ class Mesh:
         def point(t,a):
             p=t*(len(profile)-1);k=min(int(p),len(profile)-2);u=p-k
             x,y,z=[profile[k][i]*(1-u)+profile[k+1][i]*u for i in range(3)]
-            wrinkle=1+ribs*sin(t*16*pi)*sin(pi*t)**.6
+            wrinkle=1+ribs*sin(t*13*pi+sin(a*3)*.7)*(0.25+.75*sin(pi*t))
             return (offset[0]+x,offset[1]+cos(a)*y*wrinkle,offset[2]+sin(a)*z*wrinkle)
         self.grid(max(20,len(profile)*3),n,point,mat)
     def blob(self,c,r,mat='Cloth',box=.8):
@@ -60,8 +60,8 @@ class Mesh:
 
 COLORS={'Cloth':(.78,.79,.75),'Rubber':(.055,.065,.07),'Metal':(.4,.44,.46),'Blue':(.06,.21,.38),'Red':(.56,.055,.035),'Gold':(.63,.36,.065),'Patch':(.15,.22,.29)}
 (OUT/'Suit.mtl').write_text(''.join(f'newmtl {n}\nKd {r} {g} {b}\n' for n,(r,g,b) in COLORS.items()))
-m=Mesh();m.tube([(0,6.3,6.5),(3,7,7),(10,6.6,6.9),(17,5.9,6.3),(24,5.3,5.6)],ribs=.045)
-for x in (2,5,8,11,14,17,20):m.ring(x,6.4-(x/24),6.8-(x/24),.24,'Cloth')
+m=Mesh();m.tube([(0,6.3,6.5),(3,7,7),(10,6.6,6.9),(17,5.9,6.3),(24,5.3,5.6)],ribs=.022)
+for x in (3,5,20):m.ring(x,6.4-(x/24),6.8-(x/24),.18,'Cloth')
 m.save('SM_SuitForearm')
 m=Mesh();m.ring(-1.7,5.6,5.8,1,'Rubber');m.ring(-.7,5.8,6,1.3,'Blue');m.ring(.6,5.5,5.7,.65,'Metal');m.save('SM_SuitCuff')
 m=Mesh();m.tube([(0,3.9,2.7),(2,4.5,2.8),(6,4.6,2.8),(9,4.1,2.2),(9.2,.1,.1)],lambda t,a:'Rubber' if sin(a)<-.35 else 'Cloth')
@@ -74,11 +74,11 @@ def finger(t,a):
 m.grid(27,24,finger,lambda t,a:'Rubber' if sin(a)<-.25 or .42<t<.47 or .72<t<.77 else 'Cloth')
 m.blob((7.95,0,-2.7),(.6,.58,.65),'Rubber');m.save('SM_SuitFinger')
 for name,length,r in [('SM_SuitUpperArm',28,9),('SM_SuitThigh',36,10),('SM_SuitShin',34,8)]:
-    m=Mesh();m.tube([(0,r*.95,r),(3,r,r*1.05),(length*.4,r*1.03,r),(length*.8,r*.85,r*.9),(length,r*.79,r*.84)],ribs=.035)
+    m=Mesh();m.tube([(0,r*.95,r),(3,r,r*1.05),(length*.4,r*1.03,r),(length*.8,r*.85,r*.9),(length,r*.79,r*.84)],ribs=.021)
     if name=='SM_SuitUpperArm':m.blob((1,0,0),(8,9.6,9.6))
     if name=='SM_SuitThigh':m.blob((1,0,0),(5,r*.95,r))
     if name in ('SM_SuitUpperArm','SM_SuitThigh'):m.blob((length-.5,0,0),(5,r*.8,r*.85))
-    for x in (length*.72,length*.78,length*.84):m.ring(x,r*.87,r*.92,.75,'Cloth')
+    for x in (length*.72,length*.84):m.ring(x,r*.87,r*.92,.24,'Cloth')
     m.save(name)
 m=Mesh();m.blob((0,0,-10),(13,20,15));m.save('SM_SuitPelvis')
 m=Mesh();m.blob((0,0,20),(14,23,31),box=.68)
@@ -89,14 +89,28 @@ for y,mat in [(-9,'Blue'),(9,'Red')]:
     sign=1 if y>0 else -1
     m.hose([(18,y,9),(30,sign*25,0),(2,sign*31,-4),(-16,sign*18,5)])
 m.blob((17,0,26),(1,9,2.6),'Patch')
+# Raised seams, chest-unit switches and connector retaining rims.
+for y in (-17,17):m.blob((12.8,y,22),(.35,.55,20),'Cloth',box=.3)
+for y in (-5,-1.7,1.7,5):
+    m.blob((17.3,y,29),(.7,.65,1.4),'Metal',box=.3)
+for y in (-9,9):
+    m.tube([(16.6,3.2,3.2),(17.5,3.2,3.2)],'Metal',offset=(0,y,9))
+m.blob((14.1,-11,38),(.5,3.8,4.4),'Cloth',box=.3)
 m.tube([(0,9,9),(3,9,9)],'Metal',offset=(0,0,50))
 # Rotate neck ring from X to Z.
 for i in range(len(m.v)-20*33,len(m.v)):
     x,y,z=m.v[i];m.v[i]=(50-z,y,50+x)
 m.save('SM_SuitTorso')
 m=Mesh();m.blob((-17,0,22),(9,17,25),box=.4);m.blob((-25.5,0,20),(1.2,13,19),'Cloth',box=.4)
-m.blob((-25.9,0,40),(.8,8,3),'Patch',box=.3);m.save('SM_SuitPack')
-m=Mesh();m.blob((0,0,0),(15,16,18),'Cloth');m.blob((10,0,0),(8.7,14.2,13.8),'Rubber');m.blob((12,0,.4),(7.4,12.8,12.4),'Gold');m.save('SM_SuitHelmet')
+m.blob((-25.9,0,40),(.8,8,3),'Patch',box=.3)
+for y in (-10,10):m.blob((-27,y,22),(.45,1,21),'Patch',box=.3)
+for z in (3,18,37):m.blob((-27.2,0,z),(.45,13,.35),'Cloth',box=.3)
+m.save('SM_SuitPack')
+m=Mesh();m.blob((0,0,0),(15,16,18),'Cloth');m.blob((10,0,0),(8.7,14.2,13.8),'Rubber');m.blob((12,0,.4),(7.4,12.8,12.4),'Gold')
+for y in (-15.2,15.2):
+    m.blob((3,y,1),(3.1,1.1,4),'Metal',box=.6)
+    m.blob((3,y*1.045,1),(1.7,.35,1.7),'Rubber',box=.7)
+m.save('SM_SuitHelmet')
 m=Mesh();m.blob((3,0,-.2),(18,8.8,9.1),box=.5);m.blob((-2,0,8),(8.5,8.2,11),box=.55)
 m.blob((4,0,-8.6),(18.5,9.2,2.6),'Rubber',box=.25)
 for x in range(-10,21,4):m.blob((x,0,-10.5),(1.1,8.9,.8),'Rubber',box=.25)

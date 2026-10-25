@@ -27,7 +27,9 @@ namespace {
 UStaticMeshComponent* Part(AActor* A,const TCHAR* Shape,const TCHAR* Material,FVector P,FVector Scale,FRotator R=FRotator::ZeroRotator) {
  auto* C=NewObject<UStaticMeshComponent>(A);C->SetupAttachment(A->GetRootComponent());
  C->SetStaticMesh(LoadObject<UStaticMesh>(nullptr,*FString::Printf(TEXT("/Engine/BasicShapes/%s.%s"),Shape,Shape)));
- C->SetMaterial(0,LoadObject<UMaterialInterface>(nullptr,*FString::Printf(TEXT("/Game/Lunar/Materials/%s.%s"),Material,Material)));
+ const FString Surface=FString(Material)==TEXT("M_ThermalFoil")?TEXT("M_LunarFoil"):FString(Material)==TEXT("M_Ceramic")?TEXT("M_EquipmentPaint"):FString(Material)==TEXT("M_Graphite")?TEXT("M_EquipmentDark"):TEXT("");
+ auto* Mat=Surface.IsEmpty()?nullptr:LoadObject<UMaterialInterface>(nullptr,*FString::Printf(TEXT("/Game/Lunar/Apollo12/Realism/%s.%s"),*Surface,*Surface));
+ C->SetMaterial(0,Mat?Mat:LoadObject<UMaterialInterface>(nullptr,*FString::Printf(TEXT("/Game/Lunar/Materials/%s.%s"),Material,Material)));
  C->SetMobility(EComponentMobility::Movable);C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
  C->SetRelativeLocation(P);C->SetRelativeScale3D(Scale);C->SetRelativeRotation(R);C->RegisterComponent();return C;
 }
@@ -48,7 +50,7 @@ void ALunarGameMode::BuildApollo() {
  OxygenCapacity=1800;Oxygen=OxygenCapacity;
  auto* PC=UGameplayStatics::GetPlayerController(this,0);
  if(PC){PC->SetInputMode(FInputModeGameOnly());PC->bShowMouseCursor=false;}
- if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0))){P->GetCharacterMovement()->MaxWalkSpeed=140;P->GetCharacterMovement()->JumpZVelocity=190;ApolloLastPosition=P->GetActorLocation();}
+ if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0))){P->GetCharacterMovement()->MaxWalkSpeed=140;P->GetCharacterMovement()->JumpZVelocity=140;ApolloLastPosition=P->GetActorLocation();}
  ApolloMapTexture=LoadObject<UTexture2D>(nullptr,TEXT("/Game/Lunar/Apollo12/Textures/T_Apollo12_Orbital.T_Apollo12_Orbital"));
  auto Site=[&](FVector P){
   auto* A=GetWorld()->SpawnActor<AActor>();auto* Root=NewObject<USceneComponent>(A);A->SetRootComponent(Root);Root->RegisterComponent();
@@ -62,6 +64,20 @@ void ALunarGameMode::BuildApollo() {
  auto* KitBody=Part(ModuleActor,TEXT("Cube"),TEXT("M_Ceramic"),FVector(0,0,-12),FVector(.95,.7,.45));
  KitBody->SetCollisionEnabled(ECollisionEnabled::QueryOnly);KitBody->SetCollisionResponseToAllChannels(ECR_Ignore);KitBody->SetCollisionResponseToChannel(ECC_Pawn,ECR_Block);
  Part(ModuleActor,TEXT("Cube"),TEXT("M_ThermalFoil"),FVector(0,0,14),FVector(.75,.54,.08));
+ // Physical hinges, handles, closures and separated panels break up the old
+ // featureless kit. They remain authored equipment, not a historical artifact.
+ for(float Y:{-35.5f,35.5f}){
+  for(float X:{-37.f,37.f})Part(ModuleActor,TEXT("Cube"),TEXT("M_Graphite"),FVector(X,Y,-10),FVector(.045,.025,.4));
+  Strut(ModuleActor,FVector(-11,Y*1.1f,-11),FVector(11,Y*1.1f,-11),1.1f);
+  Strut(ModuleActor,FVector(-11,Y,-19),FVector(-11,Y*1.1f,-11),1.1f);
+  Strut(ModuleActor,FVector(11,Y,-19),FVector(11,Y*1.1f,-11),1.1f);
+ }
+ for(float Y:{-20.f,20.f}){
+  Part(ModuleActor,TEXT("Cube"),TEXT("M_Graphite"),FVector(-48,Y,3),FVector(.04,.1,.13));
+  Part(ModuleActor,TEXT("Cube"),TEXT("M_Ceramic"),FVector(-50,Y,5),FVector(.025,.055,.09));
+  Part(ModuleActor,TEXT("Cylinder"),TEXT("M_Ceramic"),FVector(47,Y,10),FVector(.025,.025,.16),FRotator(0,0,90));
+ }
+ for(float X:{-37.f,37.f})for(float Y:{-26.f,26.f})Part(ModuleActor,TEXT("Cylinder"),TEXT("M_Graphite"),FVector(X,Y,18.3f),FVector(.014,.014,.008));
  for(float Y:{-26.f,26.f})Strut(ModuleActor,FVector(-25,Y,-33),FVector(-32,Y,-65),2);
  Sign(ModuleActor,TEXT("INTREPID / FIELD KIT"),FVector(-50,0,38),4);
  for(int32 I=0;I<2;++I){
@@ -70,13 +86,13 @@ void ALunarGameMode::BuildApollo() {
    Part(A,TEXT("Cylinder"),TEXT("M_ThermalFoil"),FVector(0,0,-40),FVector(.6,.6,.35));
    Part(A,TEXT("Cylinder"),TEXT("M_Ceramic"),FVector(0,0,-21),FVector(.7,.7,.05));
    for(int J=0;J<3;++J){float T=J*2*PI/3;Strut(A,FVector(0,0,-45),FVector(50*FMath::Cos(T),50*FMath::Sin(T),-64),1.5);}
-   Sign(A,TEXT("ALSEP / PSE"),FVector(-45,0,12),12);
+   Sign(A,TEXT("ALSEP / PSE"),FVector(-45,0,12),5);
   }else{
    Part(A,TEXT("Cube"),TEXT("M_ThermalFoil"),FVector(0,0,-35),FVector(.8,.65,.5));
    Part(A,TEXT("Cube"),TEXT("M_Ceramic"),FVector(0,0,-8),FVector(.95,.8,.06));
    Strut(A,FVector(0,0,-8),FVector(0,0,85),2);
    ApolloAntenna=Part(A,TEXT("Cube"),TEXT("M_Ceramic"),FVector(0,0,90),FVector(.45,.18,.22),FRotator(-65,ApolloAntennaAngle,0));
-   Sign(A,TEXT("ALSEP / CENTRAL STATION"),FVector(-50,0,40),12);
+   Sign(A,TEXT("ALSEP / CENTRAL STATION"),FVector(-50,0,40),5);
   }
  }
  for(int32 I=0;I<3;++I){
@@ -122,6 +138,7 @@ void ALunarGameMode::BuildApollo() {
  auto* SurveyorCore=Part(DroneActor,TEXT("Cylinder"),TEXT("M_Graphite"),FVector(0,0,-25),FVector(.7,.7,.6));
  SurveyorCore->SetCollisionEnabled(ECollisionEnabled::QueryOnly);SurveyorCore->SetCollisionResponseToAllChannels(ECR_Ignore);SurveyorCore->SetCollisionResponseToChannel(ECC_Pawn,ECR_Block);
  for(const FVector& P:ApolloData::Approach)ApolloRouteActors.Add(Site(P));
+ BuildApolloSurfaceDetail();
  Message(ApolloText::Get(TEXT("ReadyMessage")));
  if(FParse::Param(FCommandLine::Get(),TEXT("ApolloTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ApolloChecks,3,false);}
  if(FParse::Param(FCommandLine::Get(),TEXT("ApolloPolishTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ApolloPolishChecks,3,false);}
