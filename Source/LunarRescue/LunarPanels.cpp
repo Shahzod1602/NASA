@@ -110,6 +110,7 @@ void ULunarPanel::Rebuild(){
  }
  if(!G)return;
  if(G->ApolloPhotoPending)Add(Text(WidgetTree,TEXT("Your latest photograph is still being saved."),20));
+ else if(G->ApolloPhotoFailed)Add(Text(WidgetTree,TEXT("Photo could not be saved. Close the album and open the camera to retry."),20));
  int Parts=0;for(int i=0;i<3;++i)if(G->ApolloParts&(1<<i))++Parts;
  Add(Text(WidgetTree,FString::Printf(TEXT("%s  |  %.0f m walked  |  %02d:%02d elapsed\nCargo: %d/3 samples, %d/3 Surveyor components. Evidence photographs: %d.\n%s"),G->ApolloTimed?TEXT("Timed exercise"):TEXT("Untimed historical exploration"),G->ApolloDistance,int(G->ApolloElapsed)/60,int(G->ApolloElapsed)%60,G->SampleCount(),Parts,G->ApolloEvidence.Num(),G->Stage==ELunarStage::Won?TEXT("Cargo stowed at Intrepid. The real crew reunited with Richard Gordon in Yankee Clipper and returned to Earth on 24 November 1969."):TEXT("Only committed work is listed. Cancelled work is never added to cargo.")),21));
  const TCHAR* Cargo[]={TEXT("12031 / Head: basalt rock; helps study lunar volcanic history."),TEXT("12032 / Bench: fine soil; records the surface regolith."),TEXT("12027 / Sharp: drive-tube core; preserves a shallow soil column."),TEXT("Surveyor TV camera: materials and mechanisms after lunar exposure."),TEXT("Surveyor scoop: returned hardware and adhering soil."),TEXT("Surveyor cable segment: returned material for laboratory examination.")};

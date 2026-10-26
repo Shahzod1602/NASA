@@ -1,4 +1,35 @@
-# Guided first expedition - 0.5.2
+# Guided first expedition
+
+## Contextual input help - 0.6.3
+
+Work input outside usable reach, a blocked view, a pending photograph, and a
+primary click without an open tool now request a six-second instruction. It
+occupies the existing action card and updates from the current position, aim,
+target, and rebound work key. Reach uses the same calculation as interaction:
+three metres for normal work, seven metres to open Surveyor context photography.
+Walking to Surveyor needs no activation button; the hint makes this explicit.
+
+Repeated input does not extend the timer or replace radio speech/subtitles.
+Pause freezes the timer; panels, the journal, tools and terminal screens suppress
+the hint. H clears/hides it. Opening a tool, starting over, or restoring a
+checkpoint clears it. Pending photographs no longer show a premature work
+prompt. The nearby first-minute instruction asks the player to face the kit
+without assuming that the player is already facing the right direction.
+
+No mission stages, science assets, saves, movement physics or tool completion
+rules change. The five-to-eight-person novice study remains pending.
+
+Validation on 27 October 2026: the Editor passed 99 assertions, followed by
+333 assertions in the rebuilt Windows package (42 guidance, 57 Apollo, 63 polish,
+60 checkpoint/cross-process, and 111 Moon/Mars/menu checks). All passed. Seventeen
+fresh 1280x720 DX11 frames were checked: the five new hint screens at full size
+and the twelve existing layouts on a contact sheet. The new hints fit at 100%
+and 150% text size. The packaged executable matches the compiled binary, and
+all 53 inventoried player files retained their SHA-256 hashes. No new FPS
+benchmark or human comprehension study was performed. Local verification
+artifacts are under `Reports/Clarity-input-2026-10-27`.
+
+## Original guided expedition - 0.5.2
 
 The first equipment check now teaches looking, walking to the marker, facing
 the field kit, opening the tool, and confirming it with the primary action.
@@ -45,13 +76,14 @@ Tools/verify_apollo12.ps1 -Packaged -GuideReview
 The guidance checks exercise actual opening/confirmation/cancellation, rebound
 keys in instructions, target selection, pending versus committed pouch visibility,
 feedback expiry/pause, fitting changes and journal access. The graphical review
-produces twelve real DX11 frames, including large text and help-page layouts.
+produces seventeen real DX11 frames, including contextual input hints, large
+text and help-page layouts.
 Automation validates behavior; it does not prove that first-time players
 understand it. The five-to-eight-person study in PLAYTEST_GUIDE.md remains pending.
 
 The interaction approach follows [Xbox's objective clarity guidance](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/109).
 
-## Recorded validation
+## Recorded validation - 0.5.2
 
 The final Windows package passed **325 checks, zero failures**, including the
 complete simulated traverse, distinct tools, guidance, suit, Moon/Mars regression,

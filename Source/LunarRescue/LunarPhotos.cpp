@@ -1,5 +1,6 @@
 #include "LunarPhotos.h"
 #include "LunarGame.h"
+#include "LunarPanels.h"
 #include "Camera/PlayerCameraManager.h"
 #include "Components/PoseableMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
@@ -69,16 +70,19 @@ bool LunarPhotos::Request(const FString& Filename,TFunction<void(bool)> Complete
 
 bool ALunarGameMode::RequestApolloPhoto(int32 Index,const FString& Relative){
  if(ApolloPhotoPending||Index<0||Index>5)return false;
+ ApolloPhotoFailed=false;
  const TWeakObjectPtr<ALunarGameMode> PhotoGame(this);const FGuid Run=ApolloRunId;
  auto Complete=[PhotoGame,Run,Index,Relative](bool Good){
   auto* G=PhotoGame.Get();if(!G||G->ApolloRunId!=Run)return;
   G->ApolloPhotoPending=false;
-  if(!Good){G->ConfirmApolloWork(TEXT("Photo could not be saved. Open the camera to retry."));return;}
+  G->ApolloPhotoFailed=!Good;
+  auto RefreshAlbum=[G](){if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(G,0));P&&P->ActivePanel&&!P->ActivePanel->Settings){P->ActivePanel->Rebuild();P->ActivePanel->SetKeyboardFocus();}};
+  if(!Good){G->ConfirmApolloWork(TEXT("Photo could not be saved. Open the camera to retry."));RefreshAlbum();return;}
   if(Index<3)G->ApolloPhotos|=1<<Index;
   else if(Index==3){G->SurveyorPhotographed=true;G->SelectedSample=0;}
   else G->ApolloDustPhotos|=1<<(Index-4);
   G->RecordApolloEvidence(Index,Relative);
-  G->ConfirmApolloWork(TEXT("Photo saved. I: view your photograph."));G->SaveApolloCheckpoint();
+  G->ConfirmApolloWork(TEXT("Photo saved. I: view your photograph."));G->SaveApolloCheckpoint();RefreshAlbum();
  };
  if(Relative.IsEmpty()){Complete(true);return true;} // Metadata-only headless checks.
  const FString Filename=FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir()/Relative);

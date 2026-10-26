@@ -15,6 +15,7 @@ void ALunarCharacter::ToggleApolloGuide(){
  if(!G||!G->Apollo||!G->IsActive())return;
  if(G->Paused||G->Journal){G->Journal=true;G->JournalPage=4;return;}
  G->ApolloGuideEnabled=!G->ApolloGuideEnabled;
+ G->ApolloInputHintRemaining=0;
 }
 
 AActor* ALunarGameMode::ApolloGuidanceTarget() const {
@@ -68,9 +69,33 @@ FString ALunarGameMode::ApolloTutorial() const {
  if(!CanInteract()){
   auto* P=UGameplayStatics::GetPlayerPawn(this,0);
   const bool Close=P&&ModuleActor&&FVector::Dist(P->GetActorLocation(),ModuleActor->GetActorLocation())<=300;
-  return Close?TEXT("3 / 4   Look down at the marked field kit."):TEXT("3 / 4   Keep walking to the marked field kit.");
+  return Close?TEXT("3 / 4   Look at the marked field kit."):TEXT("3 / 4   Keep walking to the marked field kit.");
  }
  return FString::Printf(TEXT("4 / 4   Press %s to open the equipment check."),*Key(TEXT("Interact")));
+}
+
+void ALunarGameMode::RequestApolloInputHint(){
+ auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));
+ if(!Apollo||!ApolloGuideEnabled||!IsActive()||Paused||Journal||ApolloTool||Holding||!P||P->ActivePanel)return;
+ // Repeated input does not restart the hint or interrupt mission radio.
+ if(ApolloInputHintRemaining<=0)ApolloInputHintRemaining=6.f;
+}
+
+FString ALunarGameMode::ApolloInputHint() const {
+ if(ApolloInputHintRemaining<=0||!Apollo||!ApolloGuideEnabled||!IsActive()||Paused||Journal||ApolloTool)return FString();
+ auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));
+ if(!P||P->ActivePanel)return FString();
+ if(ApolloPhotoPending)return TEXT("Photo is saving. Wait for the next action.");
+ if(Stage==ELunarStage::ApolloTraverse)return TEXT("Walk to Surveyor 3. Follow the gold marker; no button is needed on the way.");
+ auto* Target=ApolloGuidanceTarget();if(!IsValid(Target))return FString();
+ const float Reach=InteractionReach(Target);
+ if(FVector::Dist(P->GetActorLocation(),Target->GetActorLocation())>Reach)
+  return FString::Printf(TEXT("Move closer to the gold marker. Work within %.0f m."),Reach/100.f);
+ FVector Eye;FRotator Aim;P->GetActorEyesViewPoint(Eye,Aim);
+ if(FVector::DotProduct(Aim.Vector(),(Target->GetActorLocation()-Eye).GetSafeNormal())<.35f)
+  return TEXT("Face the marked work site. Aim the center crosshair at it.");
+ if(!CanInteractWith(Target))return TEXT("Something blocks your reach. Step around it and face the work site.");
+ return ApolloPrompt();
 }
 
 FString ALunarGameMode::ApolloFooter() const {

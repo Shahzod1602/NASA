@@ -1,5 +1,6 @@
 #include "LunarGame.h"
 #include "LunarSettings.h"
+#include "Components/BoxComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
@@ -23,10 +24,39 @@ void ALunarGameMode::ApolloGuidanceChecks(){
  ApolloLookLearned=true;Check(ApolloTutorial().Contains(TEXT("2 / 4")),TEXT("Walking appears after the look instruction"));
  auto* S=ULunarSettings::Get();S->Rebind(TEXT("MoveForward"),EKeys::Z);S->Rebind(TEXT("Interact"),EKeys::B);
  Check(ApolloTutorial().Contains(TEXT("Z"))&&!S->Rebind(TEXT("Jump"),EKeys::H),TEXT("Guide displays rebound movement and reserves the help key"));
+ const FString BeforeHintRadio=Radio;const int BeforeHintTranscript=ApolloTranscript.Num();
+ P->SetActorLocation(ModuleActor->GetActorLocation()+FVector(-800,0,50));P->Interact();
+ Check(ApolloInputHint().Contains(TEXT("Move closer"))&&ApolloInputHint().Contains(TEXT("3 m"))&&!ApolloTool&&ApolloAction==0,TEXT("Distant work input explains the real reach without opening or awarding work"));
+ Check(Radio==BeforeHintRadio&&ApolloTranscript.Num()==BeforeHintTranscript,TEXT("Input help never replaces mission radio or appends transcript entries"));
+ TickApollo(.5f);const float HintTime=ApolloInputHintRemaining;P->PrimaryClick();P->Interact();
+ Check(ApolloInputHintRemaining==HintTime,TEXT("Repeated clicks and work input do not restart the hint timer"));
+ Paused=true;P->PrimaryClick();P->Interact();TickApollo(1);
+ Check(ApolloInputHint().IsEmpty()&&ApolloInputHintRemaining==HintTime,TEXT("Pause hides and freezes input help"));Paused=false;
+ P->OpenSettings();P->PrimaryClick();P->Interact();Check(ApolloInputHint().IsEmpty()&&ApolloInputHintRemaining==HintTime,TEXT("Settings input does not create mission hints"));P->ClosePanel();
  ApolloMoveLearned=true;Aim(ModuleActor);PC->SetControlRotation(FRotator(0,180,0));
- Check(ApolloTutorial().Contains(TEXT("Look down")),TEXT("A nearby player facing away is told to look at the kit"));
+ Check(ApolloTutorial().Contains(TEXT("Look at")),TEXT("A nearby player facing away is told to look at the kit"));
+ Check(ApolloInputHint().Contains(TEXT("Face the marked")),TEXT("Input help updates from distance to facing as the player approaches"));
  Aim(ModuleActor);Check(ApolloTutorial().Contains(TEXT("Press B")),TEXT("Opening instruction uses the current work binding"));
+ Check(ApolloInputHint().Contains(TEXT("[ B ]")),TEXT("Input help switches to the rebound work key once the site is reachable"));
+ S->Rebind(TEXT("Interact"),EKeys::N);Check(ApolloInputHint().Contains(TEXT("[ N ]")),TEXT("An active hint follows a changed binding without another click"));S->Rebind(TEXT("Interact"),EKeys::B);
+ FVector Eye;FRotator AimRotation;P->GetActorEyesViewPoint(Eye,AimRotation);
+ auto* Obstacle=GetWorld()->SpawnActor<AActor>();auto* Block=NewObject<UBoxComponent>(Obstacle);
+ Obstacle->SetRootComponent(Block);Block->SetBoxExtent(FVector(12,90,120));Block->SetCollisionEnabled(ECollisionEnabled::QueryOnly);Block->SetCollisionResponseToAllChannels(ECR_Ignore);Block->SetCollisionResponseToChannel(ECC_Visibility,ECR_Block);Block->RegisterComponent();Obstacle->SetActorLocation((Eye+ModuleActor->GetActorLocation())*.5f);
+ P->Interact();Check(ApolloInputHint().Contains(TEXT("blocks your reach"))&&!ApolloTool,TEXT("A real visibility obstacle explains blocked reach rather than claiming the site is usable"));Obstacle->Destroy();
+ ApolloPhotoPending=true;P->Interact();Check(ApolloInputHint().Contains(TEXT("Photo is saving"))&&!ApolloTool,TEXT("Work input during a pending photo explains why collection must wait"));ApolloPhotoPending=false;
+ P->ToggleApolloGuide();P->PrimaryClick();P->Interact();
+ // The reachable work key remains functional when optional hints are hidden.
+ Check(ApolloInputHint().IsEmpty()&&ApolloInputHintRemaining==0&&ApolloTool==8,TEXT("Hidden guidance stays hidden while valid work remains available"));CancelApolloTool();P->ToggleApolloGuide();
+ Stage=ELunarStage::ApolloTraverse;P->Interact();Check(ApolloInputHint().Contains(TEXT("no button is needed"))&&!ApolloTool,TEXT("Traverse input explains that reaching Surveyor progresses the route"));
+ Stage=ELunarStage::ApolloRecover;SurveyorPhotographed=false;P->SetActorLocation(DroneActor->GetActorLocation()+FVector(-800,0,50));
+ Check(ApolloInputHint().Contains(TEXT("7 m")),TEXT("Surveyor context photography uses its actual seven metre opening reach"));
+ Stage=ELunarStage::Lost;Check(ApolloInputHint().IsEmpty(),TEXT("Terminal states suppress active mission hints"));
+ StartApollo(true);Check(ApolloInputHintRemaining==0,TEXT("A new mission clears transient input guidance"));Aim(ModuleActor);ApolloLookLearned=true;ApolloMoveLearned=true;
+ P->PrimaryClick();Check(!ApolloTool&&ApolloAction==0&&ApolloInputHint().Contains(TEXT("[ B ]")),TEXT("Primary click teaches the work key without starting or completing a tool"));
+ TickApollo(6.1f);Check(ApolloInputHint().IsEmpty()&&ApolloInputHintRemaining==0,TEXT("Input help expires and returns the normal instruction"));
+ P->PrimaryClick();
  P->Interact();Check(ApolloTool==8&&ApolloAction==0,TEXT("Opening the first check awards no completed work"));
+ Check(ApolloInputHintRemaining==0,TEXT("Opening the tool clears the previous input hint"));
  Check(ApolloToolHelp().Contains(TEXT("Left click")),TEXT("The opened check teaches its distinct confirmation action"));
  P->PauseMission();Check(!ApolloTool&&ApolloAction==0&&!Paused,TEXT("Cancelling the first check does not complete it or pause"));
  for(int N=0;N<3;++N){P->Interact();Click();}
@@ -84,6 +114,16 @@ void ALunarGameMode::ApolloGuidanceReview(){
  case 21:Shot(TEXT("guide-help-large.png"));break;
  case 22:JournalPage=0;break;
  case 23:Shot(TEXT("guide-map-large.png"));break;
+ case 24:Journal=false;Paused=false;StartApollo(true);RadioRemaining=0;ApolloSaveNoticeRemaining=0;ULunarSettings::Get()->TextScale=1;ULunarSettings::Get()->SubtitleScale=1;View(ModuleActor,FVector(-800,0,50));P->Interact();break;
+ case 25:Shot(TEXT("guide-hint-distance.png"));break;
+ case 26:View(ModuleActor,FVector(-170,0,50));PC->SetControlRotation(FRotator(0,180,0));ApolloInputHintRemaining=0;P->Interact();break;
+ case 27:Shot(TEXT("guide-hint-facing.png"));break;
+ case 28:View(ModuleActor,FVector(-170,0,50));ULunarSettings::Get()->Rebind(TEXT("Interact"),EKeys::B);ApolloInputHintRemaining=0;P->PrimaryClick();break;
+ case 29:Shot(TEXT("guide-hint-binding.png"));break;
+ case 30:ULunarSettings::Get()->TextScale=1.5f;ULunarSettings::Get()->SubtitleScale=1.5f;View(ModuleActor,FVector(-800,0,50));ApolloInputHintRemaining=0;P->Interact();Message(TEXT("Begin beside Intrepid. Follow the gold marker to the field kit. Your guide shows the controls."));break;
+ case 31:Shot(TEXT("guide-hint-large.png"));break;
+ case 32:Stage=ELunarStage::ApolloRecover;SurveyorPhotographed=false;View(DroneActor,FVector(-900,0,50));ApolloInputHintRemaining=0;P->Interact();break;
+ case 33:Shot(TEXT("guide-hint-surveyor.png"));break;
  default:FPlatformMisc::RequestExitWithStatus(false,0);return;
  }
  ++MovementPhase;FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ApolloGuidanceReview,1.5f,false);

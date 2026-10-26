@@ -116,13 +116,15 @@ public:
  bool ApolloLookLearned=false, ApolloMoveLearned=false;
  bool ApolloGuideEnabled=true;
  FString ApolloConfirmation;
+ float ApolloInputHintRemaining=0;
  float ApolloConfirmationRemaining=0, ApolloPackedPreviewRemaining=0;
  int32 ApolloPackedSample=INDEX_NONE;
  int32 ApolloPackedPart=INDEX_NONE;
  float ApolloPackedPartRemaining=0;
  bool ApolloDustMode=false, ApolloDustCompared=false;
  uint8 ApolloDustPhotos=0;
- bool ApolloPhotoPending=false;
+ bool ApolloPhotoPending=false, ApolloPhotoFailed=false;
+ double ApolloTestDeadline=0;
  bool RequestApolloPhoto(int32 EvidenceIndex,const FString& RelativePath);
  void ApolloOptimizationChecks();
  int32 ApolloDustChoice=0;
@@ -180,6 +182,8 @@ public:
  FString ApolloInstruction() const;
  FString ApolloPurpose() const;
  FString ApolloTutorial() const;
+ void RequestApolloInputHint();
+ FString ApolloInputHint() const;
  float ApolloHoldDuration() const;
  int32 ApolloStep() const;
  void ApolloChecks();
@@ -271,6 +275,7 @@ public:
  UFUNCTION(BlueprintPure) FString Prompt() const;
  bool CanInteract() const;
  bool CanInteractWith(AActor* Actor) const;
+ float InteractionReach(AActor* Actor) const;
  AActor* InteractionTarget() const;
  void Message(const FString& Text);
  void RunChecks();

@@ -1,4 +1,5 @@
 #include "LunarApolloText.h"
+#include "LunarSettings.h"
 #include "Internationalization/StringTableRegistry.h"
 
 namespace {
@@ -14,5 +15,5 @@ void Initialize(){
 }
 
 FText ApolloText::Text(const TCHAR* Key){Initialize();return FText::FromStringTable(TEXT("Apollo12En"),Key);}
-FString ApolloText::Get(const TCHAR* Key){return Text(Key).ToString();}
-FString ApolloText::Format(const TCHAR* Key,const FFormatNamedArguments& Arguments){return FText::Format(Text(Key),Arguments).ToString();}
+FString ApolloText::Get(const TCHAR* Key){return ULunarSettings::Get()->ControlText(Text(Key).ToString());}
+FString ApolloText::Format(const TCHAR* Key,const FFormatNamedArguments& Arguments){return FText::Format(FText::FromString(Get(Key)),Arguments).ToString();}

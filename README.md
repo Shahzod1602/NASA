@@ -1,5 +1,37 @@
 # Lunar Rescue
 
+## Contextual input help - 0.6.3
+
+Unsuccessful work input and a primary click outside a tool now explain the next
+action in the existing instruction card: approach the marker, face the site,
+move around an obstacle, use the current work key, or wait for a photograph.
+The hint updates as the player moves, respects the actual interaction distance,
+and expires after six unpaused seconds. Repeated input does not restart it or
+interrupt mission radio. H also hides this optional help. Work and cargo still
+require the normal tool actions. See [guidance details](CLARITY_UPDATE.md).
+
+Windows validation on 27 October 2026: 333 assertions passed, zero failures;
+17 fresh 720p DX11 guidance screenshots were reviewed, including 150% text.
+All 53 inventoried save, photograph and settings files retained their hashes.
+
+## Audit fixes - 0.6.2
+
+An expired timed exercise closes unfinished tools and shows its result. Moon
+interface and mission-selection text scales consistently, with measured
+briefing/result layouts and full-width journal reading pages. The route page
+retains the historical traverse.
+
+Footsteps and legacy radio respect their volume settings. Prompts use rebound
+keys, and Apollo narration no longer assumes default controls. An open evidence
+album refreshes when a photograph finishes or fails; checkpoint reload waits
+until a pending photograph is saved. Rendered workflow tests now wait for the
+actual asynchronous photo result.
+
+Windows validation on 27 October 2026: 368 headless and 154 rendered
+assertions passed across 15 suite runs. The rendered total includes the basic
+and polish suites repeated with real graphics. The full movement walkthrough
+returned all cargo, and all 42 inventoried player files retained their hashes.
+
 ## Photo and animation optimization - 0.6.1
 
 Mission photographs are encoded and written on a background queue. Evidence

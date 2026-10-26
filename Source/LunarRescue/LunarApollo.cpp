@@ -183,8 +183,9 @@ void ALunarGameMode::BuildApollo() {
 void ALunarGameMode::StartApollo(bool Confirmed){
  CancelApolloTool();ApolloLevel=FVector2D(.4f,-.3f);ApolloTranscript.Reset();
  if(!Confirmed&&ApolloSaveStatus!=EApolloSaveStatus::Missing){ApolloConfirmNew=true;return;}
+ ApolloInputHintRemaining=0;
  ApolloConfirmationRemaining=0;ApolloPackedPreviewRemaining=0;ApolloPackedSample=INDEX_NONE;ApolloGuideEnabled=true;ApolloDustMode=false;ApolloDustCompared=false;ApolloDustPhotos=0;ApolloPackedPartRemaining=0;
- ApolloConfirmNew=false;ApolloStarted=true;ApolloRunId=FGuid::NewGuid();ApolloPhotoPending=false;ApolloEvidence.Reset();
+ ApolloConfirmNew=false;ApolloStarted=true;ApolloRunId=FGuid::NewGuid();ApolloPhotoPending=false;ApolloPhotoFailed=false;ApolloEvidence.Reset();
  ApolloElapsed=0;ApolloDistance=0;Oxygen=OxygenCapacity;ApolloPhotos=0;ApolloParts=0;ApolloInstruments=0;SamplesCollected=0;SelectedSample=0;SurveyorPhotographed=false;
  for(auto& Actor:SampleActors)Actor->SetActorHiddenInGame(false);for(auto& Actor:ApolloPartActors)Actor->SetActorHiddenInGame(false);
  Stage=ELunarStage::ApolloCheckout;ApolloAction=0;
@@ -320,6 +321,7 @@ void ALunarGameMode::CompleteApolloInteraction(AActor* A){
 }
 void ALunarGameMode::TickApollo(float D){
  if(!Paused){
+  ApolloInputHintRemaining=FMath::Max(0.f,ApolloInputHintRemaining-FMath::Max(0.f,D));
   ApolloConfirmationRemaining=FMath::Max(0.f,ApolloConfirmationRemaining-FMath::Max(0.f,D));
   ApolloPackedPartRemaining=FMath::Max(0.f,ApolloPackedPartRemaining-FMath::Max(0.f,D));
   ApolloPackedPreviewRemaining=FMath::Max(0.f,ApolloPackedPreviewRemaining-FMath::Max(0.f,D));

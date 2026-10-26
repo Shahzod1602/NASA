@@ -90,13 +90,16 @@ bool ALunarGameMode::SaveApolloCheckpoint(){
 }
 bool ALunarGameMode::RestoreApolloCheckpoint(){
  if(!Apollo)return false;
+ // A completion from this run must not overwrite a checkpoint just restored.
+ if(ApolloPhotoPending){ApolloSaveNotice=TEXT("CheckpointPhotoPending");ApolloSaveNoticeRemaining=6;ApolloSaveError=false;return false;}
  RefreshApolloCheckpoint();auto* Save=ApolloCachedCheckpoint.Get();if(!Save){ApolloSaveError=true;ApolloSaveNotice=TEXT("CheckpointLoadFailed");ApolloSaveNoticeRemaining=30;return false;}
  auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));auto* PC=UGameplayStatics::GetPlayerController(this,0);FVector Ground;
  if(!P||!PC||SampleActors.Num()!=3||ApolloPartActors.Num()!=3||!ApolloSafeGround(Save->Position,Ground)){
   ApolloSaveError=true;ApolloSaveNotice=TEXT("CheckpointLoadFailed");ApolloSaveNoticeRemaining=30;return false;
  }
  // Validate position before changing progress. In-progress work is never restored.
- CancelApolloTool();ApolloConfirmationRemaining=0;ApolloPackedPreviewRemaining=0;ApolloPackedPartRemaining=0;ApolloDustMode=false;Paused=false;Journal=false;ApolloConfirmNew=false;ApolloStarted=true;
+ ApolloPhotoFailed=false;
+ CancelApolloTool();ApolloInputHintRemaining=0;ApolloConfirmationRemaining=0;ApolloPackedPreviewRemaining=0;ApolloPackedPartRemaining=0;ApolloDustMode=false;Paused=false;Journal=false;ApolloConfirmNew=false;ApolloStarted=true;
  ApolloTimed=Save->Mode==TEXT("timed-exercise");
  ApolloRunId=Save->RunId;ApolloEvidence=Save->Evidence;ApolloElapsed=Save->Elapsed;ApolloDistance=Save->Distance;Oxygen=Save->Remaining;
  ApolloAntennaAngle=Save->AntennaAngle;ApolloLookLearned=Save->LookLearned;ApolloMoveLearned=Save->MoveLearned;ApolloRouteIndex=0;

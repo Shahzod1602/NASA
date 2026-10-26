@@ -27,6 +27,9 @@ Follow the single instruction: look, walk to the gold marker, and face the kit.
 Press the displayed work key to open the equipment check, then left click.
 Opening a tool does not finish its action. Follow its current step to commit it.
 The album shortcut appears after you have photographs or cargo.
+If work input does nothing, the instruction card briefly explains how to proceed.
+It updates as you approach or face the site and shows your current work key.
+Left click outside a tool also requests this help. H hides it with the guide.
 
 SCIENCE TOOLS
 Photograph: open the camera, center the work site and left click the shutter.
@@ -52,6 +55,8 @@ SAVING
 Completed work creates an automatic checkpoint.
 C continues a saved expedition from the menu, briefing or exercise ending.
 Esc, then R reloads its last checkpoint.
+If a photograph is still saving, wait for it to finish before reloading.
+The evidence album updates automatically when a photograph finishes or fails.
 A new expedition asks before replacing existing progress.
 Walking after the last completed task and partial work are not saved on exit.
 Keep LunarRescue/Saved when moving the game to retain saves and photographs.

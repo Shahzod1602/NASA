@@ -39,8 +39,8 @@ foreach($case in $cases){
   'LunarTest' {if($case[0] -like '*Mars*'){'mars-gameplay-checks.txt'}else{'gameplay-checks.txt'}}
  }
  $resultRoot=if($Packaged){Join-Path $root 'Dist\Apollo12\Windows\LunarRescue\Reports'}else{Join-Path $root 'Reports'}
- $reviewNames=@('briefing','intrepid','alsep','sample','surveyor','map','sources','result','approach','hardware','return','history','evidence','tutorial','work-prompt','work-progress','continue','new-confirm','reload','retry-checkpoint','recovered','tool-level','tool-antenna','tool-core','tool-camera','settings','album','text150')
- if($case[1] -eq 'ApolloGuidanceReview'){$reviewNames=@('look','walk','first-check','rock','pouch','sealed','fitting-first','fitting-second','help','large-text','help-large','map-large')}
+ $reviewNames=@('briefing','intrepid','alsep','sample','surveyor','map','sources','result','approach','hardware','return','history','evidence','tutorial','work-prompt','work-progress','continue','new-confirm','reload','retry-checkpoint','recovered','tool-level','tool-antenna','tool-core','tool-camera','settings','album','text150','briefing150','continue150','confirm150','pause150','map150','history150','sources150','result150','expired-tool150','briefing125','menu150')
+ if($case[1] -eq 'ApolloGuidanceReview'){$reviewNames=@('look','walk','first-check','rock','pouch','sealed','fitting-first','fitting-second','help','large-text','help-large','map-large','hint-distance','hint-facing','hint-binding','hint-large','hint-surveyor')}
  if($case[1] -eq 'ApolloFieldworkReview'){$reviewNames=@('contact','lift','pouch','core','cable','surveyor','exposed','shielded','compare','large','album','intrepid')}
  $imagePrefix=if($case[1] -eq 'ApolloFieldworkReview'){'fieldwork'}elseif($case[1] -eq 'ApolloGuidanceReview'){'guide'}else{'apollo12'}
  if($case[1] -in @('ApolloReview','ApolloGuidanceReview','ApolloFieldworkReview')){

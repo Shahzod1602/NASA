@@ -81,7 +81,7 @@ void ALunarGameMode::BuildMoonExpedition() {
 void ALunarGameMode::AdvanceExpedition(float Delta) {if(!Mars&&!Menu&&!Paused&&Stage==ELunarStage::ActivateBeacon)BeaconCycleSeconds+=FMath::Max(0.f,Delta);}
 void ALunarGameMode::LockBeacon() {
  if(Stage!=ELunarStage::ActivateBeacon||!CanInteractWith(BeaconActor))return;
- if(!BeaconInWindow()){Message(TEXT("EARTHLINK: Wait for the green window, then tap E. Locked channels are safe."));return;}
+ if(!BeaconInWindow()){Message(TEXT("EARTHLINK: Wait for the green window, then tap {Interact}. Locked channels are safe."));return;}
  ++BeaconLocks;BeaconCycleSeconds=0;PlayPowerSound(TEXT("PowerContact"),.45f);
  if(BeaconLocks<3){Message(FString::Printf(TEXT("EARTHLINK: Channel %d/3 locked. Time the next green window."),BeaconLocks));return;}
  Stage=ELunarStage::ReturnHome;

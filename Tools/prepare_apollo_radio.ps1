@@ -1,3 +1,4 @@
+param([string[]]$Keys=@('StartMessage','CheckoutDone','InstrumentsDone','SamplesDone','SurveyorReached','PartsDone','MissionDone'))
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 $out=Join-Path $root 'SourceArt\Apollo12\Radio'
@@ -5,7 +6,6 @@ New-Item -ItemType Directory -Force -Path $out | Out-Null
 Add-Type -AssemblyName System.Speech
 $speaker=New-Object System.Speech.Synthesis.SpeechSynthesizer
 $speaker.SelectVoice('Microsoft Zira Desktop');$speaker.Rate=-1
-$keys=@('StartMessage','CheckoutDone','InstrumentsDone','SamplesDone','SurveyorReached','PartsDone','MissionDone')
 $strings=Get-Content (Join-Path $root 'Source\LunarRescue\LunarApolloStrings.inl') -Encoding UTF8
 try {
  foreach($key in $keys){

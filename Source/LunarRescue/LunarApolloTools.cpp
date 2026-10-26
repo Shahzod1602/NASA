@@ -15,6 +15,7 @@ bool ALunarGameMode::OpenApolloTool(){
  if(!Apollo||!IsActive()||Paused||ApolloTool||ApolloPhotoPending||!CanInteract()||Stage==ELunarStage::ApolloTraverse)return false;
  if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));P&&P->ThirdPerson)P->ToggleSuitView();
  ApolloWorkTarget=InteractionTarget();if(!ApolloWorkTarget)return false;
+ ApolloInputHintRemaining=0;
  ApolloToolPhase=0;ApolloToolCooldown=0;ApolloConfirmationRemaining=0;ApolloPackedPreviewRemaining=0;ApolloPackedPartRemaining=0;
  if(ApolloDustMode)ApolloTool=ApolloDustPhotos==3?9:1;
  else if(Stage==ELunarStage::ApolloCheckout)ApolloTool=8;

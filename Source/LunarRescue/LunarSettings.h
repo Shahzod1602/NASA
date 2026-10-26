@@ -23,6 +23,7 @@ public:
  static ULunarSettings* Get();
  static bool IsAutomation();
  FKey Key(FName Action) const;
+ FString ControlText(FString Text) const;
  bool Rebind(FName Action,FKey NewKey);
  void Apply(class ALunarCharacter* Player,bool Save=true);
  void Reset();
