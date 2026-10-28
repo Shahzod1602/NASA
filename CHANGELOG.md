@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased — frontend refresh, 2026-10-29
+
+- Add destination artwork and a Continue/Moon/Mars/Settings/Exit menu.
+- Organize settings into Video, Sound, Gameplay and Controls tabs.
+- Add persistent graphics/audio options and reversible display-mode previews.
+- Preserve mission saves, evidence album and rebound controls; document unsupported reference controls explicitly.
+
 ## 0.6.1 - 2026-10-26
 
 - Passed 383 packaged checks and 32 rendered review states; the measured audio-enabled 720p Medium route reduced the largest frame from 169.85 ms to 27.45 ms, with 59.99 mean FPS.

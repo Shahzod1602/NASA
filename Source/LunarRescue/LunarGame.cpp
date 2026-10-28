@@ -1,6 +1,7 @@
 #include "LunarGame.h"
 #include "LunarApolloText.h"
 #include "LunarSettings.h"
+#include "LunarPanels.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
@@ -66,11 +67,11 @@ void ALunarCharacter::BeginPlay() {
 void ALunarCharacter::Tick(float D) {
  Super::Tick(D);auto* G=Mission(this);const bool Active=G&&G->IsActive()&&!G->Paused;
  if(BreathAudio) {
-  BreathAudio->SetVolumeMultiplier(.5f*ULunarSettings::Get()->EffectsVolume);
+  BreathAudio->SetVolumeMultiplier(.5f*(ULunarSettings::Get()->EffectsVolume*ULunarSettings::Get()->MasterVolume));
   if(Active) { if(!BreathAudio->IsPlaying()) BreathAudio->Play();BreathAudio->SetPaused(false);BreathAudio->SetPitchMultiplier(G->Oxygen<60?1.18f:1.f); }
   else BreathAudio->SetPaused(true);
  }
- if(IsValid(StepAudio)){StepAudio->SetVolumeMultiplier(.7f*ULunarSettings::Get()->EffectsVolume);StepAudio->SetPaused(!Active);}
+ if(IsValid(StepAudio)){StepAudio->SetVolumeMultiplier(.7f*(ULunarSettings::Get()->EffectsVolume*ULunarSettings::Get()->MasterVolume));StepAudio->SetPaused(!Active);}
  const FVector Here=GetActorLocation();float Travel=FVector::Dist2D(Here,LastStepPosition);LastStepPosition=Here;
  if(Active) {
   SuitTime+=D;
@@ -92,7 +93,7 @@ void ALunarCharacter::Tick(float D) {
 
 void ALunarCharacter::StampFootstep() {
  LeftFoot=!LeftFoot;
- if(StepSounds.Num()==3&&StepSounds[FootprintCount%3]) StepAudio=UGameplayStatics::SpawnSound2D(this,StepSounds[FootprintCount%3],.7f*ULunarSettings::Get()->EffectsVolume,FMath::FRandRange(.94f,1.06f));
+ if(StepSounds.Num()==3&&StepSounds[FootprintCount%3]) StepAudio=UGameplayStatics::SpawnSound2D(this,StepSounds[FootprintCount%3],.7f*(ULunarSettings::Get()->EffectsVolume*ULunarSettings::Get()->MasterVolume),FMath::FRandRange(.94f,1.06f));
  const FRotator Yaw(0,GetControlRotation().Yaw,0);
  FVector P=GetActorLocation()+FRotationMatrix(Yaw).GetUnitAxis(EAxis::Y)*(LeftFoot?-12.f:12.f);
  FHitResult Hit;FCollisionQueryParams Q;Q.AddIgnoredActor(this);Q.bTraceComplex=true;
@@ -188,14 +189,8 @@ void ALunarCharacter::PrimaryClick() {
  if(G->ApolloTool){G->ApolloToolClick();return;}
  if(G->Apollo&&G->IsActive()){G->RequestApolloInputHint();return;}
  if(!G->Menu){if(!G->ApolloConfirmNew)StartMission();return;}
- auto* PC=Cast<APlayerController>(GetController());if(!PC)return;
- float X=0,Y=0;int32 W=0,H=0;PC->GetViewportSize(W,H);
- if(W<=0||H<=0||!PC->GetMousePosition(X,Y))return;
- for(int32 Index=0;Index<2;++Index) {
-  if(MissionCardBounds(Index,W,H).IsInside(FVector2D(X,Y))) {
-   G->SelectPlanet(Index==1);return;
-  }
- }
+ // Menu pointer interaction is owned by the UMG buttons.
+
 }
 // Keep ACharacter::Restart intact: possession calls it to enable walking physics.
 void ALunarCharacter::ContinueMission(){if(ActivePanel)return;if(auto* G=Mission(this))G->ContinueApollo();}
@@ -246,7 +241,7 @@ void ALunarGameMode::BeginPlay() {
  if(FParse::Param(FCommandLine::Get(),TEXT("LunarMenuTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::TravelCheck,3,false);}
  if(Menu&&FParse::Param(FCommandLine::Get(),TEXT("LunarReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,[this](){FScreenshotRequest::RequestScreenshot(ReportPath(TEXT("mission-select.png")),true,false);FTimerHandle End;GetWorldTimerManager().SetTimer(End,[](){FPlatformMisc::RequestExitWithStatus(false,0);},3,false);},8,false);}
  if(Menu){
-  RefreshApolloCheckpoint();if(auto* PC=UGameplayStatics::GetPlayerController(this,0)){PC->SetInputMode(FInputModeGameAndUI());PC->bShowMouseCursor=true;}
+  RefreshApolloCheckpoint();if(auto* PC=UGameplayStatics::GetPlayerController(this,0)){auto* Main=CreateWidget<ULunarMainMenu>(PC);Main->AddToViewport(10);PC->SetInputMode(FInputModeGameAndUI());PC->bShowMouseCursor=true;}
   if(FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveReadTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ApolloSaveChecks,3,false);}
   return;
  }
@@ -291,14 +286,14 @@ void ALunarGameMode::AdvanceRadio(float D) {
  if(!Paused)RadioRemaining=FMath::Max(0.f,RadioRemaining-FMath::Max(0.f,D));
 }
 void ALunarGameMode::UpdateAudioPause() {
- if(IsValid(RadioAudio))RadioAudio->SetVolumeMultiplier(ULunarSettings::Get()->RadioVolume);
+ if(IsValid(RadioAudio))RadioAudio->SetVolumeMultiplier((ULunarSettings::Get()->RadioVolume*ULunarSettings::Get()->MasterVolume));
  if(IsValid(RadioAudio))RadioAudio->SetPaused(Paused);
  PowerSounds.RemoveAll([](const TObjectPtr<UAudioComponent>& C){return !IsValid(C.Get());});
  for(const auto& C:PowerSounds)C->SetPaused(Paused);
 }
 UAudioComponent* ALunarGameMode::PlayPowerSound(const TCHAR* Name,float Volume) {
  auto* Sound=LoadObject<USoundBase>(nullptr,*FString::Printf(TEXT("/Game/Lunar/Immersion/Audio/%s.%s"),Name,Name));
- auto* C=Sound?UGameplayStatics::SpawnSound2D(this,Sound,Volume*ULunarSettings::Get()->EffectsVolume):nullptr;
+ auto* C=Sound?UGameplayStatics::SpawnSound2D(this,Sound,Volume*(ULunarSettings::Get()->EffectsVolume*ULunarSettings::Get()->MasterVolume)):nullptr;
  if(C){PowerSounds.Add(C);C->SetPaused(Paused);}return C;
 }
 void ALunarGameMode::BeginPowerSequence() {
@@ -417,7 +412,7 @@ void ALunarGameMode::Message(const FString& T) {
   const TCHAR* Keys[]={TEXT("StartMessage"),TEXT("CheckoutDone"),TEXT("InstrumentsDone"),TEXT("SamplesDone"),TEXT("SurveyorReached"),TEXT("PartsDone"),TEXT("MissionDone")};
   for(const TCHAR* Key:Keys)if(T==ApolloText::Get(Key)){
    auto* Sound=LoadObject<USoundBase>(nullptr,*FString::Printf(TEXT("/Game/Lunar/Apollo12/Radio/%s.%s"),Key,Key));
-   if(Sound){RadioAudio=UGameplayStatics::SpawnSound2D(this,Sound,ULunarSettings::Get()->RadioVolume);RadioRemaining=FMath::Max(10.f,Sound->GetDuration()+.5f);}break;
+   if(Sound){RadioAudio=UGameplayStatics::SpawnSound2D(this,Sound,(ULunarSettings::Get()->RadioVolume*ULunarSettings::Get()->MasterVolume));RadioRemaining=FMath::Max(10.f,Sound->GetDuration()+.5f);}break;
   }
   return;
  }
@@ -434,7 +429,7 @@ void ALunarGameMode::Message(const FString& T) {
  if(!Name.IsEmpty()) {
   if(RadioAudio)RadioAudio->Stop();
   auto* Sound=LoadObject<USoundBase>(nullptr,*FString::Printf(TEXT("%s/Radio_%s.Radio_%s"),Mars?TEXT("/Game/Mars/Audio"):TEXT("/Game/Lunar/Immersion/Audio"),*Name,*Name));
-   if(Sound){RadioRemaining=FMath::Max(10.f,Sound->GetDuration()+.5f);RadioAudio=UGameplayStatics::SpawnSound2D(this,Sound,ULunarSettings::Get()->RadioVolume);}
+   if(Sound){RadioRemaining=FMath::Max(10.f,Sound->GetDuration()+.5f);RadioAudio=UGameplayStatics::SpawnSound2D(this,Sound,(ULunarSettings::Get()->RadioVolume*ULunarSettings::Get()->MasterVolume));}
  }
 }
 void ALunarGameMode::BuildStoryProps() {
@@ -564,29 +559,7 @@ void ALunarHUD::DrawHUD() {
  if(G->Apollo){DrawApollo(G);return;}
  float W=Canvas->SizeX,H=Canvas->SizeY; float S=FMath::Min(W/1280.f,H/720.f);
  FLinearColor White(.87,.94,1),Muted(.46,.63,.73),Cyan(.12,.86,.92),Orange(1,.53,.17);
- if(G->Menu){
-  const float TS=ULunarSettings::Get()->TextScale;
-  auto Line=[&](const FString& Value,float X,float Y,float Width,float Size,FLinearColor Color){
-   TArray<FString> Words;Value.ParseIntoArray(Words,TEXT(" "),true);FString L;float FW,FH;GetTextSize(TEXT("Ag"),FW,FH,GEngine->GetLargeFont(),Size*S*TS*2.3f);
-   for(const auto& Word:Words){FString Next=L.IsEmpty()?Word:L+TEXT(" ")+Word;float TW,TH;GetTextSize(Next,TW,TH,GEngine->GetLargeFont(),Size*S*TS*2.3f);
-    if(TW>Width&&!L.IsEmpty()){Label(L,X,Y,Size*S*TS,Color);Y+=FH+6*S;L=Word;}else L=Next;
-   }
-   if(!L.IsEmpty()){Label(L,X,Y,Size*S*TS,Color);Y+=FH+6*S;}return Y;
-  };
-  Panel(0,0,W,H,1);Line(ApolloText::Get(TEXT("MenuTitle")),W*.1f,H*.08f,W*.8f,.80f,White);
-  Line(ApolloText::Get(TEXT("MenuChoose")),W*.1f,H*.20f,W*.8f,.50f,Muted);
-  for(int I=0;I<2;++I){const FBox2D Bounds=MissionCardBounds(I,W,H);float X=Bounds.Min.X,Y=Bounds.Min.Y;FLinearColor C=I?Orange:Cyan;
-   Panel(X,Y,Bounds.GetSize().X,Bounds.GetSize().Y,1);DrawRect(C,X,Y,Bounds.GetSize().X,3*S);
-   float TY=Line(ApolloText::Get(I?TEXT("MenuMars"):TEXT("MenuMoon")),X+24*S,Y+18*S,Bounds.GetSize().X-48*S,.75f,C)+10*S;
-   TY=Line(ApolloText::Get(I?TEXT("MenuMarsTitle"):TEXT("MenuMoonTitle")),X+24*S,TY,Bounds.GetSize().X-48*S,.42f,White)+8*S;
-   TY=Line(ApolloText::Get(I?TEXT("MenuMarsInfo"):TEXT("MenuMoonInfo")),X+24*S,TY,Bounds.GetSize().X-48*S,.38f,Muted)+8*S;
-   TY=Line(ApolloText::Get(I?TEXT("MenuMarsDescription"):TEXT("MenuMoonDescription")),X+24*S,TY,Bounds.GetSize().X-48*S,.38f,White)+12*S;
-   Line(ApolloText::Get(I?TEXT("MenuMarsBegin"):TEXT("MenuMoonBegin")),X+24*S,TY,Bounds.GetSize().X-48*S,.40f,C);
-  }
-  if(G->ApolloCachedCheckpoint)Line(ApolloText::Get(G->ApolloCachedCheckpoint->Step()==6?TEXT("CheckpointResult"):TEXT("CheckpointContinue")),W*.1f,H*.79f,W*.8f,.52f,Cyan);
-  else if(G->ApolloSaveStatus==EApolloSaveStatus::Incompatible||G->ApolloSaveStatus==EApolloSaveStatus::Corrupt)Line(ApolloText::Get(G->ApolloSaveStatus==EApolloSaveStatus::Incompatible?TEXT("CheckpointIncompatible"):TEXT("CheckpointCorrupt")),W*.1f,H*.79f,W*.8f,.42f,Orange);
-  Line(ApolloText::Get(TEXT("MenuHelp")),W*.1f,H*.88f,W*.8f,.43f,Muted);return;
- }
+ if(G->Menu)return;
 
  // Thin curved helmet seal around the periphery, behind all readable HUD elements.
  if(G->IsActive()) for(int I=0;I<128;++I) {
@@ -667,7 +640,7 @@ void ALunarHUD::DrawHUD() {
   }
   DrawLine(W/2-7*S,H/2,W/2+7*S,H/2,FLinearColor(1,1,1,.65),1); DrawLine(W/2,H/2-7*S,W/2,H/2+7*S,FLinearColor(1,1,1,.65),1);
   if(G->CanInteract()) { Panel(W/2-240*S,H-205*S,480*S,50*S); Label(G->Prompt(),W/2-218*S,H-191*S,.6*S,Cyan); }
-  if(G->RadioRemaining>0) { Panel(24*S,H-138*S,W-48*S,62*S,.88); Label("RADIO / "+G->Radio,40*S,H-118*S,.44*S,White); }
+  if(G->RadioRemaining>0&&ULunarSettings::Get()->Subtitles) { Panel(24*S,H-138*S,W-48*S,62*S,.88); Label("RADIO / "+G->Radio,40*S,H-118*S,.44*S,White); }
  }
  Panel(0,H-48*S,W,48*S,.9); Label("{MoveForward}{MoveLeft}{MoveBack}{MoveRight} / ARROWS  Move   MOUSE Look   {Jump} Jump   {Interact} Work   {Zoom} Zoom   {Route} Route   ESC Pause",32*S,H-31*S,.43*S,Muted);
  if(G->Stage==ELunarStage::Briefing||G->Stage==ELunarStage::Won||G->Stage==ELunarStage::Lost||G->Paused) {

@@ -1,5 +1,14 @@
 # Lunar Rescue
 
+## Reference-led frontend refresh (unreleased)
+
+The destination menu now uses separate illustrated Moon and Mars backgrounds,
+Continue, Settings and Exit buttons. Settings are arranged in four tabs with
+two scrollable columns. Graphics, audio and input options connect to the actual
+game; display changes require confirmation within 15 seconds. Unsupported
+reference options are explained instead of presented as working controls.
+See [frontend scope and validation](FRONTEND_UPDATE.md).
+
 ## Contextual input help - 0.6.3
 
 Unsuccessful work input and a primary click outside a tool now explain the next

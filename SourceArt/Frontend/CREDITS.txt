@@ -1,0 +1,11 @@
+LunarRescue frontend artwork
+Created for this project using OpenAI image generation during 28-29 October 2026.
+MenuMoon.png: authored lunar landscape / artistic Earth composition.
+MenuMars.png: authored Martian canyon composition.
+These are menu illustrations, not NASA photographs, elevation products or
+scientifically scaled views. They do not replace the in-game LROC terrain.
+The user's six UI references informed composition and interface styling;
+the reference images themselves are not shipped as interactive screens.
+No NASA endorsement or partnership is claimed.
+Imported textures: /Game/Lunar/Frontend/T_MenuMoon and T_MenuMars.
+Import script: Tools/import_frontend.py. Original generated PNGs retained here.

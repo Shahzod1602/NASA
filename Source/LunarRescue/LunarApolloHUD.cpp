@@ -50,12 +50,12 @@ void ALunarHUD::DrawApollo(ALunarGameMode* G){
 
  auto* P=UGameplayStatics::GetPlayerPawn(this,0);auto* PC=GetOwningPlayerController();
  auto RadioTop=[&](){
-  if(G->RadioRemaining<=0)return ContentBottom-12;
+  if(G->RadioRemaining<=0||!ULunarSettings::Get()->Subtitles)return ContentBottom-12;
   const float Size=.51f*ULunarSettings::Get()->SubtitleScale/ULunarSettings::Get()->TextScale;
   return ContentBottom-12-(Wrap(G->Radio,40,0,SW-80,Size,Ink,false)+40);
  };
  auto DrawRadio=[&](){
-  if(G->RadioRemaining<=0)return;
+  if(G->RadioRemaining<=0||!ULunarSettings::Get()->Subtitles)return;
   const float Top=RadioTop(),Size=.51f*ULunarSettings::Get()->SubtitleScale/ULunarSettings::Get()->TextScale;
   Box(24,Top,SW-48,ContentBottom-12-Top,.97f);Text(T(TEXT("RadioLabel")),40,Top+6,.32,Gold);
   Wrap(G->Radio,40,Top+26,SW-80,Size,Ink);

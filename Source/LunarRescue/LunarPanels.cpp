@@ -10,6 +10,9 @@
 #include "Components/TextBlock.h"
 #include "Components/Button.h"
 #include "Components/Slider.h"
+#include "Components/ComboBoxString.h"
+#include "GameFramework/GameUserSettings.h"
+#include "UObject/UnrealType.h"
 #include "Components/ScrollBox.h"
 #include "Components/InputKeySelector.h"
 #include "Components/Image.h"
@@ -24,9 +27,9 @@
 namespace {
 ALunarGameMode* Game(UObject* O){return Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(O));}
 ALunarCharacter* Player(UObject* O){return Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(O,0));}
-UTextBlock* Text(UWidgetTree* W,const FString& T,int Size=22){auto* L=W->ConstructWidget<UTextBlock>();L->SetText(FText::FromString(T));auto F=L->GetFont();F.Size=FMath::RoundToInt(Size*ULunarSettings::Get()->TextScale);L->SetFont(F);L->SetAutoWrapText(true);L->SetColorAndOpacity(FSlateColor(FLinearColor(.9,.94,.93)));return L;}
+UTextBlock* Text(UWidgetTree* W,const FString& T,int Size=22){auto* L=W->ConstructWidget<UTextBlock>();L->SetText(FText::FromString(T));auto F=L->GetFont();F.Size=FMath::RoundToInt(Size*ULunarSettings::Get()->TextScale);F.TypefaceFontName=TEXT("Regular");L->SetFont(F);L->SetAutoWrapText(true);L->SetColorAndOpacity(FSlateColor(FLinearColor(.9,.94,.93)));return L;}
 UButton* Button(UWidgetTree* W,const FString& T){auto* B=W->ConstructWidget<UButton>();B->SetBackgroundColor(FLinearColor(.055,.14,.18));B->AddChild(Text(W,T,20));return B;}
-FString Title(FName K){static const TMap<FName,FString> Titles={{TEXT("Sensitivity"),TEXT("Mouse sensitivity")},{TEXT("TextScale"),TEXT("Interface text size")},{TEXT("SubtitleScale"),TEXT("Subtitle size")},{TEXT("EffectsVolume"),TEXT("Suit and tool volume")},{TEXT("RadioVolume"),TEXT("Radio volume")},{TEXT("Brightness"),TEXT("Brightness")},{TEXT("FieldOfView"),TEXT("Field of view")},{TEXT("InvertY"),TEXT("Invert mouse Y")},{TEXT("CameraMotion"),TEXT("Hand motion")},{TEXT("ToggleSprint"),TEXT("Toggle fast stride")},{TEXT("Quality"),TEXT("Graphics quality")},{TEXT("MoveForward"),TEXT("Move forward")},{TEXT("MoveBack"),TEXT("Move backward")},{TEXT("MoveLeft"),TEXT("Move left")},{TEXT("MoveRight"),TEXT("Move right")},{TEXT("Interact"),TEXT("Open work tool")},{TEXT("Jump"),TEXT("Hop")},{TEXT("Route"),TEXT("Next site / journal page")},{TEXT("Journal"),TEXT("Field journal")},{TEXT("View"),TEXT("Camera view")},{TEXT("Sprint"),TEXT("Fast stride")},{TEXT("Zoom"),TEXT("Visor zoom")}};const FString* T=Titles.Find(K);return T?*T:K.ToString();}
+FString Title(FName K){static const TMap<FName,FString> Extra={{TEXT("MasterVolume"),TEXT("Master volume")},{TEXT("RenderScale"),TEXT("Render scale")},{TEXT("FrameLimit"),TEXT("Frame rate limit")},{TEXT("DisplayMode"),TEXT("Display mode")},{TEXT("TextureQuality"),TEXT("Texture quality")},{TEXT("ShadowQuality"),TEXT("Shadow quality")},{TEXT("ViewDistance"),TEXT("View distance")},{TEXT("AntiAliasing"),TEXT("Anti-aliasing")},{TEXT("AmbientOcclusion"),TEXT("Ambient occlusion")},{TEXT("MotionBlur"),TEXT("Motion blur")},{TEXT("MouseSmoothing"),TEXT("Mouse smoothing")}};if(const auto* V=Extra.Find(K))return *V;static const TMap<FName,FString> Titles={{TEXT("Sensitivity"),TEXT("Mouse sensitivity")},{TEXT("TextScale"),TEXT("Interface text size")},{TEXT("SubtitleScale"),TEXT("Subtitle size")},{TEXT("EffectsVolume"),TEXT("Suit and tool volume")},{TEXT("RadioVolume"),TEXT("Radio volume")},{TEXT("Brightness"),TEXT("Brightness")},{TEXT("FieldOfView"),TEXT("Field of view")},{TEXT("InvertY"),TEXT("Invert mouse Y")},{TEXT("CameraMotion"),TEXT("Hand motion")},{TEXT("ToggleSprint"),TEXT("Toggle fast stride")},{TEXT("Quality"),TEXT("Graphics quality")},{TEXT("MoveForward"),TEXT("Move forward")},{TEXT("MoveBack"),TEXT("Move backward")},{TEXT("MoveLeft"),TEXT("Move left")},{TEXT("MoveRight"),TEXT("Move right")},{TEXT("Interact"),TEXT("Open work tool")},{TEXT("Jump"),TEXT("Hop")},{TEXT("Route"),TEXT("Next site / journal page")},{TEXT("Journal"),TEXT("Field journal")},{TEXT("View"),TEXT("Camera view")},{TEXT("Sprint"),TEXT("Fast stride")},{TEXT("Zoom"),TEXT("Visor zoom")}};const FString* T=Titles.Find(K);return T?*T:K.ToString();}
 }
 UTexture2D* ALunarCharacter::LoadEvidencePhoto(const FString& Relative){
  auto* G=Game(this);if(!G)return nullptr;
@@ -45,30 +48,54 @@ UTexture2D* ALunarCharacter::LoadEvidencePhoto(const FString& Relative){
 }
 TSharedRef<SWidget> ULunarSettingRow::RebuildWidget(){
  auto* Row=WidgetTree->ConstructWidget<UHorizontalBox>();WidgetTree->RootWidget=Row;
- auto* Label=Text(WidgetTree,Title(Setting),20);Row->AddChildToHorizontalBox(Label)->SetSize(FSlateChildSize(ESlateSizeRule::Fill));
- const TSet<FName> Sliders={TEXT("Sensitivity"),TEXT("TextScale"),TEXT("SubtitleScale"),TEXT("EffectsVolume"),TEXT("RadioVolume"),TEXT("Brightness"),TEXT("FieldOfView")};
+ auto* Label=Text(WidgetTree,Title(Setting),12);auto* LS=Row->AddChildToHorizontalBox(Label);LS->SetSize(FSlateChildSize(ESlateSizeRule::Fill));LS->SetVerticalAlignment(VAlign_Center);
+ const TSet<FName> Sliders={TEXT("Sensitivity"),TEXT("TextScale"),TEXT("SubtitleScale"),TEXT("EffectsVolume"),TEXT("RadioVolume"),TEXT("Brightness"),TEXT("FieldOfView"),TEXT("MasterVolume"),TEXT("RenderScale")};
  const TSet<FName> Toggles={TEXT("InvertY"),TEXT("CameraMotion"),TEXT("ToggleSprint"),TEXT("Quality")};
- ValueLabel=Text(WidgetTree,TEXT(""),19);
+ ValueLabel=Text(WidgetTree,TEXT(""),12);
+ TArray<FString> Options;auto* Settings=ULunarSettings::Get();int32 SelectedIndex=0;
+ const TSet<FName> QualityKeys={TEXT("Quality"),TEXT("TextureQuality"),TEXT("ShadowQuality"),TEXT("ViewDistance")};
+ if(QualityKeys.Contains(Setting)){Options={TEXT("Low"),TEXT("Medium"),TEXT("High")};if(auto* Prop=FindFProperty<FIntProperty>(Settings->GetClass(),Setting))SelectedIndex=Prop->GetPropertyValue_InContainer(Settings);}
+ else if(auto* Prop=FindFProperty<FBoolProperty>(Settings->GetClass(),Setting)){Options=Setting==TEXT("ToggleSprint")?TArray<FString>{TEXT("Hold"),TEXT("Toggle")}:TArray<FString>{TEXT("Off"),TEXT("On")};SelectedIndex=Prop->GetPropertyValue_InContainer(Settings)?1:0;}
+ else if(Setting==TEXT("FrameLimit")){Options={TEXT("30 FPS"),TEXT("60 FPS"),TEXT("120 FPS"),TEXT("Unlimited")};SelectedIndex=Settings->FrameLimit==30?0:Settings->FrameLimit==120?2:Settings->FrameLimit==0?3:1;}
+ else if(Setting==TEXT("AntiAliasing")){Options={TEXT("Off"),TEXT("FXAA"),TEXT("TAA")};SelectedIndex=Settings->AntiAliasing;}
+ else if(Setting==TEXT("Resolution")){Options={TEXT("1280 x 720"),TEXT("1600 x 900"),TEXT("1920 x 1080"),TEXT("2560 x 1440")};if(auto* GS=UGameUserSettings::GetGameUserSettings()){const auto R=GS->GetScreenResolution();const FString Current=FString::Printf(TEXT("%d x %d"),R.X,R.Y);SelectedIndex=Options.IndexOfByKey(Current);if(SelectedIndex==INDEX_NONE)SelectedIndex=Options.Add(Current);}}
+ else if(Setting==TEXT("DisplayMode")){Options={TEXT("Windowed"),TEXT("Borderless"),TEXT("Fullscreen")};if(auto* GS=UGameUserSettings::GetGameUserSettings())SelectedIndex=GS->GetFullscreenMode()==EWindowMode::Windowed?0:GS->GetFullscreenMode()==EWindowMode::WindowedFullscreen?1:2;}
+ if(Options.Num()){
+  Choices=WidgetTree->ConstructWidget<UComboBoxString>();Choices->OnGenerateWidgetEvent.BindDynamic(this,&ULunarSettingRow::OptionWidget);for(const auto& Option:Options)Choices->AddOption(Option);Choices->SetSelectedIndex(FMath::Clamp(SelectedIndex,0,Options.Num()-1));
+  // UComboBoxString exposes this as construction-only (there is no runtime setter).
+  PRAGMA_DISABLE_DEPRECATION_WARNINGS
+  Choices->ForegroundColor=FSlateColor(FLinearColor(.8f,.95f,1.f));
+  PRAGMA_ENABLE_DEPRECATION_WARNINGS
+  auto Style=Choices->GetWidgetStyle();Style.ComboButtonStyle.ButtonStyle.Normal.TintColor=FSlateColor(FLinearColor(.004f,.012f,.02f));Style.ComboButtonStyle.ButtonStyle.Hovered.TintColor=FSlateColor(FLinearColor(.08f,.22f,.28f));Style.ComboButtonStyle.MenuBorderBrush.TintColor=FSlateColor(FLinearColor(.003f,.009f,.016f));Style.ComboButtonStyle.DownArrowImage.TintColor=FSlateColor(FLinearColor(.02f,.82f,.9f));Choices->SetWidgetStyle(Style);
+  auto Item=Choices->GetItemStyle();Item.TextColor=FSlateColor(FLinearColor(.9f,.95f,1.f));Item.SelectedTextColor=Item.TextColor;Item.EvenRowBackgroundBrush.DrawAs=Item.OddRowBackgroundBrush.DrawAs=ESlateBrushDrawType::Box;Item.EvenRowBackgroundBrush.TintColor=Item.OddRowBackgroundBrush.TintColor=FSlateColor(FLinearColor(.003f,.009f,.016f));Choices->SetItemStyle(Item);
+  auto* Box=WidgetTree->ConstructWidget<USizeBox>();Box->SetWidthOverride(200);Box->AddChild(Choices);Row->AddChildToHorizontalBox(Box);Choices->OnSelectionChanged.AddDynamic(this,&ULunarSettingRow::ChoiceChanged);return Super::RebuildWidget();
+ }
  if(Sliders.Contains(Setting)){
   auto* Slider=WidgetTree->ConstructWidget<USlider>();auto* S=ULunarSettings::Get();float V=0;
   if(Setting==TEXT("Sensitivity"))V=(S->Sensitivity-.15f)/1.85f;
   if(Setting==TEXT("TextScale"))V=(S->TextScale-1)*2;if(Setting==TEXT("SubtitleScale"))V=(S->SubtitleScale-1)*2;
   if(Setting==TEXT("EffectsVolume"))V=S->EffectsVolume;if(Setting==TEXT("RadioVolume"))V=S->RadioVolume;
   if(Setting==TEXT("Brightness"))V=(S->Brightness-.8f)/.6f;if(Setting==TEXT("FieldOfView"))V=(S->FieldOfView-70)/30;
+  if(Setting==TEXT("MasterVolume"))V=S->MasterVolume;if(Setting==TEXT("RenderScale"))V=(S->RenderScale-50)/50;
+  Slider->SetSliderBarColor(FLinearColor(.03f,.72f,.8f));Slider->SetSliderHandleColor(FLinearColor(.85f,.96f,1));
   Slider->SetValue(FMath::Clamp(V,0.f,1.f));Slider->OnValueChanged.AddDynamic(this,&ULunarSettingRow::Changed);
   auto* RowLayout=Row->AddChildToHorizontalBox(Slider);RowLayout->SetSize(FSlateChildSize(ESlateSizeRule::Fill));RowLayout->SetPadding(FMargin(18,8));
-  Row->AddChildToHorizontalBox(ValueLabel);
+  Row->AddChildToHorizontalBox(ValueLabel)->SetVerticalAlignment(VAlign_Center);
  }else if(Toggles.Contains(Setting)){
   auto* B=WidgetTree->ConstructWidget<UButton>();B->SetBackgroundColor(FLinearColor(.055,.14,.18));B->AddChild(ValueLabel);B->OnClicked.AddDynamic(this,&ULunarSettingRow::Clicked);Row->AddChildToHorizontalBox(B);
  }else{
   Selector=WidgetTree->ConstructWidget<UInputKeySelector>();Selector->SetSelectedKey(FInputChord(ULunarSettings::Get()->Key(Setting)));Selector->SetAllowModifierKeys(false);Selector->SetAllowGamepadKeys(false);Selector->OnKeySelected.AddDynamic(this,&ULunarSettingRow::Selected);Row->AddChildToHorizontalBox(Selector);Row->AddChildToHorizontalBox(ValueLabel);
-  auto KeyStyle=Selector->GetTextStyle();KeyStyle.SetColorAndOpacity(FSlateColor(FLinearColor(.015f,.03f,.04f)));KeyStyle.SetFont(ValueLabel->GetFont());Selector->SetTextStyle(KeyStyle);
+  auto KeyStyle=Selector->GetTextStyle();KeyStyle.SetColorAndOpacity(FSlateColor(FLinearColor(.9f,.95f,1.f)));KeyStyle.SetFont(ValueLabel->GetFont());Selector->SetTextStyle(KeyStyle);
+  auto KeyButton=Selector->GetButtonStyle();KeyButton.Normal.TintColor=FSlateColor(FLinearColor(.004f,.012f,.02f));KeyButton.Hovered.TintColor=FSlateColor(FLinearColor(.08f,.22f,.28f));Selector->SetButtonStyle(KeyButton);
  }
  Refresh();
  return Super::RebuildWidget();
 }
+UWidget* ULunarSettingRow::OptionWidget(FString Option){return Text(WidgetTree,Option,12);}
 void ULunarSettingRow::Refresh(){auto* S=ULunarSettings::Get();FString V;
  if(Setting==TEXT("Sensitivity"))V=FString::Printf(TEXT("%.2f"),S->Sensitivity);
+ if(Setting==TEXT("MasterVolume"))V=FString::Printf(TEXT("%.0f%%"),S->MasterVolume*100);
+ if(Setting==TEXT("RenderScale"))V=FString::Printf(TEXT("%.0f%%"),S->RenderScale);
  if(Setting==TEXT("TextScale"))V=FString::Printf(TEXT("%.0f%%"),S->TextScale*100);
  if(Setting==TEXT("SubtitleScale"))V=FString::Printf(TEXT("%.0f%%"),S->SubtitleScale*100);
  if(Setting==TEXT("EffectsVolume"))V=FString::Printf(TEXT("%.0f%%"),S->EffectsVolume*100);
@@ -82,6 +109,7 @@ void ULunarSettingRow::Refresh(){auto* S=ULunarSettings::Get();FString V;
  ValueLabel->SetText(FText::FromString(V));
 }
 void ULunarSettingRow::Changed(float V){auto* S=ULunarSettings::Get();
+ if(Setting==TEXT("MasterVolume"))S->MasterVolume=V;if(Setting==TEXT("RenderScale"))S->RenderScale=50+V*50;
  if(Setting==TEXT("Sensitivity"))S->Sensitivity=.15f+V*1.85f;
  if(Setting==TEXT("TextScale"))S->TextScale=1+FMath::RoundToFloat(V*2)*.25f;
  if(Setting==TEXT("SubtitleScale"))S->SubtitleScale=1+FMath::RoundToFloat(V*2)*.25f;
@@ -95,6 +123,7 @@ void ULunarSettingRow::Selected(FInputChord Chord){auto* S=ULunarSettings::Get()
 TSharedRef<SWidget> ULunarPanel::RebuildWidget(){SetIsFocusable(true);Rebuild();return Super::RebuildWidget();}
 void ULunarPanel::NativeConstruct(){Super::NativeConstruct();SetKeyboardFocus();}
 void ULunarPanel::Rebuild(){
+ if(Settings){BuildSettings();return;}
  Photo=nullptr;
  if(!Body){auto* Border=WidgetTree->ConstructWidget<UBorder>();Border->SetBrushColor(FLinearColor(.008,.02,.033,.99));Border->SetPadding(FMargin(32,20));WidgetTree->RootWidget=Border;auto* Scroll=WidgetTree->ConstructWidget<UScrollBox>();Border->AddChild(Scroll);Body=WidgetTree->ConstructWidget<UVerticalBox>();Scroll->AddChild(Body);}
  else Body->ClearChildren();
@@ -133,7 +162,7 @@ void ULunarPanel::Rebuild(){
  if(!G->ApolloTranscript.IsEmpty())Add(Text(WidgetTree,TEXT("RECENT RADIO SUBTITLES\n")+FString::Join(G->ApolloTranscript,TEXT("\n")),18));
 }
 FReply ULunarPanel::NativeOnKeyDown(const FGeometry& Geo,const FKeyEvent& E){if(E.GetKey()==EKeys::Escape||E.GetKey()==EKeys::F1){Close();return FReply::Handled();}if(!Settings&&(E.GetKey()==EKeys::Right||E.GetKey()==EKeys::Q)){Next();return FReply::Handled();}if(!Settings&&E.GetKey()==EKeys::Left){Previous();return FReply::Handled();}return Super::NativeOnKeyDown(Geo,E);}
-void ULunarPanel::Close(){if(auto* P=Player(this))P->ClosePanel();}
+void ULunarPanel::Close(){ULunarSettings::Get()->RevertDisplay();if(auto* P=Player(this))P->ClosePanel();}
 void ULunarPanel::Previous(){if(auto* G=Game(this))EvidenceIndex=(EvidenceIndex+FMath::Max(1,G->ApolloEvidence.Num())-1)%FMath::Max(1,G->ApolloEvidence.Num());Rebuild();}
 void ULunarPanel::Next(){if(auto* G=Game(this))EvidenceIndex=(EvidenceIndex+1)%FMath::Max(1,G->ApolloEvidence.Num());Rebuild();}
 void ULunarPanel::ResetSettings(){ULunarSettings::Get()->Reset();ULunarSettings::Get()->Apply(Player(this));Rebuild();}
