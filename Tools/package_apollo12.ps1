@@ -66,6 +66,7 @@ Copy-Item -LiteralPath "$root\FIELDWORK_UPDATE.md" -Destination "$credits\Apollo
 Copy-Item -LiteralPath "$root\SourceArt\Apollo12\Raw\NAC_DTM_APOLLO12_README.TXT","$root\SourceArt\Apollo12\Raw\NAC_DTM_APOLLO12.LBL" -Destination "$credits\Apollo12"
 New-Item -ItemType Directory -Force -Path "$credits\Suit" | Out-Null
 Copy-Item -LiteralPath "$root\SUIT_UPDATE.md" -Destination "$credits\Suit"
+Copy-Item -LiteralPath "$root\SUIT_REFINEMENT.md" -Destination "$credits\Suit"
 Copy-Item -LiteralPath "$root\PLAYING.txt" -Destination "$root\Dist\Apollo12\Windows\READ_ME.txt"
 $runtime=Join-Path $EngineRoot 'Engine\Extras\Redist\en-us\vc_redist.x64.exe'
 if(Test-Path -LiteralPath $runtime){

@@ -9,6 +9,7 @@
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
 #include "HAL/IConsoleManager.h"
+#include "Kismet/GameplayStatics.h"
 
 namespace {
 const TMap<FName,FKey>& Defaults(){static const TMap<FName,FKey> Keys={
@@ -34,11 +35,17 @@ bool ULunarSettings::Rebind(FName Action,FKey NewKey){
  for(const auto& Pair:Defaults())if(Pair.Key!=Action&&Key(Pair.Key)==NewKey)return false;
  Bindings.Add(Action,NewKey);return true;
 }
-void ULunarSettings::Reset(){Sensitivity=.65f;TextScale=SubtitleScale=1;EffectsVolume=RadioVolume=.8f;Brightness=1.1f;FieldOfView=85;InvertY=false;CameraMotion=true;ToggleSprint=false;Quality=1;Bindings.Reset();MasterVolume=1;RenderScale=100;FrameLimit=60;VSync=false;TextureQuality=ShadowQuality=1;ViewDistance=2;AntiAliasing=2;Bloom=AmbientOcclusion=Subtitles=true;MotionBlur=MouseSmoothing=false;}
+void ULunarSettings::Reset(){Sensitivity=.65f;TextScale=SubtitleScale=1;EffectsVolume=RadioVolume=.8f;Brightness=1.1f;FieldOfView=85;InvertY=false;CameraMotion=true;ToggleSprint=false;Quality=1;Bindings.Reset();MasterVolume=1;RenderScale=100;FrameLimit=60;VSync=false;TextureQuality=ShadowQuality=1;ViewDistance=2;AntiAliasing=2;Bloom=AmbientOcclusion=Subtitles=true;MotionBlur=MouseSmoothing=false;TutorialHints=Crosshair=true;HudOpacity=1.f;}
+float ULunarSettings::HudPanelAlpha(float Base,bool ActiveGameplay) const {
+ const float Opacity=FMath::IsFinite(HudOpacity)?FMath::Clamp(HudOpacity,.5f,1.f):1.f;
+ return FMath::Clamp(Base,0.f,1.f)*(ActiveGameplay?Opacity:1.f);
+}
 void ULunarSettings::Apply(ALunarCharacter* P,bool Save){
  Sensitivity=FMath::Clamp(Sensitivity,.15f,2.f);TextScale=FMath::Clamp(TextScale,1.f,1.5f);SubtitleScale=FMath::Clamp(SubtitleScale,1.f,1.5f);
  EffectsVolume=FMath::Clamp(EffectsVolume,0.f,1.f);RadioVolume=FMath::Clamp(RadioVolume,0.f,1.f);Brightness=FMath::Clamp(Brightness,.8f,1.4f);FieldOfView=FMath::Clamp(FieldOfView,70.f,100.f);Quality=FMath::Clamp(Quality,0,2);
+ HudOpacity=FMath::IsFinite(HudOpacity)?FMath::Clamp(HudOpacity,.5f,1.f):1.f;
  if(P){
+  if(auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(P));G&&G->Apollo){G->ApolloGuideEnabled=TutorialHints;if(!TutorialHints)G->ApolloInputHintRemaining=0;}
   P->Camera->SetFieldOfView(FieldOfView);
   if(auto* PC=Cast<APlayerController>(P->GetController());PC&&PC->PlayerInput){
    auto* Input=PC->PlayerInput.Get();

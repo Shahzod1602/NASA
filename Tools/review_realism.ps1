@@ -9,7 +9,7 @@ $reportRoot=if($Packaged){Join-Path $root 'Dist\Apollo12\Windows\LunarRescue\Rep
 $exe=if($Packaged){Join-Path $root 'Dist\Apollo12\Windows\LunarRescue\Binaries\Win64\LunarRescue.exe'}else{'D:\UnrealEngine\UE_5.8\Engine\Binaries\Win64\UnrealEditor-Cmd.exe'}
 $names=@('hands','body','third-person','front','work','walk','stride','hop')
 foreach($name in $names){$path=Join-Path $reportRoot "suit-$name.png";if(Test-Path -LiteralPath $path){Copy-Item -LiteralPath $path -Destination (Join-Path $folder "previous-$name.png");Remove-Item -LiteralPath $path}}
-$argsList=@('/Game/Lunar/Maps/Apollo12','-game','-unattended','-SuitReview','-dx11','-RenderOffscreen','-ForceRes','-ResX=1280','-ResY=720','-nosound','-ExecCmds="showhud"',"-abslog=`"$folder\capture.log`"")
+$argsList=@('/Game/Lunar/Maps/Apollo12','-game','-unattended','-SuitReview','-dx11','-RenderOffscreen','-ForceRes','-ResX=1280','-ResY=720','-nosound',"-abslog=`"$folder\capture.log`"")
 if(-not $Packaged){$argsList=@("`"$root\LunarRescue.uproject`"")+$argsList}
 if($Quality -ge 0){$argsList+="-ApolloQuality=$Quality"}
 $config=Join-Path $root 'Dist\Apollo12\Windows\LunarRescue\Saved\Config\Windows\GameUserSettings.ini'

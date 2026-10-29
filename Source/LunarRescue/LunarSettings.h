@@ -32,6 +32,10 @@ public:
  UPROPERTY(Config) bool MotionBlur=false;
  UPROPERTY(Config) bool Subtitles=true;
  UPROPERTY(Config) bool MouseSmoothing=false;
+ UPROPERTY(Config) bool TutorialHints=true;
+ UPROPERTY(Config) bool Crosshair=true;
+ UPROPERTY(Config) float HudOpacity=1.f;
+ float HudPanelAlpha(float Base,bool ActiveGameplay) const;
  // Transient: display changes must be confirmed, and never affect test profiles.
  bool DisplayPending=false;
  double DisplayDeadline=0;

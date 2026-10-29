@@ -22,7 +22,13 @@ void ALunarGameMode::ApolloGuidanceChecks(){
  P->ToggleApolloGuide();Check(ApolloTutorial().IsEmpty()&&ApolloAction==0,TEXT("Skipping the guide never advances equipment or cargo"));
  P->ToggleApolloGuide();Check(!ApolloTutorial().IsEmpty(),TEXT("The guide can be shown again without restarting"));
  ApolloLookLearned=true;Check(ApolloTutorial().Contains(TEXT("2 / 4")),TEXT("Walking appears after the look instruction"));
- auto* S=ULunarSettings::Get();S->Rebind(TEXT("MoveForward"),EKeys::Z);S->Rebind(TEXT("Interact"),EKeys::B);
+ auto* S=ULunarSettings::Get();
+ S->TutorialHints=false;S->Apply(P,false);Check(!ApolloGuideEnabled&&ApolloTutorial().IsEmpty()&&ApolloAction==0,TEXT("Settings can hide tutorial without completing work"));
+ StartApollo(true);Check(!ApolloGuideEnabled&&ApolloTutorial().IsEmpty(),TEXT("New expedition honors the saved tutorial preference"));
+ P->ToggleApolloGuide();Check(S->TutorialHints&&ApolloGuideEnabled,TEXT("H updates the same preference as Settings"));
+ P->PauseMission();P->ToggleApolloGuide();Check(S->TutorialHints&&Journal&&JournalPage==4,TEXT("Paused H opens help without changing the tutorial preference"));Journal=false;P->PauseMission();
+ ApolloLookLearned=true;
+ S->Rebind(TEXT("MoveForward"),EKeys::Z);S->Rebind(TEXT("Interact"),EKeys::B);
  Check(ApolloTutorial().Contains(TEXT("Z"))&&!S->Rebind(TEXT("Jump"),EKeys::H),TEXT("Guide displays rebound movement and reserves the help key"));
  const FString BeforeHintRadio=Radio;const int BeforeHintTranscript=ApolloTranscript.Num();
  P->SetActorLocation(ModuleActor->GetActorLocation()+FVector(-800,0,50));P->Interact();

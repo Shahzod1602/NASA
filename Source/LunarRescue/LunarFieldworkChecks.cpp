@@ -25,7 +25,8 @@ void ALunarGameMode::ApolloFieldworkChecks(){
  Check(P->WorkTool&&P->WorkTool->GetStaticMesh()&&P->ToolJaws[0]->GetStaticMesh(),TEXT("Preloaded tool base and both jaw assets are available"));
  const FVector Tip=P->WorkTool->GetComponentTransform().TransformPosition(FVector(22,0,-4));
  Check(Tip.Equals(P->WorkContact,.2f)&&P->WorkGripActive,TEXT("Tongs tip contacts the actual rock and drives hand grip anchors"));
- Check(P->Gloves[9]->GetRelativeLocation().Equals(P->WorkGrip[1]-FVector(5,0,0),.2f),TEXT("The current camera's grip and right wrist agree in the same frame"));
+ Check((P->Gloves[9]->GetRelativeLocation()+P->Gloves[10]->GetRelativeRotation().RotateVector(FVector(5,0,0))).Equals(P->WorkGrip[1],.2f),TEXT("The right palm center follows the rotated tool grip in the current camera frame"));
+ Check(FVector::DotProduct(P->Gloves[10]->GetRelativeRotation().Vector(),P->WorkTool->GetRelativeRotation().Vector())>.98f,TEXT("Right glove orientation follows the angled tongs handle"));
  Click();P->UpdateSuit(0);Check(!SamplesCollected&&!P->WorkSourceMesh->IsVisible()&&P->WorkPayload->IsVisible(),TEXT("Lift transfers the pending rock into the tongs without awarding cargo"));
  P->PrimaryClick();Check(!SamplesCollected&&ApolloToolPhase==1,TEXT("Rapid repeated input cannot skip the lift animation"));
  const FVector Before=P->WorkPayload->GetComponentLocation();TickApollo(.4f);P->UpdateSuit(0);const FVector During=P->WorkPayload->GetComponentLocation();

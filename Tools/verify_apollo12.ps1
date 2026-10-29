@@ -58,8 +58,17 @@ foreach($case in $cases){
  # Walkthrough uses fixed 1/60-second simulation steps; uncapped rendering accelerates the test.
  # Resource time and character movement remain normal game values, not teleports or cheats.
  if($case[1] -eq 'ApolloWalkTest'){$arguments+=@('-benchmark','-fps=60','-ExecCmds="t.MaxFPS 0"')}
- $p=Start-Process -FilePath $exe -ArgumentList $arguments -WindowStyle Hidden -PassThru
- if(-not $p.WaitForExit(1800000)){Stop-Process -Id $p.Id;throw "$($case[2]) timed out; see $logPath"}
+ # Preserve engine-level scalability writes as well as game-level preferences.
+ $config=if($Packaged){Join-Path $root 'Dist/Apollo12/Windows/LunarRescue/Saved/Config/Windows/GameUserSettings.ini'}else{Join-Path $root 'Saved/Config/WindowsEditor/GameUserSettings.ini'}
+ $hadConfig=Test-Path -LiteralPath $config
+ $configBytes=if($hadConfig){[IO.File]::ReadAllBytes($config)}else{$null}
+ try {
+  $p=Start-Process -FilePath $exe -ArgumentList $arguments -WindowStyle Hidden -PassThru
+  if(-not $p.WaitForExit(1800000)){Stop-Process -Id $p.Id;$p.WaitForExit();throw "$($case[2]) timed out; see $logPath"}
+ } finally {
+  if($hadConfig){[IO.File]::WriteAllBytes($config,$configBytes)}
+  elseif(Test-Path -LiteralPath $config){Remove-Item -LiteralPath $config}
+ }
  Write-Output "$prefix Apollo12 $($case[2]): exit $($p.ExitCode) (PID $($p.Id))"
  if($p.ExitCode -ne 0){throw "$($case[2]) failed; see $logPath"}
  # Unreal's graceful shutdown may return zero even when a check requests failure.

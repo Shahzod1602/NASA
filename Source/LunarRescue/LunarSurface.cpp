@@ -5,8 +5,25 @@
 #include "Engine/StaticMesh.h"
 #include "Engine/World.h"
 #include "Materials/MaterialInterface.h"
+#include "Engine/DirectionalLight.h"
+#include "Components/DirectionalLightComponent.h"
+#include "EngineUtils.h"
 
 void ALunarGameMode::BuildApolloSurfaceDetail(){
+ // Rebalance only the map's two shadowless artistic fill lights. Sun direction,
+ // imported terrain and scientific coordinates remain untouched.
+ int32 FillLights=0;
+ for(TActorIterator<ADirectionalLight> It(GetWorld());It;++It){
+  auto* Light=Cast<UDirectionalLightComponent>(It->GetLightComponent());
+  if(Light&&!Light->CastShadows&&Light->Intensity>0.f&&Light->Intensity<1.f){
+   Light->SetIntensity(Light->Intensity*2.5f);++FillLights;
+  }else if(Light&&Light->CastShadows&&Light->Intensity>1.f){
+   // Screen-space contact tracing produced distant ground stripes in the
+   // matched render diagnostic. Keep ordinary shadow maps and ambient occlusion.
+   Light->ContactShadowLength=0.f;Light->MarkRenderStateDirty();
+  }
+ }
+ UE_LOG(LogTemp,Display,TEXT("APOLLO_PRESENTATION rebalanced %d existing shadowless fill lights"),FillLights);
  // Cosmetic authored debris; the NASA 2 m collision mesh and task positions
  // are unchanged. One HISM per existing rock mesh bounds draw/scene overhead.
  auto* Detail=GetWorld()->SpawnActor<AActor>();Detail->Tags.Add(TEXT("Apollo.SurfaceDetail"));

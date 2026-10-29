@@ -15,6 +15,7 @@ void ALunarCharacter::ToggleApolloGuide(){
  if(!G||!G->Apollo||!G->IsActive())return;
  if(G->Paused||G->Journal){G->Journal=true;G->JournalPage=4;return;}
  G->ApolloGuideEnabled=!G->ApolloGuideEnabled;
+ auto* S=ULunarSettings::Get();S->TutorialHints=G->ApolloGuideEnabled;if(!S->IsAutomation())S->SaveConfig();
  G->ApolloInputHintRemaining=0;
 }
 

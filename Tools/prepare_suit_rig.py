@@ -14,10 +14,11 @@ sub = lambda a,b: tuple(x-y for x,y in zip(a,b))
 mul = lambda a,s: tuple(x*s for x in a)
 dot = lambda a,b: sum(x*y for x,y in zip(a,b))
 cross = lambda a,b: (a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0])
-def norm(a): return mul(a,1/max(.00001,math.sqrt(dot(a,a))))
+def norm(a): return mul(a,1/max(1e-12,math.sqrt(dot(a,a))))
 # Verified against UE 5.8 Interchange bind coordinates: glTF (X,Y,Z)
 # imports as Unreal centimetres (X,Z,Y). Preserve the authored forward/right.
 def convert(p): return (p[0]/100,p[2]/100,p[1]/100)
+DIGIT_LENGTHS=(.95,1.,.92,.74,.70)
 bones=[]
 def bone(name, parent, pos):
     bones.append((name,parent,pos));return len(bones)-1
@@ -34,7 +35,7 @@ for side,sign in [('l',-1),('r',1)]:
     for f in range(5):
         p=add(bones[hand][2],(0,sign*(-3.15+f*2.1) if f<4 else -sign*4,-9 if f<4 else -4))
         a=bone(('finger%d_'%f)+side,hand,p)
-        b=bone(('tip%d_'%f)+side,a,add(p,(0,0,-4)));digits.append((a,b))
+        b=bone(('tip%d_'%f)+side,a,add(p,(0,0,-4*DIGIT_LENGTHS[f])));digits.append((a,b))
     arms.append((upper,lower,hand,digits))
 
 COLORS={'Cloth':(.52,.54,.51),'Rubber':(.055,.065,.07),'Metal':(.4,.44,.46),'Blue':(.035,.12,.28),'Red':(.42,.025,.015),'Gold':(.63,.36,.065),'Patch':(.065,.10,.14)}
@@ -100,9 +101,10 @@ def generate(name, hands=False):
         if not hands:part('Forearm',frame(bones[lower][2],bones[hand][2]),fixed(lower))
         part('Cuff',frame(bones[hand][2],add(bones[hand][2],(0,0,-10))),fixed(hand))
         part('Palm',frame(bones[hand][2],add(bones[hand][2],(0,0,-10))),fixed(hand))
-        for a,b in digits:
+        for digit,(a,b) in enumerate(digits):
+            length=DIGIT_LENGTHS[digit]
             xf=frame(bones[a][2],add(bones[a][2],(0,0,-8)))
-            part('Finger',xf,lambda p,a=a,b=b:[(a,1-min(1,max(0,(p[0]-2)/4))),(b,min(1,max(0,(p[0]-2)/4)))])
+            part('Finger',lambda p,xf=xf,length=length:xf((p[0]*length,p[1],p[2])),lambda p,a=a,b=b:[(a,1-min(1,max(0,(p[0]-2)/4))),(b,min(1,max(0,(p[0]-2)/4)))])
     # This Y-up conversion includes a reflection. Its winding is therefore
     # already outward; independently verify the helmet normals before import.
     binary=bytearray();views=[];accessors=[]
@@ -144,7 +146,7 @@ def generate(name, hands=False):
             angle=math.sin(i/24*2*math.pi+side*math.pi)*.25
             rotations.append((0,0,math.sin(angle/2),math.cos(angle/2)))
         ro=acc(rotations,'4f','VEC4',5126);samplers.append({'input':ta,'output':ro,'interpolation':'LINEAR'});channels.append({'sampler':len(samplers)-1,'target':{'node':hip,'path':'rotation'}})
-    doc={'asset':{'version':'2.0','generator':'LunarRescue project-authored suit rig v0.5'},'scene':0,'scenes':[{'nodes':[0,len(nodes)-1]}],'nodes':nodes,'meshes':[{'name':name,'primitives':primitives}],'skins':[{'name':'A7L_ProjectRig','inverseBindMatrices':inv,'joints':list(range(len(bones))),'skeleton':0}],'materials':mats,'animations':[{'name':'LunarStride','samplers':samplers,'channels':channels}],'buffers':[{'byteLength':len(binary)}],'bufferViews':views,'accessors':accessors}
+    doc={'asset':{'version':'2.0','generator':'LunarRescue project-authored suit rig glove-refinement 2026-10-29'},'scene':0,'scenes':[{'nodes':[0,len(nodes)-1]}],'nodes':nodes,'meshes':[{'name':name,'primitives':primitives}],'skins':[{'name':'A7L_ProjectRig','inverseBindMatrices':inv,'joints':list(range(len(bones))),'skeleton':0}],'materials':mats,'animations':[{'name':'LunarStride','samplers':samplers,'channels':channels}],'buffers':[{'byteLength':len(binary)}],'bufferViews':views,'accessors':accessors}
     js=json.dumps(doc,separators=(',',':')).encode();js+=b' '*((-len(js))%4);binary+=b'\0'*((-len(binary))%4)
     glb=struct.pack('<III',0x46546c67,2,12+8+len(js)+8+len(binary))+struct.pack('<II',len(js),0x4e4f534a)+js+struct.pack('<II',len(binary),0x004e4942)+binary
     (OUT/(name+'.glb')).write_bytes(glb)

@@ -33,6 +33,7 @@
 #include "Engine/World.h"
 #include "Engine/Texture2D.h"
 #include "HAL/IConsoleManager.h"
+#include <limits>
 
 namespace {
 const FLinearColor Ink(.86f,.93f,.98f),Dim(.43f,.58f,.67f),Accent(.02f,.82f,.9f);
@@ -102,7 +103,7 @@ void ULunarPanel::FillSettings(){
  const TArray<FName> Rows[4][2]={
   {{TEXT("Resolution"),TEXT("DisplayMode"),TEXT("RenderScale"),TEXT("FrameLimit"),TEXT("VSync"),TEXT("Brightness"),TEXT("FieldOfView")},{TEXT("Quality"),TEXT("TextureQuality"),TEXT("ShadowQuality"),TEXT("ViewDistance"),TEXT("AntiAliasing"),TEXT("AmbientOcclusion"),TEXT("Bloom"),TEXT("MotionBlur")}},
   {{TEXT("MasterVolume"),TEXT("EffectsVolume"),TEXT("RadioVolume")},{TEXT("Subtitles")}},
-  {{TEXT("TextScale"),TEXT("SubtitleScale")},{TEXT("ToggleSprint"),TEXT("CameraMotion")}},
+  {{TEXT("TextScale"),TEXT("SubtitleScale"),TEXT("HudOpacity"),TEXT("TutorialHints"),TEXT("Crosshair")},{TEXT("ToggleSprint"),TEXT("CameraMotion")}},
   {{TEXT("Sensitivity"),TEXT("InvertY"),TEXT("MouseSmoothing"),TEXT("MoveForward"),TEXT("MoveBack"),TEXT("MoveLeft"),TEXT("MoveRight"),TEXT("Sprint"),TEXT("Jump")},{TEXT("Interact"),TEXT("Route"),TEXT("Journal"),TEXT("View"),TEXT("Zoom")}}
  };
  for(int32 Col=0;Col<2;++Col){
@@ -116,7 +117,7 @@ void ULunarPanel::FillSettings(){
   if(SettingsTab==0&&Col==1)Note(TEXT("Terrain geometry is fixed to the imported dataset. Presets change rendering, not scientific elevations."));
   if(SettingsTab==1&&Col==0)Note(TEXT("Suit and tool volume includes footsteps and station effects. No separate music, ambient or UI tracks are installed."));
   if(SettingsTab==1&&Col==1){Note(TEXT("Output: system default device. Speaker layout and spatial processing use the system configuration. No dynamic-range simulation is provided."));auto* Test=Button(WidgetTree,TEXT("TEST RADIO AUDIO"));Test->OnClicked.AddDynamic(this,&ULunarPanel::TestAudio);Content->AddChildToVerticalBox(Test)->SetPadding(FMargin(0,18,8,0));}
-  if(SettingsTab==2&&Col==0)Note(TEXT("English interface. H toggles optional tutorial guidance; J opens the map. Mission-critical markers and prompts remain visible."));
+  if(SettingsTab==2&&Col==0)Note(TEXT("H also saves the Apollo tutorial choice. HUD backgrounds adjust from 50 to 100%; menus retain full contrast. Crosshair hides the walking reticle; camera framing and work cues stay visible."));
   if(SettingsTab==2&&Col==1)Note(TEXT("Camera view: use the rebound View key in game. No crouch or head-bob mode is implemented. Progress saves after committed work, not on a timed interval."));
   if(SettingsTab==3&&Col==1)Note(TEXT("Select a binding, then press a new key. Reserved and duplicate keys are rejected. Esc / F1 always closes settings."));
  }
@@ -168,14 +169,19 @@ TSharedRef<SWidget> ULunarMainMenu::RebuildWidget(){
    auto* P=Pilot(this);auto* S=ULunarSettings::Get();Check(P!=nullptr,TEXT("Menu player exists"));
    Check(LoadObject<UTexture2D>(nullptr,TEXT("/Game/Lunar/Frontend/T_MenuMoon.T_MenuMoon"))&&LoadObject<UTexture2D>(nullptr,TEXT("/Game/Lunar/Frontend/T_MenuMars.T_MenuMars")),TEXT("Both local menu art assets load"));
    PreviewMars();Check(Destination->GetText().ToString().Contains(TEXT("MARS")),TEXT("Mars preview identifies fictional destination"));PreviewMoon();Check(Destination->GetText().ToString().Contains(TEXT("MOON")),TEXT("Moon preview restores destination"));
-   S->MasterVolume=.37f;S->RenderScale=77;S->FrameLimit=120;S->VSync=true;S->Subtitles=false;S->TextureQuality=2;S->Rebind(TEXT("Interact"),EKeys::B);
+   S->TutorialHints=false;S->Crosshair=false;S->HudOpacity=.65f;S->MasterVolume=.37f;S->RenderScale=77;S->FrameLimit=120;S->VSync=true;S->Subtitles=false;S->TextureQuality=2;S->Rebind(TEXT("Interact"),EKeys::B);
    const FString Path=FPaths::ProjectSavedDir()/TEXT("AutomatedTests/FrontendSettings.ini");IFileManager::Get().MakeDirectory(*FPaths::GetPath(Path),true);S->SaveConfig(CPF_Config,*Path);auto* Loaded=NewObject<ULunarSettings>();Loaded->LoadConfig(nullptr,*Path);
    Check(FMath::IsNearlyEqual(Loaded->MasterVolume,.37f)&&Loaded->RenderScale==77&&Loaded->FrameLimit==120&&Loaded->VSync&&!Loaded->Subtitles&&Loaded->TextureQuality==2,TEXT("New graphics and sound settings survive serialization"));
    Check(Loaded->Key(TEXT("Interact"))==EKeys::B,TEXT("New settings retain rebound work key"));
+   Check(!Loaded->TutorialHints&&!Loaded->Crosshair&&FMath::IsNearlyEqual(Loaded->HudOpacity,.65f),TEXT("Accessibility preferences survive independent config reload"));
+   Check(FMath::IsNearlyEqual(S->HudPanelAlpha(.8f,true),.52f)&&FMath::IsNearlyEqual(S->HudPanelAlpha(.8f,false),.8f),TEXT("HUD opacity changes active backgrounds and preserves menu contrast"));
+   S->HudOpacity=-1;S->Apply(P,false);Check(S->HudOpacity==.5f,TEXT("HUD opacity cannot fall below readable lower bound"));
+   S->HudOpacity=2;S->Apply(P,false);Check(S->HudOpacity==1.f,TEXT("HUD opacity cannot exceed full opacity"));
+   S->HudOpacity=std::numeric_limits<float>::quiet_NaN();S->Apply(P,false);Check(S->HudOpacity==1.f,TEXT("Non-finite HUD opacity falls back to full contrast"));
    S->AntiAliasing=1;S->MotionBlur=true;S->Apply(P,false);
    Check(IConsoleManager::Get().FindConsoleVariable(TEXT("r.AntiAliasingMethod"))->GetInt()==1&&IConsoleManager::Get().FindConsoleVariable(TEXT("r.DefaultFeature.MotionBlur"))->GetInt()==1&&IConsoleManager::Get().FindConsoleVariable(TEXT("t.MaxFPS"))->GetInt()==120,TEXT("Player renderer choices override project AA, motion blur and FPS defaults"));
    S->PreviewDisplay(FIntPoint(640,480),2);Check(!S->DisplayPending,TEXT("Automation cannot change the user's display mode"));
-   S->Reset();S->Apply(P,false);Check(S->MasterVolume==1&&S->Subtitles&&S->FrameLimit==60&&S->RenderScale==100,TEXT("Restore defaults resets new fields"));
+   S->Reset();S->Apply(P,false);Check(S->MasterVolume==1&&S->Subtitles&&S->FrameLimit==60&&S->RenderScale==100&&S->TutorialHints&&S->Crosshair&&S->HudOpacity==1.f,TEXT("Restore defaults resets new fields"));
    if(P){P->OpenSettings();Check(P->ActivePanel&&P->ActivePanel->SettingsBody,TEXT("Settings builds independently of evidence album"));if(P->ActivePanel){for(int32 I=0;I<4;++I){P->ActivePanel->SettingsTab=I;P->ActivePanel->FillSettings();Check(P->ActivePanel->SettingsBody->GetChildrenCount()==2,TEXT("Tab contains indicator and two-column content"));}P->ClosePanel();Check(!P->ActivePanel,TEXT("Settings closes without leaving input overlay"));}}
    Report+=FString::Printf(TEXT("RESULT: %d failures\n"),Failures);FFileHelper::SaveStringToFile(Report,*(FPaths::ProjectDir()/TEXT("Reports/frontend-checks.txt")));FPlatformMisc::RequestExitWithStatus(false,Failures?1:0);
   }),3.f,false);

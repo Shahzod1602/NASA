@@ -100,6 +100,7 @@ bool ALunarGameMode::RestoreApolloCheckpoint(){
  // Validate position before changing progress. In-progress work is never restored.
  ApolloPhotoFailed=false;
  CancelApolloTool();ApolloInputHintRemaining=0;ApolloConfirmationRemaining=0;ApolloPackedPreviewRemaining=0;ApolloPackedPartRemaining=0;ApolloDustMode=false;Paused=false;Journal=false;ApolloConfirmNew=false;ApolloStarted=true;
+ ApolloGuideEnabled=ULunarSettings::Get()->TutorialHints;
  ApolloTimed=Save->Mode==TEXT("timed-exercise");
  ApolloRunId=Save->RunId;ApolloEvidence=Save->Evidence;ApolloElapsed=Save->Elapsed;ApolloDistance=Save->Distance;Oxygen=Save->Remaining;
  ApolloAntennaAngle=Save->AntennaAngle;ApolloLookLearned=Save->LookLearned;ApolloMoveLearned=Save->MoveLearned;ApolloRouteIndex=0;

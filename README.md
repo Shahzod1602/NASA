@@ -1,5 +1,13 @@
 # Lunar Rescue
 
+Local graphics performance checks and reproduction commands: [PERFORMANCE_UPDATE.md](PERFORMANCE_UPDATE.md).
+
+## Graphics and comfort pass (local development)
+
+Apollo equipment is more readable in shadow, and planted boot soles follow
+the terrain slope. Gameplay settings add saved tutorial guidance, walking
+crosshair and HUD background-opacity controls. See [scope and validation](GRAPHICS_UPDATE.md).
+
 ## Reference-led frontend refresh (unreleased)
 
 The destination menu now uses separate illustrated Moon and Mars backgrounds,
@@ -276,3 +284,8 @@ rendering and performance reports, or `-Packaged` to test the standalone binary.
 Tests are sequential to fit a 16 GB development machine.
 
 See [MARS_UPDATE.md](MARS_UPDATE.md) for implementation and measured standalone validation.
+
+### Glove and garment refinement (local development)
+
+The shared suit now has shaped garment joints, detailed gloves and tool-aligned
+first-person grips. Rebuild instructions and validation: [SUIT_REFINEMENT.md](SUIT_REFINEMENT.md).

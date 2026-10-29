@@ -551,7 +551,10 @@ void ALunarGameMode::Interact() {
 }
 
 void ALunarHUD::Label(const FString& T,float X,float Y,float S,FLinearColor C) { DrawText(ULunarSettings::Get()->ControlText(T),C,X,Y,GEngine->GetLargeFont(),S*2.3f,false); }
-void ALunarHUD::Panel(float X,float Y,float W,float H,float A) { DrawRect(FLinearColor(0.008,0.019,0.032,A),X,Y,W,H); }
+void ALunarHUD::Panel(float X,float Y,float W,float H,float A) {
+ const auto* G=Mission(this);const bool Active=G&&G->IsActive()&&!G->Paused&&!G->Journal;
+ DrawRect(FLinearColor(0.008,0.019,0.032,ULunarSettings::Get()->HudPanelAlpha(A,Active)),X,Y,W,H);
+}
 void ALunarHUD::DrawHUD() {
  if(!bShowHUD)return;
  Super::DrawHUD(); auto* G=Mission(this); if(!G||!Canvas) return;
@@ -638,7 +641,7 @@ void ALunarHUD::DrawHUD() {
     Label(Side>0?"TARGET  >":"<  TARGET",Side>0?W-180*S:30*S,H*.5,.65*S,Cyan);
    }
   }
-  DrawLine(W/2-7*S,H/2,W/2+7*S,H/2,FLinearColor(1,1,1,.65),1); DrawLine(W/2,H/2-7*S,W/2,H/2+7*S,FLinearColor(1,1,1,.65),1);
+  if(ULunarSettings::Get()->Crosshair){DrawLine(W/2-7*S,H/2,W/2+7*S,H/2,FLinearColor(1,1,1,.65),1); DrawLine(W/2,H/2-7*S,W/2,H/2+7*S,FLinearColor(1,1,1,.65),1);}
   if(G->CanInteract()) { Panel(W/2-240*S,H-205*S,480*S,50*S); Label(G->Prompt(),W/2-218*S,H-191*S,.6*S,Cyan); }
   if(G->RadioRemaining>0&&ULunarSettings::Get()->Subtitles) { Panel(24*S,H-138*S,W-48*S,62*S,.88); Label("RADIO / "+G->Radio,40*S,H-118*S,.44*S,White); }
  }

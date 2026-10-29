@@ -22,9 +22,9 @@ class Mesh:
             wrinkle=1+ribs*sin(t*13*pi+sin(a*3)*.7)*(0.25+.75*sin(pi*t))
             return (offset[0]+x,offset[1]+cos(a)*y*wrinkle,offset[2]+sin(a)*z*wrinkle)
         self.grid(max(20,len(profile)*3),n,point,mat)
-    def blob(self,c,r,mat='Cloth',box=.8):
+    def blob(self,c,r,mat='Cloth',box=.8,rings=25,n=40):
         def power(v):return copysign(abs(v)**box,v)
-        self.grid(25,40,lambda t,a:(c[0]-r[0]*power(cos(pi*t)),c[1]+r[1]*power(sin(pi*t))*power(cos(a)),c[2]+r[2]*power(sin(pi*t))*power(sin(a))),mat)
+        self.grid(rings,n,lambda t,a:(c[0]-r[0]*power(cos(pi*t)),c[1]+r[1]*power(sin(pi*t))*power(cos(a)),c[2]+r[2]*power(sin(pi*t))*power(sin(a))),mat)
     def ring(self,x,ry,rz,length,mat='Metal'):
         self.tube([(x,ry*.94,rz*.94),(x+.12,ry,rz),(x+length-.12,ry,rz),(x+length,ry*.94,rz*.94)],mat)
     def hose(self,points,radius=1.6):
@@ -60,25 +60,48 @@ class Mesh:
 
 COLORS={'Cloth':(.78,.79,.75),'Rubber':(.055,.065,.07),'Metal':(.4,.44,.46),'Blue':(.06,.21,.38),'Red':(.56,.055,.035),'Gold':(.63,.36,.065),'Patch':(.15,.22,.29)}
 (OUT/'Suit.mtl').write_text(''.join(f'newmtl {n}\nKd {r} {g} {b}\n' for n,(r,g,b) in COLORS.items()))
-m=Mesh();m.tube([(0,6.3,6.5),(3,7,7),(10,6.6,6.9),(17,5.9,6.3),(24,5.3,5.6)],ribs=.022)
-for x in (3,5,20):m.ring(x,6.4-(x/24),6.8-(x/24),.18,'Cloth')
+# Layered pressure-garment silhouette, with concentrated joint folds rather
+# than evenly inflated rings. Geometry remains an authored approximation.
+m=Mesh();m.tube([(0,6.6,6.7),(2,6.9,7),(5,6.4,6.6),(10,6.1,6.4),(17,5.6,5.9),(22,5.1,5.4),(24,5,5.2)],ribs=.035)
+for x in (2,4.3,20.7,22.2):m.ring(x,6.8-x*.072,7-x*.072,.22,'Cloth')
+# Flattened outer reinforcement and paired sewn edges.
+m.blob((12,0,6.05),(6.7,3,.32),'Cloth',box=.65,rings=9,n=16)
+for y in (-3.1,3.1):m.blob((12,y,5.65),(6.4,.14,.18),'Cloth',rings=9,n=16)
 m.save('SM_SuitForearm')
-m=Mesh();m.ring(-1.7,5.6,5.8,1,'Rubber');m.ring(-.7,5.8,6,1.3,'Blue');m.ring(.6,5.5,5.7,.65,'Metal');m.save('SM_SuitCuff')
-m=Mesh();m.tube([(0,3.9,2.7),(2,4.5,2.8),(6,4.6,2.8),(9,4.1,2.2),(9.2,.1,.1)],lambda t,a:'Rubber' if sin(a)<-.35 else 'Cloth')
-m.blob((4.5,0,2.35),(3.5,3.5,.7),'Cloth');m.blob((4.4,0,-2.3),(3.4,3.6,.7),'Rubber')
+m=Mesh();m.ring(-1.7,5.1,5.3,.8,'Rubber');m.ring(-.9,5.35,5.5,1.15,'Blue');m.ring(.25,5.1,5.3,.55,'Metal')
+for y in (-4.9,4.9):m.blob((-.15,y,2),(.65,.4,.65),'Metal',rings=9,n=16)
+m.save('SM_SuitCuff')
+m=Mesh();m.tube([(0,3.9,2.5),(1.5,4.2,2.6),(4.5,4.45,2.6),(7.4,4.2,2.35),(9,3.85,1.8),(9.3,.15,.15)],lambda t,a:'Rubber' if sin(a)<-.65 else 'Cloth')
+m.blob((4.6,0,-2.05),(3.2,3.5,.55),'Rubber',box=.75,rings=9,n=16)
+# Separate dorsal pads and raised seam edges read at first-person distance.
+for y in (-2.9,-.95,.95,2.9):
+    m.blob((6,y,2.25),(2.4,.72,.48),'Cloth',rings=9,n=16)
+    m.blob((3.6,y,2.55),(1.7,.12,.12),'Cloth',rings=9,n=16)
+for y in (-4.05,4.05):m.blob((4.2,y,.6),(3.2,.18,.25),'Cloth',rings=9,n=16)
 m.save('SM_SuitPalm')
 m=Mesh()
 def finger(t,a):
-    radius=(.45+.55*sin(pi*(.08+.85*t))**.35)*(1-.4*t)
-    return (8*t,cos(a)*1.15*radius,-2.7*t*t+sin(a)*1.35*radius)
-m.grid(27,24,finger,lambda t,a:'Rubber' if sin(a)<-.25 or .42<t<.47 or .72<t<.77 else 'Cloth')
-m.blob((7.95,0,-2.7),(.6,.58,.65),'Rubber');m.save('SM_SuitFinger')
-for name,length,r in [('SM_SuitUpperArm',28,9),('SM_SuitThigh',36,10),('SM_SuitShin',34,8)]:
-    m=Mesh();m.tube([(0,r*.95,r),(3,r,r*1.05),(length*.4,r*1.03,r),(length*.8,r*.85,r*.9),(length,r*.79,r*.84)],ribs=.021)
-    if name=='SM_SuitUpperArm':m.blob((1,0,0),(8,9.6,9.6))
-    if name=='SM_SuitThigh':m.blob((1,0,0),(5,r*.95,r))
-    if name in ('SM_SuitUpperArm','SM_SuitThigh'):m.blob((length-.5,0,0),(5,r*.8,r*.85))
-    for x in (length*.72,length*.84):m.ring(x,r*.87,r*.92,.24,'Cloth')
+    # Tapered closed end, mild knuckle swelling, underside grip reinforcement.
+    cap=min(1, max(0,(1-t)/.13))**.5
+    radius=(1-.29*t)*cap*(1+.08*sin(t*3*pi)**2)
+    return (8*t,cos(a)*1.05*radius,-.9*t*t+sin(a)*1.2*radius)
+m.grid(29,24,finger,lambda t,a:'Rubber' if sin(a)<-.5 else 'Cloth')
+for x in (2.9,5.2):m.blob((x,0,1.02-.9*(x/8)**2),(.28,.78,.17),'Cloth',rings=9,n=16)
+m.save('SM_SuitFinger')
+for name,length,r in [('SM_SuitUpperArm',28,8.3),('SM_SuitThigh',36,9.8),('SM_SuitShin',34,7.7)]:
+    m=Mesh();m.tube([(0,r*.9,r*.93),(3,r,r),(length*.3,r*.98,r),(length*.64,r*.89,r*.94),(length*.85,r*.8,r*.87),(length,r*.78,r*.83)],ribs=.032)
+    # Closed shallow end gussets prevent hollow tubes at exposed joints.
+    m.blob((0,0,0),(2.5,r*.92,r*.96),'Cloth',rings=11,n=24)
+    m.blob((length,0,0),(1.7,r*.78,r*.83),'Cloth',rings=9,n=20)
+    # Overlapping cloth gussets replace the conspicuous spherical joint caps.
+    for x in (length*.76,length*.83,length*.9):m.ring(x,r*.82,r*.89,.38,'Cloth')
+    if name=='SM_SuitUpperArm':
+        m.tube([(-3,6.9,7.1),(0,8.3,8.6),(3,8.5,8.7),(7,8,8.3)],ribs=.015)
+        m.blob((-2,0,0),(3.2,7.9,8.1),'Cloth',rings=11,n=24)
+        m.blob((9,0,8.05),(4.5,3.3,.35),'Cloth',rings=9,n=16)
+    if name=='SM_SuitThigh':m.blob((length-4,0,r*.82),(4.8,5.1,.7),'Cloth',box=.65,rings=9,n=16)
+    if name=='SM_SuitShin':
+        for y in (-3.5,3.5):m.blob((length*.43,y,r*.84),(8.3,.17,.22),'Cloth',rings=9,n=16)
     m.save(name)
 m=Mesh();m.blob((0,0,-10),(13,20,15));m.save('SM_SuitPelvis')
 m=Mesh();m.blob((0,0,20),(14,23,31),box=.68)
@@ -121,5 +144,5 @@ m.blob((4,0,-8.6),(18.5,9.2,2.6),'Rubber',box=.25)
 for x in range(-10,21,4):m.blob((x,0,-10.5),(1.1,8.9,.8),'Rubber',box=.25)
 for x in (-4,7):m.blob((x,0,8),(1.4,8.5,.7),'Cloth',box=.3)
 m.save('SM_SuitBoot')
-(OUT/'CREDITS.txt').write_text('Original mesh geometry authored for LunarRescue. A7L-inspired visual approximation, not a dimensionally exact NASA suit. Generated by Tools/prepare_suit.py. Procedural animations and materials are project-authored.\n')
+(OUT/'CREDITS.txt').write_text('Original mesh geometry authored for LunarRescue. A7L-inspired visual approximation, not a dimensionally exact NASA suit. Generated by Tools/prepare_suit.py. Procedural animations and materials are project-authored. Glove and garment refinement assisted by OpenAI Codex (2026-10-29).\n')
 print('Prepared',len(list(OUT.glob('*.obj'))),'suit meshes')

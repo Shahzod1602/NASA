@@ -1,5 +1,28 @@
 # Changelog
 
+## 2026-10-29 — Controlled graphics profiling (local)
+
+- Add visible-window profiling and optional GPU telemetry.
+- Reject overlapping game/editor/shader jobs and stale full-mission evidence.
+- Test capture completeness, invalid values and hitch statistics.
+- Document repeatable measurements and unresolved earlier variability in PERFORMANCE_UPDATE.md; no game-code speedup claimed.
+
+## 2026-10-29 — Glove and garment refinement (local)
+
+- Shaped sleeves, shoulder gussets, knee reinforcement and detailed glove pads/seams.
+- Distinct digit lengths, relaxed/working curls and tool-aligned primary palm contact.
+- Fixed packaged-build glove culling with a bounded viewmodel envelope; raised resting hands and retained photography hand hiding.
+- Rebuilt skin LODs; added source geometry and visible-skeleton checks.
+
+
+## Graphics and comfort pass — local development, 2026-10-29
+
+- Brighter authored bounce-light fill around the existing Apollo scene.
+- Ground-aligned boot poses using the actual planted-foot contact.
+- Saved tutorial hints, walking crosshair and bounded HUD background opacity.
+- Optional Fab editor plugin disabled for this project after a local missing-module build error.
+- Validation and remaining limits: [GRAPHICS_UPDATE.md](GRAPHICS_UPDATE.md).
+
 ## Unreleased — frontend refresh, 2026-10-29
 
 - Add destination artwork and a Continue/Moon/Mars/Settings/Exit menu.

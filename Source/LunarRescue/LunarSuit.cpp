@@ -9,6 +9,7 @@
 #include "Components/PoseableMeshComponent.h"
 #include "Components/TextRenderComponent.h"
 #include "Engine/StaticMesh.h"
+#include "Engine/StaticMeshActor.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "Camera/PlayerCameraManager.h"
@@ -31,19 +32,19 @@ FVector Joint(FVector A,FVector B,float Upper,float Lower,FVector Bend){
  FVector Side=(Bend-Axis*FVector::DotProduct(Bend,Axis)).GetSafeNormal();
  return A+Axis*Along+Side*FMath::Sqrt(FMath::Max(0.f,Upper*Upper-Along*Along));
 }
-void Hand(const TArray<TObjectPtr<UStaticMeshComponent>>& Parts,int Base,FVector Elbow,FVector Wrist,float Side,float Work,bool Upper=false){
+void Hand(const TArray<TObjectPtr<UStaticMeshComponent>>& Parts,int Base,FVector Elbow,FVector Wrist,float Side,float Work,bool Upper=false,const FRotator* ToolFrame=nullptr){
  int N=Base;if(Upper)++N;
  Limb(Parts[N++],Elbow,Wrist,24);
- const FRotator R(8+Work*12,-Side*(7+Work*5),Side*7);const FTransform Frame(R,Wrist);
+ const FRotator R=ToolFrame?*ToolFrame:FRotator(8+Work*12,-Side*(7+Work*5),Side*7);const FTransform Frame(R,Wrist);
  Parts[N]->SetRelativeLocation(Wrist);Parts[N++]->SetRelativeRotation(R);
  Parts[N]->SetRelativeLocation(Frame.TransformPosition(FVector(1,0,0)));Parts[N++]->SetRelativeRotation(R);
- const float Lengths[]={.95f,1.f,.94f,.76f};
+ const float Lengths[]={.95f,1.f,.92f,.74f};
  for(int F=0;F<4;++F){
   auto* C=Parts[N++].Get();C->SetRelativeLocation(Frame.TransformPosition(FVector(9,(-3.15f+F*2.1f)*Side,.1f)));
-  C->SetRelativeRotation((R.Quaternion()*FRotator(-5-Work*28,(F-1.5f)*Side*3,0).Quaternion()).Rotator());C->SetRelativeScale3D(FVector(Lengths[F],1,1));
+  C->SetRelativeRotation((R.Quaternion()*FRotator(-9-Work*(F==0?24.f:34.f),(F-1.5f)*Side*(3-Work*2),0).Quaternion()).Rotator());C->SetRelativeScale3D(FVector(Lengths[F],1,1));
  }
  Parts[N]->SetRelativeLocation(Frame.TransformPosition(FVector(4,-Side*4,-1)));
- Parts[N]->SetRelativeRotation((R.Quaternion()*FRotator(-18-Work*22,-Side*52,0).Quaternion()).Rotator());Parts[N]->SetRelativeScale3D(FVector(.76f,1.1f,1.1f));
+ Parts[N]->SetRelativeRotation((R.Quaternion()*FRotator(-16-Work*18,-Side*(48-Work*19),Side*Work*14).Quaternion()).Rotator());Parts[N]->SetRelativeScale3D(FVector(.70f,1.1f,1.1f));
 }
 }
 
@@ -136,27 +137,42 @@ void ALunarCharacter::UpdateSuit(float D){
   FVector Hip(0,Side*12,-12-Crouch),Foot=FVector(Direction.X,Direction.Y,0)*Plant*GaitBlend+FVector(3,Side*12,-78);
   float Lift=Cycle<.5f?FMath::Sin(T*PI)*16*GaitBlend:0.f;
   if(Move->IsFalling()){Foot.X+=12;Foot.Z+=16;Lift=0;}
-  else {FVector W=GetActorTransform().TransformPosition(Foot);FHitResult Hit;FCollisionQueryParams Q;Q.AddIgnoredActor(this);
-   if(GetWorld()->LineTraceSingleByChannel(Hit,W+FVector(0,0,65),W-FVector(0,0,90),ECC_Visibility,Q))Foot.Z=FMath::Clamp(GetActorTransform().InverseTransformPosition(Hit.ImpactPoint).Z+11,-90.f,-65.f);
-  }
   // A planted foot stays in world space for the stance half of the cycle.
   const bool Stance=Cycle>=.5f&&Move->IsMovingOnGround()&&GaitBlend>.15f;
   if(Stance){if(!FootPlanted[S])PlantedFeet[S]=GetActorTransform().TransformPosition(Foot);const FVector Locked=GetActorTransform().InverseTransformPosition(PlantedFeet[S]);if(FVector::Dist2D(Locked,Foot)<65){Foot.X=Locked.X;Foot.Y=Locked.Y;}else PlantedFeet[S]=GetActorTransform().TransformPosition(Foot);}
   FootPlanted[S]=Stance;
+  FRotator SoleRotation(Swing*7,0,0);
+  if(!Move->IsFalling()){
+   // Trace after locking stance XY: the boot must use the ground beneath its
+   // planted position, not the moving animation target.
+   const FVector W=GetActorTransform().TransformPosition(Foot);FHitResult Hit;FCollisionQueryParams Q;Q.AddIgnoredActor(this);
+   if(GetWorld()->LineTraceSingleByChannel(Hit,W+FVector(0,0,65),W-FVector(0,0,90),ECC_Visibility,Q)&&Hit.ImpactNormal.Z>.65f){
+    Foot.Z=FMath::Clamp(GetActorTransform().InverseTransformPosition(Hit.ImpactPoint).Z+11,-90.f,-65.f);
+    const FVector LocalNormal=GetActorTransform().InverseTransformVectorNoScale(Hit.ImpactNormal).GetSafeNormal();
+    SoleRotation=FRotationMatrix::MakeFromZX(LocalNormal,FVector::ForwardVector).Rotator();
+    SoleRotation.Pitch=FMath::Clamp(SoleRotation.Pitch,-25.f,25.f)+(Stance?0.f:Swing*7);
+    SoleRotation.Roll=FMath::Clamp(SoleRotation.Roll,-25.f,25.f);SoleRotation.Yaw=0;
+   }
+  }
   Foot.Z+=Lift;FVector Knee=Joint(Hip,Foot,36,34,FVector(1,0,0));int B=4+S*3;
-  Limb(SuitBody[B],Hip,Knee,36);Limb(SuitBody[B+1],Knee,Foot,34);SuitBody[B+2]->SetRelativeLocation(Foot);SuitBody[B+2]->SetRelativeRotation(FRotator(Swing*7,0,0));
+  Limb(SuitBody[B],Hip,Knee,36);Limb(SuitBody[B+1],Knee,Foot,34);SuitBody[B+2]->SetRelativeLocation(Foot);SuitBody[B+2]->SetRelativeRotation(SoleRotation);
   FVector Shoulder(0,Side*25,40-Crouch),Wrist(12-Swing*8,Side*(28-WorkBlend*13),-10+WorkBlend*30-Crouch);
   Wrist.X+=WorkBlend*28;if(Move->IsFalling())Wrist.Z+=12;
   FVector Elbow=Joint(Shoulder,Wrist,28,24,FVector(0,Side,-.4f));Limb(SuitArms[S*9],Shoulder,Elbow,28);
   Hand(SuitArms,S*9,Elbow,Wrist,Side,WorkBlend,true);
   const float Sway=ULunarSettings::Get()->CameraMotion?FMath::Sin(Phase)*1.1f*GaitBlend:0.f;
-  FVector ViewElbow(8,Side*25,-32),ViewWrist(36+WorkBlend*3+Sway,Side*(22-WorkBlend*12),-30+WorkBlend*15+FMath::Abs(Sway)*.35f-LandBlend);
+  FVector ViewElbow(8,Side*25,-28),ViewWrist(36+WorkBlend*3+Sway,Side*(20-WorkBlend*10),-15+FMath::Abs(Sway)*.35f-LandBlend);
   if(G&&(G->ApolloTool==1||G->ApolloTool==4||G->ApolloTool==5||G->ApolloTool==6)){ViewElbow=FVector(7,Side*24,-28);ViewWrist=FVector(35,Side*10,-15);}
   if(G&&G->ApolloTool==4)ViewWrist=G->SelectedSample==1?(S?FVector(25,4,-11):FVector(42,-8,-18)):FVector(29,Side*8,-10);
   if(G&&G->ApolloTool==5)ViewWrist=FVector(38,Side*6,S?-20.f:-10.f);
   if(G&&G->ApolloTool==6)ViewWrist=FVector(30,Side*7,-16);
   if(WorkGripActive){ViewWrist=WorkGrip[S]-FVector(5,0,0);ViewElbow=FVector(8,Side*25,-32);}
-  Hand(Gloves,S*8,ViewElbow,ViewWrist,Side,WorkBlend);
+  FRotator GripRotation;const FRotator* GripFrame=nullptr;
+  if(WorkGripActive&&WorkTool&&WorkTool->IsVisible()&&(S==1||(G&&G->ApolloTool==1))){
+   GripRotation=(WorkTool->GetRelativeRotation().Quaternion()*FRotator(8,-Side*5,Side*12).Quaternion()).Rotator();
+   ViewWrist=WorkGrip[S]-GripRotation.RotateVector(FVector(5,0,0));GripFrame=&GripRotation;
+  }
+  Hand(Gloves,S*8,ViewElbow,ViewWrist,Side,WorkBlend,false,GripFrame);
  }
  PoseSuitRig();
 }
@@ -164,6 +180,7 @@ void ALunarCharacter::SuitReview(){
  auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));auto* PC=Cast<APlayerController>(GetController());if(!G||!PC)return;
  const int N=SuitReviewFrame++;
  if(N==0){G->StartMission();G->RadioRemaining=0;PC->SetControlRotation(FRotator(0,0,0));}
+ if(N==1&&HandRig)UE_LOG(LogTemp,Display,TEXT("SUIT_VIEW fov=%.2f wrist=%s hand=%s visible=%d bounds=%s extent=%s"),Camera->FieldOfView,*Gloves[1]->GetRelativeLocation().ToString(),*HandRig->GetBoneLocationByName(TEXT("hand_l"),EBoneSpaces::ComponentSpace).ToString(),HandRig->IsVisible(),*Camera->GetComponentTransform().InverseTransformPosition(HandRig->Bounds.Origin).ToString(),*HandRig->Bounds.BoxExtent.ToString());
  if(N==2)PC->SetControlRotation(FRotator(-78,0,0));
  if(N==4){ToggleSuitView();PC->SetControlRotation(FRotator(-10,25,0));}
  if(N==6){SuitOrbit=true;PC->SetControlRotation(FRotator(-8,GetActorRotation().Yaw+150,0));}
@@ -213,6 +230,31 @@ void ALunarCharacter::SuitChecks(){
   Check(!G->Journal&&!G->Paused,TEXT("Escape input closes the journal and resumes play"));Key(EKeys::Escape,IE_Released);Key(EKeys::L,IE_Pressed);
  }else{
   Check(G->ApolloObjective().Contains(TEXT("PREPARE"))&&ApolloText::Get(TEXT("MenuHelp")).Contains(TEXT("Controls are introduced as you play.")),TEXT("Former L language shortcut leaves the game in English"));Key(EKeys::L,IE_Released);
+  // Isolated collision fixture above the map; never modifies terrain or saves.
+  auto* Floor=GetWorld()->SpawnActor<AStaticMeshActor>();auto* FixtureMesh=Floor->GetStaticMeshComponent();
+  FixtureMesh->SetMobility(EComponentMobility::Movable);FixtureMesh->SetStaticMesh(LoadObject<UStaticMesh>(nullptr,TEXT("/Engine/BasicShapes/Cube.Cube")));FixtureMesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);FixtureMesh->SetCollisionResponseToAllChannels(ECR_Block);
+  Floor->SetActorLocation(FVector(0,0,9912));Floor->SetActorScale3D(FVector(4,4,.02f));
+  const FTransform Before=GetActorTransform();SetActorLocation(FVector(0,0,10000));SetActorRotation(FRotator::ZeroRotator);GetCharacterMovement()->StopMovementImmediately();GetCharacterMovement()->SetMovementMode(MOVE_Walking);GaitBlend=0;FootPlanted[0]=FootPlanted[1]=false;
+  UpdateSuit(0);Check(SuitBody[6]->GetUpVector().Equals(FVector::UpVector,.01f)&&SuitBody[9]->GetUpVector().Equals(FVector::UpVector,.01f),TEXT("Boot soles stay level on a flat collision fixture"));
+  Floor->SetActorRotation(FRotator(0,0,15));UpdateSuit(0);
+  Check(FVector::DotProduct(SuitBody[6]->GetUpVector(),Floor->GetActorUpVector())>.995f&&FVector::DotProduct(SuitBody[9]->GetUpVector(),Floor->GetActorUpVector())>.995f,TEXT("Both boot soles align to a known 15-degree slope"));
+  Floor->SetActorRotation(FRotator(12,0,15));UpdateSuit(0);
+  Check(FVector::DotProduct(SuitBody[6]->GetUpVector(),Floor->GetActorUpVector())>.99f&&FVector::DotProduct(SuitBody[9]->GetUpVector(),Floor->GetActorUpVector())>.99f,TEXT("Boot alignment follows combined uphill and side slopes"));
+  Floor->Destroy();SetActorTransform(Before);
+  // Validate the rendered skeleton, not only the hidden static pose drivers.
+  G->Holding=false;G->ApolloTool=0;WorkBlend=0;UpdateSuit(0);
+  auto Bone=[&](const TCHAR* Name){return HandRig->GetBoneLocationByName(Name,EBoneSpaces::ComponentSpace);};
+  Check(FMath::IsNearlyEqual(FVector::Dist(Bone(TEXT("finger1_r")),Bone(TEXT("tip1_r"))),4.f,.05f)&&FMath::IsNearlyEqual(FVector::Dist(Bone(TEXT("finger3_r")),Bone(TEXT("tip3_r"))),2.96f,.05f),TEXT("Rendered middle and little fingers retain different authored joint lengths"));
+  HandRig->UpdateBounds();
+  Check(HandRig->Bounds.GetBox().IsInside(HandRig->GetBoneLocationByName(TEXT("tip1_l"),EBoneSpaces::WorldSpace))&&HandRig->Bounds.GetBox().IsInside(HandRig->GetBoneLocationByName(TEXT("tip1_r"),EBoneSpaces::WorldSpace)),TEXT("Cooked viewmodel bounds contain both posed gloves"));
+  const FRotator Relaxed=HandRig->GetBoneRotationByName(TEXT("tip1_r"),EBoneSpaces::ComponentSpace);
+  G->Holding=true;WorkBlend=1;UpdateSuit(0);
+  Check(!HandRig->GetBoneRotationByName(TEXT("tip1_r"),EBoneSpaces::ComponentSpace).Equals(Relaxed,10.f),TEXT("Gripping bends the visible distal finger instead of leaving an open hand"));
+  G->Paused=true;const float FrozenGrip=WorkBlend;UpdateSuit(.5f);
+  Check(WorkBlend==FrozenGrip,TEXT("Pause preserves the current glove grip pose"));G->Paused=false;G->Holding=false;WorkBlend=0;UpdateSuit(0);
+  PhotoCaptureFrames=2;UpdateSuit(0);Check(!HandRig->IsVisible(),TEXT("Evidence photography still excludes first-person gloves"));
+  PhotoCaptureFrames=0;UpdateSuit(0);Check(HandRig->IsVisible(),TEXT("First-person gloves return after evidence photography"));
+
   G->MovementReport+=FString::Printf(TEXT("RESULT: %d failures\n"),G->MovementFailures);
   FFileHelper::SaveStringToFile(G->MovementReport,*(FPaths::ProjectDir()/TEXT("Reports/suit-checks.txt")));UE_LOG(LogTemp,Display,TEXT("SUIT_CHECKS\n%s"),*G->MovementReport);FPlatformMisc::RequestExitWithStatus(false,G->MovementFailures?1:0);return;
  }

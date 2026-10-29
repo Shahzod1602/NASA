@@ -11,6 +11,7 @@ parser.add_argument("capture", type=Path)
 parser.add_argument("--warmup", type=int, default=600)
 parser.add_argument("--expected-frames", type=int, default=4200)
 parser.add_argument("--full-mission", action="store_true")
+parser.add_argument("--onscreen", action="store_true")
 parser.add_argument("--fps-cap", type=int, default=60)
 parser.add_argument("--output", type=Path, required=True)
 args = parser.parse_args()
@@ -46,7 +47,7 @@ result = {
     "p99_frame_ms": ordered[math.ceil(len(ordered) * 0.99) - 1],
     "largest_frame_ms": max(sample),
     "method": "1% low = 1000 / mean frame ms of the slowest 1% of sampled frames",
-    "limitations": ("Rendered offscreen full automated mission" if args.full_mission else "Rendered offscreen opening route") + f", normal delta time, {str(args.fps_cap)+' FPS cap' if args.fps_cap else 'uncapped rendering'}; not human playtest or on-screen presentation evidence. VRAM is not inferred from zero DX11 CSV counters.",
+    "limitations": ("On-screen" if args.onscreen else "Rendered offscreen") + (" full automated mission" if args.full_mission else " opening route") + f", normal delta time, {str(args.fps_cap)+' FPS cap' if args.fps_cap else 'uncapped rendering'}; not a human playtest; captures alone do not validate presentation smoothness. VRAM is not inferred from zero DX11 CSV counters.",
 }
 args.output.parent.mkdir(parents=True, exist_ok=True)
 args.output.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")

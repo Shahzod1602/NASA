@@ -12,9 +12,18 @@ $arguments=@('/Game/Rescue/Maps/MissionSelect','-game','-unattended',"-$flag","-
 if(-not $Packaged){$arguments=@("`"$root\LunarRescue.uproject`"")+$arguments}
 if($Review){$arguments+=@('-dx11','-RenderOffscreen','-ForceRes',"-ResX=$Width","-ResY=$Height")}else{$arguments+=@('-nullrhi','-nosound')}
 $started=Get-Date
-$process=Start-Process -FilePath $exe -ArgumentList $arguments -WindowStyle Hidden -PassThru
-if(-not $process.WaitForExit(600000)){Stop-Process -Id $process.Id;throw 'Frontend validation timed out'}
-if($process.ExitCode -ne 0){throw "Frontend validation exited $($process.ExitCode); see $log"}
+# Unreal may save scalability at shutdown even when game-level saving is disabled.
+$config=Join-Path $projectRoot ('Saved/Config/'+$(if($Packaged){'Windows'}else{'WindowsEditor'})+'/GameUserSettings.ini')
+$hadConfig=Test-Path -LiteralPath $config
+$configBytes=if($hadConfig){[IO.File]::ReadAllBytes($config)}else{$null}
+try {
+ $process=Start-Process -FilePath $exe -ArgumentList $arguments -WindowStyle Hidden -PassThru
+ if(-not $process.WaitForExit(600000)){Stop-Process -Id $process.Id;$process.WaitForExit();throw 'Frontend validation timed out'}
+ if($process.ExitCode -ne 0){throw "Frontend validation exited $($process.ExitCode); see $log"}
+} finally {
+ if($hadConfig){[IO.File]::WriteAllBytes($config,$configBytes)}
+ elseif(Test-Path -LiteralPath $config){Remove-Item -LiteralPath $config}
+}
 if($Review){
  $destination=Join-Path $reports "$prefix-${Width}x${Height}"
  New-Item -ItemType Directory -Force -Path $destination | Out-Null

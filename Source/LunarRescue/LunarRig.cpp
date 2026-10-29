@@ -15,6 +15,14 @@ void ALunarCharacter::PoseSuitRig(){
   auto Make=[&](const TCHAR* Path,USceneComponent* Parent){auto* C=NewObject<UPoseableMeshComponent>(this);C->SetupAttachment(Parent);C->SetSkeletalMesh(LoadObject<USkeletalMesh>(nullptr,Path));C->SetCollisionEnabled(ECollisionEnabled::NoCollision);C->SetOnlyOwnerSee(true);C->RegisterComponent();return C;};
   SuitRig=Make(TEXT("/Game/Lunar/Suit/Rig/SK_A7L/SkeletalMeshes/SK_A7L.SK_A7L"),GetCapsuleComponent());
   HandRig=Make(TEXT("/Game/Lunar/Suit/Rig/SK_A7L_Hands/SkeletalMeshes/SK_A7L_Hands.SK_A7L_Hands"),Camera);HandRig->SetCastShadow(false);
+  // The imported hands hang at x=6 in bind pose, but camera-space work poses
+  // reach forward. Cooked builds otherwise frustum-cull the visible gloves.
+  // A bounded, shadowless viewmodel envelope (cm); set once, no per-frame scan.
+  if(auto* HandsAsset=Cast<USkeletalMesh>(HandRig->GetSkinnedAsset())){
+   HandsAsset->SetPositiveBoundsExtension(FVector(150,40,90));
+   HandsAsset->SetNegativeBoundsExtension(FVector(25,40,85));
+   HandRig->bComponentUseFixedSkelBounds=true;HandRig->InvalidateCachedBounds();HandRig->UpdateBounds();
+  }
   if(auto* RigAsset=Cast<USkeletalMesh>(SuitRig->GetSkinnedAsset())){
    const auto& Ref=RigAsset->GetRefSkeleton();TArray<FTransform> World;World.SetNum(Ref.GetNum());
    for(int I=0;I<Ref.GetNum();++I){World[I]=Ref.GetRefBonePose()[I];const int Parent=Ref.GetParentIndex(I);if(Parent>=0)World[I]*=World[Parent];}
@@ -51,8 +59,12 @@ void ALunarCharacter::PoseSuitRig(){
    for(int Digit=0;Digit<5;++Digit){
     auto* FingerMesh=Parts[F+3+Digit].Get();const FQuat Rotation=FingerMesh->GetRelativeRotation().Quaternion();
     Set(C,FString::Printf(TEXT("finger%d_"),Digit)+Side,FingerMesh->GetRelativeLocation(),Rotation*RestHand.Inverse());
-    const FQuat Curl=FRotator(-WorkBlend*38,0,0).Quaternion();
-    Set(C,FString::Printf(TEXT("tip%d_"),Digit)+Side,FingerMesh->GetRelativeLocation()+Rotation.RotateVector(FVector(4,0,0)),Rotation*Curl*RestHand.Inverse());
+    // Authored digit lengths match the GLB bind pivots. Relaxed fingers are
+    // slightly curled; the thumb opposes the four fingers when gripping.
+    const float Lengths[]={.95f,1.f,.92f,.74f,.70f};
+    const float CurlDegrees=Digit==4?12.f+WorkBlend*24.f:14.f+WorkBlend*(Digit==0?32.f:44.f);
+    const FQuat Curl=FRotator(-CurlDegrees,0,0).Quaternion();
+    Set(C,FString::Printf(TEXT("tip%d_"),Digit)+Side,FingerMesh->GetRelativeLocation()+Rotation.RotateVector(FVector(4*Lengths[Digit],0,0)),Rotation*Curl*RestHand.Inverse());
    }
   }
  };

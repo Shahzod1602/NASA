@@ -149,7 +149,7 @@ void ALunarHUD::DrawApollo(ALunarGameMode* G){
     Text(FString::Printf(TEXT("%d m"),Distance),X+12,SH*.49f+35,.46,Ink);
    }
   }
-  DrawLine(W*.5f-5*S,H*.5f,W*.5f+5*S,H*.5f,Ink,1);DrawLine(W*.5f,H*.5f-5*S,W*.5f,H*.5f+5*S,Ink,1);
+  if(ULunarSettings::Get()->Crosshair){DrawLine(W*.5f-5*S,H*.5f,W*.5f+5*S,H*.5f,Ink,1);DrawLine(W*.5f,H*.5f-5*S,W*.5f,H*.5f+5*S,Ink,1);}
   if(!G->ApolloPhotoPending&&G->CanInteract()&&G->Stage!=ELunarStage::ApolloTraverse){
    const float X=SW*.5f-380;
    const float Height=Wrap(G->ApolloPrompt(),X+18,0,724,.60,Gold,false)+24;
