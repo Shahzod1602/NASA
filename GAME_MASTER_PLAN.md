@@ -4,6 +4,18 @@
 
 Bu hujjat keyingi ishlar uchun asosiy reja. Bo‘limlardagi talablar yakuniy maqsadni bildiradi; barchasi bajarilgan degani emas. Amalga oshirish holati quyidagi jadvalda ajratilgan. [2026-09-21 rejasi](DEVELOPMENT_PLAN.md) avvalgi holatni saqlaydi.
 
+## Yangi bosqich — 2026-10-29/30, mahalliy ishlab chiqish
+
+My Expedition xaritasi, checkpoint ichidagi cheklangan shaxsiy marshrut,
+refine qilingan skafandr/qo‘lqoplar, haqiqiy etik holatiga mos 160 ta qayta
+ishlatiladigan iz va ixtiyoriy o‘tkazib yuboriladigan yuk joylash sahnasi
+amalga oshirildi. Aniq holat va bajarilgan tekshiruvlar
+[EXPEDITION_EXPERIENCE.md](EXPEDITION_EXPERIENCE.md) da qayd qilinadi.
+
+Foydalanuvchi hozir playtest ishtirokchilari yo‘qligini bildirdi. 3–5 kishilik
+sinov ssenariysi va bo‘sh formalar tayyor, inson natijalari mavjud emas.
+Quyidagi sanalangan bo‘limlar o‘z davridagi tarixiy holatni saqlaydi.
+
 ## Yangi amalga oshirish — 2026-10-25 / v0.5
 
 Olti yo‘nalish bo‘yicha yangi kod va aktivlar qo‘shildi:

@@ -1,4 +1,5 @@
 #include "LunarGame.h"
+#include "LunarCargoFinale.h"
 #include "LunarSettings.h"
 #include "LunarPanels.h"
 #include "Components/PoseableMeshComponent.h"
@@ -56,7 +57,8 @@ void ALunarGameMode::ApolloPolishChecks(){
  auto* Save=CaptureApolloCheckpoint();FString Why;Check(Save&&Save->Mode==TEXT("historical-exploration")&&Save->Validate(Why),TEXT("Untimed checkpoint uses a validated explicit mode"));
  if(Save){Save->Elapsed=4000;Check(Save->Validate(Why),TEXT("Historical mode accepts elapsed time beyond exercise duration"));Save->Mode=TEXT("timed-exercise");Check(!Save->Validate(Why),TEXT("Timed save rejects impossible exercise telemetry"));}
  auto* S=ULunarSettings::Get();Check(!S->Rebind(TEXT("Interact"),EKeys::Escape)&&!S->Rebind(TEXT("Interact"),EKeys::W),TEXT("Rebinding rejects reserved and duplicate keys"));Check(S->Rebind(TEXT("Interact"),EKeys::B)&&S->Key(TEXT("Interact"))==EKeys::B,TEXT("A free key can be assigned to work"));
- Stage=ELunarStage::ApolloCheckout;ApolloAction=0;S->Apply(P,false);PC->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::B,IE_Pressed,1.f));PC->PlayerInput->ProcessInputStack({P->InputComponent.Get()},.016f,false);Check(ApolloTool==8,TEXT("Rebound B input opens the actual work tool"));PC->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::B,IE_Released,0.f));PC->PlayerInput->ProcessInputStack({P->InputComponent.Get()},.016f,false);CancelApolloTool();
+ // This subtest starts a new synthetic phase after completing the expedition.
+ ALunarCargoFinale::Reset(this);Stage=ELunarStage::ApolloCheckout;ApolloAction=0;S->Apply(P,false);PC->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::B,IE_Pressed,1.f));PC->PlayerInput->ProcessInputStack({P->InputComponent.Get()},.016f,false);Check(ApolloTool==8,TEXT("Rebound B input opens the actual work tool"));PC->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::B,IE_Released,0.f));PC->PlayerInput->ProcessInputStack({P->InputComponent.Get()},.016f,false);CancelApolloTool();
  const FString SettingsPath=FPaths::ProjectSavedDir()/TEXT("AutomatedTests/PolishSettings.ini");IFileManager::Get().MakeDirectory(*FPaths::GetPath(SettingsPath),true);S->Sensitivity=1.17f;S->SaveConfig(CPF_Config,*SettingsPath);
  auto* Reload=NewObject<ULunarSettings>();Reload->LoadConfig(nullptr,*SettingsPath);Check(FMath::IsNearlyEqual(Reload->Sensitivity,1.17f)&&Reload->Key(TEXT("Interact"))==EKeys::B,TEXT("Settings and rebound keys survive independent config serialization"));
  S->Reset();S->Apply(P,false);

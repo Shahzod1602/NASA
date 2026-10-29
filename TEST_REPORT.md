@@ -1,4 +1,36 @@
-# Test hisoboti — 2026-09-21
+# Test reports
+
+## 2026-10-29/30 — Expedition Experience, final Windows
+
+**591 packaged assertion/outcome o‘tdi, 0 xato.** Final exe SHA-256 `1aad851146a01e143e6a8464b24694d1c9835a0e37d26955fdf61fcacff9a957`.
+Editor/game build va yakuniy BuildCookRun ExitCode=0. To‘liq oddiy yurish: 896,81 sim s,
+1 237,50 horizontal m, 815 trail points. 720p Medium, 60-cap qisqa profilda
+59.993 → 59.997 FPS; butun missiya performance kafolati emas.
+7 sahna, 12 fieldwork PNG va 120 synthetic motion frame; inson sessiyasi0, ishtirokchilar yo‘q.
+Player/science fayllari o‘zgarmagan; Editor metadata/staging manifest farqlari alohida qayd etilgan.
+To‘liq buyruqlar, failure/repair tarixi va chegaralar: [EXPEDITION_EXPERIENCE.md](EXPEDITION_EXPERIENCE.md).
+Mashina qaydi: `Reports/ExpeditionExperience20261029/validation.json`.
+
+## 2026-10-29 - Expedition presentation (local)
+
+Windows Development build/cook/stage passed. Packaged assertions: **512 passed,
+0 failures**, including actual normal-movement walkthrough, checkpoint fresh
+process restore, new presentation/audio checks, Moon/Mars, frontend and loading.
+Editor and packaged render reviews found and fixed missing instanced material
+usage and 150% debrief row overlap. Original save/photo/config/science hashes:
+234 checked, unchanged. Two new generated review images archived separately.
+
+Matched 720p Medium DX11 offscreen opening profiles: 59.993 FPS before and
+59.997 after; 1% low 55.750 and 56.552. Both use 3600 frames, exclude startup
+600, cap60 and disable sound. These are not full-mission or cross-hardware FPS
+guarantees. The headless walkthrough's 896.81 simulated seconds/1237.50m are
+functional evidence, not graphical performance.
+
+Details, commands and limits: [EXPEDITION_POLISH.md](EXPEDITION_POLISH.md).
+Machine-readable evidence: `Reports/ExpeditionPolish20261029/validation.json`.
+Human playtests: **not run**, protocol and blank form prepared. No push/release.
+
+## Historical test hisoboti — 2026-09-21
 
 Quyidagi baseline bo‘limlari oldingi audit holatini saqlaydi. Keyingi source tuzatishi uchun alohida “Menu maintenance” bo‘limi fayl oxirida berilgan.
 

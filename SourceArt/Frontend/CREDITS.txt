@@ -9,3 +9,15 @@ the reference images themselves are not shipped as interactive screens.
 No NASA endorsement or partnership is claimed.
 Imported textures: /Game/Lunar/Frontend/T_MenuMoon and T_MenuMars.
 Import script: Tools/import_frontend.py. Original generated PNGs retained here.
+
+Mission loading artwork added on 29 October 2026:
+LoadingMoon.png and LoadingMars.png are clean illustration backgrounds derived
+from the user's two loading-screen reference images using built-in OpenAI image
+editing. The editing prompts removed reference text and loading graphics only;
+mission labels, guides and preparation percentages are rendered dynamically.
+The depicted spacecraft and journey compositions are fictional illustrations,
+not NASA photographs, historical reconstructions or scientifically scaled views.
+These images do not modify or replace the existing in-game scientific terrain.
+No NASA endorsement or partnership is claimed.
+Imported textures: /Game/Lunar/Frontend/T_LoadingMoon and T_LoadingMars.
+Import script: Tools/import_loading.py. Generated source copies retained here.

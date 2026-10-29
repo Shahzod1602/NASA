@@ -46,7 +46,7 @@ void Place(UCanvasPanel* Canvas,UWidget* Widget,float X,float Y,float W,float H)
 UCanvasPanel* Frame(UWidgetTree* Tree){
  auto* Scale=Tree->ConstructWidget<UScaleBox>();Scale->SetStretch(EStretch::ScaleToFit);auto* Size=Tree->ConstructWidget<USizeBox>();Size->SetWidthOverride(1280);Size->SetHeightOverride(720);Scale->AddChild(Size);auto* C=Tree->ConstructWidget<UCanvasPanel>();Size->AddChild(C);Tree->RootWidget=Scale;return C;
 }
-UButton* Button(UWidgetTree* Tree,const FString& Text,bool Active=false){
+UButton* FrontendButton(UWidgetTree* Tree,const FString& Text,bool Active=false){
  auto* B=Tree->ConstructWidget<UButton>();auto Style=B->GetStyle();
  Style.Normal.DrawAs=Style.Hovered.DrawAs=Style.Pressed.DrawAs=ESlateBrushDrawType::Box;
  Style.Normal.TintColor=FSlateColor(Active?FLinearColor(.04f,.2f,.26f,.96f):FLinearColor(.005f,.012f,.018f,.94f));
@@ -82,17 +82,17 @@ void ULunarPanel::BuildSettings(){
  Shade(WidgetTree,C,26,32,1228,656,FLinearColor(.002f,.006f,.011f,.98f));
  Place(C,Label(WidgetTree,TEXT("L U N A R R E S C U E"),10,Dim),58,49,800,20);
  Place(C,Label(WidgetTree,TEXT("S E T T I N G S"),22),58,72,900,40);
- auto* X=Button(WidgetTree,TEXT("X"));X->OnClicked.AddDynamic(this,&ULunarPanel::Close);Place(C,X,1214,42,28,28);
+ auto* X=FrontendButton(WidgetTree,TEXT("X"));X->OnClicked.AddDynamic(this,&ULunarPanel::Close);Place(C,X,1214,42,28,28);
  const TCHAR* Names[]={TEXT("VIDEO OPTIONS"),TEXT("SOUND OPTIONS"),TEXT("GAMEPLAY"),TEXT("CONTROLS")};
- for(int32 I=0;I<4;++I){auto* B=Button(WidgetTree,Names[I]);Place(C,B,58+291*I,118,291,36);
+ for(int32 I=0;I<4;++I){auto* B=FrontendButton(WidgetTree,Names[I]);Place(C,B,58+291*I,118,291,36);
   if(I==0)B->OnClicked.AddDynamic(this,&ULunarPanel::VideoTab);if(I==1)B->OnClicked.AddDynamic(this,&ULunarPanel::SoundTab);if(I==2)B->OnClicked.AddDynamic(this,&ULunarPanel::GameplayTab);if(I==3)B->OnClicked.AddDynamic(this,&ULunarPanel::ControlsTab);
  }
  SettingsBody=WidgetTree->ConstructWidget<UVerticalBox>();Place(C,SettingsBody,58,172,1164,423);Shade(WidgetTree,C,640,190,1,405,FLinearColor(.035f,.06f,.08f));
  Shade(WidgetTree,C,58,610,1164,1,FLinearColor(.2f,.32f,.4f));
- auto* Back=Button(WidgetTree,TEXT("BACK"));Back->OnClicked.AddDynamic(this,&ULunarPanel::Close);Place(C,Back,58,628,183,38);
+ auto* Back=FrontendButton(WidgetTree,TEXT("BACK"));Back->OnClicked.AddDynamic(this,&ULunarPanel::Close);Place(C,Back,58,628,183,38);
  DisplayStatus=Label(WidgetTree,TEXT("Changes save automatically. Scroll each column for more."),10,Dim);Place(C,DisplayStatus,260,636,550,35);
- auto* Keep=Button(WidgetTree,TEXT("KEEP DISPLAY"));Keep->Rename(TEXT("KeepDisplayButton"));Keep->SetVisibility(ESlateVisibility::Collapsed);Keep->OnClicked.AddDynamic(this,&ULunarPanel::KeepDisplay);Place(C,Keep,810,628,190,38);
- auto* Reset=Button(WidgetTree,TEXT("RESTORE DEFAULTS"));Reset->OnClicked.AddDynamic(this,&ULunarPanel::ResetSettings);Place(C,Reset,1010,628,212,38);
+ auto* Keep=FrontendButton(WidgetTree,TEXT("KEEP DISPLAY"));Keep->Rename(TEXT("KeepDisplayButton"));Keep->SetVisibility(ESlateVisibility::Collapsed);Keep->OnClicked.AddDynamic(this,&ULunarPanel::KeepDisplay);Place(C,Keep,810,628,190,38);
+ auto* Reset=FrontendButton(WidgetTree,TEXT("RESTORE DEFAULTS"));Reset->OnClicked.AddDynamic(this,&ULunarPanel::ResetSettings);Place(C,Reset,1010,628,212,38);
  FillSettings();
 }
 void ULunarPanel::FillSettings(){
@@ -116,13 +116,13 @@ void ULunarPanel::FillSettings(){
   if(SettingsTab==0&&Col==0)Note(TEXT("Display changes revert after 15 seconds unless kept. Close / Esc also reverts an unconfirmed change."));
   if(SettingsTab==0&&Col==1)Note(TEXT("Terrain geometry is fixed to the imported dataset. Presets change rendering, not scientific elevations."));
   if(SettingsTab==1&&Col==0)Note(TEXT("Suit and tool volume includes footsteps and station effects. No separate music, ambient or UI tracks are installed."));
-  if(SettingsTab==1&&Col==1){Note(TEXT("Output: system default device. Speaker layout and spatial processing use the system configuration. No dynamic-range simulation is provided."));auto* Test=Button(WidgetTree,TEXT("TEST RADIO AUDIO"));Test->OnClicked.AddDynamic(this,&ULunarPanel::TestAudio);Content->AddChildToVerticalBox(Test)->SetPadding(FMargin(0,18,8,0));}
+  if(SettingsTab==1&&Col==1){Note(TEXT("Output: system default device. Speaker layout and spatial processing use the system configuration. No dynamic-range simulation is provided."));auto* Test=FrontendButton(WidgetTree,TEXT("TEST RADIO AUDIO"));Test->OnClicked.AddDynamic(this,&ULunarPanel::TestAudio);Content->AddChildToVerticalBox(Test)->SetPadding(FMargin(0,18,8,0));}
   if(SettingsTab==2&&Col==0)Note(TEXT("H also saves the Apollo tutorial choice. HUD backgrounds adjust from 50 to 100%; menus retain full contrast. Crosshair hides the walking reticle; camera framing and work cues stay visible."));
   if(SettingsTab==2&&Col==1)Note(TEXT("Camera view: use the rebound View key in game. No crouch or head-bob mode is implemented. Progress saves after committed work, not on a timed interval."));
   if(SettingsTab==3&&Col==1)Note(TEXT("Select a binding, then press a new key. Reserved and duplicate keys are rejected. Esc / F1 always closes settings."));
  }
 }
-void ULunarPanel::NativeTick(const FGeometry& Geo,float Delta){Super::NativeTick(Geo,Delta);if(!Settings)return;auto* S=ULunarSettings::Get();if(auto* Keep=WidgetTree->FindWidget(TEXT("KeepDisplayButton")))Keep->SetVisibility(S->DisplayPending?ESlateVisibility::Visible:ESlateVisibility::Collapsed);if(S->DisplayPending&&FPlatformTime::Seconds()>=S->DisplayDeadline){S->RevertDisplay();FillSettings();}if(DisplayStatus)DisplayStatus->SetText(FText::FromString(S->DisplayPending?FString::Printf(TEXT("Keep display? Reverting in %d seconds."),FMath::Max(0,FMath::CeilToInt(S->DisplayDeadline-FPlatformTime::Seconds()))):TEXT("Changes save automatically. Scroll each column for more.")));}
+void ULunarPanel::NativeTick(const FGeometry& Geo,float Delta){Super::NativeTick(Geo,Delta);if(!Settings){if(Body&&FMath::Abs(EvidenceLayoutWidth-EvidenceContentWidth())>1.f)Rebuild();return;}auto* S=ULunarSettings::Get();if(auto* Keep=WidgetTree->FindWidget(TEXT("KeepDisplayButton")))Keep->SetVisibility(S->DisplayPending?ESlateVisibility::Visible:ESlateVisibility::Collapsed);if(S->DisplayPending&&FPlatformTime::Seconds()>=S->DisplayDeadline){S->RevertDisplay();FillSettings();}if(DisplayStatus)DisplayStatus->SetText(FText::FromString(S->DisplayPending?FString::Printf(TEXT("Keep display? Reverting in %d seconds."),FMath::Max(0,FMath::CeilToInt(S->DisplayDeadline-FPlatformTime::Seconds()))):TEXT("Changes save automatically. Scroll each column for more.")));}
 void ULunarPanel::VideoTab(){SettingsTab=0;FillSettings();}
 void ULunarPanel::SoundTab(){SettingsTab=1;FillSettings();}
 void ULunarPanel::GameplayTab(){SettingsTab=2;FillSettings();}
@@ -135,7 +135,7 @@ TSharedRef<SWidget> ULunarMainMenu::RebuildWidget(){
  auto* C=Frame(WidgetTree);Background=Backdrop(WidgetTree,C);Shade(WidgetTree,C,0,0,1280,720,FLinearColor(0,0,0,.12f));
  Place(C,Label(WidgetTree,TEXT("L U N A R R E S C U E"),31),84,84,650,48);Place(C,Label(WidgetTree,TEXT("E X P E D I T I O N S"),16,Dim),87,133,600,30);
  const TCHAR* Names[]={TEXT("Continue expedition"),TEXT("Explore the Moon"),TEXT("Explore Mars"),TEXT("Settings"),TEXT("Exit")};
- for(int32 I=0;I<5;++I){auto* B=Button(WidgetTree,Names[I]);if(auto* Layout=Cast<UButtonSlot>(B->GetContent()->Slot))Layout->SetHorizontalAlignment(HAlign_Left);auto MenuStyle=B->GetStyle();MenuStyle.NormalPadding=MenuStyle.PressedPadding=FMargin(16,4);B->SetStyle(MenuStyle);Place(C,B,87,195+48*I,268,42);
+ for(int32 I=0;I<5;++I){auto* B=FrontendButton(WidgetTree,Names[I]);if(auto* Layout=Cast<UButtonSlot>(B->GetContent()->Slot))Layout->SetHorizontalAlignment(HAlign_Left);auto MenuStyle=B->GetStyle();MenuStyle.NormalPadding=MenuStyle.PressedPadding=FMargin(16,4);B->SetStyle(MenuStyle);Place(C,B,87,195+48*I,268,42);
   if(I==0){B->OnClicked.AddDynamic(this,&ULunarMainMenu::Continue);B->SetIsEnabled(Mission(this)&&Mission(this)->ApolloCachedCheckpoint!=nullptr);}
   if(I==1){MoonButton=B;B->OnHovered.AddDynamic(this,&ULunarMainMenu::PreviewMoon);B->OnClicked.AddDynamic(this,&ULunarMainMenu::ExploreMoon);}
   if(I==2){MarsButton=B;B->OnHovered.AddDynamic(this,&ULunarMainMenu::PreviewMars);B->OnClicked.AddDynamic(this,&ULunarMainMenu::ExploreMars);}

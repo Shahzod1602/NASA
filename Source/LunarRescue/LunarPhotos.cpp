@@ -77,7 +77,7 @@ bool ALunarGameMode::RequestApolloPhoto(int32 Index,const FString& Relative){
   G->ApolloPhotoPending=false;
   G->ApolloPhotoFailed=!Good;
   auto RefreshAlbum=[G](){if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(G,0));P&&P->ActivePanel&&!P->ActivePanel->Settings){P->ActivePanel->Rebuild();P->ActivePanel->SetKeyboardFocus();}};
-  if(!Good){G->ConfirmApolloWork(TEXT("Photo could not be saved. Open the camera to retry."));RefreshAlbum();return;}
+  if(!Good){G->ConfirmApolloWork(TEXT("Photo could not be saved. Open the camera to retry."),false);RefreshAlbum();return;}
   if(Index<3)G->ApolloPhotos|=1<<Index;
   else if(Index==3){G->SurveyorPhotographed=true;G->SelectedSample=0;}
   else G->ApolloDustPhotos|=1<<(Index-4);
@@ -91,5 +91,5 @@ bool ALunarGameMode::RequestApolloPhoto(int32 Index,const FString& Relative){
  if(!LunarPhotos::Request(Filename,Complete)){Complete(false);return false;}
  if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0))){P->PhotoCaptureFrames=2;if(P->HandRig)P->HandRig->SetVisibility(false);if(P->WorkTool)P->WorkTool->SetVisibility(false);}
  if(auto* PC=UGameplayStatics::GetPlayerController(this,0);PC&&PC->PlayerCameraManager)PC->PlayerCameraManager->SetGameCameraCutThisFrame();
- ConfirmApolloWork(TEXT("Saving photograph..."));return true;
+ ConfirmApolloWork(TEXT("Saving photograph..."),false);return true;
 }

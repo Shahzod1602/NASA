@@ -1,3 +1,4 @@
+#include "Components/AudioComponent.h"
 #include "LunarGame.h"
 #include "LunarSettings.h"
 #include "LunarPanels.h"
@@ -27,7 +28,7 @@ bool ALunarGameMode::OpenApolloTool(){
  if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0)))P->BeginApolloWork(ApolloWorkTarget);
  ReleaseInteract();return ApolloTool!=0;
 }
-void ALunarGameMode::CancelApolloTool(){if(ApolloTool==4&&SelectedSample==0)if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));P&&P->WorkSourceMesh)P->WorkSourceMesh->SetVisibility(true);if(ApolloTool)if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0))){P->Camera->bUsePawnControlRotation=true;P->Camera->SetRelativeLocation(FVector(0,0,68));P->Camera->SetRelativeRotation(FRotator::ZeroRotator);}ApolloTool=0;ApolloToolPhase=0;ApolloToolCooldown=0;ApolloWorkTarget=nullptr;ReleaseInteract();}
+void ALunarGameMode::CancelApolloTool(){if(ApolloTool==4&&SelectedSample==0)if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));P&&P->WorkSourceMesh)P->WorkSourceMesh->SetVisibility(true);if(ApolloTool)if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0))){P->Camera->bUsePawnControlRotation=true;P->Camera->SetRelativeLocation(FVector(0,0,68));P->Camera->SetRelativeRotation(FRotator::ZeroRotator);}ApolloTool=0;ApolloToolPhase=0;ApolloToolCooldown=0;ApolloToolFeedback.Reset();ApolloToolFeedbackRemaining=0;ApolloWorkTarget=nullptr;ReleaseInteract();}
 void ALunarGameMode::ApolloToolAxis(float X,float Y){
  if(Paused)return;
  if(ApolloTool==2){ApolloLevel.X=FMath::Clamp(ApolloLevel.X+X*.035f,-1.f,1.f);ApolloLevel.Y=FMath::Clamp(ApolloLevel.Y+Y*.035f,-1.f,1.f);}
@@ -79,8 +80,8 @@ void ALunarGameMode::ApolloToolClick(){
  if(Tool==2&&ApolloLevel.Size()>.09f){Message(TEXT("ALSEP: center the bubble before confirming. Use the mouse or arrow keys."));return;}
  if(Tool==3&&FMath::Abs(FMath::FindDeltaAngleDegrees(ApolloAntennaAngle,-7.f))>8){Message(TEXT("ALSEP: signal is weak. Rotate toward the strongest signal, then verify."));return;}
  if(Tool==4||Tool==5||Tool==6){
-  ++ApolloToolPhase;ApolloToolCooldown=.75f;
-  if(Tool==4&&SelectedSample==0&&ApolloToolPhase==1)if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));P&&P->WorkSourceMesh)P->WorkSourceMesh->SetVisibility(false);PlayPowerSound(TEXT("PowerContact"),.22f);
+  ++ApolloToolPhase;ApolloToolCooldown=.75f;PulseApolloToolFeedback();
+  if(Tool==4&&SelectedSample==0&&ApolloToolPhase==1)if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));P&&P->WorkSourceMesh)P->WorkSourceMesh->SetVisibility(false);
   const int Required=Tool==4?2:Tool==5?7:3;
   if(ApolloToolPhase<Required)return;
  }
@@ -104,3 +105,20 @@ void ALunarCharacter::ClosePanel(){
  if(auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this))){if(G->Paused&&!PanelWasPaused)PauseMission();if(auto* PC=Cast<APlayerController>(GetController())){PC->bShowMouseCursor=G->Menu;if(G->Menu)PC->SetInputMode(FInputModeGameAndUI());else PC->SetInputMode(FInputModeGameOnly());}}
 }
 void ALunarCharacter::ToggleApolloMode(){if(auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));G&&G->Apollo&&G->Stage==ELunarStage::Briefing&&!G->ApolloConfirmNew&&!ActivePanel)G->ApolloTimed=!G->ApolloTimed;}
+
+FString ALunarGameMode::ApolloWorkStepLabel(int32 Tool,int32 Phase) const {
+ if(Tool==4&&Phase==1)return SelectedSample==1?TEXT("Soil lifted. Seal the pouch to record the sample."):TEXT("Rock lifted. Seal the pouch to record the sample.");
+ if(Tool==5){
+  if(Phase==1)return TEXT("Tube positioned. Complete four hammer strokes.");
+  if(Phase>=2&&Phase<=5)return FString::Printf(TEXT("Hammer stroke %d / 4 complete. The core is not packed yet."),Phase-1);
+  if(Phase==6)return TEXT("Core withdrawn. Cap and label the tube to record it.");
+ }
+ if(Tool==6&&Phase>=1&&Phase<=2)return SelectedSample==2?FString::Printf(TEXT("Cable end %d / 2 cut. Pack the part to record it."),Phase):FString::Printf(TEXT("Fitting %d / 2 released. Pack the part to record it."),Phase);
+ return FString();
+}
+void ALunarGameMode::PulseApolloToolFeedback(){
+ ApolloToolFeedback=ApolloWorkStepLabel(ApolloTool,ApolloToolPhase);
+ ApolloToolFeedbackRemaining=ApolloToolFeedback.IsEmpty()?0.f:1.6f;
+ // Authored suit/tool contact cues; no external sound propagation is simulated.
+ if(auto* Cue=PlayPowerSound(TEXT("PowerContact"),ApolloTool==5?.26f:.18f))Cue->SetPitchMultiplier(ApolloTool==5?.78f:ApolloTool==6?1.18f:1.f);
+}

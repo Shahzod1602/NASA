@@ -62,6 +62,10 @@ Copy-Item -LiteralPath "$root\SourceArt\Apollo12\manifest.json","$root\APOLLO12.
 Copy-Item -LiteralPath "$root\POLISH_UPDATE.md","$root\HISTORICAL_AUDIT.md","$root\PLAYTEST_GUIDE.md" -Destination "$credits\Apollo12"
 Copy-Item -LiteralPath "$root\REALISM_UPDATE.md" -Destination "$credits\Apollo12"
 Copy-Item -LiteralPath "$root\CLARITY_UPDATE.md" -Destination "$credits\Apollo12"
+Copy-Item -LiteralPath "$root\LOADING_UPDATE.md" -Destination "$credits\Apollo12"
+Copy-Item -LiteralPath "$root\EXPEDITION_POLISH.md" -Destination "$credits\Apollo12"
+Copy-Item -LiteralPath "$root\EXPEDITION_EXPERIENCE.md" -Destination "$credits\Apollo12"
+Copy-Item -LiteralPath "$root\Tools\fixtures\expedition-playtest-form.md" -Destination "$credits\Apollo12\PLAYTEST_FORM.md"
 Copy-Item -LiteralPath "$root\FIELDWORK_UPDATE.md" -Destination "$credits\Apollo12"
 Copy-Item -LiteralPath "$root\SourceArt\Apollo12\Raw\NAC_DTM_APOLLO12_README.TXT","$root\SourceArt\Apollo12\Raw\NAC_DTM_APOLLO12.LBL" -Destination "$credits\Apollo12"
 New-Item -ItemType Directory -Force -Path "$credits\Suit" | Out-Null
@@ -74,4 +78,20 @@ if(Test-Path -LiteralPath $runtime){
  New-Item -ItemType Directory -Force -Path $runtimeFolder | Out-Null
  Copy-Item -LiteralPath $runtime -Destination $runtimeFolder
 }
+# A later build must not inherit this iteration's manual verification claim.
+$stagedGame=Join-Path $root 'Dist\Apollo12\Windows\LunarRescue\Binaries\Win64\LunarRescue.exe'
+$engineVersion=Get-Content -LiteralPath (Join-Path $EngineRoot 'Engine\Build\Build.version') -Raw | ConvertFrom-Json
+$localBuild=[ordered]@{
+ schema_version=1
+ build_kind='local-development'
+ published_release=$false
+ base_git_commit=((& git -C $root rev-parse HEAD) -join '')
+ source_worktree_dirty=(@(& git -C $root status --porcelain).Count -gt 0)
+ engine_version="$($engineVersion.MajorVersion).$($engineVersion.MinorVersion).$($engineVersion.PatchVersion)"
+ generated_utc=[DateTime]::UtcNow.ToString('o')
+ executable='LunarRescue/Binaries/Win64/LunarRescue.exe'
+ executable_sha256=(Get-FileHash -LiteralPath $stagedGame -Algorithm SHA256).Hash.ToLowerInvariant()
+ verification_status='Not certified by packaging; run verification for this build and its assets.'
+}
+$localBuild | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath (Join-Path $root 'Dist\Apollo12\Windows\BUILD_INFO.json') -Encoding UTF8
 Write-Output "Apollo 12 package: $root\Dist\Apollo12\Windows\LunarRescue.exe"

@@ -39,6 +39,14 @@ bool UApolloCheckpoint::Validate(FString& Reason) const {
  if(!RunId.IsValid()||CompletedTasks.Num()>20||Evidence.Num()>6)return Reject(TEXT("invalid identifiers"));
  if(Position.ContainsNaN()||View.ContainsNaN()||!FMath::IsFinite(Position.X)||!FMath::IsFinite(Position.Y)||!FMath::IsFinite(Position.Z)||Position.X < -59000||Position.X > 44000||Position.Y < -39000||Position.Y > 44000||FMath::Abs(Position.Z)>50000)return Reject(TEXT("invalid position"));
  if(!FMath::IsFinite(Elapsed)||!FMath::IsFinite(Distance)||!FMath::IsFinite(Remaining)||!FMath::IsFinite(AntennaAngle)||Elapsed<0||Elapsed>(Mode==TEXT("timed-exercise")?1830.f:604800.f)||Distance<0||Distance>50000||Remaining<0||Remaining>1800||FMath::Abs(AntennaAngle)>180||FMath::Abs(View.Pitch)>360||FMath::Abs(View.Yaw)>360||FMath::Abs(View.Roll)>360)return Reject(TEXT("invalid telemetry"));
+ if(Trail.Num()>1024)return Reject(TEXT("trail exceeds bounded capacity"));
+ float PreviousTime=-1;
+ for(const auto& Point:Trail){
+  const FVector P=Point.Position;
+  if(P.ContainsNaN()||!FMath::IsFinite(P.X)||!FMath::IsFinite(P.Y)||!FMath::IsFinite(P.Z)||P.X < -60025.366||P.X > 44774.634||P.Y < -39983.14||P.Y > 44816.86||FMath::Abs(P.Z)>50000||!FMath::IsFinite(Point.Elapsed)||Point.Elapsed<0||Point.Elapsed>Elapsed+.1f||Point.Elapsed<PreviousTime)return Reject(TEXT("invalid recorded trail"));
+  PreviousTime=Point.Elapsed;
+ }
+ if(!Trail.IsEmpty()&&!Trail[0].BreakBefore)return Reject(TEXT("trail needs initial boundary"));
  TSet<FName> Allowed,Seen;
  for(const TCHAR* Id:ApolloTasks::Checkout)Allowed.Add(FName(Id));
  for(const TCHAR* Id:ApolloTasks::Instruments)Allowed.Add(FName(Id));

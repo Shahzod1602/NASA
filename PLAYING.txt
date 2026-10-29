@@ -15,7 +15,7 @@ WASD / arrows: move             Mouse: look around
 E: open work tool              Left click: use the open tool
 Q: select a site / journal page Esc: cancel tool, then pause
 Tab / J: map and field journal  F1: settings and key bindings
-I: photograph album and cargo   Mouse / arrows: level or antenna adjustment
+I: photos, cargo and My Expedition   Mouse / arrows: level or antenna adjustment
 Space: hop                     Shift: faster stride
 V: change camera               Alt: orbit in the following view
 F: zoom                        M: mission selection from pause/results
@@ -30,6 +30,14 @@ The album shortcut appears after you have photographs or cargo.
 If work input does nothing, the instruction card briefly explains how to proceed.
 It updates as you approach or face the site and shows your current work key.
 Left click outside a tool also requests this help. H hides it with the guide.
+
+MY EXPEDITION AND ENDING
+Press I, then choose My Expedition / map to review your recorded route.
+Gold shows your walk; thin cyan shows the reconstructed historical traverse.
+Site symbols link your photographs and collected cargo to their work locations.
+Older checkpoints may contain only a partial route; the map explains this.
+After successful stowage, a short authored cargo scene plays.
+Press your displayed work key, left click or Enter to skip; Esc pauses it.
 
 SCIENCE TOOLS
 Photograph: open the camera, center the work site and left click the shutter.

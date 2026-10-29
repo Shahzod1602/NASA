@@ -1,5 +1,28 @@
 # Lunar Rescue
 
+## My Expedition and cargo stowage (local development)
+
+The journal map overlays your sampled walking trace on the modern LROC map, while
+the evidence panel adds a **My Expedition / map** view with committed worksite
+markers. Walking traces survive new checkpoints; older saves remain readable and
+are labelled as partial coverage. The suit has more tapered sleeves/gloves and
+shallower garment end caps. Existing boot treads now follow posed feet and reuse
+up to 160 components. Completing the expedition starts a short skippable authored
+cargo-stowage scene. See [scope and actual validation](EXPEDITION_EXPERIENCE.md).
+
+## Expedition presentation and feedback (local development)
+
+Intrepid gains terrain-aligned contact detail, nearby regolith stays within a
+bounded instancing budget, and suit/tool transitions settle more smoothly.
+Work progress is distinguished from recorded cargo; the debrief explains the
+observed evidence, optional study and exercise budget. See [scope and validation](EXPEDITION_POLISH.md).
+
+## Destination loading screens (local development)
+
+Moon and Mars travel displays illustrated mission guides and smoothly animated
+preparation progress. The selected destination opens automatically when ready.
+Map travel for Continue and full restart uses the same transition. See [implementation and checks](LOADING_UPDATE.md).
+
 Local graphics performance checks and reproduction commands: [PERFORMANCE_UPDATE.md](PERFORMANCE_UPDATE.md).
 
 ## Graphics and comfort pass (local development)

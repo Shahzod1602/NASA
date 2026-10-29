@@ -1,7 +1,9 @@
 #include "LunarGame.h"
+#include "LunarCargoFinale.h"
 #include "LunarApolloText.h"
 #include "LunarSettings.h"
 #include "ApolloData.h"
+#include "LunarTrail.h"
 #include "Engine/Canvas.h"
 #include "Engine/Engine.h"
 #include "Engine/Texture2D.h"
@@ -60,6 +62,18 @@ void ALunarHUD::DrawApollo(ALunarGameMode* G){
   Box(24,Top,SW-48,ContentBottom-12-Top,.97f);Text(T(TEXT("RadioLabel")),40,Top+6,.32,Gold);
   Wrap(G->Radio,40,Top+26,SW-80,Size,Ink);
  };
+ if(ALunarCargoFinale::Active(G)&&!G->Paused){
+  const float Width=FMath::Min(900.f,SW-48),X=(SW-Width)*.5f;
+  const float Bottom=RadioTop()-12;
+  const FString Skip=ULunarSettings::Get()->Key(TEXT("Interact")).GetDisplayName().ToString()+TEXT(" / Left click / Enter: skip     Esc: pause");
+  const float CaptionHeight=Wrap(G->CargoFinale->Caption(),0,0,Width-40,.58,Ink,false);
+  const float SkipHeight=Wrap(Skip,0,0,Width-40,.36,Gold,false);const float Height=CaptionHeight+SkipHeight+70;
+  Box(X,Bottom-Height,Width,Height,.96f);Text(TEXT("INTREPID / AUTHORED CARGO DISPLAY"),X+20,Bottom-Height+12,.36,Cyan);
+  Wrap(G->CargoFinale->Caption(),X+20,Bottom-Height+40,Width-40,.58,Ink);
+  Wrap(Skip,X+20,Bottom-SkipHeight-20,Width-40,.36,Gold);
+  DrawRect(Gold,(X+20)*S,(Bottom-8)*S,(Width-40)*S*G->CargoFinale->Progress(),3*S);
+  DrawRadio();return;
+ }
  auto WorkCue=[&](){
   if(!PC||!G->ApolloGuideEnabled)return;
   FVector Point;FString Label;FVector2D Pos;
@@ -79,9 +93,12 @@ void ALunarHUD::DrawApollo(ALunarGameMode* G){
  if(G->ApolloTool&&G->IsActive()&&!G->Paused){
   const float X=24,Y=104,ToolWidth=G->ApolloTool==1?430.f:560.f;
   const float HelpEnd=Wrap(G->ApolloToolHelp(),44,174,ToolWidth-40,.60,Ink,false);
-  Box(X,Y,ToolWidth,HelpEnd-Y+16,.97f);Text(G->ApolloToolTitle(),X+20,Y+14,.46,Gold);
+  const bool Feedback=G->ApolloToolFeedbackRemaining>0&&!G->ApolloToolFeedback.IsEmpty();
+  const float ToolEnd=Feedback?Wrap(TEXT("IN PROGRESS: ")+G->ApolloToolFeedback,44,HelpEnd+10,ToolWidth-40,.43,Cyan,false):HelpEnd;
+  Box(X,Y,ToolWidth,ToolEnd-Y+16,.97f);Text(G->ApolloToolTitle(),X+20,Y+14,.46,Gold);
   Text(G->ApolloToolProgress(),X+20,Y+43,.42,Cyan);
   Wrap(G->ApolloToolHelp(),X+20,Y+70,ToolWidth-40,.60,Ink);
+  if(Feedback)Wrap(TEXT("IN PROGRESS: ")+G->ApolloToolFeedback,X+20,HelpEnd+10,ToolWidth-40,.43,Cyan);
   if(G->ApolloTool==9){
    const float AnswerX=SW*.5f-430,AnswerY=SH*.46f;Box(AnswerX,AnswerY,860,168,.98f);
    const TCHAR* Answers[]={TEXT("Intrepid landing exhaust moved the dust."),TEXT("Rain washed the coating."),TEXT("Earth-like wind eroded the surface.")};
@@ -122,7 +139,7 @@ void ALunarHUD::DrawApollo(ALunarGameMode* G){
   Wrap(Instruction,40,151,ContentWidth,.64,InstructionColor);
   if(G->ApolloConfirmationRemaining>0&&!G->ApolloConfirmation.IsEmpty()){
    const float X=SW-484,End=Wrap(G->ApolloConfirmation,X+16,143,428,.58,Ink,false);
-   Box(X,104,460,End-104+14,.97f);Text(TEXT("DONE"),X+16,117,.40,Cyan);
+   Box(X,104,460,End-104+14,.97f);Text(G->ApolloConfirmationLabel,X+16,117,.40,G->ApolloConfirmationLabel==TEXT("RECORDED")?Cyan:Gold);
    Wrap(G->ApolloConfirmation,X+16,143,428,.58,Ink);
   }
 
@@ -168,12 +185,19 @@ void ALunarHUD::DrawApollo(ALunarGameMode* G){
   if(G->ApolloMapTexture)DrawTexture(G->ApolloMapTexture,MX*S,MY*S,MW*S,MH*S,0,0,1,1,FLinearColor(.72,.78,.77),BLEND_Opaque);
   auto MapPoint=[&](FVector Pos){return FVector2D((MX+(Pos.X+60025.366)/104800.f*MW)*S,(MY+(Pos.Y+39983.14)/84800.f*MH)*S);};
   for(const auto& Segment:ApolloData::ReferenceRoute){auto A=MapPoint(Segment[0]),B=MapPoint(Segment[1]);DrawLine(A.X,A.Y,B.X,B.Y,FLinearColor(.1,.65,.70,.7),1);}
+  const auto Trail=G->ApolloTrailSnapshot();
+  for(int32 I=1;I<Trail.Num();++I)if(!Trail[I].BreakBefore){auto A=MapPoint(Trail[I-1].Position),B=MapPoint(Trail[I].Position);DrawLine(A.X,A.Y,B.X,B.Y,Gold,2);}
   auto Dot=[&](FVector Pos,const FString& Name,FLinearColor C){auto M=MapPoint(Pos);DrawRect(C,M.X-3*S,M.Y-3*S,6*S,6*S);Label(Name,M.X+7*S,M.Y-8*S,.31*TextScale*S,C);};
+  const TCHAR* IDs[]={TEXT("12031"),TEXT("12032"),TEXT("12027")};
+  for(int32 I=0;I<3;++I)if((G->ApolloPhotos|G->SamplesCollected)&(1<<I))Dot(ApolloData::Samples[I],FString((G->SamplesCollected&(1<<I))?TEXT("[+] "):TEXT("[P] "))+IDs[I],(G->SamplesCollected&(1<<I))?Gold:Cyan);
+  if(G->SurveyorPhotographed||G->ApolloParts)Dot(ApolloData::Surveyor,G->ApolloParts?TEXT("[+] SURVEYOR"):TEXT("[P] SURVEYOR"),G->ApolloParts?Gold:Cyan);
   Dot(ApolloData::Home,TEXT("INTREPID"),Ink);
   if(auto* Target=G->ApolloGuidanceTarget();Target&&Target!=G->HomeActor)Dot(Target->GetActorLocation(),G->ApolloSiteName(),Gold);
   if(P){auto M=MapPoint(P->GetActorLocation());DrawRect(FLinearColor(1,.4,.25),M.X-3*S,M.Y-3*S,6*S,6*S);Label(T(TEXT("MapYou")),M.X-37*S,M.Y+7*S,.31*TextScale*S,FLinearColor(1,.4,.25));}
   if(auto* Target=G->ApolloGuidanceTarget()){auto A=MapPoint(Target->GetActorLocation());DrawLine(A.X-7*S,A.Y,A.X+7*S,A.Y,Gold,2);DrawLine(A.X,A.Y-7*S,A.X,A.Y+7*S,Gold,2);}
-  Box(MX,MY,MW,29,.75f);Text(T(TEXT("MapNorth")),MX+10,MY+6,.35,Ink);
+  Box(MX,MY,MW,29,.85f);Text(T(TEXT("MapNorth")),MX+10,MY+6,.35,Ink);
+  Box(MX,MY+MH-48,MW,48,.95f);RawText(TEXT("GOLD / MY WALK     CYAN / HISTORICAL"),MX+10,MY+MH-44,.32,Ink);
+  RawText(TEXT("[P] PHOTO SITE   [+] COLLECTED   I / FULL MAP"),MX+10,MY+MH-23,.29,Gold);
   }
   const float TX=X+(G->JournalPage==0?557:24);float TY=Y+82;
   if(G->JournalPage==0){
@@ -235,11 +259,11 @@ void ALunarHUD::DrawApollo(ALunarGameMode* G){
    Row(T(TEXT("WinText")),.59,Ink);
    Row(T(TEXT("WinCargo")),.46,Cyan);
    Row(ApolloText::Format(TEXT("WinStats"),{{TEXT("Time"),Time(G->ApolloElapsed)},{TEXT("Distance"),FMath::RoundToInt(G->ApolloDistance)},{TEXT("Count"),G->ApolloEvidence.Num()}}),.50,Ink);
-   Row(T(TEXT("WinContext")),.46,Dim);
-   Row(TEXT("I  Cargo, photographs and debrief     ")+T(TEXT("Again")),.46,Gold,0);
+   Row(G->ApolloRetryAdvice(),.46,Dim);
+   Row(TEXT("I  My Expedition, photos and cargo     ")+T(TEXT("Again")),.46,Gold,0);
   }else{
    Row(G->FailureReason,.60,Ink,18);
-   Row(T(TEXT("LostHelp")),.52,Dim,18);
+   Row(G->ApolloRetryAdvice(),.52,Dim,18);
    if(G->ApolloCachedCheckpoint)Row(ContinueLabel(),.56,Cyan);
    Row(T(TEXT("Restart")),.60,Gold,0);
   }

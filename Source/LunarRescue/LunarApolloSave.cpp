@@ -1,6 +1,8 @@
 #include "LunarGame.h"
+#include "LunarCargoFinale.h"
 #include "LunarApolloText.h"
 #include "LunarSettings.h"
+#include "LunarLoading.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/StaticMeshComponent.h"
@@ -15,7 +17,7 @@
 #include "Misc/Parse.h"
 
 namespace {
-bool SaveTest(){return FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveTest"))||FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveWriteTest"))||FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveReadTest"))||FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveMenuReview"))||FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveProfile"));}
+bool SaveTest(){return FParse::Param(FCommandLine::Get(),TEXT("LoadingTest"))||FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveTest"))||FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveWriteTest"))||FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveReadTest"))||FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveMenuReview"))||FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveProfile"));}
 bool Automation(){
  if(ULunarSettings::IsAutomation())return true;
  const TCHAR* Flags[]={TEXT("ApolloTest"),TEXT("ApolloReview"),TEXT("ApolloWalkTest"),TEXT("SuitTest"),TEXT("SuitReview"),TEXT("LunarTest"),TEXT("LunarMenuTest"),TEXT("LunarReview"),TEXT("LunarMovementTest"),TEXT("LunarWalkthroughTest"),TEXT("LunarExpeditionReview")};
@@ -25,6 +27,7 @@ bool Automation(){
 }
 
 FString ALunarGameMode::ApolloSaveDirectory() const {
+ if(FParse::Param(FCommandLine::Get(),TEXT("LoadingTest")))return FPaths::ProjectSavedDir()/TEXT("AutomatedTests/Loading");
  if(SaveTest())return FPaths::ProjectSavedDir()/TEXT("AutomatedTests")/(FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveProfile"))?TEXT("ApolloProfile"):FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveTest"))?TEXT("ApolloCheckpoint"):TEXT("ApolloCrossProcess"));
  return FPaths::ProjectSavedDir()/TEXT("SaveGames/Apollo12");
 }
@@ -62,7 +65,7 @@ UApolloCheckpoint* ALunarGameMode::CaptureApolloCheckpoint(){
  Save->RunId=ApolloRunId;Save->SavedAtUtc=FDateTime::UtcNow().GetTicks();Save->Position=Safe;
  Save->Mode=ApolloTimed?TEXT("timed-exercise"):TEXT("historical-exploration");
  Save->View=(P?P->GetControlRotation():ApolloSafeView).GetNormalized();Save->Elapsed=ApolloElapsed;Save->Distance=ApolloDistance;Save->Remaining=Oxygen;Save->AntennaAngle=ApolloAntennaAngle;
- Save->LookLearned=ApolloLookLearned;Save->MoveLearned=ApolloMoveLearned;Save->Evidence=ApolloEvidence;
+ Save->LookLearned=ApolloLookLearned;Save->MoveLearned=ApolloMoveLearned;Save->Evidence=ApolloEvidence;Save->Trail=ApolloTrailSnapshot();Save->TrailFromStart=ApolloTrailFromStart;Save->TrailSimplified=ApolloTrailSimplified||ApolloTrail.Num()>=1024;
  auto Add=[&](const TCHAR* Task){Save->CompletedTasks.Add(FName(Task));};
  const int32 CheckoutCount=Stage==ELunarStage::ApolloCheckout?FMath::Clamp(ApolloAction,0,3):3;
  for(int I=0;I<CheckoutCount;++I)Add(ApolloTasks::Checkout[I]);
@@ -97,12 +100,13 @@ bool ALunarGameMode::RestoreApolloCheckpoint(){
  if(!P||!PC||SampleActors.Num()!=3||ApolloPartActors.Num()!=3||!ApolloSafeGround(Save->Position,Ground)){
   ApolloSaveError=true;ApolloSaveNotice=TEXT("CheckpointLoadFailed");ApolloSaveNoticeRemaining=30;return false;
  }
+ ALunarCargoFinale::Reset(this);P->ResetFootprints();
  // Validate position before changing progress. In-progress work is never restored.
- ApolloPhotoFailed=false;
+ ApolloPhotoFailed=false;ApolloToolFeedback.Reset();ApolloToolFeedbackRemaining=0;
  CancelApolloTool();ApolloInputHintRemaining=0;ApolloConfirmationRemaining=0;ApolloPackedPreviewRemaining=0;ApolloPackedPartRemaining=0;ApolloDustMode=false;Paused=false;Journal=false;ApolloConfirmNew=false;ApolloStarted=true;
  ApolloGuideEnabled=ULunarSettings::Get()->TutorialHints;
  ApolloTimed=Save->Mode==TEXT("timed-exercise");
- ApolloRunId=Save->RunId;ApolloEvidence=Save->Evidence;ApolloElapsed=Save->Elapsed;ApolloDistance=Save->Distance;Oxygen=Save->Remaining;
+ ApolloRunId=Save->RunId;ApolloEvidence=Save->Evidence;ApolloTrail=Save->Trail;ApolloTrailFromStart=Save->TrailFromStart;ApolloTrailSimplified=Save->TrailSimplified;ApolloTrailSpacing=ApolloTrailSimplified?300.f:150.f;ApolloTrailPendingBreak=true;ApolloTrailLatest=Ground;ApolloTrailLatestTime=Save->Elapsed;ApolloElapsed=Save->Elapsed;ApolloDistance=Save->Distance;Oxygen=Save->Remaining;
  ApolloAntennaAngle=Save->AntennaAngle;ApolloLookLearned=Save->LookLearned;ApolloMoveLearned=Save->MoveLearned;ApolloRouteIndex=0;
  SamplesCollected=0;ApolloPhotos=0;ApolloParts=0;ApolloInstruments=0;SelectedSample=0;
  for(int I=0;I<3;++I){
@@ -121,7 +125,7 @@ bool ALunarGameMode::RestoreApolloCheckpoint(){
  P->FastStride=false;P->SuitOrbit=false;if(P->ThirdPerson)P->ToggleSuitView();P->Camera->SetFieldOfView(ULunarSettings::Get()->FieldOfView);
  P->GetCharacterMovement()->SetComponentTickEnabled(true);P->GetCharacterMovement()->StopMovementImmediately();
  P->SetActorLocation(Ground,false,nullptr,ETeleportType::TeleportPhysics);P->GetCharacterMovement()->SetMovementMode(MOVE_Walking);PC->SetControlRotation(Save->View);
- P->LastStepPosition=Ground;P->PausedVelocity=FVector::ZeroVector;P->StepTravel=0;P->GaitBlend=0;P->WorkBlend=0;
+ P->LastStepPosition=Ground;P->PausedVelocity=FVector::ZeroVector;P->StepTravel=0;P->GaitBlend=0;P->WorkBlend=0;P->SuitStrideSpeed=P->SuitTurnLean=0;P->SuitMoveDirection=FVector::ForwardVector;
  ApolloLastPosition=Ground;ApolloSafePosition=Ground;ApolloSafeView=Save->View;ApolloHasSafePosition=true;ApolloTutorialOrigin=Ground;ApolloTutorialAim=Save->View;
  LowOxygenWarned=Oxygen<180;FailureReason.Reset();UpdateAudioPause();
  int Missing=0;for(const auto& E:ApolloEvidence)if(!E.PhotoPath.IsEmpty()&&!IFileManager::Get().FileExists(*(FPaths::ProjectSavedDir()/E.PhotoPath)))++Missing;
@@ -130,6 +134,6 @@ bool ALunarGameMode::RestoreApolloCheckpoint(){
 }
 void ALunarGameMode::ContinueApollo(){
  if(!ApolloCachedCheckpoint)return;
- if(Menu){UGameplayStatics::OpenLevel(this,TEXT("/Game/Lunar/Maps/Apollo12"),true,TEXT("ResumeApollo=1"));return;}
+ if(Menu){LunarLoading::Open(this,TEXT("/Game/Lunar/Maps/Apollo12"),TEXT("ResumeApollo=1"));return;}
  if(Apollo&&(Stage==ELunarStage::Briefing||Stage==ELunarStage::Lost))RestoreApolloCheckpoint();
 }

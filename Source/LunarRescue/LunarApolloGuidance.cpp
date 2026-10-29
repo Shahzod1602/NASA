@@ -121,7 +121,11 @@ FString ALunarGameMode::ApolloToolProgress() const {
  return FString::Printf(TEXT("STEP %d / %d"),Step,Count);
 }
 
-void ALunarGameMode::ConfirmApolloWork(const FString& Value){ApolloConfirmation=Value;ApolloConfirmationRemaining=5.f;}
+void ALunarGameMode::ConfirmApolloWork(const FString& Value,bool Recorded){
+ ApolloConfirmation=Value;ApolloConfirmationRemaining=5.f;
+ ApolloConfirmationLabel=Recorded?TEXT("RECORDED"):TEXT("STATUS");
+ if(Recorded)PlayPowerSound(TEXT("PowerReady"),.10f);
+}
 
 bool ALunarGameMode::ApolloWorkCue(FVector& Position,FString& Label) const {
  if(ApolloTool==4&&ApolloToolPhase>0)return false;

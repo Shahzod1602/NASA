@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-10-29 - Expedition presentation and feedback (local)
+
+- Ground Intrepid contact detail on imported terrain, with instanced seams, rims and equipment fasteners.
+- Redistribute nearby regolith without expanding the six-batch surface budget or changing NASA collision.
+- Smooth stride/turn/landing and tool visual paths while preserving exact primary grip and comfort options.
+- Distinguish in-progress, pending status and recorded work; reuse bounded suit/tool audio cues.
+- Add session-fact debrief advice and a blank 3-5 novice playtest protocol; human sessions are not yet run.
+
+## 2026-10-29 — Destination loading screens (local)
+
+- Add Moon/Mars mission illustrations, accurate gameplay tips and corner preparation progress.
+- Keep Slate animation active during map loading and display completion before automatic entry.
+- Preserve Continue options, block duplicate travel requests and isolate loading-test checkpoints.
+
 ## 2026-10-29 — Controlled graphics profiling (local)
 
 - Add visible-window profiling and optional GPU telemetry.
@@ -134,3 +148,12 @@
 - Moon/Mars tanlash, ARES ekspeditsiyasi, orbital relay vazifasi va standalone Windows build.
 - Mavjud implementatsiya va avvalgi tekshiruvlar: [MARS_UPDATE](MARS_UPDATE.md), [AUDIT_FIXES](AUDIT_FIXES.md).
 - Ushbu reliz 2026 Space Apps hakatonidan oldin yaratilgan; qayta ishlatishga ruxsat tasdiqlanmagan.
+
+## Local development — expedition trace, suit form and stowage
+
+- Add My Expedition with a bounded saved walking trace and committed worksite markers.
+- Preserve old checkpoints and explain incomplete trace coverage.
+- Refine authored sleeve, glove and leg-end silhouettes; preserve the 36-bone rig.
+- Ground existing tread decals at posed boots and reuse a fixed 160-component pool.
+- Show an 8.8-second skippable cargo vignette after committed expedition completion.
+- Extend the novice protocol; human sessions remain unperformed because participants are unavailable.

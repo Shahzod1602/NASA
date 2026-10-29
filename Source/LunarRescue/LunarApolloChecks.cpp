@@ -171,8 +171,11 @@ void ALunarGameMode::ApolloWalkTick(float D){
  WalkSeconds+=D;WalkStepSeconds+=D;
  if(Stage==ELunarStage::Briefing){if(WalkSeconds>2){StartMission();WalkStepSeconds=0;}return;}
  if(Stage==ELunarStage::Won||Stage==ELunarStage::Lost||WalkSeconds>1700||WalkStepSeconds>500){
-  const bool Good=Stage==ELunarStage::Won&&SamplesCollected==7&&ApolloParts==7&&ApolloInstruments==3;
+  const auto Trace=ApolloTrailSnapshot();float TraceMetres=0;for(int32 I=1;I<Trace.Num();++I)if(!Trace[I].BreakBefore)TraceMetres+=FVector::Dist2D(Trace[I-1].Position,Trace[I].Position)/100.f;
+  const bool TraceGood=Trace.Num()>100&&Trace.Num()<=1024&&ApolloTrailFromStart&&TraceMetres>100&&TraceMetres<=ApolloDistance+3;
+  const bool Good=Stage==ELunarStage::Won&&SamplesCollected==7&&ApolloParts==7&&ApolloInstruments==3&&TraceGood;
   FString Report=FString::Printf(TEXT("%s real movement Apollo 12 expedition\nElapsed %.2f s\nWalked %.2f m\nRemaining exercise time %.2f s\nSamples %d/3; hardware mask %d; ALSEP mask %d\nPeak memory %.2f MiB\nRESULT: %d failures\n"),Good?TEXT("PASS"):TEXT("FAIL"),ApolloElapsed,ApolloDistance,Oxygen,SampleCount(),ApolloParts,ApolloInstruments,FPlatformMemory::GetStats().PeakUsedPhysical/1048576.0,Good?0:1);
+  Report=FString::Printf(TEXT("%s Real movement produces bounded My Expedition trace: %d points, %.2f m sampled display length (independent of recorded horizontal distance)\n"),TraceGood?TEXT("PASS"):TEXT("FAIL"),Trace.Num(),TraceMetres)+Report;
   FFileHelper::SaveStringToFile(Report,*ReportPath(TEXT("apollo12-walkthrough.txt")));UE_LOG(LogTemp,Display,TEXT("APOLLO12_WALK %s"),*Report);ApolloWalking=false;
   if(FParse::Param(FCommandLine::Get(),TEXT("ApolloFullProfile"))){PC->ConsoleCommand(TEXT("csvprofile stop"),false);FTimerHandle End;GetWorldTimerManager().SetTimer(End,[Good](){FPlatformMisc::RequestExitWithStatus(false,Good?0:1);},8,false);}else FPlatformMisc::RequestExitWithStatus(false,Good?0:1);return;
  }

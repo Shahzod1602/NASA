@@ -28,6 +28,14 @@ struct FApolloEvidence {
  UPROPERTY() float CapturedAt=0;
 };
 
+USTRUCT()
+struct FApolloTrailPoint {
+ GENERATED_BODY()
+ UPROPERTY() FVector Position=FVector::ZeroVector;
+ UPROPERTY() float Elapsed=0;
+ UPROPERTY() bool BreakBefore=true;
+};
+
 UCLASS()
 class LUNARRESCUE_API UApolloCheckpoint : public USaveGame {
  GENERATED_BODY()
@@ -47,6 +55,10 @@ public:
  UPROPERTY() float Remaining=1800;
  UPROPERTY() float AntennaAngle=-82;
  UPROPERTY() FName SelectedSite;
+ // Optional additive data: version-1 saves without a trail remain readable.
+ UPROPERTY() TArray<FApolloTrailPoint> Trail;
+ UPROPERTY() bool TrailFromStart=false;
+ UPROPERTY() bool TrailSimplified=false;
  UPROPERTY() bool LookLearned=false;
  UPROPERTY() bool MoveLearned=false;
  bool Has(const TCHAR* Task) const;

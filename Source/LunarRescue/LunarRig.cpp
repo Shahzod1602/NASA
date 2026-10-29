@@ -35,11 +35,11 @@ void ALunarCharacter::PoseSuitRig(){
   SuitRig->SetRelativeRotation(SuitCoordinate.Inverse());HandRig->SetRelativeRotation(SuitCoordinate.Inverse());
  }
  const bool Show=!G->Menu&&(G->IsActive()||G->Stage==ELunarStage::Briefing||G->Stage==ELunarStage::Won);
- const bool Capture=PhotoCaptureFrames>0||(FScreenshotRequest::IsScreenshotRequested()&&!FScreenshotRequest::ShouldShowUI());
- SuitRig->SetVisibility(Show&&ThirdPerson);HandRig->SetVisibility(Show&&!ThirdPerson&&Camera->FieldOfView>60&&!Capture);
+ const bool CapturingPhoto=PhotoCaptureFrames>0||(FScreenshotRequest::IsScreenshotRequested()&&!FScreenshotRequest::ShouldShowUI());
+ SuitRig->SetVisibility(Show&&ThirdPerson);HandRig->SetVisibility(Show&&!ThirdPerson&&Camera->FieldOfView>60&&!CapturingPhoto);
  if(PhotoCaptureFrames>0)--PhotoCaptureFrames;
  if(!SuitRig->GetSkinnedAsset()||!HandRig->GetSkinnedAsset())return;
- for(const auto& C:SuitArms){C->SetVisibility(false);C->SetCastShadow(false);}for(int I=0;I<Gloves.Num();++I)Gloves[I]->SetVisibility((I==0||I==8)&&Show&&!ThirdPerson&&Camera->FieldOfView>60&&!Capture);
+ for(const auto& C:SuitArms){C->SetVisibility(false);C->SetCastShadow(false);}for(int I=0;I<Gloves.Num();++I)Gloves[I]->SetVisibility((I==0||I==8)&&Show&&!ThirdPerson&&Camera->FieldOfView>60&&!CapturingPhoto);
  for(const auto& C:SuitBody)C->SetCastShadow(false);SuitRig->bCastHiddenShadow=true;
  if(ThirdPerson)for(const auto& C:SuitBody)C->SetVisibility(false,true);
  auto Set=[&](UPoseableMeshComponent* C,const FString& Name,FVector P,FQuat R=FQuat::Identity){
@@ -71,7 +71,10 @@ void ALunarCharacter::PoseSuitRig(){
  if(Show){
   Set(SuitRig,TEXT("root"),FVector::ZeroVector);Set(SuitRig,TEXT("pelvis"),SuitBody[1]->GetRelativeLocation()+FVector(0,0,-12));
   Set(SuitRig,TEXT("chest"),SuitBody[0]->GetRelativeLocation()+FVector(0,0,30));Set(SuitRig,TEXT("head"),SuitBody[2]->GetRelativeLocation());
-  for(int S=0;S<2;++S){const int B=4+S*3;const FString Side=S?TEXT("r"):TEXT("l");const FVector Hip=SuitBody[B]->GetRelativeLocation(),Knee=SuitBody[B+1]->GetRelativeLocation(),Foot=SuitBody[B+2]->GetRelativeLocation();
+  for(int S=0;S<2;++S){const int B=4+S*3;const FString Side=S?TEXT("r"):TEXT("l");// Body and hidden-shadow skeleton use physical hips, independent of
+   // the separate off-screen first-person trouser presentation.
+   const FVector Hip(0,S?12.f:-12.f,SuitBody[1]->GetRelativeLocation().Z-12);
+   const FVector Knee=SuitBody[B+1]->GetRelativeLocation(),Foot=SuitBody[B+2]->GetRelativeLocation();
    Set(SuitRig,TEXT("thigh_")+Side,Hip,FQuat::FindBetweenNormals(FVector(4,0,-35).GetSafeNormal(),(Knee-Hip).GetSafeNormal()));
    Set(SuitRig,TEXT("calf_")+Side,Knee,FQuat::FindBetweenNormals(FVector(-1,0,-31).GetSafeNormal(),(Foot-Knee).GetSafeNormal()));
    Set(SuitRig,TEXT("foot_")+Side,Foot,SuitBody[B+2]->GetRelativeRotation().Quaternion());

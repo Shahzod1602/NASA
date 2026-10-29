@@ -56,3 +56,28 @@ Haqiqiy grid balandlik/collisionni, undan hisoblangan slope esa A/B yo‘llarnin
 | Authored content | SELENE/ARES, rescue voqeasi, science records, joylashtirilgan baza/toshlar; [credits](CREDITS.md). |
 
 Science & Sources oynasi kelajakda uch bo‘limni aniq ajratadi: “Measured & derived data”, “Simplified gameplay rules”, “Authored story & objects”. Asosiy HUD qisqa qoladi.
+
+## Presentation update - 29 October 2026
+
+Intrepid contact detail is fitted to the existing imported terrain collision.
+It is an authored visual accommodation to the triangulated DEM, not measured
+landing-gear physics or a reconstruction of the 1969 touchdown attitude.
+Small surface fragments and tool motions remain authored detail; they do not
+increase the spatial resolution of the NASA/LROC elevation source. Debrief
+reports recorded horizontal travel, cargo/documentation and optional work.
+The timed exercise balance is a gameplay time budget. See EXPEDITION_POLISH.md.
+
+## Local expedition trace and presentation additions
+
+My Expedition draws a sampled local gameplay path in the existing world-centimetre
+coordinate system over the modern LROC background. Gold is the current player's
+recorded trace; thin cyan is the separately sourced reconstructed historical
+traverse. The display is bounded to 1,024 points and may be simplified. Teleports
+and restored checkpoints begin separate segments; missing pre-update data is
+labelled partial rather than reconstructed. Display polyline length is not used
+to replace the independently accumulated horizontal movement distance.
+
+Photo/cargo markers identify mapped work sites whose tasks were committed. They
+do not claim to record the camera's exact shutter location. Boot marks, garment
+shapes, cargo arrangement and stowage animation are authored visual content. They
+add no terrain measurements, astronaut biomechanical validation or safety rating.

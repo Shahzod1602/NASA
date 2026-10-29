@@ -18,3 +18,21 @@ Muallif o‘z kodiga MIT (sodda permissive) yoki Apache-2.0 (patent grant va qo�
 | AI yordami | OpenAI Codex: ushbu audit, manbalarni tekshirish, testlarni ishga tushirish va hujjat yozishda yordam. AI yordamining o‘zi NASA endorsement yoki ilmiy validatsiya emas; muallif review qiladi. |
 
 Asset jadvali repositorydagi creditlarga tayangan; har bir upstream assetning aynan ushbu nusxasi va qayta tarqatish huquqi yangidan to‘liq tekshirilgan deb da’vo qilinmaydi. Packaged Credits tarkibi va tanlovdagi third-party shartlarini release oldidan alohida solishtirish kerak. Barcha materialni bitta “NASA data” yoki bitta kod litsenziyasi ostida ko‘rsatish mumkin emas.
+
+## Expedition presentation - 29 October 2026
+
+Existing lander, rock, suit/tool, material and audio assets retain their original
+attributions and licences. This pass adds authored arrangements and runtime
+poses; four existing base materials gain persisted instancing usage through
+the Unreal Editor API. OpenAI Codex assisted implementation, review and
+documentation. Prepared playtest forms do not constitute human test results.
+
+## Expedition experience — local development, October 2026
+
+The suit silhouette refinements, local trail presentation, footprint pooling and
+cargo-stowage arrangement are authored project work with OpenAI Codex assistance.
+The existing NASA/LROC terrain, historical traverse, Surveyor/lander models, suit
+materials and tool meshes retain their existing credits and licence terms. No
+additional NASA measurements or historical footprint data were imported. The
+cargo rack and animation are an educational display, not a reconstruction of
+Apollo cargo-handling procedures. The procedural boot-tread material is reused.

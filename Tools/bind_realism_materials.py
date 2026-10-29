@@ -23,3 +23,7 @@ for name in ('SK_A7L','SK_A7L_Hands'):
     results.append({'mesh':name,'before':before,'after':after,'vertices_per_lod':vertices})
 (root/'Reports/realism-material-bindings.json').write_text(json.dumps(results,indent=2))
 u.log('REALISM_SUIT_BINDINGS_VERIFIED')
+
+# Persist the required HISM permutations before cooking the presentation batches.
+import runpy
+runpy.run_path(str(root/"Tools/prepare_presentation_materials.py"))

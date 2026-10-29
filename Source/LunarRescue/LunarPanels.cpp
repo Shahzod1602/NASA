@@ -1,7 +1,9 @@
 #include "LunarPanels.h"
+#include "LunarTrailMap.h"
 #include "LunarSettings.h"
 #include "LunarGame.h"
 #include "Blueprint/WidgetTree.h"
+#include "Blueprint/WidgetLayoutLibrary.h"
 #include "Components/Border.h"
 #include "Components/VerticalBox.h"
 #include "Components/VerticalBoxSlot.h"
@@ -27,8 +29,8 @@
 namespace {
 ALunarGameMode* Game(UObject* O){return Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(O));}
 ALunarCharacter* Player(UObject* O){return Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(O,0));}
-UTextBlock* Text(UWidgetTree* W,const FString& T,int Size=22){auto* L=W->ConstructWidget<UTextBlock>();L->SetText(FText::FromString(T));auto F=L->GetFont();F.Size=FMath::RoundToInt(Size*ULunarSettings::Get()->TextScale);F.TypefaceFontName=TEXT("Regular");L->SetFont(F);L->SetAutoWrapText(true);L->SetColorAndOpacity(FSlateColor(FLinearColor(.9,.94,.93)));return L;}
-UButton* Button(UWidgetTree* W,const FString& T){auto* B=W->ConstructWidget<UButton>();B->SetBackgroundColor(FLinearColor(.055,.14,.18));B->AddChild(Text(W,T,20));return B;}
+UTextBlock* Text(UWidgetTree* W,const FString& T,int Size=22){auto* L=W->ConstructWidget<UTextBlock>();L->SetText(FText::FromString(T));auto F=L->GetFont();F.Size=FMath::RoundToInt(Size*ULunarSettings::Get()->TextScale);F.TypefaceFontName=TEXT("Regular");L->SetFont(F);L->SetAutoWrapText(true);if(auto* Panel=W->GetTypedOuter<ULunarPanel>();Panel&&!Panel->Settings){L->SetAutoWrapText(false);L->SetWrapTextAt(Panel->EvidenceContentWidth());}L->SetColorAndOpacity(FSlateColor(FLinearColor(.9,.94,.93)));return L;}
+UButton* Button(UWidgetTree* W,const FString& T){auto* B=W->ConstructWidget<UButton>();B->SetBackgroundColor(FLinearColor(.055,.14,.18));auto* Caption=Text(W,T,20);Caption->SetAutoWrapText(false);Caption->SetWrapTextAt(0);B->AddChild(Caption);return B;}
 FString Title(FName K){static const TMap<FName,FString> Extra={{TEXT("HudOpacity"),TEXT("HUD background opacity")},{TEXT("TutorialHints"),TEXT("Apollo tutorial hints")},{TEXT("MasterVolume"),TEXT("Master volume")},{TEXT("RenderScale"),TEXT("Render scale")},{TEXT("FrameLimit"),TEXT("Frame rate limit")},{TEXT("DisplayMode"),TEXT("Display mode")},{TEXT("TextureQuality"),TEXT("Texture quality")},{TEXT("ShadowQuality"),TEXT("Shadow quality")},{TEXT("ViewDistance"),TEXT("View distance")},{TEXT("AntiAliasing"),TEXT("Anti-aliasing")},{TEXT("AmbientOcclusion"),TEXT("Ambient occlusion")},{TEXT("MotionBlur"),TEXT("Motion blur")},{TEXT("MouseSmoothing"),TEXT("Mouse smoothing")}};if(const auto* V=Extra.Find(K))return *V;static const TMap<FName,FString> Titles={{TEXT("Sensitivity"),TEXT("Mouse sensitivity")},{TEXT("TextScale"),TEXT("Interface text size")},{TEXT("SubtitleScale"),TEXT("Subtitle size")},{TEXT("EffectsVolume"),TEXT("Suit and tool volume")},{TEXT("RadioVolume"),TEXT("Radio volume")},{TEXT("Brightness"),TEXT("Brightness")},{TEXT("FieldOfView"),TEXT("Field of view")},{TEXT("InvertY"),TEXT("Invert mouse Y")},{TEXT("CameraMotion"),TEXT("Hand motion")},{TEXT("ToggleSprint"),TEXT("Toggle fast stride")},{TEXT("Quality"),TEXT("Graphics quality")},{TEXT("MoveForward"),TEXT("Move forward")},{TEXT("MoveBack"),TEXT("Move backward")},{TEXT("MoveLeft"),TEXT("Move left")},{TEXT("MoveRight"),TEXT("Move right")},{TEXT("Interact"),TEXT("Open work tool")},{TEXT("Jump"),TEXT("Hop")},{TEXT("Route"),TEXT("Next site / journal page")},{TEXT("Journal"),TEXT("Field journal")},{TEXT("View"),TEXT("Camera view")},{TEXT("Sprint"),TEXT("Fast stride")},{TEXT("Zoom"),TEXT("Visor zoom")}};const FString* T=Titles.Find(K);return T?*T:K.ToString();}
 }
 UTexture2D* ALunarCharacter::LoadEvidencePhoto(const FString& Relative){
@@ -125,13 +127,18 @@ void ULunarSettingRow::Selected(FInputChord Chord){auto* S=ULunarSettings::Get()
 
 TSharedRef<SWidget> ULunarPanel::RebuildWidget(){SetIsFocusable(true);Rebuild();return Super::RebuildWidget();}
 void ULunarPanel::NativeConstruct(){Super::NativeConstruct();SetKeyboardFocus();}
+float ULunarPanel::EvidenceContentWidth() const {
+ const FVector2D View=UWidgetLayoutLibrary::GetViewportSize(this);const float Dpi=FMath::Max(.1f,UWidgetLayoutLibrary::GetViewportScale(this));
+ return FMath::Max(300.f,float(View.X>1?View.X:1280)/Dpi-96.f);
+}
 void ULunarPanel::Rebuild(){
+ EvidenceLayoutWidth=EvidenceContentWidth();
  if(Settings){BuildSettings();return;}
  Photo=nullptr;
  if(!Body){auto* Border=WidgetTree->ConstructWidget<UBorder>();Border->SetBrushColor(FLinearColor(.008,.02,.033,.99));Border->SetPadding(FMargin(32,20));WidgetTree->RootWidget=Border;auto* Scroll=WidgetTree->ConstructWidget<UScrollBox>();Border->AddChild(Scroll);Body=WidgetTree->ConstructWidget<UVerticalBox>();Scroll->AddChild(Body);}
  else Body->ClearChildren();
  auto Add=[&](UWidget* W){auto* RowLayout=Body->AddChildToVerticalBox(W);RowLayout->SetPadding(FMargin(4,7));};
- auto* G=Game(this);Add(Text(WidgetTree,Settings?TEXT("SETTINGS"):G&&G->Stage==ELunarStage::Won?TEXT("EXPEDITION DEBRIEF"):TEXT("EVIDENCE ALBUM"),30));
+ auto* G=Game(this);Add(Text(WidgetTree,Settings?TEXT("SETTINGS"):G&&(G->Stage==ELunarStage::Won||G->Stage==ELunarStage::Lost)?TEXT("EXPEDITION DEBRIEF"):TEXT("EVIDENCE ALBUM"),30));
  auto* Top=WidgetTree->ConstructWidget<UHorizontalBox>();Add(Top);auto* Back=Button(WidgetTree,TEXT("Close / Esc / F1"));Back->OnClicked.AddDynamic(this,&ULunarPanel::Close);Top->AddChild(Back);
  if(Settings){
   auto* Reset=Button(WidgetTree,TEXT("Restore defaults"));Reset->OnClicked.AddDynamic(this,&ULunarPanel::ResetSettings);Top->AddChild(Reset);
@@ -141,10 +148,26 @@ void ULunarPanel::Rebuild(){
   return;
  }
  if(!G)return;
+ if(G->Apollo){auto* MapButton=Button(WidgetTree,ShowExpeditionMap?TEXT("Photos & cargo"):TEXT("My Expedition / map"));MapButton->OnClicked.AddDynamic(this,&ULunarPanel::ToggleExpeditionMap);Top->AddChild(MapButton);}
+ if(ShowExpeditionMap){
+  Add(Text(WidgetTree,TEXT("MY EXPEDITION"),27));
+  Add(Text(WidgetTree,TEXT("Gold solid line: your recorded walk. Thin cyan line: reconstructed historical traverse."),18));
+  auto* Map=CreateWidget<ULunarTrailMap>(GetOwningPlayer());auto* MapSize=WidgetTree->ConstructWidget<USizeBox>();MapSize->SetHeightOverride(480);MapSize->AddChild(Map);Add(MapSize);
+  Add(Text(WidgetTree,TEXT("Square: photographed site. Crossed square: cargo collected there. Site markers indicate work locations, not shutter positions."),18));
+  Add(Text(WidgetTree,G->ApolloTrailSummary(),18));
+  Add(Text(WidgetTree,FString::Printf(TEXT("%.0f m recorded horizontal movement. The display trace is not used to recalculate this distance."),G->ApolloDistance),19));
+  Add(Text(WidgetTree,TEXT("Modern NASA/LROC orbital map and mapped sites. Your trace is local gameplay telemetry; it is not a historical astronaut track or a terrain safety rating."),17));
+  return;
+ }
  if(G->ApolloPhotoPending)Add(Text(WidgetTree,TEXT("Your latest photograph is still being saved."),20));
  else if(G->ApolloPhotoFailed)Add(Text(WidgetTree,TEXT("Photo could not be saved. Close the album and open the camera to retry."),20));
  int Parts=0;for(int i=0;i<3;++i)if(G->ApolloParts&(1<<i))++Parts;
- Add(Text(WidgetTree,FString::Printf(TEXT("%s  |  %.0f m walked  |  %02d:%02d elapsed\nCargo: %d/3 samples, %d/3 Surveyor components. Evidence photographs: %d.\n%s"),G->ApolloTimed?TEXT("Timed exercise"):TEXT("Untimed historical exploration"),G->ApolloDistance,int(G->ApolloElapsed)/60,int(G->ApolloElapsed)%60,G->SampleCount(),Parts,G->ApolloEvidence.Num(),G->Stage==ELunarStage::Won?TEXT("Cargo stowed at Intrepid. The real crew reunited with Richard Gordon in Yankee Clipper and returned to Earth on 24 November 1969."):TEXT("Only committed work is listed. Cancelled work is never added to cargo.")),21));
+ Add(Text(WidgetTree,FString::Printf(TEXT("%s  |  %.0f m recorded (horizontal)  |  %02d:%02d elapsed\nCargo: %d/3 samples, %d/3 Surveyor components. Evidence photographs: %d.\n%s"),G->ApolloTimed?TEXT("Timed exercise"):TEXT("Untimed historical exploration"),G->ApolloDistance,int(G->ApolloElapsed)/60,int(G->ApolloElapsed)%60,G->SampleCount(),Parts,G->ApolloEvidence.Num(),G->Stage==ELunarStage::Won?TEXT("Cargo stowed at Intrepid. The real crew reunited with Richard Gordon in Yankee Clipper and returned to Earth on 24 November 1969."):TEXT("Only committed work is listed. Cancelled work is never added to cargo.")),21));
+ if(G->Stage==ELunarStage::Won||G->Stage==ELunarStage::Lost){
+  Add(Text(WidgetTree,TEXT("YOUR EXPEDITION / OBSERVED FACTS"),23));
+  for(const FString& Line:G->ApolloDebriefLines())Add(Text(WidgetTree,Line,18));
+  Add(Text(WidgetTree,G->ApolloRetryAdvice(),20));
+ }
  const TCHAR* Cargo[]={TEXT("12031 / Head: basalt rock; helps study lunar volcanic history."),TEXT("12032 / Bench: fine soil; records the surface regolith."),TEXT("12027 / Sharp: drive-tube core; preserves a shallow soil column."),TEXT("Surveyor TV camera: materials and mechanisms after lunar exposure."),TEXT("Surveyor scoop: returned hardware and adhering soil."),TEXT("Surveyor cable segment: returned material for laboratory examination.")};
  auto* Nav=WidgetTree->ConstructWidget<UHorizontalBox>();Add(Nav);auto* Prev=Button(WidgetTree,TEXT("< Previous photo"));auto* NextB=Button(WidgetTree,TEXT("Next photo >"));Prev->OnClicked.AddDynamic(this,&ULunarPanel::Previous);NextB->OnClicked.AddDynamic(this,&ULunarPanel::Next);Nav->AddChild(Prev);Nav->AddChild(NextB);
  EvidenceIndex=FMath::Clamp(EvidenceIndex,0,FMath::Max(0,G->ApolloEvidence.Num()-1));
@@ -166,6 +189,7 @@ void ULunarPanel::Rebuild(){
 }
 FReply ULunarPanel::NativeOnKeyDown(const FGeometry& Geo,const FKeyEvent& E){if(E.GetKey()==EKeys::Escape||E.GetKey()==EKeys::F1){Close();return FReply::Handled();}if(!Settings&&(E.GetKey()==EKeys::Right||E.GetKey()==EKeys::Q)){Next();return FReply::Handled();}if(!Settings&&E.GetKey()==EKeys::Left){Previous();return FReply::Handled();}return Super::NativeOnKeyDown(Geo,E);}
 void ULunarPanel::Close(){ULunarSettings::Get()->RevertDisplay();if(auto* P=Player(this))P->ClosePanel();}
+void ULunarPanel::ToggleExpeditionMap(){ShowExpeditionMap=!ShowExpeditionMap;Rebuild();}
 void ULunarPanel::Previous(){if(auto* G=Game(this))EvidenceIndex=(EvidenceIndex+FMath::Max(1,G->ApolloEvidence.Num())-1)%FMath::Max(1,G->ApolloEvidence.Num());Rebuild();}
 void ULunarPanel::Next(){if(auto* G=Game(this))EvidenceIndex=(EvidenceIndex+1)%FMath::Max(1,G->ApolloEvidence.Num());Rebuild();}
 void ULunarPanel::ResetSettings(){ULunarSettings::Get()->Reset();ULunarSettings::Get()->Apply(Player(this));Rebuild();}

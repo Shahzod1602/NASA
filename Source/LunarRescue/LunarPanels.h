@@ -25,6 +25,8 @@ class LUNARRESCUE_API ULunarPanel : public UUserWidget {
  GENERATED_BODY()
 public:
  bool Settings=false;
+ bool ShowExpeditionMap=false;
+ UFUNCTION() void ToggleExpeditionMap();
  int32 EvidenceIndex=0;
  int32 SettingsTab=0;
  bool BuiltSettings=false;
@@ -45,6 +47,8 @@ public:
  virtual void NativeConstruct() override;
  virtual TSharedRef<SWidget> RebuildWidget() override;
  virtual FReply NativeOnKeyDown(const FGeometry& Geometry,const FKeyEvent& Event) override;
+ float EvidenceLayoutWidth=0;
+ float EvidenceContentWidth() const;
  void Rebuild();
  UFUNCTION() void Close();
  UFUNCTION() void Previous();
