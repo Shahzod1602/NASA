@@ -5,7 +5,8 @@ Extract the entire Windows ZIP into a folder, then run LunarRescue.exe.
 Unreal Editor is not required. Keep Engine, LunarRescue and Credits
 beside the executable.
 
-Press 1 or Enter to choose the Moon, or 2 to choose Mars.
+At home, press 1 or Enter for the Moon, or 2 for Mars.
+Choose Apollo 12 / SELENE / ARES, then select Start mission.
 At the Apollo briefing, Enter begins a new expedition.
 T selects historical exploration (untimed) or a 30-minute exercise.
 All game text and guidance are in English.
@@ -13,7 +14,7 @@ All game text and guidance are in English.
 CONTROLS
 WASD / arrows: move             Mouse: look around
 E: open work tool              Left click: use the open tool
-Q: select a site / journal page Esc: cancel tool, then pause
+Q: select a site / journal page Esc: pause; cancel unfinished tool work
 Tab / J: map and field journal  F1: settings and key bindings
 I: photos, cargo and My Expedition   Mouse / arrows: level or antenna adjustment
 Space: hop                     Shift: faster stride
@@ -47,7 +48,7 @@ Bench: scoop fine soil, then seal and label it.
 Sharp: place the core tube, tap with the hammer four times, extract and cap it.
 Surveyor: release two fittings/cable ends, then remove and pack the component.
 Intrepid: open the manifest and confirm cargo stowage to finish.
-Esc safely cancels unfinished work. Cargo is committed only at the final action.
+Esc immediately pauses and safely cancels unfinished work. Cargo is committed only at the final action.
 Let each short tool motion finish before the next input. The tool tip follows
 the marked fitting; a lifted sample moves into its labeled pouch before stowing.
 
@@ -85,3 +86,9 @@ Official information:
 https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist
 
 Source and releases: https://github.com/Shahzod1602/NASA
+
+MISSION SELECTION
+Explore the Moon / Explore Mars opens the mission picker.
+Choose a card, then click START MISSION or press Enter.
+1 / 2: choose destination; Left / Right: select mission; Esc: back; F1: settings.
+Continue expedition resumes the saved Apollo checkpoint.

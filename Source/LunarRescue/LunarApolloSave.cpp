@@ -3,6 +3,7 @@
 #include "LunarApolloText.h"
 #include "LunarSettings.h"
 #include "LunarLoading.h"
+#include "LunarPanels.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/StaticMeshComponent.h"
@@ -103,7 +104,7 @@ bool ALunarGameMode::RestoreApolloCheckpoint(){
  ALunarCargoFinale::Reset(this);P->ResetFootprints();
  // Validate position before changing progress. In-progress work is never restored.
  ApolloPhotoFailed=false;ApolloToolFeedback.Reset();ApolloToolFeedbackRemaining=0;
- CancelApolloTool();ApolloInputHintRemaining=0;ApolloConfirmationRemaining=0;ApolloPackedPreviewRemaining=0;ApolloPackedPartRemaining=0;ApolloDustMode=false;Paused=false;Journal=false;ApolloConfirmNew=false;ApolloStarted=true;
+ CancelApolloTool();ApolloInputHintRemaining=0;ApolloConfirmationRemaining=0;ApolloPackedPreviewRemaining=0;ApolloPackedPartRemaining=0;ApolloDustMode=false;Paused=false;Journal=false;ApolloConfirmNew=false;ApolloStarted=true;ResetFieldLessons();
  ApolloGuideEnabled=ULunarSettings::Get()->TutorialHints;
  ApolloTimed=Save->Mode==TEXT("timed-exercise");
  ApolloRunId=Save->RunId;ApolloEvidence=Save->Evidence;ApolloTrail=Save->Trail;ApolloTrailFromStart=Save->TrailFromStart;ApolloTrailSimplified=Save->TrailSimplified;ApolloTrailSpacing=ApolloTrailSimplified?300.f:150.f;ApolloTrailPendingBreak=true;ApolloTrailLatest=Ground;ApolloTrailLatestTime=Save->Elapsed;ApolloElapsed=Save->Elapsed;ApolloDistance=Save->Distance;Oxygen=Save->Remaining;
@@ -133,6 +134,7 @@ bool ALunarGameMode::RestoreApolloCheckpoint(){
  Message(ApolloInstruction());return true;
 }
 void ALunarGameMode::ContinueApollo(){
+ if(Menu&&MainMenu&&MainMenu->IsIntroActive())return;
  if(!ApolloCachedCheckpoint)return;
  if(Menu){LunarLoading::Open(this,TEXT("/Game/Lunar/Maps/Apollo12"),TEXT("ResumeApollo=1"));return;}
  if(Apollo&&(Stage==ELunarStage::Briefing||Stage==ELunarStage::Lost))RestoreApolloCheckpoint();

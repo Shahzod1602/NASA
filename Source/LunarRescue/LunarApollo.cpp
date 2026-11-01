@@ -191,7 +191,7 @@ void ALunarGameMode::StartApollo(bool Confirmed){
  ApolloInputHintRemaining=0;
  ApolloConfirmationRemaining=0;ApolloConfirmationLabel=TEXT("RECORDED");ApolloToolFeedback.Reset();ApolloToolFeedbackRemaining=0;ApolloPackedPreviewRemaining=0;ApolloPackedSample=INDEX_NONE;ApolloGuideEnabled=ULunarSettings::Get()->TutorialHints;ApolloDustMode=false;ApolloDustCompared=false;ApolloDustPhotos=0;ApolloPackedPartRemaining=0;
  ALunarCargoFinale::Reset(this);
- ApolloConfirmNew=false;ApolloStarted=true;ApolloRunId=FGuid::NewGuid();ApolloPhotoPending=false;ApolloPhotoFailed=false;ApolloEvidence.Reset();
+ ApolloConfirmNew=false;ApolloStarted=true;ResetFieldLessons();ApolloRunId=FGuid::NewGuid();ApolloPhotoPending=false;ApolloPhotoFailed=false;ApolloEvidence.Reset();
  ApolloElapsed=0;ResetApolloTrail();
  if(auto* Character=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0)))Character->ResetFootprints();
  ApolloElapsed=0;ApolloDistance=0;Oxygen=OxygenCapacity;ApolloPhotos=0;ApolloParts=0;ApolloInstruments=0;SamplesCollected=0;SelectedSample=0;SurveyorPhotographed=false;

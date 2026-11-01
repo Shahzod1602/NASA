@@ -1,6 +1,6 @@
 # External model credits
 
-Imported on 2026-09-20 from the files in D:\Users\shaxz\Downloads.
+Imported on 2026-09-20 from locally supplied source files.
 The final Unreal assets are in Content/Lunar/Imported. Meshes were converted
 from GLB to static OBJ with SourceArt textures and scaled to Unreal centimeters.
 The imported textures are capped at 2K for the laptop GPU.

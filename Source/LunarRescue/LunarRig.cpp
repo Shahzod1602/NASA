@@ -1,4 +1,5 @@
 #include "LunarGame.h"
+#include "LunarPovMotion.h"
 #include "Components/PoseableMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -36,10 +37,13 @@ void ALunarCharacter::PoseSuitRig(){
  }
  const bool Show=!G->Menu&&(G->IsActive()||G->Stage==ELunarStage::Briefing||G->Stage==ELunarStage::Won);
  const bool CapturingPhoto=PhotoCaptureFrames>0||(FScreenshotRequest::IsScreenshotRequested()&&!FScreenshotRequest::ShouldShowUI());
- SuitRig->SetVisibility(Show&&ThirdPerson);HandRig->SetVisibility(Show&&!ThirdPerson&&Camera->FieldOfView>60&&!CapturingPhoto);
+ const bool CarryCell=!G->Apollo&&G->Stage==ELunarStage::RestorePower&&G->RepairStep==0;
+ const bool TaskHands=G->ApolloTool||G->Holding||CarryCell||G->ApolloPackedPreviewRemaining>0||G->ApolloPackedPartRemaining>0;
+ const bool FreeHandsVisible=LunarPovMotion::HandsVisible(Camera->GetComponentRotation().Pitch,TaskHands);
+ SuitRig->SetVisibility(Show&&ThirdPerson);HandRig->SetVisibility(Show&&!ThirdPerson&&Camera->FieldOfView>60&&!CapturingPhoto&&FreeHandsVisible);
  if(PhotoCaptureFrames>0)--PhotoCaptureFrames;
  if(!SuitRig->GetSkinnedAsset()||!HandRig->GetSkinnedAsset())return;
- for(const auto& C:SuitArms){C->SetVisibility(false);C->SetCastShadow(false);}for(int I=0;I<Gloves.Num();++I)Gloves[I]->SetVisibility((I==0||I==8)&&Show&&!ThirdPerson&&Camera->FieldOfView>60&&!CapturingPhoto);
+ for(const auto& C:SuitArms){C->SetVisibility(false);C->SetCastShadow(false);}for(int I=0;I<Gloves.Num();++I)Gloves[I]->SetVisibility((I==0||I==8)&&Show&&!ThirdPerson&&Camera->FieldOfView>60&&!CapturingPhoto&&FreeHandsVisible);
  for(const auto& C:SuitBody)C->SetCastShadow(false);SuitRig->bCastHiddenShadow=true;
  if(ThirdPerson)for(const auto& C:SuitBody)C->SetVisibility(false,true);
  auto Set=[&](UPoseableMeshComponent* C,const FString& Name,FVector P,FQuat R=FQuat::Identity){
@@ -62,7 +66,8 @@ void ALunarCharacter::PoseSuitRig(){
     // Authored digit lengths match the GLB bind pivots. Relaxed fingers are
     // slightly curled; the thumb opposes the four fingers when gripping.
     const float Lengths[]={.95f,1.f,.92f,.74f,.70f};
-    const float CurlDegrees=Digit==4?12.f+WorkBlend*24.f:14.f+WorkBlend*(Digit==0?32.f:44.f);
+    const bool Pointing=View&&S==1&&G->Mars&&!G->Apollo&&G->Holding&&(G->Stage==ELunarStage::CollectData||G->Stage==ELunarStage::RestorePower);
+    const float CurlDegrees=Pointing&&Digit==0?6.f:Digit==4?12.f+WorkBlend*24.f:14.f+WorkBlend*(Digit==0?32.f:44.f);
     const FQuat Curl=FRotator(-CurlDegrees,0,0).Quaternion();
     Set(C,FString::Printf(TEXT("tip%d_"),Digit)+Side,FingerMesh->GetRelativeLocation()+Rotation.RotateVector(FVector(4*Lengths[Digit],0,0)),Rotation*Curl*RestHand.Inverse());
    }

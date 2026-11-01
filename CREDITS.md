@@ -1,5 +1,27 @@
 # Credits va litsenziya holati
 
+## Current additions - 1 November 2026
+
+The intro uses **user-supplied LunarRescue artwork**, retained as the unchanged
+`SourceArt/Frontend/IntroReference.jpg`. Its supplied credit, received date and
+SHA-256 are recorded in [intro-manifest.json](SourceArt/Frontend/intro-manifest.json).
+Unreal imports it as a UI texture; the fade is authored UI animation. The image
+is an illustration, not a NASA survey product or evidence of NASA affiliation.
+No private correspondence, reference recordings or chat history is bundled.
+
+The compact HUD, pause page, gestures and Field lessons are authored project
+work with OpenAI Codex coding assistance. Existing asset licences remain intact.
+The Apollo 12 ground and map retain **NASA/GSFC/Arizona State University, LROC
+science team** credit; product URLs, hashes and processing metadata are in
+[the Apollo 12 manifest](SourceArt/Apollo12/manifest.json). Lesson history notes
+cite [NASA's Apollo 12 mission account](https://www.nasa.gov/missions/apollo/apollo-12-the-pinpoint-mission/);
+fictional rescue narratives and gameplay resource rules are labelled as project
+content. Answer summaries do not establish educational effectiveness.
+
+The project-wide code-licence issue noted in the historical audit below has not
+been resolved by this update. Engine and third-party materials retain their own
+terms; no licence is replaced here.
+
 2026-09-21 audit. Mavjud litsenziyalar o‘zgartirilmadi. Rootda loyiha kodini qamrab oluvchi LICENSE topilmadi; public GitHub repositoryning o‘zi reuse litsenziyasi emas.
 
 Muallif o‘z kodiga MIT (sodda permissive) yoki Apache-2.0 (patent grant va qo‘shimcha notice shartlari) kabi litsenziyani tanlashi mumkin. Bu qaror ushbu auditda qabul qilinmadi. Har ikkisi ham Unreal Engine yoki uchinchi tomon assetlarini avtomatik qayta litsenziyalamaydi. Space Apps shartlari alohida tekshiriladi.
@@ -36,3 +58,7 @@ materials and tool meshes retain their existing credits and licence terms. No
 additional NASA measurements or historical footprint data were imported. The
 cargo rack and animation are an educational display, not a reconstruction of
 Apollo cargo-handling procedures. The procedural boot-tread material is reused.
+
+## Mission-selection presentation - 31 October 2026
+
+The blue glass cards, mission picker and input flow are authored project UI implemented with AI coding assistance. The supplied menu videos informed the interaction reference; no reference recording was bundled as a game asset. The UI uses Unreal background blur and existing destination illustrations. No new planetary measurements or NASA affiliation are claimed.

@@ -50,7 +50,8 @@ void ALunarGameMode::ApolloPresentationChecks(){
  const float Clock=ApolloElapsed,Balance=Oxygen;Paused=true;TickApollo(10);AdvanceTime(10);
  Check(ApolloToolFeedbackRemaining==FeedbackTime&&ApolloElapsed==Clock&&Oxygen==Balance,TEXT("Pause holds feedback, mission clock and exercise balance"));
  Paused=false;P->PauseMission();
- Check(!ApolloTool&&ApolloToolFeedbackRemaining==0&&!SamplesCollected,TEXT("Escape clears transient feedback without recording unfinished work"));
+ Check(Paused&&!ApolloTool&&ApolloToolFeedbackRemaining==0&&!SamplesCollected,TEXT("Escape pauses and clears transient feedback without recording unfinished work"));
+ P->PauseMission();Check(!Paused&&!SamplesCollected,TEXT("A second Escape resumes before the sampling retry without granting cargo"));
  P->Interact();P->PrimaryClick();TickApollo(.8f);P->PrimaryClick();
  Check((SamplesCollected&1)&&ApolloConfirmationLabel==TEXT("RECORDED")&&ApolloToolFeedbackRemaining==0,TEXT("Sealing records cargo and changes progress feedback to a recorded confirmation"));
  ConfirmApolloWork(TEXT("Saving photograph..."),false);

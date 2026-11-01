@@ -1,6 +1,7 @@
 #include "LunarGame.h"
 #include "LunarTrail.h"
 #include "LunarCargoFinale.h"
+#include "LunarPauseMenu.h"
 #include "LunarPanels.h"
 #include "LunarSettings.h"
 #include "ApolloData.h"
@@ -63,7 +64,11 @@ void ALunarGameMode::ApolloExperienceChecks(){
  StartApollo(true);Stage=ELunarStage::ApolloReturn;SamplesCollected=ApolloParts=7;ApolloInstruments=3;CompleteApolloInteraction(HomeActor);
  Check(Stage==ELunarStage::Won&&ALunarCargoFinale::Active(this),TEXT("Actual return completion commits win before starting stowage"));
  P->PauseMission();P->StartMission();Check(!Paused&&ALunarCargoFinale::Active(this),TEXT("Enter resumes paused finale without skipping it"));
- P->PauseMission();P->PrimaryClick();Check(!Paused&&ALunarCargoFinale::Active(this),TEXT("Primary click resumes paused finale without skipping it"));
+ P->PauseMission();const auto* PausedScene=CargoFinale.Get();const float PausedSceneTime=PausedScene?PausedScene->PresentationTime():0;P->PrimaryClick();
+ Check(Paused&&ALunarCargoFinale::Active(this)&&PausedScene&&PausedScene->PresentationTime()==PausedSceneTime,TEXT("Background primary click leaves the finale paused without skipping or advancing it"));
+ Check(P->PauseMenu&&P->PauseMenu->GetVisibility()==ESlateVisibility::Visible,TEXT("Paused finale exposes its explicit pause actions"));
+ if(P->PauseMenu)P->PauseMenu->Resume();
+ Check(!Paused&&ALunarCargoFinale::Active(this)&&CargoFinale.Get()==PausedScene&&PausedScene->PresentationTime()==PausedSceneTime,TEXT("The actual Resume action preserves the same finale and presentation time"));
  const bool OriginalThird=P->ThirdPerson;P->ToggleSuitView();Check(P->ThirdPerson==OriginalThird,TEXT("Camera-view input cannot alter the preserved player view during stowage"));
  P->PauseMission();const float Clock=ApolloElapsed,Remaining=Oxygen;auto* Scene=CargoFinale.Get();const float SceneTime=Scene?Scene->PresentationTime():0;TickApollo(4);if(Scene)Scene->AdvancePresentation(4);
  Check(Paused&&Scene&&Scene->PresentationTime()==SceneTime&&Clock==ApolloElapsed&&Remaining==Oxygen,TEXT("Normal pause input freezes finale and completed telemetry"));

@@ -1,0 +1,7 @@
+{
+  "asset": "IntroReference.jpg",
+  "credit": "User-provided LunarRescue intro artwork, supplied for project integration. Not a NASA survey image. Existing project branding.",
+  "sha256": "0e1d72bd13fd288f47b8c6d18a59c9f83c068206e7f9a7b00681c549afdaa08f",
+  "received_date": "2026-11-01",
+  "processing": "Unmodified original JPEG; imported as a UI texture via Unreal AssetImportTask. Fade is rendered in UI code."
+}

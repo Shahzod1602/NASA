@@ -1,4 +1,5 @@
 #include "LunarGame.h"
+#include "LunarPovMotion.h"
 #include "Camera/CameraComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/TextRenderComponent.h"
@@ -45,7 +46,8 @@ void ALunarCharacter::UpdateApolloWorkVisuals(){
  WorkTool->SetVisibility(false);SamplePouch->SetVisibility(false);WorkPayload->SetVisibility(false);DrivenTube->SetVisibility(false);PouchSeal->SetVisibility(false);PouchLabel->SetVisibility(false);for(const auto& Jaw:ToolJaws)Jaw->SetVisibility(false);
  if(!Show)return;
  const int Tool=G->ApolloTool,Phase=G->ApolloToolPhase;
- const float T=ApolloWorkMinimumJerk(1-G->ApolloToolCooldown/.75f);
+ const float RawMotion=1-LunarPovMotion::Ratio(G->ApolloToolCooldown,.75f);
+ const float T=ApolloWorkMinimumJerk(RawMotion);
  const FTransform View=Camera->GetComponentTransform();
  auto Local=[&](FVector P){return View.InverseTransformPosition(P);};
  auto AssignToolMesh=[&](UStaticMeshComponent* C,const TCHAR* Name){C->SetStaticMesh(ApolloToolMeshes.FindRef(FName(Name)));C->SetVisibility(C->GetStaticMesh()!=nullptr);};
@@ -59,14 +61,22 @@ void ALunarCharacter::UpdateApolloWorkVisuals(){
  const bool Packing=G->ApolloPackedPreviewRemaining>0;
  const int Sample=Packing?G->ApolloPackedSample:G->SelectedSample;
  if((Tool==4&&Phase>=1)||(Packing&&Sample<2)){
-  AssignToolMesh(SamplePouch,TEXT("SM_SamplePouch"));const float Drop=Packing?ApolloWorkMinimumJerk((1-G->ApolloPackedPreviewRemaining)/1.2f)*32:0;
+  AssignToolMesh(SamplePouch,TEXT("SM_SamplePouch"));
+  const float PackedAge=FMath::Clamp(2.2f-G->ApolloPackedPreviewRemaining,0.f,2.2f);
+  const float Drop=Packing?ApolloWorkMinimumJerk((PackedAge-1.35f)/.85f)*32:0;
   SamplePouch->SetRelativeLocation(FVector(80,-28,-24-Drop));SamplePouch->SetRelativeRotation(FRotator(0,-8,4));SamplePouch->SetRelativeScale3D(FVector::OneVector);
   const FString Caption=Sample==1?TEXT("12032"):TEXT("12031");if(PouchCaption!=Caption){PouchCaption=Caption;PouchLabel->SetText(FText::FromString(Caption));}PouchLabel->SetRelativeLocation(FVector(77.7f,-28,-25-Drop));PouchLabel->SetRelativeRotation(FRotator(0,180,0));PouchLabel->SetVisibility(true);
   if(Packing){
-   const float Deposit=ApolloWorkMinimumJerk((2.2f-G->ApolloPackedPreviewRemaining)/.45f);
-   if(Deposit<1)Payload(View.TransformPosition((FMath::Lerp(FVector(90,18,-8),FVector(80,-28,-23),Deposit)-FVector(0,0,Drop))),Sample==1);
-   PouchSeal->SetRelativeLocation(FVector(80,-28,-15-Drop));PouchSeal->SetRelativeScale3D(FVector(.04*Deposit,.13,.009));PouchSeal->SetRelativeRotation(FRotator(0,-8,4));PouchSeal->SetVisibility(Deposit>.1f);
-   WorkGrip[0]=FVector(58,-27,-25-Drop);WorkGrip[1]=FVector(60,-10,-24-Drop);WorkGripActive=true;
+   // Separate the deposit, sealing sweep and lowering, using only the existing
+   // committed preview clock. Cargo is already recorded; this awards nothing.
+   const float Deposit=ApolloWorkMinimumJerk(PackedAge/.75f);
+   const float Seal=ApolloWorkMinimumJerk((PackedAge-.65f)/.65f);
+   const FVector Carried=FMath::Lerp(FVector(90,18,-8),FVector(80,-28,-23),Deposit)+FVector(0,0,6*FMath::Sin(Deposit*PI)-Drop);
+   if(Deposit<1)Payload(View.TransformPosition(Carried),Sample==1);
+   PouchSeal->SetRelativeLocation(FVector(80,-28,-15-Drop));PouchSeal->SetRelativeScale3D(FVector(.04*Seal,.13,.009));PouchSeal->SetRelativeRotation(FRotator(0,-8,4));PouchSeal->SetVisibility(Seal>.025f);
+   WorkGrip[0]=FVector(64,-30,-25-Drop);
+   WorkGrip[1]=PackedAge<.65f?Carried+FVector(-7,5,0):FMath::Lerp(FVector(74,-15,-16-Drop),FVector(74,-35,-16-Drop),Seal);
+   WorkGripActive=true;
   }
  }
  if(G->ApolloPackedPartRemaining>0){
@@ -80,8 +90,9 @@ void ALunarCharacter::UpdateApolloWorkVisuals(){
  FVector Contact=G->ApolloContactPoint(),Tip;
  if(Tool==4){
   Contact=WorkContact;
-  Tip=Phase==0?Contact:FMath::Lerp(Contact,View.TransformPosition(FVector(90,18,-8)),T);
-  if(Phase>=1&&G->ApolloToolCooldown<=0)Tip=View.TransformPosition(FVector(90,18,-8));
+  const FVector Carry=View.TransformPosition(FVector(90,18,-8));
+  Tip=Phase==0?Contact:Sample==1?LunarPovMotion::ScoopLift(Contact,Carry,RawMotion):FMath::Lerp(Contact,Carry,T);
+  if(Phase>=1&&G->ApolloToolCooldown<=0)Tip=Carry;
   if(Phase>=1)Payload(Tip+FVector(0,0,1),Sample==1);
  }else if(Tool==6){Tip=Contact;}
  else{
@@ -105,8 +116,14 @@ void ALunarCharacter::UpdateApolloWorkVisuals(){
  }
  const bool Tongs=Tool==4&&Sample==0,Cutters=Tool==6;
  const FVector End=Tongs?FVector(22,0,-4):Cutters?FVector(11,0,0):FVector(14,0,-2);
- const FQuat Rotation=View.GetRotation()*FRotator(35,-25,0).Quaternion();const FVector Base=Tip-Rotation.RotateVector(End);
+ // A soil scoop digs, curls and lifts rather than translating as a rigid rod.
+ // The handle grip is derived from this same frame, so the palm stays attached.
+ const bool SoilScoop=Tool==4&&Sample==1;
+ const float Dig=SoilScoop&&Phase>=1?FMath::Sin(RawMotion*PI):0;
+ const FRotator ToolPose=SoilScoop?FRotator(Phase==0?48.f:FMath::Lerp(48.f,18.f,T),-25+Dig*10,Dig*12):FRotator(35,-25,0);
+ const FQuat Rotation=View.GetRotation()*ToolPose.Quaternion();const FVector Base=Tip-Rotation.RotateVector(End);
  AssignToolMesh(WorkTool,Tongs?TEXT("SM_TongsBase"):Cutters?TEXT("SM_CuttersBase"):TEXT("SM_SoilScoop"));WorkTool->SetWorldLocation(Base);WorkTool->SetWorldRotation(Rotation);WorkTool->SetWorldScale3D(FVector::OneVector);
+ if(SoilScoop&&WorkPayload->IsVisible())WorkPayload->SetWorldRotation(Rotation);
  if(Tongs||Cutters){
   const float Close=Tongs?(Phase>=1?T:0):G->ApolloToolCooldown>0?FMath::Sin(T*PI):0;
   for(int I=0;I<2;++I){AssignToolMesh(ToolJaws[I],Tongs?(I?TEXT("SM_TongsJawR"):TEXT("SM_TongsJawL")):(I?TEXT("SM_CuttersJawR"):TEXT("SM_CuttersJawL")));

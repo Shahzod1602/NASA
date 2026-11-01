@@ -23,7 +23,8 @@ void ALunarGameMode::ApolloPolishChecks(){
  if(MovementPhase==0){
  Check(!ApolloTimed&&ApolloToolsEnabled,TEXT("Default product mode is untimed exploration with distinct tools"));
  StartApollo(true);P->GetCharacterMovement()->DisableMovement();AdvanceTime(2000);Check(IsActive()&&Oxygen==1800,TEXT("Historical exploration does not time out after 30 minutes"));
- Aim(ModuleActor);P->Interact();Check(ApolloTool==8&&ApolloAction==0,TEXT("E opens checkout without committing it"));P->PauseMission();Check(!ApolloTool&&!Paused&&ApolloAction==0,TEXT("Escape cancels a tool before pausing"));
+ Aim(ModuleActor);P->Interact();Check(ApolloTool==8&&ApolloAction==0,TEXT("E opens checkout without committing it"));P->PauseMission();Check(!ApolloTool&&Paused&&ApolloAction==0,TEXT("Escape immediately pauses and cancels unfinished work without committing it"));
+ P->PauseMission();Check(!Paused&&ApolloAction==0,TEXT("A second Escape resumes the uncommitted equipment check"));
  for(int I=0;I<3;++I){P->Interact();Click();}
  Check(Stage==ELunarStage::ApolloDeploy,TEXT("Equipment checks advance through actual primary-action input"));
  Aim(ApolloInstrumentActors[0]);P->Interact();Click();Check(ApolloTool==2&&ApolloInstruments==0,TEXT("Unlevel seismometer cannot be committed"));

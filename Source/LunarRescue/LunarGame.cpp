@@ -4,6 +4,9 @@
 #include "LunarApolloText.h"
 #include "LunarSettings.h"
 #include "LunarPanels.h"
+#include "LunarPauseMenu.h"
+#include "LunarLearning.h"
+#include "LunarFlightHUD.h"
 #include "LunarLoading.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -32,12 +35,6 @@
 #include "HAL/PlatformMemory.h"
 #include "HAL/FileManager.h"
 #include "GameFramework/WorldSettings.h"
-
-// Canvas and pointer input share the same viewport-pixel card bounds.
-static FBox2D MissionCardBounds(int32 Index,float Width,float Height) {
- const FVector2D Min(Width*(Index==1?.53f:.1f),Height*.32f);
- return FBox2D(Min,Min+FVector2D(Width*.37f,Height*.43f));
-}
 
 ALunarCharacter::ALunarCharacter() {
  PrimaryActorTick.bCanEverTick=true;
@@ -92,7 +89,7 @@ void ALunarCharacter::Tick(float D) {
   }
  }
  if(CarriedModule)CarriedModule->SetVisibility(G&&G->Stage==ELunarStage::RestorePower&&G->RepairStep==0&&Camera->FieldOfView>60);
- UpdateSuit(D);
+ UpdateSuit(D);SyncPauseMenu();
 }
 
 void ALunarCharacter::Landed(const FHitResult& Hit) {
@@ -130,6 +127,10 @@ void ALunarCharacter::SetupPlayerInputComponent(UInputComponent* I) {
  I->BindAction("Pause",IE_Pressed,this,&ALunarCharacter::PauseMission);
  I->BindKey(EKeys::One,IE_Pressed,this,&ALunarCharacter::ChooseMoon);
  I->BindKey(EKeys::Two,IE_Pressed,this,&ALunarCharacter::ChooseMars);
+ I->BindKey(EKeys::Left,IE_Pressed,this,&ALunarCharacter::PreviousMenuMission).bConsumeInput=false;
+ I->BindKey(EKeys::Right,IE_Pressed,this,&ALunarCharacter::NextMenuMission).bConsumeInput=false;
+ I->BindKey(EKeys::Up,IE_Pressed,this,&ALunarCharacter::PreviousMenuMission).bConsumeInput=false;
+ I->BindKey(EKeys::Down,IE_Pressed,this,&ALunarCharacter::NextMenuMission).bConsumeInput=false;
  I->BindKey(EKeys::M,IE_Pressed,this,&ALunarCharacter::MissionMenu);
  I->BindKey(EKeys::J,IE_Pressed,this,&ALunarCharacter::ToggleJournal);
  I->BindAction("Journal",IE_Pressed,this,&ALunarCharacter::ToggleJournal);
@@ -160,14 +161,15 @@ void ALunarCharacter::ToggleJournal() {
  if(auto* G=Mission(this))if(G->Apollo&&G->IsActive()) {
   G->CancelApolloTool();
   if(G->Journal){G->Journal=false;if(G->Paused)PauseMission();}
-  else {if(!G->Paused)PauseMission();G->Journal=true;}
+  else {G->Journal=true;if(!G->Paused)PauseMission();}
  }
 }
 void ALunarCharacter::StartMission() {
  if(ActivePanel)return;
+ if(auto* PausedMission=Mission(this);PausedMission&&PausedMission->Paused){if(PausedMission->Journal)PauseMission();else{SyncPauseMenu();if(PauseMenu)PauseMenu->Activate();}return;}
  if(auto* SceneMission=Mission(this);ALunarCargoFinale::Active(SceneMission)){if(SceneMission->Paused)PauseMission();else ALunarCargoFinale::Skip(SceneMission);return;}
  if(auto* G=Mission(this)) {
-  if(G->Menu) G->SelectPlanet(false);
+  if(G->Menu){if(G->MainMenu)G->MainMenu->ConfirmSelection();}
   else if(G->Paused) PauseMission();
   else if(G->Stage==ELunarStage::Won||G->Stage==ELunarStage::Lost) RestartMission();
   else G->StartMission();
@@ -175,7 +177,7 @@ void ALunarCharacter::StartMission() {
 }
 void ALunarCharacter::PrimaryClick() {
  auto* G=Mission(this);if(!G)return;
- if(ActivePanel)return;
+ if(ActivePanel||G->Paused)return;
  if(ALunarCargoFinale::Active(G)){if(G->Paused)StartMission();else ALunarCargoFinale::Skip(G);return;}
  if(G->ApolloTool){G->ApolloToolClick();return;}
  if(G->Apollo&&G->IsActive()){G->RequestApolloInputHint();return;}
@@ -193,39 +195,17 @@ void ALunarCharacter::RestartMission() {
 }
 void ALunarCharacter::ChooseMoon(){if(ActivePanel)return;if(auto* G=Mission(this))if(G->Menu)G->SelectPlanet(false);}
 void ALunarCharacter::ChooseMars(){if(ActivePanel)return;if(auto* G=Mission(this))if(G->Menu)G->SelectPlanet(true);}
-void ALunarCharacter::MissionMenu(){if(ActivePanel)return;if(auto* G=Mission(this))if(G->Paused||!G->IsActive())LunarLoading::Open(this,TEXT("/Game/Rescue/Maps/MissionSelect"));}
-void ALunarGameMode::TravelCheck(){
- static int Phase=0;static FString Report;
- const bool LoadingTest=FParse::Param(FCommandLine::Get(),TEXT("LoadingTest"));
- const TCHAR* Normal[]={TEXT("MissionSelect"),TEXT("Apollo12"),TEXT("Apollo12"),TEXT("MissionSelect"),TEXT("MarsBase"),TEXT("MarsBase"),TEXT("MissionSelect")};
- const TCHAR* Loading[]={TEXT("MissionSelect"),TEXT("Apollo12"),TEXT("Apollo12"),TEXT("MissionSelect"),TEXT("Apollo12"),TEXT("MissionSelect"),TEXT("MarsBase"),TEXT("MarsBase"),TEXT("MissionSelect")};
- const FString Map=UGameplayStatics::GetCurrentLevelName(this,true);auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));
- bool Good=P&&Map==(LoadingTest?Loading[Phase]:Normal[Phase])&&(Menu||FMath::IsNearlyEqual(GetWorld()->GetGravityZ(),-SurfaceGravity,.1f));
- auto Check=[&](bool Result,const FString& Name){Report+=(Result?TEXT("PASS "):TEXT("FAIL "))+Name+TEXT("\n");Good=Good&&Result;};
- Check(Good,FString::Printf(TEXT("travel phase %d: %s"),Phase,*Map));
- if(LoadingTest){
-  if(Phase>0)Check(LunarLoading::Completed(Map,FParse::Param(FCommandLine::Get(),TEXT("LoadingRenderedTest"))),TEXT("Matching destination completed; rendered progress has visible 0/100, monotonic order and held world time"));
-  if(Phase==0)Check(!LunarLoading::Open(this,TEXT("/Game/Missing/NoSuchMission"))&&!LunarLoading::IsBusy(),TEXT("Missing map is rejected without trapping loading state"));
-  if(Phase==4)Check(ApolloStarted&&Stage==ELunarStage::ApolloCheckout&&ApolloElapsed>=17&&ApolloElapsed<25,TEXT("Continue keeps ResumeApollo and restores the isolated checkpoint"));
- }
- const int Last=LoadingTest?8:6;
- if(!Good||Phase==Last){Report+=Good?TEXT("RESULT: 0 failures\n"):TEXT("RESULT: 1 failures\n");FFileHelper::SaveStringToFile(Report,*(FPaths::ProjectDir()/TEXT("Reports")/(LoadingTest?TEXT("loading-checks.txt"):TEXT("menu-travel-checks.txt"))));FPlatformMisc::RequestExitWithStatus(false,Good?0:1);return;}
- const int Step=Phase++;
- if(LoadingTest){
-  if(Step==0){P->ChooseMoon();Check(!LunarLoading::Open(this,TEXT("/Game/Mars/Maps/MarsBase")),TEXT("Duplicate input cannot replace the selected destination"));}
-  else if(Step==1||Step==6){Stage=ELunarStage::Won;P->RestartMission();}
-  else if(Step==2){StartApollo(true);ApolloElapsed=17;SaveApolloCheckpoint();Paused=true;P->MissionMenu();}
-  else if(Step==3)ContinueApollo();
-  else if(Step==5)P->ChooseMars();
-  else {Paused=true;P->MissionMenu();}
- }else if(Step==0)P->ChooseMoon();else if(Step==3)P->ChooseMars();else if(Step==1||Step==4){Stage=ELunarStage::Won;P->RestartMission();}else P->MissionMenu();
-}
-void ALunarGameMode::SelectPlanet(bool SelectMars){LunarLoading::Open(this,SelectMars?TEXT("/Game/Mars/Maps/MarsBase"):TEXT("/Game/Lunar/Maps/Apollo12"));}
+void ALunarCharacter::PreviousMenuMission(){if(ActivePanel)return;if(auto* G=Mission(this)){if(G->Menu&&G->MainMenu)G->MainMenu->MoveSelection(-1);else if(G->Paused&&PauseMenu&&!G->Journal)PauseMenu->Navigate(-1);}}
+void ALunarCharacter::NextMenuMission(){if(ActivePanel)return;if(auto* G=Mission(this)){if(G->Menu&&G->MainMenu)G->MainMenu->MoveSelection(1);else if(G->Paused&&PauseMenu&&!G->Journal)PauseMenu->Navigate(1);}}
+void ALunarCharacter::MissionMenu(){if(ActivePanel)return;if(auto* G=Mission(this)){if(G->Menu){if(G->MainMenu)G->MainMenu->Back();}else if(G->Paused||!G->IsActive())LunarLoading::Open(this,TEXT("/Game/Rescue/Maps/MissionSelect"));}}
+void ALunarGameMode::SelectPlanet(bool SelectMars){if(Menu&&MainMenu&&!LunarLoading::IsBusy()){auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));if(!P||!P->ActivePanel)MainMenu->OpenSelection(SelectMars);}}
 FString ALunarGameMode::ReportPath(const TCHAR* Name) const{return FPaths::ProjectDir()/TEXT("Reports")/((Mars?FString("mars-"):FString())+Name);}
 void ALunarCharacter::PauseMission() {
  if(ActivePanel){ClosePanel();return;}
  if(auto* G=Mission(this)) {
-  if(G->ApolloTool){G->CancelApolloTool();return;}
+  if(G->Menu){if(G->MainMenu)G->MainMenu->Back();return;}
+  if(G->Paused&&PauseMenu&&!G->Journal&&PauseMenu->HandleBack())return;
+  if(G->ApolloTool)G->CancelApolloTool();
   if(G->ApolloConfirmNew){G->ApolloConfirmNew=false;return;}
   if(!G->IsActive()&&!ALunarCargoFinale::Active(G))return;
   auto* Move=GetCharacterMovement();
@@ -233,6 +213,7 @@ void ALunarCharacter::PauseMission() {
   G->UpdateAudioPause();
   if(G->Paused) { PausedVelocity=Move->Velocity; Move->StopMovementImmediately();Move->SetComponentTickEnabled(false); }
   else { Move->SetComponentTickEnabled(true);Move->Velocity=PausedVelocity; }
+  SyncPauseMenu();
  }
 }
 
@@ -247,12 +228,21 @@ void ALunarGameMode::BeginPlay() {
  IFileManager::Get().MakeDirectory(*(FPaths::ProjectDir()/TEXT("Reports")),true);
  if(FParse::Param(FCommandLine::Get(),TEXT("LunarMenuTest"))||FParse::Param(FCommandLine::Get(),TEXT("LoadingTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::TravelCheck,3,false);}
  if(Menu&&FParse::Param(FCommandLine::Get(),TEXT("LunarReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,[this](){FScreenshotRequest::RequestScreenshot(ReportPath(TEXT("mission-select.png")),true,false);FTimerHandle End;GetWorldTimerManager().SetTimer(End,[](){FPlatformMisc::RequestExitWithStatus(false,0);},3,false);},8,false);}
+ if(FParse::Param(FCommandLine::Get(),TEXT("NasaUITest"))&&!Menu){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::NasaUIChecks,3,false);}
+ if(FParse::Param(FCommandLine::Get(),TEXT("NasaLearningTest"))&&!Menu){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::NasaLearningChecks,3,false);}
+ if(FParse::Param(FCommandLine::Get(),TEXT("NasaPovTest"))&&!Menu){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::NasaPovChecks,3,false);}
+ if(FParse::Param(FCommandLine::Get(),TEXT("NasaPovReview"))&&!Menu){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::NasaPovReview,5,false);}
+ if(FParse::Param(FCommandLine::Get(),TEXT("NasaRestartTest"))&&!Menu){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::NasaRestartChecks,3,false);}
+ if(FParse::Param(FCommandLine::Get(),TEXT("NasaUIReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::NasaUIReview,4,false);}
  if(Menu){
-  RefreshApolloCheckpoint();if(auto* PC=UGameplayStatics::GetPlayerController(this,0)){auto* Main=CreateWidget<ULunarMainMenu>(PC);Main->AddToViewport(10);PC->SetInputMode(FInputModeGameAndUI());PC->bShowMouseCursor=true;}
+  RefreshApolloCheckpoint();if(auto* PC=UGameplayStatics::GetPlayerController(this,0)){MainMenu=CreateWidget<ULunarMainMenu>(PC);MainMenu->AddToViewport(10);PC->SetInputMode(FInputModeGameAndUI());PC->bShowMouseCursor=true;}
+  if(FParse::Param(FCommandLine::Get(),TEXT("NasaIntroTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::NasaIntroChecks,.1f,false);}
+  if(FParse::Param(FCommandLine::Get(),TEXT("MissionSelectionTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::MissionSelectionChecks,3,false);}
+  if(FParse::Param(FCommandLine::Get(),TEXT("MissionSelectionReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::MissionSelectionReview,4,false);}
   if(FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveReadTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ApolloSaveChecks,3,false);}
   return;
  }
- if(Apollo){BuildApollo();return;}
+ if(Apollo){BuildApollo();BuildMissionInterface();return;}
  PowerBulbs.SetNum(4);PowerLights.SetNum(4);
  for(TActorIterator<AActor> It(GetWorld());It;++It) {
   if(It->ActorHasTag("Relay")) RelayActor=*It;
@@ -272,7 +262,7 @@ void ALunarGameMode::BeginPlay() {
   }
  }
  if(auto* PC=UGameplayStatics::GetPlayerController(this,0)) { PC->SetInputMode(FInputModeGameOnly()); PC->bShowMouseCursor=false; }
- BuildStoryProps();BuildMoonExpedition();
+ BuildStoryProps();BuildMoonExpedition();BuildMissionInterface();
  if(!Mars&&FParse::Param(FCommandLine::Get(),TEXT("LunarExpeditionReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ExpeditionReview,8,false);}
  WalkthroughEnabled=FParse::Param(FCommandLine::Get(),TEXT("LunarWalkthroughTest"));
  if(FParse::Param(FCommandLine::Get(),TEXT("LunarLedgeTest"))) {FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::LedgeCheck,3,false);}
@@ -285,7 +275,7 @@ void ALunarGameMode::BeginPlay() {
 }
 bool ALunarGameMode::IsActive() const { return (Stage>=ELunarStage::FindModule&&Stage<=ELunarStage::ReturnHome)||Stage==ELunarStage::SurveySamples||Stage==ELunarStage::RecoverDrone||Stage==ELunarStage::ActivateBeacon||(Stage>=ELunarStage::ApolloCheckout&&Stage<=ELunarStage::ApolloReturn); }
 void ALunarGameMode::Tick(float D) {
- Super::Tick(D); AdvanceRadio(D); UpdateAudioPause(); AdvanceTime(D); AdvancePowerSequence(D); AdvanceExpedition(D); AdvanceInteraction(D);
+ Super::Tick(D);if(Menu&&MainMenu)MainMenu->AdvanceIntro(D); AdvanceRadio(D); UpdateAudioPause(); AdvanceTime(D); AdvancePowerSequence(D); AdvanceExpedition(D); AdvanceInteraction(D);
  if(Apollo)TickApollo(D);
  if(WalkthroughEnabled)WalkthroughTick(D);
 }
@@ -567,6 +557,8 @@ void ALunarHUD::DrawHUD() {
  if(!bShowHUD)return;
  Super::DrawHUD(); auto* G=Mission(this); if(!G||!Canvas) return;
  if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));P&&P->PhotoCaptureFrames>0)return;
+ auto* InterfacePilot=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));
+ if((G->Paused&&!G->Journal&&InterfacePilot&&InterfacePilot->PauseMenu)||ULunarFlightHUD::ShouldShow(G,InterfacePilot))return;
  if(G->Apollo){DrawApollo(G);return;}
  float W=Canvas->SizeX,H=Canvas->SizeY; float S=FMath::Min(W/1280.f,H/720.f);
  FLinearColor White(.87,.94,1),Muted(.46,.63,.73),Cyan(.12,.86,.92),Orange(1,.53,.17);
@@ -656,7 +648,7 @@ void ALunarHUD::DrawHUD() {
  Panel(0,H-48*S,W,48*S,.9); Label("{MoveForward}{MoveLeft}{MoveBack}{MoveRight} / ARROWS  Move   MOUSE Look   {Jump} Jump   {Interact} Work   {Zoom} Zoom   {Route} Route   ESC Pause",32*S,H-31*S,.43*S,Muted);
  if(G->Stage==ELunarStage::Briefing||G->Stage==ELunarStage::Won||G->Stage==ELunarStage::Lost||G->Paused) {
   Panel(0,90*S,W,H-138*S,.6); float X=W/2-365*S,Y=H/2-180*S;
-  Panel(X,Y,730*S,360*S,.96); DrawRect(Cyan,X,Y,730*S,3*S);
+  Panel(X,Y,730*S,(LunarLearning::Reviewed(G)>0?410:360)*S,.96); DrawRect(Cyan,X,Y,730*S,3*S);
   FString Title=G->Paused?"MISSION PAUSED":G->Stage==ELunarStage::Won?(G->RecorderRecovered?"THE TRUTH RECOVERED":"MISSION COMPLETE"):G->Stage==ELunarStage::Lost?"SIGNAL LOST":G->Mars?"THE LAST SIGNAL":"THE LOST EXPEDITION";
   Label(G->Mars?"MARS RESCUE  /  MISSION 02":"LUNAR RESCUE  /  MISSION 01",X+36*S,Y+30*S,.44*S,Cyan);
   Label("[ M ] MISSION SELECT",X+465*S,Y+31*S,.35*S,Muted);
@@ -673,7 +665,9 @@ void ALunarHUD::DrawHUD() {
    Label(G->Stage==ELunarStage::Won?FString::Printf(TEXT("O2 REMAINING  %02d:%02d   /   POWER ONLINE   /   SCIENCE SECURED"),FMath::CeilToInt(G->Oxygen)/60,FMath::CeilToInt(G->Oxygen)%60):FString("Tip: hold {Interact} during restart and data download."),X+36*S,Y+195*S,.42*S,Muted);
    if(G->Stage==ELunarStage::Won) Label(G->RecorderRecovered?"LOGS 2/2 - Crew evacuated safely. Samples saved by emergency shutdown.":"LOGS 1/2 - The crew recorder remains on the survey ledge.",X+36*S,Y+224*S,.4*S,Muted);
    if(!G->Mars&&G->Stage==ELunarStage::Won)Label("RANK: "+G->ExpeditionRank()+FString::Printf(TEXT("   /   SAMPLES %d/3   /   NOMAD %s   /   LINK %d/3"),G->SampleCount(),G->DroneRecovered?TEXT("SAFE"):TEXT("LOST"),G->BeaconLocks),X+36*S,Y+251*S,.37*S,Cyan);
-   Label("[ R / ENTER ]  PLAY AGAIN",X+36*S,Y+290*S,.65*S,Cyan);
+   const FString LessonSummary=LunarLearning::SessionSummary(G);
+   if(!LessonSummary.IsEmpty())Label(FString::Printf(TEXT("LESSONS %d/3 / LATEST CORRECT %d/%d (SESSION)"),LunarLearning::Reviewed(G),LunarLearning::Correct(G),LunarLearning::Reviewed(G)),X+36*S,Y+284*S,.46*S,Cyan);
+   Label("[ R / ENTER ]  PLAY AGAIN",X+36*S,Y+(LessonSummary.IsEmpty()?290:334)*S,.65*S,Cyan);
   }
  }
 }
@@ -782,29 +776,30 @@ void ALunarGameMode::MovementCheck() {
  auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));
  auto* PC=UGameplayStatics::GetPlayerController(this,0);
  if(!P||!PC) { FFileHelper::SaveStringToFile(TEXT("FAIL no possessed astronaut"),*(ReportPath(TEXT("movement-checks.txt")))); FPlatformMisc::RequestExitWithStatus(false,1);return; }
- const FKey Keys[]={EKeys::W,EKeys::D,EKeys::S,EKeys::A};
+ const FKey Keys[]={EKeys::W,EKeys::D,EKeys::S,EKeys::A,EKeys::Up,EKeys::Right,EKeys::Down,EKeys::Left};
  auto Input=[&](FKey Key,EInputEvent Event) { PC->InputKey(FInputKeyEventArgs::CreateSimulated(Key,Event,Event==IE_Released?0.f:1.f)); };
  if(MovementPhase==0) {
   StartMission(); PC->SetControlRotation(FRotator(0,0,0)); MovementOrigin=P->GetActorLocation();
-  MovementReport=FString::Printf(TEXT("Spawn: %s, pawn=%s, movement mode=%d\n"),*MovementOrigin.ToString(),*P->GetClass()->GetName(),int(P->GetCharacterMovement()->MovementMode));
+  MovementReport=FString::Printf(TEXT("Spawn: %s, pawn=%s, movement mode=%d\nWalking key coverage: %d (WASD and arrow keys)\n"),*MovementOrigin.ToString(),*P->GetClass()->GetName(),int(P->GetCharacterMovement()->MovementMode),int32(UE_ARRAY_COUNT(Keys)));
   Input(Keys[0],IE_Pressed);
- } else if(MovementPhase<=4) {
+ } else if(MovementPhase<=UE_ARRAY_COUNT(Keys)) {
   Input(Keys[MovementPhase-1],IE_Released);
   FVector Delta=P->GetActorLocation()-MovementOrigin;
-  float Along=MovementPhase==1?Delta.X:MovementPhase==2?Delta.Y:MovementPhase==3?-Delta.X:-Delta.Y;
+  const int32 Direction=(MovementPhase-1)%4;
+  float Along=Direction==0?Delta.X:Direction==1?Delta.Y:Direction==2?-Delta.X:-Delta.Y;
   bool Good=Along>100;
   if(!Good)++MovementFailures;
   MovementReport+=FString::Printf(TEXT("%s %s held 1.5 seconds: %.1f cm along intended direction, delta=%s velocity=%s mode=%d\n"),Good?TEXT("PASS"):TEXT("FAIL"),*Keys[MovementPhase-1].ToString(),Along,*Delta.ToString(),*P->GetVelocity().ToString(),int(P->GetCharacterMovement()->MovementMode));
   if(!Good) {
    FHitResult Hit; FCollisionQueryParams Q; Q.AddIgnoredActor(P);
    const FVector Dirs[]={FVector(1,0,0),FVector(0,1,0),FVector(-1,0,0),FVector(0,-1,0)};
-   GetWorld()->SweepSingleByChannel(Hit,P->GetActorLocation(),P->GetActorLocation()+Dirs[MovementPhase-1]*100,FQuat::Identity,ECC_Pawn,FCollisionShape::MakeCapsule(34,86),Q);
+   GetWorld()->SweepSingleByChannel(Hit,P->GetActorLocation(),P->GetActorLocation()+Dirs[(MovementPhase-1)%4]*100,FQuat::Identity,ECC_Pawn,FCollisionShape::MakeCapsule(34,86),Q);
    MovementReport+=FString::Printf(TEXT("Blocker=%s label=%s input=%s\n"),Hit.GetActor()?*Hit.GetActor()->GetName():TEXT("none"),Hit.GetActor()?*Hit.GetActor()->GetActorNameOrLabel():TEXT("none"),*P->GetLastMovementInputVector().ToString());
   }
   P->GetCharacterMovement()->StopMovementImmediately(); MovementOrigin=P->GetActorLocation();
-  if(MovementPhase<4) Input(Keys[MovementPhase],IE_Pressed);
+  if(MovementPhase<UE_ARRAY_COUNT(Keys)) Input(Keys[MovementPhase],IE_Pressed);
   else Input(EKeys::SpaceBar,IE_Pressed);
- } else if(MovementPhase==5) {
+ } else if(MovementPhase==UE_ARRAY_COUNT(Keys)+1) {
   Input(EKeys::SpaceBar,IE_Released); float Height=P->GetActorLocation().Z-MovementOrigin.Z;
   bool Good=Height>50;if(!Good)++MovementFailures;
   MovementReport+=FString::Printf(TEXT("%s Space jump: %.1f cm rise\n"),Good?TEXT("PASS"):TEXT("FAIL"),Height);
@@ -812,7 +807,7 @@ void ALunarGameMode::MovementCheck() {
   bool Assets=P->BootMaterial&&P->StepSounds.Num()==3&&P->StepSounds[0]&&P->StepSounds[1]&&P->StepSounds[2]&&P->Gloves.Num()==16&&P->SuitBody.Num()==10&&P->SuitArms.Num()==18&&P->Gloves[0]->GetStaticMesh()!=nullptr;
   if(!Prints)++MovementFailures;if(!Assets)++MovementFailures;
   MovementReport+=FString::Printf(TEXT("%s Grounded walking leaves bootprints: %d\n%s Suit meshes, decal and step sounds loaded\n"),Prints?TEXT("PASS"):TEXT("FAIL"),P->FootprintCount,Assets?TEXT("PASS"):TEXT("FAIL"));
- } else if(MovementPhase==6) {
+ } else if(MovementPhase==UE_ARRAY_COUNT(Keys)+2) {
   bool Landed=P->GetCharacterMovement()->IsMovingOnGround()&&P->LandingGrains.Num()==16;
   if(!Landed)++MovementFailures;
   MovementReport+=FString::Printf(TEXT("%s Jump landing emits bounded grain particles\n"),Landed?TEXT("PASS"):TEXT("FAIL"));

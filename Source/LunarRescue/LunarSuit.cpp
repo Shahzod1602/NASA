@@ -2,6 +2,7 @@
 #include "LunarCargoFinale.h"
 #include "LunarApolloText.h"
 #include "LunarSettings.h"
+#include "LunarPovMotion.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
 #include "Camera/CameraComponent.h"
@@ -41,7 +42,7 @@ FVector Joint(FVector A,FVector B,float Upper,float Lower,FVector Bend){
  FVector Side=(Bend-Axis*FVector::DotProduct(Bend,Axis)).GetSafeNormal();
  return A+Axis*Along+Side*FMath::Sqrt(FMath::Max(0.f,Upper*Upper-Along*Along));
 }
-void Hand(const TArray<TObjectPtr<UStaticMeshComponent>>& Parts,int Base,FVector Elbow,FVector Wrist,float Side,float Work,bool Upper=false,const FRotator* ToolFrame=nullptr){
+void Hand(const TArray<TObjectPtr<UStaticMeshComponent>>& Parts,int Base,FVector Elbow,FVector Wrist,float Side,float Work,bool Upper=false,const FRotator* ToolFrame=nullptr,bool Pointing=false){
  int N=Base;if(Upper)++N;
  Limb(Parts[N++],Elbow,Wrist,24);
  const FRotator R=ToolFrame?*ToolFrame:FRotator(8+Work*12,-Side*(7+Work*5),Side*7);const FTransform Frame(R,Wrist);
@@ -50,7 +51,7 @@ void Hand(const TArray<TObjectPtr<UStaticMeshComponent>>& Parts,int Base,FVector
  const float Lengths[]={.95f,1.f,.92f,.74f};
  for(int F=0;F<4;++F){
   auto* C=Parts[N++].Get();C->SetRelativeLocation(Frame.TransformPosition(FVector(9,(-3.15f+F*2.1f)*Side,.1f)));
-  C->SetRelativeRotation((R.Quaternion()*FRotator(-9-Work*(F==0?24.f:34.f),(F-1.5f)*Side*(3-Work*2),0).Quaternion()).Rotator());C->SetRelativeScale3D(FVector(Lengths[F],1,1));
+  C->SetRelativeRotation((R.Quaternion()*FRotator(-9-(Pointing&&F==0?0.f:Work*(F==0?24.f:34.f)),(F-1.5f)*Side*(3-Work*2),0).Quaternion()).Rotator());C->SetRelativeScale3D(FVector(Lengths[F],1,1));
  }
  Parts[N]->SetRelativeLocation(Frame.TransformPosition(FVector(4,-Side*4,-1)));
  Parts[N]->SetRelativeRotation((R.Quaternion()*FRotator(-16-Work*18,-Side*(48-Work*19),Side*Work*14).Quaternion()).Rotator());Parts[N]->SetRelativeScale3D(FVector(.70f,1.1f,1.1f));
@@ -102,6 +103,8 @@ void ALunarCharacter::UpdateSuit(float D){
  if(Paused&&D>0){PoseSuitRig();return;}
  if(!FMath::IsFinite(D)||D<0)D=0;
  const bool HandMotion=ULunarSettings::Get()->CameraMotion;
+ const bool CarryCell=G&&!G->Apollo&&G->Stage==ELunarStage::RestorePower&&G->RepairStep==0;
+ const bool TaskHands=G&&(G->ApolloTool||G->Holding||CarryCell||G->ApolloPackedPreviewRemaining>0||G->ApolloPackedPartRemaining>0);
  if(!Paused&&D>0){
   const float Speed=GetVelocity().Size2D();
   const float TurnAngle=FMath::Abs(FMath::FindDeltaAngleDegrees(GetActorRotation().Yaw,GetControlRotation().Yaw));
@@ -117,7 +120,7 @@ void ALunarCharacter::UpdateSuit(float D){
   const float TurnTarget=Active&&!(ThirdPerson&&SuitOrbit)?FMath::Clamp(SignedTurn/45.f,-1.f,1.f):0.f;
   SuitTurnLean=FMath::Lerp(SuitTurnLean,TurnTarget,SuitMotionWeight(D,9));
   const bool PhysicalTool=G&&(G->ApolloTool==1||G->ApolloTool==4||G->ApolloTool==5||G->ApolloTool==6);
-  WorkBlend=FMath::Lerp(WorkBlend,G&&(G->Holding||PhysicalTool)?1.f:0.f,SuitMotionWeight(D,8));
+  WorkBlend=FMath::Lerp(WorkBlend,G&&(G->Holding||PhysicalTool||CarryCell||G->ApolloPackedPreviewRemaining>0||G->ApolloPackedPartRemaining>0)?1.f:0.f,SuitMotionWeight(D,8));
   LandBlend=FMath::Lerp(LandBlend,0.f,SuitMotionWeight(D,5));
   if(!(ThirdPerson&&SuitOrbit))SetActorRotation(FQuat::Slerp(GetActorQuat(),FRotator(0,GetControlRotation().Yaw,0).Quaternion(),SuitMotionWeight(D,10)));
  }
@@ -125,6 +128,11 @@ void ALunarCharacter::UpdateSuit(float D){
  for(const auto& C:SuitBody)C->SetVisibility(Show);SuitBody[2]->SetVisibility(Show&&ThirdPerson);
  SuitBody[0]->SetVisibility(Show&&ThirdPerson,true);SuitBody[3]->SetVisibility(Show&&ThirdPerson);
  SuitBody[1]->SetVisibility(Show&&ThirdPerson);
+ // Close work uses a separate camera in front of the boots. Body proxies stay
+ // at the physical astronaut and would fill that lens with near-cut thighs.
+ // Keep the full anatomical hidden-shadow rig, but omit these view-only proxies.
+ const bool CloseWork=G&&G->Apollo&&G->ApolloTool>1;
+ if(!ThirdPerson&&CloseWork)for(int32 I=4;I<SuitBody.Num();++I)SuitBody[I]->SetVisibility(false);
  for(const auto& C:SuitArms)C->SetVisibility(Show&&ThirdPerson);
  for(const auto& C:Gloves)C->SetVisibility(Show&&!ThirdPerson&&Camera->FieldOfView>60);
  const float Breath=FMath::Sin(SuitTime*1.5f)*.18f;
@@ -148,7 +156,7 @@ void ALunarCharacter::UpdateSuit(float D){
   FVector Desired=Target-WorkDirection*WorkDistance+FVector(0,0,Kit?70.f:G->ApolloTool==6?30.f:(G->ApolloTool==4||G->ApolloTool==5)?85.f:25.f);
   FHitResult Hit;FCollisionQueryParams Q;Q.AddIgnoredActor(this);
   if(GetWorld()->SweepSingleByChannel(Hit,Target+FVector(0,0,30),Desired,FQuat::Identity,ECC_Visibility,FCollisionShape::MakeSphere(6),Q))Desired=Hit.Location;
-  Camera->SetWorldLocation(D>0?FMath::VInterpTo(Camera->GetComponentLocation(),Desired,D,10):Desired);
+  Camera->SetWorldLocation(D>0?FMath::Lerp(Camera->GetComponentLocation(),Desired,SuitMotionWeight(D,10)):Desired);
   Camera->SetWorldRotation((Target-Camera->GetComponentLocation()).Rotation());
  }
  // Camera first, tool contacts second, glove pose last: all use one view transform.
@@ -163,6 +171,7 @@ void ALunarCharacter::UpdateSuit(float D){
  // stationary turns keep planted XY and lift the feet in place.
  if(GetVelocity().Size2D()>5||FMath::Abs(SuitTurnLean)<.08f)Direction=D>0?SuitMoveDirection:Direction;
  UpdateApolloWorkVisuals();
+ const float Rest=LunarPovMotion::HandRest(Camera->GetComponentRotation().Pitch,TaskHands);
  for(int S=0;S<2;++S){
   const float Side=S?1.f:-1.f;const float Phase=GaitPhase+S*PI;const float Swing=FMath::Sin(Phase)*GaitBlend;
   const float Cycle=FMath::Fmod(Phase,2*PI)/(2*PI),HalfStride=FastStride?40.f:32.f;
@@ -198,9 +207,33 @@ void ALunarCharacter::UpdateSuit(float D){
   Wrist.X+=WorkBlend*28;if(Move->IsFalling())Wrist.Z+=12;
   FVector Elbow=Joint(Shoulder,Wrist,28,24,FVector(0,Side,-.4f));Limb(SuitArms[S*9],Shoulder,Elbow,28);
   Hand(SuitArms,S*9,Elbow,Wrist,Side,WorkBlend,true);
-  const float Sway=HandMotion?FMath::Sin(Phase)*1.1f*GaitBlend:0.f;
+  const float Sway=HandMotion?FMath::Sin(Phase)*1.1f*GaitBlend*(1-Rest):0.f;
   FVector ViewElbow(8,Side*25,-28),ViewWrist(36+WorkBlend*3+Sway,Side*(20-WorkBlend*10),-15+FMath::Abs(Sway)*.35f-(HandMotion?LandBlend:0.f));
   if(G&&(G->ApolloTool==1||G->ApolloTool==4||G->ApolloTool==5||G->ApolloTool==6)){ViewElbow=FVector(7,Side*24,-28);ViewWrist=FVector(35,Side*10,-15);}
+  // Free hands settle below the helmet before disappearing on a downward
+  // inspection. Work/carry hands remain visible, so no active tool loses its grip.
+  ViewWrist.Z-=Rest*46;ViewElbow.Z-=Rest*24;
+  bool MarsPose=false,MarsPoint=false;FRotator MarsRotation=FRotator::ZeroRotator;
+  if(G&&G->Mars&&!G->Apollo){
+   const float Progress=LunarPovMotion::Ratio(G->HoldProgress,G->HoldDuration());
+   const float Reach=LunarPovMotion::Ease(FMath::Min(1.f,Progress*5));
+   if(CarryCell){ViewWrist=FVector(43,Side*12,-29);ViewElbow=FVector(4,Side*28,-31);MarsRotation=FRotator(-8,-Side*8,Side*16);MarsPose=true;}
+   else if(G->Holding){
+    MarsPose=true;ViewElbow=FVector(5,Side*27,-30);
+    if(G->Stage==ELunarStage::CollectData){
+     // A right index works the terminal while the left hand steadies the edge.
+     const float Tap=HandMotion?FMath::Sin(Progress*PI*6)*1.3f:0;
+     ViewWrist=S?FVector(45+Tap,10,-12):FVector(41,-24,-22);MarsPoint=S==1;
+     MarsRotation=FRotator(S?-5.f:12.f,-Side*8,S?2.f:-12.f);
+    }else if(G->Stage==ELunarStage::AlignRelay){
+     const float Turn=HandMotion?FMath::Sin(Progress*PI*2)*14.f:0;
+     ViewWrist=FVector(45,Side*15,-16+Reach*3);MarsRotation=FRotator(-7,Side*(12+Turn),Side*(8+Turn*.45f));
+    }else if(G->Stage==ELunarStage::RestorePower){
+     ViewWrist=S?FVector(44+Reach*3,10,-15):FVector(39,-22,-23);MarsRotation=FRotator(-9,-Side*6,S?8.f:-12.f);MarsPoint=S==1;
+    }else{ViewWrist=FVector(43,Side*14,-19);MarsRotation=FRotator(5,-Side*8,Side*12);}
+   }
+  }
+
   if(G&&G->ApolloTool==4)ViewWrist=G->SelectedSample==1?(S?FVector(25,4,-11):FVector(42,-8,-18)):FVector(29,Side*8,-10);
   if(G&&G->ApolloTool==5)ViewWrist=FVector(38,Side*6,S?-20.f:-10.f);
   if(G&&G->ApolloTool==6)ViewWrist=FVector(30,Side*7,-16);
@@ -214,7 +247,7 @@ void ALunarCharacter::UpdateSuit(float D){
   // previous component pose instead of snapping when a tool closes or a turn ends.
   if(!WorkGripActive){
    if(HandMotion)ViewWrist.Y-=TorsoLean*1.1f;
-   FRotator FreeRotation(8+WorkBlend*12,-Side*(7+WorkBlend*5),Side*7+(HandMotion?SuitTurnLean*3:0));
+   FRotator FreeRotation=MarsPose?MarsRotation:FRotator(8+WorkBlend*12,-Side*(7+WorkBlend*5),Side*7+(HandMotion?SuitTurnLean*3:0));
    if(D>0){
     const float Response=SuitMotionWeight(D,14);
     ViewElbow=FMath::Lerp(Gloves[S*8]->GetRelativeLocation(),ViewElbow,Response);
@@ -223,7 +256,7 @@ void ALunarCharacter::UpdateSuit(float D){
    }
    GripRotation=FreeRotation;GripFrame=&GripRotation;
   }
-  Hand(Gloves,S*8,ViewElbow,ViewWrist,Side,WorkBlend,false,GripFrame);
+  Hand(Gloves,S*8,ViewElbow,ViewWrist,Side,WorkBlend,false,GripFrame,MarsPoint);
  }
  PoseSuitRig();
 }

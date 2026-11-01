@@ -138,7 +138,7 @@ void ULunarPanel::Rebuild(){
  if(!Body){auto* Border=WidgetTree->ConstructWidget<UBorder>();Border->SetBrushColor(FLinearColor(.008,.02,.033,.99));Border->SetPadding(FMargin(32,20));WidgetTree->RootWidget=Border;auto* Scroll=WidgetTree->ConstructWidget<UScrollBox>();Border->AddChild(Scroll);Body=WidgetTree->ConstructWidget<UVerticalBox>();Scroll->AddChild(Body);}
  else Body->ClearChildren();
  auto Add=[&](UWidget* W){auto* RowLayout=Body->AddChildToVerticalBox(W);RowLayout->SetPadding(FMargin(4,7));};
- auto* G=Game(this);Add(Text(WidgetTree,Settings?TEXT("SETTINGS"):G&&(G->Stage==ELunarStage::Won||G->Stage==ELunarStage::Lost)?TEXT("EXPEDITION DEBRIEF"):TEXT("EVIDENCE ALBUM"),30));
+ auto* G=Game(this);Add(Text(WidgetTree,Settings?TEXT("SETTINGS"):G&&(G->Stage==ELunarStage::Won||G->Stage==ELunarStage::Lost)?TEXT("EXPEDITION DEBRIEF"):ShowFieldLessons||G&&!G->Apollo?TEXT("FIELD NOTEBOOK"):TEXT("EVIDENCE ALBUM"),30));
  auto* Top=WidgetTree->ConstructWidget<UHorizontalBox>();Add(Top);auto* Back=Button(WidgetTree,TEXT("Close / Esc / F1"));Back->OnClicked.AddDynamic(this,&ULunarPanel::Close);Top->AddChild(Back);
  if(Settings){
   auto* Reset=Button(WidgetTree,TEXT("Restore defaults"));Reset->OnClicked.AddDynamic(this,&ULunarPanel::ResetSettings);Top->AddChild(Reset);
@@ -149,6 +149,9 @@ void ULunarPanel::Rebuild(){
  }
  if(!G)return;
  if(G->Apollo){auto* MapButton=Button(WidgetTree,ShowExpeditionMap?TEXT("Photos & cargo"):TEXT("My Expedition / map"));MapButton->OnClicked.AddDynamic(this,&ULunarPanel::ToggleExpeditionMap);Top->AddChild(MapButton);}
+ auto* Lessons=Button(WidgetTree,ShowFieldLessons?(G->Apollo?TEXT("Photos & cargo"):TEXT("Notebook overview")):TEXT("Field lessons"));Lessons->OnClicked.AddDynamic(this,&ULunarPanel::ToggleFieldLessons);Top->AddChild(Lessons);
+ if(ShowFieldLessons){BuildFieldLessons();return;}
+ if(!G->Apollo){Add(Text(WidgetTree,TEXT("FIELD NOTEBOOK"),27));Add(Text(WidgetTree,TEXT("Review three optional field lessons to distinguish measured planetary data, authored scenery and gameplay rules. Select Field lessons above to begin."),21));return;}
  if(ShowExpeditionMap){
   Add(Text(WidgetTree,TEXT("MY EXPEDITION"),27));
   Add(Text(WidgetTree,TEXT("Gold solid line: your recorded walk. Thin cyan line: reconstructed historical traverse."),18));
@@ -187,9 +190,9 @@ void ULunarPanel::Rebuild(){
  Add(Text(WidgetTree,TEXT("Historical note: this chapter combines selected work from two EVAs. Tool motions, single-player operation and simplified ALSEP alignment are authored gameplay. Core 12027 used a drive tube, not a powered drill. Terrain uses modern LROC orbital data. Sources: nasa.gov/history/alsj/a12/ and the bundled Credits/Apollo12 files."),17));
  if(!G->ApolloTranscript.IsEmpty())Add(Text(WidgetTree,TEXT("RECENT RADIO SUBTITLES\n")+FString::Join(G->ApolloTranscript,TEXT("\n")),18));
 }
-FReply ULunarPanel::NativeOnKeyDown(const FGeometry& Geo,const FKeyEvent& E){if(E.GetKey()==EKeys::Escape||E.GetKey()==EKeys::F1){Close();return FReply::Handled();}if(!Settings&&(E.GetKey()==EKeys::Right||E.GetKey()==EKeys::Q)){Next();return FReply::Handled();}if(!Settings&&E.GetKey()==EKeys::Left){Previous();return FReply::Handled();}return Super::NativeOnKeyDown(Geo,E);}
+FReply ULunarPanel::NativeOnKeyDown(const FGeometry& Geo,const FKeyEvent& E){if(E.GetKey()==EKeys::Escape||E.GetKey()==EKeys::F1){Close();return FReply::Handled();}if(!Settings&&ShowFieldLessons&&(E.GetKey()==EKeys::One||E.GetKey()==EKeys::Two)){if(E.GetKey()==EKeys::One)AnswerFieldLessonA();else AnswerFieldLessonB();return FReply::Handled();}if(!Settings&&(E.GetKey()==EKeys::Right||E.GetKey()==EKeys::Q)){Next();return FReply::Handled();}if(!Settings&&E.GetKey()==EKeys::Left){Previous();return FReply::Handled();}return Super::NativeOnKeyDown(Geo,E);}
 void ULunarPanel::Close(){ULunarSettings::Get()->RevertDisplay();if(auto* P=Player(this))P->ClosePanel();}
-void ULunarPanel::ToggleExpeditionMap(){ShowExpeditionMap=!ShowExpeditionMap;Rebuild();}
-void ULunarPanel::Previous(){if(auto* G=Game(this))EvidenceIndex=(EvidenceIndex+FMath::Max(1,G->ApolloEvidence.Num())-1)%FMath::Max(1,G->ApolloEvidence.Num());Rebuild();}
-void ULunarPanel::Next(){if(auto* G=Game(this))EvidenceIndex=(EvidenceIndex+1)%FMath::Max(1,G->ApolloEvidence.Num());Rebuild();}
+void ULunarPanel::ToggleExpeditionMap(){ShowFieldLessons=false;ShowExpeditionMap=!ShowExpeditionMap;Rebuild();}
+void ULunarPanel::Previous(){if(ShowFieldLessons){PreviousFieldLesson();return;}if(auto* G=Game(this))EvidenceIndex=(EvidenceIndex+FMath::Max(1,G->ApolloEvidence.Num())-1)%FMath::Max(1,G->ApolloEvidence.Num());Rebuild();}
+void ULunarPanel::Next(){if(ShowFieldLessons){NextFieldLesson();return;}if(auto* G=Game(this))EvidenceIndex=(EvidenceIndex+1)%FMath::Max(1,G->ApolloEvidence.Num());Rebuild();}
 void ULunarPanel::ResetSettings(){ULunarSettings::Get()->Reset();ULunarSettings::Get()->Apply(Player(this));Rebuild();}

@@ -1,4 +1,5 @@
 #include "LunarGame.h"
+#include "LunarLearning.h"
 
 namespace {
 int32 DebriefTaskBits(uint8 Mask){int32 Count=0;for(int32 I=0;I<3;++I)Count+=(Mask&(1<<I))?1:0;return Count;}
@@ -17,6 +18,7 @@ TArray<FString> ALunarGameMode::ApolloDebriefLines() const {
  else Lines.Add(TEXT("Optional investigation: no coating comparison was recorded. It is not required to return the primary cargo."));
  Lines.Add(ApolloTimed?TEXT("Timed exercise budget remaining: ")+DebriefBudgetClock(Oxygen,OxygenCapacity)+TEXT(". This is a gameplay time budget, not suit endurance."):TEXT("Historical exploration had no exercise deadline. The mission clock and recorded horizontal distance describe this attempt."));
  Lines.Add(TEXT("NASA data in play: LROC elevations shape the ground and work-site heights. Lander detail, small fragments and tool motions are authored presentation."));
+ const FString Lessons=LunarLearning::SessionSummary(this);if(!Lessons.IsEmpty())Lines.Add(Lessons);
  return Lines;
 }
 FString ALunarGameMode::ApolloRetryAdvice() const {

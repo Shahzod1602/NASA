@@ -1,5 +1,39 @@
 # Lunar Rescue
 
+Windows v0.7.0: [release and download](https://github.com/Shahzod1602/NASA/releases/tag/apollo12-v0.7.0).
+Extract the complete ZIP and run `LunarRescue.exe`; Unreal Editor is not required.
+
+## Intro, mission HUD and field lessons (local development, 1 November 2026)
+
+The supplied intro artwork fades into the menu without repainting the source
+image. All five home actions share the blue glass style; destination overview
+text is uppercase. Moon/Mars still open their mission picker before loading.
+Active missions now use compact frosted panels for objectives, actual work
+progress, navigation, subtitles and the gameplay resource clock. The pause page
+provides Resume, Settings, Restart Mission, Main Menu and Exit; full restart
+returns to the briefing and keeps the saved Apollo checkpoint.
+
+Looking sharply down lowers and hides free hands while tool/carry hands remain
+available. The 12032 soil step 2/2 work view omits the near-cut leg proxies;
+soil deposit/sealing and rescue work gestures use the existing gameplay state.
+Optional **Field lessons** in the `I` notebook provide three short questions,
+explanations and sources. Latest answers are session-only and do not affect
+cargo or resources. They are not evidence of measured learning gains.
+
+See [scope, controls and validation status](NASA_TASKS_UPDATE.md). Current terrain
+provenance is in [Science & Sources](SCIENCE_AND_SOURCES.md): Apollo 12 uses the
+2 m LROC terrain product; SELENE and ARES keep authored terrain.
+
+## Mission selection and blue glass cards (local development)
+
+**Explore the Moon** opens a choice of **Apollo 12** and **SELENE**. **Explore
+Mars** opens **ARES**. Choose a card, then press **Start mission**; browsing a
+destination never begins loading. Continue expedition still resumes the existing
+Apollo checkpoint. Blue frosted cards keep the selected mission highlighted
+when the pointer leaves. Use `1` / `2` for destinations, left/right to select,
+Enter to open/confirm, Esc to go back, and F1 for settings. See
+[implementation and verification](MISSION_SELECTION_UPDATE.md).
+
 ## My Expedition and cargo stowage (local development)
 
 The journal map overlays your sampled walking trace on the modern LROC map, while
@@ -196,7 +230,7 @@ The editor fallback uses the installed Unreal Engine 5.8.3.
 
 ## Controls
 
-- Enter or left click: start the mission; resume from pause.
+- Enter: confirm mission selection or activate the selected pause action. Left click activates the visible button; background clicks do not resume.
 - WASD or arrow keys: move.
 - Mouse: look around.
 - Space: jump.
@@ -207,7 +241,7 @@ The editor fallback uses the installed Unreal Engine 5.8.3.
 - Q: select the next site or journal page. Legacy SELENE retains its original controls.
 - F: toggle visor zoom.
 - Tab / J: open the Apollo field journal; it pauses movement and the exercise clock.
-- Escape: cancel the current tool, then pause or resume.
+- Escape: pause immediately and cancel unfinished tool work; press again to resume.
 - F1: settings, including key bindings, text size, audio and graphics.
 - I: evidence album and the actual cargo debrief.
 - T: choose historical exploration or timed exercise at the Apollo briefing.

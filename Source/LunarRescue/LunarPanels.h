@@ -2,6 +2,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Framework/Commands/InputChord.h"
+#include "LunarIntro.h"
 #include "LunarPanels.generated.h"
 
 UCLASS()
@@ -26,6 +27,14 @@ class LUNARRESCUE_API ULunarPanel : public UUserWidget {
 public:
  bool Settings=false;
  bool ShowExpeditionMap=false;
+ bool ShowFieldLessons=false;
+ int32 FieldLessonIndex=0;
+ void BuildFieldLessons();
+ UFUNCTION() void ToggleFieldLessons();
+ UFUNCTION() void AnswerFieldLessonA();
+ UFUNCTION() void AnswerFieldLessonB();
+ UFUNCTION() void NextFieldLesson();
+ UFUNCTION() void PreviousFieldLesson();
  UFUNCTION() void ToggleExpeditionMap();
  int32 EvidenceIndex=0;
  int32 SettingsTab=0;
@@ -63,9 +72,31 @@ public:
  UPROPERTY() TObjectPtr<class UImage> Background;
  UPROPERTY() TObjectPtr<class UTextBlock> Destination;
  UPROPERTY() TObjectPtr<class UTextBlock> Details;
- UPROPERTY() TObjectPtr<class UButton> MoonButton;
- UPROPERTY() TObjectPtr<class UButton> MarsButton;
+ UPROPERTY() TArray<TObjectPtr<class ULunarMissionCard>> HomeCards;
+ UPROPERTY() TArray<TObjectPtr<class ULunarMissionCard>> ExtraHomeCards;
+ UPROPERTY() TObjectPtr<class UCanvasPanel> IntroLayer;
+ UPROPERTY() TObjectPtr<class UImage> IntroImage;
+ FLunarIntroState IntroState;
+ bool IsIntroActive() const {return IntroState.Active;}
+ void BeginIntro(bool Force=false);
+ void AdvanceIntro(float Delta);
+ UPROPERTY() TArray<TObjectPtr<class ULunarMissionCard>> MissionCards;
+ UPROPERTY() TObjectPtr<class UCanvasPanel> HomePage;
+ UPROPERTY() TObjectPtr<class UCanvasPanel> SelectionPage;
+ UPROPERTY() TObjectPtr<class UTextBlock> SelectionTitle;
+ UPROPERTY() TObjectPtr<class UTextBlock> SelectionPrompt;
+ UPROPERTY() TObjectPtr<class UButton> LaunchButton;
+ bool MissionSelection=false,SelectionMars=false,PreviewingMars=false;
+ int32 SelectedMission=INDEX_NONE;
  virtual TSharedRef<SWidget> RebuildWidget() override;
+ void OpenSelection(bool Mars);
+ void ConfirmSelection();
+ void MoveSelection(int32 Direction);
+ UFUNCTION() void Back();
+ UFUNCTION() void SelectMission(int32 Index);
+ UFUNCTION() void LaunchMission();
+ UFUNCTION() void PreviewHome(int32 Index);
+ UFUNCTION() void ChooseHome(int32 Index);
  UFUNCTION() void PreviewMoon();
  UFUNCTION() void PreviewMars();
  UFUNCTION() void ExploreMoon();

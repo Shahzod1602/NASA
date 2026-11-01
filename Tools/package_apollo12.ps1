@@ -65,6 +65,10 @@ Copy-Item -LiteralPath "$root\CLARITY_UPDATE.md" -Destination "$credits\Apollo12
 Copy-Item -LiteralPath "$root\LOADING_UPDATE.md" -Destination "$credits\Apollo12"
 Copy-Item -LiteralPath "$root\EXPEDITION_POLISH.md" -Destination "$credits\Apollo12"
 Copy-Item -LiteralPath "$root\EXPEDITION_EXPERIENCE.md" -Destination "$credits\Apollo12"
+Copy-Item -LiteralPath "$root\MISSION_SELECTION_UPDATE.md" -Destination "$credits\Apollo12"
+Copy-Item -LiteralPath "$root\NASA_TASKS_UPDATE.md","$root\SCIENCE_AND_SOURCES.md","$root\CREDITS.md" -Destination $credits
+New-Item -ItemType Directory -Force -Path "$credits\Frontend" | Out-Null
+Copy-Item -LiteralPath "$root\SourceArt\Frontend\intro-manifest.json" -Destination "$credits\Frontend"
 Copy-Item -LiteralPath "$root\Tools\fixtures\expedition-playtest-form.md" -Destination "$credits\Apollo12\PLAYTEST_FORM.md"
 Copy-Item -LiteralPath "$root\FIELDWORK_UPDATE.md" -Destination "$credits\Apollo12"
 Copy-Item -LiteralPath "$root\SourceArt\Apollo12\Raw\NAC_DTM_APOLLO12_README.TXT","$root\SourceArt\Apollo12\Raw\NAC_DTM_APOLLO12.LBL" -Destination "$credits\Apollo12"

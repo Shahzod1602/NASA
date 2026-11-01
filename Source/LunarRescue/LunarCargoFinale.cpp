@@ -1,4 +1,5 @@
 #include "LunarCargoFinale.h"
+#include "LunarPovMotion.h"
 #include "LunarGame.h"
 #include "LunarPanels.h"
 #include "Camera/CameraComponent.h"
@@ -109,10 +110,12 @@ void ALunarCargoFinale::BuildCargo(){
 
 void ALunarCargoFinale::PoseCargo(){
  for(int32 I=0;I<CargoRoots.Num();++I){
-  const float T=Ease((Elapsed-.35f-I*.82f)/.70f);
+  const float Raw=LunarPovMotion::Ratio(Elapsed-.35f-I*.82f,.70f),T=Ease(Raw);
   CargoRoots[I]->SetVisibility(Elapsed>=.35f+I*.82f,true);
-  CargoRoots[I]->SetRelativeLocation(CargoTargets[I]+FVector(-18,-20,65)*(1-T));
-  CargoRoots[I]->SetRelativeRotation(FRotator(0,-8*(1-T),0));
+  // Sequential carry-in arc, orientation check, then gentle settling into the
+  // assigned compartment. No physics actor, extra cargo or mission time is added.
+  CargoRoots[I]->SetRelativeLocation(CargoTargets[I]+LunarPovMotion::CargoApproach(Raw));
+  CargoRoots[I]->SetRelativeRotation(FRotator(12*FMath::Sin(T*PI),-24*(1-T),8*FMath::Sin(T*PI)));
  }
  const float T=Ease(Elapsed/StowageDuration);const FVector Eye=FMath::Lerp(FVector(-310,-375,285),FVector(-285,-350,265),T);
  ShotCamera->SetRelativeLocation(Eye);ShotCamera->SetRelativeRotation((FVector(0,0,24)-Eye).Rotation());

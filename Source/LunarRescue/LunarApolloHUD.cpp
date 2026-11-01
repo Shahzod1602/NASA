@@ -2,6 +2,8 @@
 #include "LunarCargoFinale.h"
 #include "LunarApolloText.h"
 #include "LunarSettings.h"
+#include "LunarFlightHUD.h"
+#include "LunarLearning.h"
 #include "ApolloData.h"
 #include "LunarTrail.h"
 #include "Engine/Canvas.h"
@@ -13,6 +15,7 @@
 
 void ALunarHUD::DrawApollo(ALunarGameMode* G){
  if(FScreenshotRequest::IsScreenshotRequested()&&!FScreenshotRequest::ShouldShowUI())return;
+ if(ULunarFlightHUD::ShouldShow(G,Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0))))return;
  const float W=Canvas->SizeX,H=Canvas->SizeY,S=FMath::Min(W/1280.f,H/720.f);
  const float SW=W/S,SH=H/S;
  const FLinearColor Ink(.92,.95,.94),Dim(.64,.72,.74),Gold(.98,.73,.35),Cyan(.39,.87,.84);
@@ -259,10 +262,12 @@ void ALunarHUD::DrawApollo(ALunarGameMode* G){
    Row(T(TEXT("WinText")),.59,Ink);
    Row(T(TEXT("WinCargo")),.46,Cyan);
    Row(ApolloText::Format(TEXT("WinStats"),{{TEXT("Time"),Time(G->ApolloElapsed)},{TEXT("Distance"),FMath::RoundToInt(G->ApolloDistance)},{TEXT("Count"),G->ApolloEvidence.Num()}}),.50,Ink);
+   const FString Lessons=LunarLearning::SessionSummary(G);if(!Lessons.IsEmpty())Row(Lessons,.43,Cyan);
    Row(G->ApolloRetryAdvice(),.46,Dim);
    Row(TEXT("I  My Expedition, photos and cargo     ")+T(TEXT("Again")),.46,Gold,0);
   }else{
    Row(G->FailureReason,.60,Ink,18);
+   const FString Lessons=LunarLearning::SessionSummary(G);if(!Lessons.IsEmpty())Row(Lessons,.46,Cyan,18);
    Row(G->ApolloRetryAdvice(),.52,Dim,18);
    if(G->ApolloCachedCheckpoint)Row(ContinueLabel(),.56,Cyan);
    Row(T(TEXT("Restart")),.60,Gold,0);

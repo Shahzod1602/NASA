@@ -54,8 +54,12 @@ public:
  void Forward(float V); void Right(float V); void Turn(float V); void Look(float V);
  void Leap(); void Interact(); void StartMission(); void RestartMission(); void PauseMission();
  void PrimaryClick();
+ void RestartCurrentMission();
+ void SyncPauseMenu();
+ UPROPERTY() TObjectPtr<class ULunarPauseMenu> PauseMenu;
  void ZoomVisor();
  void ChooseMoon(); void ChooseMars(); void MissionMenu();
+ void PreviousMenuMission(); void NextMenuMission();
  void ReleaseInteract(); void ToggleRoute();
  void ToggleJournal();
  void ContinueMission();
@@ -99,6 +103,15 @@ class LUNARRESCUE_API ALunarGameMode : public AGameModeBase {
 public:
  ALunarGameMode();
  bool Mars=false, Menu=false;
+ UPROPERTY() TObjectPtr<class ULunarMainMenu> MainMenu;
+ UPROPERTY() TObjectPtr<class ULunarFlightHUD> FlightHUD;
+ void BuildMissionInterface();
+ TArray<int32> FieldLessonAnswers={-1,-1,-1};
+ void ResetFieldLessons();
+ void NasaLearningChecks();
+ void NasaPovChecks(); void NasaPovReview();
+ void NasaIntroChecks(); void NasaUIChecks(); void NasaRestartChecks();
+ void NasaUIReview();
  bool Apollo=false, Journal=false;
  bool ApolloTimed=false;
  bool ApolloToolsEnabled=true;
@@ -219,6 +232,8 @@ public:
  UPROPERTY() TObjectPtr<AActor> RelayDish;
  void SelectPlanet(bool SelectMars);
  void TravelCheck();
+ void MissionSelectionChecks();
+ void MissionSelectionReview();
  FString ReportPath(const TCHAR* Name) const;
  virtual void BeginPlay() override;
  virtual void Tick(float Delta) override;

@@ -1,5 +1,34 @@
 # Changelog
 
+## v0.7.0 — Expedition UI and Field Lessons — 2026-11-01
+
+- Ship the explicit Moon/Mars mission picker, mission loading guides, expedition trail and cargo finale since v0.6.4.
+- Add the supplied-art intro, five glass home actions, compact HUD, real hold indicator and five-action pause/restart.
+- Fix first-person work views and add optional sourced lessons with win/loss session summaries.
+- Package a clean Windows build with credits and checksums; omit player saves, test outputs and debug symbols.
+- Local validation: 997 assertion/outcomes, zero failures; human sessions remain zero. See TEST_REPORT.md.
+
+## 2026-11-01 - Intro, compact mission interface and field lessons (local)
+
+- Fade the unchanged user-supplied intro image into the menu; share glass styling across five home actions and uppercase overview text.
+- Replace active-play HUD bands with compact frosted objective, guide, resource and subtitle panels driven by mission state.
+- Distinguish actual hold progress in rescue tasks from step-by-step Apollo tool clicks.
+- Add a five-action pause page and confirmed full restart to the briefing while preserving the Apollo checkpoint.
+- Lower/hide free hands during steep downward viewing, retain task/carry hands, and omit near-cut leg proxies in the 12032 step 2/2 view.
+- Refine authored soil deposit/sealing, cargo carry and rescue work gestures without awarding additional progress.
+- Add optional sourced Field lessons with latest session answers and a factual debrief summary; no human comprehension result is claimed.
+- Correct the science overview to distinguish the integrated Apollo 12 LROC product from authored rescue maps and the historical LOLA candidate.
+- Validation for this iteration is recorded separately in TEST_REPORT.md and NASA_TASKS_UPDATE.md; earlier totals are historical.
+
+## 2026-10-31 - Mission selection (local)
+
+- Open a destination-specific mission picker before loading Apollo 12, SELENE or ARES.
+- Require a chosen card and explicit Start mission; keep Continue as checkpoint resume.
+- Share animated blue glass, real background blur and persistent selected cues across expedition entries and mission cards.
+- Support keyboard selection, Back, settings overlays and scrollable 150% card text.
+- Add selection and rendered-transition checks; expand travel checks to all three maps.
+
+
 ## 2026-10-29 - Expedition presentation and feedback (local)
 
 - Ground Intrepid contact detail on imported terrain, with instanced seams, rims and equipment fasteners.

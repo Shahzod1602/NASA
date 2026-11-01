@@ -1,8 +1,59 @@
-# Ilmiy ma’lumot va manbalar
+# Science and sources
 
-Holat: **2026-09-21; dataset baholashi, integratsiya emas**. LunarRescue hozir authored Moon/Mars rescue prototipi. NASA tasdiqlagan simulyator yoki professional astronavt tayyorlash vositasi emas. Science terminaldagi yozuvlar syujet; real tadqiqot natijasi emas.
+## Current implementation - 1 November 2026
 
-## Nomzod: LOLA janubiy qutb grid
+**Apollo 12 uses a real, stereo-derived LROC terrain product. SELENE and ARES use
+authored terrain.** The old LOLA south-pole investigation below is historical
+candidate research and does not describe the current Apollo chapter.
+LunarRescue is a simplified educational game, not NASA-endorsed astronaut
+training or a certified simulator.
+
+| Content | Actual role and source |
+| --- | --- |
+| Apollo 12 terrain | `NAC_DTM_APOLLO12`, v1.9, dataset `LRO-L-LROC-5-RDR-V1.0`. Source 2 m post spacing. Imported heights control ground collision and the heights of mapped worksites. [Manifest](SourceArt/Apollo12/manifest.json), [product label](SourceArt/Apollo12/Raw/NAC_DTM_APOLLO12.LBL). |
+| Apollo map and traverse | The modern LROC orbital image supports the journal map. Mapped Apollo work locations and reconstructed traverse segments are imported separately. The player's gold walking trace is local gameplay telemetry, not a historical astronaut track. |
+| SELENE / ARES | Procedurally authored rescue maps and fictional station/science-record scenarios. Their downloads do not constitute a measured NASA dataset or a new discovery. |
+| Objects and presentation | Equipment placement details, small fragments, suit/tool poses, boot prints, lighting, cargo displays and UI animation are authored. They do not increase measured elevation resolution. |
+| Resources | Both rescue missions currently initialize a 480-second gameplay oxygen budget. Apollo 12 defaults to untimed exploration and offers a 1,800-second optional exercise. A countdown is game tuning, not real suit endurance. |
+| Optional Field lessons | Three mission-specific questions distinguish terrain provenance, historical context/fictional objectives and gameplay budgets. The debrief reports latest session responses only. No learning gain or astronaut competence is inferred. |
+
+The official [Apollo 12 archive product](https://pds.mcp.nasa.gov/data/store/img/lunar_reconnaissance_orbiter/pds4/lroc/lro-l-lroc-5-rdr/LROLRC_2001/DATA/SDP/NAC_DTM/APOLLO12/NAC_DTM_APOLLO12_README.TXT)
+and its local README describe the LROC source and errors. Credit: NASA/GSFC/ASU,
+LROC science team. Source images were acquired in 2010; these are modern orbital
+products, not photographs or terrain measurements made during the 1969 EVA.
+Two metres is grid spacing, not a guarantee of absolute positional accuracy.
+
+The selected crop is 525 x 425 vertices. `Tools/prepare_apollo12.py` reads the
+GeoTIFF as a masked raster and rejects missing elevations in that crop, then
+exports the same triangulation used to place worksites. The label specifies
+32-bit floating-point GeoTIFF and NoData `-3.40282266e+038`. The projection is
+lunar equirectangular, with a 1,737,400 m reference sphere, standard parallel
+-3 degrees and central meridian 180 degrees. The manifest records the crop,
+coordinate transform, local origin, source URLs, byte sizes and SHA-256 hashes.
+Per-file acquisition timestamps are not currently recorded in that manifest.
+
+Runtime axes are X east, Y south, Z up; **100 Unreal units = 1 metre**, with no
+horizontal or vertical exaggeration. Z is relative to the manifest's local
+origin elevation. The source grid and crop were not regenerated in this UI pass.
+Data and derived assets are local; reading a lesson or source note does not
+require a runtime web request. A network-disconnected run is a separate check.
+
+The photo-context lesson cites [NASA's Apollo 12 mission account](https://www.nasa.gov/missions/apollo/apollo-12-the-pinpoint-mission/),
+which describes photographing Surveyor before hardware retrieval. Extending a
+photo-first rule to the game's selected sample tasks is an authored adaptation.
+The countdown lesson cites project gameplay rules rather than presenting NASA
+suit specifications. Field-lesson answers are optional, session-only and do not
+alter cargo, time budgets or scientific measurements.
+
+## Historical candidate research - 21 September 2026
+
+The retained sections below describe the earlier **LOLA candidate**, its planned
+pipeline and the prototype at that date. Statements such as "not integrated"
+refer to that candidate and historical plan, not the current LROC Apollo 12
+terrain. The A/B route planner and slope-driven resource forecast remain future
+work; importing the Apollo terrain does not by itself implement those systems.
+
+## Historical LOLA candidate: south-pole grid
 
 [NASA LOLA](https://science.nasa.gov/mission/lro/lola/) asbob haqida; [PDS Geosciences](https://pds-geosciences.wustl.edu/missions/lro/lola.htm) arxiv va mahsulotlarga kirish beradi. Quyidagi qiymatlar bevosita [PDS mahsulot labeli](https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/polar/img/ldem_875s_20m.lbl)dan tekshirildi:
 

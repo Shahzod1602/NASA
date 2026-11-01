@@ -89,20 +89,21 @@ void ALunarGameMode::ApolloToolClick(){
 }
 void ALunarCharacter::OpenSettings(){
  if(ActivePanel){ClosePanel();return;}
- auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));auto* PC=Cast<APlayerController>(GetController());if(!G||!PC)return;
+ auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));auto* PC=Cast<APlayerController>(GetController());if(!G||!PC||(G->Menu&&G->MainMenu&&G->MainMenu->IsIntroActive()))return;
  G->CancelApolloTool();PanelWasPaused=G->Paused;if(G->IsActive()&&!G->Paused)PauseMission();
  ActivePanel=CreateWidget<ULunarPanel>(PC);ActivePanel->Settings=true;ActivePanel->AddToViewport(100);
  PC->bShowMouseCursor=true;FInputModeGameAndUI Input;Input.SetWidgetToFocus(ActivePanel->TakeWidget());Input.SetHideCursorDuringCapture(false);PC->SetInputMode(Input);
 }
 void ALunarCharacter::OpenEvidence(){
  if(ActivePanel){ClosePanel();return;}
- auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));auto* PC=Cast<APlayerController>(GetController());if(!G||!G->Apollo||!PC)return;
+ auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));auto* PC=Cast<APlayerController>(GetController());if(!G||G->Menu||!PC)return;
  G->CancelApolloTool();PanelWasPaused=G->Paused;if(G->IsActive()&&!G->Paused)PauseMission();
  ActivePanel=CreateWidget<ULunarPanel>(PC);ActivePanel->AddToViewport(100);PC->bShowMouseCursor=true;FInputModeGameAndUI Input;Input.SetWidgetToFocus(ActivePanel->TakeWidget());Input.SetHideCursorDuringCapture(false);PC->SetInputMode(Input);
 }
 void ALunarCharacter::ClosePanel(){
  if(!ActivePanel)return;ULunarSettings::Get()->RevertDisplay();ActivePanel->RemoveFromParent();ActivePanel=nullptr;
  if(auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this))){if(G->Paused&&!PanelWasPaused)PauseMission();if(auto* PC=Cast<APlayerController>(GetController())){PC->bShowMouseCursor=G->Menu;if(G->Menu)PC->SetInputMode(FInputModeGameAndUI());else PC->SetInputMode(FInputModeGameOnly());}}
+ SyncPauseMenu();
 }
 void ALunarCharacter::ToggleApolloMode(){if(auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));G&&G->Apollo&&G->Stage==ELunarStage::Briefing&&!G->ApolloConfirmNew&&!ActivePanel)G->ApolloTimed=!G->ApolloTimed;}
 

@@ -1,6 +1,41 @@
-# Rivojlantirish rejasi
+# Development plan
 
-> **Yangi asosiy reja:** [2026-10-24 — LunarRescue to‘liq rivojlantirish rejasi](GAME_MASTER_PLAN.md). Quyidagi matn 2026-09-21 holatining tarixiy qaydidir; hozirgi Apollo 12 funksiyalari va keyingi ishlar yangi hujjatda ajratilgan.
+## Current implementation - 1 November 2026
+
+The current local source adds the supplied-art intro, five glass home actions,
+compact live mission HUD, an interactive pause page, confirmed full restart,
+first-person work-view fixes and optional Field lessons. The existing Moon/Mars
+mission picker, rescue sequence, real Apollo 12 terrain, checkpoint and local
+expedition trace remain the foundation. See [this iteration's scope and evidence
+status](NASA_TASKS_UPDATE.md) and [the broader plan](GAME_MASTER_PLAN.md).
+
+The local Windows iteration is verified: 997 packaged assertion/outcomes,
+156 staged 720p/1080p PNGs, full Apollo traversal and paired rendered performance
+captures. The final executable and limitations are in TEST_REPORT.md. All 131
+original save/photo/config files match their preserved hashes. Human sessions
+remain zero; competition acceptance remains unconfirmed.
+
+The next three priorities are:
+
+1. Add terrain-supported A/B route choices, a matching forecast/live resource
+   model and route-aware debrief telemetry to the Moon chapter.
+2. Run the prepared novice playtest when participants are available; record
+   completion, before/after answers and confusing moments without fabricating gains.
+3. Verify the full current 2026 challenge, prior-work reuse and licensing terms
+   before preparing a challenge-specific implementation or submission.
+
+Later educational development still includes two terrain-supported route
+choices, a mission planner, matching forecast/live resource calculations and
+route-aware debrief telemetry. Those systems are not supplied by the current
+three-question lesson panel. Mars needs its own verified elevation product
+before its authored canyon can be described as a measured NASA terrain map.
+
+## Historical planning record - 21 September 2026
+
+The remainder is retained as the earlier backlog and competition-dependent plan.
+Its references to unimplemented terrain work concern the proposed LOLA profile;
+the current Apollo chapter instead uses the separate LROC product described in
+SCIENCE_AND_SOURCES.md.
 
 2026-09-21 holati. **Bu backlog; quyidagi yangi funksiyalar bajarilmagan.** [2026 vaqt cheklovi](COMPETITION_READINESS.md) sabab challenge implementatsiyasi hakatonga qoldirildi. Oldingi v0.2.0 va ushbu tayyorgarlikning qayta ishlatilishi ham tasdiqlanishi kerak.
 

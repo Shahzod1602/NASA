@@ -1,8 +1,57 @@
-# Space Apps 2026: tekshiruv holati
+# Space Apps 2026: eligibility status
 
-Tekshirilgan sana: **2026-09-21**, Asia/Tashkent. Holat: **eligibility tasdiqlanmagan; yangi challenge implementatsiyasi kechiktirildi**. Mahsulotning ishlashi tanlovga qabul qilinishini anglatmaydi.
+## Current revalidation - 1 November 2026, Asia/Tashkent
 
-## Joriy yil manbalari
+**Eligibility is not confirmed.** No current full 2026 challenge has been read
+and matched to this version of LunarRescue. Product quality and successful local
+builds do not establish competition acceptance.
+
+The session's web fetches returned 502 errors. Fresh command-line requests to
+the official FAQ, legal terms and 2026 challenge directory were bounded to
+30 seconds each and failed certificate validation (`SEC_E_UNTRUSTED_ROOT`, curl
+error 60, zero downloaded bytes). Certificate verification was not disabled.
+No current page content or rule was verified through those failed requests.
+Attempt metadata and error-log hashes are in the ignored
+`Reports/competition-refresh-20261101/attempt-results.json`.
+
+| Official page | Result of this revalidation |
+| --- | --- |
+| [Participant FAQ](https://www.spaceappschallenge.org/resources/participant-faqs/) | Unavailable; no fresh rule conclusion. |
+| [Participant terms](https://www.spaceappschallenge.org/legal/) | Unavailable; prior terms are not represented as rechecked today. |
+| [2026 challenge directory](https://www.spaceappschallenge.org/2026/challenges/) | Current full statements were not read; no challenge fit is approved. |
+
+The September audit retained below is a historical record. Its summary-phase
+status, event dates, publication schedule and submission expectations must not
+be presented as freshly confirmed November requirements. Current video duration,
+slide limits, reuse permissions and judging eligibility remain unconfirmed.
+
+The existing releases, LROC integration, Apollo/Mars gameplay and later UI or
+presentation work are pre-existing independent product development. Their real
+Git dates must be retained and disclosed; separating old and new work does not
+grant permission to reuse either for a challenge. This update does not declare
+that work eligible, enter a team or submit the project. If current rules restrict
+challenge-specific implementation to the hackathon period, that implementation
+must remain backlog until the permitted period and scope are established.
+
+A current organizer clarification is needed before choosing competition work.
+Draft question, **not sent**:
+
+> May a team reuse LunarRescue's pre-existing source, maps, assets and independent
+> product improvements through 1 November 2026, with original Git dates and full
+> disclosure? Which parts, if any, may be judged for a 2026 challenge, and when may
+> challenge-specific implementation begin? Please identify the current full
+> challenge, submission/video limits and applicable reuse/open-source rules.
+
+The existing code-licence and third-party-material questions also remain open;
+see [credits](CREDITS.md). Continue the game as an independent educational
+product while competition permission and challenge fit are unresolved.
+
+## Historical audit - 21 September 2026
+
+The material below records what was read and concluded on that earlier date.
+It is preserved for provenance, not asserted as the current event state.
+
+## Sources last read on 21 September 2026 - historical
 
 | Manba | Tekshiruv natijasi |
 | --- | --- |

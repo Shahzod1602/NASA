@@ -64,7 +64,8 @@ void ALunarGameMode::ApolloGuidanceChecks(){
  P->Interact();Check(ApolloTool==8&&ApolloAction==0,TEXT("Opening the first check awards no completed work"));
  Check(ApolloInputHintRemaining==0,TEXT("Opening the tool clears the previous input hint"));
  Check(ApolloToolHelp().Contains(TEXT("Left click")),TEXT("The opened check teaches its distinct confirmation action"));
- P->PauseMission();Check(!ApolloTool&&ApolloAction==0&&!Paused,TEXT("Cancelling the first check does not complete it or pause"));
+ P->PauseMission();Check(!ApolloTool&&ApolloAction==0&&Paused,TEXT("Escape cancels unfinished first-check work and immediately pauses without completion"));
+ P->PauseMission();Check(!Paused&&ApolloAction==0,TEXT("A second Escape resumes without committing the cancelled check"));
  for(int N=0;N<3;++N){P->Interact();Click();}
  Check(Stage==ELunarStage::ApolloDeploy&&ApolloConfirmation.Contains(TEXT("3 / 3")),TEXT("All three actual confirmations finish onboarding"));
  Stage=ELunarStage::ApolloSamples;SelectedSample=0;SamplesCollected=0;ApolloPhotos=2;Aim(SampleActors[1]);

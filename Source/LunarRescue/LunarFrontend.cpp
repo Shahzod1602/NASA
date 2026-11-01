@@ -1,6 +1,8 @@
 #include "LunarPanels.h"
 #include "LunarSettings.h"
 #include "LunarGame.h"
+#include "LunarMissionCard.h"
+#include "LunarLoading.h"
 #include "Blueprint/WidgetTree.h"
 #include "Components/CanvasPanel.h"
 #include "Components/CanvasPanelSlot.h"
@@ -37,6 +39,7 @@
 
 namespace {
 const FLinearColor Ink(.86f,.93f,.98f),Dim(.43f,.58f,.67f),Accent(.02f,.82f,.9f);
+bool IntroShownThisProcess=false;
 ALunarCharacter* Pilot(UObject* O){return Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(O,0));}
 ALunarGameMode* Mission(UObject* O){return Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(O));}
 UTextBlock* Label(UWidgetTree* Tree,const FString& Text,int32 Size,FLinearColor Color=Ink){
@@ -46,8 +49,8 @@ void Place(UCanvasPanel* Canvas,UWidget* Widget,float X,float Y,float W,float H)
 UCanvasPanel* Frame(UWidgetTree* Tree){
  auto* Scale=Tree->ConstructWidget<UScaleBox>();Scale->SetStretch(EStretch::ScaleToFit);auto* Size=Tree->ConstructWidget<USizeBox>();Size->SetWidthOverride(1280);Size->SetHeightOverride(720);Scale->AddChild(Size);auto* C=Tree->ConstructWidget<UCanvasPanel>();Size->AddChild(C);Tree->RootWidget=Scale;return C;
 }
-UButton* FrontendButton(UWidgetTree* Tree,const FString& Text,bool Active=false){
- auto* B=Tree->ConstructWidget<UButton>();auto Style=B->GetStyle();
+UButton* FrontendButton(UWidgetTree* Tree,const FString& Text,bool Active=false,bool Focusable=true){
+ auto* B=Focusable?Tree->ConstructWidget<UButton>():Tree->ConstructWidget<ULunarMissionButton>();auto Style=B->GetStyle();
  Style.Normal.DrawAs=Style.Hovered.DrawAs=Style.Pressed.DrawAs=ESlateBrushDrawType::Box;
  Style.Normal.TintColor=FSlateColor(Active?FLinearColor(.04f,.2f,.26f,.96f):FLinearColor(.005f,.012f,.018f,.94f));
  Style.Hovered.TintColor=FSlateColor(FLinearColor(.08f,.23f,.3f));Style.Pressed.TintColor=FSlateColor(FLinearColor(.03f,.34f,.4f));B->SetStyle(Style);
@@ -132,22 +135,38 @@ void ULunarPanel::RevertDisplay(){ULunarSettings::Get()->RevertDisplay();FillSet
 void ULunarPanel::TestAudio(){auto* S=ULunarSettings::Get();if(auto* Sound=LoadObject<USoundBase>(nullptr,TEXT("/Game/Lunar/Immersion/Audio/Radio_Intro.Radio_Intro")))UGameplayStatics::PlaySound2D(this,Sound,S->RadioVolume*S->MasterVolume);}
 
 TSharedRef<SWidget> ULunarMainMenu::RebuildWidget(){
- auto* C=Frame(WidgetTree);Background=Backdrop(WidgetTree,C);Shade(WidgetTree,C,0,0,1280,720,FLinearColor(0,0,0,.12f));
- Place(C,Label(WidgetTree,TEXT("L U N A R R E S C U E"),31),84,84,650,48);Place(C,Label(WidgetTree,TEXT("E X P E D I T I O N S"),16,Dim),87,133,600,30);
- const TCHAR* Names[]={TEXT("Continue expedition"),TEXT("Explore the Moon"),TEXT("Explore Mars"),TEXT("Settings"),TEXT("Exit")};
- for(int32 I=0;I<5;++I){auto* B=FrontendButton(WidgetTree,Names[I]);if(auto* Layout=Cast<UButtonSlot>(B->GetContent()->Slot))Layout->SetHorizontalAlignment(HAlign_Left);auto MenuStyle=B->GetStyle();MenuStyle.NormalPadding=MenuStyle.PressedPadding=FMargin(16,4);B->SetStyle(MenuStyle);Place(C,B,87,195+48*I,268,42);
-  if(I==0){B->OnClicked.AddDynamic(this,&ULunarMainMenu::Continue);B->SetIsEnabled(Mission(this)&&Mission(this)->ApolloCachedCheckpoint!=nullptr);}
-  if(I==1){MoonButton=B;B->OnHovered.AddDynamic(this,&ULunarMainMenu::PreviewMoon);B->OnClicked.AddDynamic(this,&ULunarMainMenu::ExploreMoon);}
-  if(I==2){MarsButton=B;B->OnHovered.AddDynamic(this,&ULunarMainMenu::PreviewMars);B->OnClicked.AddDynamic(this,&ULunarMainMenu::ExploreMars);}
-  if(I==3)B->OnClicked.AddDynamic(this,&ULunarMainMenu::Settings);
-  if(I==4)B->OnClicked.AddDynamic(this,&ULunarMainMenu::ExitGame);
- }
- Destination=Label(WidgetTree,TEXT(""),24);Place(C,Destination,410,190,700,45);
- Details=Label(WidgetTree,TEXT(""),13);Place(C,Details,410,249,460,280);
- Shade(WidgetTree,C,0,620,1280,100,FLinearColor(0,0,0,.7f));
- Place(C,Label(WidgetTree,TEXT("1  MOON     2  MARS     F1  SETTINGS"),13,Dim),87,642,700,24);
- Place(C,Label(WidgetTree,TEXT("Illustrated menu background / not a survey image"),11,Dim),87,672,700,22);
- PreviewMoon();
+ auto* C=Frame(WidgetTree);Background=Backdrop(WidgetTree,C);Shade(WidgetTree,C,0,0,1280,720,FLinearColor(0,0,0,.2f));
+ HomeCards.Reset();ExtraHomeCards.Reset();MissionCards.Reset();MissionSelection=false;SelectedMission=INDEX_NONE;IntroState=FLunarIntroState();
+ HomePage=WidgetTree->ConstructWidget<UCanvasPanel>();Place(C,HomePage,0,0,1280,720);
+ Place(HomePage,Label(WidgetTree,TEXT("L U N A R R E S C U E"),31),84,84,650,48);Place(HomePage,Label(WidgetTree,TEXT("E X P E D I T I O N S"),16,Dim),87,133,600,30);
+ const TCHAR* Names[]={TEXT("Continue expedition"),TEXT("Explore the Moon"),TEXT("Explore Mars")};
+ for(int32 I=0;I<3;++I){auto* Card=CreateWidget<ULunarMissionCard>(GetOwningPlayer());Card->Configure(I,Names[I],TEXT(""),TEXT(""),true);Card->OnChosen.AddDynamic(this,&ULunarMainMenu::ChooseHome);Card->OnPreview.AddDynamic(this,&ULunarMainMenu::PreviewHome);Place(HomePage,Card,87,195+48*I,268,42);HomeCards.Add(Card);if(I==0)Card->SetIsEnabled(Mission(this)&&Mission(this)->ApolloCachedCheckpoint!=nullptr);}
+ for(int32 I=3;I<5;++I){auto* Card=CreateWidget<ULunarMissionCard>(GetOwningPlayer());Card->Configure(I,I==3?TEXT("Settings"):TEXT("Exit"),TEXT(""),TEXT(""),true);Card->OnChosen.AddDynamic(this,&ULunarMainMenu::ChooseHome);Place(HomePage,Card,87,195+48*I,268,42);ExtraHomeCards.Add(Card);}
+ Destination=Label(WidgetTree,TEXT(""),24);Place(HomePage,Destination,410,190,700,45);
+ Details=Label(WidgetTree,TEXT(""),13);Place(HomePage,Details,410,249,460,280);
+ SelectionPage=WidgetTree->ConstructWidget<UCanvasPanel>();Place(C,SelectionPage,0,0,1280,720);
+ Shade(WidgetTree,SelectionPage,0,0,1280,720,FLinearColor(.001f,.006f,.014f,.42f));
+ Place(SelectionPage,Label(WidgetTree,TEXT("L U N A R R E S C U E  /  E X P E D I T I O N S"),11,Accent),70,48,1000,24);
+ SelectionTitle=Label(WidgetTree,TEXT(""),32);Place(SelectionPage,SelectionTitle,70,86,1100,56);
+ Place(SelectionPage,Label(WidgetTree,TEXT("Choose a mission, then start when you are ready."),15),70,151,1100,30);
+ const TCHAR* Titles[]={TEXT("APOLLO 12"),TEXT("SELENE"),TEXT("ARES")};
+ const TCHAR* Tags[]={TEXT("MOON / HISTORICAL EXPLORATION"),TEXT("MOON / FICTIONAL RESCUE"),TEXT("MARS / FICTIONAL PROTOTYPE")};
+ const TCHAR* Descriptions[]={TEXT("Deploy ALSEP, collect three samples and recover Surveyor 3 hardware.\n\nLROC terrain / 6 stages\nUntimed exploration"),TEXT("Restore SELENE power and recover its science data.\n\nAuthored terrain / optional recorder\n8-minute gameplay oxygen budget"),TEXT("Restore ARES power, recover the ice survey and align the orbital antenna.\n\nAuthored terrain / optional recorder\n8-minute gameplay oxygen budget")};
+ for(int32 I=0;I<3;++I){auto* Card=CreateWidget<ULunarMissionCard>(GetOwningPlayer());Card->Configure(I,Titles[I],Tags[I],Descriptions[I]);Card->OnChosen.AddDynamic(this,&ULunarMainMenu::SelectMission);Place(SelectionPage,Card,I==0?268:I==1?656:462,216,356,312);MissionCards.Add(Card);}
+ Shade(WidgetTree,SelectionPage,0,558,1280,162,FLinearColor(.001f,.004f,.009f,.91f));
+ SelectionPrompt=Label(WidgetTree,TEXT("Select a mission to continue."),15);Place(SelectionPage,SelectionPrompt,70,583,780,54);
+ LaunchButton=FrontendButton(WidgetTree,TEXT("START MISSION"),true,false);LaunchButton->OnClicked.AddDynamic(this,&ULunarMainMenu::LaunchMission);Place(SelectionPage,LaunchButton,922,580,288,50);
+ auto* BackButton=FrontendButton(WidgetTree,TEXT("BACK"),false,false);BackButton->OnClicked.AddDynamic(this,&ULunarMainMenu::Back);Place(SelectionPage,BackButton,70,650,150,36);
+ auto* PickerSettings=FrontendButton(WidgetTree,TEXT("SETTINGS"),false,false);PickerSettings->OnClicked.AddDynamic(this,&ULunarMainMenu::Settings);Place(SelectionPage,PickerSettings,1060,650,150,36);
+ Place(SelectionPage,Label(WidgetTree,TEXT("LEFT / RIGHT  SELECT     ENTER  START     ESC  BACK     1 / 2  DESTINATION"),11,Dim),250,654,800,30);
+ SelectionPage->SetVisibility(ESlateVisibility::Collapsed);LaunchButton->SetIsEnabled(false);PreviewMoon();
+ IntroLayer=WidgetTree->ConstructWidget<UCanvasPanel>();Place(C,IntroLayer,0,0,1280,720);
+ Shade(WidgetTree,IntroLayer,0,0,1280,720,FLinearColor::Black);
+ IntroImage=WidgetTree->ConstructWidget<UImage>();
+ auto* IntroTexture=LoadObject<UTexture2D>(nullptr,TEXT("/Game/Lunar/Frontend/T_IntroReference.T_IntroReference"));
+ if(IntroTexture){IntroImage->SetBrushFromTexture(IntroTexture);Place(IntroLayer,IntroImage,0,0,1280,720);}
+ else{Place(IntroLayer,Label(WidgetTree,TEXT("L U N A R R E S C U E"),44),286,295,920,65);Place(IntroLayer,Label(WidgetTree,TEXT("E X P E D I T I O N S"),19,Dim),452,372,700,40);UE_LOG(LogTemp,Warning,TEXT("NASA_INTRO reference texture missing; authored text fallback"));}
+ BeginIntro();
  if(FParse::Param(FCommandLine::Get(),TEXT("FrontendReview"))){
   FTimerHandle Handle;GetWorld()->GetTimerManager().SetTimer(Handle,FTimerDelegate::CreateWeakLambda(this,[this,Step=0]()mutable{
    auto Capture=[&](const TCHAR* Name){const FString Folder=FPaths::ProjectDir()/TEXT("Reports/Frontend20261028");IFileManager::Get().MakeDirectory(*Folder,true);FScreenshotRequest::RequestScreenshot(Folder/TEXT("frontend-")+Name+TEXT(".png"),true,false);};
@@ -188,10 +207,55 @@ TSharedRef<SWidget> ULunarMainMenu::RebuildWidget(){
  }
  return Super::RebuildWidget();
 }
-void ULunarMainMenu::PreviewMoon(){if(Background)Background->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr,TEXT("/Game/Lunar/Frontend/T_MenuMoon.T_MenuMoon")));Destination->SetText(FText::FromString(TEXT("01 / MOON")));Details->SetText(FText::FromString(TEXT("EXPEDITION\nAPOLLO 12 / SURVEYOR'S LEGACY\n\nTERRAIN & STRUCTURE\nLROC TERRAIN / 6 STAGES\n\nOBJECTIVE\nCollect lunar samples and Surveyor 3 hardware.")));MoonButton->SetBackgroundColor(Accent);MarsButton->SetBackgroundColor(FLinearColor::White);}
-void ULunarMainMenu::PreviewMars(){if(Background)Background->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr,TEXT("/Game/Lunar/Frontend/T_MenuMars.T_MenuMars")));Destination->SetText(FText::FromString(TEXT("02 / MARS")));Details->SetText(FText::FromString(TEXT("EXPEDITION\nARES / FICTIONAL PROTOTYPE\n\nGAMEPLAY BUDGET\n8 MIN OXYGEN / 3.71 m/s2\n\nOBJECTIVE\nRestore the relay and recover ice survey data.")));MarsButton->SetBackgroundColor(Accent);MoonButton->SetBackgroundColor(FLinearColor::White);}
-void ULunarMainMenu::ExploreMoon(){if(auto* G=Mission(this))G->SelectPlanet(false);}
-void ULunarMainMenu::ExploreMars(){if(auto* G=Mission(this))G->SelectPlanet(true);}
-void ULunarMainMenu::Continue(){if(auto* G=Mission(this))G->ContinueApollo();}
-void ULunarMainMenu::Settings(){if(auto* P=Pilot(this))P->OpenSettings();}
-void ULunarMainMenu::ExitGame(){UKismetSystemLibrary::QuitGame(this,GetOwningPlayer(),EQuitPreference::Quit,false);}
+void ULunarMainMenu::PreviewHome(int32 Index){if(!IsIntroActive()&&!MissionSelection){if(Index==1)PreviewMoon();else if(Index==2)PreviewMars();}}
+void ULunarMainMenu::ChooseHome(int32 Index){if(IsIntroActive())return;if(Index==0)Continue();else if(Index==1)ExploreMoon();else if(Index==2)ExploreMars();else if(Index==3)Settings();else if(Index==4)ExitGame();}
+void ULunarMainMenu::PreviewMoon(){if(MissionSelection||IsIntroActive())return;PreviewingMars=false;if(Background)Background->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr,TEXT("/Game/Lunar/Frontend/T_MenuMoon.T_MenuMoon")));Destination->SetText(FText::FromString(TEXT("01 / MOON")));Details->SetText(FText::FromString(FString(TEXT("EXPEDITIONS\nAPOLLO 12 / HISTORICAL EXPLORATION\nSELENE / FICTIONAL RESCUE\n\nCHOOSE YOUR MISSION\nReview the mission guide before departure.\n\nOBJECTIVE\nExplore lunar worksites or restore the rescue station.")).ToUpper()));for(int32 I=0;I<HomeCards.Num();++I)HomeCards[I]->SetSelected(I==1);}
+void ULunarMainMenu::PreviewMars(){if(MissionSelection||IsIntroActive())return;PreviewingMars=true;if(Background)Background->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr,TEXT("/Game/Lunar/Frontend/T_MenuMars.T_MenuMars")));Destination->SetText(FText::FromString(TEXT("02 / MARS")));Details->SetText(FText::FromString(FString(TEXT("EXPEDITION\nARES / FICTIONAL PROTOTYPE\n\nGAMEPLAY BUDGET\n8 MIN OXYGEN / 3.71 m/s2\n\nOBJECTIVE\nRestore the relay and recover ice survey data.")).ToUpper().Replace(TEXT("M/S2"),TEXT("m/s²"))));for(int32 I=0;I<HomeCards.Num();++I)HomeCards[I]->SetSelected(I==2);}
+void ULunarMainMenu::OpenSelection(bool Mars){
+ auto* G=Mission(this);auto* P=Pilot(this);if(!G||!G->Menu||IsIntroActive()||LunarLoading::IsBusy()||(P&&P->ActivePanel))return;
+ MissionSelection=false;if(Mars)PreviewMars();else PreviewMoon();MissionSelection=true;SelectionMars=Mars;SelectedMission=INDEX_NONE;
+ HomePage->SetVisibility(ESlateVisibility::Collapsed);SelectionPage->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+ SelectionTitle->SetText(FText::FromString(Mars?TEXT("MARS / MISSION SELECTION"):TEXT("MOON / MISSION SELECTION")));
+ SelectionPrompt->SetText(FText::FromString(TEXT("Select a mission to continue.")));LaunchButton->SetIsEnabled(false);
+ for(int32 I=0;I<MissionCards.Num();++I){MissionCards[I]->SetSelected(false);MissionCards[I]->SetVisibility((Mars?I==2:I<2)?ESlateVisibility::Visible:ESlateVisibility::Collapsed);}
+}
+void ULunarMainMenu::ExploreMoon(){OpenSelection(false);}
+void ULunarMainMenu::ExploreMars(){OpenSelection(true);}
+void ULunarMainMenu::SelectMission(int32 Index){
+ auto* P=Pilot(this);if(IsIntroActive()||!MissionSelection||LunarLoading::IsBusy()||(P&&P->ActivePanel)||Index<0||Index>=MissionCards.Num()||(SelectionMars?Index!=2:Index==2))return;
+ SelectedMission=Index;for(int32 I=0;I<MissionCards.Num();++I)MissionCards[I]->SetSelected(I==Index);
+ const TCHAR* Names[]={TEXT("Apollo 12 / Surveyor's Legacy"),TEXT("SELENE / fictional rescue"),TEXT("ARES / fictional prototype")};
+ SelectionPrompt->SetText(FText::FromString(FString(TEXT("SELECTED: "))+Names[Index]+TEXT("\nStart mission when you are ready.")));LaunchButton->SetIsEnabled(true);
+}
+void ULunarMainMenu::MoveSelection(int32 Direction){
+ if(!MissionSelection||!Direction)return;
+ const int32 First=SelectionMars?2:0,Count=SelectionMars?1:2;
+ const int32 Offset=SelectedMission==INDEX_NONE?(Direction>0?0:Count-1):(SelectedMission-First+(Direction>0?1:Count-1))%Count;
+ SelectMission(First+Offset);
+}
+void ULunarMainMenu::ConfirmSelection(){if(IsIntroActive())return;if(MissionSelection)LaunchMission();else OpenSelection(PreviewingMars);}
+void ULunarMainMenu::LaunchMission(){
+ auto* G=Mission(this);auto* P=Pilot(this);if(!G||!G->Menu||IsIntroActive()||!MissionSelection||LunarLoading::IsBusy()||(P&&P->ActivePanel)||SelectedMission<0||SelectedMission>=3||(SelectionMars?SelectedMission!=2:SelectedMission==2))return;
+ const TCHAR* Maps[]={TEXT("/Game/Lunar/Maps/Apollo12"),TEXT("/Game/Lunar/Maps/MoonBase"),TEXT("/Game/Mars/Maps/MarsBase")};
+ if(LunarLoading::Open(this,Maps[SelectedMission]))LaunchButton->SetIsEnabled(false);
+}
+void ULunarMainMenu::Back(){auto* P=Pilot(this);if(IsIntroActive()||!MissionSelection||LunarLoading::IsBusy()||(P&&P->ActivePanel))return;MissionSelection=false;SelectionPage->SetVisibility(ESlateVisibility::Collapsed);HomePage->SetVisibility(ESlateVisibility::SelfHitTestInvisible);if(SelectionMars)PreviewMars();else PreviewMoon();}
+void ULunarMainMenu::Continue(){if(IsIntroActive())return;if(auto* P=Pilot(this);P&&P->ActivePanel)return;if(!LunarLoading::IsBusy())if(auto* G=Mission(this))G->ContinueApollo();}
+void ULunarMainMenu::Settings(){if(IsIntroActive())return;if(auto* P=Pilot(this))P->OpenSettings();}
+void ULunarMainMenu::ExitGame(){if(IsIntroActive())return;UKismetSystemLibrary::QuitGame(this,GetOwningPlayer(),EQuitPreference::Quit,false);}
+
+void ULunarMainMenu::BeginIntro(bool Force){
+ if(!IntroLayer)return;
+ if(IntroShownThisProcess&&!Force){IntroState.Elapsed=FLunarIntroState::Duration;IntroState.Active=false;IntroLayer->SetVisibility(ESlateVisibility::Collapsed);return;}
+ IntroShownThisProcess=true;IntroState.Begin();MissionSelection=false;SelectedMission=INDEX_NONE;
+ HomePage->SetVisibility(ESlateVisibility::Collapsed);SelectionPage->SetVisibility(ESlateVisibility::Collapsed);
+ IntroLayer->SetVisibility(ESlateVisibility::Visible);IntroLayer->SetRenderOpacity(1);if(IntroImage)IntroImage->SetRenderOpacity(0);
+}
+void ULunarMainMenu::AdvanceIntro(float Delta){
+ if(!IntroState.Active)return;
+ IntroState.Advance(Delta);
+ if(IntroImage)IntroImage->SetRenderOpacity(IntroState.ImageAlpha());
+ IntroLayer->SetRenderOpacity(IntroState.LayerAlpha());
+ if(IntroState.RevealingMenu())HomePage->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+ if(!IntroState.Active){IntroLayer->SetVisibility(ESlateVisibility::Collapsed);UE_LOG(LogTemp,Display,TEXT("NASA_INTRO completed before menu input enabled"));}
+}
