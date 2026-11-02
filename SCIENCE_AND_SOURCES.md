@@ -1,6 +1,6 @@
 # Science and sources
 
-## Current implementation - 1 November 2026
+## Current implementation - 2 November 2026
 
 **Apollo 12 uses a real, stereo-derived LROC terrain product. SELENE and ARES use
 authored terrain.** The old LOLA south-pole investigation below is historical
@@ -16,6 +16,7 @@ training or a certified simulator.
 | Objects and presentation | Equipment placement details, small fragments, suit/tool poses, boot prints, lighting, cargo displays and UI animation are authored. They do not increase measured elevation resolution. |
 | Resources | Both rescue missions currently initialize a 480-second gameplay oxygen budget. Apollo 12 defaults to untimed exploration and offers a 1,800-second optional exercise. A countdown is game tuning, not real suit endurance. |
 | Optional Field lessons | Three mission-specific questions distinguish terrain provenance, historical context/fictional objectives and gameplay budgets. The debrief reports latest session responses only. No learning gain or astronaut competence is inferred. |
+| Optional equipment diagnostics | The I notebook reads existing repair/reboot flags and Apollo photo/instrument/cargo records. It explains prerequisites and the next normal action. It does not measure voltage, electrical power, hardware damage or safety, and grants no mission progress. |
 
 The official [Apollo 12 archive product](https://pds.mcp.nasa.gov/data/store/img/lunar_reconnaissance_orbiter/pds4/lroc/lro-l-lroc-5-rdr/LROLRC_2001/DATA/SDP/NAC_DTM/APOLLO12/NAC_DTM_APOLLO12_README.TXT)
 and its local README describe the LROC source and errors. Credit: NASA/GSFC/ASU,
@@ -44,6 +45,57 @@ photo-first rule to the game's selected sample tasks is an authored adaptation.
 The countdown lesson cites project gameplay rules rather than presenting NASA
 suit specifications. Field-lesson answers are optional, session-only and do not
 alter cargo, time budgets or scientific measurements.
+
+## Local feedback and equipment pass - 2 November 2026
+
+Borderless HUD text and compact loading typography present existing mission
+state. The loading percentage represents preparation milestones, not file-byte
+throughput. Loading artwork remains illustrative and not to scale. Neither the
+UI nor the optional diagnostic checklist adds a scientific measurement.
+
+The equipment inventory contains 39 research/coverage rows: 32 authored scene
+detail treatments, five existing tools reused in a storage display and two
+unchanged targets. These are not 39 imported meshes. Added rails, collars,
+connectors, supports, rock clusters and visual contact pads are authored
+arrangements using existing assets. Terrain traces position cosmetic details;
+they do not modify the NASA/LROC height grid, collision, coordinate units or
+measured resolution. The suit/first-person tool meshes are not claimed as newly
+replaced by this pass. See [the precise asset scope](ASSET_IMPROVEMENTS_UPDATE.md)
+and [candidate provenance research](ASSET_SOURCE_CATALOG.md).
+
+The diagnostic display distinguishes recorded gameplay steps from a physical
+equipment diagnosis. In rescue missions the station is not shown as rebooted
+merely because its cell/cable steps are complete. Apollo evidence is counted
+only from committed photo and cargo flags. If the ended rescue mission does not
+retain a separate download or relay flag, that status is unavailable rather
+than guessed. Space Engineers informed the dependency/help design; it is a game
+reference, not scientific evidence or a copied engineering model. The primary
+references and design inferences are in [the gameplay update](GAMEPLAY_REFERENCE_UPDATE.md).
+
+The later SELENE rover correction changes one existing MoonBase actor's
+rotation and world Z, not the retained mesh or terrain. Forty-eight contact
+sample entries across eight wheels were traced against SELENE's authored
+terrain; their clearance is a cosmetic placement check, not NASA-derived
+engineering validation. Authored basalt/talus scales from actual source bounds
+and follows the local terrain normal, with 20% of its requested height buried.
+That tuning does not add measured geological detail. No NASA DEM, source crop,
+coordinate transform, collision mesh or measured-resolution claim was changed.
+
+Final local executable `b0347651...a9fb4` passed 1,254 exact PASS executions after
+full cooking, including 18 new grounding assertions. The
+[per-executable receipt](Docs/Feedback2026-11-02/evidence.json) separates 110
+staged PNGs and six routed pointer outcomes from assertions and prior builds.
+Fourteen fresh Editor Python equipment views were reviewed; the latest solar
+junction view remains inconclusive. Offline OBJ geometry proof does not certify
+its rendered visibility. Matched controlled performance runs and the 264/264
+unchanged protected-file comparison completed; see [TEST_REPORT](TEST_REPORT.md)
+for conditions and limits, rather than a sustained whole-mission FPS claim.
+
+No new terrain dataset, NASA partnership, hardware-health measurement, verified
+astronaut safety rule or human learning result is introduced. Runtime remains
+local; source links are citations, not a required online service. Build/runtime
+assertions do not substitute for a separately performed network-disconnected
+run or a real participant study.
 
 ## Historical candidate research - 21 September 2026
 

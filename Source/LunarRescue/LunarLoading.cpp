@@ -1,5 +1,7 @@
 #include "UObject/Package.h"
 #include "LunarLoading.h"
+#include "LunarLoadingTypography.h"
+#include "LunarSettings.h"
 #include "MoviePlayer.h"
 #include "Engine/Engine.h"
 #include "Engine/Texture2D.h"
@@ -31,14 +33,15 @@ class SLunarLoading : public SLeafWidget {
 public:
  SLATE_BEGIN_ARGS(SLunarLoading) {} SLATE_END_ARGS()
  void Construct(const FArguments&, UTexture2D* Texture, const FString& Map,
-                TSharedRef<FLoadingProgress, ESPMode::ThreadSafe> InProgress) {
-  Progress=InProgress;Mars=Map==TEXT("MarsBase");Menu=Map==TEXT("MissionSelect");Legacy=Map==TEXT("MoonBase");
+                TSharedRef<FLoadingProgress, ESPMode::ThreadSafe> InProgress,float TextScale,bool IsPreview=false) {
+  Progress=InProgress;Preview=IsPreview;Layout=LunarLoading::BuildTypography(Map,TextScale);
   Art.SetResourceObject(Texture);Art.ImageSize=FVector2D(1280,720);Art.DrawAs=ESlateBrushDrawType::Image;
   White=FCoreStyle::Get().GetBrush(TEXT("WhiteBrush"));
-  SetCanTick(true);
+  SetCanTick(!Preview);
  }
  virtual FVector2D ComputeDesiredSize(float) const override {return FVector2D(1280,720);}
  virtual void Tick(const FGeometry&,double,float Delta) override {
+  if(Preview)return;
   const int32 Before=Progress->Display.load();
   // Give the first zero state at least three Slate frames, including warm loads.
   if(Ticks++>=3)Value=FMath::Min(float(Progress->Target.load()),Value+FMath::Clamp(Delta,0.f,.1f)*70.f);
@@ -52,53 +55,30 @@ public:
   auto Box=[&](FVector2D At,FVector2D Size,const FSlateBrush* Brush,FLinearColor Color){
    FSlateDrawElement::MakeBox(Out,Layer++,G.ToPaintGeometry(Size,FSlateLayoutTransform(At)),Brush,ESlateDrawEffect::None,Color);
   };
-  auto Text=[&](const TCHAR* Message,float X,float Y,int32 Size,FLinearColor Color,bool Bold=false){
-   FSlateDrawElement::MakeText(Out,Layer++,G.ToPaintGeometry(FVector2D(1200,80),FSlateLayoutTransform(FVector2D(X,Y))),FString(Message),FCoreStyle::GetDefaultFontStyle(Bold?"Bold":"Regular",Size),ESlateDrawEffect::None,Color);
-  };
-  const FLinearColor Accent(.025f,.85f,.9f),Ink(.96f,.98f,1),Dim(.64f,.73f,.78f);
+  const FLinearColor Accent(.025f,.85f,.9f);
   Box(FVector2D::ZeroVector,FVector2D(1280,720),White,FLinearColor(.002f,.006f,.012f));
   if(Art.GetResourceObject())Box(FVector2D::ZeroVector,FVector2D(1280,720),&Art,FLinearColor::White);
-  // A quiet footer and title backing keep text readable over either illustration.
-  Box(FVector2D(0,0),FVector2D(470,132),White,FLinearColor(0,.004f,.008f,.72f));
-  Box(FVector2D(0,488),FVector2D(1280,232),White,FLinearColor(0,.004f,.008f,.88f));
-  Text(Mars?TEXT("L U N A R R E S C U E  /  E X P E D I T I O N  0 2"):TEXT("L U N A R R E S C U E  /  E X P E D I T I O N  0 1"),46,35,9,Accent,true);
-  Text(Menu?TEXT("EXPEDITIONS"):Mars?TEXT("MARS"):TEXT("MOON"),44,53,48,Ink,true);
-  Text(Menu?TEXT("CHOOSE YOUR NEXT EXPEDITION"):Mars?TEXT("ARES / FICTIONAL PROTOTYPE"):Legacy?TEXT("SELENE / FICTIONAL RESCUE"):TEXT("APOLLO 12 / SURVEYOR'S LEGACY"),46,507,23,Ink,true);
-  Text(TEXT("M I S S I O N  G U I D E"),47,550,10,Accent,true);
-  if(Menu){
-   Text(TEXT("Explore the Moon or restore the Mars relay."),47,573,14,Ink);
-   Text(TEXT("Continue expedition returns to your saved Apollo checkpoint."),47,596,14,Ink);
-  }else if(Mars){
-   Text(TEXT("Recover the power cell and restore ARES station power."),47,573,14,Ink);
-   Text(TEXT("Download the ice survey, align the relay and return to the lander."),47,596,14,Ink);
-   Text(TEXT("Watch your oxygen budget. The crew recorder is optional."),47,619,14,Ink);
-  }else if(Legacy){
-   Text(TEXT("Recover the power cell and restore SELENE station power."),47,573,14,Ink);
-   Text(TEXT("Collect the science data and return to the lander."),47,596,14,Ink);
-   Text(TEXT("Watch your oxygen budget. The crew recorder is optional."),47,619,14,Ink);
-  }else{
-   Text(TEXT("Check your equipment, deploy ALSEP and document three samples."),47,573,14,Ink);
-   Text(TEXT("Recover Surveyor 3 hardware and return the cargo to Intrepid."),47,596,14,Ink);
-   Text(TEXT("Follow the objective marker; open the journal for the route."),47,619,14,Ink);
-  }
-  Text(TEXT("Illustrated journey / fictional spacecraft / not to scale"),47,681,10,Dim);
+  Box(FVector2D::ZeroVector,FVector2D(Layout.HeaderWidth,Layout.HeaderHeight),White,FLinearColor(0,.004f,.008f,.72f));
+  Box(FVector2D(0,Layout.FooterTop),FVector2D(1280,720-Layout.FooterTop),White,FLinearColor(0,.004f,.008f,.88f));
   const int32 Percent=Progress->Display.load();
   if(Percent==0)++Progress->ZeroFrames;
   if(Percent==100)++Progress->ReadyFrames;
-  TArray<FVector2D> Ring,Arc;const FVector2D Center(1116,647);
-  for(int32 I=0;I<=64;++I){const float A=-HALF_PI+2*PI*I/64.f;const FVector2D P=Center+FVector2D(FMath::Cos(A),FMath::Sin(A))*19;Ring.Add(P);if(I<=Percent*.64f)Arc.Add(P);}
+  TArray<FVector2D> Ring,Arc;const FVector2D Center=Layout.RingCenter;
+  for(int32 I=0;I<=64;++I){const float A=-HALF_PI+2*PI*I/64.f;const FVector2D P=Center+FVector2D(FMath::Cos(A),FMath::Sin(A))*Layout.RingRadius;Ring.Add(P);if(I<=Percent*.64f)Arc.Add(P);}
   FSlateDrawElement::MakeLines(Out,Layer++,G.ToPaintGeometry(),Ring,ESlateDrawEffect::None,FLinearColor(.15f,.22f,.27f),true,3);
   if(Arc.Num()>1)FSlateDrawElement::MakeLines(Out,Layer++,G.ToPaintGeometry(),Arc,ESlateDrawEffect::None,Accent,true,3);
-  Text(TEXT("L O A D I N G"),1151,627,10,Ink,true);
-  Text(TEXT("Preparation progress"),1070,604,10,Dim);
-  Text(*FString::Printf(TEXT("%d %%"),Percent),1151,650,15,Ink,true);
-  Text(Percent==100?TEXT("READY TO EXPLORE"):Progress->Target.load()<70?TEXT("PREPARING DESTINATION"):TEXT("TERRAIN & EQUIPMENT"),924,688,10,Dim);
+  for(const auto& Line:Layout.Lines){
+   FString Message=Line.Text;
+   if(Line.Role==TEXT("percent"))Message=FString::Printf(TEXT("%d %%"),Percent);
+   else if(Line.Role==TEXT("status"))Message=Percent==100?TEXT("READY TO EXPLORE"):Progress->Target.load()<70?TEXT("PREPARING DESTINATION"):TEXT("TERRAIN & EQUIPMENT");
+   FSlateDrawElement::MakeText(Out,Layer++,G.ToPaintGeometry(Line.Extent,FSlateLayoutTransform(Line.Position)),Message,Line.Font,ESlateDrawEffect::None,Line.Color);
+  }
   return Layer;
  }
 private:
  TSharedPtr<FLoadingProgress,ESPMode::ThreadSafe> Progress;
  FSlateBrush Art;const FSlateBrush* White=nullptr;
- bool Mars=false,Menu=false,Legacy=false;float Value=0;int32 Ticks=0;
+ LunarLoading::FTypographyLayout Layout;bool Preview=false;float Value=0;int32 Ticks=0;
 };
 
 class FLoadingController {
@@ -142,7 +122,7 @@ private:
    const TCHAR* Name=Map==TEXT("MarsBase")?TEXT("Mars"):TEXT("Moon");
    auto* Texture=LoadObject<UTexture2D>(nullptr,*FString::Printf(TEXT("/Game/Lunar/Frontend/T_Loading%s.T_Loading%s"),Name,Name));
    if(Texture&&!Textures.Contains(Texture)){Texture->AddToRoot();Textures.Add(Texture);}
-   Screen=SNew(SBox).WidthOverride(1280).HeightOverride(720)[SNew(SLunarLoading,Texture,Map,Progress.ToSharedRef())];
+   Screen=SNew(SBox).WidthOverride(1280).HeightOverride(720)[SNew(SLunarLoading,Texture,Map,Progress.ToSharedRef(),LunarLoading::LoadingTextScale(ULunarSettings::Get()->TextScale))];
    FLoadingScreenAttributes Attr;
    Attr.WidgetLoadingScreen=SNew(SScaleBox).Stretch(EStretch::ScaleToFit)[Screen.ToSharedRef()];
    Attr.bAutoCompleteWhenLoadingCompletes=false;Attr.bWaitForManualStop=true;Attr.bMoviesAreSkippable=false;
@@ -194,3 +174,8 @@ void LunarLoading::Shutdown(){LunarLoadingController.Shutdown();}
 bool LunarLoading::Open(const UObject* Context,FName Map,const FString& Options){return LunarLoadingController.Open(Context,Map,Options);}
 bool LunarLoading::IsBusy(){return LunarLoadingController.Busy||LunarLoadingController.Pending;}
 bool LunarLoading::Completed(const FString& Map,bool Rendered){return LunarLoadingController.Completed(Map,Rendered);}
+
+TSharedRef<SWidget> LunarLoading::MakeTypographyPreview(UTexture2D* Texture,const FString& Map,float TextScale,int32 Percent){
+ auto Progress=MakeShared<FLoadingProgress,ESPMode::ThreadSafe>();Progress->Target=Percent<=0?15:100;Progress->Display=FMath::Clamp(Percent,0,100);
+ return SNew(SScaleBox).Stretch(EStretch::ScaleToFit)[SNew(SBox).WidthOverride(1280).HeightOverride(720)[SNew(SLunarLoading,Texture,Map,Progress,TextScale,true)]];
+}

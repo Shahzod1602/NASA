@@ -1,5 +1,130 @@
 # Test reports
 
+## 2026-11-02 — HUD, loading, diagnostics va assetlar: yakuniy mahalliy paket
+
+**Yakuniy paketda 1 254 PASS, 0 FAIL.** 18 ta tekshirilgan run: 1 128 funksional,
+76 haqiqiy loading/travel va 50 HUD geometriyasi tekshiruvi. Bu takroriy test
+bajarilishlari soni; 1 254 noyob test yoki inson natijasi degani emas.
+[SHA va buyruqlar dalili](Docs/Feedback2026-11-02/evidence.json).
+
+Win64 Development exe SHA-256:
+`b034765110ad30f5a60ffcf1e874ddac679002b16c74f0e9f72bea54017a9fb4`.
+Editor module: `251318c8bbb8946f416b76dcef563611778e7dbcb5a343e2a45ec6628a3dcf7e`.
+78 ta Source fayli compile oldidagi hashlar bilan bir xil. Built va staged exe
+hashlari teng. Editor 4 action/25.89 s, Game 3 action/46.40 s — Succeeded.
+To‘liq cook: 710 cooked + 7 platform skip = 717 processed; incremental skip 0.
+Cook/stage/archive `BUILD SUCCESSFUL`, UAT exit 0. Bu incremental C++ compile
+va to‘liq cook; bo‘sh Intermediate bilan clean-checkout build bajarilgani emas.
+Eski float/deprecation warninglari bor, warning-free build da’vo qilinmaydi.
+
+Muhit: Windows 11, UE 5.8.3, MSVC 14.44.35217, SDK 10.0.22621,
+Ryzen 5 6600H, RTX 3050 Laptop GPU, 16 GB RAM.
+
+| Shu final paketda tekshirilgan qism | PASS |
+| --- | ---: |
+| Jihoz, ground-rock hisoblari va read-only diagnostics: uch missiya | 152 |
+| Loading shriftlari: to‘rt manzil, 100/150% | 55 |
+| HUD: 720p/1080p, 100/150%, actual Slate geometry | 50 |
+| Apollo/SELENE/ARES/menu, walkthrough, suit/polish/guidance/fieldwork/checkpoint | 460 |
+| Intro, HUD, pause/restart, POV va Field Lessons regressiyasi | 275 |
+| Mission selection va frontend/settings | 71 |
+| Mars movement va ledge | 16 |
+| Experience va DX11/audio presentation | 99 |
+| Haqiqiy loading: 0/100%, monotonic progress, world-time hold | 76 |
+| **Jami** | **1 254** |
+
+Bundan tashqari 110 yangi staged UI PNG (50 HUD, 20 loading, 14 frontend,
+26 selection) fayl yangiligi/o‘lchami bilan tekshirildi. 6 routed Slate pointer
+natijasi alohida saqlandi; ular jismoniy sichqoncha/inson playtesti emas.
+Editor -game DX11 orqali 14 yangi jihoz kadri olindi va barchasi ko‘rib chiqildi.
+Apollo 39 component/546 instance, SELENE 63/709, ARES 46/594; limit 128/1400.
+Bular packaged FPS testi emas. Solar ostki junction oxirgi kadrda aniq
+ajralmadi: source OBJ tashqarisida joylashganini tekshirish va clear ray uning
+vizual tasdig‘i deb yozilmadi. Shu detal ko‘rigi ochiq cheklov bo‘lib qoladi.
+
+Ko‘rikda topilib tuzatilganlar: 150% loading progress yozuvlari to‘qnashuvi,
+optional javob panelining ortiqcha maydoni, yo‘qolgan Route/javob tugmasi
+eslatmasi, noto‘g‘ri source masshtabi sabab yer ostida qolgan kosmetik toshlar.
+Toshlar haqiqiy mesh bounds bilan o‘lchanadi, target balandlikning 20% qismi
+yerga botiriladi; flat/known-normal, invalid va actual-instance ground testlari
+qo‘shildi. Bu authored tuning, yangi NASA geologik o‘lchovi emas.
+
+SELENE roverining eski pitch15 holati supported Editor Python orqali
+pitch0/yaw15/roll0, Z4.554649 cm ga tuzatildi. To‘liq original map zaxiralandi;
+8 g‘ildirakdagi 48 kontakt namunasi (40 distinct source vertex) 1–6.8743 cm
+clearance ko‘rsatdi. XY/scale/tags/material/collision va boshqa 1 910 actorning
+snapshotlari saqlandi. Faqat `MoonBase.umap` o‘zgardi; map regeneratsiya, ARES
+map o‘zgarishi yoki NASA relyefini tahrirlash bajarilmadi. Map SHA:
+`d5a76deedb6e6d438834929bc46b59a71bcc5fd14cf30e45dd294cbcc121e1b6`.
+Dastlabki ikkita Python API urinishida script save oldida to‘xtadi; uchinchi
+urinish muvaffaqiyatli bo‘ldi. Eski Unity compile muammosi module `bUseUnity=false`
+bilan tuzatildi; game optimization saqlandi. Xato dalillari Reports’da saqlangan.
+
+Asosiy buyruqlar:
+
+```powershell
+./Tools/repair_selene_rover.ps1 -Apply # faqat original pitch15 map uchun; qayta apply rad etiladi
+./Tools/package_apollo12.ps1 -MaxCompileActions 2
+./Tools/verify_feedback.ps1 -Packaged
+./Tools/verify_feedback.ps1 -Packaged -Review -Width 1920 -Height 1080
+./Tools/verify_loading_typography.ps1 -Packaged
+./Tools/verify_loading_typography.ps1 -Packaged -Review
+./Tools/verify_loading.ps1 -Packaged -Graphics
+./Tools/verify_nasa_tasks.ps1 -Packaged
+./Tools/verify_apollo12.ps1 -Packaged -Regression -Checkpoints -Polish -Suit -Guidance -Fieldwork -Walkthrough
+./Tools/verify_mission_selection.ps1 -Packaged
+./Tools/verify_frontend.ps1 -Packaged
+./Tools/verify_experience.ps1 -Packaged
+./Tools/verify_presentation.ps1 -Packaged -Graphics -Audio
+./Tools/verify_planet_movement.ps1 -Packaged
+./Tools/review_equipment.ps1
+```
+
+Frontend/selection/loading/HUD reviewlari 1280×720 va 1920×1080 da bajarildi;
+aniq flag/buyruq va raw report hashlari evidence.json’da. NullRHI walkthrough
+funksional traversal bo‘lib, grafik FPS yoki inson o‘ynash natijasi emas.
+
+### Bir xil sharoitdagi performance
+
+Oldingi `ee207b31…` va final `b0347651…` uchun DX11 RenderOffscreen 1280×720,
+Medium(1), 60 FPS cap, VSync off, nosound; har capture 1 800 frame.
+Menu 300 warmup/1 500 sample, Apollo 600 warmup/1 200 sample.
+[Hisob va raw fayl SHA-lari](Docs/Feedback2026-11-02/performance.json).
+
+| Sahna | O‘rtacha FPS oldin → keyin | p99 frame ms oldin → keyin | sampled working set MiB oldin → keyin |
+| --- | ---: | ---: | ---: |
+| Menu | 59.977 → 59.957 | 17.8475 → 17.4734 | 552.8 → 528.8 |
+| Apollo opening walk | 59.975 → 59.997 | 18.1036 → 17.8913 | 603.0 → 598.1 |
+
+Har sahna uchun bittadan nazoratli o‘lchov. FPS limitlangan; bu headroom,
+barqaror 60 FPS, butun missiya, Mars/SELENE performance yoki animatsiya sifati
+kafolati emas. Working set bir soniyada olingan namunalarning maksimumi,
+haqiqiy peak yoki VRAM emas. CSV to‘liq va log toza; raw profiling process exit
+`777003` o‘zgartirilmagan, exit0 deb ko‘rsatilmagan. 2ed oraliq build o‘lchovlari
+finalga ko‘chirilmagan.
+
+### Saqlangan ishlar va chegaralar
+
+Original save/photo/config ro‘yxatidagi **264/264 fayl hash jihatdan saqlandi**,
+0 missing, 0 farq. Editor avtomatik o‘zgartirgan bitta
+`EditorPerProjectUserSettings.ini` verified original backupdan tiklandi.
+[Preservation dalili](Docs/Feedback2026-11-02/preservation.json).
+
+39 asset targetidan 32 tasiga authored scene detail, 5 tasiga existing-tool
+storage display qo‘shildi; suit/gloves va Mars ground shader bu passda saqlandi.
+39 yangi professional model yuklab/import qilinmadi. Ilmiy NASA datasetlar va
+terrain birliklari o‘zgarmadi; yangi hardware/rocks authored content.
+
+Yangi inson playtesti, o‘rganish samarasi, interaktiv PIE, tarmoq uzilgan muhit
+sinovi va barcha hardware/ekran/FOV kombinatsiyalari tekshirilmadi. Competition
+eligibility bu ish bilan qayta tasdiqlanmadi. Git commit/push, yangi reliz yoki
+tanlovga topshirish bajarilmadi. Mahalliy launcher:
+`Dist/Apollo12/Windows/LunarRescue.exe`; build/run/controls README va PLAYING’da.
+Oldingi e738/2ed runlari o‘z executable guruhlarida saqlandi va final soniga
+qo‘shilmadi. Mahalliy raw dalillar `Reports/Feedback20261102/ground-*`,
+`compiled-ground-final.json`, `package-ground-final-build.log`,
+`selene-rover-repair-20261102-073944-141/`, `equipment-visual-qa-ground-final.json`.
+
 ## 2026-11-01 — v0.7.0 relizini tayyorlash
 
 Foydalanuvchi GitHub relizi va NASA guruhiga xulosa yuborishni alohida so‘radi.

@@ -5,11 +5,19 @@
 #include "LunarIntro.h"
 #include "LunarPanels.generated.h"
 
+struct FLunarFrontendLabel {
+ TWeakObjectPtr<class UTextBlock> Widget;
+ int32 BaseSize=12;
+ bool Scales=true;
+};
+
 UCLASS()
 class LUNARRESCUE_API ULunarSettingRow : public UUserWidget {
  GENERATED_BODY()
 public:
  FName Setting;
+ float RowTextScale=-1;
+ virtual void NativeTick(const FGeometry& Geometry,float Delta) override;
  UPROPERTY() TObjectPtr<class UTextBlock> ValueLabel;
  UPROPERTY() TObjectPtr<class UInputKeySelector> Selector;
  UPROPERTY() TObjectPtr<class UComboBoxString> Choices;
@@ -26,6 +34,8 @@ class LUNARRESCUE_API ULunarPanel : public UUserWidget {
  GENERATED_BODY()
 public:
  bool Settings=false;
+ TArray<FLunarFrontendLabel> FrontendLabels;
+ float FrontendTextScale=-1;
  bool ShowExpeditionMap=false;
  bool ShowFieldLessons=false;
  int32 FieldLessonIndex=0;
@@ -69,6 +79,9 @@ UCLASS()
 class LUNARRESCUE_API ULunarMainMenu : public UUserWidget {
  GENERATED_BODY()
 public:
+ TArray<FLunarFrontendLabel> FrontendLabels;
+ float FrontendTextScale=-1;
+ virtual void NativeTick(const FGeometry& Geometry,float Delta) override;
  UPROPERTY() TObjectPtr<class UImage> Background;
  UPROPERTY() TObjectPtr<class UTextBlock> Destination;
  UPROPERTY() TObjectPtr<class UTextBlock> Details;

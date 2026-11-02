@@ -1,0 +1,2625 @@
+{
+  "schema_version": 1,
+  "collected_utc": "2026-11-02T03:00:12.368858+00:00",
+  "scope": "Read-only collection of existing test outputs; no engine launched",
+  "count_semantics": "Exact PASS-line executions, including repeated suites/maps. PNGs and exit-zero summaries are not assertions. Totals remain separate per executable; no claim of complete final-build coverage.",
+  "receipt_validation": "Collector independently SHA-256 checked both current built/staged executables against the supplied single-hash receipt",
+  "source_artifacts": "Paths are repository-relative local validation artifacts; some Reports files are ignored by Git. SHA-256 identifies the exact input read. Raw source-group messages are not included.",
+  "human_playtests": 0,
+  "performance_measurement": false,
+  "queues": [
+    {
+      "path": "Reports/Feedback20261102/ground-test-queue.json",
+      "sha256": "52b83faf19b8561b5343a0b909ec32385a12c5df86a2bcb142055c4d3fffea30",
+      "completed_records": 17,
+      "names": [
+        "feedback-functional",
+        "feedback-review720",
+        "feedback-review1080",
+        "typography-review720",
+        "typography-review1080",
+        "loading-actual",
+        "nasa-regression",
+        "apollo-regression",
+        "selection-functional",
+        "frontend-functional",
+        "experience-functional",
+        "presentation-functional",
+        "mars-movement",
+        "frontend-review720",
+        "frontend-review1080",
+        "selection-review720",
+        "selection-review1080"
+      ]
+    }
+  ],
+  "preserved_collections": [
+    {
+      "path": "Reports/Feedback20261102/controls-frozen/evidence.json",
+      "sha256": "0685469a2cc651c9a46b4bf7ab416085051346d561f9793eafd56dbb11170e42"
+    }
+  ],
+  "duplicate_run_records_ignored": 0,
+  "default_queue_cases_not_yet_recorded": [],
+  "runs": [
+    {
+      "name": "feedback-functional",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:45:39.1547699Z",
+      "finished_utc": "2026-11-02T02:46:13.2529354Z",
+      "executable_sha256": "b034765110ad30f5a60ffcf1e874ddac679002b16c74f0e9f72bea54017a9fb4",
+      "executable_provenance": "runner-recorded executable hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-ground-final.json",
+        "sha256": "766e233f56ec34ac5d0eebac8a2a5e6fc789fd8721f2b55d9ed7f644896efe42"
+      },
+      "assertion_reports": [
+        {
+          "case": "assets-apollo",
+          "category": "functional",
+          "pass_executions": 14,
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261102-074539-206/assets-apollo-checks.txt",
+          "sha256": "8fae21338cf38713d7c13900d6f22336bb737afb850c562b423ce522bdfd2dfb"
+        },
+        {
+          "case": "diagnostics-apollo",
+          "category": "functional",
+          "pass_executions": 38,
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261102-074539-206/diagnostics-apollo-checks.txt",
+          "sha256": "ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19"
+        },
+        {
+          "case": "assets-selene",
+          "category": "functional",
+          "pass_executions": 12,
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261102-074539-206/assets-selene-checks.txt",
+          "sha256": "97eb6e923aa43de828fd1d1fc9f97e9256ee41b02da82b19f7298f10088ca35f"
+        },
+        {
+          "case": "diagnostics-selene",
+          "category": "functional",
+          "pass_executions": 38,
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261102-074539-206/diagnostics-selene-checks.txt",
+          "sha256": "ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19"
+        },
+        {
+          "case": "assets-mars",
+          "category": "functional",
+          "pass_executions": 12,
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261102-074539-206/assets-mars-checks.txt",
+          "sha256": "97eb6e923aa43de828fd1d1fc9f97e9256ee41b02da82b19f7298f10088ca35f"
+        },
+        {
+          "case": "diagnostics-mars",
+          "category": "functional",
+          "pass_executions": 38,
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261102-074539-206/diagnostics-mars-checks.txt",
+          "sha256": "ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/ground-feedback-functional.log",
+          "sha256": "7d497b6e3cfd3becce086a8f7b4b787323c1870a3088998a7fde79f6e0e234d1"
+        },
+        {
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261102-074539-206/run-summary.json",
+          "sha256": "398ce3232d116ef6473d628dd1accf4f42fff49ef215e45b93995302beb26826"
+        }
+      ],
+      "resolution": [
+        1280,
+        720
+      ],
+      "queue": "Reports/Feedback20261102/ground-test-queue.json"
+    },
+    {
+      "name": "feedback-review720",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:47:28.3577608Z",
+      "finished_utc": "2026-11-02T02:48:18.9121387Z",
+      "executable_sha256": "b034765110ad30f5a60ffcf1e874ddac679002b16c74f0e9f72bea54017a9fb4",
+      "executable_provenance": "runner-recorded executable hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-ground-final.json",
+        "sha256": "766e233f56ec34ac5d0eebac8a2a5e6fc789fd8721f2b55d9ed7f644896efe42"
+      },
+      "assertion_reports": [
+        {
+          "case": "hud-apollo",
+          "category": "staged-layout",
+          "pass_executions": 9,
+          "path": "Reports/Feedback20261102/package-review-1280x720-20261102-074728-380/hud-apollo-checks.txt",
+          "sha256": "e43a6d97e21671c34d1093a5e2ed4d08576f90b1825ad262f3da8c3ab41fe0ea"
+        },
+        {
+          "case": "hud-selene",
+          "category": "staged-layout",
+          "pass_executions": 8,
+          "path": "Reports/Feedback20261102/package-review-1280x720-20261102-074728-380/hud-selene-checks.txt",
+          "sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482"
+        },
+        {
+          "case": "hud-mars",
+          "category": "staged-layout",
+          "pass_executions": 8,
+          "path": "Reports/Feedback20261102/package-review-1280x720-20261102-074728-380/hud-mars-checks.txt",
+          "sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482"
+        }
+      ],
+      "staged_frames": 25,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/ground-feedback-review720.log",
+          "sha256": "68fddacecc3c8b5bfdbea1820e4b616a995f8dfbc6e88e29b0bee7afb4b456fc"
+        },
+        {
+          "path": "Reports/Feedback20261102/package-review-1280x720-20261102-074728-380/run-summary.json",
+          "sha256": "adceb57ce20a99a7acdc2203e66c29525262b1de5a542bf8d084c0384738feac"
+        }
+      ],
+      "resolution": [
+        1280,
+        720
+      ],
+      "queue": "Reports/Feedback20261102/ground-test-queue.json"
+    },
+    {
+      "name": "feedback-review1080",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:48:18.9134823Z",
+      "finished_utc": "2026-11-02T02:49:12.0386366Z",
+      "executable_sha256": "b034765110ad30f5a60ffcf1e874ddac679002b16c74f0e9f72bea54017a9fb4",
+      "executable_provenance": "runner-recorded executable hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-ground-final.json",
+        "sha256": "766e233f56ec34ac5d0eebac8a2a5e6fc789fd8721f2b55d9ed7f644896efe42"
+      },
+      "assertion_reports": [
+        {
+          "case": "hud-apollo",
+          "category": "staged-layout",
+          "pass_executions": 9,
+          "path": "Reports/Feedback20261102/package-review-1920x1080-20261102-074818-932/hud-apollo-checks.txt",
+          "sha256": "e43a6d97e21671c34d1093a5e2ed4d08576f90b1825ad262f3da8c3ab41fe0ea"
+        },
+        {
+          "case": "hud-selene",
+          "category": "staged-layout",
+          "pass_executions": 8,
+          "path": "Reports/Feedback20261102/package-review-1920x1080-20261102-074818-932/hud-selene-checks.txt",
+          "sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482"
+        },
+        {
+          "case": "hud-mars",
+          "category": "staged-layout",
+          "pass_executions": 8,
+          "path": "Reports/Feedback20261102/package-review-1920x1080-20261102-074818-932/hud-mars-checks.txt",
+          "sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482"
+        }
+      ],
+      "staged_frames": 25,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/ground-feedback-review1080.log",
+          "sha256": "ad7b7d653d7fd80f6b6808449e7f60d051460fdc063d022a783123e7e2b1cb85"
+        },
+        {
+          "path": "Reports/Feedback20261102/package-review-1920x1080-20261102-074818-932/run-summary.json",
+          "sha256": "e7150fdaee30d4108638c312c6f77725f1f72dc1d1e0ee3b57f23e1c588dadf4"
+        }
+      ],
+      "resolution": [
+        1920,
+        1080
+      ],
+      "queue": "Reports/Feedback20261102/ground-test-queue.json"
+    },
+    {
+      "name": "typography-review720",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:49:12.0402397Z",
+      "finished_utc": "2026-11-02T02:49:23.8499078Z",
+      "executable_sha256": "b034765110ad30f5a60ffcf1e874ddac679002b16c74f0e9f72bea54017a9fb4",
+      "executable_provenance": "runner-recorded executable hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-ground-final.json",
+        "sha256": "766e233f56ec34ac5d0eebac8a2a5e6fc789fd8721f2b55d9ed7f644896efe42"
+      },
+      "assertion_reports": [],
+      "staged_frames": 10,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/ground-typography-review720.log",
+          "sha256": "3570384d6d87efee52c680355c6383ff455656e1fda12cc7b6ea4b260a755cfe"
+        },
+        {
+          "path": "Reports/LoadingTypography20261102/package-review-1280x720-20261102-074912-058/run-summary.json",
+          "sha256": "0049ee1390777fa3f0cebd69e0897bda1b6b021fca8a4209a098c59bd99a6e7b"
+        }
+      ],
+      "resolution": "1280x720",
+      "queue": "Reports/Feedback20261102/ground-test-queue.json"
+    },
+    {
+      "name": "typography-review1080",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:49:23.8514098Z",
+      "finished_utc": "2026-11-02T02:49:37.4468897Z",
+      "executable_sha256": "b034765110ad30f5a60ffcf1e874ddac679002b16c74f0e9f72bea54017a9fb4",
+      "executable_provenance": "runner-recorded executable hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-ground-final.json",
+        "sha256": "766e233f56ec34ac5d0eebac8a2a5e6fc789fd8721f2b55d9ed7f644896efe42"
+      },
+      "assertion_reports": [],
+      "staged_frames": 10,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/ground-typography-review1080.log",
+          "sha256": "40304b45575b3f6dec5c3657ac01f3406e40855e2a0f5d2e02cf60460aa3c93e"
+        },
+        {
+          "path": "Reports/LoadingTypography20261102/package-review-1920x1080-20261102-074923-880/run-summary.json",
+          "sha256": "ead9c8e5133035ef83ed21e5c9759e48cf29b178b6bcc169e84f011b1cc455b7"
+        }
+      ],
+      "resolution": "1920x1080",
+      "queue": "Reports/Feedback20261102/ground-test-queue.json"
+    },
+    {
+      "name": "loading-actual",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:49:37.4482123Z",
+      "finished_utc": "2026-11-02T02:50:40.6544832Z",
+      "executable_sha256": "b034765110ad30f5a60ffcf1e874ddac679002b16c74f0e9f72bea54017a9fb4",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-ground-final.json",
+        "sha256": "766e233f56ec34ac5d0eebac8a2a5e6fc789fd8721f2b55d9ed7f644896efe42"
+      },
+      "assertion_reports": [
+        {
+          "case": "loading-actual",
+          "category": "actual-travel",
+          "pass_executions": 76,
+          "path": "Reports/Feedback20261102/ground-loading-actual.log",
+          "sha256": "692c6649da0ee0d24897c5b85786ddf2281a1d27f61bc87e946a41a0119da846"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/ground-loading-actual.log",
+          "sha256": "692c6649da0ee0d24897c5b85786ddf2281a1d27f61bc87e946a41a0119da846"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/ground-test-queue.json"
+    },
+    {
+      "name": "nasa-regression",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:50:40.6556614Z",
+      "finished_utc": "2026-11-02T02:51:52.0749517Z",
+      "executable_sha256": "b034765110ad30f5a60ffcf1e874ddac679002b16c74f0e9f72bea54017a9fb4",
+      "executable_provenance": "runner-recorded executable hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-ground-final.json",
+        "sha256": "766e233f56ec34ac5d0eebac8a2a5e6fc789fd8721f2b55d9ed7f644896efe42"
+      },
+      "assertion_reports": [
+        {
+          "case": "intro",
+          "category": "functional",
+          "pass_executions": 12,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-075040-731/intro-checks.txt",
+          "sha256": "0092db04c7d47e436d52321cdc5a55707f3fef74909097755d6d12c251e16146"
+        },
+        {
+          "case": "ui-apollo",
+          "category": "functional",
+          "pass_executions": 24,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-075040-731/ui-apollo-checks.txt",
+          "sha256": "1676fb5306f2e2c2328fca5914e549b8b9c57fe0d4e21ae6d4ff828dbaac331c"
+        },
+        {
+          "case": "ui-selene",
+          "category": "functional",
+          "pass_executions": 30,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-075040-731/ui-selene-checks.txt",
+          "sha256": "be6b0f2ccf91e157c1d88204f068662b4e6196da18a9f53b8efda3df1628cc6c"
+        },
+        {
+          "case": "ui-mars",
+          "category": "functional",
+          "pass_executions": 28,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-075040-731/ui-mars-checks.txt",
+          "sha256": "8ab57171547fbc61ceb13ccd95c2aab7c9b8f5a4c662580b4738938ccf304dc8"
+        },
+        {
+          "case": "pov",
+          "category": "functional",
+          "pass_executions": 28,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-075040-731/pov-checks.txt",
+          "sha256": "dcc7cc835f41db95bb892ec4d2de41ac74dd6c0fbf1fed4c6fd89a2b59319189"
+        },
+        {
+          "case": "learning-apollo",
+          "category": "functional",
+          "pass_executions": 39,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-075040-731/learning-apollo-checks.txt",
+          "sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123"
+        },
+        {
+          "case": "learning-selene",
+          "category": "functional",
+          "pass_executions": 39,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-075040-731/learning-selene-checks.txt",
+          "sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123"
+        },
+        {
+          "case": "learning-mars",
+          "category": "functional",
+          "pass_executions": 39,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-075040-731/learning-mars-checks.txt",
+          "sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123"
+        },
+        {
+          "case": "restart-apollo",
+          "category": "functional",
+          "pass_executions": 12,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-075040-731/restart-apollo-checks.txt",
+          "sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e"
+        },
+        {
+          "case": "restart-selene",
+          "category": "functional",
+          "pass_executions": 12,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-075040-731/restart-selene-checks.txt",
+          "sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e"
+        },
+        {
+          "case": "restart-mars",
+          "category": "functional",
+          "pass_executions": 12,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-075040-731/restart-mars-checks.txt",
+          "sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/ground-nasa-regression.log",
+          "sha256": "6b0ff586b4002eb4a441d701d9ce265cd4142538775bbf52839dc4422dccad8b"
+        },
+        {
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-075040-731/run-summary.json",
+          "sha256": "21e6e68184007a0244ba5b7270f44f174c08e888fd9ed1e9866df421fe54d0c1"
+        }
+      ],
+      "resolution": [
+        1280,
+        720
+      ],
+      "queue": "Reports/Feedback20261102/ground-test-queue.json"
+    },
+    {
+      "name": "apollo-regression",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:51:52.0764803Z",
+      "finished_utc": "2026-11-02T02:54:11.6299504Z",
+      "executable_sha256": "b034765110ad30f5a60ffcf1e874ddac679002b16c74f0e9f72bea54017a9fb4",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-ground-final.json",
+        "sha256": "766e233f56ec34ac5d0eebac8a2a5e6fc789fd8721f2b55d9ed7f644896efe42"
+      },
+      "assertion_reports": [
+        {
+          "case": "apollo-checks",
+          "category": "functional",
+          "pass_executions": 57,
+          "path": "Reports/package-apollo12-checks-result.txt",
+          "sha256": "1d8911bc084c6a7a1c2bb63b9fbebc6f33d1fe6ec51ae0d726d8ded7e9e7d44c"
+        },
+        {
+          "case": "apollo-legacy-moon",
+          "category": "functional",
+          "pass_executions": 50,
+          "path": "Reports/package-apollo12-legacy-moon-result.txt",
+          "sha256": "6b4f590b824979b6e5dbaa629e5e4fc16fa4e2ec4d8050a432dbab8150846886"
+        },
+        {
+          "case": "apollo-mars",
+          "category": "functional",
+          "pass_executions": 54,
+          "path": "Reports/package-apollo12-mars-result.txt",
+          "sha256": "fa5e80fd8a9073604fedda210da7ca12626bacbf5955d98d7302b97f53390de3"
+        },
+        {
+          "case": "apollo-menu",
+          "category": "functional",
+          "pass_executions": 55,
+          "path": "Reports/package-apollo12-menu-result.txt",
+          "sha256": "11c6ab3438d78be5caeb4ef56d2c4426c6d5a2bc3de848e457cd31ed58cae9f9"
+        },
+        {
+          "case": "apollo-walk",
+          "category": "functional",
+          "pass_executions": 2,
+          "path": "Reports/package-apollo12-walk-result.txt",
+          "sha256": "fee0cb5858ff3d67adc4cdd14e2a329c749d001c31f9dfedc292ae3d91d5fd17"
+        },
+        {
+          "case": "apollo-suit",
+          "category": "functional",
+          "pass_executions": 32,
+          "path": "Reports/package-apollo12-suit-result.txt",
+          "sha256": "901df3df557c022d6624af6172f6cd46584b0324cbd46fa2d5de5654198f5a15"
+        },
+        {
+          "case": "apollo-polish",
+          "category": "functional",
+          "pass_executions": 64,
+          "path": "Reports/package-apollo12-polish-result.txt",
+          "sha256": "c927f568452ca06accd24406049d0e7a723c2c16dacca8706e8b14d1d233e5a8"
+        },
+        {
+          "case": "apollo-guidance",
+          "category": "functional",
+          "pass_executions": 47,
+          "path": "Reports/package-apollo12-guidance-result.txt",
+          "sha256": "d9a16b9f4f62acc93b7534b308edfa4e36b0d6c8966064d288b4110112c86ffa"
+        },
+        {
+          "case": "apollo-fieldwork",
+          "category": "functional",
+          "pass_executions": 39,
+          "path": "Reports/package-apollo12-fieldwork-result.txt",
+          "sha256": "ea375f02581686b0e4ef8ad36e583622d000fb282c0b93ea71c68c216ad9b192"
+        },
+        {
+          "case": "apollo-save",
+          "category": "functional",
+          "pass_executions": 51,
+          "path": "Reports/package-apollo12-save-result.txt",
+          "sha256": "6f9761b2a673ceefe91006a49d46f19bffa922479b741b11295fe962fe6e97dc"
+        },
+        {
+          "case": "apollo-save-write",
+          "category": "functional",
+          "pass_executions": 2,
+          "path": "Reports/package-apollo12-save-write-result.txt",
+          "sha256": "925561c794fc7f059e796c96d107eec4f34e6b77bde7676e82b2985e42a002f4"
+        },
+        {
+          "case": "apollo-save-read",
+          "category": "functional",
+          "pass_executions": 7,
+          "path": "Reports/package-apollo12-save-read-result.txt",
+          "sha256": "e0b31f0af7c9b70f375ccc1c6740cc612456916225adbf73425bc9d6540de24c"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/ground-apollo-regression.log",
+          "sha256": "1fb5ad112cb2690112878713b9ec6e2cfb71a19eb2c3b88f8642db150b633d1f"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/ground-test-queue.json"
+    },
+    {
+      "name": "selection-functional",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:54:11.6313361Z",
+      "finished_utc": "2026-11-02T02:54:17.2942135Z",
+      "executable_sha256": "b034765110ad30f5a60ffcf1e874ddac679002b16c74f0e9f72bea54017a9fb4",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-ground-final.json",
+        "sha256": "766e233f56ec34ac5d0eebac8a2a5e6fc789fd8721f2b55d9ed7f644896efe42"
+      },
+      "assertion_reports": [
+        {
+          "case": "selection-functional",
+          "category": "functional",
+          "pass_executions": 51,
+          "path": "Reports/Feedback20261102/ground-selection-functional.log",
+          "sha256": "87d161be6996994a2b4202ad7fc22c2c48e8e1fd25de220579c5d92adf41a239"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/ground-selection-functional.log",
+          "sha256": "87d161be6996994a2b4202ad7fc22c2c48e8e1fd25de220579c5d92adf41a239"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/ground-test-queue.json"
+    },
+    {
+      "name": "frontend-functional",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:54:17.2953872Z",
+      "finished_utc": "2026-11-02T02:54:22.9935038Z",
+      "executable_sha256": "b034765110ad30f5a60ffcf1e874ddac679002b16c74f0e9f72bea54017a9fb4",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-ground-final.json",
+        "sha256": "766e233f56ec34ac5d0eebac8a2a5e6fc789fd8721f2b55d9ed7f644896efe42"
+      },
+      "assertion_reports": [
+        {
+          "case": "frontend-functional",
+          "category": "functional",
+          "pass_executions": 20,
+          "path": "Reports/Feedback20261102/ground-frontend-functional.log",
+          "sha256": "05151b821c8d287b3f5a3779a124256ea9b182498cc1d8798b9aeb8eefc2b492"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/ground-frontend-functional.log",
+          "sha256": "05151b821c8d287b3f5a3779a124256ea9b182498cc1d8798b9aeb8eefc2b492"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/ground-test-queue.json"
+    },
+    {
+      "name": "experience-functional",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:54:22.9946974Z",
+      "finished_utc": "2026-11-02T02:54:28.6643995Z",
+      "executable_sha256": "b034765110ad30f5a60ffcf1e874ddac679002b16c74f0e9f72bea54017a9fb4",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-ground-final.json",
+        "sha256": "766e233f56ec34ac5d0eebac8a2a5e6fc789fd8721f2b55d9ed7f644896efe42"
+      },
+      "assertion_reports": [
+        {
+          "case": "experience-functional",
+          "category": "functional",
+          "pass_executions": 64,
+          "path": "Reports/Feedback20261102/ground-experience-functional.log",
+          "sha256": "b37339ffa96906d4a67c0c7ae96e0157a77c8fe02aed6f7fc0871a054c78eaa8"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/ground-experience-functional.log",
+          "sha256": "b37339ffa96906d4a67c0c7ae96e0157a77c8fe02aed6f7fc0871a054c78eaa8"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/ground-test-queue.json"
+    },
+    {
+      "name": "presentation-functional",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:54:28.6657934Z",
+      "finished_utc": "2026-11-02T02:54:38.0410012Z",
+      "executable_sha256": "b034765110ad30f5a60ffcf1e874ddac679002b16c74f0e9f72bea54017a9fb4",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-ground-final.json",
+        "sha256": "766e233f56ec34ac5d0eebac8a2a5e6fc789fd8721f2b55d9ed7f644896efe42"
+      },
+      "assertion_reports": [
+        {
+          "case": "presentation-functional",
+          "category": "functional",
+          "pass_executions": 35,
+          "path": "Reports/Feedback20261102/ground-presentation-functional.log",
+          "sha256": "f26aa363af47b6558d351a03f97822d0cd2ee65ff87544c11b9117dd085d33f2"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/ground-presentation-functional.log",
+          "sha256": "f26aa363af47b6558d351a03f97822d0cd2ee65ff87544c11b9117dd085d33f2"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/ground-test-queue.json"
+    },
+    {
+      "name": "mars-movement",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:54:38.0424734Z",
+      "finished_utc": "2026-11-02T02:55:08.4076510Z",
+      "executable_sha256": "b034765110ad30f5a60ffcf1e874ddac679002b16c74f0e9f72bea54017a9fb4",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-ground-final.json",
+        "sha256": "766e233f56ec34ac5d0eebac8a2a5e6fc789fd8721f2b55d9ed7f644896efe42"
+      },
+      "assertion_reports": [
+        {
+          "case": "mars-movement",
+          "category": "functional",
+          "pass_executions": 16,
+          "path": "Reports/Feedback20261102/ground-mars-movement.log",
+          "sha256": "315e33b0094af59148102d39dffe4aa9271bffdbc722cbce87d6bb7d804145e6"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/ground-mars-movement.log",
+          "sha256": "315e33b0094af59148102d39dffe4aa9271bffdbc722cbce87d6bb7d804145e6"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/ground-test-queue.json"
+    },
+    {
+      "name": "frontend-review720",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:55:08.4091080Z",
+      "finished_utc": "2026-11-02T02:55:43.7667173Z",
+      "executable_sha256": "b034765110ad30f5a60ffcf1e874ddac679002b16c74f0e9f72bea54017a9fb4",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-ground-final.json",
+        "sha256": "766e233f56ec34ac5d0eebac8a2a5e6fc789fd8721f2b55d9ed7f644896efe42"
+      },
+      "assertion_reports": [],
+      "staged_frames": 7,
+      "validated_pointer_events": 0,
+      "assertion_count_available": false,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/ground-frontend-review720.log",
+          "sha256": "c27b2efbf22d48877d62fc13a540f5d3675a13f92f5792d5ccb160b797c06787"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/ground-test-queue.json"
+    },
+    {
+      "name": "frontend-review1080",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:55:43.7679877Z",
+      "finished_utc": "2026-11-02T02:56:19.2558163Z",
+      "executable_sha256": "b034765110ad30f5a60ffcf1e874ddac679002b16c74f0e9f72bea54017a9fb4",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-ground-final.json",
+        "sha256": "766e233f56ec34ac5d0eebac8a2a5e6fc789fd8721f2b55d9ed7f644896efe42"
+      },
+      "assertion_reports": [],
+      "staged_frames": 7,
+      "validated_pointer_events": 0,
+      "assertion_count_available": false,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/ground-frontend-review1080.log",
+          "sha256": "e188f5c6d95532646e910457df41b8f69ba06b1128454ebcb6a3c4140dc4aa92"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/ground-test-queue.json"
+    },
+    {
+      "name": "selection-review720",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:56:19.2572269Z",
+      "finished_utc": "2026-11-02T02:56:40.6085130Z",
+      "executable_sha256": "b034765110ad30f5a60ffcf1e874ddac679002b16c74f0e9f72bea54017a9fb4",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-ground-final.json",
+        "sha256": "766e233f56ec34ac5d0eebac8a2a5e6fc789fd8721f2b55d9ed7f644896efe42"
+      },
+      "assertion_reports": [],
+      "staged_frames": 13,
+      "validated_pointer_events": 3,
+      "assertion_count_available": false,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/ground-selection-review720.log",
+          "sha256": "86b716128da176f3286ec525e0af900326344e2e88db9f9698dda489e2d504b3"
+        },
+        {
+          "path": "Reports/MissionSelection20261031/package-review-1280x720-20261102-075619-280/review-manifest.json",
+          "sha256": "97b4d7e00d3d9c91bf5709f2504d286c802b6ab2be132eb07f0727bfccca2a5b"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/ground-test-queue.json"
+    },
+    {
+      "name": "selection-review1080",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:56:40.6097799Z",
+      "finished_utc": "2026-11-02T02:57:01.8771523Z",
+      "executable_sha256": "b034765110ad30f5a60ffcf1e874ddac679002b16c74f0e9f72bea54017a9fb4",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-ground-final.json",
+        "sha256": "766e233f56ec34ac5d0eebac8a2a5e6fc789fd8721f2b55d9ed7f644896efe42"
+      },
+      "assertion_reports": [],
+      "staged_frames": 13,
+      "validated_pointer_events": 3,
+      "assertion_count_available": false,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/ground-selection-review1080.log",
+          "sha256": "aa9fdc761eff1b0db538a5ac50f0253d68cbcb0014107e4de918c969c66b5a4d"
+        },
+        {
+          "path": "Reports/MissionSelection20261031/package-review-1920x1080-20261102-075640-627/review-manifest.json",
+          "sha256": "805e5fe1d17e74ccc12c42f5cc8aa45dc6e0a1d5e8b0abefe4acb05b0cbb5022"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/ground-test-queue.json"
+    },
+    {
+      "name": "typography-functional",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": null,
+      "finished_utc": null,
+      "executable_sha256": "b034765110ad30f5a60ffcf1e874ddac679002b16c74f0e9f72bea54017a9fb4",
+      "executable_provenance": "runner-recorded executable hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-ground-final.json",
+        "sha256": "766e233f56ec34ac5d0eebac8a2a5e6fc789fd8721f2b55d9ed7f644896efe42"
+      },
+      "assertion_reports": [
+        {
+          "case": "loading-typography",
+          "category": "functional",
+          "pass_executions": 55,
+          "path": "Reports/LoadingTypography20261102/package-checks-1280x720-20261102-074531-750/loading-typography-checks.txt",
+          "sha256": "bdf1e38884c279b85eb5fc4478d1d66990c0baf6b53e90fcf3bf15d9954bcb0d"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/ground-typography-functional.log",
+          "sha256": "17ee8110b82743d956e3faed0f183667ee4746b9b25310a292a06502fb666821"
+        },
+        {
+          "path": "Reports/LoadingTypography20261102/package-checks-1280x720-20261102-074531-750/run-summary.json",
+          "sha256": "51736744ef500570e45a9d4183c22ca1581ffefb0db8fb3362b4b1a8090c4f8a"
+        }
+      ]
+    },
+    {
+      "name": "feedback-functional",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:55:07.2016089Z",
+      "finished_utc": "2026-11-02T01:55:41.7905641Z",
+      "executable_sha256": "2ed50ecc18818d78cd5c5d97959822cdba77210025224b0ea155d5f8663eb818",
+      "executable_provenance": "runner-recorded executable hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-controls-final.json",
+        "sha256": "141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d/compiled-controls-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "assets-apollo",
+          "category": "functional",
+          "pass_executions": 8,
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261102-065507-270/assets-apollo-checks.txt",
+          "sha256": "76ff63ab1390c48b307a5a55aaf685a7f1bd168e212263564fa21577845082b5",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/76ff63ab1390c48b307a5a55aaf685a7f1bd168e212263564fa21577845082b5/assets-apollo-checks.txt"
+        },
+        {
+          "case": "diagnostics-apollo",
+          "category": "functional",
+          "pass_executions": 38,
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261102-065507-270/diagnostics-apollo-checks.txt",
+          "sha256": "ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19/diagnostics-apollo-checks.txt"
+        },
+        {
+          "case": "assets-selene",
+          "category": "functional",
+          "pass_executions": 6,
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261102-065507-270/assets-selene-checks.txt",
+          "sha256": "8b3ba8761c7900e24f42c0c559c0b4e82314beb52b2ef13cac3deb211b5a5bf3",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/8b3ba8761c7900e24f42c0c559c0b4e82314beb52b2ef13cac3deb211b5a5bf3/assets-selene-checks.txt"
+        },
+        {
+          "case": "diagnostics-selene",
+          "category": "functional",
+          "pass_executions": 38,
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261102-065507-270/diagnostics-selene-checks.txt",
+          "sha256": "ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19/diagnostics-selene-checks.txt"
+        },
+        {
+          "case": "assets-mars",
+          "category": "functional",
+          "pass_executions": 6,
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261102-065507-270/assets-mars-checks.txt",
+          "sha256": "8b3ba8761c7900e24f42c0c559c0b4e82314beb52b2ef13cac3deb211b5a5bf3",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/8b3ba8761c7900e24f42c0c559c0b4e82314beb52b2ef13cac3deb211b5a5bf3/assets-mars-checks.txt"
+        },
+        {
+          "case": "diagnostics-mars",
+          "category": "functional",
+          "pass_executions": 38,
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261102-065507-270/diagnostics-mars-checks.txt",
+          "sha256": "ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19/diagnostics-mars-checks.txt"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/controls-feedback-functional.log",
+          "sha256": "a3b802c0065464ad88def5e7834dbf259c03df43dd723851db6833f0c99f3e56",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/a3b802c0065464ad88def5e7834dbf259c03df43dd723851db6833f0c99f3e56/controls-feedback-functional.log"
+        },
+        {
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261102-065507-270/run-summary.json",
+          "sha256": "7bebb356f5bbea67f22e1ba087e31aedd3e51057bf28b34aec17bcba56e7290e",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/7bebb356f5bbea67f22e1ba087e31aedd3e51057bf28b34aec17bcba56e7290e/run-summary.json"
+        }
+      ],
+      "resolution": [
+        1280,
+        720
+      ],
+      "queue": "Reports/Feedback20261102/controls-test-queue.json"
+    },
+    {
+      "name": "feedback-review720",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:55:41.7929499Z",
+      "finished_utc": "2026-11-02T01:56:38.0463813Z",
+      "executable_sha256": "2ed50ecc18818d78cd5c5d97959822cdba77210025224b0ea155d5f8663eb818",
+      "executable_provenance": "runner-recorded executable hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-controls-final.json",
+        "sha256": "141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d/compiled-controls-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "hud-apollo",
+          "category": "staged-layout",
+          "pass_executions": 9,
+          "path": "Reports/Feedback20261102/package-review-1280x720-20261102-065541-802/hud-apollo-checks.txt",
+          "sha256": "e43a6d97e21671c34d1093a5e2ed4d08576f90b1825ad262f3da8c3ab41fe0ea",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/e43a6d97e21671c34d1093a5e2ed4d08576f90b1825ad262f3da8c3ab41fe0ea/hud-apollo-checks.txt"
+        },
+        {
+          "case": "hud-selene",
+          "category": "staged-layout",
+          "pass_executions": 8,
+          "path": "Reports/Feedback20261102/package-review-1280x720-20261102-065541-802/hud-selene-checks.txt",
+          "sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482/hud-selene-checks.txt"
+        },
+        {
+          "case": "hud-mars",
+          "category": "staged-layout",
+          "pass_executions": 8,
+          "path": "Reports/Feedback20261102/package-review-1280x720-20261102-065541-802/hud-mars-checks.txt",
+          "sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482/hud-mars-checks.txt"
+        }
+      ],
+      "staged_frames": 25,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/controls-feedback-review720.log",
+          "sha256": "af4c898edc19e64e5c56fcc8a9023c2cad61b62537f4eb88f8ae73c45745c9b2",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/af4c898edc19e64e5c56fcc8a9023c2cad61b62537f4eb88f8ae73c45745c9b2/controls-feedback-review720.log"
+        },
+        {
+          "path": "Reports/Feedback20261102/package-review-1280x720-20261102-065541-802/run-summary.json",
+          "sha256": "086894f69c331115dd996852d93603cb57bb13fa70b59c8e0b294c467fb4dedc",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/086894f69c331115dd996852d93603cb57bb13fa70b59c8e0b294c467fb4dedc/run-summary.json"
+        }
+      ],
+      "resolution": [
+        1280,
+        720
+      ],
+      "queue": "Reports/Feedback20261102/controls-test-queue.json"
+    },
+    {
+      "name": "feedback-review1080",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:56:38.0480379Z",
+      "finished_utc": "2026-11-02T01:57:38.8274902Z",
+      "executable_sha256": "2ed50ecc18818d78cd5c5d97959822cdba77210025224b0ea155d5f8663eb818",
+      "executable_provenance": "runner-recorded executable hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-controls-final.json",
+        "sha256": "141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d/compiled-controls-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "hud-apollo",
+          "category": "staged-layout",
+          "pass_executions": 9,
+          "path": "Reports/Feedback20261102/package-review-1920x1080-20261102-065638-055/hud-apollo-checks.txt",
+          "sha256": "e43a6d97e21671c34d1093a5e2ed4d08576f90b1825ad262f3da8c3ab41fe0ea",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/e43a6d97e21671c34d1093a5e2ed4d08576f90b1825ad262f3da8c3ab41fe0ea/hud-apollo-checks.txt"
+        },
+        {
+          "case": "hud-selene",
+          "category": "staged-layout",
+          "pass_executions": 8,
+          "path": "Reports/Feedback20261102/package-review-1920x1080-20261102-065638-055/hud-selene-checks.txt",
+          "sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482/hud-selene-checks.txt"
+        },
+        {
+          "case": "hud-mars",
+          "category": "staged-layout",
+          "pass_executions": 8,
+          "path": "Reports/Feedback20261102/package-review-1920x1080-20261102-065638-055/hud-mars-checks.txt",
+          "sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482/hud-mars-checks.txt"
+        }
+      ],
+      "staged_frames": 25,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/controls-feedback-review1080.log",
+          "sha256": "aab2a0ab54a18dcc1e4b3ceb0aeb59e88195430304f08d862b2e49fa0cefd0d8",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/aab2a0ab54a18dcc1e4b3ceb0aeb59e88195430304f08d862b2e49fa0cefd0d8/controls-feedback-review1080.log"
+        },
+        {
+          "path": "Reports/Feedback20261102/package-review-1920x1080-20261102-065638-055/run-summary.json",
+          "sha256": "d8a1b75b6467815915eabf4731667bf4779e6b0e904f7aa0797bd4c0b80139fb",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/d8a1b75b6467815915eabf4731667bf4779e6b0e904f7aa0797bd4c0b80139fb/run-summary.json"
+        }
+      ],
+      "resolution": [
+        1920,
+        1080
+      ],
+      "queue": "Reports/Feedback20261102/controls-test-queue.json"
+    },
+    {
+      "name": "typography-review720",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:57:38.8289307Z",
+      "finished_utc": "2026-11-02T01:57:52.4837410Z",
+      "executable_sha256": "2ed50ecc18818d78cd5c5d97959822cdba77210025224b0ea155d5f8663eb818",
+      "executable_provenance": "runner-recorded executable hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-controls-final.json",
+        "sha256": "141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d/compiled-controls-final.json"
+      },
+      "assertion_reports": [],
+      "staged_frames": 10,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/controls-typography-review720.log",
+          "sha256": "e0bbdca85fb092f20fca93b579662d25ce3046984edc4c9624b99fb00449cad9",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/e0bbdca85fb092f20fca93b579662d25ce3046984edc4c9624b99fb00449cad9/controls-typography-review720.log"
+        },
+        {
+          "path": "Reports/LoadingTypography20261102/package-review-1280x720-20261102-065738-836/run-summary.json",
+          "sha256": "89768485c2bf9844666c8cc92add4a0be2a54e64fedfcd6003527f7a7650e47b",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/89768485c2bf9844666c8cc92add4a0be2a54e64fedfcd6003527f7a7650e47b/run-summary.json"
+        }
+      ],
+      "resolution": "1280x720",
+      "queue": "Reports/Feedback20261102/controls-test-queue.json"
+    },
+    {
+      "name": "typography-review1080",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:57:52.4850664Z",
+      "finished_utc": "2026-11-02T01:58:06.7554034Z",
+      "executable_sha256": "2ed50ecc18818d78cd5c5d97959822cdba77210025224b0ea155d5f8663eb818",
+      "executable_provenance": "runner-recorded executable hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-controls-final.json",
+        "sha256": "141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d/compiled-controls-final.json"
+      },
+      "assertion_reports": [],
+      "staged_frames": 10,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/controls-typography-review1080.log",
+          "sha256": "445df26378679cd17a1740fcecf7d6f2b512d9aae49daa4e75c734a83b80405a",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/445df26378679cd17a1740fcecf7d6f2b512d9aae49daa4e75c734a83b80405a/controls-typography-review1080.log"
+        },
+        {
+          "path": "Reports/LoadingTypography20261102/package-review-1920x1080-20261102-065752-491/run-summary.json",
+          "sha256": "114f47b413c3cf35374759b1e0363f6a7a10cca1ff5f755099b7c38165ade9b2",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/114f47b413c3cf35374759b1e0363f6a7a10cca1ff5f755099b7c38165ade9b2/run-summary.json"
+        }
+      ],
+      "resolution": "1920x1080",
+      "queue": "Reports/Feedback20261102/controls-test-queue.json"
+    },
+    {
+      "name": "loading-actual",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:58:06.7568929Z",
+      "finished_utc": "2026-11-02T01:59:10.1811829Z",
+      "executable_sha256": "2ed50ecc18818d78cd5c5d97959822cdba77210025224b0ea155d5f8663eb818",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-controls-final.json",
+        "sha256": "141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d/compiled-controls-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "loading-actual",
+          "category": "actual-travel",
+          "pass_executions": 76,
+          "path": "Reports/Feedback20261102/controls-loading-actual.log",
+          "sha256": "a940f86d8c8dc9d15acdac2a35ed9c064d90d216151207d045b55cc8828921e8",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/a940f86d8c8dc9d15acdac2a35ed9c064d90d216151207d045b55cc8828921e8/controls-loading-actual.log"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/controls-loading-actual.log",
+          "sha256": "a940f86d8c8dc9d15acdac2a35ed9c064d90d216151207d045b55cc8828921e8",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/a940f86d8c8dc9d15acdac2a35ed9c064d90d216151207d045b55cc8828921e8/controls-loading-actual.log"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/controls-test-queue.json"
+    },
+    {
+      "name": "nasa-regression",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:59:10.1827145Z",
+      "finished_utc": "2026-11-02T02:00:23.0045241Z",
+      "executable_sha256": "2ed50ecc18818d78cd5c5d97959822cdba77210025224b0ea155d5f8663eb818",
+      "executable_provenance": "runner-recorded executable hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-controls-final.json",
+        "sha256": "141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d/compiled-controls-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "intro",
+          "category": "functional",
+          "pass_executions": 12,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-065910-257/intro-checks.txt",
+          "sha256": "0092db04c7d47e436d52321cdc5a55707f3fef74909097755d6d12c251e16146",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/0092db04c7d47e436d52321cdc5a55707f3fef74909097755d6d12c251e16146/intro-checks.txt"
+        },
+        {
+          "case": "ui-apollo",
+          "category": "functional",
+          "pass_executions": 24,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-065910-257/ui-apollo-checks.txt",
+          "sha256": "1676fb5306f2e2c2328fca5914e549b8b9c57fe0d4e21ae6d4ff828dbaac331c",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/1676fb5306f2e2c2328fca5914e549b8b9c57fe0d4e21ae6d4ff828dbaac331c/ui-apollo-checks.txt"
+        },
+        {
+          "case": "ui-selene",
+          "category": "functional",
+          "pass_executions": 30,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-065910-257/ui-selene-checks.txt",
+          "sha256": "be6b0f2ccf91e157c1d88204f068662b4e6196da18a9f53b8efda3df1628cc6c",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/be6b0f2ccf91e157c1d88204f068662b4e6196da18a9f53b8efda3df1628cc6c/ui-selene-checks.txt"
+        },
+        {
+          "case": "ui-mars",
+          "category": "functional",
+          "pass_executions": 28,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-065910-257/ui-mars-checks.txt",
+          "sha256": "8ab57171547fbc61ceb13ccd95c2aab7c9b8f5a4c662580b4738938ccf304dc8",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/8ab57171547fbc61ceb13ccd95c2aab7c9b8f5a4c662580b4738938ccf304dc8/ui-mars-checks.txt"
+        },
+        {
+          "case": "pov",
+          "category": "functional",
+          "pass_executions": 28,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-065910-257/pov-checks.txt",
+          "sha256": "dcc7cc835f41db95bb892ec4d2de41ac74dd6c0fbf1fed4c6fd89a2b59319189",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/dcc7cc835f41db95bb892ec4d2de41ac74dd6c0fbf1fed4c6fd89a2b59319189/pov-checks.txt"
+        },
+        {
+          "case": "learning-apollo",
+          "category": "functional",
+          "pass_executions": 39,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-065910-257/learning-apollo-checks.txt",
+          "sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123/learning-apollo-checks.txt"
+        },
+        {
+          "case": "learning-selene",
+          "category": "functional",
+          "pass_executions": 39,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-065910-257/learning-selene-checks.txt",
+          "sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123/learning-selene-checks.txt"
+        },
+        {
+          "case": "learning-mars",
+          "category": "functional",
+          "pass_executions": 39,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-065910-257/learning-mars-checks.txt",
+          "sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123/learning-mars-checks.txt"
+        },
+        {
+          "case": "restart-apollo",
+          "category": "functional",
+          "pass_executions": 12,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-065910-257/restart-apollo-checks.txt",
+          "sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e/restart-apollo-checks.txt"
+        },
+        {
+          "case": "restart-selene",
+          "category": "functional",
+          "pass_executions": 12,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-065910-257/restart-selene-checks.txt",
+          "sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e/restart-selene-checks.txt"
+        },
+        {
+          "case": "restart-mars",
+          "category": "functional",
+          "pass_executions": 12,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-065910-257/restart-mars-checks.txt",
+          "sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e/restart-mars-checks.txt"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/controls-nasa-regression.log",
+          "sha256": "229699cd984e740746fc8ef17cf1557a0aaec4c7a1e0234232ac0f9d4616a60c",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/229699cd984e740746fc8ef17cf1557a0aaec4c7a1e0234232ac0f9d4616a60c/controls-nasa-regression.log"
+        },
+        {
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-065910-257/run-summary.json",
+          "sha256": "77c99a3deb5720c655556bd1157cbc69c074ae75252cbca8688c156107388b66",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/77c99a3deb5720c655556bd1157cbc69c074ae75252cbca8688c156107388b66/run-summary.json"
+        }
+      ],
+      "resolution": [
+        1280,
+        720
+      ],
+      "queue": "Reports/Feedback20261102/controls-test-queue.json"
+    },
+    {
+      "name": "apollo-regression",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:00:23.0068943Z",
+      "finished_utc": "2026-11-02T02:02:44.8761116Z",
+      "executable_sha256": "2ed50ecc18818d78cd5c5d97959822cdba77210025224b0ea155d5f8663eb818",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-controls-final.json",
+        "sha256": "141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d/compiled-controls-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "apollo-checks",
+          "category": "functional",
+          "pass_executions": 57,
+          "path": "Reports/package-apollo12-checks-result.txt",
+          "sha256": "1d8911bc084c6a7a1c2bb63b9fbebc6f33d1fe6ec51ae0d726d8ded7e9e7d44c",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/1d8911bc084c6a7a1c2bb63b9fbebc6f33d1fe6ec51ae0d726d8ded7e9e7d44c/package-apollo12-checks-result.txt"
+        },
+        {
+          "case": "apollo-legacy-moon",
+          "category": "functional",
+          "pass_executions": 50,
+          "path": "Reports/package-apollo12-legacy-moon-result.txt",
+          "sha256": "6b4f590b824979b6e5dbaa629e5e4fc16fa4e2ec4d8050a432dbab8150846886",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/6b4f590b824979b6e5dbaa629e5e4fc16fa4e2ec4d8050a432dbab8150846886/package-apollo12-legacy-moon-result.txt"
+        },
+        {
+          "case": "apollo-mars",
+          "category": "functional",
+          "pass_executions": 54,
+          "path": "Reports/package-apollo12-mars-result.txt",
+          "sha256": "fa5e80fd8a9073604fedda210da7ca12626bacbf5955d98d7302b97f53390de3",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/fa5e80fd8a9073604fedda210da7ca12626bacbf5955d98d7302b97f53390de3/package-apollo12-mars-result.txt"
+        },
+        {
+          "case": "apollo-menu",
+          "category": "functional",
+          "pass_executions": 55,
+          "path": "Reports/package-apollo12-menu-result.txt",
+          "sha256": "11c6ab3438d78be5caeb4ef56d2c4426c6d5a2bc3de848e457cd31ed58cae9f9",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/11c6ab3438d78be5caeb4ef56d2c4426c6d5a2bc3de848e457cd31ed58cae9f9/package-apollo12-menu-result.txt"
+        },
+        {
+          "case": "apollo-walk",
+          "category": "functional",
+          "pass_executions": 2,
+          "path": "Reports/package-apollo12-walk-result.txt",
+          "sha256": "19fb4f10147dcde7e3c3b110a3edfcbc80a32dc47c6fe22cf8c05bbe50c912d6",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/19fb4f10147dcde7e3c3b110a3edfcbc80a32dc47c6fe22cf8c05bbe50c912d6/package-apollo12-walk-result.txt"
+        },
+        {
+          "case": "apollo-suit",
+          "category": "functional",
+          "pass_executions": 32,
+          "path": "Reports/package-apollo12-suit-result.txt",
+          "sha256": "901df3df557c022d6624af6172f6cd46584b0324cbd46fa2d5de5654198f5a15",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/901df3df557c022d6624af6172f6cd46584b0324cbd46fa2d5de5654198f5a15/package-apollo12-suit-result.txt"
+        },
+        {
+          "case": "apollo-polish",
+          "category": "functional",
+          "pass_executions": 64,
+          "path": "Reports/package-apollo12-polish-result.txt",
+          "sha256": "c927f568452ca06accd24406049d0e7a723c2c16dacca8706e8b14d1d233e5a8",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/c927f568452ca06accd24406049d0e7a723c2c16dacca8706e8b14d1d233e5a8/package-apollo12-polish-result.txt"
+        },
+        {
+          "case": "apollo-guidance",
+          "category": "functional",
+          "pass_executions": 47,
+          "path": "Reports/package-apollo12-guidance-result.txt",
+          "sha256": "d9a16b9f4f62acc93b7534b308edfa4e36b0d6c8966064d288b4110112c86ffa",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/d9a16b9f4f62acc93b7534b308edfa4e36b0d6c8966064d288b4110112c86ffa/package-apollo12-guidance-result.txt"
+        },
+        {
+          "case": "apollo-fieldwork",
+          "category": "functional",
+          "pass_executions": 39,
+          "path": "Reports/package-apollo12-fieldwork-result.txt",
+          "sha256": "ea375f02581686b0e4ef8ad36e583622d000fb282c0b93ea71c68c216ad9b192",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/ea375f02581686b0e4ef8ad36e583622d000fb282c0b93ea71c68c216ad9b192/package-apollo12-fieldwork-result.txt"
+        },
+        {
+          "case": "apollo-save",
+          "category": "functional",
+          "pass_executions": 51,
+          "path": "Reports/package-apollo12-save-result.txt",
+          "sha256": "6f9761b2a673ceefe91006a49d46f19bffa922479b741b11295fe962fe6e97dc",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/6f9761b2a673ceefe91006a49d46f19bffa922479b741b11295fe962fe6e97dc/package-apollo12-save-result.txt"
+        },
+        {
+          "case": "apollo-save-write",
+          "category": "functional",
+          "pass_executions": 2,
+          "path": "Reports/package-apollo12-save-write-result.txt",
+          "sha256": "925561c794fc7f059e796c96d107eec4f34e6b77bde7676e82b2985e42a002f4",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/925561c794fc7f059e796c96d107eec4f34e6b77bde7676e82b2985e42a002f4/package-apollo12-save-write-result.txt"
+        },
+        {
+          "case": "apollo-save-read",
+          "category": "functional",
+          "pass_executions": 7,
+          "path": "Reports/package-apollo12-save-read-result.txt",
+          "sha256": "e0b31f0af7c9b70f375ccc1c6740cc612456916225adbf73425bc9d6540de24c",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/e0b31f0af7c9b70f375ccc1c6740cc612456916225adbf73425bc9d6540de24c/package-apollo12-save-read-result.txt"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/controls-apollo-regression.log",
+          "sha256": "e5c721bedbbf47af8abb10a43516dddeb68adebcb7499e12e0ffff898d9a9e16",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/e5c721bedbbf47af8abb10a43516dddeb68adebcb7499e12e0ffff898d9a9e16/controls-apollo-regression.log"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/controls-test-queue.json"
+    },
+    {
+      "name": "selection-functional",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:02:44.8778774Z",
+      "finished_utc": "2026-11-02T02:02:50.4980602Z",
+      "executable_sha256": "2ed50ecc18818d78cd5c5d97959822cdba77210025224b0ea155d5f8663eb818",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-controls-final.json",
+        "sha256": "141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d/compiled-controls-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "selection-functional",
+          "category": "functional",
+          "pass_executions": 51,
+          "path": "Reports/Feedback20261102/controls-selection-functional.log",
+          "sha256": "be0a1865de00d4240dc9a3a6be8623fa4ac9226e48be45b1884b46193a0394ab",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/be0a1865de00d4240dc9a3a6be8623fa4ac9226e48be45b1884b46193a0394ab/controls-selection-functional.log"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/controls-selection-functional.log",
+          "sha256": "be0a1865de00d4240dc9a3a6be8623fa4ac9226e48be45b1884b46193a0394ab",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/be0a1865de00d4240dc9a3a6be8623fa4ac9226e48be45b1884b46193a0394ab/controls-selection-functional.log"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/controls-test-queue.json"
+    },
+    {
+      "name": "frontend-functional",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:02:50.4992783Z",
+      "finished_utc": "2026-11-02T02:02:56.1894692Z",
+      "executable_sha256": "2ed50ecc18818d78cd5c5d97959822cdba77210025224b0ea155d5f8663eb818",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-controls-final.json",
+        "sha256": "141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d/compiled-controls-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "frontend-functional",
+          "category": "functional",
+          "pass_executions": 20,
+          "path": "Reports/Feedback20261102/controls-frontend-functional.log",
+          "sha256": "05151b821c8d287b3f5a3779a124256ea9b182498cc1d8798b9aeb8eefc2b492",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/05151b821c8d287b3f5a3779a124256ea9b182498cc1d8798b9aeb8eefc2b492/controls-frontend-functional.log"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/controls-frontend-functional.log",
+          "sha256": "05151b821c8d287b3f5a3779a124256ea9b182498cc1d8798b9aeb8eefc2b492",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/05151b821c8d287b3f5a3779a124256ea9b182498cc1d8798b9aeb8eefc2b492/controls-frontend-functional.log"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/controls-test-queue.json"
+    },
+    {
+      "name": "experience-functional",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:02:56.1911891Z",
+      "finished_utc": "2026-11-02T02:03:01.9138991Z",
+      "executable_sha256": "2ed50ecc18818d78cd5c5d97959822cdba77210025224b0ea155d5f8663eb818",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-controls-final.json",
+        "sha256": "141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d/compiled-controls-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "experience-functional",
+          "category": "functional",
+          "pass_executions": 64,
+          "path": "Reports/Feedback20261102/controls-experience-functional.log",
+          "sha256": "844f1ba18069597f3d8d6867fd7caf5fd5dd89847a81d37653194aef843ad1c0",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/844f1ba18069597f3d8d6867fd7caf5fd5dd89847a81d37653194aef843ad1c0/controls-experience-functional.log"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/controls-experience-functional.log",
+          "sha256": "844f1ba18069597f3d8d6867fd7caf5fd5dd89847a81d37653194aef843ad1c0",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/844f1ba18069597f3d8d6867fd7caf5fd5dd89847a81d37653194aef843ad1c0/controls-experience-functional.log"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/controls-test-queue.json"
+    },
+    {
+      "name": "presentation-functional",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:03:01.9155292Z",
+      "finished_utc": "2026-11-02T02:03:11.4087119Z",
+      "executable_sha256": "2ed50ecc18818d78cd5c5d97959822cdba77210025224b0ea155d5f8663eb818",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-controls-final.json",
+        "sha256": "141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d/compiled-controls-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "presentation-functional",
+          "category": "functional",
+          "pass_executions": 35,
+          "path": "Reports/Feedback20261102/controls-presentation-functional.log",
+          "sha256": "bc4c996a696c62e589dc42432ef88ce45fda65a1eb4bf559b642bf15530ea110",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/bc4c996a696c62e589dc42432ef88ce45fda65a1eb4bf559b642bf15530ea110/controls-presentation-functional.log"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/controls-presentation-functional.log",
+          "sha256": "bc4c996a696c62e589dc42432ef88ce45fda65a1eb4bf559b642bf15530ea110",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/bc4c996a696c62e589dc42432ef88ce45fda65a1eb4bf559b642bf15530ea110/controls-presentation-functional.log"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/controls-test-queue.json"
+    },
+    {
+      "name": "mars-movement",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:03:11.4105023Z",
+      "finished_utc": "2026-11-02T02:03:41.6962843Z",
+      "executable_sha256": "2ed50ecc18818d78cd5c5d97959822cdba77210025224b0ea155d5f8663eb818",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-controls-final.json",
+        "sha256": "141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d/compiled-controls-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "mars-movement",
+          "category": "functional",
+          "pass_executions": 16,
+          "path": "Reports/Feedback20261102/controls-mars-movement.log",
+          "sha256": "5e04c96ebbb86b7ce6f2d3109de5f3ca02ba62ea19bec4e68c14351a39a75275",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/5e04c96ebbb86b7ce6f2d3109de5f3ca02ba62ea19bec4e68c14351a39a75275/controls-mars-movement.log"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/controls-mars-movement.log",
+          "sha256": "5e04c96ebbb86b7ce6f2d3109de5f3ca02ba62ea19bec4e68c14351a39a75275",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/5e04c96ebbb86b7ce6f2d3109de5f3ca02ba62ea19bec4e68c14351a39a75275/controls-mars-movement.log"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/controls-test-queue.json"
+    },
+    {
+      "name": "frontend-review720",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:03:41.6976830Z",
+      "finished_utc": "2026-11-02T02:04:17.1071620Z",
+      "executable_sha256": "2ed50ecc18818d78cd5c5d97959822cdba77210025224b0ea155d5f8663eb818",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-controls-final.json",
+        "sha256": "141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d/compiled-controls-final.json"
+      },
+      "assertion_reports": [],
+      "staged_frames": 7,
+      "validated_pointer_events": 0,
+      "assertion_count_available": false,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/controls-frontend-review720.log",
+          "sha256": "c27b2efbf22d48877d62fc13a540f5d3675a13f92f5792d5ccb160b797c06787",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/c27b2efbf22d48877d62fc13a540f5d3675a13f92f5792d5ccb160b797c06787/controls-frontend-review720.log"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/controls-test-queue.json"
+    },
+    {
+      "name": "frontend-review1080",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:04:17.1087836Z",
+      "finished_utc": "2026-11-02T02:04:52.5557133Z",
+      "executable_sha256": "2ed50ecc18818d78cd5c5d97959822cdba77210025224b0ea155d5f8663eb818",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-controls-final.json",
+        "sha256": "141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d/compiled-controls-final.json"
+      },
+      "assertion_reports": [],
+      "staged_frames": 7,
+      "validated_pointer_events": 0,
+      "assertion_count_available": false,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/controls-frontend-review1080.log",
+          "sha256": "e188f5c6d95532646e910457df41b8f69ba06b1128454ebcb6a3c4140dc4aa92",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/e188f5c6d95532646e910457df41b8f69ba06b1128454ebcb6a3c4140dc4aa92/controls-frontend-review1080.log"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/controls-test-queue.json"
+    },
+    {
+      "name": "selection-review720",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:04:52.5572715Z",
+      "finished_utc": "2026-11-02T02:05:13.9029831Z",
+      "executable_sha256": "2ed50ecc18818d78cd5c5d97959822cdba77210025224b0ea155d5f8663eb818",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-controls-final.json",
+        "sha256": "141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d/compiled-controls-final.json"
+      },
+      "assertion_reports": [],
+      "staged_frames": 13,
+      "validated_pointer_events": 3,
+      "assertion_count_available": false,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/controls-selection-review720.log",
+          "sha256": "eb17e86cef49e496b02814a4be9df2dadae74f28d73c000a467adc9ca64b31d2",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/eb17e86cef49e496b02814a4be9df2dadae74f28d73c000a467adc9ca64b31d2/controls-selection-review720.log"
+        },
+        {
+          "path": "Reports/MissionSelection20261031/package-review-1280x720-20261102-070452-567/review-manifest.json",
+          "sha256": "1f41561bc3fb28c57fdc632d4c132f2282bbe744c439fc641519c989d88f7bff",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/1f41561bc3fb28c57fdc632d4c132f2282bbe744c439fc641519c989d88f7bff/review-manifest.json"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/controls-test-queue.json"
+    },
+    {
+      "name": "selection-review1080",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T02:05:13.9043595Z",
+      "finished_utc": "2026-11-02T02:05:35.2384415Z",
+      "executable_sha256": "2ed50ecc18818d78cd5c5d97959822cdba77210025224b0ea155d5f8663eb818",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-controls-final.json",
+        "sha256": "141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d/compiled-controls-final.json"
+      },
+      "assertion_reports": [],
+      "staged_frames": 13,
+      "validated_pointer_events": 3,
+      "assertion_count_available": false,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/controls-selection-review1080.log",
+          "sha256": "b71b0284db56eba7e2b1c0e1e898bc53cd274c971389f3d81d2921fb79614987",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/b71b0284db56eba7e2b1c0e1e898bc53cd274c971389f3d81d2921fb79614987/controls-selection-review1080.log"
+        },
+        {
+          "path": "Reports/MissionSelection20261031/package-review-1920x1080-20261102-070513-910/review-manifest.json",
+          "sha256": "be2d84ed36580a7e0dcc9108e80d8a633691b828edaa3f5e0f19d2d22b673488",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/be2d84ed36580a7e0dcc9108e80d8a633691b828edaa3f5e0f19d2d22b673488/review-manifest.json"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/controls-test-queue.json"
+    },
+    {
+      "name": "typography-functional",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": null,
+      "finished_utc": null,
+      "executable_sha256": "2ed50ecc18818d78cd5c5d97959822cdba77210025224b0ea155d5f8663eb818",
+      "executable_provenance": "runner-recorded executable hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-controls-final.json",
+        "sha256": "141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/141f9c29665537200d70ceff29c4ee796d77c32c0f4be22ffaf3817b8522267d/compiled-controls-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "loading-typography",
+          "category": "functional",
+          "pass_executions": 55,
+          "path": "Reports/LoadingTypography20261102/package-checks-1280x720-20261102-065459-630/loading-typography-checks.txt",
+          "sha256": "bdf1e38884c279b85eb5fc4478d1d66990c0baf6b53e90fcf3bf15d9954bcb0d",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/bdf1e38884c279b85eb5fc4478d1d66990c0baf6b53e90fcf3bf15d9954bcb0d/loading-typography-checks.txt"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/controls-typography-functional.log",
+          "sha256": "099a1d9e26f10f0fe15caa823ff6dcc67720392b2ecdf8c7058c3291e1d3f1f6",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/099a1d9e26f10f0fe15caa823ff6dcc67720392b2ecdf8c7058c3291e1d3f1f6/controls-typography-functional.log"
+        },
+        {
+          "path": "Reports/LoadingTypography20261102/package-checks-1280x720-20261102-065459-630/run-summary.json",
+          "sha256": "9b62f14751c8319c92888b2c510230ee0212936398cd9d8545dd18f74efa0e4a",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/9b62f14751c8319c92888b2c510230ee0212936398cd9d8545dd18f74efa0e4a/run-summary.json"
+        }
+      ]
+    },
+    {
+      "name": "feedback-functional",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:33:49.6491394Z",
+      "finished_utc": "2026-11-02T01:34:24.6395922Z",
+      "executable_sha256": "e73853cde9dcfdac8003889c7dfa86efd6feb7fabdb587d33ca4594972d3dd26",
+      "executable_provenance": "runner-recorded executable hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-typography-final.json",
+        "sha256": "01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd/compiled-typography-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "assets-apollo",
+          "category": "functional",
+          "pass_executions": 8,
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261102-063349-755/assets-apollo-checks.txt",
+          "sha256": "76ff63ab1390c48b307a5a55aaf685a7f1bd168e212263564fa21577845082b5",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/76ff63ab1390c48b307a5a55aaf685a7f1bd168e212263564fa21577845082b5/assets-apollo-checks.txt"
+        },
+        {
+          "case": "diagnostics-apollo",
+          "category": "functional",
+          "pass_executions": 38,
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261102-063349-755/diagnostics-apollo-checks.txt",
+          "sha256": "ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19/diagnostics-apollo-checks.txt"
+        },
+        {
+          "case": "assets-selene",
+          "category": "functional",
+          "pass_executions": 6,
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261102-063349-755/assets-selene-checks.txt",
+          "sha256": "8b3ba8761c7900e24f42c0c559c0b4e82314beb52b2ef13cac3deb211b5a5bf3",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/8b3ba8761c7900e24f42c0c559c0b4e82314beb52b2ef13cac3deb211b5a5bf3/assets-selene-checks.txt"
+        },
+        {
+          "case": "diagnostics-selene",
+          "category": "functional",
+          "pass_executions": 38,
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261102-063349-755/diagnostics-selene-checks.txt",
+          "sha256": "ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19/diagnostics-selene-checks.txt"
+        },
+        {
+          "case": "assets-mars",
+          "category": "functional",
+          "pass_executions": 6,
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261102-063349-755/assets-mars-checks.txt",
+          "sha256": "8b3ba8761c7900e24f42c0c559c0b4e82314beb52b2ef13cac3deb211b5a5bf3",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/8b3ba8761c7900e24f42c0c559c0b4e82314beb52b2ef13cac3deb211b5a5bf3/assets-mars-checks.txt"
+        },
+        {
+          "case": "diagnostics-mars",
+          "category": "functional",
+          "pass_executions": 38,
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261102-063349-755/diagnostics-mars-checks.txt",
+          "sha256": "ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19/diagnostics-mars-checks.txt"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/final-feedback-functional.log",
+          "sha256": "13f6a14378e9cc65280c1759869b6210768cd26ccd899c7bed569e712be54999",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/13f6a14378e9cc65280c1759869b6210768cd26ccd899c7bed569e712be54999/final-feedback-functional.log"
+        },
+        {
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261102-063349-755/run-summary.json",
+          "sha256": "0b59f66ffa7a1b81bf8b2d7523337bdd00e3c124ee97dbe093ee8ccaaef4fc2e",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/0b59f66ffa7a1b81bf8b2d7523337bdd00e3c124ee97dbe093ee8ccaaef4fc2e/run-summary.json"
+        }
+      ],
+      "resolution": [
+        1280,
+        720
+      ],
+      "queue": "Reports/Feedback20261102/final-test-queue.json"
+    },
+    {
+      "name": "feedback-review720",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:34:24.6429546Z",
+      "finished_utc": "2026-11-02T01:35:16.6486672Z",
+      "executable_sha256": "e73853cde9dcfdac8003889c7dfa86efd6feb7fabdb587d33ca4594972d3dd26",
+      "executable_provenance": "runner-recorded executable hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-typography-final.json",
+        "sha256": "01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd/compiled-typography-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "hud-apollo",
+          "category": "staged-layout",
+          "pass_executions": 9,
+          "path": "Reports/Feedback20261102/package-review-1280x720-20261102-063424-663/hud-apollo-checks.txt",
+          "sha256": "e43a6d97e21671c34d1093a5e2ed4d08576f90b1825ad262f3da8c3ab41fe0ea",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/e43a6d97e21671c34d1093a5e2ed4d08576f90b1825ad262f3da8c3ab41fe0ea/hud-apollo-checks.txt"
+        },
+        {
+          "case": "hud-selene",
+          "category": "staged-layout",
+          "pass_executions": 8,
+          "path": "Reports/Feedback20261102/package-review-1280x720-20261102-063424-663/hud-selene-checks.txt",
+          "sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482/hud-selene-checks.txt"
+        },
+        {
+          "case": "hud-mars",
+          "category": "staged-layout",
+          "pass_executions": 8,
+          "path": "Reports/Feedback20261102/package-review-1280x720-20261102-063424-663/hud-mars-checks.txt",
+          "sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482/hud-mars-checks.txt"
+        }
+      ],
+      "staged_frames": 25,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/final-feedback-review720.log",
+          "sha256": "bbb80e138dc4445cc8819632605d89010d2bb6c5277f9f3c50cdcb6baa3178bc",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/bbb80e138dc4445cc8819632605d89010d2bb6c5277f9f3c50cdcb6baa3178bc/final-feedback-review720.log"
+        },
+        {
+          "path": "Reports/Feedback20261102/package-review-1280x720-20261102-063424-663/run-summary.json",
+          "sha256": "d0e7aaa5b6b6543970b7f7e9d13a8c06e9caaf41c6530043d3399fe1ff99d4a4",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/d0e7aaa5b6b6543970b7f7e9d13a8c06e9caaf41c6530043d3399fe1ff99d4a4/run-summary.json"
+        }
+      ],
+      "resolution": [
+        1280,
+        720
+      ],
+      "queue": "Reports/Feedback20261102/final-test-queue.json"
+    },
+    {
+      "name": "feedback-review1080",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:35:16.6503356Z",
+      "finished_utc": "2026-11-02T01:36:10.3888128Z",
+      "executable_sha256": "e73853cde9dcfdac8003889c7dfa86efd6feb7fabdb587d33ca4594972d3dd26",
+      "executable_provenance": "runner-recorded executable hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-typography-final.json",
+        "sha256": "01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd/compiled-typography-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "hud-apollo",
+          "category": "staged-layout",
+          "pass_executions": 9,
+          "path": "Reports/Feedback20261102/package-review-1920x1080-20261102-063516-666/hud-apollo-checks.txt",
+          "sha256": "e43a6d97e21671c34d1093a5e2ed4d08576f90b1825ad262f3da8c3ab41fe0ea",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/e43a6d97e21671c34d1093a5e2ed4d08576f90b1825ad262f3da8c3ab41fe0ea/hud-apollo-checks.txt"
+        },
+        {
+          "case": "hud-selene",
+          "category": "staged-layout",
+          "pass_executions": 8,
+          "path": "Reports/Feedback20261102/package-review-1920x1080-20261102-063516-666/hud-selene-checks.txt",
+          "sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482/hud-selene-checks.txt"
+        },
+        {
+          "case": "hud-mars",
+          "category": "staged-layout",
+          "pass_executions": 8,
+          "path": "Reports/Feedback20261102/package-review-1920x1080-20261102-063516-666/hud-mars-checks.txt",
+          "sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482/hud-mars-checks.txt"
+        }
+      ],
+      "staged_frames": 25,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/final-feedback-review1080.log",
+          "sha256": "e0783c067801563013f2202c2f1bb0f1ba6c99cfbe555ba86892f461d9aca793",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/e0783c067801563013f2202c2f1bb0f1ba6c99cfbe555ba86892f461d9aca793/final-feedback-review1080.log"
+        },
+        {
+          "path": "Reports/Feedback20261102/package-review-1920x1080-20261102-063516-666/run-summary.json",
+          "sha256": "12109e371c1850386a01dc2bf7907c9b650b188a2eb4247a7ba9c7f8440d95f1",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/12109e371c1850386a01dc2bf7907c9b650b188a2eb4247a7ba9c7f8440d95f1/run-summary.json"
+        }
+      ],
+      "resolution": [
+        1920,
+        1080
+      ],
+      "queue": "Reports/Feedback20261102/final-test-queue.json"
+    },
+    {
+      "name": "typography-review720",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:36:10.3902266Z",
+      "finished_utc": "2026-11-02T01:36:22.2494010Z",
+      "executable_sha256": "e73853cde9dcfdac8003889c7dfa86efd6feb7fabdb587d33ca4594972d3dd26",
+      "executable_provenance": "runner-recorded executable hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-typography-final.json",
+        "sha256": "01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd/compiled-typography-final.json"
+      },
+      "assertion_reports": [],
+      "staged_frames": 10,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/final-typography-review720.log",
+          "sha256": "a5bcbdab04bd8dfe734cd135a1c1fa4c08f48a62e8e1c3d664162668fd7c87dd",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/a5bcbdab04bd8dfe734cd135a1c1fa4c08f48a62e8e1c3d664162668fd7c87dd/final-typography-review720.log"
+        },
+        {
+          "path": "Reports/LoadingTypography20261102/package-review-1280x720-20261102-063610-423/run-summary.json",
+          "sha256": "168ed842e47df6bf7ef2ff9ad90c497a1e495b9b65afa4cc840b672b78732f15",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/168ed842e47df6bf7ef2ff9ad90c497a1e495b9b65afa4cc840b672b78732f15/run-summary.json"
+        }
+      ],
+      "resolution": "1280x720",
+      "queue": "Reports/Feedback20261102/final-test-queue.json"
+    },
+    {
+      "name": "typography-review1080",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:36:22.2507688Z",
+      "finished_utc": "2026-11-02T01:36:36.0610655Z",
+      "executable_sha256": "e73853cde9dcfdac8003889c7dfa86efd6feb7fabdb587d33ca4594972d3dd26",
+      "executable_provenance": "runner-recorded executable hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-typography-final.json",
+        "sha256": "01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd/compiled-typography-final.json"
+      },
+      "assertion_reports": [],
+      "staged_frames": 10,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/final-typography-review1080.log",
+          "sha256": "ca21629ec1ce5406d54b5af5b6e933bebe076f3c7bda678e034c61d5f3a5874f",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/ca21629ec1ce5406d54b5af5b6e933bebe076f3c7bda678e034c61d5f3a5874f/final-typography-review1080.log"
+        },
+        {
+          "path": "Reports/LoadingTypography20261102/package-review-1920x1080-20261102-063622-268/run-summary.json",
+          "sha256": "bb78c342cb95f43447ecb7c2218a5c419c5568ae9eec0cf1f9b3745f458a6d99",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/bb78c342cb95f43447ecb7c2218a5c419c5568ae9eec0cf1f9b3745f458a6d99/run-summary.json"
+        }
+      ],
+      "resolution": "1920x1080",
+      "queue": "Reports/Feedback20261102/final-test-queue.json"
+    },
+    {
+      "name": "loading-actual",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:36:36.0622428Z",
+      "finished_utc": "2026-11-02T01:37:39.3777373Z",
+      "executable_sha256": "e73853cde9dcfdac8003889c7dfa86efd6feb7fabdb587d33ca4594972d3dd26",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-typography-final.json",
+        "sha256": "01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd/compiled-typography-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "loading-actual",
+          "category": "actual-travel",
+          "pass_executions": 76,
+          "path": "Reports/Feedback20261102/final-loading-actual.log",
+          "sha256": "d0dd6ddfc6ff70cbd40f6c0b06b70daa3d53d2b2eb22c1c46992525973354981",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/d0dd6ddfc6ff70cbd40f6c0b06b70daa3d53d2b2eb22c1c46992525973354981/final-loading-actual.log"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/final-loading-actual.log",
+          "sha256": "d0dd6ddfc6ff70cbd40f6c0b06b70daa3d53d2b2eb22c1c46992525973354981",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/d0dd6ddfc6ff70cbd40f6c0b06b70daa3d53d2b2eb22c1c46992525973354981/final-loading-actual.log"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/final-test-queue.json"
+    },
+    {
+      "name": "nasa-regression",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:37:39.3792780Z",
+      "finished_utc": "2026-11-02T01:38:52.0067582Z",
+      "executable_sha256": "e73853cde9dcfdac8003889c7dfa86efd6feb7fabdb587d33ca4594972d3dd26",
+      "executable_provenance": "runner-recorded executable hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-typography-final.json",
+        "sha256": "01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd/compiled-typography-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "intro",
+          "category": "functional",
+          "pass_executions": 12,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-063739-457/intro-checks.txt",
+          "sha256": "0092db04c7d47e436d52321cdc5a55707f3fef74909097755d6d12c251e16146",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/0092db04c7d47e436d52321cdc5a55707f3fef74909097755d6d12c251e16146/intro-checks.txt"
+        },
+        {
+          "case": "ui-apollo",
+          "category": "functional",
+          "pass_executions": 24,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-063739-457/ui-apollo-checks.txt",
+          "sha256": "1676fb5306f2e2c2328fca5914e549b8b9c57fe0d4e21ae6d4ff828dbaac331c",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/1676fb5306f2e2c2328fca5914e549b8b9c57fe0d4e21ae6d4ff828dbaac331c/ui-apollo-checks.txt"
+        },
+        {
+          "case": "ui-selene",
+          "category": "functional",
+          "pass_executions": 30,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-063739-457/ui-selene-checks.txt",
+          "sha256": "be6b0f2ccf91e157c1d88204f068662b4e6196da18a9f53b8efda3df1628cc6c",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/be6b0f2ccf91e157c1d88204f068662b4e6196da18a9f53b8efda3df1628cc6c/ui-selene-checks.txt"
+        },
+        {
+          "case": "ui-mars",
+          "category": "functional",
+          "pass_executions": 28,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-063739-457/ui-mars-checks.txt",
+          "sha256": "8ab57171547fbc61ceb13ccd95c2aab7c9b8f5a4c662580b4738938ccf304dc8",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/8ab57171547fbc61ceb13ccd95c2aab7c9b8f5a4c662580b4738938ccf304dc8/ui-mars-checks.txt"
+        },
+        {
+          "case": "pov",
+          "category": "functional",
+          "pass_executions": 28,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-063739-457/pov-checks.txt",
+          "sha256": "dcc7cc835f41db95bb892ec4d2de41ac74dd6c0fbf1fed4c6fd89a2b59319189",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/dcc7cc835f41db95bb892ec4d2de41ac74dd6c0fbf1fed4c6fd89a2b59319189/pov-checks.txt"
+        },
+        {
+          "case": "learning-apollo",
+          "category": "functional",
+          "pass_executions": 39,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-063739-457/learning-apollo-checks.txt",
+          "sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123/learning-apollo-checks.txt"
+        },
+        {
+          "case": "learning-selene",
+          "category": "functional",
+          "pass_executions": 39,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-063739-457/learning-selene-checks.txt",
+          "sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123/learning-selene-checks.txt"
+        },
+        {
+          "case": "learning-mars",
+          "category": "functional",
+          "pass_executions": 39,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-063739-457/learning-mars-checks.txt",
+          "sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123/learning-mars-checks.txt"
+        },
+        {
+          "case": "restart-apollo",
+          "category": "functional",
+          "pass_executions": 12,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-063739-457/restart-apollo-checks.txt",
+          "sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e/restart-apollo-checks.txt"
+        },
+        {
+          "case": "restart-selene",
+          "category": "functional",
+          "pass_executions": 12,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-063739-457/restart-selene-checks.txt",
+          "sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e/restart-selene-checks.txt"
+        },
+        {
+          "case": "restart-mars",
+          "category": "functional",
+          "pass_executions": 12,
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-063739-457/restart-mars-checks.txt",
+          "sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e/restart-mars-checks.txt"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/final-nasa-regression.log",
+          "sha256": "ba9c24d2de8f934ffaccc8c35ddbd20342e951da912aba10bcb004281f98277f",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/ba9c24d2de8f934ffaccc8c35ddbd20342e951da912aba10bcb004281f98277f/final-nasa-regression.log"
+        },
+        {
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261102-063739-457/run-summary.json",
+          "sha256": "c156325bb1890a97a2f59df5d07a0070793c0e37b3da51a8006d337d79ed7a92",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/c156325bb1890a97a2f59df5d07a0070793c0e37b3da51a8006d337d79ed7a92/run-summary.json"
+        }
+      ],
+      "resolution": [
+        1280,
+        720
+      ],
+      "queue": "Reports/Feedback20261102/final-test-queue.json"
+    },
+    {
+      "name": "apollo-regression",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:38:52.0087910Z",
+      "finished_utc": "2026-11-02T01:41:14.7914083Z",
+      "executable_sha256": "e73853cde9dcfdac8003889c7dfa86efd6feb7fabdb587d33ca4594972d3dd26",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-typography-final.json",
+        "sha256": "01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd/compiled-typography-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "apollo-checks",
+          "category": "functional",
+          "pass_executions": 57,
+          "path": "Reports/package-apollo12-checks-result.txt",
+          "sha256": "1d8911bc084c6a7a1c2bb63b9fbebc6f33d1fe6ec51ae0d726d8ded7e9e7d44c",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/1d8911bc084c6a7a1c2bb63b9fbebc6f33d1fe6ec51ae0d726d8ded7e9e7d44c/package-apollo12-checks-result.txt"
+        },
+        {
+          "case": "apollo-legacy-moon",
+          "category": "functional",
+          "pass_executions": 50,
+          "path": "Reports/package-apollo12-legacy-moon-result.txt",
+          "sha256": "6b4f590b824979b6e5dbaa629e5e4fc16fa4e2ec4d8050a432dbab8150846886",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/6b4f590b824979b6e5dbaa629e5e4fc16fa4e2ec4d8050a432dbab8150846886/package-apollo12-legacy-moon-result.txt"
+        },
+        {
+          "case": "apollo-mars",
+          "category": "functional",
+          "pass_executions": 54,
+          "path": "Reports/package-apollo12-mars-result.txt",
+          "sha256": "fa5e80fd8a9073604fedda210da7ca12626bacbf5955d98d7302b97f53390de3",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/fa5e80fd8a9073604fedda210da7ca12626bacbf5955d98d7302b97f53390de3/package-apollo12-mars-result.txt"
+        },
+        {
+          "case": "apollo-menu",
+          "category": "functional",
+          "pass_executions": 55,
+          "path": "Reports/package-apollo12-menu-result.txt",
+          "sha256": "11c6ab3438d78be5caeb4ef56d2c4426c6d5a2bc3de848e457cd31ed58cae9f9",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/11c6ab3438d78be5caeb4ef56d2c4426c6d5a2bc3de848e457cd31ed58cae9f9/package-apollo12-menu-result.txt"
+        },
+        {
+          "case": "apollo-walk",
+          "category": "functional",
+          "pass_executions": 2,
+          "path": "Reports/package-apollo12-walk-result.txt",
+          "sha256": "9e4f5b9b33e89e86fe78fe942a1f2b7d7d5c262e7d26a13fb56fff56fd2a7e24",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/9e4f5b9b33e89e86fe78fe942a1f2b7d7d5c262e7d26a13fb56fff56fd2a7e24/package-apollo12-walk-result.txt"
+        },
+        {
+          "case": "apollo-suit",
+          "category": "functional",
+          "pass_executions": 32,
+          "path": "Reports/package-apollo12-suit-result.txt",
+          "sha256": "901df3df557c022d6624af6172f6cd46584b0324cbd46fa2d5de5654198f5a15",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/901df3df557c022d6624af6172f6cd46584b0324cbd46fa2d5de5654198f5a15/package-apollo12-suit-result.txt"
+        },
+        {
+          "case": "apollo-polish",
+          "category": "functional",
+          "pass_executions": 64,
+          "path": "Reports/package-apollo12-polish-result.txt",
+          "sha256": "c927f568452ca06accd24406049d0e7a723c2c16dacca8706e8b14d1d233e5a8",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/c927f568452ca06accd24406049d0e7a723c2c16dacca8706e8b14d1d233e5a8/package-apollo12-polish-result.txt"
+        },
+        {
+          "case": "apollo-guidance",
+          "category": "functional",
+          "pass_executions": 47,
+          "path": "Reports/package-apollo12-guidance-result.txt",
+          "sha256": "d9a16b9f4f62acc93b7534b308edfa4e36b0d6c8966064d288b4110112c86ffa",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/d9a16b9f4f62acc93b7534b308edfa4e36b0d6c8966064d288b4110112c86ffa/package-apollo12-guidance-result.txt"
+        },
+        {
+          "case": "apollo-fieldwork",
+          "category": "functional",
+          "pass_executions": 39,
+          "path": "Reports/package-apollo12-fieldwork-result.txt",
+          "sha256": "ea375f02581686b0e4ef8ad36e583622d000fb282c0b93ea71c68c216ad9b192",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/ea375f02581686b0e4ef8ad36e583622d000fb282c0b93ea71c68c216ad9b192/package-apollo12-fieldwork-result.txt"
+        },
+        {
+          "case": "apollo-save",
+          "category": "functional",
+          "pass_executions": 51,
+          "path": "Reports/package-apollo12-save-result.txt",
+          "sha256": "6f9761b2a673ceefe91006a49d46f19bffa922479b741b11295fe962fe6e97dc",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/6f9761b2a673ceefe91006a49d46f19bffa922479b741b11295fe962fe6e97dc/package-apollo12-save-result.txt"
+        },
+        {
+          "case": "apollo-save-write",
+          "category": "functional",
+          "pass_executions": 2,
+          "path": "Reports/package-apollo12-save-write-result.txt",
+          "sha256": "925561c794fc7f059e796c96d107eec4f34e6b77bde7676e82b2985e42a002f4",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/925561c794fc7f059e796c96d107eec4f34e6b77bde7676e82b2985e42a002f4/package-apollo12-save-write-result.txt"
+        },
+        {
+          "case": "apollo-save-read",
+          "category": "functional",
+          "pass_executions": 7,
+          "path": "Reports/package-apollo12-save-read-result.txt",
+          "sha256": "e0b31f0af7c9b70f375ccc1c6740cc612456916225adbf73425bc9d6540de24c",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/e0b31f0af7c9b70f375ccc1c6740cc612456916225adbf73425bc9d6540de24c/package-apollo12-save-read-result.txt"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/final-apollo-regression.log",
+          "sha256": "9be405c84eb6eb8f0341dfe4cce95025655f3178278d5b292f178e043fd3b9a3",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/9be405c84eb6eb8f0341dfe4cce95025655f3178278d5b292f178e043fd3b9a3/final-apollo-regression.log"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/final-test-queue.json"
+    },
+    {
+      "name": "selection-functional",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:41:14.7929115Z",
+      "finished_utc": "2026-11-02T01:41:20.4821719Z",
+      "executable_sha256": "e73853cde9dcfdac8003889c7dfa86efd6feb7fabdb587d33ca4594972d3dd26",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-typography-final.json",
+        "sha256": "01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd/compiled-typography-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "selection-functional",
+          "category": "functional",
+          "pass_executions": 51,
+          "path": "Reports/Feedback20261102/final-selection-functional.log",
+          "sha256": "dab960d288a1cac47a9c95240645e56216df4df39c99ad3faf4d6ad73ba49490",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/dab960d288a1cac47a9c95240645e56216df4df39c99ad3faf4d6ad73ba49490/final-selection-functional.log"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/final-selection-functional.log",
+          "sha256": "dab960d288a1cac47a9c95240645e56216df4df39c99ad3faf4d6ad73ba49490",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/dab960d288a1cac47a9c95240645e56216df4df39c99ad3faf4d6ad73ba49490/final-selection-functional.log"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/final-test-queue.json"
+    },
+    {
+      "name": "frontend-functional",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:41:20.4834981Z",
+      "finished_utc": "2026-11-02T01:41:26.1942467Z",
+      "executable_sha256": "e73853cde9dcfdac8003889c7dfa86efd6feb7fabdb587d33ca4594972d3dd26",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-typography-final.json",
+        "sha256": "01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd/compiled-typography-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "frontend-functional",
+          "category": "functional",
+          "pass_executions": 20,
+          "path": "Reports/Feedback20261102/final-frontend-functional.log",
+          "sha256": "05151b821c8d287b3f5a3779a124256ea9b182498cc1d8798b9aeb8eefc2b492",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/05151b821c8d287b3f5a3779a124256ea9b182498cc1d8798b9aeb8eefc2b492/final-frontend-functional.log"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/final-frontend-functional.log",
+          "sha256": "05151b821c8d287b3f5a3779a124256ea9b182498cc1d8798b9aeb8eefc2b492",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/05151b821c8d287b3f5a3779a124256ea9b182498cc1d8798b9aeb8eefc2b492/final-frontend-functional.log"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/final-test-queue.json"
+    },
+    {
+      "name": "experience-functional",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:41:26.1955567Z",
+      "finished_utc": "2026-11-02T01:41:31.9404311Z",
+      "executable_sha256": "e73853cde9dcfdac8003889c7dfa86efd6feb7fabdb587d33ca4594972d3dd26",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-typography-final.json",
+        "sha256": "01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd/compiled-typography-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "experience-functional",
+          "category": "functional",
+          "pass_executions": 64,
+          "path": "Reports/Feedback20261102/final-experience-functional.log",
+          "sha256": "fb97ba9e5ed534f4ad1cf6cf3619fdb4ae38261f7f7e2fda874946cb82a112e8",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/fb97ba9e5ed534f4ad1cf6cf3619fdb4ae38261f7f7e2fda874946cb82a112e8/final-experience-functional.log"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/final-experience-functional.log",
+          "sha256": "fb97ba9e5ed534f4ad1cf6cf3619fdb4ae38261f7f7e2fda874946cb82a112e8",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/fb97ba9e5ed534f4ad1cf6cf3619fdb4ae38261f7f7e2fda874946cb82a112e8/final-experience-functional.log"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/final-test-queue.json"
+    },
+    {
+      "name": "presentation-functional",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:41:31.9420445Z",
+      "finished_utc": "2026-11-02T01:41:41.5227374Z",
+      "executable_sha256": "e73853cde9dcfdac8003889c7dfa86efd6feb7fabdb587d33ca4594972d3dd26",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-typography-final.json",
+        "sha256": "01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd/compiled-typography-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "presentation-functional",
+          "category": "functional",
+          "pass_executions": 35,
+          "path": "Reports/Feedback20261102/final-presentation-functional.log",
+          "sha256": "88b8b2b7c21956dadd8e7218e3bb3f09667cb9854b3662e09283a903699e012c",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/88b8b2b7c21956dadd8e7218e3bb3f09667cb9854b3662e09283a903699e012c/final-presentation-functional.log"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/final-presentation-functional.log",
+          "sha256": "88b8b2b7c21956dadd8e7218e3bb3f09667cb9854b3662e09283a903699e012c",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/88b8b2b7c21956dadd8e7218e3bb3f09667cb9854b3662e09283a903699e012c/final-presentation-functional.log"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/final-test-queue.json"
+    },
+    {
+      "name": "mars-movement",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:41:41.5241926Z",
+      "finished_utc": "2026-11-02T01:42:11.9575816Z",
+      "executable_sha256": "e73853cde9dcfdac8003889c7dfa86efd6feb7fabdb587d33ca4594972d3dd26",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-typography-final.json",
+        "sha256": "01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd/compiled-typography-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "mars-movement",
+          "category": "functional",
+          "pass_executions": 16,
+          "path": "Reports/Feedback20261102/final-mars-movement.log",
+          "sha256": "af16e4625bac4dfae0f77415b7c8360f455f0d54cf7bc3b7891ce304e931819b",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/af16e4625bac4dfae0f77415b7c8360f455f0d54cf7bc3b7891ce304e931819b/final-mars-movement.log"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/final-mars-movement.log",
+          "sha256": "af16e4625bac4dfae0f77415b7c8360f455f0d54cf7bc3b7891ce304e931819b",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/af16e4625bac4dfae0f77415b7c8360f455f0d54cf7bc3b7891ce304e931819b/final-mars-movement.log"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/final-test-queue.json"
+    },
+    {
+      "name": "frontend-review720",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:42:11.9591809Z",
+      "finished_utc": "2026-11-02T01:42:47.2865553Z",
+      "executable_sha256": "e73853cde9dcfdac8003889c7dfa86efd6feb7fabdb587d33ca4594972d3dd26",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-typography-final.json",
+        "sha256": "01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd/compiled-typography-final.json"
+      },
+      "assertion_reports": [],
+      "staged_frames": 7,
+      "validated_pointer_events": 0,
+      "assertion_count_available": false,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/final-frontend-review720.log",
+          "sha256": "c27b2efbf22d48877d62fc13a540f5d3675a13f92f5792d5ccb160b797c06787",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/c27b2efbf22d48877d62fc13a540f5d3675a13f92f5792d5ccb160b797c06787/final-frontend-review720.log"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/final-test-queue.json"
+    },
+    {
+      "name": "frontend-review1080",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:42:47.2877174Z",
+      "finished_utc": "2026-11-02T01:43:22.5992074Z",
+      "executable_sha256": "e73853cde9dcfdac8003889c7dfa86efd6feb7fabdb587d33ca4594972d3dd26",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-typography-final.json",
+        "sha256": "01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd/compiled-typography-final.json"
+      },
+      "assertion_reports": [],
+      "staged_frames": 7,
+      "validated_pointer_events": 0,
+      "assertion_count_available": false,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/final-frontend-review1080.log",
+          "sha256": "e188f5c6d95532646e910457df41b8f69ba06b1128454ebcb6a3c4140dc4aa92",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/e188f5c6d95532646e910457df41b8f69ba06b1128454ebcb6a3c4140dc4aa92/final-frontend-review1080.log"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/final-test-queue.json"
+    },
+    {
+      "name": "selection-review720",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:43:22.6008906Z",
+      "finished_utc": "2026-11-02T01:43:42.9623049Z",
+      "executable_sha256": "e73853cde9dcfdac8003889c7dfa86efd6feb7fabdb587d33ca4594972d3dd26",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-typography-final.json",
+        "sha256": "01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd/compiled-typography-final.json"
+      },
+      "assertion_reports": [],
+      "staged_frames": 13,
+      "validated_pointer_events": 3,
+      "assertion_count_available": false,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/final-selection-review720.log",
+          "sha256": "63510ae854aa009066d4ec08c6dea46470611749e1a4c77aae640a39c33d8516",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/63510ae854aa009066d4ec08c6dea46470611749e1a4c77aae640a39c33d8516/final-selection-review720.log"
+        },
+        {
+          "path": "Reports/MissionSelection20261031/package-review-1280x720-20261102-064322-625/review-manifest.json",
+          "sha256": "d8f058e45c32d3d9f3a998f35d11687ce9e974fb6a14e2b1f0ed7caee79e7c9b",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/d8f058e45c32d3d9f3a998f35d11687ce9e974fb6a14e2b1f0ed7caee79e7c9b/review-manifest.json"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/final-test-queue.json"
+    },
+    {
+      "name": "selection-review1080",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": "2026-11-02T01:43:42.9634538Z",
+      "finished_utc": "2026-11-02T01:44:04.3524790Z",
+      "executable_sha256": "e73853cde9dcfdac8003889c7dfa86efd6feb7fabdb587d33ca4594972d3dd26",
+      "executable_provenance": "explicit build receipt supplied for this queue; legacy runner did not self-record hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-typography-final.json",
+        "sha256": "01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd/compiled-typography-final.json"
+      },
+      "assertion_reports": [],
+      "staged_frames": 13,
+      "validated_pointer_events": 3,
+      "assertion_count_available": false,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/final-selection-review1080.log",
+          "sha256": "2c11b2236e66044cec3a177168e92a63131c877c74cbc0d2e957d5392ae72456",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/2c11b2236e66044cec3a177168e92a63131c877c74cbc0d2e957d5392ae72456/final-selection-review1080.log"
+        },
+        {
+          "path": "Reports/MissionSelection20261031/package-review-1920x1080-20261102-064342-982/review-manifest.json",
+          "sha256": "727d22b18ccc00fa28a3f21af4ae31960fadbe411d0acc4abad261ef59b5f053",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/727d22b18ccc00fa28a3f21af4ae31960fadbe411d0acc4abad261ef59b5f053/review-manifest.json"
+        }
+      ],
+      "queue": "Reports/Feedback20261102/final-test-queue.json"
+    },
+    {
+      "name": "typography-functional",
+      "queue_success": true,
+      "verification": "verified-existing-evidence",
+      "started_utc": null,
+      "finished_utc": null,
+      "executable_sha256": "e73853cde9dcfdac8003889c7dfa86efd6feb7fabdb587d33ca4594972d3dd26",
+      "executable_provenance": "runner-recorded executable hash",
+      "build_receipt": {
+        "path": "Reports/Feedback20261102/compiled-typography-final.json",
+        "sha256": "01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd",
+        "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/01af2b7279ce290093c0e2073e6d32bd0793ab5fe6dfd06d447b8e762937b6cd/compiled-typography-final.json"
+      },
+      "assertion_reports": [
+        {
+          "case": "loading-typography",
+          "category": "functional",
+          "pass_executions": 55,
+          "path": "Reports/LoadingTypography20261102/package-checks-1280x720-20261102-063303-796/loading-typography-checks.txt",
+          "sha256": "bdf1e38884c279b85eb5fc4478d1d66990c0baf6b53e90fcf3bf15d9954bcb0d",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/bdf1e38884c279b85eb5fc4478d1d66990c0baf6b53e90fcf3bf15d9954bcb0d/loading-typography-checks.txt"
+        }
+      ],
+      "staged_frames": 0,
+      "validated_pointer_events": 0,
+      "assertion_count_available": true,
+      "sources": [
+        {
+          "path": "Reports/Feedback20261102/final-typography-functional.log",
+          "sha256": "d3224c61a4897e96729fca88247661167bb80a5643ada7b358f0dacc7246b888",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/d3224c61a4897e96729fca88247661167bb80a5643ada7b358f0dacc7246b888/final-typography-functional.log"
+        },
+        {
+          "path": "Reports/LoadingTypography20261102/package-checks-1280x720-20261102-063303-796/run-summary.json",
+          "sha256": "034c0d55f65a68bb668fa8d36fbe00c168541dc8984240dc1985e5fd4ff4480f",
+          "frozen_path": "Reports/Feedback20261102/controls-frozen/inputs/034c0d55f65a68bb668fa8d36fbe00c168541dc8984240dc1985e5fd4ff4480f/run-summary.json"
+        }
+      ]
+    }
+  ],
+  "totals_by_executable_sha256": {
+    "b034765110ad30f5a60ffcf1e874ddac679002b16c74f0e9f72bea54017a9fb4": {
+      "verified_runs": 18,
+      "unverified_runs": 0,
+      "pass_executions": 1254,
+      "functional_pass_executions": 1128,
+      "staged_layout_pass_executions": 50,
+      "actual_travel_pass_executions": 76,
+      "staged_frames": 110,
+      "validated_pointer_events": 6
+    },
+    "2ed50ecc18818d78cd5c5d97959822cdba77210025224b0ea155d5f8663eb818": {
+      "verified_runs": 18,
+      "unverified_runs": 0,
+      "pass_executions": 1236,
+      "functional_pass_executions": 1110,
+      "staged_layout_pass_executions": 50,
+      "actual_travel_pass_executions": 76,
+      "staged_frames": 110,
+      "validated_pointer_events": 6
+    },
+    "e73853cde9dcfdac8003889c7dfa86efd6feb7fabdb587d33ca4594972d3dd26": {
+      "verified_runs": 18,
+      "unverified_runs": 0,
+      "pass_executions": 1236,
+      "functional_pass_executions": 1110,
+      "staged_layout_pass_executions": 50,
+      "actual_travel_pass_executions": 76,
+      "staged_frames": 110,
+      "validated_pointer_events": 6
+    }
+  }
+}

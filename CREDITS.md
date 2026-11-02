@@ -1,5 +1,42 @@
 # Credits va litsenziya holati
 
+## Local feedback additions - 2 November 2026
+
+The borderless HUD presentation, compact loading typography, read-only mission
+diagnostics, equipment-detail arrangements and their check/review code are
+project-authored work developed with OpenAI Codex AI coding and documentation
+assistance. The supported SELENE rover-repair scripts, retained-source contact
+fixture and bounds-normalized cosmetic rock placement were developed with the
+same assistance. This credit does not establish scientific validation or change the
+project-wide code-licence issue below.
+
+The 39-row asset inventory records 32 authored scene-detail treatments, five
+existing tools reused in a new display and two unchanged targets. It is not a
+receipt for 39 new models. Existing NASA/Carbajal Apollo lander, NASA/LaRC HDU,
+Lunokhod, battery, terminal, solar-panel, rock/material, suit and tool credits
+retain their original terms. Added visual detail does not become NASA-measured
+geometry. The SELENE rover map edit changes only pose/world Z; its retained
+model and sampled contact coordinates keep the existing Lunokhod attribution
+and third-party terms in [ExternalModels credits](SourceArt/ExternalModels/CREDITS.md).
+No NASA DEM was edited by the contact fixes. The solar OBJ analysis is a source
+placement check, not a claim that the latest rendered junction view is resolved.
+See [asset implementation scope](ASSET_IMPROVEMENTS_UPDATE.md) and
+[the source catalogue](ASSET_SOURCE_CATALOG.md); candidate links are not imports
+or blanket redistribution licences.
+
+Keen Software House's **Space Engineers** official guides were consulted as a
+gameplay design reference for optional help and explicit prerequisites. No code,
+models, textures, audio or other Space Engineers assets were copied. Precise
+primary URLs and design inferences are in [the gameplay reference update](GAMEPLAY_REFERENCE_UPDATE.md).
+Existing menu/loading illustrations remain credited in
+[Frontend credits](SourceArt/Frontend/CREDITS.txt); this pass changes typography
+and layout rather than importing new artwork. NASA/GSFC/ASU LROC terrain credit
+and all third-party notices remain in force. No NASA endorsement is claimed.
+Final scripted validation, controlled performance captures and the 264/264
+unchanged protected-file comparison are recorded separately in
+[TEST_REPORT](TEST_REPORT.md); they do not establish asset-relicensing rights,
+scientific validation or human learning effectiveness.
+
 ## Current additions - 1 November 2026
 
 The intro uses **user-supplied LunarRescue artwork**, retained as the unchanged

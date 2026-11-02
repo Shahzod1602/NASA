@@ -1,0 +1,10 @@
+{
+  "restored_path": "Saved/Config/WindowsEditor/EditorPerProjectUserSettings.ini",
+  "differences": [],
+  "before_restore_sha256": "d189ae16301acb475cfd893cd18ba1a6e88875a194f5c52806bed6092cacbc5f",
+  "restored_automatic_editor_preference": true,
+  "expected_sha256": "af0ab4507ab67296941ed1a8c3e21921cef040a794edac85e37c3c509954681e",
+  "unchanged": 264,
+  "baseline_files": 264,
+  "checked_utc": "2026-11-02T03:01:18.8423349Z"
+}

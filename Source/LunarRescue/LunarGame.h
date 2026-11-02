@@ -112,6 +112,8 @@ public:
  void NasaPovChecks(); void NasaPovReview();
  void NasaIntroChecks(); void NasaUIChecks(); void NasaRestartChecks();
  void NasaUIReview();
+ void HUDReferenceReview();
+ void FeedbackAssetChecks();
  bool Apollo=false, Journal=false;
  bool ApolloTimed=false;
  bool ApolloToolsEnabled=true;

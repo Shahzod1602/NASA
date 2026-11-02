@@ -1,6 +1,65 @@
 # Development plan
 
-## Current implementation - 1 November 2026
+## Current local work - 2 November 2026 (unreleased)
+
+Implemented: borderless mission/resource HUD text with state-driven counters and
+hold feedback, compact measured loading typography, optional read-only I
+notebook diagnostics, and bounded authored equipment presentation. Rescue
+power dependencies and Apollo photo/setup/cargo prerequisites use the actual
+mission records; opening the notebook cannot finish work. The 39-row asset
+inventory accounts for 32 scene-detail treatments, five existing tools reused
+in a storage display and two unchanged targets, not 39 new mesh imports.
+See [gameplay scope](GAMEPLAY_REFERENCE_UPDATE.md),
+[asset scope](ASSET_IMPROVEMENTS_UPDATE.md), [source candidates](ASSET_SOURCE_CATALOG.md)
+and [loading typography](LOADING_TYPOGRAPHY_UPDATE.md).
+
+Final local executable SHA-256
+`b034765110ad30f5a60ffcf1e874ddac679002b16c74f0e9f72bea54017a9fb4`
+compiled/staged after a full cook and passed all 17 queue runs plus typography:
+1,254 exact PASS executions (1,128 functional + 76 actual-travel + 50 staged
+HUD layout). This includes the six new grounding assertions per mission.
+Wrappers separately validated 110 staged PNGs and six routed Slate pointer
+outcomes. [The receipt](Docs/Feedback2026-11-02/evidence.json) records earlier
+2ed/e738 executables under their own hashes; repeated prior results are not
+additional unique tests or substitutes for final-build coverage. Earlier
+release totals below remain historical. Matched controlled performance runs
+and the 264/264 unchanged protected-file comparison completed; conditions and
+limits are in [TEST_REPORT](TEST_REPORT.md). One run per scene does not establish
+whole-mission sustained FPS. No human learning gain, new release or competition
+eligibility is established.
+
+Later visual correction: the supported Editor repair leveled the original
+SELENE MoonBase rover (pitch 0/yaw 15/roll 0, world Z 4.55465 cm), with eight
+wheels and 48 contact entries sampled against existing terrain. The map backup,
+before/after hashes and successful receipt confirm unchanged rover properties
+and 1,910 other actors. ARES and terrain are unchanged. Cosmetic basalt/talus
+now uses bounds-normalized source dimensions, local terrain-normal alignment
+and 20% height burial. Neither fix changes the mission dependency model.
+
+Immediate priorities:
+
+1. Use the final executable-specific receipt and [TEST_REPORT](TEST_REPORT.md)
+   to assess release readiness, including matched-condition performance and
+   protected-player-file preservation. Fourteen fresh Editor equipment views
+   were reviewed; resolve the still-inconclusive solar-junction presentation in
+   a future focused visual pass without treating source geometry or a clear
+   line trace as rendered visibility proof.
+2. Review the bounded equipment pass with normal packaged gameplay before any
+   replacement mesh. Select candidates individually from the verified source
+   catalogue; verify licence, dimensions, import and work/contact behavior.
+   Research availability alone is not implementation.
+3. Run the prepared novice playtest with real participants and record observed
+   completion, comprehension answers and confusing points. Keep human sessions
+   separate from scripted UI fixtures and functional assertions.
+
+The later Moon A/B route/resource planner and sourced Mars elevation work remain
+backlog. Space Apps prior-work and challenge eligibility still require their own
+verified decision; product improvements do not establish competition acceptance.
+
+## Previous verified milestone - 1 November 2026
+
+The following record describes the earlier v0.7.0 milestone. Its totals do not
+certify the local 2 November feedback/typography build.
 
 The current local source adds the supplied-art intro, five glass home actions,
 compact live mission HUD, an interactive pause page, confirmed full restart,

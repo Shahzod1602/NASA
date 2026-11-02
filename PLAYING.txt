@@ -11,12 +11,37 @@ At the Apollo briefing, Enter begins a new expedition.
 T selects historical exploration (untimed) or a 30-minute exercise.
 All game text and guidance are in English.
 
+LOCAL UNRELEASED FEEDBACK UPDATE - 2 NOVEMBER 2026
+The source/current local build adds borderless mission/resource text and a
+compact loading guide. Preparation percentage is a staged progress indicator,
+not the percentage of file bytes loaded. The published v0.7.0 ZIP is an earlier
+release and may not contain these local changes.
+
+Press I for equipment diagnostics as well as the existing photos/cargo views.
+SELENE/ARES show the next power-and-data prerequisite; Apollo shows its separate
+fieldwork checklist. RECORDED means committed mission work. READY means the
+preceding step is recorded; close the notebook, approach the marker and perform
+the normal work action. Reading grants no cargo, time or completed tasks.
+The notebook scrolls and pauses active play. Esc closes it and restores the
+previous pause state.
+These are simplified gameplay records, not real hardware-health measurements.
+The SELENE display rover is levelled; cosmetic rocks use their actual source
+dimensions and follow local terrain. These changes do not alter controls,
+mission tasks or the NASA terrain dataset. Final local build b0347651...a9fb4
+passed 1,254 exact PASS executions after rebuilding/recooking; 110 staged PNGs
+and six routed Slate pointer outcomes are separate evidence, not human tests.
+The latest solar-junction view remains visually inconclusive. Completed
+controlled performance runs and 264/264 unchanged protected-file comparison:
+TEST_REPORT.md. These do not establish sustained whole-mission FPS. Executable-specific evidence:
+Docs/Feedback2026-11-02/evidence.json.
+
 CONTROLS
 WASD / arrows: move             Mouse: look around
 E: open work tool              Left click: use the open tool
 Q: select a site / journal page Esc: pause; cancel unfinished tool work
 Tab / J: map and field journal  F1: settings and key bindings
-I: photos, cargo and My Expedition   Mouse / arrows: level or antenna adjustment
+I: notebook, diagnostics, photos and cargo
+Mouse / arrows: level or antenna adjustment
 Space: hop                     Shift: faster stride
 V: change camera               Alt: orbit in the following view
 F: zoom                        M: mission selection from pause/results

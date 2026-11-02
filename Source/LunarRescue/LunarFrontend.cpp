@@ -7,6 +7,9 @@
 #include "Components/CanvasPanel.h"
 #include "Components/CanvasPanelSlot.h"
 #include "Components/Border.h"
+#include "Components/Overlay.h"
+#include "Components/BackgroundBlur.h"
+#include "Brushes/SlateRoundedBoxBrush.h"
 #include "Components/Button.h"
 #include "Components/ButtonSlot.h"
 #include "Components/TextBlock.h"
@@ -43,7 +46,9 @@ bool IntroShownThisProcess=false;
 ALunarCharacter* Pilot(UObject* O){return Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(O,0));}
 ALunarGameMode* Mission(UObject* O){return Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(O));}
 UTextBlock* Label(UWidgetTree* Tree,const FString& Text,int32 Size,FLinearColor Color=Ink){
- auto* W=Tree->ConstructWidget<UTextBlock>();W->SetText(FText::FromString(Text));auto Font=W->GetFont();Font.Size=Size;Font.TypefaceFontName=TEXT("Regular");W->SetFont(Font);W->SetColorAndOpacity(Color);W->SetAutoWrapText(true);return W;
+ auto* W=Tree->ConstructWidget<UTextBlock>();W->SetText(FText::FromString(Text));const bool Scales=!Text.StartsWith(TEXT("L U N A R R E S C U E"));
+ auto Font=W->GetFont();Font.Size=FMath::RoundToInt(Size*(Scales?FMath::Clamp(ULunarSettings::Get()->TextScale,1.f,1.5f):1.f));Font.TypefaceFontName=TEXT("Regular");W->SetFont(Font);W->SetColorAndOpacity(Color);W->SetAutoWrapText(true);
+ if(auto* Main=Tree->GetTypedOuter<ULunarMainMenu>())Main->FrontendLabels.Add({W,Size,Scales});else if(auto* Panel=Tree->GetTypedOuter<ULunarPanel>())Panel->FrontendLabels.Add({W,Size,Scales});return W;
 }
 void Place(UCanvasPanel* Canvas,UWidget* Widget,float X,float Y,float W,float H){auto* S=Canvas->AddChildToCanvas(Widget);S->SetPosition(FVector2D(X,Y));S->SetSize(FVector2D(W,H));}
 UCanvasPanel* Frame(UWidgetTree* Tree){
@@ -51,10 +56,20 @@ UCanvasPanel* Frame(UWidgetTree* Tree){
 }
 UButton* FrontendButton(UWidgetTree* Tree,const FString& Text,bool Active=false,bool Focusable=true){
  auto* B=Focusable?Tree->ConstructWidget<UButton>():Tree->ConstructWidget<ULunarMissionButton>();auto Style=B->GetStyle();
- Style.Normal.DrawAs=Style.Hovered.DrawAs=Style.Pressed.DrawAs=ESlateBrushDrawType::Box;
- Style.Normal.TintColor=FSlateColor(Active?FLinearColor(.04f,.2f,.26f,.96f):FLinearColor(.005f,.012f,.018f,.94f));
- Style.Hovered.TintColor=FSlateColor(FLinearColor(.08f,.23f,.3f));Style.Pressed.TintColor=FSlateColor(FLinearColor(.03f,.34f,.4f));B->SetStyle(Style);
- auto* T=Label(Tree,Text,12);T->SetAutoWrapText(false);B->AddChild(T);return B;
+ Style.Normal=FSlateRoundedBoxBrush(FLinearColor::Transparent,4.f,FLinearColor(.16f,.40f,.53f,.65f),1.f);
+ Style.Hovered=FSlateRoundedBoxBrush(FLinearColor(.04f,.44f,.68f,.40f),4.f,FLinearColor(.05f,.85f,1.f,.9f),1.f);
+ Style.Pressed=FSlateRoundedBoxBrush(FLinearColor(.03f,.38f,.60f,.65f),4.f,FLinearColor(.1f,.9f,1.f),1.f);
+ Style.Disabled=FSlateRoundedBoxBrush(FLinearColor(.01f,.03f,.05f,.45f),4.f,FLinearColor(.14f,.23f,.29f,.5f),1.f);
+ Style.NormalPadding=Style.PressedPadding=FMargin(0);B->SetStyle(Style);
+ auto* Layers=Tree->ConstructWidget<UOverlay>();B->AddChild(Layers);if(auto* S=Cast<UButtonSlot>(Layers->Slot)){S->SetPadding(0);S->SetHorizontalAlignment(HAlign_Fill);S->SetVerticalAlignment(VAlign_Fill);}
+ auto* Blur=Tree->ConstructWidget<UBackgroundBlur>();Blur->SetBlurStrength(2.f);Blur->SetCornerRadius(FVector4(4,4,4,4));FSlateBrush Fallback;Fallback.TintColor=FSlateColor(FLinearColor(.01f,.035f,.06f,.85f));Blur->SetLowQualityFallbackBrush(Fallback);Blur->SetVisibility(ESlateVisibility::HitTestInvisible);Layers->AddChild(Blur);
+ auto* Face=Tree->ConstructWidget<UBorder>();Face->SetBrush(FSlateRoundedBoxBrush(FLinearColor::White,4.f));Face->SetBrushColor(Active?FLinearColor(.02f,.19f,.32f,.48f):FLinearColor(.008f,.03f,.055f,.46f));Face->SetPadding(Text==TEXT("X")?FMargin(0):FMargin(12,5));Face->SetVisibility(ESlateVisibility::HitTestInvisible);Layers->AddChild(Face);
+ auto* T=Label(Tree,Text,12);T->SetAutoWrapText(false);T->SetJustification(ETextJustify::Center);Face->SetContent(T);return B;
+}
+void RefreshFrontendLabels(UWidgetTree* Tree,TArray<FLunarFrontendLabel>& Labels,float& Cached){
+ const float Scale=FMath::Clamp(ULunarSettings::Get()->TextScale,1.f,1.5f);if(FMath::IsNearlyEqual(Cached,Scale))return;Cached=Scale;
+ Labels.RemoveAll([&](const FLunarFrontendLabel& Entry){auto* W=Entry.Widget.Get();if(!W)return true;UWidget* Top=W;while(Top->GetParent())Top=Top->GetParent();return Top!=Tree->RootWidget;});
+ for(const auto& Entry:Labels)if(auto* W=Entry.Widget.Get()){auto Font=W->GetFont();Font.Size=FMath::RoundToInt(Entry.BaseSize*(Entry.Scales?Scale:1.f));W->SetFont(Font);}
 }
 UImage* Backdrop(UWidgetTree* Tree,UCanvasPanel* C){auto* I=Tree->ConstructWidget<UImage>();I->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr,TEXT("/Game/Lunar/Frontend/T_MenuMoon.T_MenuMoon")));Place(C,I,0,0,1280,720);return I;}
 void Shade(UWidgetTree* Tree,UCanvasPanel* C,float X,float Y,float W,float H,FLinearColor Color){auto* B=Tree->ConstructWidget<UBorder>();B->SetBrushColor(Color);B->SetVisibility(ESlateVisibility::HitTestInvisible);Place(C,B,X,Y,W,H);}
@@ -81,10 +96,10 @@ void ULunarSettingRow::ChoiceChanged(FString Choice,ESelectInfo::Type Type){
 
 void ULunarPanel::BuildSettings(){
  if(BuiltSettings){FillSettings();return;}
- BuiltSettings=true;auto* C=Frame(WidgetTree);Backdrop(WidgetTree,C);Shade(WidgetTree,C,0,0,1280,720,FLinearColor(0,.01f,.025f,.65f));
+ BuiltSettings=true;FrontendLabels.Reset();FrontendTextScale=-1;auto* C=Frame(WidgetTree);Backdrop(WidgetTree,C);Shade(WidgetTree,C,0,0,1280,720,FLinearColor(0,.01f,.025f,.65f));
  Shade(WidgetTree,C,26,32,1228,656,FLinearColor(.002f,.006f,.011f,.98f));
  Place(C,Label(WidgetTree,TEXT("L U N A R R E S C U E"),10,Dim),58,49,800,20);
- Place(C,Label(WidgetTree,TEXT("S E T T I N G S"),22),58,72,900,40);
+ Place(C,Label(WidgetTree,TEXT("S E T T I N G S"),22),58,66,900,46);
  auto* X=FrontendButton(WidgetTree,TEXT("X"));X->OnClicked.AddDynamic(this,&ULunarPanel::Close);Place(C,X,1214,42,28,28);
  const TCHAR* Names[]={TEXT("VIDEO OPTIONS"),TEXT("SOUND OPTIONS"),TEXT("GAMEPLAY"),TEXT("CONTROLS")};
  for(int32 I=0;I<4;++I){auto* B=FrontendButton(WidgetTree,Names[I]);Place(C,B,58+291*I,118,291,36);
@@ -125,7 +140,7 @@ void ULunarPanel::FillSettings(){
   if(SettingsTab==3&&Col==1)Note(TEXT("Select a binding, then press a new key. Reserved and duplicate keys are rejected. Esc / F1 always closes settings."));
  }
 }
-void ULunarPanel::NativeTick(const FGeometry& Geo,float Delta){Super::NativeTick(Geo,Delta);if(!Settings){if(Body&&FMath::Abs(EvidenceLayoutWidth-EvidenceContentWidth())>1.f)Rebuild();return;}auto* S=ULunarSettings::Get();if(auto* Keep=WidgetTree->FindWidget(TEXT("KeepDisplayButton")))Keep->SetVisibility(S->DisplayPending?ESlateVisibility::Visible:ESlateVisibility::Collapsed);if(S->DisplayPending&&FPlatformTime::Seconds()>=S->DisplayDeadline){S->RevertDisplay();FillSettings();}if(DisplayStatus)DisplayStatus->SetText(FText::FromString(S->DisplayPending?FString::Printf(TEXT("Keep display? Reverting in %d seconds."),FMath::Max(0,FMath::CeilToInt(S->DisplayDeadline-FPlatformTime::Seconds()))):TEXT("Changes save automatically. Scroll each column for more.")));}
+void ULunarPanel::NativeTick(const FGeometry& Geo,float Delta){Super::NativeTick(Geo,Delta);RefreshFrontendLabels(WidgetTree,FrontendLabels,FrontendTextScale);if(!Settings){if(Body&&FMath::Abs(EvidenceLayoutWidth-EvidenceContentWidth())>1.f)Rebuild();return;}auto* S=ULunarSettings::Get();if(auto* Keep=WidgetTree->FindWidget(TEXT("KeepDisplayButton")))Keep->SetVisibility(S->DisplayPending?ESlateVisibility::Visible:ESlateVisibility::Collapsed);if(S->DisplayPending&&FPlatformTime::Seconds()>=S->DisplayDeadline){S->RevertDisplay();FillSettings();}if(DisplayStatus)DisplayStatus->SetText(FText::FromString(S->DisplayPending?FString::Printf(TEXT("Keep display? Reverting in %d seconds."),FMath::Max(0,FMath::CeilToInt(S->DisplayDeadline-FPlatformTime::Seconds()))):TEXT("Changes save automatically. Scroll each column for more.")));}
 void ULunarPanel::VideoTab(){SettingsTab=0;FillSettings();}
 void ULunarPanel::SoundTab(){SettingsTab=1;FillSettings();}
 void ULunarPanel::GameplayTab(){SettingsTab=2;FillSettings();}
@@ -135,26 +150,26 @@ void ULunarPanel::RevertDisplay(){ULunarSettings::Get()->RevertDisplay();FillSet
 void ULunarPanel::TestAudio(){auto* S=ULunarSettings::Get();if(auto* Sound=LoadObject<USoundBase>(nullptr,TEXT("/Game/Lunar/Immersion/Audio/Radio_Intro.Radio_Intro")))UGameplayStatics::PlaySound2D(this,Sound,S->RadioVolume*S->MasterVolume);}
 
 TSharedRef<SWidget> ULunarMainMenu::RebuildWidget(){
- auto* C=Frame(WidgetTree);Background=Backdrop(WidgetTree,C);Shade(WidgetTree,C,0,0,1280,720,FLinearColor(0,0,0,.2f));
+ FrontendLabels.Reset();FrontendTextScale=-1;auto* C=Frame(WidgetTree);Background=Backdrop(WidgetTree,C);Shade(WidgetTree,C,0,0,1280,720,FLinearColor(0,0,0,.2f));
  HomeCards.Reset();ExtraHomeCards.Reset();MissionCards.Reset();MissionSelection=false;SelectedMission=INDEX_NONE;IntroState=FLunarIntroState();
  HomePage=WidgetTree->ConstructWidget<UCanvasPanel>();Place(C,HomePage,0,0,1280,720);
  Place(HomePage,Label(WidgetTree,TEXT("L U N A R R E S C U E"),31),84,84,650,48);Place(HomePage,Label(WidgetTree,TEXT("E X P E D I T I O N S"),16,Dim),87,133,600,30);
  const TCHAR* Names[]={TEXT("Continue expedition"),TEXT("Explore the Moon"),TEXT("Explore Mars")};
  for(int32 I=0;I<3;++I){auto* Card=CreateWidget<ULunarMissionCard>(GetOwningPlayer());Card->Configure(I,Names[I],TEXT(""),TEXT(""),true);Card->OnChosen.AddDynamic(this,&ULunarMainMenu::ChooseHome);Card->OnPreview.AddDynamic(this,&ULunarMainMenu::PreviewHome);Place(HomePage,Card,87,195+48*I,268,42);HomeCards.Add(Card);if(I==0)Card->SetIsEnabled(Mission(this)&&Mission(this)->ApolloCachedCheckpoint!=nullptr);}
  for(int32 I=3;I<5;++I){auto* Card=CreateWidget<ULunarMissionCard>(GetOwningPlayer());Card->Configure(I,I==3?TEXT("Settings"):TEXT("Exit"),TEXT(""),TEXT(""),true);Card->OnChosen.AddDynamic(this,&ULunarMainMenu::ChooseHome);Place(HomePage,Card,87,195+48*I,268,42);ExtraHomeCards.Add(Card);}
- Destination=Label(WidgetTree,TEXT(""),24);Place(HomePage,Destination,410,190,700,45);
- Details=Label(WidgetTree,TEXT(""),13);Place(HomePage,Details,410,249,460,280);
+ Destination=Label(WidgetTree,TEXT(""),24);Place(HomePage,Destination,410,184,700,60);
+ Details=Label(WidgetTree,TEXT(""),13);Place(HomePage,Details,410,249,520,390);
  SelectionPage=WidgetTree->ConstructWidget<UCanvasPanel>();Place(C,SelectionPage,0,0,1280,720);
  Shade(WidgetTree,SelectionPage,0,0,1280,720,FLinearColor(.001f,.006f,.014f,.42f));
  Place(SelectionPage,Label(WidgetTree,TEXT("L U N A R R E S C U E  /  E X P E D I T I O N S"),11,Accent),70,48,1000,24);
- SelectionTitle=Label(WidgetTree,TEXT(""),32);Place(SelectionPage,SelectionTitle,70,86,1100,56);
- Place(SelectionPage,Label(WidgetTree,TEXT("Choose a mission, then start when you are ready."),15),70,151,1100,30);
+ SelectionTitle=Label(WidgetTree,TEXT(""),32);Place(SelectionPage,SelectionTitle,70,80,1100,64);
+ Place(SelectionPage,Label(WidgetTree,TEXT("Choose a mission, then start when you are ready."),15),70,151,1100,40);
  const TCHAR* Titles[]={TEXT("APOLLO 12"),TEXT("SELENE"),TEXT("ARES")};
  const TCHAR* Tags[]={TEXT("MOON / HISTORICAL EXPLORATION"),TEXT("MOON / FICTIONAL RESCUE"),TEXT("MARS / FICTIONAL PROTOTYPE")};
  const TCHAR* Descriptions[]={TEXT("Deploy ALSEP, collect three samples and recover Surveyor 3 hardware.\n\nLROC terrain / 6 stages\nUntimed exploration"),TEXT("Restore SELENE power and recover its science data.\n\nAuthored terrain / optional recorder\n8-minute gameplay oxygen budget"),TEXT("Restore ARES power, recover the ice survey and align the orbital antenna.\n\nAuthored terrain / optional recorder\n8-minute gameplay oxygen budget")};
  for(int32 I=0;I<3;++I){auto* Card=CreateWidget<ULunarMissionCard>(GetOwningPlayer());Card->Configure(I,Titles[I],Tags[I],Descriptions[I]);Card->OnChosen.AddDynamic(this,&ULunarMainMenu::SelectMission);Place(SelectionPage,Card,I==0?268:I==1?656:462,216,356,312);MissionCards.Add(Card);}
  Shade(WidgetTree,SelectionPage,0,558,1280,162,FLinearColor(.001f,.004f,.009f,.91f));
- SelectionPrompt=Label(WidgetTree,TEXT("Select a mission to continue."),15);Place(SelectionPage,SelectionPrompt,70,583,780,54);
+ SelectionPrompt=Label(WidgetTree,TEXT("Select a mission to continue."),15);Place(SelectionPage,SelectionPrompt,70,574,780,64);
  LaunchButton=FrontendButton(WidgetTree,TEXT("START MISSION"),true,false);LaunchButton->OnClicked.AddDynamic(this,&ULunarMainMenu::LaunchMission);Place(SelectionPage,LaunchButton,922,580,288,50);
  auto* BackButton=FrontendButton(WidgetTree,TEXT("BACK"),false,false);BackButton->OnClicked.AddDynamic(this,&ULunarMainMenu::Back);Place(SelectionPage,BackButton,70,650,150,36);
  auto* PickerSettings=FrontendButton(WidgetTree,TEXT("SETTINGS"),false,false);PickerSettings->OnClicked.AddDynamic(this,&ULunarMainMenu::Settings);Place(SelectionPage,PickerSettings,1060,650,150,36);
@@ -207,6 +222,8 @@ TSharedRef<SWidget> ULunarMainMenu::RebuildWidget(){
  }
  return Super::RebuildWidget();
 }
+void ULunarMainMenu::NativeTick(const FGeometry& Geometry,float Delta){Super::NativeTick(Geometry,Delta);RefreshFrontendLabels(WidgetTree,FrontendLabels,FrontendTextScale);}
+
 void ULunarMainMenu::PreviewHome(int32 Index){if(!IsIntroActive()&&!MissionSelection){if(Index==1)PreviewMoon();else if(Index==2)PreviewMars();}}
 void ULunarMainMenu::ChooseHome(int32 Index){if(IsIntroActive())return;if(Index==0)Continue();else if(Index==1)ExploreMoon();else if(Index==2)ExploreMars();else if(Index==3)Settings();else if(Index==4)ExitGame();}
 void ULunarMainMenu::PreviewMoon(){if(MissionSelection||IsIntroActive())return;PreviewingMars=false;if(Background)Background->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr,TEXT("/Game/Lunar/Frontend/T_MenuMoon.T_MenuMoon")));Destination->SetText(FText::FromString(TEXT("01 / MOON")));Details->SetText(FText::FromString(FString(TEXT("EXPEDITIONS\nAPOLLO 12 / HISTORICAL EXPLORATION\nSELENE / FICTIONAL RESCUE\n\nCHOOSE YOUR MISSION\nReview the mission guide before departure.\n\nOBJECTIVE\nExplore lunar worksites or restore the rescue station.")).ToUpper()));for(int32 I=0;I<HomeCards.Num();++I)HomeCards[I]->SetSelected(I==1);}

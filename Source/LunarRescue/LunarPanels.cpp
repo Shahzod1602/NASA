@@ -1,5 +1,6 @@
 #include "LunarPanels.h"
 #include "LunarTrailMap.h"
+#include "LunarDiagnostics.h"
 #include "LunarSettings.h"
 #include "LunarGame.h"
 #include "Blueprint/WidgetTree.h"
@@ -94,6 +95,12 @@ TSharedRef<SWidget> ULunarSettingRow::RebuildWidget(){
  Refresh();
  return Super::RebuildWidget();
 }
+void ULunarSettingRow::NativeTick(const FGeometry& Geometry,float Delta){
+ Super::NativeTick(Geometry,Delta);const float Scale=FMath::Clamp(ULunarSettings::Get()->TextScale,1.f,1.5f);if(FMath::IsNearlyEqual(RowTextScale,Scale))return;RowTextScale=Scale;
+ TArray<UWidget*> Widgets;WidgetTree->GetAllWidgets(Widgets);for(auto* W:Widgets)if(auto* Label=Cast<UTextBlock>(W)){auto Font=Label->GetFont();Font.Size=FMath::RoundToInt(12*Scale);Label->SetFont(Font);}
+ if(Selector){auto Style=Selector->GetTextStyle();auto Font=Style.Font;Font.Size=FMath::RoundToInt(12*Scale);Style.SetFont(Font);Selector->SetTextStyle(Style);}
+ if(auto* Size=Cast<USizeBox>(GetParent()))Size->SetMinDesiredHeight(40*Scale);
+}
 UWidget* ULunarSettingRow::OptionWidget(FString Option){return Text(WidgetTree,Option,12);}
 void ULunarSettingRow::Refresh(){auto* S=ULunarSettings::Get();FString V;
  if(Setting==TEXT("HudOpacity"))V=FString::Printf(TEXT("%.0f%%"),S->HudOpacity*100);
@@ -151,7 +158,8 @@ void ULunarPanel::Rebuild(){
  if(G->Apollo){auto* MapButton=Button(WidgetTree,ShowExpeditionMap?TEXT("Photos & cargo"):TEXT("My Expedition / map"));MapButton->OnClicked.AddDynamic(this,&ULunarPanel::ToggleExpeditionMap);Top->AddChild(MapButton);}
  auto* Lessons=Button(WidgetTree,ShowFieldLessons?(G->Apollo?TEXT("Photos & cargo"):TEXT("Notebook overview")):TEXT("Field lessons"));Lessons->OnClicked.AddDynamic(this,&ULunarPanel::ToggleFieldLessons);Top->AddChild(Lessons);
  if(ShowFieldLessons){BuildFieldLessons();return;}
- if(!G->Apollo){Add(Text(WidgetTree,TEXT("FIELD NOTEBOOK"),27));Add(Text(WidgetTree,TEXT("Review three optional field lessons to distinguish measured planetary data, authored scenery and gameplay rules. Select Field lessons above to begin."),21));return;}
+ if(!ShowExpeditionMap)LunarDiagnostics::BuildNotebook(this);
+ if(!G->Apollo){Add(Text(WidgetTree,TEXT("FIELD LESSONS"),27));Add(Text(WidgetTree,TEXT("Review three optional field lessons to distinguish measured planetary data, authored scenery and gameplay rules. Select Field lessons above to begin."),21));return;}
  if(ShowExpeditionMap){
   Add(Text(WidgetTree,TEXT("MY EXPEDITION"),27));
   Add(Text(WidgetTree,TEXT("Gold solid line: your recorded walk. Thin cyan line: reconstructed historical traverse."),18));

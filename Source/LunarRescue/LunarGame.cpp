@@ -7,6 +7,7 @@
 #include "LunarPauseMenu.h"
 #include "LunarLearning.h"
 #include "LunarFlightHUD.h"
+#include "LunarDiagnostics.h"
 #include "LunarLoading.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -234,6 +235,11 @@ void ALunarGameMode::BeginPlay() {
  if(FParse::Param(FCommandLine::Get(),TEXT("NasaPovReview"))&&!Menu){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::NasaPovReview,5,false);}
  if(FParse::Param(FCommandLine::Get(),TEXT("NasaRestartTest"))&&!Menu){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::NasaRestartChecks,3,false);}
  if(FParse::Param(FCommandLine::Get(),TEXT("NasaUIReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::NasaUIReview,4,false);}
+ if(!Menu&&FParse::Param(FCommandLine::Get(),TEXT("HUDReferenceReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::HUDReferenceReview,4,false);}
+ if(!Menu&&FParse::Param(FCommandLine::Get(),TEXT("FeedbackAssetsTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::FeedbackAssetChecks,3,false);}
+ if(!Menu&&FParse::Param(FCommandLine::Get(),TEXT("EquipmentDiagnosticsTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,[this](){LunarDiagnostics::RunChecks(this);},3,false);}
+ if(Menu&&FParse::Param(FCommandLine::Get(),TEXT("LoadingTypographyTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,[this](){LunarLoading::RunTypographyChecks(this);},3,false);}
+ if(Menu&&FParse::Param(FCommandLine::Get(),TEXT("LoadingTypographyReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,[this](){LunarLoading::RunTypographyReview(GetWorld());},4,false);}
  if(Menu){
   RefreshApolloCheckpoint();if(auto* PC=UGameplayStatics::GetPlayerController(this,0)){MainMenu=CreateWidget<ULunarMainMenu>(PC);MainMenu->AddToViewport(10);PC->SetInputMode(FInputModeGameAndUI());PC->bShowMouseCursor=true;}
   if(FParse::Param(FCommandLine::Get(),TEXT("NasaIntroTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::NasaIntroChecks,.1f,false);}

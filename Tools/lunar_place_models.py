@@ -60,7 +60,9 @@ def place(name,location,rotation=(0,0,0),collision=True):
 place('HabitatMain',(1050,-1000,140))
 place('HabitatUtility',(1770,-1000,140))
 place('ApolloLander',(-1900,-300,0))
-place('Lunokhod',(4300,-250,0),(0,15,0))
+# Python Rotator positional order differs from C++; keep this call explicit.
+rover=place('Lunokhod',(4300,-250,0))
+rover.set_actor_rotation(u.Rotator(pitch=0.0,yaw=15.0,roll=0.0),False)
 place('SolarPanel',(1500,-2700,145),(0,0,12),False)
 place('SolarPanel',(1500,-3700,145),(0,0,12),False)
 

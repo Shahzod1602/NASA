@@ -1,5 +1,43 @@
 # Changelog
 
+## Unreleased - Feedback, equipment diagnostics and loading typography - 2026-11-02
+
+- Present active mission/objective and resource information without large HUD
+  borders; keep compact contextual work guidance and subtitles, scale-dependent
+  widths, actual hold progress and state-derived counters.
+- Use compact measured loading typography, a separately reserved progress area
+  and 100-150% text support. Keep preparation progress distinct from file bytes.
+- Add an optional I notebook diagnostic chain for SELENE/ARES and a separate
+  Apollo photo/instrument/cargo checklist, with a next action and explicit model
+  limits. Read-only inspection grants no work or resource reward.
+- Add 32 authored scene-detail treatments; reuse five existing tools in a storage
+  display; retain two targets unchanged. The 39 inventory/research rows do not
+  mean 39 new downloaded or imported meshes. Keep existing terrain and credits.
+- Document verified external model candidates and the official Space Engineers
+  gameplay references; label design inferences and avoid engineering claims.
+- Credit AI coding assistance for the new authored implementation.
+- Final local executable `b0347651...a9fb4` compiled, fully cooked/staged and
+  passed all 17 queue runs plus typography: 1,254 exact PASS executions (1,128
+  functional, 76 actual-travel and 50 staged HUD geometry). Validate 110 staged
+  PNGs and six routed Slate pointer outcomes separately. Earlier 2ed/e738
+  results remain historical under their own hashes, not additional unique
+  tests. See [the per-executable receipt](Docs/Feedback2026-11-02/evidence.json).
+- Repair only the original SELENE MoonBase rover pose using supported Editor
+  Python, after a full map backup and hash check. Preserve XY/scale/materials/
+  collision and all 1,910 other actors. Use explicit Rotator keywords in the
+  original rover placement call to prevent recurrence. ARES is unchanged.
+- Normalize cosmetic basalt/talus dimensions by the actual source bounding box;
+  align to measured terrain normals and bury 20% of the requested height.
+  Existing terrain, collision, navigation, instance caps and no-Tick behavior
+  remain unchanged. Six new geometric assertions per mission passed on the
+  final executable and are included in its 1,254 total.
+- Review 14 fresh Editor Python equipment views. The latest solar-junction view
+  remains visually inconclusive; source OBJ placement proof is not a rendered
+  detail certification. Matched controlled performance runs and the 264/264
+  unchanged protected-file comparison completed; see [TEST_REPORT](TEST_REPORT.md)
+  for conditions and limits. No sustained-FPS or human-playtest result is claimed.
+  The existing v0.7.0 release remains a separate published artifact.
+
 ## v0.7.0 — Expedition UI and Field Lessons — 2026-11-01
 
 - Ship the explicit Moon/Mars mission picker, mission loading guides, expedition trail and cargo finale since v0.6.4.

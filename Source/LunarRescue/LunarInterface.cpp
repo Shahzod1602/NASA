@@ -3,6 +3,7 @@
 #include "LunarPauseMenu.h"
 #include "LunarFlightHUD.h"
 #include "LunarLoading.h"
+#include "LunarEquipmentDetail.h"
 #include "Engine/World.h"
 #include "UObject/Package.h"
 #include "LunarCargoFinale.h"
@@ -11,7 +12,9 @@
 #include "Kismet/GameplayStatics.h"
 
 void ALunarGameMode::BuildMissionInterface(){
- if(Menu||FlightHUD)return;
+ if(Menu)return;
+ LunarEquipmentDetail::Build(this);
+ if(FlightHUD)return;
  if(auto* PC=UGameplayStatics::GetPlayerController(this,0)){
   FlightHUD=CreateWidget<ULunarFlightHUD>(PC);FlightHUD->AddToViewport(5);FlightHUD->Refresh();
  }

@@ -34,6 +34,7 @@ public:
  static float HoldFraction(const ALunarGameMode* Game);
  static FLunarFlightHUDState ReadState(const ALunarGameMode* Game,const ALunarCharacter* Player);
  void Refresh();
+ bool ValidateLayout(FString& Reason) const;
  const FLunarFlightHUDState& State() const {return Current;}
  UPROPERTY() TObjectPtr<UTextBlock> ObjectiveLabel;
  UPROPERTY() TObjectPtr<UTextBlock> ResourceLabel;
@@ -49,10 +50,13 @@ private:
  FLunarFlightHUDState Current;
  UPROPERTY() TObjectPtr<UCanvasPanel> Content;
  UPROPERTY() TObjectPtr<UWidget> MissionPanel;
+ UPROPERTY() TObjectPtr<UWidget> ResourcePanel;
+ UPROPERTY() TArray<TObjectPtr<class USizeBox>> LayoutWidths;
  UPROPERTY() TObjectPtr<UWidget> GuidePanel;
  UPROPERTY() TObjectPtr<UWidget> RadioPanel;
  UPROPERTY() TObjectPtr<UWidget> ToolsPanel;
  UPROPERTY() TObjectPtr<class UVerticalBox> ToolAnswers;
+ UPROPERTY() TObjectPtr<UTextBlock> DustInstruction;
  UPROPERTY() TObjectPtr<UTextBlock> ExpeditionLabel;
  UPROPERTY() TObjectPtr<UTextBlock> MissionLabel;
  UPROPERTY() TObjectPtr<UTextBlock> StageLabel;
@@ -74,4 +78,3 @@ private:
  float RadioTop=710,GuideTop=540;
  int32 CachedTool=INDEX_NONE;
 };
-

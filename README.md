@@ -3,6 +3,54 @@
 Windows v0.7.0: [release and download](https://github.com/Shahzod1602/NASA/releases/tag/apollo12-v0.7.0).
 Extract the complete ZIP and run `LunarRescue.exe`; Unreal Editor is not required.
 
+## Feedback improvements (local, unreleased - 2 November 2026)
+
+The active HUD now uses borderless mission/objective and resource text, with
+compact work guidance and subtitles. Layout widths respond to 100-150% text;
+settings labels update with the text-size choice. Mission loading uses smaller,
+measured typography and separates the guide from corner preparation progress.
+The percentage describes preparation stages, not bytes loaded.
+
+Press **I** for optional state-derived equipment diagnostics. SELENE/ARES explain
+the cell -> port -> cable -> startup -> science chain; Apollo 12 shows its own
+photo, instrument and packed-cargo prerequisites. Inspection grants no progress
+or resources. See [gameplay research and limits](GAMEPLAY_REFERENCE_UPDATE.md).
+
+The equipment pass adds **32 authored scene-detail treatments**, reuses five
+existing tools in a storage display and retains two targets unchanged. The
+39-row inventory is research/coverage tracking, not 39 newly imported meshes.
+See [asset scope](ASSET_IMPROVEMENTS_UPDATE.md), [verified source candidates](ASSET_SOURCE_CATALOG.md)
+and [loading typography](LOADING_TYPOGRAPHY_UPDATE.md). NASA terrain and existing
+asset credits remain separate from cosmetic detail.
+
+The final local Windows build (`b0347651...a9fb4` SHA-256) compiled, fully
+cooked and staged after the contact corrections below. All 17 queued runs and
+the separate typography suite passed: **1,254 exact PASS executions** (1,128
+functional, 76 actual-loading travel and 50 staged HUD-layout checks). Wrappers
+validated **110 staged PNGs** and six routed Slate pointer outcomes separately.
+[The evidence receipt](Docs/Feedback2026-11-02/evidence.json) keeps both earlier
+executables and their repeated results under their own hashes. For matched
+performance measurements and the completed **264/264 unchanged protected-file**
+comparison, see [TEST_REPORT](TEST_REPORT.md). One controlled performance run per
+scene does not establish sustained whole-mission FPS. No human playtest result
+is claimed. The public v0.7.0 download above is the
+previously published artifact; this local work is not a new release.
+
+The later equipment review found a tilted SELENE rover and buried cosmetic
+rocks. The supported Editor repair changed only the existing MoonBase rover
+rotation and world Z: pitch 15 degrees became level pitch with 15-degree yaw,
+and Z rose 4.555 cm. All eight wheels were sampled at 48 contact entries
+(40 distinct source vertices), with 1.000-6.875 cm sampled terrain clearance.
+The receipt preserved rover XY/scale/materials/collision and all 1,910 other
+actors; ARES and planetary terrain were not edited. Authored rock/talus detail
+now scales from each retained mesh bounding box and follows the measured local
+terrain normal, with 20% of its requested height buried. This is cosmetic
+placement, not a geologic measurement. The full final-build retest includes
+18 new grounding assertions across all three missions. Fourteen fresh Editor
+Python equipment views were visually reviewed; the latest solar junction view
+remains inconclusive. Source OBJ triangle checks put the junction outside the
+panel slab, but that is not visual certification of the rendered detail.
+
 ## Intro, mission HUD and field lessons (local development, 1 November 2026)
 
 The supplied intro artwork fades into the menu without repainting the source

@@ -1,4 +1,4 @@
-param([string]$EngineRoot='D:\UnrealEngine\UE_5.8',[switch]$StageOnly,[ValidateRange(256,2048)][int]$ManagedHeapMB=1024)
+param([string]$EngineRoot='D:\UnrealEngine\UE_5.8',[switch]$StageOnly,[ValidateRange(256,2048)][int]$ManagedHeapMB=1024,[ValidateRange(1,2)][int]$MaxCompileActions=1)
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 New-Item -ItemType Directory -Force -Path "$root\Intermediate\ApolloTemp" | Out-Null
@@ -21,7 +21,7 @@ try{
  if(-not $StageOnly){
  # Separate UBT processes keep the editor rules out of memory during the game link.
  foreach($target in @('LunarRescueEditor','LunarRescue')){
-  $buildFlags=@('-WaitMutex','-MaxParallelActions=1','-NoUBA','-NoPCH','-NoSharedPCH')
+  $buildFlags=@('-WaitMutex',"-MaxParallelActions=$MaxCompileActions",'-NoUBA','-NoPCH','-NoSharedPCH')
   # The monolithic Windows symbol link exceeds this machine's commit budget.
   # Keep editor symbols for development; the distributed game omits symbols.
   if($target -eq 'LunarRescue'){$buildFlags+=@('-NoDebugInfo','-NoLinkerDebugInfo')}
@@ -67,6 +67,17 @@ Copy-Item -LiteralPath "$root\EXPEDITION_POLISH.md" -Destination "$credits\Apoll
 Copy-Item -LiteralPath "$root\EXPEDITION_EXPERIENCE.md" -Destination "$credits\Apollo12"
 Copy-Item -LiteralPath "$root\MISSION_SELECTION_UPDATE.md" -Destination "$credits\Apollo12"
 Copy-Item -LiteralPath "$root\NASA_TASKS_UPDATE.md","$root\SCIENCE_AND_SOURCES.md","$root\CREDITS.md" -Destination $credits
+# Ship local feature/provenance notes alongside the retained source credits.
+New-Item -ItemType Directory -Force -Path "$credits\Feedback" | Out-Null
+Copy-Item -LiteralPath "$root\ASSET_IMPROVEMENTS_UPDATE.md","$root\ASSET_SOURCE_CATALOG.md","$root\GAMEPLAY_REFERENCE_UPDATE.md","$root\LOADING_TYPOGRAPHY_UPDATE.md" -Destination "$credits\Feedback"
+# Keep repository-relative report/source links usable in the local package.
+Copy-Item -LiteralPath "$root\ASSET_IMPROVEMENTS_UPDATE.md","$root\ASSET_SOURCE_CATALOG.md","$root\GAMEPLAY_REFERENCE_UPDATE.md","$root\LOADING_TYPOGRAPHY_UPDATE.md","$root\TEST_REPORT.md" -Destination $credits
+$validationSource=Join-Path $root 'Docs\Feedback2026-11-02'
+if(Test-Path -LiteralPath $validationSource){
+ $validationTarget=Join-Path $credits 'Docs\Feedback2026-11-02'
+ New-Item -ItemType Directory -Force -Path $validationTarget | Out-Null
+ Get-ChildItem -LiteralPath $validationSource -File -Filter '*.json' | Copy-Item -Destination $validationTarget
+}
 New-Item -ItemType Directory -Force -Path "$credits\Frontend" | Out-Null
 Copy-Item -LiteralPath "$root\SourceArt\Frontend\intro-manifest.json" -Destination "$credits\Frontend"
 Copy-Item -LiteralPath "$root\Tools\fixtures\expedition-playtest-form.md" -Destination "$credits\Apollo12\PLAYTEST_FORM.md"
