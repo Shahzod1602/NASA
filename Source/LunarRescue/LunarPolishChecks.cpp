@@ -57,11 +57,11 @@ void ALunarGameMode::ApolloPolishChecks(){
  Check(Stage==ELunarStage::ApolloReturn&&ApolloParts==7,TEXT("All real hardware workflows unlock return"));Aim(HomeActor);P->Interact();Click();Check(Stage==ELunarStage::Won,TEXT("Manifest confirmation stows actual cargo and finishes mission"));
  auto* Save=CaptureApolloCheckpoint();FString Why;Check(Save&&Save->Mode==TEXT("historical-exploration")&&Save->Validate(Why),TEXT("Untimed checkpoint uses a validated explicit mode"));
  if(Save){Save->Elapsed=4000;Check(Save->Validate(Why),TEXT("Historical mode accepts elapsed time beyond exercise duration"));Save->Mode=TEXT("timed-exercise");Check(!Save->Validate(Why),TEXT("Timed save rejects impossible exercise telemetry"));}
- auto* S=ULunarSettings::Get();Check(!S->Rebind(TEXT("Interact"),EKeys::Escape)&&!S->Rebind(TEXT("Interact"),EKeys::W),TEXT("Rebinding rejects reserved and duplicate keys"));Check(S->Rebind(TEXT("Interact"),EKeys::B)&&S->Key(TEXT("Interact"))==EKeys::B,TEXT("A free key can be assigned to work"));
+ auto* S=ULunarSettings::Get();Check(!S->Rebind(TEXT("Interact"),EKeys::Escape)&&!S->Rebind(TEXT("Interact"),EKeys::W),TEXT("Rebinding rejects reserved and duplicate keys"));Check(S->Rebind(TEXT("Interact"),EKeys::U)&&S->Key(TEXT("Interact"))==EKeys::U,TEXT("A free key can be assigned to work"));
  // This subtest starts a new synthetic phase after completing the expedition.
- ALunarCargoFinale::Reset(this);Stage=ELunarStage::ApolloCheckout;ApolloAction=0;S->Apply(P,false);PC->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::B,IE_Pressed,1.f));PC->PlayerInput->ProcessInputStack({P->InputComponent.Get()},.016f,false);Check(ApolloTool==8,TEXT("Rebound B input opens the actual work tool"));PC->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::B,IE_Released,0.f));PC->PlayerInput->ProcessInputStack({P->InputComponent.Get()},.016f,false);CancelApolloTool();
+ ALunarCargoFinale::Reset(this);Stage=ELunarStage::ApolloCheckout;ApolloAction=0;S->Apply(P,false);PC->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::U,IE_Pressed,1.f));PC->PlayerInput->ProcessInputStack({P->InputComponent.Get()},.016f,false);Check(ApolloTool==8,TEXT("Rebound U input opens the actual work tool"));PC->InputKey(FInputKeyEventArgs::CreateSimulated(EKeys::U,IE_Released,0.f));PC->PlayerInput->ProcessInputStack({P->InputComponent.Get()},.016f,false);CancelApolloTool();
  const FString SettingsPath=FPaths::ProjectSavedDir()/TEXT("AutomatedTests/PolishSettings.ini");IFileManager::Get().MakeDirectory(*FPaths::GetPath(SettingsPath),true);S->Sensitivity=1.17f;S->SaveConfig(CPF_Config,*SettingsPath);
- auto* Reload=NewObject<ULunarSettings>();Reload->LoadConfig(nullptr,*SettingsPath);Check(FMath::IsNearlyEqual(Reload->Sensitivity,1.17f)&&Reload->Key(TEXT("Interact"))==EKeys::B,TEXT("Settings and rebound keys survive independent config serialization"));
+ auto* Reload=NewObject<ULunarSettings>();Reload->LoadConfig(nullptr,*SettingsPath);Check(FMath::IsNearlyEqual(Reload->Sensitivity,1.17f)&&Reload->Key(TEXT("Interact"))==EKeys::U,TEXT("Settings and rebound keys survive independent config serialization"));
  S->Reset();S->Apply(P,false);
  Stage=ELunarStage::ApolloCheckout;P->OpenSettings();Check(P->ActivePanel&&Paused,TEXT("Settings panel pauses active gameplay"));P->ClosePanel();Check(!P->ActivePanel&&!Paused,TEXT("Closing settings restores the previous running state"));
  P->PauseMission();P->OpenEvidence();Check(P->ActivePanel&&Paused,TEXT("Evidence album opens from an already paused game"));P->ClosePanel();Check(Paused,TEXT("Closing album preserves an existing pause"));P->PauseMission();
@@ -73,9 +73,9 @@ void ALunarGameMode::ApolloPolishChecks(){
   Check(Stage==ELunarStage::Lost&&!ApolloTool&&!ApolloDustMode&&!Journal,TEXT("Time expiry closes unfinished work and reveals the result"));
  }
  Check(S->Rebind(TEXT("Journal"),EKeys::L)&&S->ControlText(TEXT("{Journal} / J Map"))==TEXT("L / J Map"),TEXT("Pause instructions resolve the rebound journal key"));
- S->Rebind(TEXT("Interact"),EKeys::B);S->Rebind(TEXT("Route"),EKeys::N);
+ S->Rebind(TEXT("Interact"),EKeys::U);S->Rebind(TEXT("Route"),EKeys::N);
  Apollo=false;Stage=ELunarStage::SurveySamples;
- Check(Prompt().Contains(TEXT("B"))&&!Prompt().Contains(TEXT("HOLD E")),TEXT("Legacy work prompt follows the rebound interaction key"));
+ Check(Prompt().Contains(TEXT("U"))&&!Prompt().Contains(TEXT("HOLD E")),TEXT("Legacy work prompt follows the rebound interaction key"));
  Apollo=true;S->Reset();S->Apply(P,false);
  Report+=FString::Printf(TEXT("RESULT: %d failures\n"),Failed);FFileHelper::SaveStringToFile(Report,*ReportPath(TEXT("polish-checks.txt")));UE_LOG(LogTemp,Display,TEXT("APOLLO_POLISH\n%s"),*Report);FPlatformMisc::RequestExitWithStatus(false,Failed?1:0);return;
  }

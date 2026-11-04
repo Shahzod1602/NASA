@@ -1,4 +1,5 @@
 #include "LunarGame.h"
+#include "LunarCarryPresentation.h"
 #include "LunarPovMotion.h"
 #include "Camera/CameraComponent.h"
 #include "Components/StaticMeshComponent.h"
@@ -59,8 +60,9 @@ void ALunarGameMode::NasaPovChecks(){
   }
   // These are isolated hand-presentation states, not a Mars traversal claim.
   CancelApolloTool();ApolloPackedPreviewRemaining=0;Apollo=false;Mars=true;Stage=ELunarStage::RestorePower;RepairStep=0;P->WorkBlend=1;P->UpdateSuit(0);
-  const FVector CellHand=P->Gloves[9]->GetRelativeLocation();
-  Check(P->HandRig->IsVisible()&&FMath::IsNearlyEqual(CellHand.X,43,.1f),TEXT("Power-cell carry has supporting hands while leaving the existing cell actor untouched"));
+  LunarCarryPresentation::Update(P);FVector CellPalm;
+  const FVector ActualCellPalm=P->Gloves[9]->GetRelativeLocation()+P->Gloves[10]->GetRelativeRotation().RotateVector(FVector(5,0,0));
+  Check(P->HandRig->IsVisible()&&P->CarriedModule&&P->CarriedModule->IsVisible()&&LunarCarryPresentation::CellGrip(P,1,CellPalm)&&ActualCellPalm.Equals(CellPalm,.2f),TEXT("Power-cell carry has a visible fitted item and a palm on its actual source-side grip"));
   Stage=ELunarStage::CollectData;Holding=true;HoldProgress=1.95f;P->UpdateSuit(0);const FRotator DataRotation=P->Gloves[10]->GetRelativeRotation();const FVector DataHand=P->Gloves[9]->GetRelativeLocation();
   Check(FVector::DotProduct(P->Gloves[11]->GetForwardVector(),P->Gloves[10]->GetForwardVector())>FVector::DotProduct(P->Gloves[12]->GetForwardVector(),P->Gloves[10]->GetForwardVector()),TEXT("Mars science work extends the right index while the other fingers remain curved"));
   Stage=ELunarStage::AlignRelay;HoldProgress=2;P->UpdateSuit(0);

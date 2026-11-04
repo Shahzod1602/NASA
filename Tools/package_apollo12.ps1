@@ -110,3 +110,19 @@ $localBuild=[ordered]@{
 }
 $localBuild | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath (Join-Path $root 'Dist\Apollo12\Windows\BUILD_INFO.json') -Encoding UTF8
 Write-Output "Apollo 12 package: $root\Dist\Apollo12\Windows\LunarRescue.exe"
+
+# Bundle the November gameplay notes; verification remains executable-specific.
+$gameplayNotes=Join-Path $root 'Docs/Gameplay20261103'
+if(Test-Path -LiteralPath $gameplayNotes){
+ $gameplayTarget=Join-Path $credits 'Docs/Gameplay20261103'
+ New-Item -ItemType Directory -Force -Path $gameplayTarget | Out-Null
+ Get-ChildItem -LiteralPath $gameplayNotes -File | Where-Object {$_.Extension -in @('.md','.json')} | Copy-Item -Destination $gameplayTarget
+}
+
+# Independent modern surface-training notes; no competition eligibility claim.
+$fieldNotes=Join-Path $root 'Docs/FieldOperations20261104'
+if(Test-Path -LiteralPath $fieldNotes){
+ $fieldTarget=Join-Path $credits 'Docs/FieldOperations20261104'
+ New-Item -ItemType Directory -Force -Path $fieldTarget | Out-Null
+ Get-ChildItem -LiteralPath $fieldNotes -File | Where-Object {$_.Extension -in @('.md','.json')} | Copy-Item -Destination $fieldTarget
+}

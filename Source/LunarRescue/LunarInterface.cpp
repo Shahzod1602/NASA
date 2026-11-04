@@ -1,4 +1,8 @@
 #include "LunarGame.h"
+#include "LunarFieldOperations.h"
+#include "LunarSurfaceVehicle.h"
+#include "LunarDeparture.h"
+#include "LunarCrew.h"
 #include "LunarPanels.h"
 #include "LunarPauseMenu.h"
 #include "LunarFlightHUD.h"
@@ -13,7 +17,8 @@
 
 void ALunarGameMode::BuildMissionInterface(){
  if(Menu)return;
- LunarEquipmentDetail::Build(this);
+ LunarEquipmentDetail::Build(this);LunarCrew::Build(this);
+ if(!FieldOperations){FieldOperations=NewObject<UFieldOperationsComponent>(this);FieldOperations->RegisterComponent();FieldOperations->Initialize(this);}
  if(FlightHUD)return;
  if(auto* PC=UGameplayStatics::GetPlayerController(this,0)){
   FlightHUD=CreateWidget<ULunarFlightHUD>(PC);FlightHUD->AddToViewport(5);FlightHUD->Refresh();
@@ -22,7 +27,7 @@ void ALunarGameMode::BuildMissionInterface(){
 void ALunarCharacter::SyncPauseMenu(){
  auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));auto* PC=Cast<APlayerController>(GetController());
  if(!G||!PC||G->Menu)return;
- const bool PausedScreen=G->Paused&&!G->Journal&&!G->ApolloConfirmNew&&(G->IsActive()||ALunarCargoFinale::Active(G))&&!LunarLoading::IsBusy();
+ const bool PausedScreen=G->Paused&&!G->Journal&&!G->ApolloConfirmNew&&(G->IsActive()||ALunarCargoFinale::Active(G)||ALunarDepartureScene::Active(G))&&!LunarLoading::IsBusy();
  const bool Show=PausedScreen&&!ActivePanel;
  if(PausedScreen&&!PauseMenu){PauseMenu=CreateWidget<ULunarPauseMenu>(PC);PauseMenu->AddToViewport(60);PauseMenu->SetVisibility(ESlateVisibility::Collapsed);}
  if(!PauseMenu)return;
@@ -42,5 +47,7 @@ void ALunarCharacter::RestartCurrentMission(){
  // this is distinct from R's paused Apollo checkpoint reload.
  // Use the supported mission package, independent of transient world names.
  const FName MissionMap(G->Apollo?TEXT("/Game/Lunar/Maps/Apollo12"):G->Mars?TEXT("/Game/Mars/Maps/MarsBase"):TEXT("/Game/Lunar/Maps/MoonBase"));
+ if(G->FieldOperations)G->FieldOperations->Shutdown();
+ ALunarDepartureScene::Abort(G);G->DepartureAuthorizedNewRun=false;
  LunarLoading::Open(this,MissionMap);
 }

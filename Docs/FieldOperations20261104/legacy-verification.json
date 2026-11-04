@@ -1,0 +1,2851 @@
+{
+  "schema": 1,
+  "kind": "fresh-legacy-regression-evidence",
+  "checked_utc": "2026-11-04T02:59:19.745Z",
+  "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a",
+  "current_packaged_executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a",
+  "current_executable_matches": true,
+  "queue": {
+    "path": "Reports/Gameplay20261103/final-queue-20261104-074127/queue-summary.json",
+    "sha256": "80a812d2c99e2f689e40f0580536d82be2eef9d397c13d85b32e734296d5d8bd",
+    "completed": true,
+    "suite_count": 16,
+    "passed_suites": 16,
+    "failures": 0
+  },
+  "counting_method": {
+    "cpp": "Count only anchored ^PASS and ^FAIL lines in the 55 fresh copied C++ reports listed below; require RESULT: 0 failures. Do not count wrapper stdout PASS lines or the same report path twice.",
+    "executions_not_unique_tests": true,
+    "identical_content_across_separate_runs_not_deduplicated": true,
+    "images": "Independently match manifest frame names/layout flags to unique PNG paths; verify file hash, PNG header dimensions and suite freshness. Image count is separate from C++ assertions.",
+    "pixel": "Verify helper receipt, manifest SHA and shown/control image SHAs; use its measured rendered-contribution result. This is not semantic segmentation or a human quality rating."
+  },
+  "totals": {
+    "raw_cpp_reports": 55,
+    "cpp_pass_executions": 2400,
+    "cpp_failures": 0,
+    "staged_pngs": 160,
+    "paired_pixel_checks": 8
+  },
+  "suites": [
+    {
+      "name": "gameplay-functional",
+      "command": {
+        "script": "Tools/verify_gameplay_tasks.ps1",
+        "parameters": {
+          "Packaged": true
+        }
+      },
+      "started_utc": "2026-11-04T02:41:28.1462936Z",
+      "finished_utc": "2026-11-04T02:41:46.9164539Z",
+      "passed": true,
+      "stdout_log": {
+        "path": "Reports/Gameplay20261103/final-queue-20261104-074127/gameplay-functional.log",
+        "sha256": "e42f5939f37448fc9835348af6274c2e27f3d29ebb1bac6d97197db231b1c395"
+      },
+      "summary": {
+        "path": "Reports/Gameplay20261103/package-test-1280x720-20261104-074128-165/run-summary.json",
+        "sha256": "ae23aa5663bcd4d4146d9014fa9c035c2b067e056544710f722ba6262b07dbcf",
+        "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a"
+      },
+      "executable_binding": "suite-summary-and-queue",
+      "raw_reports": [
+        {
+          "path": "Reports/Gameplay20261103/package-test-1280x720-20261104-074128-165/apollo-checks.txt",
+          "sha256": "b4cd2835d9d7a9a08b6b782b970837ea3743d4e9124dc92dbf42a3ae5040b6a8",
+          "bytes": 13562,
+          "pass_executions": 181,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:41:33.111Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/Gameplay20261103/package-test-1280x720-20261104-074128-165/mars-checks.txt",
+          "sha256": "ff8e0fff10b3ecec08072da3c43d9b7432044d08aa0dc8905ccbe2f02e4048ba",
+          "bytes": 11416,
+          "pass_executions": 152,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:41:45.120Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/Gameplay20261103/package-test-1280x720-20261104-074128-165/selene-checks.txt",
+          "sha256": "f9ce10bc62118b6e5587d17f9463d467456c257316caf3852b5d2e014b1cb5ad",
+          "bytes": 12501,
+          "pass_executions": 167,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:41:39.395Z",
+          "fresh_within_suite": true
+        }
+      ],
+      "cpp_pass_executions": 500,
+      "cpp_failures": 0,
+      "staged_pngs": 0,
+      "paired_pixel_checks": 0
+    },
+    {
+      "name": "gameplay-rendered",
+      "command": {
+        "script": "Tools/verify_gameplay_tasks.ps1",
+        "parameters": {
+          "Rendered": true,
+          "Packaged": true
+        }
+      },
+      "started_utc": "2026-11-04T02:41:46.9186642Z",
+      "finished_utc": "2026-11-04T02:42:13.7087451Z",
+      "passed": true,
+      "stdout_log": {
+        "path": "Reports/Gameplay20261103/final-queue-20261104-074127/gameplay-rendered.log",
+        "sha256": "1776eedf565a6fef48d987919af7997b60d9eee7916b7ae554046b39d04a57c5"
+      },
+      "summary": {
+        "path": "Reports/Gameplay20261103/package-rendered-test-1280x720-20261104-074146-925/run-summary.json",
+        "sha256": "b3a05f29987d3d51102f335b846160bb028905f9a5302bfdc828d0a0cca3d038",
+        "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a"
+      },
+      "executable_binding": "suite-summary-and-queue",
+      "raw_reports": [
+        {
+          "path": "Reports/Gameplay20261103/package-rendered-test-1280x720-20261104-074146-925/apollo-checks.txt",
+          "sha256": "7104475e64c15d4142ed761455137f3d12f06d51aefcca2c1f021c0b378f9fc1",
+          "bytes": 14537,
+          "pass_executions": 193,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:41:54.710Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/Gameplay20261103/package-rendered-test-1280x720-20261104-074146-925/mars-checks.txt",
+          "sha256": "9993723be12e766fa0213f4a533c542a935b30b19c1cddabccb1804a9387563e",
+          "bytes": 12391,
+          "pass_executions": 164,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:42:12.151Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/Gameplay20261103/package-rendered-test-1280x720-20261104-074146-925/selene-checks.txt",
+          "sha256": "a929711f3bac5a8d8b125d60b4f14bb6d1918756e8cbc0d6ba71fbcdee992f80",
+          "bytes": 13476,
+          "pass_executions": 179,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:42:03.393Z",
+          "fresh_within_suite": true
+        }
+      ],
+      "cpp_pass_executions": 536,
+      "cpp_failures": 0,
+      "staged_pngs": 0,
+      "paired_pixel_checks": 0
+    },
+    {
+      "name": "gameplay-review720",
+      "command": {
+        "script": "Tools/verify_gameplay_tasks.ps1",
+        "parameters": {
+          "Width": 1280,
+          "Height": 720,
+          "Review": true,
+          "Packaged": true
+        }
+      },
+      "started_utc": "2026-11-04T02:42:13.7101943Z",
+      "finished_utc": "2026-11-04T02:43:35.5778969Z",
+      "passed": true,
+      "stdout_log": {
+        "path": "Reports/Gameplay20261103/final-queue-20261104-074127/gameplay-review720.log",
+        "sha256": "bbffc2c26c717e5518e285f8c1692fb5c45251ae92ed10a4497b80fa0f0a06fb"
+      },
+      "summary": {
+        "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/run-summary.json",
+        "sha256": "9d445b0a349d24ddff96ffda5cce2ebe6b673b85e73bb0918803ca6e178035a9",
+        "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a"
+      },
+      "executable_binding": "suite-summary-and-queue",
+      "raw_reports": [
+        {
+          "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/apollo/gameplay-review-checks.txt",
+          "sha256": "8ab581018c892a82554694b841f705de910b9fe801c42f7c2658238fb7dd92c7",
+          "bytes": 420,
+          "pass_executions": 18,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:42:38.766Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/mars/gameplay-review-checks.txt",
+          "sha256": "bf89b64057031f788a94ef7f84628af08ed2f1cd737106e8b2e060f96707aa9f",
+          "bytes": 389,
+          "pass_executions": 16,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:43:33.114Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/gameplay-review-checks.txt",
+          "sha256": "e4ba9f8c147aa0f393639805176a8ec4e4f04311a5280380c0005c03d99c5946",
+          "bytes": 494,
+          "pass_executions": 21,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:43:08.364Z",
+          "fresh_within_suite": true
+        }
+      ],
+      "cpp_pass_executions": 55,
+      "cpp_failures": 0,
+      "staged_pngs": 55,
+      "paired_pixel_checks": 4
+    },
+    {
+      "name": "gameplay-review1080",
+      "command": {
+        "script": "Tools/verify_gameplay_tasks.ps1",
+        "parameters": {
+          "Width": 1920,
+          "Height": 1080,
+          "Review": true,
+          "Packaged": true
+        }
+      },
+      "started_utc": "2026-11-04T02:43:35.5790139Z",
+      "finished_utc": "2026-11-04T02:44:59.8468974Z",
+      "passed": true,
+      "stdout_log": {
+        "path": "Reports/Gameplay20261103/final-queue-20261104-074127/gameplay-review1080.log",
+        "sha256": "8ed0a17cda7b8c4a56a900f662372e935ed9375b0135ee151f8316dd7389590a"
+      },
+      "summary": {
+        "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/run-summary.json",
+        "sha256": "688cacdc319027c105a62c517494478f62d5b39023a3ae106c0a6b9b870fa180",
+        "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a"
+      },
+      "executable_binding": "suite-summary-and-queue",
+      "raw_reports": [
+        {
+          "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/apollo/gameplay-review-checks.txt",
+          "sha256": "8ab581018c892a82554694b841f705de910b9fe801c42f7c2658238fb7dd92c7",
+          "bytes": 420,
+          "pass_executions": 18,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:44:01.666Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/mars/gameplay-review-checks.txt",
+          "sha256": "bf89b64057031f788a94ef7f84628af08ed2f1cd737106e8b2e060f96707aa9f",
+          "bytes": 389,
+          "pass_executions": 16,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:44:57.036Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/gameplay-review-checks.txt",
+          "sha256": "e4ba9f8c147aa0f393639805176a8ec4e4f04311a5280380c0005c03d99c5946",
+          "bytes": 494,
+          "pass_executions": 21,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:44:31.441Z",
+          "fresh_within_suite": true
+        }
+      ],
+      "cpp_pass_executions": 55,
+      "cpp_failures": 0,
+      "staged_pngs": 55,
+      "paired_pixel_checks": 4
+    },
+    {
+      "name": "apollo-regressions",
+      "command": {
+        "script": "Tools/verify_apollo12.ps1",
+        "parameters": {
+          "Checkpoints": true,
+          "Suit": true,
+          "Regression": true,
+          "Packaged": true,
+          "Polish": true,
+          "Walkthrough": true,
+          "Guidance": true,
+          "Fieldwork": true
+        }
+      },
+      "started_utc": "2026-11-04T02:44:59.8481161Z",
+      "finished_utc": "2026-11-04T02:47:25.4077089Z",
+      "passed": true,
+      "stdout_log": {
+        "path": "Reports/Gameplay20261103/final-queue-20261104-074127/apollo-regressions.log",
+        "sha256": "5824bead651662430f8f0b5a1e02c90ec02f63c5da756c05d9d873ab7f876ffd"
+      },
+      "summary": null,
+      "executable_binding": "queue-identity-and-fresh-report-window",
+      "raw_reports": [
+        {
+          "path": "Reports/package-apollo12-checks-result.txt",
+          "sha256": "1d8911bc084c6a7a1c2bb63b9fbebc6f33d1fe6ec51ae0d726d8ded7e9e7d44c",
+          "bytes": 2949,
+          "pass_executions": 57,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:45:04.442Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/package-apollo12-fieldwork-result.txt",
+          "sha256": "ea375f02581686b0e4ef8ad36e583622d000fb282c0b93ea71c68c216ad9b192",
+          "bytes": 2612,
+          "pass_executions": 39,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:47:04.181Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/package-apollo12-guidance-result.txt",
+          "sha256": "d9a16b9f4f62acc93b7534b308edfa4e36b0d6c8966064d288b4110112c86ffa",
+          "bytes": 3029,
+          "pass_executions": 47,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:46:58.547Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/package-apollo12-legacy-moon-result.txt",
+          "sha256": "6b4f590b824979b6e5dbaa629e5e4fc16fa4e2ec4d8050a432dbab8150846886",
+          "bytes": 2055,
+          "pass_executions": 50,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:45:09.343Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/package-apollo12-mars-result.txt",
+          "sha256": "fa5e80fd8a9073604fedda210da7ca12626bacbf5955d98d7302b97f53390de3",
+          "bytes": 2180,
+          "pass_executions": 54,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:45:13.706Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/package-apollo12-menu-result.txt",
+          "sha256": "11c6ab3438d78be5caeb4ef56d2c4426c6d5a2bc3de848e457cd31ed58cae9f9",
+          "bytes": 2899,
+          "pass_executions": 55,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:45:46.829Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/package-apollo12-polish-result.txt",
+          "sha256": "4a564bcfb9c92a97f43ba00fddc81ad71791fe72e69142fa06febec5ab092621",
+          "bytes": 3794,
+          "pass_executions": 64,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:46:52.622Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/package-apollo12-save-read-result.txt",
+          "sha256": "e0b31f0af7c9b70f375ccc1c6740cc612456916225adbf73425bc9d6540de24c",
+          "bytes": 452,
+          "pass_executions": 7,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:47:24.097Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/package-apollo12-save-result.txt",
+          "sha256": "6f9761b2a673ceefe91006a49d46f19bffa922479b741b11295fe962fe6e97dc",
+          "bytes": 2936,
+          "pass_executions": 51,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:47:10.475Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/package-apollo12-save-write-result.txt",
+          "sha256": "925561c794fc7f059e796c96d107eec4f34e6b77bde7676e82b2985e42a002f4",
+          "bytes": 130,
+          "pass_executions": 2,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:47:15.660Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/package-apollo12-suit-result.txt",
+          "sha256": "901df3df557c022d6624af6172f6cd46584b0324cbd46fa2d5de5654198f5a15",
+          "bytes": 1975,
+          "pass_executions": 32,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:46:46.090Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/package-apollo12-walk-result.txt",
+          "sha256": "95a158c972dd77a73193600ca2e2ab139b1d19c0dbf2c164d6816a645f0e3f1f",
+          "bytes": 341,
+          "pass_executions": 2,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:46:29.090Z",
+          "fresh_within_suite": true
+        }
+      ],
+      "cpp_pass_executions": 460,
+      "cpp_failures": 0,
+      "staged_pngs": 0,
+      "paired_pixel_checks": 0
+    },
+    {
+      "name": "nasa-regressions",
+      "command": {
+        "script": "Tools/verify_nasa_tasks.ps1",
+        "parameters": {
+          "Packaged": true
+        }
+      },
+      "started_utc": "2026-11-04T02:47:25.4093038Z",
+      "finished_utc": "2026-11-04T02:48:38.6721053Z",
+      "passed": true,
+      "stdout_log": {
+        "path": "Reports/Gameplay20261103/final-queue-20261104-074127/nasa-regressions.log",
+        "sha256": "51e0d162dd09927a3ae1ede1786808ca695f27ed086f551e35aa69dcc080eb0b"
+      },
+      "summary": {
+        "path": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/run-summary.json",
+        "sha256": "60dbdc29b9287109cbb3d2839df8fefc958ec41c666e265d035f730a73e949fe",
+        "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a"
+      },
+      "executable_binding": "suite-summary-and-queue",
+      "raw_reports": [
+        {
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/intro-checks.txt",
+          "sha256": "0092db04c7d47e436d52321cdc5a55707f3fef74909097755d6d12c251e16146",
+          "bytes": 793,
+          "pass_executions": 12,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:47:29.641Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/learning-apollo-checks.txt",
+          "sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123",
+          "bytes": 2780,
+          "pass_executions": 39,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:47:59.497Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/learning-mars-checks.txt",
+          "sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123",
+          "bytes": 2780,
+          "pass_executions": 39,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:48:10.739Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/learning-selene-checks.txt",
+          "sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123",
+          "bytes": 2780,
+          "pass_executions": 39,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:48:05.337Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/pov-checks.txt",
+          "sha256": "55a21933747d1e835455118ca60fba4beeeaf6f40167880ac8df464efa73a883",
+          "bytes": 2167,
+          "pass_executions": 28,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:47:53.778Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/restart-apollo-checks.txt",
+          "sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e",
+          "bytes": 785,
+          "pass_executions": 12,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:48:19.606Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/restart-mars-checks.txt",
+          "sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e",
+          "bytes": 785,
+          "pass_executions": 12,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:48:36.871Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/restart-selene-checks.txt",
+          "sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e",
+          "bytes": 785,
+          "pass_executions": 12,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:48:28.664Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/ui-apollo-checks.txt",
+          "sha256": "1676fb5306f2e2c2328fca5914e549b8b9c57fe0d4e21ae6d4ff828dbaac331c",
+          "bytes": 1559,
+          "pass_executions": 24,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:47:36.111Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/ui-mars-checks.txt",
+          "sha256": "8ab57171547fbc61ceb13ccd95c2aab7c9b8f5a4c662580b4738938ccf304dc8",
+          "bytes": 1787,
+          "pass_executions": 28,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:47:48.377Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/ui-selene-checks.txt",
+          "sha256": "be6b0f2ccf91e157c1d88204f068662b4e6196da18a9f53b8efda3df1628cc6c",
+          "bytes": 1923,
+          "pass_executions": 30,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:47:42.015Z",
+          "fresh_within_suite": true
+        }
+      ],
+      "cpp_pass_executions": 275,
+      "cpp_failures": 0,
+      "staged_pngs": 0,
+      "paired_pixel_checks": 0
+    },
+    {
+      "name": "selection",
+      "command": {
+        "script": "Tools/verify_mission_selection.ps1",
+        "parameters": {
+          "Packaged": true
+        }
+      },
+      "started_utc": "2026-11-04T02:48:38.6736988Z",
+      "finished_utc": "2026-11-04T02:48:44.3028193Z",
+      "passed": true,
+      "stdout_log": {
+        "path": "Reports/Gameplay20261103/final-queue-20261104-074127/selection.log",
+        "sha256": "73ad5e05122d79a99fea3053add015ad9f5d851582367cb2a945920008c6b3b0"
+      },
+      "summary": null,
+      "executable_binding": "queue-identity-and-fresh-report-window",
+      "raw_reports": [
+        {
+          "path": "Reports/MissionSelection20261031/package-test-1280x720-20261104-074838-699-checks.txt",
+          "sha256": "bb8418653d8852295b19a5d27bba6f9040b3440c6fe80752150321a25db7444d",
+          "bytes": 3579,
+          "pass_executions": 51,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:48:42.969Z",
+          "fresh_within_suite": true
+        }
+      ],
+      "cpp_pass_executions": 51,
+      "cpp_failures": 0,
+      "staged_pngs": 0,
+      "paired_pixel_checks": 0
+    },
+    {
+      "name": "frontend",
+      "command": {
+        "script": "Tools/verify_frontend.ps1",
+        "parameters": {
+          "Packaged": true
+        }
+      },
+      "started_utc": "2026-11-04T02:48:44.3042602Z",
+      "finished_utc": "2026-11-04T02:48:49.9677301Z",
+      "passed": true,
+      "stdout_log": {
+        "path": "Reports/Gameplay20261103/final-queue-20261104-074127/frontend.log",
+        "sha256": "05151b821c8d287b3f5a3779a124256ea9b182498cc1d8798b9aeb8eefc2b492"
+      },
+      "summary": null,
+      "executable_binding": "queue-identity-and-fresh-report-window",
+      "raw_reports": [
+        {
+          "path": "Reports/Frontend20261028/package-checks.txt",
+          "sha256": "2dc9c92382364d06916328347951cf3a73b38e1f6b9c43d27d022186adec7bc3",
+          "bytes": 1045,
+          "pass_executions": 20,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:48:48.694Z",
+          "fresh_within_suite": true
+        }
+      ],
+      "cpp_pass_executions": 20,
+      "cpp_failures": 0,
+      "staged_pngs": 0,
+      "paired_pixel_checks": 0
+    },
+    {
+      "name": "experience",
+      "command": {
+        "script": "Tools/verify_experience.ps1",
+        "parameters": {
+          "Packaged": true
+        }
+      },
+      "started_utc": "2026-11-04T02:48:49.9692697Z",
+      "finished_utc": "2026-11-04T02:48:55.6870468Z",
+      "passed": true,
+      "stdout_log": {
+        "path": "Reports/Gameplay20261103/final-queue-20261104-074127/experience.log",
+        "sha256": "24fbf1f7b18dd7e46acd465834c493a7c8a479761448f967c930a6e827b98e84"
+      },
+      "summary": null,
+      "executable_binding": "queue-identity-and-fresh-report-window",
+      "raw_reports": [
+        {
+          "path": "Reports/ExpeditionExperience20261029/package-test-nullrhi-silent-1280x720-20261104-074849-992-checks.txt",
+          "sha256": "9fbd8b15c9db5387b2b10b7838e66126bafb2f22ee875e601c010359c39d9fd2",
+          "bytes": 4094,
+          "pass_executions": 64,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:48:54.510Z",
+          "fresh_within_suite": true
+        }
+      ],
+      "cpp_pass_executions": 64,
+      "cpp_failures": 0,
+      "staged_pngs": 0,
+      "paired_pixel_checks": 0
+    },
+    {
+      "name": "presentation",
+      "command": {
+        "script": "Tools/verify_presentation.ps1",
+        "parameters": {
+          "Graphics": true,
+          "Packaged": true,
+          "Audio": true
+        }
+      },
+      "started_utc": "2026-11-04T02:48:55.6884402Z",
+      "finished_utc": "2026-11-04T02:49:05.1120756Z",
+      "passed": true,
+      "stdout_log": {
+        "path": "Reports/Gameplay20261103/final-queue-20261104-074127/presentation.log",
+        "sha256": "22ffabcaec3b88431faf63eec0ffd1b4b845fc91cdfd3aad035b012cccddd033"
+      },
+      "summary": null,
+      "executable_binding": "queue-identity-and-fresh-report-window",
+      "raw_reports": [
+        {
+          "path": "Reports/ExpeditionPolish20261029/package-test-dx11-audio-1280x720-20261104-074855-699-checks.txt",
+          "sha256": "3bb17c02eaa4fa46321ad6b31f9e5b4911eeedf474a0034c1ceb426384752ab7",
+          "bytes": 2373,
+          "pass_executions": 35,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:49:03.631Z",
+          "fresh_within_suite": true
+        }
+      ],
+      "cpp_pass_executions": 35,
+      "cpp_failures": 0,
+      "staged_pngs": 0,
+      "paired_pixel_checks": 0
+    },
+    {
+      "name": "movement",
+      "command": {
+        "script": "Tools/verify_planet_movement.ps1",
+        "parameters": {
+          "Packaged": true
+        }
+      },
+      "started_utc": "2026-11-04T02:49:05.1138172Z",
+      "finished_utc": "2026-11-04T02:49:35.5839631Z",
+      "passed": true,
+      "stdout_log": {
+        "path": "Reports/Gameplay20261103/final-queue-20261104-074127/movement.log",
+        "sha256": "a3df9436c61897457ed4aa6bbb6b088e8863ec5dd6822d13d012ac6da4e1ed5f"
+      },
+      "summary": null,
+      "executable_binding": "queue-identity-and-fresh-report-window",
+      "raw_reports": [
+        {
+          "path": "Reports/ExpeditionExperience20261029/final-package-mars-ledge.txt",
+          "sha256": "31479744611ddcee36f31630d52ed5ec3585620d6976056c1cae96e7cbbd0c90",
+          "bytes": 221,
+          "pass_executions": 3,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:49:34.227Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/ExpeditionExperience20261029/final-package-mars-movement.txt",
+          "sha256": "8891fdcc14220149da1074436a7965479332a188d9487f0f5b674accd411b30b",
+          "bytes": 1453,
+          "pass_executions": 13,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:49:25.016Z",
+          "fresh_within_suite": true
+        }
+      ],
+      "cpp_pass_executions": 16,
+      "cpp_failures": 0,
+      "staged_pngs": 0,
+      "paired_pixel_checks": 0
+    },
+    {
+      "name": "equipment",
+      "command": {
+        "script": "Tools/verify_feedback.ps1",
+        "parameters": {
+          "Packaged": true
+        }
+      },
+      "started_utc": "2026-11-04T02:49:35.5858037Z",
+      "finished_utc": "2026-11-04T02:50:10.1981515Z",
+      "passed": true,
+      "stdout_log": {
+        "path": "Reports/Gameplay20261103/final-queue-20261104-074127/equipment.log",
+        "sha256": "4667924efb7c4542188a8cfe10971b0dc4722130a195965632baf763b7e19d25"
+      },
+      "summary": {
+        "path": "Reports/Feedback20261102/package-test-1280x720-20261104-074935-605/run-summary.json",
+        "sha256": "f1850d4c8c7c5c9e32530997c6dfb288c50d1ab2fe7e0fc6d0930265bb9d66fa",
+        "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a"
+      },
+      "executable_binding": "suite-summary-and-queue",
+      "raw_reports": [
+        {
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261104-074935-605/assets-apollo-checks.txt",
+          "sha256": "8fae21338cf38713d7c13900d6f22336bb737afb850c562b423ce522bdfd2dfb",
+          "bytes": 1104,
+          "pass_executions": 14,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:49:40.150Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261104-074935-605/assets-mars-checks.txt",
+          "sha256": "97eb6e923aa43de828fd1d1fc9f97e9256ee41b02da82b19f7298f10088ca35f",
+          "bytes": 956,
+          "pass_executions": 12,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:50:02.750Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261104-074935-605/assets-selene-checks.txt",
+          "sha256": "97eb6e923aa43de828fd1d1fc9f97e9256ee41b02da82b19f7298f10088ca35f",
+          "bytes": 956,
+          "pass_executions": 12,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:49:51.709Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261104-074935-605/diagnostics-apollo-checks.txt",
+          "sha256": "ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19",
+          "bytes": 2741,
+          "pass_executions": 38,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:49:45.852Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261104-074935-605/diagnostics-mars-checks.txt",
+          "sha256": "ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19",
+          "bytes": 2741,
+          "pass_executions": 38,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:50:08.385Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/Feedback20261102/package-test-1280x720-20261104-074935-605/diagnostics-selene-checks.txt",
+          "sha256": "ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19",
+          "bytes": 2741,
+          "pass_executions": 38,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:49:57.414Z",
+          "fresh_within_suite": true
+        }
+      ],
+      "cpp_pass_executions": 152,
+      "cpp_failures": 0,
+      "staged_pngs": 0,
+      "paired_pixel_checks": 0
+    },
+    {
+      "name": "loading-font",
+      "command": {
+        "script": "Tools/verify_loading_typography.ps1",
+        "parameters": {
+          "Packaged": true
+        }
+      },
+      "started_utc": "2026-11-04T02:50:10.1995818Z",
+      "finished_utc": "2026-11-04T02:50:16.2698783Z",
+      "passed": true,
+      "stdout_log": {
+        "path": "Reports/Gameplay20261103/final-queue-20261104-074127/loading-font.log",
+        "sha256": "15f179626109fa39973d586a2b5f8978a48b3d7e18ce4d707fdef6c7486159da"
+      },
+      "summary": {
+        "path": "Reports/LoadingTypography20261102/package-checks-1280x720-20261104-075010-216/run-summary.json",
+        "sha256": "7e29eaa00d48ed52833a2018a652de5670f4ab87a9d90393f6687ff380b23e35",
+        "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a"
+      },
+      "executable_binding": "suite-summary-and-queue",
+      "raw_reports": [
+        {
+          "path": "Reports/LoadingTypography20261102/package-checks-1280x720-20261104-075010-216/loading-typography-checks.txt",
+          "sha256": "bdf1e38884c279b85eb5fc4478d1d66990c0baf6b53e90fcf3bf15d9954bcb0d",
+          "bytes": 4661,
+          "pass_executions": 55,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:50:14.498Z",
+          "fresh_within_suite": true
+        }
+      ],
+      "cpp_pass_executions": 55,
+      "cpp_failures": 0,
+      "staged_pngs": 0,
+      "paired_pixel_checks": 0
+    },
+    {
+      "name": "loading-travel",
+      "command": {
+        "script": "Tools/verify_loading.ps1",
+        "parameters": {
+          "Packaged": true,
+          "Graphics": true
+        }
+      },
+      "started_utc": "2026-11-04T02:50:16.2713821Z",
+      "finished_utc": "2026-11-04T02:51:19.5772079Z",
+      "passed": true,
+      "stdout_log": {
+        "path": "Reports/Gameplay20261103/final-queue-20261104-074127/loading-travel.log",
+        "sha256": "25b02499dd459f1a36909f8e821128f19150d9fe444299c8d1ad3f30878f4cdc"
+      },
+      "summary": null,
+      "executable_binding": "queue-identity-and-fresh-report-window",
+      "raw_reports": [
+        {
+          "path": "Reports/Loading20261029/package-offscreen-1280x720-20261104-075016-289-checks.txt",
+          "sha256": "9aae6c703448a34d34784c52360ac4a6b96cd7f33c9fb3412b19d972192d8010",
+          "bytes": 4657,
+          "pass_executions": 76,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:51:17.995Z",
+          "fresh_within_suite": true
+        }
+      ],
+      "cpp_pass_executions": 76,
+      "cpp_failures": 0,
+      "staged_pngs": 0,
+      "paired_pixel_checks": 0
+    },
+    {
+      "name": "hud-review720",
+      "command": {
+        "script": "Tools/verify_feedback.ps1",
+        "parameters": {
+          "Width": 1280,
+          "Height": 720,
+          "Review": true,
+          "Packaged": true
+        }
+      },
+      "started_utc": "2026-11-04T02:51:19.5786751Z",
+      "finished_utc": "2026-11-04T02:52:09.9844540Z",
+      "passed": true,
+      "stdout_log": {
+        "path": "Reports/Gameplay20261103/final-queue-20261104-074127/hud-review720.log",
+        "sha256": "45ea0b43e6e0961f2cc20745943ddc0fdd54ce06b8109e44c2c616b20ef099be"
+      },
+      "summary": {
+        "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/run-summary.json",
+        "sha256": "53d9ce4c175c3e13d061514ff02bcbe2e3c153c44a526743ff8a5fb4280e92ba",
+        "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a"
+      },
+      "executable_binding": "suite-summary-and-queue",
+      "raw_reports": [
+        {
+          "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-apollo-checks.txt",
+          "sha256": "e43a6d97e21671c34d1093a5e2ed4d08576f90b1825ad262f3da8c3ab41fe0ea",
+          "bytes": 221,
+          "pass_executions": 9,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:51:36.101Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-mars-checks.txt",
+          "sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482",
+          "bytes": 193,
+          "pass_executions": 8,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:52:08.653Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-selene-checks.txt",
+          "sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482",
+          "bytes": 193,
+          "pass_executions": 8,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:51:52.384Z",
+          "fresh_within_suite": true
+        }
+      ],
+      "cpp_pass_executions": 25,
+      "cpp_failures": 0,
+      "staged_pngs": 25,
+      "paired_pixel_checks": 0
+    },
+    {
+      "name": "hud-review1080",
+      "command": {
+        "script": "Tools/verify_feedback.ps1",
+        "parameters": {
+          "Width": 1920,
+          "Height": 1080,
+          "Review": true,
+          "Packaged": true
+        }
+      },
+      "started_utc": "2026-11-04T02:52:09.9860231Z",
+      "finished_utc": "2026-11-04T02:53:03.6394985Z",
+      "passed": true,
+      "stdout_log": {
+        "path": "Reports/Gameplay20261103/final-queue-20261104-074127/hud-review1080.log",
+        "sha256": "4aa25ac74a4ba7a5540deb920d50c788f891f8c4ad1559012119653eb197afca"
+      },
+      "summary": {
+        "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/run-summary.json",
+        "sha256": "5e61dddfdcd3dc57b382cdbab00f66210193702fd7257439f39f510bd96ba3fc",
+        "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a"
+      },
+      "executable_binding": "suite-summary-and-queue",
+      "raw_reports": [
+        {
+          "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-apollo-checks.txt",
+          "sha256": "e43a6d97e21671c34d1093a5e2ed4d08576f90b1825ad262f3da8c3ab41fe0ea",
+          "bytes": 221,
+          "pass_executions": 9,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:52:26.959Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-mars-checks.txt",
+          "sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482",
+          "bytes": 193,
+          "pass_executions": 8,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:53:01.779Z",
+          "fresh_within_suite": true
+        },
+        {
+          "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-selene-checks.txt",
+          "sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482",
+          "bytes": 193,
+          "pass_executions": 8,
+          "failures": 0,
+          "result_zero": true,
+          "modified_utc": "2026-11-04T02:52:44.333Z",
+          "fresh_within_suite": true
+        }
+      ],
+      "cpp_pass_executions": 25,
+      "cpp_failures": 0,
+      "staged_pngs": 25,
+      "paired_pixel_checks": 0
+    }
+  ],
+  "render_manifests": [
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/apollo/gameplay-manifest.json",
+      "sha256": "050c83111d5694476a8e47a11ac148a68006a5467ed1459a750191a3b3944501",
+      "frames": 18,
+      "all_layout_passed": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/mars/gameplay-manifest.json",
+      "sha256": "b776c325cfde3ba64b0d68450db7bb9a91eca2ef01414e24c6337998a3767d35",
+      "frames": 16,
+      "all_layout_passed": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/gameplay-manifest.json",
+      "sha256": "395a6fd9b4460db5a85076d91da92c2ebe07b49e8afb7881309b74d9d3cefb7a",
+      "frames": 21,
+      "all_layout_passed": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/apollo/gameplay-manifest.json",
+      "sha256": "050c83111d5694476a8e47a11ac148a68006a5467ed1459a750191a3b3944501",
+      "frames": 18,
+      "all_layout_passed": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/mars/gameplay-manifest.json",
+      "sha256": "b776c325cfde3ba64b0d68450db7bb9a91eca2ef01414e24c6337998a3767d35",
+      "frames": 16,
+      "all_layout_passed": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/gameplay-manifest.json",
+      "sha256": "395a6fd9b4460db5a85076d91da92c2ebe07b49e8afb7881309b74d9d3cefb7a",
+      "frames": 21,
+      "all_layout_passed": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-apollo/hud-reference-manifest.json",
+      "sha256": "fd2fcac4e242c4f97957ef8a0824b62f6d40ed36fb7f03e487255fff93c6a9ec",
+      "frames": 9,
+      "all_layout_passed": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-mars/hud-reference-manifest.json",
+      "sha256": "0450d0e62a8fbcc40725ff4b5a9fed3989873cd62e4a837797a4fad9390c691e",
+      "frames": 8,
+      "all_layout_passed": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-selene/hud-reference-manifest.json",
+      "sha256": "0450d0e62a8fbcc40725ff4b5a9fed3989873cd62e4a837797a4fad9390c691e",
+      "frames": 8,
+      "all_layout_passed": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-apollo/hud-reference-manifest.json",
+      "sha256": "fd2fcac4e242c4f97957ef8a0824b62f6d40ed36fb7f03e487255fff93c6a9ec",
+      "frames": 9,
+      "all_layout_passed": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-mars/hud-reference-manifest.json",
+      "sha256": "0450d0e62a8fbcc40725ff4b5a9fed3989873cd62e4a837797a4fad9390c691e",
+      "frames": 8,
+      "all_layout_passed": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-selene/hud-reference-manifest.json",
+      "sha256": "0450d0e62a8fbcc40725ff4b5a9fed3989873cd62e4a837797a4fad9390c691e",
+      "frames": 8,
+      "all_layout_passed": true
+    }
+  ],
+  "staged_pngs": [
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/apollo/departure-cabin.png",
+      "sha256": "2e08fe8097be51f670495751f016f9f704846b5cc5ac0a21acb9297306ad1e9d",
+      "bytes": 820721,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/apollo/departure-hatch.png",
+      "sha256": "85d376b3728b041316c84acf8e7ed4fe1c19987f810a7995f7d4784660c9d74f",
+      "bytes": 865238,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/apollo/departure-paused.png",
+      "sha256": "c88a50451d9da0f705101d0e9d8031fa3529703ba517bfc6958b788056259d8b",
+      "bytes": 381104,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/apollo/departure-near-surface.png",
+      "sha256": "971484e91b985bc97266a458dc72c4e7b395d7c7f91901327d70a71e6c61c682",
+      "bytes": 749388,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/apollo/departure-handover.png",
+      "sha256": "0afdf3bb6b901c1e868794d91f2dce1f612dd464670329713be3926b357267a6",
+      "bytes": 889502,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/apollo/apollo-pouch-fp.png",
+      "sha256": "9158edc941e603ed70b73a54f83f84743dc454a6ec12984e0104bbc49a54098f",
+      "bytes": 910526,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/apollo/apollo-core-fp45.png",
+      "sha256": "eaa1eb175576744d915c523fa6a5c6cf237585e09cb82c7322d2552d1ea82c7a",
+      "bytes": 1781470,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/apollo/apollo-hardware-body.png",
+      "sha256": "e19e3e7119cec4d7c4cd8aa0ced1c88d9ae48328d4d3c5551a4586af1856a164",
+      "bytes": 1119664,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/apollo/apollo-stowed.png",
+      "sha256": "1f4898e3cb9aaa331454bc397299fd18bce17d4169024402a5b4809b9237a440",
+      "bytes": 903509,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/apollo/crew-pip-model.png",
+      "sha256": "84b49351cb78a805663d762b4c477a4f06d41303fd6ef1d1356b9b39035b2dbb",
+      "bytes": 1271401,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/apollo/crew-mira-communicator.png",
+      "sha256": "1090d35063f7f9de045a56bc0d47ed66040fb3529d84434a0458105ae7a6846c",
+      "bytes": 1153875,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/apollo/crew-notebook100.png",
+      "sha256": "196923ecb62de7ea6a7f674b86e90e61135536c8c6108424482acb2bc9eb3194",
+      "bytes": 218859,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/apollo/crew-notebook150.png",
+      "sha256": "85764a5e94e058009a69ea585b75d33d4f5748791a6df92a9e1d000f0cd57a81",
+      "bytes": 283203,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/apollo/water-first-decision.png",
+      "sha256": "d11887a3cbe39445880334c4f892bdd75a2a2b90338205b8ca01292bef39c73e",
+      "bytes": 225342,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/apollo/water-feedback.png",
+      "sha256": "149374882dca46cac85885f0f2d1c9d763a58e4e48ff4248212f167f8100f287",
+      "bytes": 217542,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/apollo/water-ready.png",
+      "sha256": "fe621bfd1082af214346e5266768e44a04f965cd746fb61021d8ad9fbd805b65",
+      "bytes": 234117,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/apollo/water-recorded.png",
+      "sha256": "412d96c8fa6fc8d4c6f90756164598452f5d1c76428dcc41059d5f1f0c32ee39",
+      "bytes": 253895,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/apollo/water-sources150.png",
+      "sha256": "66c8001e691aba2f3ef6cc6d48dc6eb3e1270417abdf71a9e8845abc18c89dc0",
+      "bytes": 315587,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/mars/departure-cabin.png",
+      "sha256": "a28b1d38f5caaa86251e152e1d054b64db65c1cd535b5eb845b26dbb0f38b0a8",
+      "bytes": 830450,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/mars/departure-hatch.png",
+      "sha256": "d0a771d9f80762f21a3ee9fcaac939c5a57861900558ec8913c4d0ae99d3892f",
+      "bytes": 895992,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/mars/departure-paused.png",
+      "sha256": "9ade93929fb1c76e7ae5fbea5d8942d46d75668f123b18163f9564f19f4fab77",
+      "bytes": 342164,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/mars/departure-near-surface.png",
+      "sha256": "2ab578948211d953820d3faf4b83a9d74f5da84aa88b6cb9b18f0bccb0522a1a",
+      "bytes": 824745,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/mars/departure-handover.png",
+      "sha256": "41bbd0a38266ce15d3e801e525fb22bf55a0874ede911e12cc264479a407c852",
+      "bytes": 1052293,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/mars/cell-fp85.png",
+      "sha256": "79d824aae1d941828902d6c269cbd44ea26730519b151e49ce56859c5a016c5e",
+      "bytes": 1086341,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/mars/cell-fp45-lookdown.png",
+      "sha256": "57228646b6d5f85af21e82251d319a264bcf59fe8f8771b795614d3a790523cf",
+      "bytes": 909501,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/mars/cell-fp45-hidden-control.png",
+      "sha256": "b14bdd453f062b737b8f58af6ac0b473bfc7117378e0bf5c06ce878c7e1406d7",
+      "bytes": 886758,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/mars/cell-fp45-text150.png",
+      "sha256": "8f79f4e9c6c9abe14082f70ba13641c3245bf0b972013229c3f1d9814c8d6d76",
+      "bytes": 970318,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/mars/cell-fp45-text150-hidden-control.png",
+      "sha256": "d8e8316acf9219ade212246df304e8229e6379ef2fd51950bf87334e0675b663",
+      "bytes": 910912,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/mars/cell-body.png",
+      "sha256": "72815803b625c4b5c182a4d534600730b5f610360aa3faad320a34928e8170fa",
+      "bytes": 1181852,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/mars/cell-seated.png",
+      "sha256": "1365774c1b9b9a9f8aa7ce4366bb3a72a8e046f8dbfab8fac408d8a243d74760",
+      "bytes": 1055860,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/mars/crew-pip-model.png",
+      "sha256": "d77a665b74692722797ca677d6e80ee56e9dc9cb5c155f5f275764c1953a4932",
+      "bytes": 1238763,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/mars/crew-mira-communicator.png",
+      "sha256": "10dd895e6cc6ed4f7c15e72d60826aa9a111b4bf1c663d600cfdde977536010d",
+      "bytes": 1035842,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/mars/crew-notebook100.png",
+      "sha256": "dc739b45afc83484a5f26aaf7164516c132204de770594d33f59db5e777be844",
+      "bytes": 150304,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/mars/crew-notebook150.png",
+      "sha256": "f2ae63f9a0002b740bd29075af0f4967a95e33bbdf3c6dfdea997983e9a53dbd",
+      "bytes": 203576,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/departure-cabin.png",
+      "sha256": "57b82be2efbe9e97e6700d54989d062d5297964a3eed03e31861bbbc78474341",
+      "bytes": 839191,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/departure-hatch.png",
+      "sha256": "2ab68c997684eb998e132fab1722ea31875c1f0980e82dd596ba84080d60e931",
+      "bytes": 962025,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/departure-paused.png",
+      "sha256": "6454bc42e3823ca0559813a0413654bda8db290f69e631dcaaa715ef64a33fc6",
+      "bytes": 394696,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/departure-near-surface.png",
+      "sha256": "45a61581e115139f67bd8951d1183ad1f4d3e5cbcdd9f5786568cdee06214447",
+      "bytes": 1054065,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/departure-handover.png",
+      "sha256": "77199601a7b25bddef814cbe9fd6523333169dda8d949c8458df6e839e2421fa",
+      "bytes": 1229436,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/cell-fp85.png",
+      "sha256": "84366c333995e73bb556fdffbf9ce6cd3b918d3c721f103c266695b4d404034d",
+      "bytes": 1150286,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/cell-fp45-lookdown.png",
+      "sha256": "774d413c5b0047b0675fe1e681ad471f734b28e524283ca8a1bec75e6696ffa6",
+      "bytes": 1241773,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/cell-fp45-hidden-control.png",
+      "sha256": "d0b6bfa8028034191cb30081b09a5629a47da9e380284bee014f11db0bcb7626",
+      "bytes": 1244232,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/cell-fp45-text150.png",
+      "sha256": "63776e115405dc46586a7217f7804d0346ac2f781e92ef9581ea3d509451d754",
+      "bytes": 1242178,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/cell-fp45-text150-hidden-control.png",
+      "sha256": "a38763ef978b57e49c5a7c3e370f1a72522a855e4763f9fde4ceb2bb1c291a1a",
+      "bytes": 1248921,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/cell-body.png",
+      "sha256": "828308ae3aa34f8a55adb62f377321b7ce9d838e7e6035501d77a63194e36e4f",
+      "bytes": 1348002,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/cell-seated.png",
+      "sha256": "03876b9a4e7f0a348e8108108afe0e2909ec2eac3d56ab4682c8e822626a2417",
+      "bytes": 1050507,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/crew-pip-model.png",
+      "sha256": "b17be46d696205028023d7729beb5a75b3f36d476c447c82dbded1ab19db3064",
+      "bytes": 1450239,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/crew-mira-communicator.png",
+      "sha256": "3bdc65f7fac2daa3a87831b6db987f9702bc378345c384b10b5a146cd4d2d6c3",
+      "bytes": 786850,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/crew-notebook100.png",
+      "sha256": "9b7590a5c55b8653dfd819d385b658e1c75fea107b87a55abe027438ed8da708",
+      "bytes": 132841,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/crew-notebook150.png",
+      "sha256": "d6b3b3ff9b4a036bbfc7fd625b214883b4ef2b94822e49d8c28b54e473960047",
+      "bytes": 178846,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/water-first-decision.png",
+      "sha256": "98849f45c66cdaaf9c6fbf5cfc60bf8688664479b8cadde3e49da8666423a86c",
+      "bytes": 170325,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/water-feedback.png",
+      "sha256": "9da3f377814675519d4c5ce1171a74edcf90d84c1d0f783411837ee5eb6178a6",
+      "bytes": 165541,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/water-ready.png",
+      "sha256": "828945e560e503267f3b3bdb2d7170cc6fbb10c628fd462392eee2e6c086e62b",
+      "bytes": 166065,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/water-recorded.png",
+      "sha256": "ddbc2511151e8c724cbe4044db330efb72c327f0c8f151189a3f678119527bd8",
+      "bytes": 170185,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/water-sources150.png",
+      "sha256": "a3f6131f1ea7ae0d1069504bbdbbc01359bf3f73f31cdff5a9deb90f6f8ed512",
+      "bytes": 220970,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/apollo/departure-cabin.png",
+      "sha256": "c61a29915a70df3c3389634eb826bc18fa279c7339209dd308197d906c59fd63",
+      "bytes": 1675962,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/apollo/departure-hatch.png",
+      "sha256": "e757733bcc86fec7699526f5c4ce2eeb6f8ef89ed0410f01c1b709690bf6f01e",
+      "bytes": 1801688,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/apollo/departure-paused.png",
+      "sha256": "9620666e1c33db156aa663db67984b9e8b92843228ada418fe4af06ad3e2c000",
+      "bytes": 716127,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/apollo/departure-near-surface.png",
+      "sha256": "a8a18b1b78eda8ac35b29bc5e81d57baf98e1fdc618012a69fdb3514967267de",
+      "bytes": 1614048,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/apollo/departure-handover.png",
+      "sha256": "ccb81fe3596887e03ae5ff5b50adf0bdab3aa517a6ee5f6f99187b5568b162d1",
+      "bytes": 1883268,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/apollo/apollo-pouch-fp.png",
+      "sha256": "4fdd1b1e9433a892258ef6ead631332cd50ddb9d43535b58c14225461843bb22",
+      "bytes": 1950973,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/apollo/apollo-core-fp45.png",
+      "sha256": "fb1a6162159b4fc64429241e335aa21f10772fdea4212c31396664f58ca8e1e7",
+      "bytes": 3915816,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/apollo/apollo-hardware-body.png",
+      "sha256": "9322ec8795b88e48e90f8abaffe905885d5cebd350ab5b644766d0537d1ac7ac",
+      "bytes": 2548236,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/apollo/apollo-stowed.png",
+      "sha256": "4040df2f97f451c063444ed048541c514f41193f51b8a781d18b1a290cb6f66d",
+      "bytes": 1914269,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/apollo/crew-pip-model.png",
+      "sha256": "87cb6d8829f0c46812d156c3f26a20d110fa9fc4a09777f9c33c9431253ae7b8",
+      "bytes": 2851099,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/apollo/crew-mira-communicator.png",
+      "sha256": "f9c2e60fac06853d1c0d7e9b1674ab7b52d104b2164c839034b8876c92086c65",
+      "bytes": 2549251,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/apollo/crew-notebook100.png",
+      "sha256": "0b2bad6c178e695c9afbf747c3eca6e4116c71a927067e4b72530932c9c30c8d",
+      "bytes": 466039,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/apollo/crew-notebook150.png",
+      "sha256": "9027147f8b73c125834653206cbb81e7e82b60b5ebc07d6f448a0e951267db95",
+      "bytes": 556531,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/apollo/water-first-decision.png",
+      "sha256": "acb561ba5b4e1836ce0c604cca6f14f008dd2625c294185f64eb063c5425320c",
+      "bytes": 468699,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/apollo/water-feedback.png",
+      "sha256": "674675d6899cecaadda725a02f25b683cdb7424ae4c4519d460fdc9b81c3aa15",
+      "bytes": 468078,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/apollo/water-ready.png",
+      "sha256": "77b67fe447550c7e17b1766cffa59f7b794d7e1903b77ec66d9c1775e449a162",
+      "bytes": 480619,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/apollo/water-recorded.png",
+      "sha256": "56332f1708b2e0ed0bd684014ef3bbdcf9252690fbee3eb2354cf80dc3f51893",
+      "bytes": 519914,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/apollo/water-sources150.png",
+      "sha256": "528125483f5d105fcc995d8312cfd1a138c7b846228ab041802a5910e31c15ef",
+      "bytes": 633738,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/mars/departure-cabin.png",
+      "sha256": "c1edcba105bd13e6e1b3c79411d9c634e0fabeaf670af48c38fd84abd6647447",
+      "bytes": 1705855,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/mars/departure-hatch.png",
+      "sha256": "71365447afd9bb236b26e199c573948d6f706257cb80adbfab748fde08a9240f",
+      "bytes": 1858260,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/mars/departure-paused.png",
+      "sha256": "03552afd0f6681ffd5bb9ea4556a6d873ef48655f6c43c02cebc0c44f9108eec",
+      "bytes": 632548,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/mars/departure-near-surface.png",
+      "sha256": "f26f12c8747a732ae7fcd11304424c3d3615b41107d11c11bbd2e9e43cd59b44",
+      "bytes": 1711658,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/mars/departure-handover.png",
+      "sha256": "768bb166a95b660cd9eb489c66005d89820eece499a52f136ee75958370adcb2",
+      "bytes": 2179942,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/mars/cell-fp85.png",
+      "sha256": "433eac2437e149acba6dec3dfa9b0528c93d98219866c26d99278a80c8ad5274",
+      "bytes": 2222547,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/mars/cell-fp45-lookdown.png",
+      "sha256": "4d243f7cbca924f1143fbda010a8767e454f9fbdf77c59d9317d2f42c096002b",
+      "bytes": 1877667,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/mars/cell-fp45-hidden-control.png",
+      "sha256": "9300d637e644da0ea332c44b8addfd873a6e903fa9372af899ae04e500ddad25",
+      "bytes": 1843564,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/mars/cell-fp45-text150.png",
+      "sha256": "7e143eeee86240687c27b587aee893add63ddea56492b610c640fc205eec986c",
+      "bytes": 1902444,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/mars/cell-fp45-text150-hidden-control.png",
+      "sha256": "f50b34f7effffc2b99a016946f6422c043cf3d3ee42a2dd15c62b7f7204d0b3b",
+      "bytes": 2063593,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/mars/cell-body.png",
+      "sha256": "21cb62b4be67fd8205ac9214ba5cfb1e47fef8f392ea5cd470611b2efd48e406",
+      "bytes": 2445189,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/mars/cell-seated.png",
+      "sha256": "74a20020effd345d15d262098a89e43202a695904e9816522a99f6a1a4f254ea",
+      "bytes": 2188984,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/mars/crew-pip-model.png",
+      "sha256": "53c388a058a089bb4b81580a58be38f2549d8a2233721aff367db6833ea5dba2",
+      "bytes": 2548815,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/mars/crew-mira-communicator.png",
+      "sha256": "b28aec0dd040f072964bf766f49754d4709eed089b8a3245ec929c521d182f62",
+      "bytes": 2138560,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/mars/crew-notebook100.png",
+      "sha256": "9152ab0a733209c0f1d4418040a05049b29b7b577f976a7811ede7c1e5423de3",
+      "bytes": 263235,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/mars/crew-notebook150.png",
+      "sha256": "ec37d3cd2eb744367cbb02ef15171278446cd5de33cef98de9a89e6b25b640fc",
+      "bytes": 341979,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/departure-cabin.png",
+      "sha256": "8f2c8eef6dc1a92243d3ad7871ebf0619f4abb7f00a1426245ef443bd0f81ae7",
+      "bytes": 1728903,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/departure-hatch.png",
+      "sha256": "0df59561404fb11c6887a07939287344d4036164dfb097d790feaa0fe65b8e68",
+      "bytes": 1978728,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/departure-paused.png",
+      "sha256": "b0b2df49edd2a9bac2176cfbbec4afa216e677fb91b426343c166f29659f3a2e",
+      "bytes": 757349,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/departure-near-surface.png",
+      "sha256": "75ee330b47a2bfa738c8a50f421ae0daeec64d4532829a6c3251cc9b96d790c8",
+      "bytes": 2201111,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/departure-handover.png",
+      "sha256": "8021865c8dab277206eb521f33f9272d3f5d34f6218a939bbae7e80b9e730531",
+      "bytes": 2582230,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/cell-fp85.png",
+      "sha256": "0abe5361fa5c7db5e4d845c697b24cfdbf4f6635e9aeb4f704572f40030b25f1",
+      "bytes": 2426034,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/cell-fp45-lookdown.png",
+      "sha256": "4b28df307d4a85fbb8aa9f64198d963556262413905a9c1aa9dfa707d052907c",
+      "bytes": 2490307,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/cell-fp45-hidden-control.png",
+      "sha256": "64cef32d2cea87f30f619cad9f3d8b6b0de4dc0a4b43d19ff6ef95b3d96189bc",
+      "bytes": 2495380,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/cell-fp45-text150.png",
+      "sha256": "d47e10f23378545e73857fb05e7b1bf4cb0fb75dd23e2e06006e6dad55f5ca28",
+      "bytes": 2465693,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/cell-fp45-text150-hidden-control.png",
+      "sha256": "53ffa2e8be36f24ddb21e142e5d88839fe66df8d8ecec266b1e4db8a9f572c2b",
+      "bytes": 2487255,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/cell-body.png",
+      "sha256": "b4d6c6095f7eefcc3fa2926a961378334ee5feaa2f8daf665c87563df4daec32",
+      "bytes": 2831589,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/cell-seated.png",
+      "sha256": "dae09174e75080de2bf39ed498f64bd0bf4fea2e5f40b4f9b5f733c98b0cc322",
+      "bytes": 2214574,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/crew-pip-model.png",
+      "sha256": "d95498732e53c00a1ba5f636b2e40e01bd00f289cf40f76e5c6a5c2c1d5b317a",
+      "bytes": 3000921,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/crew-mira-communicator.png",
+      "sha256": "b5f2c25078e63e9408e1cbf46ef5cf3f9381953a3b5f35306e019135d066f01a",
+      "bytes": 1633505,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/crew-notebook100.png",
+      "sha256": "0769d6c5575e05a35cbdbb7c8338dcb0fe6f56eed65cead62af5efaa20be04e8",
+      "bytes": 237483,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/crew-notebook150.png",
+      "sha256": "856fdd4428d9a5233a7597fc8d14d1f7d261757f19f7ffdf3241165a715f760c",
+      "bytes": 303737,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/water-first-decision.png",
+      "sha256": "4eb616088403b2fffcf21b11b0ea17201b57936a673112ecb1169a36aa3c9d5a",
+      "bytes": 301151,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/water-feedback.png",
+      "sha256": "ee5e19011d7138414a8fd022febd388e2903258c6469504c870769967b3b52dc",
+      "bytes": 300609,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/water-ready.png",
+      "sha256": "f96220dbd840845df09ca8ac6759a0afa8226d4bcfbfe61805fdd39724d6333e",
+      "bytes": 289497,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/water-recorded.png",
+      "sha256": "f14414b659c28eb2eb59deee1c5496b7b766f1aec4b7214d0f668b9eb42a2d09",
+      "bytes": 297905,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/water-sources150.png",
+      "sha256": "adc20bbf56e82239025c8ad321684cc1cfc8b9abf17fd2e28325dc29d49505bb",
+      "bytes": 394700,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-apollo/hud-overview100.png",
+      "sha256": "1944acc0181c9b9432ffe765a86efcb804e074e02c88d379cd2b4bed35512760",
+      "bytes": 887270,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-apollo/hud-overview150.png",
+      "sha256": "2c06e20b2b058b00a14583846e4ac3c6c54df3f48288dc224beff85c6bb2c75c",
+      "bytes": 882838,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-apollo/hud-guide100.png",
+      "sha256": "041aa779d3810b3d3f2519187cf4e24919b594cef7dc4e0ce362e77db7c5f2d2",
+      "bytes": 901696,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-apollo/hud-guide150.png",
+      "sha256": "7cc9065795ee075eee4adfece2bc718318e0bdf85b567a2fa1919d5010a8bff8",
+      "bytes": 908152,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-apollo/hud-work150.png",
+      "sha256": "55de63ef11975353d53571b26cac70dc5c90e5d22aedae04ac49eec4fa8c98b5",
+      "bytes": 1671175,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-apollo/hud-low-resource150.png",
+      "sha256": "4e615ecea0e17f4b86bd133e0d5764f9afb24211a05af0f5d656cb571e7dca1f",
+      "bytes": 1683775,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-apollo/equipment-notebook100.png",
+      "sha256": "55bc386fe0c0ca7dfbcc7a4e5f53ab7a5f380c7fb3945ac06ef9b3d2baee659d",
+      "bytes": 381575,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-apollo/equipment-notebook150.png",
+      "sha256": "bfba09977f117dd16bda6acfef34f495705b854bef43980d8a0a42f76ea83745",
+      "bytes": 385975,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-apollo/hud-optional-choice150.png",
+      "sha256": "3b3721768bbe06f1f3b6ea227ae94634ed15e96cf832bbdb6ed7c0c521b4b691",
+      "bytes": 1637855,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-mars/hud-overview100.png",
+      "sha256": "fae7ee9726bdadbe042a4fb4dab480b58771808f8aff712a95645920719cfd6b",
+      "bytes": 1054131,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-mars/hud-overview150.png",
+      "sha256": "26c70c3db4f471bde0174f7e29a4ec28fc51f307980ed7316371816a6d9588be",
+      "bytes": 1064002,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-mars/hud-guide100.png",
+      "sha256": "21aea554aab29f91a06d969ec2633d226db5de347ca15ed8ef63140e693b12be",
+      "bytes": 1054954,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-mars/hud-guide150.png",
+      "sha256": "709fa92facafc8fcbdde4fad930719631e3e06b4742673d7dbc46f78436c2749",
+      "bytes": 1078333,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-mars/hud-work150.png",
+      "sha256": "195a91cdfe8e69ffbf562b59370d4b0a2412d078ed71281e8bedd33c1eaa49d7",
+      "bytes": 1129707,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-mars/hud-low-resource150.png",
+      "sha256": "1fad0354d50fd773ac0133c5ccef64d0657b67fad2b51d625fc4903cec088f5a",
+      "bytes": 1106650,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-mars/equipment-notebook100.png",
+      "sha256": "6aad82583a9cf64ee0915d4f68593eb6a0195f7186318ec52892b65beef9bc9f",
+      "bytes": 186234,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-mars/equipment-notebook150.png",
+      "sha256": "a29a72e81d38d0c1cc0aef718b4e09feef32ea88ae33254a899a41af6a8228b8",
+      "bytes": 235713,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-selene/hud-overview100.png",
+      "sha256": "33399f11a1df9bcba6f21f9287581f66cb0693158190093dad19471fcdeb98df",
+      "bytes": 1233054,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-selene/hud-overview150.png",
+      "sha256": "611bacf08e845de7af35e093526559f7d89c69166ff9ebdfcfa6e685437746f2",
+      "bytes": 1219191,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-selene/hud-guide100.png",
+      "sha256": "5be8017b1b5bca62bc83e375d874db7317c6ae8fed013c2e814f061f569abb82",
+      "bytes": 1239170,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-selene/hud-guide150.png",
+      "sha256": "f40b3cc1f97ac91deaac8a5c3e91c67ae6cda10a234389171b7d2e07da65d4e4",
+      "bytes": 1247810,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-selene/hud-work150.png",
+      "sha256": "f8dc5d887cd9af2e9c78093c91274248803925b9d67ccb180a95643faffe4b24",
+      "bytes": 1221059,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-selene/hud-low-resource150.png",
+      "sha256": "f4f05fb662e08f57a1fbbf7aee1c017196bda5817f2d37182d18bd363e092403",
+      "bytes": 1315496,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-selene/equipment-notebook100.png",
+      "sha256": "9df7e1f4a49ec38bffa7f2f6719e8c386119411721903cff1390a627767681f5",
+      "bytes": 236043,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review720",
+      "path": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-selene/equipment-notebook150.png",
+      "sha256": "433b630062a58fb5bd100d6bd37effe566addcc91f8cc654b9ef4c8c37a3152f",
+      "bytes": 285469,
+      "width": 1280,
+      "height": 720,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-apollo/hud-overview100.png",
+      "sha256": "29d333eb604f9f1eea79dc87b56d63b87a4f4d6fc62a6307ea3660c04c4ba6c2",
+      "bytes": 1880983,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-apollo/hud-overview150.png",
+      "sha256": "1de3bb9d5cade4287498cc4b4d812fb814e07b861d8c197310d6318f398d2e80",
+      "bytes": 1843631,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-apollo/hud-guide100.png",
+      "sha256": "aea15e240fb032d4a503b2c86ddc03ecd7aff5deb4623e17e53f5234af0b2f9f",
+      "bytes": 1916292,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-apollo/hud-guide150.png",
+      "sha256": "d7245655ed90d92b83e8e42e67631b410f88cdb512819ea76ebbc9bbd6a1dca2",
+      "bytes": 1914743,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-apollo/hud-work150.png",
+      "sha256": "be0df19118f585e02e1772447d07d6a96dc8625cfe4b93685a8c9ac9afac4ba8",
+      "bytes": 3808720,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-apollo/hud-low-resource150.png",
+      "sha256": "7d89a8a22ecc5c429ea1ace420b074a03695628ee9ceb2d49d340aaf609884e7",
+      "bytes": 3873359,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-apollo/equipment-notebook100.png",
+      "sha256": "213d4d9309ddf7c7f3640729e84be08426136b94e9402cd8f0ad20fe25f4f873",
+      "bytes": 872684,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-apollo/equipment-notebook150.png",
+      "sha256": "ee7e584bf516b40e82e9e8ed5688613bd3b52ca73434c7a4b9176bc8c18ea947",
+      "bytes": 873717,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-apollo/hud-optional-choice150.png",
+      "sha256": "92b1c904e6ea1600209f744e2b5d4dc8df194c3cb106c3a590d162e58e5a70f2",
+      "bytes": 3766530,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-mars/hud-overview100.png",
+      "sha256": "fff4879a44abd8bf546076ab0e48a8d5a1f0504b3e2fc8e5e05feae10e081b45",
+      "bytes": 2178873,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-mars/hud-overview150.png",
+      "sha256": "7f3c52e1a10a7b82c58d9a33cafdbc48eca022168a522e31ad40781a9ede5349",
+      "bytes": 2153723,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-mars/hud-guide100.png",
+      "sha256": "3549af7faebfe625424158760f25a46b0ce4d729d45df5286c687e7e99d7dacc",
+      "bytes": 2186492,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-mars/hud-guide150.png",
+      "sha256": "7630e4f68bc7650008219e96b82749040856d537589138f1302c8e6dc052814c",
+      "bytes": 2208865,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-mars/hud-work150.png",
+      "sha256": "55cd2bbd8da85e8a0134366f6bf4df2d06a7111a34041a3e05b41a482c24163c",
+      "bytes": 2211385,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-mars/hud-low-resource150.png",
+      "sha256": "35be3fda10e0e45f2d79efc600624a49c5ebc6f9cc21039c279ce3515c434316",
+      "bytes": 2189776,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-mars/equipment-notebook100.png",
+      "sha256": "04bfd5722c7d2ad206d0174f570bf72a2abb916418f0ad07a1e11edfd2415b0e",
+      "bytes": 331155,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-mars/equipment-notebook150.png",
+      "sha256": "2160a01124ca11f691b5a81f5123d935552b72d0f060e0933d7762cd1623b80a",
+      "bytes": 383306,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-selene/hud-overview100.png",
+      "sha256": "32d02aa9a004d105e1bc6ac79c83e12ed2923a92d6b8af4118cb0ea8eef0954a",
+      "bytes": 2586368,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-selene/hud-overview150.png",
+      "sha256": "6bd5b9ea47ce02d74a9ee3b97076ba419c0ccc9888043754cfb0648d134ab231",
+      "bytes": 2527191,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-selene/hud-guide100.png",
+      "sha256": "d850e43daa730f3af75adf3c57c1ff4c0f8f974cc6634f47bc0a6a1da63bb821",
+      "bytes": 2602065,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-selene/hud-guide150.png",
+      "sha256": "2c3bff4cc36f92ed516900bb8a014242a180f8ee198ac80e8286d302806ea49c",
+      "bytes": 2597756,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-selene/hud-work150.png",
+      "sha256": "4d8aa165b08a8863c8c0b72a9a4e103840d7777be0302bd9d7757f50b7c03695",
+      "bytes": 2505359,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-selene/hud-low-resource150.png",
+      "sha256": "b5bb4b0457457b89b8a7af254f104654dcf3c24644cae361b22f5fbbe569fe9e",
+      "bytes": 2679988,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-selene/equipment-notebook100.png",
+      "sha256": "e9bb35f04ba2259859764bb8e38e016c9715b41995df910519854c4f8ac45d1a",
+      "bytes": 422986,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    },
+    {
+      "suite": "hud-review1080",
+      "path": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-selene/equipment-notebook150.png",
+      "sha256": "568899d9632b937f9fceeb19a1ccf35470dbaefdaaee118caa31502b7c567599",
+      "bytes": 496187,
+      "width": 1920,
+      "height": 1080,
+      "layout_passed": true,
+      "fresh_within_suite": true
+    }
+  ],
+  "paired_pixel_results": [
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/mars/carry-pixel-checks.json",
+      "sha256": "658d69100358849913fd661c216e0ebdcf725afcec9f0a945ad52961cfaba16f",
+      "manifest_sha256": "b776c325cfde3ba64b0d68450db7bb9a91eca2ef01414e24c6337998a3767d35",
+      "passed": true,
+      "pair_count": 2,
+      "pairs": [
+        {
+          "shown": "cell-fp45-lookdown",
+          "control": "cell-fp45-hidden-control",
+          "changed_fraction": 0.9885144515966174,
+          "passed": true,
+          "shown_sha256": "57228646b6d5f85af21e82251d319a264bcf59fe8f8771b795614d3a790523cf",
+          "control_sha256": "b14bdd453f062b737b8f58af6ac0b473bfc7117378e0bf5c06ce878c7e1406d7",
+          "images_match_receipt": true
+        },
+        {
+          "shown": "cell-fp45-text150",
+          "control": "cell-fp45-text150-hidden-control",
+          "changed_fraction": 0.9876309478732803,
+          "passed": true,
+          "shown_sha256": "8f79f4e9c6c9abe14082f70ba13641c3245bf0b972013229c3f1d9814c8d6d76",
+          "control_sha256": "d8e8316acf9219ade212246df304e8229e6379ef2fd51950bf87334e0675b663",
+          "images_match_receipt": true
+        }
+      ],
+      "metric": "fraction of central-ROI pixels with max absolute RGB channel difference > threshold",
+      "minimum_changed_fraction": 0.12
+    },
+    {
+      "suite": "gameplay-review720",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/carry-pixel-checks.json",
+      "sha256": "c36ae6902d9a8be8ae5481812a5fdb180408d1064c723a9ca89f50466872e9e5",
+      "manifest_sha256": "395a6fd9b4460db5a85076d91da92c2ebe07b49e8afb7881309b74d9d3cefb7a",
+      "passed": true,
+      "pair_count": 2,
+      "pairs": [
+        {
+          "shown": "cell-fp45-lookdown",
+          "control": "cell-fp45-hidden-control",
+          "changed_fraction": 0.9096301905843746,
+          "passed": true,
+          "shown_sha256": "774d413c5b0047b0675fe1e681ad471f734b28e524283ca8a1bec75e6696ffa6",
+          "control_sha256": "d0b6bfa8028034191cb30081b09a5629a47da9e380284bee014f11db0bcb7626",
+          "images_match_receipt": true
+        },
+        {
+          "shown": "cell-fp45-text150",
+          "control": "cell-fp45-text150-hidden-control",
+          "changed_fraction": 0.9084942572257984,
+          "passed": true,
+          "shown_sha256": "63776e115405dc46586a7217f7804d0346ac2f781e92ef9581ea3d509451d754",
+          "control_sha256": "a38763ef978b57e49c5a7c3e370f1a72522a855e4763f9fde4ceb2bb1c291a1a",
+          "images_match_receipt": true
+        }
+      ],
+      "metric": "fraction of central-ROI pixels with max absolute RGB channel difference > threshold",
+      "minimum_changed_fraction": 0.12
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/mars/carry-pixel-checks.json",
+      "sha256": "f0d1e9538de94b10a0088632e9f67523a3f1b6425123393dc3265e8bd9e5fb92",
+      "manifest_sha256": "b776c325cfde3ba64b0d68450db7bb9a91eca2ef01414e24c6337998a3767d35",
+      "passed": true,
+      "pair_count": 2,
+      "pairs": [
+        {
+          "shown": "cell-fp45-lookdown",
+          "control": "cell-fp45-hidden-control",
+          "changed_fraction": 0.9885746606334842,
+          "passed": true,
+          "shown_sha256": "4d243f7cbca924f1143fbda010a8767e454f9fbdf77c59d9317d2f42c096002b",
+          "control_sha256": "9300d637e644da0ea332c44b8addfd873a6e903fa9372af899ae04e500ddad25",
+          "images_match_receipt": true
+        },
+        {
+          "shown": "cell-fp45-text150",
+          "control": "cell-fp45-text150-hidden-control",
+          "changed_fraction": 0.9882070135746607,
+          "passed": true,
+          "shown_sha256": "7e143eeee86240687c27b587aee893add63ddea56492b610c640fc205eec986c",
+          "control_sha256": "f50b34f7effffc2b99a016946f6422c043cf3d3ee42a2dd15c62b7f7204d0b3b",
+          "images_match_receipt": true
+        }
+      ],
+      "metric": "fraction of central-ROI pixels with max absolute RGB channel difference > threshold",
+      "minimum_changed_fraction": 0.12
+    },
+    {
+      "suite": "gameplay-review1080",
+      "path": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/carry-pixel-checks.json",
+      "sha256": "b902dba5e0ee001ce32e3b8c26a45a0cb1ca15b61674d48cab49c07745dd7351",
+      "manifest_sha256": "395a6fd9b4460db5a85076d91da92c2ebe07b49e8afb7881309b74d9d3cefb7a",
+      "passed": true,
+      "pair_count": 2,
+      "pairs": [
+        {
+          "shown": "cell-fp45-lookdown",
+          "control": "cell-fp45-hidden-control",
+          "changed_fraction": 0.9133766968325792,
+          "passed": true,
+          "shown_sha256": "4b28df307d4a85fbb8aa9f64198d963556262413905a9c1aa9dfa707d052907c",
+          "control_sha256": "64cef32d2cea87f30f619cad9f3d8b6b0de4dc0a4b43d19ff6ef95b3d96189bc",
+          "images_match_receipt": true
+        },
+        {
+          "shown": "cell-fp45-text150",
+          "control": "cell-fp45-text150-hidden-control",
+          "changed_fraction": 0.91210407239819,
+          "passed": true,
+          "shown_sha256": "d47e10f23378545e73857fb05e7b1bf4cb0fb75dd23e2e06006e6dad55f5ca28",
+          "control_sha256": "53ffa2e8be36f24ddb21e142e5d88839fe66df8d8ecec266b1e4db8a9f572c2b",
+          "images_match_receipt": true
+        }
+      ],
+      "metric": "fraction of central-ROI pixels with max absolute RGB channel difference > threshold",
+      "minimum_changed_fraction": 0.12
+    }
+  ],
+  "nullrhi_vs_rendered": {
+    "nullrhi_pass_executions": 500,
+    "rendered_pass_executions": 536,
+    "difference": 36,
+    "reason": "Each of three current NullRHI logs explicitly skips engine viewport projection; rendered execution adds 12 viewport-corner checks per mission. Camera-space bounds are checked in both modes."
+  },
+  "limitations": {
+    "human_playtest": false,
+    "performance_measurement": false,
+    "network_isolation_tested": false,
+    "not_unique_test_count": true,
+    "new_field_operations_counts_included": false,
+    "legacy_feature_scope": "Existing automation flags exercise retained regression paths with the new field-operations extension disabled by its automation gate. New field-operation functional/review evidence is separate.",
+    "fixed_report_note": "Apollo/frontend/movement helper copies use fixed paths. Each was read once, verified fresh inside its current queue suite interval, and recorded with its SHA; no generic packaged Reports file was counted additionally.",
+    "binding_note": "Some older helpers do not record an individual executable hash; their binding is the queue executable identity plus actual helper command and fresh result/log window, stated per suite."
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "dataset_id": "lcross-cabeus-published-estimate-v1",
+  "kind": "published_science_summary",
+  "nodata": false,
+  "title": "LCROSS / CABEUS 2009 / REMOTE EVIDENCE STUDY",
+  "site": "Permanently shadowed region within Cabeus crater, lunar south pole",
+  "observation_date": "2009-10-09",
+  "publication_date": "2010-10-22",
+  "latitude_deg": -84.9,
+  "longitude_deg": -35.5,
+  "coordinate_scope": "Approximate crater context from NASA quick mission facts; not the LCROSS impact point. Coordinate reference frame is not specified by that summary. Do not use these values as a precise navigation target.",
+  "water_mass_percent": 5.6,
+  "water_uncertainty_points": 2.9,
+  "water_units": "percent_by_mass",
+  "uncertainty_kind": "reported_plus_minus_percentage_points",
+  "observed_water_kg": 155,
+  "observed_water_uncertainty_kg": 12,
+  "observed_water_context": "Published maximum total water vapour plus water ice within the LCROSS instrument field of view. This is not the entire plume or a whole-crater inventory.",
+  "estimate_context": "Site regolith mass fraction inferred using the estimated excavated regolith mass that reached sunlight and was observable. It is not a direct weighing of a sample returned by this player.",
+  "citation": "Colaprete, A. et al. (2010). Detection of Water in the LCROSS Ejecta Plume. Science 330(6003), 463-468.",
+  "doi": "10.1126/science.1186986",
+  "source_url": "https://pubmed.ncbi.nlm.nih.gov/20966242/",
+  "sources": [
+    {"url": "https://doi.org/10.1126/science.1186986", "supports": "Original peer-reviewed analysis; water observation, maximum FOV quantity and site mass-fraction estimate with reported uncertainties."},
+    {"url": "https://science.nasa.gov/mission/lcross/", "supports": "LCROSS mission, south-polar Cabeus impact and water discovery context."},
+    {"url": "https://ntrs.nasa.gov/api/citations/20130014470/downloads/20130014470.pdf", "supports": "Appendix C approximate Cabeus crater context coordinates, 84.9 degrees S and 35.5 degrees W; not impact coordinates."},
+    {"url": "https://pds-geosciences.wustl.edu/missions/lcross/default.htm", "supports": "Public raw and calibrated mission archives. No raw spectrum from that archive is bundled or analysed by this exercise."}
+  ],
+  "processing": [
+    "Transcribe cited published numeric estimates and their units into a small factual JSON record.",
+    "Preserve reported plus/minus without assigning a confidence level that is not established here.",
+    "Compute 5.6 - 2.9 = 2.7 and 5.6 + 2.9 = 8.5 only as arithmetic endpoints of the reported expression, not guaranteed physical or statistical bounds.",
+    "Explain percent by mass using a hypothetical 100 kg comparison; do not label it a measured sample.",
+    "Keep this modern remote study separate from Apollo 12 location, historical cargo, terrain, oxygen and mission completion."
+  ],
+  "limitations": [
+    "This product is a derived publication-facts summary, not raw spectral measurements or a new NASA result.",
+    "One impact site's inferred concentration does not establish water everywhere on the Moon, at Apollo 12, or at any point in the current game map.",
+    "The 100 kg comparison does not predict recoverable water or extraction yield.",
+    "No fabricated spectral points, drill measurements, player samples or local water detections are provided."
+  ],
+  "checked_date": "2026-11-03",
+  "credit": "Scientific facts: Colaprete et al. (2010), LCROSS science team; mission/archive context: NASA and NASA Planetary Data System. Derived exercise and arithmetic presentation: LunarRescue contributors with AI assistance.",
+  "rights": "Facts transcribed and paraphrased with source attribution. No journal figure, abstract copy, PDF or licensed model is redistributed. NASA context remains subject to its media guidelines; no endorsement is implied."
+}

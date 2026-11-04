@@ -1,5 +1,44 @@
 # Changelog
 
+## v0.8.0 — Modern field training — 2026-11-04
+
+- Four ordered timed EVA checks and a mandatory one-time resource/difficulty plan.
+- Board with actual-world map points, visible support navigation, shared utility,
+  limited payload/storage, timed recharge and powered-link downlink.
+- Authored Moon/Mars rover with swept collision, wheel contact/animation, battery
+  travel cost, safe exits and Apollo camera clearance.
+- Centred magnifier, held optical inspection, separate simulated cartridge cargo
+  and lander deposit. Terrain/capsule/sight checks choose exposed authored sites.
+- Labelled rescue cable matching; bounded strict-type additive Apollo save state.
+- Pause/restart guards, faithful local session totals and offline source notes.
+- Readable 100%/150% UI at 720p/1080p with separated map callouts.
+
+Local executable 08485e289426: 4,018 C++ PASS executions / 0 FAIL,
+280 staged PNGs, 8 paired-pixel checks and 16/16 legacy suites. Human participants:0.
+No licence, map geometry or historical Git dates were changed. Publication of v0.8.0 is authorized separately after local verification.
+
+## Unreleased - Departure, carried objects, fictional crew and water evidence - 2026-11-03
+
+Final local exe 5171c1b0: 2,400 C++ PASS executions / 0 FAIL, 160 staged PNGs,
+8 paired pixel checks and unchanged original 544-file snapshot. These are
+automated repeated executions, not human playtests; see TEST_REPORT.md.
+
+- Add a skippable, pause-aware authored transfer-cabin departure to new missions;
+  hand over to the existing surface view before starting mission clocks.
+- Fit the rescue cell from its actual mesh bounds/FOV; add a body carry proxy
+  and committed Apollo sample/core/hardware previews in third person.
+- Add PIP-3 and Dr. Mira Vale as explicitly fictional, optional scripted guides;
+  advice reads current mission facts and grants no repairs, cargo or resources.
+- Add an offline LCROSS publication-evidence exercise with three decisions,
+  error feedback, explicit report commit, source/uncertainty explanations and
+  additive valid Apollo checkpoint state. Keep SELENE research session-local.
+- Wrap notebook navigation, guard stale/hidden callbacks and repeated answer
+  keys, and use measured, content-sized departure captions at 100-150% text.
+- Add combined functional/rendered fixtures and packaged-data/provenance checks.
+  See [feature scope](Docs/Gameplay20261103/FEATURE_GUIDE.md) and
+  [actual validation](TEST_REPORT.md); scripted results are not human playtests.
+
+
 ## Unreleased - Feedback, equipment diagnostics and loading typography - 2026-11-02
 
 - Present active mission/objective and resource information without large HUD

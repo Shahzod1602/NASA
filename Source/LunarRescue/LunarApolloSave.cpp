@@ -1,4 +1,8 @@
 #include "LunarGame.h"
+#include "LunarFieldOperations.h"
+#include "LunarSurfaceVehicle.h"
+#include "LunarDeparture.h"
+#include "LunarWaterStudy.h"
 #include "LunarCargoFinale.h"
 #include "LunarApolloText.h"
 #include "LunarSettings.h"
@@ -61,7 +65,9 @@ UApolloCheckpoint* ALunarGameMode::CaptureApolloCheckpoint(){
  if(!Apollo||!ApolloStarted||(!IsActive()&&Stage!=ELunarStage::Won))return nullptr;
  FVector Safe;auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));
  const bool Grounded=P&&P->GetCharacterMovement()->IsMovingOnGround();
- if(!ApolloSafeGround(Grounded?P->GetActorLocation():ApolloHasSafePosition?ApolloSafePosition:ApolloLastPosition,Safe))return nullptr;
+ FVector Candidate=Grounded?P->GetActorLocation():ApolloHasSafePosition?ApolloSafePosition:ApolloLastPosition;
+ if(ALunarSurfaceVehicle::IsRiding(this)&&!FieldOperations->Vehicle->GroundedExitPose(Candidate))return nullptr;
+ if(!ApolloSafeGround(Candidate,Safe))return nullptr;
  auto* Save=Cast<UApolloCheckpoint>(UGameplayStatics::CreateSaveGameObject(UApolloCheckpoint::StaticClass()));
  Save->RunId=ApolloRunId;Save->SavedAtUtc=FDateTime::UtcNow().GetTicks();Save->Position=Safe;
  Save->Mode=ApolloTimed?TEXT("timed-exercise"):TEXT("historical-exploration");
@@ -79,6 +85,9 @@ UApolloCheckpoint* ALunarGameMode::CaptureApolloCheckpoint(){
  if(Stage==ELunarStage::Won)Add(ApolloTasks::Stowed);
  if(Stage==ELunarStage::ApolloSamples)Save->SelectedSite=FName(ApolloTasks::Sites[FMath::Clamp(SelectedSample,0,2)]);
  else if(Stage==ELunarStage::ApolloRecover&&SurveyorPhotographed)Save->SelectedSite=FName(ApolloTasks::Parts[FMath::Clamp(SelectedSample,0,2)]);
+ const auto& WaterData=LunarWater::Dataset();
+ if(WaterData.Available&&LunarWater::IsValidState(WaterStudy)){Save->WaterDataId=FName(*WaterData.Id);Save->WaterAnswers=WaterStudy.Answers;Save->WaterStep=WaterStudy.Step;Save->WaterAttempts=WaterStudy.Attempts;Save->WaterRecorded=WaterStudy.Recorded;}
+ Save->FieldOperationsState=FieldOperations?FieldOperations->ExportState():FString();
  return Save;
 }
 bool ALunarGameMode::SaveApolloCheckpoint(){
@@ -97,10 +106,14 @@ bool ALunarGameMode::RestoreApolloCheckpoint(){
  // A completion from this run must not overwrite a checkpoint just restored.
  if(ApolloPhotoPending){ApolloSaveNotice=TEXT("CheckpointPhotoPending");ApolloSaveNoticeRemaining=6;ApolloSaveError=false;return false;}
  RefreshApolloCheckpoint();auto* Save=ApolloCachedCheckpoint.Get();if(!Save){ApolloSaveError=true;ApolloSaveNotice=TEXT("CheckpointLoadFailed");ApolloSaveNoticeRemaining=30;return false;}
+ FString CheckpointReason;if(!Save->Validate(CheckpointReason)){ApolloSaveError=true;ApolloSaveNotice=TEXT("CheckpointLoadFailed");ApolloSaveNoticeRemaining=30;return false;}
  auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));auto* PC=UGameplayStatics::GetPlayerController(this,0);FVector Ground;
  if(!P||!PC||SampleActors.Num()!=3||ApolloPartActors.Num()!=3||!ApolloSafeGround(Save->Position,Ground)){
   ApolloSaveError=true;ApolloSaveNotice=TEXT("CheckpointLoadFailed");ApolloSaveNoticeRemaining=30;return false;
  }
+ // Abort only after both persisted state and its grounded resume pose passed.
+ if(FieldOperations)FieldOperations->Shutdown();
+ ALunarDepartureScene::Abort(this);DepartureAuthorizedNewRun=false;
  ALunarCargoFinale::Reset(this);P->ResetFootprints();
  // Validate position before changing progress. In-progress work is never restored.
  ApolloPhotoFailed=false;ApolloToolFeedback.Reset();ApolloToolFeedbackRemaining=0;
@@ -120,6 +133,8 @@ bool ALunarGameMode::RestoreApolloCheckpoint(){
  for(int I=0;I<2;++I)if(Save->Has(ApolloTasks::Instruments[I]))ApolloInstruments|=1<<I;
  SurveyorPhotographed=Save->Has(ApolloTasks::SurveyorPhoto);
  ApolloDustPhotos=0;for(int I=0;I<2;++I)if(Save->Has(ApolloTasks::DustPhotos[I]))ApolloDustPhotos|=1<<I;ApolloDustCompared=Save->Has(ApolloTasks::DustCompared);
+ LunarWater::Reset(WaterStudy);const auto& WaterData=LunarWater::Dataset();
+ if(WaterData.Available&&Save->WaterDataId==FName(*WaterData.Id)&&Save->WaterAnswers.Num()==3){LunarWater::FState Optional;Optional.Answers=Save->WaterAnswers;Optional.Step=Save->WaterStep;Optional.Attempts=Save->WaterAttempts;Optional.Recorded=Save->WaterRecorded;if(LunarWater::IsValidState(Optional))WaterStudy=MoveTemp(Optional);}
  const ELunarStage Stages[]={ELunarStage::ApolloCheckout,ELunarStage::ApolloDeploy,ELunarStage::ApolloSamples,ELunarStage::ApolloTraverse,ELunarStage::ApolloRecover,ELunarStage::ApolloReturn,ELunarStage::Won};
  Stage=Stages[Save->Step()];ApolloAction=Stage==ELunarStage::ApolloCheckout?int32(Save->Has(ApolloTasks::Checkout[0]))+int32(Save->Has(ApolloTasks::Checkout[1])):Stage==ELunarStage::ApolloDeploy?int32(Save->Has(ApolloTasks::Instruments[0])):2;
  if(ApolloAntenna)ApolloAntenna->SetRelativeRotation(FRotator(-65,ApolloAntennaAngle,0));
@@ -128,12 +143,15 @@ bool ALunarGameMode::RestoreApolloCheckpoint(){
  P->SetActorLocation(Ground,false,nullptr,ETeleportType::TeleportPhysics);P->GetCharacterMovement()->SetMovementMode(MOVE_Walking);PC->SetControlRotation(Save->View);
  P->LastStepPosition=Ground;P->PausedVelocity=FVector::ZeroVector;P->StepTravel=0;P->GaitBlend=0;P->WorkBlend=0;P->SuitStrideSpeed=P->SuitTurnLean=0;P->SuitMoveDirection=FVector::ForwardVector;
  ApolloLastPosition=Ground;ApolloSafePosition=Ground;ApolloSafeView=Save->View;ApolloHasSafePosition=true;ApolloTutorialOrigin=Ground;ApolloTutorialAim=Save->View;
+ OxygenCapacity=1800.f; // Native Apollo baseline before optional difficulty restoration.
+ if(FieldOperations&&!FieldOperations->ImportState(Save->FieldOperationsState)){FieldOperations->Shutdown();FieldOperations->Enabled=false;FieldOperations->RefreshWorldVisibility();UE_LOG(LogTemp,Warning,TEXT("Optional field-operations checkpoint rejected; main mission remains available."));}
  LowOxygenWarned=Oxygen<180;FailureReason.Reset();UpdateAudioPause();
  int Missing=0;for(const auto& E:ApolloEvidence)if(!E.PhotoPath.IsEmpty()&&!IFileManager::Get().FileExists(*(FPaths::ProjectSavedDir()/E.PhotoPath)))++Missing;
  ApolloSaveError=false;ApolloSaveNotice=ApolloSaveStatus==EApolloSaveStatus::Recovered?TEXT("CheckpointRecovered"):Missing?TEXT("CheckpointPhotosMissing"):TEXT("CheckpointLoaded");ApolloSaveNoticeRemaining=Missing||ApolloSaveStatus==EApolloSaveStatus::Recovered?20:6;
  Message(ApolloInstruction());return true;
 }
 void ALunarGameMode::ContinueApollo(){
+ if(ALunarDepartureScene::Active(this))return;
  if(Menu&&MainMenu&&MainMenu->IsIntroActive())return;
  if(!ApolloCachedCheckpoint)return;
  if(Menu){LunarLoading::Open(this,TEXT("/Game/Lunar/Maps/Apollo12"),TEXT("ResumeApollo=1"));return;}

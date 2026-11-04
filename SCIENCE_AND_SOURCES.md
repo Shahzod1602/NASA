@@ -1,5 +1,26 @@
 # Science and sources
 
+## Modern field-training extension — 4 November 2026
+
+Existing LROC Apollo 12 elevations continue to control terrain and work-site
+heights; SELENE/ARES terrain is authored. No new DEM, M3 map or local water
+measurement/extraction dataset was integrated in this iteration.
+
+Content/Science/LunarWater/study.json remains a published-facts summary of remote
+LCROSS evidence at Cabeus in 2009. Three authored delivery cartridges reference
+that summary after optical inspection. Their 0.5 kg package mass, storage sizes,
+inspection time and resource costs are game rules, never a measured water mass.
+The supplied search-result screenshot was treated as reference, not a raster or
+redistribution licence.
+
+Apollo 12 had no rover. The lunar rover is a modern fictional overlay; the Mars
+vehicle deployment is fictional and inspired by SEV prototype research. Its
+4.5 m/s limit, 18 degree traversal threshold and swept hull are tuning, not vehicle
+or astronaut safety certification. Four pre-EVA checks are authored actions, not
+measured suit pressure or operational NASA procedures. No NASA approval is claimed.
+[Research, official links and limits](Docs/FieldOperations20261104/SCIENCE_RESEARCH.md)
+identify which facts each source supports. Runtime remains offline.
+
 ## Current implementation - 2 November 2026
 
 **Apollo 12 uses a real, stereo-derived LROC terrain product. SELENE and ARES use
@@ -45,6 +66,44 @@ photo-first rule to the game's selected sample tasks is an authored adaptation.
 The countdown lesson cites project gameplay rules rather than presenting NASA
 suit specifications. Field-lesson answers are optional, session-only and do not
 alter cargo, time budgets or scientific measurements.
+
+## Remote water study and fictional guides — 3 November 2026
+
+Source integration adds an optional modern **LCROSS/Cabeus 2009** exercise in the
+Moon notebook. It does not detect water at Apollo 12, change its Oceanus Procellarum
+terrain, or turn SELENE/ARES scenery into surveyed polar sites. The local Windows build and rendered checks completed; see the executable-specific
+[evidence and limitations](TEST_REPORT.md).
+
+The bundled `Content/Science/LunarWater/study.json` is a derived publication-facts
+summary with a checksum manifest, not a raw spectrum.
+[Colaprete et al. (2010)](https://doi.org/10.1126/science.1186986),
+[PubMed record](https://pubmed.ncbi.nlm.nih.gov/20966242/), reports a maximum
+155 +/- 12 kg of water vapour plus ice in the observing field of view and a
+5.6 +/- 2.9 percent-by-mass impact-site regolith estimate using observable
+excavated material. These are not whole-crater inventories or player samples.
+The hypothetical 100 kg comparison and 2.7–8.5 percent arithmetic endpoints are
+explanations, not newly measured samples, guaranteed deposits or a newly assigned
+confidence interval. The reported +/- receives no invented confidence level.
+
+[NASA LCROSS](https://science.nasa.gov/mission/lcross/) supports the mission context;
+[NASA quick facts, Appendix C](https://ntrs.nasa.gov/api/citations/20130014470/downloads/20130014470.pdf)
+gives approximate crater context, explicitly not an impact navigation coordinate.
+The [PDS archive](https://pds-geosciences.wustl.edu/missions/lcross/default.htm)
+is a reference; no raw spectral packets are bundled or analysed by this exercise.
+Three optional decisions and explicit report commit record local attempts without
+granting cargo, repairs, oxygen or primary progress. Successful Apollo checkpoints
+can retain valid state; SELENE's result is session-only. Invalid/missing data
+only disables the study. No runtime network request is required for its display.
+
+PIP-3 and Dr. Mira Vale are fictional authored guides. PIP reads recorded mission
+prerequisites; Mira is a modern communicator icon, not an Apollo crew member or
+NASA employee. The transfer-cabin/hatch scene is authored camera presentation,
+not a reconstructed Intrepid interior. Carry proxies reuse retained assets and
+add no measurement or inventory physics. No NASA partnership or real hardware
+validation is implied. See [feature guide](Docs/Gameplay20261103/FEATURE_GUIDE.md)
+and [water provenance](SourceArt/LunarWater/CREDITS.md). Existing source/licence
+boundaries and earlier validation records remain separate.
+
 
 ## Local feedback and equipment pass - 2 November 2026
 

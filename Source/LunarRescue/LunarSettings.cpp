@@ -19,19 +19,19 @@ const TMap<FName,FKey>& Defaults(){static const TMap<FName,FKey> Keys={
 }
 bool ULunarSettings::IsAutomation(){
  const FString Args=FCommandLine::Get();
- return Args.Contains(TEXT("Test"))||Args.Contains(TEXT("Review"))||Args.Contains(TEXT("csvCapture"))||Args.Contains(TEXT("ApolloSaveProfile"));
+ return Args.Contains(TEXT("Test"))||Args.Contains(TEXT("Review"))||Args.Contains(TEXT("csvCapture"))||Args.Contains(TEXT("ApolloSaveProfile"))||Args.Contains(TEXT("FieldOperationsProfile"));
 }
 ULunarSettings* ULunarSettings::Get(){
  static ULunarSettings* S=[](){auto* V=NewObject<ULunarSettings>();V->AddToRoot();if(IsAutomation())V->Reset();else V->LoadConfig();return V;}();return S;
 }
-FKey ULunarSettings::Key(FName Action) const {const FKey* K=Bindings.Find(Action);if(K&&K->IsValid()&&*K!=EKeys::K)return *K;K=Defaults().Find(Action);return K?*K:EKeys::Invalid;}
+FKey ULunarSettings::Key(FName Action) const {const FKey* K=Bindings.Find(Action);if(K&&K->IsValid()&&*K!=EKeys::K&&*K!=EKeys::B&&*K!=EKeys::G)return *K;K=Defaults().Find(Action);return K?*K:EKeys::Invalid;}
 FString ULunarSettings::ControlText(FString Text) const {
  for(const auto& Pair:Defaults())Text.ReplaceInline(*(TEXT("{")+Pair.Key.ToString()+TEXT("}")),*Key(Pair.Key).GetDisplayName().ToString());
  return Text;
 }
 bool ULunarSettings::Rebind(FName Action,FKey NewKey){
  if(!Defaults().Contains(Action)||!NewKey.IsValid()||NewKey.IsMouseButton()||NewKey==EKeys::Escape||NewKey==EKeys::F1||NewKey==EKeys::Enter||NewKey==EKeys::C||NewKey==EKeys::R||NewKey==EKeys::M||NewKey==EKeys::T||NewKey==EKeys::J||NewKey==EKeys::LeftAlt)return false;
- if(NewKey==EKeys::K||NewKey==EKeys::H||NewKey==EKeys::I||NewKey==EKeys::Up||NewKey==EKeys::Down||NewKey==EKeys::Left||NewKey==EKeys::Right)return false;
+ if(NewKey==EKeys::B||NewKey==EKeys::G||NewKey==EKeys::K||NewKey==EKeys::H||NewKey==EKeys::I||NewKey==EKeys::Up||NewKey==EKeys::Down||NewKey==EKeys::Left||NewKey==EKeys::Right)return false;
  for(const auto& Pair:Defaults())if(Pair.Key!=Action&&Key(Pair.Key)==NewKey)return false;
  Bindings.Add(Action,NewKey);return true;
 }

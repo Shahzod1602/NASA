@@ -1,0 +1,1017 @@
+{
+  "schema": 1,
+  "checked_utc": "2026-11-04T03:08:43.796547+00:00",
+  "scope": "bundle integrity and supplied packaged receipts",
+  "human_playtest": false,
+  "performance_measurement": false,
+  "network_isolation_tested": false,
+  "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a",
+  "build_info": {
+    "sha256": "240525fd796c012475c1e9eb71048a2d010c98e111fc58f18785befb628bc9c2",
+    "base_git_commit": "54140321bb2607b836aa9ae12da468e9f56bf531",
+    "source_worktree_dirty": true,
+    "engine_version": "5.8.3"
+  },
+  "pak_files": [
+    {
+      "path": "LunarRescue/Content/Paks/LunarRescue-Windows.pak",
+      "bytes": 10661072
+    }
+  ],
+  "science": {
+    "dataset_id": "lcross-cabeus-published-estimate-v1",
+    "data_sha256": "40db698b4244ee7f6f28fcb5aa44c7dd3e60177694b34cb18d8bc32a24981105",
+    "manifest_sha256": "9319ebd61843c0859ff94ae32871090f657164c7a535e3a04909d494a16ca01b",
+    "bytes": 3863
+  },
+  "source_maps": [
+    {
+      "path": "Content/Lunar/Maps/Apollo12.umap",
+      "historical_expected_sha256": "7cd63371b866a7914ad9bd178b109e217d57b9032c639e0e9ee4f6ac897569f4",
+      "actual_sha256": "7cd63371b866a7914ad9bd178b109e217d57b9032c639e0e9ee4f6ac897569f4",
+      "matched": true
+    },
+    {
+      "path": "Content/Lunar/Maps/MoonBase.umap",
+      "historical_expected_sha256": "d5a76deedb6e6d438834929bc46b59a71bcc5fd14cf30e45dd294cbcc121e1b6",
+      "actual_sha256": "d5a76deedb6e6d438834929bc46b59a71bcc5fd14cf30e45dd294cbcc121e1b6",
+      "matched": true
+    },
+    {
+      "path": "Content/Mars/Maps/MarsBase.umap",
+      "historical_expected_sha256": "d01d7605533777664a5dda974d09c4640a8a91e5830fe01b67198b54d1f7d4e4",
+      "actual_sha256": "d01d7605533777664a5dda974d09c4640a8a91e5830fe01b67198b54d1f7d4e4",
+      "matched": true
+    },
+    {
+      "path": "Content/Rescue/Maps/MissionSelect.umap",
+      "historical_expected_sha256": "9f098ec909532fa9284dd0e930ffeb055ccaf20acaa824123011fbbdb3c2dd25",
+      "actual_sha256": "9f098ec909532fa9284dd0e930ffeb055ccaf20acaa824123011fbbdb3c2dd25",
+      "matched": true
+    }
+  ],
+  "credits_and_docs": {
+    "matched_files": 32,
+    "field_notes": [
+      "IMPLEMENTATION.md",
+      "PERFORMANCE_RECIPE.md",
+      "PLAYTEST.md",
+      "SCIENCE_RESEARCH.md",
+      "STORY_AND_REFERENCES.md",
+      "editor-config-restoration.json",
+      "editor-ui-visual-qa-720.json",
+      "legacy-verification.json",
+      "package-ui-visual-qa-1080.json",
+      "package-world-visual-qa.json",
+      "performance-comparison.json",
+      "preservation-final.json",
+      "verification-index.json"
+    ]
+  },
+  "receipts": [
+    {
+      "path": "Reports/FieldOperations20261104/package-rendered-test-1280x720-20261104-073817-882/run-summary.json",
+      "sha256": "338a3d483a16eead0634beb3e6dd69aad6fb43657faa400aaa613e343c262771",
+      "review": false,
+      "packaged": true,
+      "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a",
+      "source_fingerprint": {
+        "total": 111,
+        "matched": 111,
+        "mismatches": [],
+        "sha256": "4ab005b9fe697ed1d75cda204bb55274e3817d9e371d5757710ec92704aae86b"
+      },
+      "cases": [
+        {
+          "case": "apollo",
+          "map": "/Game/Lunar/Maps/Apollo12",
+          "assertions": 215,
+          "report_sha256": "818ea02d2f3fd157186163d831e5446663de2904f5081defdea2855b2fe0fd8d",
+          "log_sha256": "2fda34ebfba6ffe11e34180012e964a6363c6c89b46c9d5c5ec885334fe507dd"
+        },
+        {
+          "case": "selene",
+          "map": "/Game/Lunar/Maps/MoonBase",
+          "assertions": 220,
+          "report_sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2",
+          "log_sha256": "1ea9c1a1a11623c6876c237666183b9aa3f643e9329c092041fcc66f290882a3"
+        },
+        {
+          "case": "mars",
+          "map": "/Game/Mars/Maps/MarsBase",
+          "assertions": 220,
+          "report_sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2",
+          "log_sha256": "b4fa03e74c3fd3be9222dc31a75150ce07cc0d28634522231c524e27f3a4ef6f"
+        }
+      ]
+    },
+    {
+      "path": "Reports/FieldOperations20261104/package-review-1280x720-20261104-073845-396/run-summary.json",
+      "sha256": "acd8ff23db61fb3a3009dfe1423cf5bb7348e0b8e8e95ac606b734fd7951a8be",
+      "review": true,
+      "packaged": true,
+      "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a",
+      "source_fingerprint": {
+        "total": 111,
+        "matched": 111,
+        "mismatches": [],
+        "sha256": "4ab005b9fe697ed1d75cda204bb55274e3817d9e371d5757710ec92704aae86b"
+      },
+      "cases": [
+        {
+          "case": "apollo",
+          "map": "/Game/Lunar/Maps/Apollo12",
+          "assertions": 50,
+          "report_sha256": "0ed88ce5ac309dc374b3457bf7e8d0453841b83ef903ceca78e7710ded5403a6",
+          "log_sha256": "19f5bfa5e4daf1be0d6e848f67047b07833e08b06642350f96b7d46e2c5f8d41",
+          "review": {
+            "frames": 20,
+            "images": [
+              {
+                "name": "preflight100",
+                "sha256": "950000d35289f05cc09e71f161f68f8f5ddd50b0ab4f5427cbf1d5f9e75d158e",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "preflight150",
+                "sha256": "ef7f53b0d33146cd44b3d7a7c02734d869588ef1028e2d3378e16870d2d9aef4",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "preflight-checking150",
+                "sha256": "35f7bafed916cfebb021f2173cc0ad74c2a639407d1f9787bde0d5e69e255f38",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "preflight-ready150",
+                "sha256": "6a09d3b55e7e1818ef2d711d7a2b4889ba9adfbbd0b54deea603ffa4b52ca434",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "briefing100",
+                "sha256": "3cb539bcf35ff5db27e8e3114e65a862a8c9bb3f0e0d9267d5273eaeedf5e401",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "briefing150",
+                "sha256": "c38c80bf418eb3ea728bd659246c61d12f00491800a91cee55c4fcee8fbb0933",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "resources100",
+                "sha256": "45b6e31c2aa4c0818541f26c219411e8b7228b455cb8c6a7029ab7ff8d7b515a",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "resources150",
+                "sha256": "f58737fb6a02847aa4ab18485a0d6d06997a4256fc38cda5d58fc6fe28651510",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "vehicle100",
+                "sha256": "10e39e8da3343c93ba1ff95f4f093ec65e9cb57b0fa5a4f932ec47aafa22046c",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "vehicle150",
+                "sha256": "14bf5681c5413c0ff8b0c8f079c95d9fb4086a8b6953fdff8a1581991e92f650",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "wire100",
+                "sha256": "b18c172532cc2b98640cd93a683f8178aae1e7964c466c60b746046ffa686835",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "wire150",
+                "sha256": "e9317447d2b7d86130b30b2d8b2e0882e171e5f75290388c61d77b2f4a465af6",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "inventory100",
+                "sha256": "42246ecdcb4af7d129121f44ad39e564fa7587f84a890830c1ae2bdb62dd7c7d",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "inventory150",
+                "sha256": "039604c90d1bf2a5513b866d359e97d0c0d15d55612ac00d02f8eca83f002f00",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "sample100",
+                "sha256": "78096e7b19f0c9b915773545384c79c8649ea111092f5f48627054a8b49e5f45",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "sample150",
+                "sha256": "4397a622a71ebc39d37d02a2f273e8806e391d7bcc6fe04f425935257ebef8be",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "sample-sources150",
+                "sha256": "c28eb84f27f64e018575b4f27381a14c5532e070f3d6c0d89f13ae1630df977f",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "world-rover-mounted",
+                "sha256": "59a62172c4b3d4f0b4ad39f63ab00673a57d4cc217984122189c9ea85b90fb0e",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "world-magnifier-cartridge",
+                "sha256": "1caaf0535b12a38054f73996696de459dc2eb70bb70b24ebdce97f964ce5dd19",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "world-sampler-package",
+                "sha256": "4f25da0b68d09552ee8b22708f8f8371ff479bc202ad563784d41ddbabbd3ec8",
+                "width": 1280,
+                "height": 720
+              }
+            ],
+            "semantic_report": "field-operations-review-checks.txt"
+          }
+        },
+        {
+          "case": "selene",
+          "map": "/Game/Lunar/Maps/MoonBase",
+          "assertions": 52,
+          "report_sha256": "64999a8600005393aa23aec914d6e0cc5b691efb84065a4d706af2760941582c",
+          "log_sha256": "e7c1bd3b0e95c430674a1838714beb77a683759280d9bef450bd002436c6b47f",
+          "review": {
+            "frames": 20,
+            "images": [
+              {
+                "name": "preflight100",
+                "sha256": "3063e26946dc451ec1f25c6c32f73dae67c0e4ca8e0a816a37a397e8fe741805",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "preflight150",
+                "sha256": "75d7de66ab6829e04ba412a0b13dc486cdc0dec3e69b5c2120f1045ea33af91b",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "preflight-checking150",
+                "sha256": "4857dcdde3e0268fda73166177e336ee6ddfd62b45ff903b42a46d19faee616b",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "preflight-ready150",
+                "sha256": "5a1178e2cbf73fb1807f666cb3086e9df0bbfc802ae3cf9c3777f3d5b88a4d22",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "briefing100",
+                "sha256": "80249068a9362578917c4787c8fa82a1c515160a4eefd3091e1eb43c1e9410ed",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "briefing150",
+                "sha256": "5f7a2e4e5424e758bb7e86eb9bc0fb0ada4207fc5ee81e98557cbdb9849187f0",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "resources100",
+                "sha256": "ed7809757dbb0f4545158e8290024a88e5ba5e29a613d56e3e167a4bab54ee96",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "resources150",
+                "sha256": "05f21248a47eeae51ce16117f51484585ae573f5612e4ecd15324b90fcf72b7b",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "vehicle100",
+                "sha256": "ce08b65499280e7d110fbe0b5be37f5758dc0d48b382f2f4727fb4cc9b8155e0",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "vehicle150",
+                "sha256": "f0d74353fa92ea295770927d2f16c71c4c89a68b8e25968da4e896d8f36979d8",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "wire100",
+                "sha256": "1d5396578786396a2466d2122353f905fabcfa8471b1c4a90eddc24c73b4c939",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "wire150",
+                "sha256": "e1f80ad1c37d3e1554e4fd1010a4b9f02bb6cc1539e3eccc3ce39304b686b0f2",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "inventory100",
+                "sha256": "9a36f45c140c58b122d0eae89a72a39d779d618f153d86abac9a0d9dd3200935",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "inventory150",
+                "sha256": "1cef9e0f2334f823cc7756c4e553547df50ac06065718686990cdfffe3b1c1d1",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "sample100",
+                "sha256": "0bbefe9840bb0d2a43a119405e4d3b4aabefd50c038f3fbecda477caa95c6b2c",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "sample150",
+                "sha256": "3c771d9d241c7c1174dcd063f23f13152f028eb6292377174e3fb3b41244c406",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "sample-sources150",
+                "sha256": "5e2a30a2479f98a47dd6f24c9e14051db1babadab45f00b2a80b36735aeb800d",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "world-rover-mounted",
+                "sha256": "64b40f70bca7ab8354e9e633c0da7a0514027fbbfaa222a82035b5fc24fcd0a2",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "world-magnifier-cartridge",
+                "sha256": "44be1cc2affcec95b81f21c344d4de601a19c19c234580cbceaa327aa9d26bcb",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "world-sampler-package",
+                "sha256": "2c4de95c61139b36d20248c5c92828ca708166b6b310a76b047a9a4f7e2361ea",
+                "width": 1280,
+                "height": 720
+              }
+            ],
+            "semantic_report": "field-operations-review-checks.txt"
+          }
+        },
+        {
+          "case": "mars",
+          "map": "/Game/Mars/Maps/MarsBase",
+          "assertions": 52,
+          "report_sha256": "64999a8600005393aa23aec914d6e0cc5b691efb84065a4d706af2760941582c",
+          "log_sha256": "a7e9416abf928efd90c4581a3026731f37d1d771b5fa49026e01d75f126ef4f3",
+          "review": {
+            "frames": 20,
+            "images": [
+              {
+                "name": "preflight100",
+                "sha256": "bf9fb0ea9f7b2ba1f87b533159154b2c776808cf81e7a496b8082ec913d153f6",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "preflight150",
+                "sha256": "dbf77ec4a1f70b7a7923f6931254891c11be27f245075f033454d3788f65cf90",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "preflight-checking150",
+                "sha256": "c3ec4d54cdc2655a65b8c353e8405a95d35776f65e06bf78856719aefab272ad",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "preflight-ready150",
+                "sha256": "9e3781b0fd3013dcbb0e44a8ac52a6307dd396a3aa34ca7cc88738e9765f81d8",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "briefing100",
+                "sha256": "f422073e3d4c967c194467b8df2a8ee4f88e36fa704269751356cd17419acab8",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "briefing150",
+                "sha256": "60bff82ab6012b58cf2e698d40b1f53425a6b0ce3d552afd2afebba848d2cce5",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "resources100",
+                "sha256": "729f44b218fd1f5e0b527db51821d71d980514fd0b05d300ce511069ef55177e",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "resources150",
+                "sha256": "0238dfd57439c0cf20690bf9491de2f36f6296dbce0380c1b064cecd42f51be5",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "vehicle100",
+                "sha256": "28f32e042d80e816d313ce5b0b4a87ec570395f67545e7d799c253d137dbf438",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "vehicle150",
+                "sha256": "cd32fe28f5f3d17d316205791bab8e6112a9e8180568498e1e9543b65aeea241",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "wire100",
+                "sha256": "0c605d0d1666f97e3fe7f7d84ce0e824e885014c887478fd6130ef720299b309",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "wire150",
+                "sha256": "801de0c3a77e32b2ef45a527cb0820371f4904a8e8f0b2fd4c9ffec097f0de0e",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "inventory100",
+                "sha256": "b8bfde3df17b6528ef3c979cb3ad9d68de00e9d4df9b282517d2597fe560429c",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "inventory150",
+                "sha256": "7a0fcdb7cda8dc8c79402e0227251559034c43616cd7aca9203c07979eafee6a",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "sample100",
+                "sha256": "14fea9097b772af712a9f183286b11c7a14df75415d2b08f2b8e5703ea430b49",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "sample150",
+                "sha256": "d65258979c7063128e2d543fdcb86c8f57524ce2d70c7d8557273379b6494717",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "sample-sources150",
+                "sha256": "52e4a7dbc636a74a6d9b684fd1b4414c04f73bfdaa232c8f09cc60e07cc0462e",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "world-rover-mounted",
+                "sha256": "674f3b6824bdaae7a5398afaaa54acacba1d1f761cfbaa2fd3bfe9a2c9dea2ff",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "world-magnifier-cartridge",
+                "sha256": "65a030154fa8414ca711522aeca17a41a5f1ab403a49f5c434f999d1e9536c8c",
+                "width": 1280,
+                "height": 720
+              },
+              {
+                "name": "world-sampler-package",
+                "sha256": "0e5e75e6a21c0a08237dc6f2aada2ce8a7f3b3095aeea1a1dde726da00acf435",
+                "width": 1280,
+                "height": 720
+              }
+            ],
+            "semantic_report": "field-operations-review-checks.txt"
+          }
+        }
+      ]
+    },
+    {
+      "path": "Reports/FieldOperations20261104/package-review-1920x1080-20261104-074005-994/run-summary.json",
+      "sha256": "40aa4ba6f15f0fb61b01be0ac40534e5e1efd010bc32546d3b43c8036ce0f9c1",
+      "review": true,
+      "packaged": true,
+      "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a",
+      "source_fingerprint": {
+        "total": 111,
+        "matched": 111,
+        "mismatches": [],
+        "sha256": "4ab005b9fe697ed1d75cda204bb55274e3817d9e371d5757710ec92704aae86b"
+      },
+      "cases": [
+        {
+          "case": "apollo",
+          "map": "/Game/Lunar/Maps/Apollo12",
+          "assertions": 50,
+          "report_sha256": "0ed88ce5ac309dc374b3457bf7e8d0453841b83ef903ceca78e7710ded5403a6",
+          "log_sha256": "b21b9441f29591d3a0189618e691f56f7976bb017f1a9e604f1162151c18a3a7",
+          "review": {
+            "frames": 20,
+            "images": [
+              {
+                "name": "preflight100",
+                "sha256": "93c61d57498d94432d781649c969ed49cd2dffed7a046917bbf370568aaefd70",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "preflight150",
+                "sha256": "dc8ad36548494cecb33dff95220c793031ba632d615ae86a3c1db9b0c14c0fe4",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "preflight-checking150",
+                "sha256": "891a37373c86e210c60802c4b88326401446f80fbbc220531abe48dde3a35c37",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "preflight-ready150",
+                "sha256": "9de29a4614d9b16b98b8fd4586fc39952e0ea8ce3dac4880992a22d388ddeec5",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "briefing100",
+                "sha256": "78614dc62014d7ad1d39b108e6af5839bce4ade1ddf17d525da002b1e2d25b45",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "briefing150",
+                "sha256": "40a9b3752e3a6eb47870c8b66ff9220c81a45c0c6c8758935d83cd66c3c97268",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "resources100",
+                "sha256": "a9cb08f7db9e968a1f00f306bc26ed21409ba0f969f3a11d4f3b8f4a4e10cb46",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "resources150",
+                "sha256": "59e8d6ce066e562ac9997ed6a86d68b3cda6ba4bde04e51e6600eebdf30a9011",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "vehicle100",
+                "sha256": "6e95ebf0f4f6b3a9aeb464ac39d7b6077542b1bf9d369965a459b8507de791e5",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "vehicle150",
+                "sha256": "6145ac6e271e11b6130e83ef1461490461d637bb2afd91b38f89a8c5ccdb02fc",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "wire100",
+                "sha256": "69f8027ce52a1a713699e6c4ad7e6c54e93ff645823fd37bc43fb0c6fc52d9b5",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "wire150",
+                "sha256": "01ae55fb2f744019a43a707049cbbb637138144f5fa0aba0b1a03fca471f1e5a",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "inventory100",
+                "sha256": "d3bd4fb801a0f7f048f3510f137497f9c1ce3481ffabf806c616e0d35f6bf3c3",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "inventory150",
+                "sha256": "3874f80c0636f889cde38b24f67b1f653dcc3a0b551a7a8c893e4ee1b86b5eb3",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "sample100",
+                "sha256": "b0452605668a629945fd399c83745266a610a90db3ff915e68ace7b54ba67f97",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "sample150",
+                "sha256": "a8d0ddd23ad7c901be2fcb011b11be5c036b69d598cef27578b59a6431a870a2",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "sample-sources150",
+                "sha256": "923a9533804d7048f03295cb950645dd7cf0f72f4e1f80bc2c74ae4fddecf81b",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "world-rover-mounted",
+                "sha256": "81e310c40833886b584c4985849d416ff22e606baae43f71a4eeaaf634405eaa",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "world-magnifier-cartridge",
+                "sha256": "7e50adc7460ec1d3fa9ec447eb975e943c9a66e12ee2268251befdc0ec369ceb",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "world-sampler-package",
+                "sha256": "3bff9a5950e93369b8a3a59965fc253ca0e4e6be2d24ab18624b624c5327a978",
+                "width": 1920,
+                "height": 1080
+              }
+            ],
+            "semantic_report": "field-operations-review-checks.txt"
+          }
+        },
+        {
+          "case": "selene",
+          "map": "/Game/Lunar/Maps/MoonBase",
+          "assertions": 52,
+          "report_sha256": "64999a8600005393aa23aec914d6e0cc5b691efb84065a4d706af2760941582c",
+          "log_sha256": "87b571c1e67eed4c8f042b40f87951a9f23efc5aced78c5786ea76fa5dd6edcd",
+          "review": {
+            "frames": 20,
+            "images": [
+              {
+                "name": "preflight100",
+                "sha256": "232417e7ba16df1ef9f5085de90d25d755a4156a775b9e4141bd45a58c299d44",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "preflight150",
+                "sha256": "37c0a70a3275036d98fd55a4f4d71a336707b55d2c9e245ac66255d2a5589711",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "preflight-checking150",
+                "sha256": "352f9397cea89b03a4d0a8ae5e8ce104b8feafb0e4b014b964c157ac7bc30cfb",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "preflight-ready150",
+                "sha256": "6199173f69d09d4f0e6a464437202945979830024149c16da837efcfa3756c4a",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "briefing100",
+                "sha256": "cd0f22dfaf4391dcba7fabc83628a81857698f932461e2cd0627b7082453ca6d",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "briefing150",
+                "sha256": "2340e9eedf5bb9781f371023338170038ffe19ad4a8db5ff9ade3b7ba1486d3a",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "resources100",
+                "sha256": "8c1f00e689853e8c3ff0a71c8ed98adc4122b95266e2da282a7701c6e2de5dea",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "resources150",
+                "sha256": "d8aaa59672a7754858a1b72435f35346eeadc22288e0cb81427c8a6e12a4fc05",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "vehicle100",
+                "sha256": "d14ff8dec8e1e6bab2ed5e073a1b4485d82a09e6560d92849e4907b1cd5c005d",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "vehicle150",
+                "sha256": "9c1ab3f071eae7cd56463b19ca2f0aeecf7ddbdf6750d22605494598ca8a3164",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "wire100",
+                "sha256": "f6ae5fa731f461ece4827ad7b85b398f57c65fef671ef26ac33d86b056cac61d",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "wire150",
+                "sha256": "93d599fa7fa54a3eabf2e6e780348d5fa4c882bbc68c19fa946c3ca0853d8a2a",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "inventory100",
+                "sha256": "7ab7c8b6999029d9b54f5b6bacf4a2e24adb854d43743f5977c58abd6db9bb1b",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "inventory150",
+                "sha256": "6096a6112ce74cf5e88f12137f92b3e8e35cabd595670a344f1ed78bf4fd9820",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "sample100",
+                "sha256": "329e09def074b386b4caf4ca1f7860a9dee26aea55328c20b0219390c52f00c3",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "sample150",
+                "sha256": "9de6ac23178907ad0aef7ef79c29f75ba270697d55b9fa417b6f6fdeb194891a",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "sample-sources150",
+                "sha256": "8ea618f34ffadebe8688863c8c279f1c310112c9314f81b66323927a4d4670da",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "world-rover-mounted",
+                "sha256": "64266c72636c3fdbf739dff45a78632116cf8a48d0786a9f89dd8eed84beb50c",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "world-magnifier-cartridge",
+                "sha256": "6a3a78232dae24c812cb2c5b6f4dfec28fe6ec633535ab1c705a5e0cfd0a3715",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "world-sampler-package",
+                "sha256": "42450d78fba05cf75da0568cf3edf08faedf8ff9fb74614ef4b75ee9f22ffe37",
+                "width": 1920,
+                "height": 1080
+              }
+            ],
+            "semantic_report": "field-operations-review-checks.txt"
+          }
+        },
+        {
+          "case": "mars",
+          "map": "/Game/Mars/Maps/MarsBase",
+          "assertions": 52,
+          "report_sha256": "64999a8600005393aa23aec914d6e0cc5b691efb84065a4d706af2760941582c",
+          "log_sha256": "91c1e14c8c66f46d34791e66651cd744f7b162bf30ceaf81ef66bf2418191a85",
+          "review": {
+            "frames": 20,
+            "images": [
+              {
+                "name": "preflight100",
+                "sha256": "18215611509df950858a2a59e377b61e997d1dbd5d5a103307731133876131a4",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "preflight150",
+                "sha256": "bc553d38b5c56c7692c405e867751bc4870e0a56c82996f6a494163d651d6165",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "preflight-checking150",
+                "sha256": "911a892d0d3a73a4b0b5e47475be96d76660c9dc30873d0eec45ea8b94abaf77",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "preflight-ready150",
+                "sha256": "79d3e71a3d0b9602fec7eb6134f73649f68290874e62a29a316d958280983fa6",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "briefing100",
+                "sha256": "236f9607881f641ef7d2e3f06ee9909c8af4a5a15cb4c7785b163be3143bfe6a",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "briefing150",
+                "sha256": "f2ccf7cde60f1b4d1a8ebfebe730836a5ab504153251c49d125320d553c5a88e",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "resources100",
+                "sha256": "f882e66adbc448bfde28bdb1c2b848511632f9143c40b1cd03579decf84a1a9a",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "resources150",
+                "sha256": "8c38cb1b449b6c482e05b67e41b64b94b133879fda9c57a69e636549f04dab7e",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "vehicle100",
+                "sha256": "529a956bc7dd7b5716b3e3e4c7c1e50db22fd5c6b6fb7e18657ce9db7edaa413",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "vehicle150",
+                "sha256": "d5ae4027563fbbccd1bdb4c56b00c57d52627c8ea51d2709b49e428530266de5",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "wire100",
+                "sha256": "f6e6971ae23257f81117e07b5bd279e5d7f64439e5e637a72455b4fe9dbb551d",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "wire150",
+                "sha256": "e24601e49774034097e0738efbb16d06b20176b4e23c3d3d198d309fa5599133",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "inventory100",
+                "sha256": "4cb55ff0580e9b950a88e3dc6a8d148652ad21258765697ca535a2dfdcfa1f64",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "inventory150",
+                "sha256": "391f663fde20edc3ed54761184155cd6ef5092e1d3b70d9a7caf46a73761d439",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "sample100",
+                "sha256": "8962be778fd8ebe3ddd477c6259a5d2ab12f8401bed5061bb886eb78ba76700a",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "sample150",
+                "sha256": "c1f74d5315ddd0d42066d8a59be3266d0b80b3210f1f581f4be1192ca40d1431",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "sample-sources150",
+                "sha256": "f879fc6359985bae4451252d697ced50e5132f20b45a20607532d44b97e749fe",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "world-rover-mounted",
+                "sha256": "d02127e91af43b0ab180f7887e845ddb54cd74ec466fc30248208b90233210f8",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "world-magnifier-cartridge",
+                "sha256": "a193c109e90b6e5d733fe7a9e4962edc7411f709a4f62c9b7d01a7d24e340a97",
+                "width": 1920,
+                "height": 1080
+              },
+              {
+                "name": "world-sampler-package",
+                "sha256": "bc7804efb6a3131665357193e106c4d0c9495a2579a1ebaa73b25d7a7bd4864a",
+                "width": 1920,
+                "height": 1080
+              }
+            ],
+            "semantic_report": "field-operations-review-checks.txt"
+          }
+        }
+      ]
+    },
+    {
+      "path": "Reports/FieldOperations20261104/package-test-1280x720-20261104-073757-439/run-summary.json",
+      "sha256": "617918685185548ea6781af77bff678baabc61f3895e3cb17016c90edcc37747",
+      "review": false,
+      "packaged": true,
+      "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a",
+      "source_fingerprint": {
+        "total": 111,
+        "matched": 111,
+        "mismatches": [],
+        "sha256": "4ab005b9fe697ed1d75cda204bb55274e3817d9e371d5757710ec92704aae86b"
+      },
+      "cases": [
+        {
+          "case": "apollo",
+          "map": "/Game/Lunar/Maps/Apollo12",
+          "assertions": 215,
+          "report_sha256": "818ea02d2f3fd157186163d831e5446663de2904f5081defdea2855b2fe0fd8d",
+          "log_sha256": "82d207e43d2d8bda3d2947fb78ce438002299b1e0f463b7f7fe60d1c92bd7940"
+        },
+        {
+          "case": "selene",
+          "map": "/Game/Lunar/Maps/MoonBase",
+          "assertions": 220,
+          "report_sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2",
+          "log_sha256": "047300438ee051f054f94cc3c9e3c4d14730b83815b71035a543e10140634117"
+        },
+        {
+          "case": "mars",
+          "map": "/Game/Mars/Maps/MarsBase",
+          "assertions": 220,
+          "report_sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2",
+          "log_sha256": "d51aab4d1927c05b4df1090bad86f15e3d506d2d76f00cdb4dadefb5b5b54c1a"
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "receipts_requested": 4,
+    "receipts_validated": 4,
+    "functional_maps": [
+      "apollo",
+      "mars",
+      "selene"
+    ],
+    "review_maps": [
+      "apollo",
+      "mars",
+      "selene"
+    ],
+    "all_three_functional_maps": true,
+    "all_three_review_maps": true,
+    "functional_pass_executions": 1310,
+    "review_pass_executions": 308,
+    "validated_pngs": 120
+  },
+  "checks": {
+    "bootstrap_present": true,
+    "built_and_staged_executable_match": true,
+    "build_info_identity": true,
+    "nonempty_cooked_pak_present": true,
+    "science_payload": true,
+    "historical_map_unchanged:Content/Lunar/Maps/Apollo12.umap": true,
+    "historical_map_unchanged:Content/Lunar/Maps/MoonBase.umap": true,
+    "historical_map_unchanged:Content/Mars/Maps/MarsBase.umap": true,
+    "historical_map_unchanged:Content/Rescue/Maps/MissionSelect.umap": true,
+    "credits_and_docs": true,
+    "receipt:0": true,
+    "receipt:1": true,
+    "receipt:2": true,
+    "receipt:3": true,
+    "executable_unchanged_during_verification": true
+  },
+  "errors": [],
+  "passed": true,
+  "limitations": [
+    "Source map hashes do not inspect map contents inside cooked pak archives.",
+    "Hashes and arranged screenshot geometry do not prove visual quality or animation smoothness.",
+    "PASS executions across receipts are executions, not a count of unique requirements.",
+    "No engine, network, human playtest or performance measurement is performed by this verifier."
+  ]
+}

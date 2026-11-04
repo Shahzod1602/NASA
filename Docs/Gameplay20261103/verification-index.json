@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "verified_utc": "2026-11-03T03:31:30.352444+00:00",
+  "base_git_commit": "54140321bb2607b836aa9ae12da468e9f56bf531",
+  "executable_sha256": "5171c1b0a6142dfa4c35e373d731d441ce88eb8d7a41f768779bbeaded52f2f0",
+  "editor_module_sha256": "c7b0e68232086c6ba8708c79e7256e58976f815888626612f5fce799cd212be0",
+  "cpp_pass_executions": 2400,
+  "cpp_failures": 0,
+  "staged_pngs": 160,
+  "paired_pixel_checks": 8,
+  "source_inputs_matched": 98,
+  "maps_unchanged": 4,
+  "original_snapshot_files_matched": 544,
+  "human_playtest": false,
+  "network_isolation_tested": false,
+  "published_release": false,
+  "competition_eligibility": "unconfirmed",
+  "artifacts": {
+    "evidence.json": "873078429407bc3d76f992811f0b224be4bc8cf8979f710710bc4ab1a00289cd",
+    "evidence-notes.md": "c42a048d254e7c69094396961e0f6b70b57804a5e2f92dc8271877cc1bfeca65",
+    "performance.json": "92a07165f9fabf8f9942d9b41ff3339b9d1cac57d12d5730be829300fb115456",
+    "bundle-verification.json": "d43fa9b4d6ac58558edfb9b5c291cacd5dd8413d9e280825a0a683e31c52ac22",
+    "carry-visual-qa.json": "0334741027ec5f987672bd4c03511d120b290671807898ece7f7e57106f17ef1"
+  }
+}

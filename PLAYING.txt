@@ -117,3 +117,22 @@ Explore the Moon / Explore Mars opens the mission picker.
 Choose a card, then click START MISSION or press Enter.
 1 / 2: choose destination; Left / Right: select mission; Esc: back; F1: settings.
 Continue expedition resumes the saved Apollo checkpoint.
+
+NEW MISSION PRESENTATION AND OPTIONAL RESEARCH
+At a new-mission briefing, Enter starts the authored departure. Enter/left click skips after 0.3 seconds; Esc pauses. Mission clocks begin at surface handover.
+Carried objects appear from actual pickup/committed-cargo state. Camera view (default V) changes between first and third person.
+Approach and face PIP-3 or Mira's communicator and use the displayed work binding (default E), or open I > Mission Crew. They are fictional scripted guides.
+Moon missions offer I > Water Research: answer by click or 1/2/3, then Enter to record after three correct decisions. Science & Sources explains remote Cabeus/2009 evidence; it does not detect water at your landing site.
+Esc/F1 closes the notebook. Apollo research is retained by successful checkpoint saves; SELENE research is session-local.
+
+
+MODERN FIELD TRAINING (local work, 4 November 2026)
+Complete four EVA checks and open the hatch. Select and confirm a gameplay budget.
+B opens resources/map/inventory. Inspect rover to unlock driving and magnifier.
+W/S drives, A/D steers, your work key (default E) exits onto safe ground.
+G toggles magnifier; hold left click on a labelled cartridge, release to cancel,
+E packs an inspected item. Mass/storage are limited. Deposit near the lander.
+Powered mission links enable timed recharge/downlink beside the resource board.
+SELENE/ARES cable: isolate, choose a left port, then its matching right identifier.
+Apollo ALSEP retains its historical-task flow. These are fictional modern training
+procedures; Apollo 12 had no rover and cartridges never measure local water.

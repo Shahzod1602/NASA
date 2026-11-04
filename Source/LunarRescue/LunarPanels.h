@@ -36,6 +36,16 @@ public:
  bool Settings=false;
  TArray<FLunarFrontendLabel> FrontendLabels;
  float FrontendTextScale=-1;
+ bool ShowCrew=false,ShowWaterStudy=false,ShowWaterSources=false;
+ void BuildWaterStudy();
+ UFUNCTION() void ToggleCrew();
+ UFUNCTION() void ToggleWaterStudy();
+ UFUNCTION() void ToggleWaterSources();
+ UFUNCTION() void WaterAnswerA();
+ UFUNCTION() void WaterAnswerB();
+ UFUNCTION() void WaterAnswerC();
+ UFUNCTION() void CommitWaterReport();
+ UFUNCTION() void ResetWaterReport();
  bool ShowExpeditionMap=false;
  bool ShowFieldLessons=false;
  int32 FieldLessonIndex=0;

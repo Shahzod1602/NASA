@@ -4,6 +4,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "GameFramework/HUD.h"
 #include "LunarCheckpoint.h"
+#include "LunarWaterStudy.h"
 #include "LunarGame.generated.h"
 
 UENUM(BlueprintType)
@@ -54,6 +55,7 @@ public:
  void Forward(float V); void Right(float V); void Turn(float V); void Look(float V);
  void Leap(); void Interact(); void StartMission(); void RestartMission(); void PauseMission();
  void PrimaryClick();
+ void OpenFieldOperations(); void ToggleFieldScanner(); void ReleasePrimary();
  void RestartCurrentMission();
  void SyncPauseMenu();
  UPROPERTY() TObjectPtr<class ULunarPauseMenu> PauseMenu;
@@ -63,6 +65,7 @@ public:
  void ReleaseInteract(); void ToggleRoute();
  void ToggleJournal();
  void ContinueMission();
+ void OpenCrewNotebook(); void OpenWaterNotebook();
  void OpenSettings(); void OpenEvidence(); void ClosePanel(); void ToggleApolloMode(); void ToggleApolloGuide();
  UPROPERTY() TObjectPtr<class ULunarPanel> ActivePanel;
  bool PanelWasPaused=false;
@@ -93,6 +96,7 @@ public:
  void PoseSuitRig();
  FVector PlantedFeet[2]; bool FootPlanted[2]={false,false};
  UPROPERTY() TObjectPtr<class UStaticMeshComponent> CarriedModule;
+ UPROPERTY() TObjectPtr<class UStaticMeshComponent> BodyCarryItem;
  FVector PausedVelocity=FVector::ZeroVector;
  UPROPERTY(VisibleAnywhere, BlueprintReadOnly) TObjectPtr<class UCameraComponent> Camera;
 };
@@ -114,6 +118,15 @@ public:
  void NasaUIReview();
  void HUDReferenceReview();
  void FeedbackAssetChecks();
+ void GameplayTaskChecks(); void GameplayTaskReview();
+ void ValidateFieldOperationsChecks(); void ValidateFieldOperationsReview();
+ UPROPERTY() TObjectPtr<class UFieldOperationsComponent> FieldOperations;
+ UPROPERTY() TObjectPtr<class ALunarDepartureScene> DepartureScene;
+ bool DepartureAuthorizedNewRun=false;
+ void CommitMissionStart();
+ UPROPERTY() TArray<TObjectPtr<AActor>> CrewActors;
+ int32 CrewSpeaker=0,CrewTalkCount=0;
+ LunarWater::FState WaterStudy;
  bool Apollo=false, Journal=false;
  bool ApolloTimed=false;
  bool ApolloToolsEnabled=true;

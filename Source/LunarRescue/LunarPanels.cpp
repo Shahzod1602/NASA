@@ -1,6 +1,8 @@
 #include "LunarPanels.h"
 #include "LunarTrailMap.h"
 #include "LunarDiagnostics.h"
+#include "LunarCrew.h"
+#include "Components/WrapBox.h"
 #include "LunarSettings.h"
 #include "LunarGame.h"
 #include "Blueprint/WidgetTree.h"
@@ -146,7 +148,7 @@ void ULunarPanel::Rebuild(){
  else Body->ClearChildren();
  auto Add=[&](UWidget* W){auto* RowLayout=Body->AddChildToVerticalBox(W);RowLayout->SetPadding(FMargin(4,7));};
  auto* G=Game(this);Add(Text(WidgetTree,Settings?TEXT("SETTINGS"):G&&(G->Stage==ELunarStage::Won||G->Stage==ELunarStage::Lost)?TEXT("EXPEDITION DEBRIEF"):ShowFieldLessons||G&&!G->Apollo?TEXT("FIELD NOTEBOOK"):TEXT("EVIDENCE ALBUM"),30));
- auto* Top=WidgetTree->ConstructWidget<UHorizontalBox>();Add(Top);auto* Back=Button(WidgetTree,TEXT("Close / Esc / F1"));Back->OnClicked.AddDynamic(this,&ULunarPanel::Close);Top->AddChild(Back);
+ auto* Top=WidgetTree->ConstructWidget<UWrapBox>();Top->SetInnerSlotPadding(FVector2D(6,6));Top->SetExplicitWrapSize(true);Top->SetWrapSize(EvidenceContentWidth()-24);Add(Top);auto* Back=Button(WidgetTree,TEXT("Close / Esc / F1"));Back->OnClicked.AddDynamic(this,&ULunarPanel::Close);Top->AddChild(Back);
  if(Settings){
   auto* Reset=Button(WidgetTree,TEXT("Restore defaults"));Reset->OnClicked.AddDynamic(this,&ULunarPanel::ResetSettings);Top->AddChild(Reset);
   Add(Text(WidgetTree,TEXT("Changes save automatically. Text size is applied to the game when this panel closes. Scroll for key bindings. Esc and F1 always return to the game."),18));
@@ -157,9 +159,13 @@ void ULunarPanel::Rebuild(){
  if(!G)return;
  if(G->Apollo){auto* MapButton=Button(WidgetTree,ShowExpeditionMap?TEXT("Photos & cargo"):TEXT("My Expedition / map"));MapButton->OnClicked.AddDynamic(this,&ULunarPanel::ToggleExpeditionMap);Top->AddChild(MapButton);}
  auto* Lessons=Button(WidgetTree,ShowFieldLessons?(G->Apollo?TEXT("Photos & cargo"):TEXT("Notebook overview")):TEXT("Field lessons"));Lessons->OnClicked.AddDynamic(this,&ULunarPanel::ToggleFieldLessons);Top->AddChild(Lessons);
+ auto* Crew=Button(WidgetTree,TEXT("Mission Crew"));Crew->OnClicked.AddDynamic(this,&ULunarPanel::ToggleCrew);Top->AddChild(Crew);
+ if(!G->Mars){auto* Water=Button(WidgetTree,G->WaterStudy.Recorded?TEXT("Water Research / recorded"):TEXT("Water Research"));Water->OnClicked.AddDynamic(this,&ULunarPanel::ToggleWaterStudy);Top->AddChild(Water);}
+ if(ShowCrew){LunarCrew::BuildNotebook(this);return;}
+ if(ShowWaterStudy){BuildWaterStudy();return;}
  if(ShowFieldLessons){BuildFieldLessons();return;}
  if(!ShowExpeditionMap)LunarDiagnostics::BuildNotebook(this);
- if(!G->Apollo){Add(Text(WidgetTree,TEXT("FIELD LESSONS"),27));Add(Text(WidgetTree,TEXT("Review three optional field lessons to distinguish measured planetary data, authored scenery and gameplay rules. Select Field lessons above to begin."),21));return;}
+ if(!G->Apollo){if(!G->Mars&&G->WaterStudy.Step>0)Add(Text(WidgetTree,LunarWater::StateSummary(G->WaterStudy),18));Add(Text(WidgetTree,TEXT("FIELD LESSONS"),27));Add(Text(WidgetTree,TEXT("Review three optional field lessons to distinguish measured planetary data, authored scenery and gameplay rules. Select Field lessons above to begin."),21));return;}
  if(ShowExpeditionMap){
   Add(Text(WidgetTree,TEXT("MY EXPEDITION"),27));
   Add(Text(WidgetTree,TEXT("Gold solid line: your recorded walk. Thin cyan line: reconstructed historical traverse."),18));
@@ -198,9 +204,9 @@ void ULunarPanel::Rebuild(){
  Add(Text(WidgetTree,TEXT("Historical note: this chapter combines selected work from two EVAs. Tool motions, single-player operation and simplified ALSEP alignment are authored gameplay. Core 12027 used a drive tube, not a powered drill. Terrain uses modern LROC orbital data. Sources: nasa.gov/history/alsj/a12/ and the bundled Credits/Apollo12 files."),17));
  if(!G->ApolloTranscript.IsEmpty())Add(Text(WidgetTree,TEXT("RECENT RADIO SUBTITLES\n")+FString::Join(G->ApolloTranscript,TEXT("\n")),18));
 }
-FReply ULunarPanel::NativeOnKeyDown(const FGeometry& Geo,const FKeyEvent& E){if(E.GetKey()==EKeys::Escape||E.GetKey()==EKeys::F1){Close();return FReply::Handled();}if(!Settings&&ShowFieldLessons&&(E.GetKey()==EKeys::One||E.GetKey()==EKeys::Two)){if(E.GetKey()==EKeys::One)AnswerFieldLessonA();else AnswerFieldLessonB();return FReply::Handled();}if(!Settings&&(E.GetKey()==EKeys::Right||E.GetKey()==EKeys::Q)){Next();return FReply::Handled();}if(!Settings&&E.GetKey()==EKeys::Left){Previous();return FReply::Handled();}return Super::NativeOnKeyDown(Geo,E);}
+FReply ULunarPanel::NativeOnKeyDown(const FGeometry& Geo,const FKeyEvent& E){if(E.GetKey()==EKeys::Escape||E.GetKey()==EKeys::F1){Close();return FReply::Handled();}if(!Settings&&ShowWaterStudy){if(E.IsRepeat()&&(E.GetKey()==EKeys::One||E.GetKey()==EKeys::Two||E.GetKey()==EKeys::Three||E.GetKey()==EKeys::Enter))return FReply::Handled();if(E.GetKey()==EKeys::One){WaterAnswerA();return FReply::Handled();}if(E.GetKey()==EKeys::Two){WaterAnswerB();return FReply::Handled();}if(E.GetKey()==EKeys::Three){WaterAnswerC();return FReply::Handled();}if(E.GetKey()==EKeys::Enter){CommitWaterReport();return FReply::Handled();}}if(!Settings&&(ShowWaterStudy||ShowCrew))return Super::NativeOnKeyDown(Geo,E);if(!Settings&&ShowFieldLessons&&(E.GetKey()==EKeys::One||E.GetKey()==EKeys::Two)){if(E.GetKey()==EKeys::One)AnswerFieldLessonA();else AnswerFieldLessonB();return FReply::Handled();}if(!Settings&&(E.GetKey()==EKeys::Right||E.GetKey()==EKeys::Q)){Next();return FReply::Handled();}if(!Settings&&E.GetKey()==EKeys::Left){Previous();return FReply::Handled();}return Super::NativeOnKeyDown(Geo,E);}
 void ULunarPanel::Close(){ULunarSettings::Get()->RevertDisplay();if(auto* P=Player(this))P->ClosePanel();}
-void ULunarPanel::ToggleExpeditionMap(){ShowFieldLessons=false;ShowExpeditionMap=!ShowExpeditionMap;Rebuild();}
+void ULunarPanel::ToggleExpeditionMap(){ShowCrew=ShowWaterStudy=ShowWaterSources=false;ShowFieldLessons=false;ShowExpeditionMap=!ShowExpeditionMap;Rebuild();}
 void ULunarPanel::Previous(){if(ShowFieldLessons){PreviousFieldLesson();return;}if(auto* G=Game(this))EvidenceIndex=(EvidenceIndex+FMath::Max(1,G->ApolloEvidence.Num())-1)%FMath::Max(1,G->ApolloEvidence.Num());Rebuild();}
 void ULunarPanel::Next(){if(ShowFieldLessons){NextFieldLesson();return;}if(auto* G=Game(this))EvidenceIndex=(EvidenceIndex+1)%FMath::Max(1,G->ApolloEvidence.Num());Rebuild();}
 void ULunarPanel::ResetSettings(){ULunarSettings::Get()->Reset();ULunarSettings::Get()->Apply(Player(this));Rebuild();}

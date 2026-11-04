@@ -1,5 +1,44 @@
 # Credits va litsenziya holati
 
+## Modern field-training additions — 4 November 2026
+
+Training rover geometry, wheels, sampler proxy props, magnifier, resource-board
+presentation and pre-EVA/wire code are authored project work assisted by Codex.
+All previous material, engine-mesh and science credits remain applicable. NASA's
+SEV model is linked for reference only; it was not imported by this update.
+Water-study publication credits remain with their authors and NASA mission
+sources. Third-party material is not automatically relicensed under code terms.
+No project licence was changed; that choice remains with the author.
+[The asset catalogue](Docs/FieldOperations20261104/STORY_AND_REFERENCES.md)
+separates references, implemented proxies and future art work.
+
+## Authored gameplay and LCROSS study — 3 November 2026
+
+The departure cabin, carry presentation, PIP-3 robot, Dr. Mira Vale communicator,
+scripted guidance, research UI/data model and checks are project-authored work
+with OpenAI Codex AI coding/research/documentation assistance. Retained Unreal
+basic shapes and existing project materials/models are reused. No new external
+robot, human scan, rigged scientist, voice recording or cabin model is claimed as
+obtained by this pass. Mira is fictional, not an Apollo astronaut or NASA employee.
+
+The optional LCROSS record transcribes/paraphrases factual estimates from
+[Colaprete et al. (2010), Science](https://doi.org/10.1126/science.1186986)
+and the [official PubMed record](https://pubmed.ncbi.nlm.nih.gov/20966242/).
+[NASA LCROSS](https://science.nasa.gov/mission/lcross/) and
+[NASA quick facts](https://ntrs.nasa.gov/api/citations/20130014470/downloads/20130014470.pdf)
+support context; [PDS](https://pds-geosciences.wustl.edu/missions/lcross/default.htm)
+is cited as the instrument archive. The game bundles a derived facts summary,
+not a copied abstract, journal figure/PDF or raw spectrum. See
+[water credits](SourceArt/LunarWater/CREDITS.md) and
+[checksum manifest](Content/Science/LunarWater/manifest.json).
+
+Attribution does not imply NASA endorsement, partnership, training accuracy or a
+new local-water discovery. Final local build/test/review evidence is in [TEST_REPORT](TEST_REPORT.md).
+Existing Unreal, NASA model/LROC, battery, tool, suit/material and third-party
+terms remain intact. The unresolved project code-licence issue below is unchanged;
+no blanket licence is applied to external material.
+
+
 ## Local feedback additions - 2 November 2026
 
 The borderless HUD presentation, compact loading typography, read-only mission

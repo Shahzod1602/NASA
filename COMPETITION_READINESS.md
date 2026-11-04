@@ -1,5 +1,29 @@
 # Space Apps 2026: eligibility status
 
+## Follow-up check — 4 November 2026
+
+**Eligibility remains unconfirmed.** This field-training iteration is independent
+product development before the 14–15 November 2026 event; it is not represented
+as event-only work. The v0.2.0 release and earlier code/assets remain pre-existing
+work. Dates and Git history are retained.
+
+The complete current official challenge text and applicable prior-work/reuse
+permission could not be verified. An indexed 7 August 2026 global legal document
+and a local Santiago rule are not a substitute for the full applicable challenge
+and global reuse terms. The local rule must not be applied as a global permission.
+See [checked links and limits](Docs/FieldOperations20261104/SCIENCE_RESEARCH.md).
+
+Question prepared for the organizers, **not sent**:
+
+> May our team reuse and disclose the pre-event LunarRescue repository, releases,
+> authored assets and this independently developed training extension, and which
+> parts must be created during the official 2026 event? Please point us to the
+> applicable global rules and complete challenge requirements.
+
+If event-only development is required, the competition-specific implementation
+must remain in the event backlog. No submission, eligibility claim, challenge
+selection or guessed presentation-duration/slide limit is authorized by this work.
+
 ## Current revalidation - 1 November 2026, Asia/Tashkent
 
 **Eligibility is not confirmed.** No current full 2026 challenge has been read

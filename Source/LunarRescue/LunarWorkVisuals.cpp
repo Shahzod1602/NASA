@@ -1,5 +1,6 @@
 #include "LunarGame.h"
 #include "LunarPovMotion.h"
+#include "LunarCarryPresentation.h"
 #include "Camera/CameraComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/TextRenderComponent.h"
@@ -40,21 +41,24 @@ void ALunarCharacter::BeginApolloWork(AActor* Source){
 
 void ALunarCharacter::UpdateApolloWorkVisuals(){
  auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));WorkGripActive=false;
+ // Clear the previous mission/view before an early return; camera-only payloads
+ // must not survive a panel, pause, photograph or mission/view switch.
+ for(UStaticMeshComponent* C:{WorkTool.Get(),SamplePouch.Get(),WorkPayload.Get(),DrivenTube.Get(),PouchSeal.Get()})if(C)C->SetVisibility(false);
+ if(PouchLabel)PouchLabel->SetVisibility(false);for(const auto& Jaw:ToolJaws)if(Jaw)Jaw->SetVisibility(false);
  if(!G||!G->Apollo)return;
  PrepareApolloWorkAssets();if(!WorkTool)return;
- const bool Show=!ThirdPerson&&!ActivePanel&&PhotoCaptureFrames<=0&&!(FScreenshotRequest::IsScreenshotRequested()&&!FScreenshotRequest::ShouldShowUI())&&G->IsActive();
- WorkTool->SetVisibility(false);SamplePouch->SetVisibility(false);WorkPayload->SetVisibility(false);DrivenTube->SetVisibility(false);PouchSeal->SetVisibility(false);PouchLabel->SetVisibility(false);for(const auto& Jaw:ToolJaws)Jaw->SetVisibility(false);
- if(!Show)return;
+ if(!LunarCarryPresentation::ShouldShow(this,G,true))return;
  const int Tool=G->ApolloTool,Phase=G->ApolloToolPhase;
  const float RawMotion=1-LunarPovMotion::Ratio(G->ApolloToolCooldown,.75f);
  const float T=ApolloWorkMinimumJerk(RawMotion);
  const FTransform View=Camera->GetComponentTransform();
  auto Local=[&](FVector P){return View.InverseTransformPosition(P);};
  auto AssignToolMesh=[&](UStaticMeshComponent* C,const TCHAR* Name){C->SetStaticMesh(ApolloToolMeshes.FindRef(FName(Name)));C->SetVisibility(C->GetStaticMesh()!=nullptr);};
- auto Payload=[&](FVector P,bool Soil){
+ auto Payload=[&](FVector P,bool Soil,UStaticMeshComponent* Recorded=nullptr){
+  const FTransform SourceFrame=Recorded?Recorded->GetComponentTransform():WorkSourceTransform;
   if(Soil){WorkPayload->SetStaticMesh(ApolloToolMeshes.FindRef(TEXT("PayloadSphere")));WorkPayload->SetMaterial(0,WorkSoilMaterial);WorkPayload->SetRelativeScale3D(FVector(.08,.08,.025));}
-  else if(auto* Source=WorkSourceMesh.Get()){WorkPayload->SetStaticMesh(Source->GetStaticMesh());for(int I=0;I<Source->GetNumMaterials();++I)WorkPayload->SetMaterial(I,Source->GetMaterial(I));WorkPayload->SetWorldScale3D(WorkSourceTransform.GetScale3D());}
-  WorkPayload->SetWorldLocation(P);WorkPayload->SetWorldRotation(WorkSourceTransform.Rotator());WorkPayload->SetVisibility(WorkPayload->GetStaticMesh()!=nullptr);
+  else if(auto* Source=Recorded?Recorded:WorkSourceMesh.Get()){WorkPayload->SetStaticMesh(Source->GetStaticMesh());for(int I=0;I<Source->GetNumMaterials();++I)WorkPayload->SetMaterial(I,Source->GetMaterial(I));WorkPayload->SetWorldScale3D(SourceFrame.GetScale3D());}
+  WorkPayload->SetWorldLocation(P);WorkPayload->SetWorldRotation(SourceFrame.Rotator());WorkPayload->SetVisibility(WorkPayload->GetStaticMesh()!=nullptr);
  };
  // The soft pouch stays open until the final seal input. The committed preview
  // deposits the sample, closes the lip, then lowers it without blocking walking.
@@ -81,7 +85,11 @@ void ALunarCharacter::UpdateApolloWorkVisuals(){
  }
  if(G->ApolloPackedPartRemaining>0){
   const float Move=ApolloWorkMinimumJerk((2.2f-G->ApolloPackedPartRemaining)/.7f),Drop=ApolloWorkMinimumJerk((1-G->ApolloPackedPartRemaining)/1.2f)*45;
-  Payload(FMath::Lerp(WorkSourceTransform.GetLocation(),View.TransformPosition(FVector(105,10,-18-Drop)),Move),false);
+  // A new tool may update WorkSource before this old committed preview ends.
+  // Resolve the recorded part, rather than substituting the new work target.
+  auto* Packed=G->ApolloPartActors.IsValidIndex(G->ApolloPackedPart)?SourceMesh(G->ApolloPartActors[G->ApolloPackedPart]):nullptr;
+  if(!Packed||!Packed->GetStaticMesh()){WorkGripActive=false;return;}
+  Payload(FMath::Lerp(Packed->GetComponentLocation(),View.TransformPosition(FVector(105,10,-18-Drop)),Move),false,Packed);
   WorkGrip[0]=FVector(65,-6,-29-Drop);WorkGrip[1]=FVector(65,18,-29-Drop);WorkGripActive=true;return;
  }
  if(Packing&&Sample==2){AssignToolMesh(WorkTool,TEXT("SM_DriveTube"));WorkTool->SetRelativeLocation(FVector(51,0,-15-ApolloWorkMinimumJerk((1-G->ApolloPackedPreviewRemaining)/1.2f)*35));WorkTool->SetRelativeRotation(FRotator(0,0,12));WorkTool->SetRelativeScale3D(FVector::OneVector);WorkGrip[0]=WorkTool->GetRelativeLocation()+FVector(-7,-5,0);WorkGrip[1]=WorkTool->GetRelativeLocation()+FVector(-7,5,0);WorkGripActive=true;return;}

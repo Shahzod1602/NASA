@@ -1,4 +1,8 @@
 #include "LunarGame.h"
+#include "LunarFieldOperations.h"
+#include "LunarSurfaceVehicle.h"
+#include "LunarDeparture.h"
+#include "LunarWaterStudy.h"
 #include "LunarCargoFinale.h"
 #include "LunarPhotos.h"
 #include "LunarApolloText.h"
@@ -186,8 +190,11 @@ void ALunarGameMode::BuildApollo() {
  if(FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveTest"))||FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveWriteTest"))||FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveReadTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ApolloSaveChecks,3,false);}
 }
 void ALunarGameMode::StartApollo(bool Confirmed){
+ ALunarDepartureScene::Abort(this);DepartureAuthorizedNewRun=false;
  CancelApolloTool();ApolloLevel=FVector2D(.4f,-.3f);ApolloTranscript.Reset();
  if(!Confirmed&&ApolloSaveStatus!=EApolloSaveStatus::Missing){ApolloConfirmNew=true;return;}
+ if(FieldOperations&&FieldOperations->Enabled)FieldOperations->ResetNewRun(Stage==ELunarStage::Briefing&&FieldOperations->Prepared);
+ LunarWater::Reset(WaterStudy);CrewTalkCount=0;CrewSpeaker=0;
  ApolloInputHintRemaining=0;
  ApolloConfirmationRemaining=0;ApolloConfirmationLabel=TEXT("RECORDED");ApolloToolFeedback.Reset();ApolloToolFeedbackRemaining=0;ApolloPackedPreviewRemaining=0;ApolloPackedSample=INDEX_NONE;ApolloGuideEnabled=ULunarSettings::Get()->TutorialHints;ApolloDustMode=false;ApolloDustCompared=false;ApolloDustPhotos=0;ApolloPackedPartRemaining=0;
  ALunarCargoFinale::Reset(this);
@@ -200,6 +207,7 @@ void ALunarGameMode::StartApollo(bool Confirmed){
  ApolloLookLearned=false;ApolloMoveLearned=false;
  if(auto* P=UGameplayStatics::GetPlayerPawn(this,0)){ApolloTutorialOrigin=P->GetActorLocation();ApolloTutorialAim=P->GetControlRotation();}
  Message(ApolloText::Get(TEXT("StartMessage")));
+ if(FieldOperations)FieldOperations->OnMissionCommitted();
  SaveApolloCheckpoint();
 }
 int32 ALunarGameMode::ApolloStep() const {return Stage==ELunarStage::Won?6:Stage>=ELunarStage::ApolloCheckout&&Stage<=ELunarStage::ApolloReturn?int32(Stage)-int32(ELunarStage::ApolloCheckout):0;}
@@ -347,9 +355,10 @@ void ALunarGameMode::TickApollo(float D){
  if(!Paused)ApolloSaveNoticeRemaining=FMath::Max(0.f,ApolloSaveNoticeRemaining-FMath::Max(0.f,D));
  if(IsActive()&&!Paused&&P){
   if(ApolloDustMode&&DroneActor&&FVector::Dist2D(P->GetActorLocation(),DroneActor->GetActorLocation())>1200){CancelApolloTool();ApolloDustMode=false;}
-  ApolloElapsed+=FMath::Max(0.f,D);float Distance=FVector::Dist2D(P->GetActorLocation(),ApolloLastPosition);if(Distance<300)ApolloDistance+=Distance/100;
-  RecordApolloTrail(P->GetActorLocation(),D,FMath::IsFinite(Distance)&&Distance<300);
-  if(Stage==ELunarStage::ApolloCheckout){
+  const bool Riding=ALunarSurfaceVehicle::IsRiding(this);
+  ApolloElapsed+=FMath::Max(0.f,D);float Distance=FVector::Dist2D(P->GetActorLocation(),ApolloLastPosition);if(!Riding&&Distance<300)ApolloDistance+=Distance/100;
+  if(!Riding)RecordApolloTrail(P->GetActorLocation(),D,FMath::IsFinite(Distance)&&Distance<300);else ApolloTrailPendingBreak=true;
+  if(Stage==ELunarStage::ApolloCheckout&&!Riding){
    const FRotator Aim=P->GetControlRotation();
    ApolloLookLearned|=FMath::Abs(FMath::FindDeltaAngleDegrees(ApolloTutorialAim.Yaw,Aim.Yaw))>18||FMath::Abs(FMath::FindDeltaAngleDegrees(ApolloTutorialAim.Pitch,Aim.Pitch))>12;
    ApolloMoveLearned|=FVector::Dist2D(P->GetActorLocation(),ApolloTutorialOrigin)>150;
@@ -359,7 +368,7 @@ void ALunarGameMode::TickApollo(float D){
    Stage=ELunarStage::ApolloRecover;SelectedSample=0;Message(ApolloText::Get(TEXT("SurveyorReached")));
    SaveApolloCheckpoint();
   }
-  if(auto* Character=Cast<ALunarCharacter>(P);Character&&Character->GetCharacterMovement()->IsMovingOnGround()){ApolloSafePosition=P->GetActorLocation();ApolloSafeView=P->GetControlRotation();ApolloHasSafePosition=true;}
+  if(auto* Character=Cast<ALunarCharacter>(P);!Riding&&Character&&Character->GetCharacterMovement()->IsMovingOnGround()){ApolloSafePosition=P->GetActorLocation();ApolloSafeView=P->GetControlRotation();ApolloHasSafePosition=true;}
  }
  if(Paused&&P&&FVector::Dist2D(P->GetActorLocation(),ApolloLastPosition)>.1f)ApolloTrailPendingBreak=true;
  if(P)ApolloLastPosition=P->GetActorLocation();

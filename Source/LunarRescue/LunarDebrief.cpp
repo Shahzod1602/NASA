@@ -1,4 +1,5 @@
 #include "LunarGame.h"
+#include "LunarFieldOperations.h"
 #include "LunarLearning.h"
 
 namespace {
@@ -18,7 +19,9 @@ TArray<FString> ALunarGameMode::ApolloDebriefLines() const {
  else Lines.Add(TEXT("Optional investigation: no coating comparison was recorded. It is not required to return the primary cargo."));
  Lines.Add(ApolloTimed?TEXT("Timed exercise budget remaining: ")+DebriefBudgetClock(Oxygen,OxygenCapacity)+TEXT(". This is a gameplay time budget, not suit endurance."):TEXT("Historical exploration had no exercise deadline. The mission clock and recorded horizontal distance describe this attempt."));
  Lines.Add(TEXT("NASA data in play: LROC elevations shape the ground and work-site heights. Lander detail, small fragments and tool motions are authored presentation."));
+ if(WaterStudy.Step>0)Lines.Add(LunarWater::StateSummary(WaterStudy));
  const FString Lessons=LunarLearning::SessionSummary(this);if(!Lessons.IsEmpty())Lines.Add(Lessons);
+ if(FieldOperations&&FieldOperations->Enabled&&FieldOperations->Briefed)Lines.Add(FieldOperations->Summary());
  return Lines;
 }
 FString ALunarGameMode::ApolloRetryAdvice() const {

@@ -1,0 +1,11 @@
+{
+  "restored": "Saved/Config/WindowsEditor/EditorPerProjectUserSettings.ini",
+  "expected_sha256": "af0ab4507ab67296941ed1a8c3e21921cef040a794edac85e37c3c509954681e",
+  "generated_sha256": "129a848bfe9d59543d021a9d18d40b6257a90b4a35f7def28bc1c7f66e521b09",
+  "backup_verified": true,
+  "changed_keys": [
+    "-LunarRescue.TimeStamp",
+    "+LunarRescue.TimeStamp"
+  ],
+  "scope": "Only the task-generated editor settings difference was restored; original player data retained."
+}

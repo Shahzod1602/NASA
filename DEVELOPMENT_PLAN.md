@@ -1,6 +1,53 @@
 # Development plan
 
-## Current local work - 2 November 2026 (unreleased)
+## Current local work — 4 November 2026
+
+Completed and locally verified: ordered EVA gate, mandatory budget preview/lock,
+actual-position support map/navigation, authored four-wheel rover and safe exits,
+shared utility, optical inspection and limited training cargo, rescue wire matching,
+strict additive Apollo state, source notes and local session totals. Editor and
+Windows game built; final packaged functional/rendered/UI and all 16 legacy suites
+passed. Exact executable-specific evidence is in the current TEST_REPORT.
+
+Next three priorities:
+
+1. Run the prepared protocol with real new players when participants are available.
+   Human participants/results remain zero; scripted fixtures do not establish learning.
+2. Improve production art: gripping hand/rover driver, less faceted magnifier,
+   readable world labels and sampler detail. Measure sustained driving/scanning and
+   complete-route traversal before claiming whole-mission smoothness.
+3. Verify a complete official 2026 challenge and prior-work permission before an
+   entry; keep competition-specific implementation in the event backlog if required.
+
+Budget/finance remains deferred by task scope. No NASA SEV mesh was imported and
+no new measured Mars terrain/water raster is claimed. Existing primary missions
+remain separate from the fictional modern training extension.
+
+## Current local work - 3 November 2026
+
+Implemented: authored departure/handover, bounded carried-object presentation,
+fictional crew advice and optional remote LCROSS evidence decisions. These reuse
+retained assets and preserve historical cargo, the rescue dependency chain and
+version-one save compatibility. See the [feature guide](Docs/Gameplay20261103/FEATURE_GUIDE.md)
+and [current validation/limitations](TEST_REPORT.md). Existing NASA terrain is
+unchanged; the water record is a publication-facts dataset, not raw spectra or
+water detected at the playable landing site.
+
+The next three priorities are:
+
+1. Build the measured-terrain Moon A/B route planner with forecasts derived from
+   the same live movement/resource rules and a session-based route debrief.
+2. Run the prepared novice playtest when participants are available. Record
+   completion, before/after comprehension and confusing moments without
+   inventing learning gains or treating scripted fixtures as people.
+3. Improve authored cabin/crew art and held-object animation one asset at a time,
+   verifying licence, proportions, contacts and matched-condition performance.
+
+Space Apps eligibility remains a separate unresolved assessment. Product work
+and old/new-work documentation do not establish challenge acceptance.
+
+
+## Previous local work - 2 November 2026 (unreleased)
 
 Implemented: borderless mission/resource HUD text with state-driven counters and
 hold feedback, compact measured loading typography, optional read-only I

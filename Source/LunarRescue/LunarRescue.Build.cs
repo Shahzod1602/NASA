@@ -6,6 +6,6 @@ public class LunarRescue : ModuleRules {
   PCHUsage = PCHUsageMode.NoPCHs;
   // File-local helpers must remain isolated in clean and adaptive builds.
   bUseUnity = false;
-  PublicDependencyModuleNames.AddRange(new string[]{"Core","CoreUObject","Engine","InputCore","UMG","Slate","SlateCore","ImageWriteQueue","MoviePlayer"});
+  PublicDependencyModuleNames.AddRange(new string[]{"Core","CoreUObject","Engine","InputCore","UMG","Slate","SlateCore","ImageWriteQueue","MoviePlayer","Json"});
  }
 }

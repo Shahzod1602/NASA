@@ -1,0 +1,39 @@
+{
+  "schema":1,
+  "reviewer":"flight_hud",
+  "reviewed_on":"2026-11-04",
+  "root":"D:/LunarRescue/Reports/FieldOperations20261104/editor-review-1280x720-20261104-063002-536",
+  "runtime":"Editor game DX11 synthetic rendered review",
+  "game_module_sha256":"6746103a5f26e16f73820b81d68c360e5ee26ea78f5c664fa7ef443d90459f64",
+  "source_fingerprint_sha256":"e8b4a67d73a7e3bef3e864e9a37e91dd5b73bf71ad1f9a032fd41233e6c7f48a",
+  "operations_panel_cpp_sha256":"59337051a10f791a797530c7f3f163c550c5b368b7693aed56bb3765eff27137",
+  "review_cpp_sha256":"777323d445270f760282868815f62621b7e197f28c25e3fab9356ec76e933d23",
+  "human_playtest":false,
+  "performance_measurement":false,
+  "source_or_engine_mutated":false,
+  "reviewed_count":9,
+  "verdict":"VISUAL SIGNOFF for the nine actually opened 720p 150%-text UI frames. No material unreadable/clipped control or allocated-text defect found in these frames.",
+  "findings":[
+    {"id":"resource150-wrap","status":"resolved-in-inspected-render","evidence":"resources150 in Apollo, SELENE and Mars","observation":"Explicit text wrap is stable and readable. Top/bottom text cropped by the scroll viewport is expected scrolling, not an allocated-row defect. All three resource-map screenshots passed the unchanged strict layout checks."},
+    {"id":"overlapping-map-numbers","status":"resolved-in-inspected-render","evidence":"resources150 in all three missions","observation":"All numbered labels are separate legible callouts. Leader lines point to unchanged actual star coordinates; the Apollo orbital texture and rescue local-world grids are identified correctly. Leader lines remain visually busy, a cosmetic limitation."},
+    {"id":"briefing150","status":"visually-confirmed","evidence":"briefing150 in all three missions","observation":"Difficulty choices, selected Professional state, factual lander status and proposed budgets are readable. Remaining content and confirmation control continue below the scroll fold; the screenshot is not a proof of an entire human confirmation flow."},
+    {"id":"wire150","status":"visually-confirmed","evidence":"wire150 in all three missions","observation":"SELENE and Mars show readable source/socket identifiers, text plus color, one verified connection of four and selected source B. Apollo clearly shows read-only rescue context with no active cable-action buttons."}
+  ],
+  "limits":[
+    "Only the nine listed PNGs were actually opened in this review; the wrapper generated sixty frames and passed 154 assertions overall.",
+    "This signoff is for Editor 1280x720 UI only. It does not claim final packaged, 1080p, continuous animation, performance or human playtest verification.",
+    "A faint background HUD/pause overlay remains visible through the dark translucent panel; readability was adequate in the inspected frames.",
+    "World rover/magnifier/sampler graphics were not part of this nine-frame signoff."
+  ],
+  "frames":[
+    {"path":"apollo/resources150.png","sha256":"3c780632842cba79bd5e11e99163620f0e518ccd3c361c4647ac90cbcca319d0","width":1280,"height":720,"actually_viewed":true},
+    {"path":"apollo/briefing150.png","sha256":"5d244c326fd09a81e78e8f51581c2e933fa891ec9a4913ac706b1eed8ba8f69f","width":1280,"height":720,"actually_viewed":true},
+    {"path":"apollo/wire150.png","sha256":"1604d7a8c828b6f7efe875d429cda83ec46e25b1f2aa91cfbb3b535d91f0f492","width":1280,"height":720,"actually_viewed":true},
+    {"path":"selene/resources150.png","sha256":"34395167179a89579d7bd9c8026b644338dd5d80ad53819dda18b7840393a225","width":1280,"height":720,"actually_viewed":true},
+    {"path":"selene/briefing150.png","sha256":"532dad3b24e7d67c706acab50c48435477faf96f768989ddc3a3863d75859fcf","width":1280,"height":720,"actually_viewed":true},
+    {"path":"selene/wire150.png","sha256":"bf6b4a50353de0c6ac3889f896f36b5b0a044519391de01eef1044ca03a1a689","width":1280,"height":720,"actually_viewed":true},
+    {"path":"mars/resources150.png","sha256":"dbec376895a84cdf1c24874bafa6962b1785f98a4a7951ef00dac5b74324530b","width":1280,"height":720,"actually_viewed":true},
+    {"path":"mars/briefing150.png","sha256":"73b994ec5ccacc46cce2c6abc87b8a169293e6bc9aff207424ea0de48e7f5a20","width":1280,"height":720,"actually_viewed":true},
+    {"path":"mars/wire150.png","sha256":"4248e75feff78a00469156470d3d927bd6136ed9ef981b7bf7714b3428d7ce53","width":1280,"height":720,"actually_viewed":true}
+  ]
+}

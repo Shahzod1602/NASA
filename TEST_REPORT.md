@@ -1,5 +1,243 @@
 # Test reports
 
+## 2026-11-04 — Field operations: yakuniy mahalliy Windows build
+
+**4 018 C++ PASS bajarilishi / 0 FAIL; 16/16 eski suite; 280 PNG va 8 pixel-pair
+tekshiruvi.** Bular takroriy missiya, render va resolution urinishlarini ham sanaydi;
+4 018 noyob test yoki inson sinovi degani emas.
+
+Final inner executable SHA256: 08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a
+Base Git commit: 54140321bb2607b836aa9ae12da468e9f56bf531. Build va quyidagi tekshiruvlar local/unreleased holatda bajarilgan. Keyingi
+foydalanuvchi ko‘rsatmasi bilan v0.8.0 GitHub relizi va NASA guruhiga xabar
+tayyorlandi; bu lokal tekshiruvning asl sanasi va compile provenance’ini o‘zgartirmaydi.
+
+| Dalil | PASS execution | Raw report | PNG |
+|---|---:|---:|---:|
+| Yangi Field Operations NullRHI + DX11 functional, uch missiya | 1310 | 6 | 0 |
+| Yangi 720p/1080p UI + actual-world review | 308 | 6 | 120 |
+| Mavjud 16 suite regressiyasi | 2400 | 55 | 160 |
+| Jami | 4018 | 67 | 280 |
+
+Yangi receiptlar to‘liq va ayni executable bilan bog‘langan. Eski suite reportlari
+fresh, alohida nusxalar; wrapper PASS qatorlari yoki fixed-output dublikatlari hisobga
+qo‘shilmadi. Sakkiz carry pixel-pair tekshiruvi alohida tasdiqlandi.
+[Verification index](Docs/FieldOperations20261104/verification-index.json),
+[legacy dalili](Docs/FieldOperations20261104/legacy-verification.json) va
+[bundle auditi](Docs/FieldOperations20261104/bundle-verification.json) tafsilot beradi.
+
+Muhit: Windows 11 x64, Ryzen 5 6600H, RTX 3050 Laptop GPU, taxminan16GB RAM,
+Unreal Engine5.8.3, MSVC14.44/WindowsSDK22621. Editor va game build muvaffaqiyatli;
+full cook717 package, UAT ExitCode0. Keyingi test-fikstura o‘zgarishlarida faqat
+tegishli C++ modullar qayta yig‘ildi va mavjud cookdan StageOnly bajarildi.
+
+Asosiy buyruqlar:
+
+    Tools/package_apollo12.ps1 -MaxCompileActions 2
+    Tools/verify_field_operations.ps1 -Packaged
+    Tools/verify_field_operations.ps1 -Packaged -Rendered
+    Tools/verify_field_operations.ps1 -Packaged -Review -Width 1280 -Height 720
+    Tools/verify_field_operations.ps1 -Packaged -Review -Width 1920 -Height 1080
+    Tools/verify_gameplay_regression.ps1
+    Tools/profile_mission_menu.ps1 -Label fieldops-20261104-after -Frames 1800 -Quality 1
+    Tools/profile_apollo12.ps1 -Label fieldops-20261104-after -Frames 1800 -Quality 1
+    Tools/profile_apollo12.ps1 -Label fieldops-20261104-enabled -Frames 1800 -Quality 1 -FieldOperationsProfile
+
+Tekshirilgan xatti-harakatlar: ordered EVA/skip/pause; yopilgan rejalashtirishdan
+bepul vaqt olmaslik; bir martalik difficulty va resurslar; B/G reserved/fallback;
+haqiqiy ko‘rish chizig‘i va blocker; 0.4MB aniq chegara; cargo limiti/deposit;
+recharge/downlink bilan native kislorod va pause; rescue wire isolation/matching;
+swept rover/wheel/battery, blocked/zero-charge exit va EndPlay; native piyoda
+telemetriyaga transport/dismount sakrashini qo‘shmaslik; strict JSON type/mask/units,
+legacy/invalid optional state, SaveGame memory roundtrip; screenshot actual layout.
+Har uch cartridge uchun real terrain/capsule/LOS kuzatuv nuqtasi topildi. Bu butun
+marshrutning uzluksiz o‘tilganini kafolatlamaydi.
+
+Performance: DX11 rendered offscreen,1280x720,Quality1,60FPS cap,1800captured frame.
+Warmup menu300/Apollo600 chiqarildi. Bitta capture’dan kichik farqning sababini
+isbotlab bo‘lmaydi; NullRHI grafik performance hisoblanmadi.
+
+| Yuklama | Mean FPS before / after | p99 frame ms before / after |
+|---|---|---|
+| menu_same_workload | 60.00 / 59.99 | 17.45 / 17.46 |
+| apollo_legacy_same_workload | 59.93 / 59.95 | 17.66 / 17.86 |
+| apollo_enabled_support_opening | 59.93 / 60.00 | 17.66 / 17.78 |
+
+Legacy opening after optional extensionni o‘chiradi; enabled opening parked rover,
+support actors va bookkeeping’ni yoqib scripted walk qiladi. Occupied driving,
+scanner/board benchmark va to‘liq missiya FPS barqarorligi o‘lchanmadi. RAM natijasi
+one-second sampled process working set; VRAM deb ko‘rsatilmaydi.
+[Performance dalili](Docs/FieldOperations20261104/performance-comparison.json).
+
+Ilmiy rol: mavjud LROC balandliklari Apollo ground/work-site heightsni boshqaradi.
+LCROSS publication summary simulyatsiya cartridge’ining source label/izohini
+boshqaradi; mahalliy suv o‘lchovi, qazib olish yoki yangi rawM3data yo‘q. SELENE/ARES
+terrain va yangi rover/sampler props authored. Apollo12 rover ishlatmagan. EVA va
+resource koeffitsiyentlari o‘quv game rules, NASA operational procedure emas.
+
+Saqlash: 84/84 himoyalangan player fayli original SHA bilan mos. Editor faqat
+EditorPerProjectUserSettings’dagi LunarRescue.TimeStampni yangilagan; tekshirilgan
+backupdan asl baytlari tiklandi. 1747editable-before faylidan yo‘qolgan fayl0;
+to‘rtta map baselineSHA mos. Oldingi commit qilinmagan ishlar zaxiralangan.
+
+Chegaralar: human playtest0; firewall/network isolation bajarilmadi (zarur lokal
+payload paketda va runtime fetch talab qilinmaydi). Rover/sampler oddiy proxy art,
+visible gripping hand/driver yo‘q, ayrim world label qorong‘i va map leaderline’lar
+band ko‘rinadi. Tasdiqlangan stationary camera PNG haydash animatsiyasi yoki uzoq
+traverse silliqligi dalili emas. Competition eligibility tasdiqlanmagan.
+
+Iteratsiya tarixidagi yiqilishlar yashirilmadi: birinchi C++ build helper naming/type
+xatolari;25runtimeFAIL strict JSONcoercion va fixture/float masalalari; Mars authored
+site LOS; HUD overlap/wrap; actual Apollo camera clearance; legacyBfixtures va
+UTF16 verifier reader tuzatildi. Performance navbatidagi noto‘g‘ri helper nomi
+alohida qayta chaqirildi. Yakuniy yuqoridagi natijalar faqat final hashga tegishli.
+
+## 2026-11-03 — Departure, carry, crew va LCROSS: yakuniy mahalliy Windows build
+
+**2 400 C++ PASS bajarilishi, 0 FAIL; 16/16 suite o‘tdi.** Bu 2 400 noyob test
+yoki inson natijasi emas. 55 ta yangi nusxalangan hisobotdagi aniq PASS satrlari
+hisoblandi. 160 ta staged PNG va 8 juft pixel tekshiruvi alohida tasdiqlandi.
+[Har bir run va raw hisobot SHA dalili](Docs/Gameplay20261103/evidence.json),
+[hisoblash izohlari](Docs/Gameplay20261103/evidence-notes.md).
+
+Yakuniy Win64 Development exe SHA-256:
+
+    5171c1b0a6142dfa4c35e373d731d441ce88eb8d7a41f768779bbeaded52f2f0
+
+Editor module SHA-256:
+
+    c7b0e68232086c6ba8708c79e7256e58976f815888626612f5fce799cd212be0
+
+| Shu yakuniy exe’da bajarilgan qism | PASS bajarilishi |
+| --- | ---: |
+| Yangi gameplay: uch missiya, NullRHI | 500 |
+| Yangi gameplay: uch missiya, DX11 rendered | 536 |
+| Yangi 720p/1080p staged frame/UI tekshiruvlari | 110 |
+| Eski gameplay, save, suit, selection, diagnostics regressiyalari | 1 128 |
+| Haqiqiy loading/travel | 76 |
+| Eski HUD: 720p/1080p actual layout | 50 |
+| **Jami** | **2 400** |
+
+Rendered 536 va NullRHI 500 orasidagi 36 farq — har missiyada 12 tadan
+FOV/pitch viewport corner-projection tekshiruvi. NullRHI loglari viewport
+bo‘lmagani uchun ularni ataylab o‘tkazib yuborganini yozadi. NullRHI grafik
+performance testi deb ko‘rsatilmagan. 160 layout PASS yuqoridagi jami ichida;
+160 PNG yoki 8 pixel juftini yana C++ test soniga qo‘shmadik.
+
+### Nimalar tekshirildi
+
+- Tabiiy 9.4 s departure va skip missiyani bir marta boshlaydi; abort view,
+  movement va ko‘rinishni tiklaydi. Cabin vaqtida va pause’da oxygen, mission
+  timer, eski radio hamda cargo o‘zgarmaydi; negative/nonfinite delta rad etiladi.
+- Cell FP FOV/aspect bounds, pitch, seating, body proxy, photo/pause/notebook
+  suppression; committed Apollo sample/core/hardware preview va stow ketma-ketligi.
+- Ikki fictional guide’ning materiallari, 40 komponent limiti, range/facing/LOS,
+  actual conversation va owned notebook; mission work ustuvorligi va no-reward.
+- LCROSS birliklari/koordinata scope, missing/malformed/NoData parser holatlari,
+  haqiqiy qiymatlar, noto‘g‘ri javob, uch to‘g‘ri qaror va explicit commit.
+  Hidden/unowned/stale callback va repeated key bloklanadi. Apollo SaveGame
+  memory roundtrip optional recordni saqlaydi; invalid/absent optional data
+  version-one historical cargo’ni bekor qilmaydi. Fresh run recordni tozalaydi.
+- Oldingi Moon/Mars picker, power/cable/startup/science/recorder, Apollo
+  walkthrough, checkpoints, pause/restart, tools, movement, loading va HUD
+  regressiyalari yakuniy exe’da qayta bajarildi.
+
+110 yangi gameplay PNG + 50 oldingi HUD PNG = 160 fresh staged artifact;
+1280×720 va 1920×1080, 100/150% text. Bular scripted holatlar, inson sessiyasi emas.
+Yakuniy carry ko‘rigida 20 ta PNG ochib tekshirildi: SELENE va ARES, ikki
+resolution, 100/150% matn, cell-visible/hidden controls va TP body.
+[Ko‘rilgan kadrlarning aniq SHA dalili](Docs/Gameplay20261103/carry-visual-qa.json).
+
+Juft tasvirlarda qo‘l, kamera va world saqlanib, faqat cell yashiriladi.
+Markaziy 60% ROI’da max RGB kanal farqi >24 bo‘lgan pixel ulushi kamida 0.12
+talab qilindi; sakkiz juftning natijasi 0.9089–0.9886. Bu rendered contribution
+ko‘rsatkichi; semantic segmentation, anatomik aniqlik yoki FPS o‘lchovi emas.
+Dastlabki fefcbd43 build barcha avtomatik suite’lardan o‘tsa ham qo‘lda ko‘rik
+forearm occlusion topdi. Fix’dan keyin besh CPP o‘zgardi va barcha 16 suite
+yangi 5171c1b0 exe’da qayta bajarildi. Eski natijalar yangi exe’ga ko‘chirilmagan.
+
+### Build, data va saqlanish dalili
+
+Muhit: Windows 11, UE 5.8.3, MSVC 14.44.35217, SDK 10.0.22621,
+Ryzen 5 6600H, RTX 3050 Laptop GPU, 16 GB RAM. D3D11 loglari oldin/keyin
+NVIDIA adapterni tanlaganini ko‘rsatadi. NoUnity/NoPCH va ikki compile action
+chegarasi ishlatildi; game debug-symbol link’i o‘chirildi.
+
+To‘liq cook/stage/archive muvaffaqiyatli: 717 processed, 710 cooked va 7
+platform skip. Keyingi carry visual fix faqat besh CPP’ni o‘zgartirdi; header,
+config, dataset va assetlar o‘zgarmadi. Editor qayta compile: 8 action/72.03 s;
+Game qayta compile: 7 action/89.11 s — Succeeded. Yakuniy binary completed cook
+bilan StageOnly orqali qayta stage/archive qilindi — BUILD SUCCESSFUL.
+Bu incremental C++ build; clean checkout/bo‘sh Intermediate build emas.
+Mavjud float, hidden Reset va deprecated skeletal API warninglari saqlandi;
+warning-free build da’vosi yo‘q. Dastlabki pointer-type/shadow compile xatolari
+va review-helper null dereference loglari raw Reports’da saqlandi va tuzatildi.
+
+98 source/config/dataset input ayni final snapshot bilan mos, built/staged exe
+SHA teng, 4 map SHA o‘zgarmagan. Mahalliy LCROSS JSON 3 863 byte:
+
+    40db698b4244ee7f6f28fcb5aa44c7dd3e60177694b34cb18d8bc32a24981105
+
+Runtime JSON/manifest va credits paketda bor, source bilan byte-identical.
+Bu publication-facts summary: 155 ±12 kg field-of-view maksimumi va inferred
+5.6 ±2.9 mass% qarorlar/barlarni boshqaradi. Raw spectrum yoki Apollo 12’da
+suv topilgani da’vo qilinmaydi; mavjud LROC terrain o‘zgarmagan.
+[Dataset va ilmiy chegaralar](SCIENCE_AND_SOURCES.md).
+
+Boshlang‘ich 544 save/photo/config snapshot fayli yakunda byte-identical.
+Keng baseline engine crash/config va generated stage config’ni ham olgan:
+engine tozalagan 180 eski crash config va ikki generated/editor config testlar
+tugagach tasdiqlangan original backup’dan tiklandi. O‘yinchi save/fotosida
+kutilmagan o‘zgarish bo‘lmadi. [Final bundle/preservation receipt](Docs/Gameplay20261103/bundle-verification.json).
+
+### Bir xil sozlamadagi performance
+
+DX11 RenderOffscreen 1280×720, Medium(1), 60 FPS cap, VSync off, nosound;
+har build/scene uchun bir martadan 1 800 frame. Menu: 300 warmup/1 500 sample;
+Apollo opening walk: 600 warmup/1 200 sample. [Raw CSV SHA va muhit](Docs/Gameplay20261103/performance.json).
+
+| Scene | Mean FPS oldin → keyin | p99 ms oldin → keyin | Sampled working set MiB oldin → keyin |
+| --- | --- | --- | --- |
+| Menu | 59.9998 → 59.9999 | 17.5210 → 17.4943 | 553.95 → 529.48 |
+| Apollo opening walk | 59.9958 → 59.9992 | 17.7668 → 17.6841 | 604.00 → 603.44 |
+
+Kichik farqlar sababli improvement yoki butun missiyada stable 60 FPS xulosasi
+chiqarilmadi. Working set sampled process memory; true peak yoki VRAM emas.
+Capture active Apollo opening walk va static menu bilan cheklangan: departure,
+rescue cell work va to‘liq missiya performance’i o‘lchanmagan. Ular uchun
+rendered functional review bor. Profiling raw exit 777003 completed CSV sharti
+bilan tekshirildi; oddiy gameplay test exit’i sifatida qabul qilinmagan.
+
+Asosiy qayta bajarish buyruqlari:
+
+    ./Tools/package_apollo12.ps1 -MaxCompileActions 2
+    ./Tools/verify_gameplay_regression.ps1
+    python ./Tools/verify_gameplay_bundle.py
+    ./Tools/verify_gameplay_tasks.ps1 -Packaged -Review -Width 1280 -Height 720
+    ./Tools/verify_gameplay_tasks.ps1 -Packaged -Review -Width 1920 -Height 1080
+    ./Tools/profile_mission_menu.ps1 -Label UNIQUE_LABEL -Frames 1800 -Quality 1
+    ./Tools/profile_apollo12.ps1 -Label UNIQUE_LABEL -Frames 1800 -Quality 1
+
+Aynan bajarilgan 16-case driver va parametrlar Reports/Gameplay20261103/
+final-queue-20261103-075914/queue-summary.json da. Tools’dagi portable nusxa
+shu driver bilan bir xil; faqat project root discovery ishlatiladi. Pixel review
+uchun development Python/Pillow kerak; packaged o‘yin Python/Unreal Editor talab
+qilmaydi. ZIP tarqatishda butun Windows papkasini saqlash kerak.
+
+### Ochiq cheklovlar va keyingi ishlar
+
+- Inson playtesti 0; comprehension yoki mission completion natijalari to‘qilmadi.
+- Network uzilgan holda alohida test bajarilmadi; demo bundled lokal data’dan
+  foydalanadi, runtime data download/online chatbot talab qilmaydi.
+- FP cuffs/round wrist ends va barmoqlar hali sodda; crew world-label kontrasti
+  keyingi art polish uchun qoladi. Bu build polished anatomical rig deb taqdim etilmaydi.
+- Cabin/PIP/Mira authored fiction; NASA endorsement yoki professional training
+  simulyatori da’vosi yo‘q. Space Apps 2026 eligibility tasdiqlanmagan va bu
+  product testi bilan belgilanmaydi. Yangi push/release/submission bajarilmadi.
+- Keyingi uch ish: measured-terrain A/B planner va live-resource forecast;
+  ishtirokchilar bo‘lganda novice playtest; litsenziyasi tekshirilgan art/rig va
+  animation polish. [Ustuvorliklar](DEVELOPMENT_PLAN.md).
+
+
 ## 2026-11-02 — HUD, loading, diagnostics va assetlar: yakuniy mahalliy paket
 
 **Yakuniy paketda 1 254 PASS, 0 FAIL.** 18 ta tekshirilgan run: 1 128 funksional,

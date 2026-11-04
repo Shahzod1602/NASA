@@ -61,6 +61,15 @@ public:
  UPROPERTY() bool TrailSimplified=false;
  UPROPERTY() bool LookLearned=false;
  UPROPERTY() bool MoveLearned=false;
+ // Optional additive modern-water exercise. Missing or invalid study state
+ // never invalidates the historical mission cargo in a version-1 save.
+ UPROPERTY() FName WaterDataId;
+ UPROPERTY() TArray<int32> WaterAnswers;
+ UPROPERTY() int32 WaterStep=0;
+ UPROPERTY() int32 WaterAttempts=0;
+ UPROPERTY() bool WaterRecorded=false;
+ // Optional modern training state; empty legacy checkpoints stay compatible.
+ UPROPERTY() FString FieldOperationsState;
  bool Has(const TCHAR* Task) const;
  int32 Step() const;
  bool Validate(FString& Reason) const;

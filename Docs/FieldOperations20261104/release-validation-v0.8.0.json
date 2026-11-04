@@ -1,0 +1,571 @@
+{
+  "schema": 1,
+  "version": "0.8.0",
+  "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a",
+  "new_functional_cases": [
+    {
+      "case": "field-0-apollo",
+      "passed": 215,
+      "failed": 0,
+      "outcome": "passed",
+      "receipt": "Reports/FieldOperations20261104/package-rendered-test-1280x720-20261104-073817-882/run-summary.json",
+      "receipt_sha256": "338a3d483a16eead0634beb3e6dd69aad6fb43657faa400aaa613e343c262771",
+      "raw_report_sha256": "818ea02d2f3fd157186163d831e5446663de2904f5081defdea2855b2fe0fd8d"
+    },
+    {
+      "case": "field-0-selene",
+      "passed": 220,
+      "failed": 0,
+      "outcome": "passed",
+      "receipt": "Reports/FieldOperations20261104/package-rendered-test-1280x720-20261104-073817-882/run-summary.json",
+      "receipt_sha256": "338a3d483a16eead0634beb3e6dd69aad6fb43657faa400aaa613e343c262771",
+      "raw_report_sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2"
+    },
+    {
+      "case": "field-0-mars",
+      "passed": 220,
+      "failed": 0,
+      "outcome": "passed",
+      "receipt": "Reports/FieldOperations20261104/package-rendered-test-1280x720-20261104-073817-882/run-summary.json",
+      "receipt_sha256": "338a3d483a16eead0634beb3e6dd69aad6fb43657faa400aaa613e343c262771",
+      "raw_report_sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2"
+    },
+    {
+      "case": "field-1-apollo",
+      "passed": 50,
+      "failed": 0,
+      "outcome": "passed",
+      "receipt": "Reports/FieldOperations20261104/package-review-1280x720-20261104-073845-396/run-summary.json",
+      "receipt_sha256": "acd8ff23db61fb3a3009dfe1423cf5bb7348e0b8e8e95ac606b734fd7951a8be",
+      "raw_report_sha256": "0ed88ce5ac309dc374b3457bf7e8d0453841b83ef903ceca78e7710ded5403a6"
+    },
+    {
+      "case": "field-1-selene",
+      "passed": 52,
+      "failed": 0,
+      "outcome": "passed",
+      "receipt": "Reports/FieldOperations20261104/package-review-1280x720-20261104-073845-396/run-summary.json",
+      "receipt_sha256": "acd8ff23db61fb3a3009dfe1423cf5bb7348e0b8e8e95ac606b734fd7951a8be",
+      "raw_report_sha256": "64999a8600005393aa23aec914d6e0cc5b691efb84065a4d706af2760941582c"
+    },
+    {
+      "case": "field-1-mars",
+      "passed": 52,
+      "failed": 0,
+      "outcome": "passed",
+      "receipt": "Reports/FieldOperations20261104/package-review-1280x720-20261104-073845-396/run-summary.json",
+      "receipt_sha256": "acd8ff23db61fb3a3009dfe1423cf5bb7348e0b8e8e95ac606b734fd7951a8be",
+      "raw_report_sha256": "64999a8600005393aa23aec914d6e0cc5b691efb84065a4d706af2760941582c"
+    },
+    {
+      "case": "field-2-apollo",
+      "passed": 50,
+      "failed": 0,
+      "outcome": "passed",
+      "receipt": "Reports/FieldOperations20261104/package-review-1920x1080-20261104-074005-994/run-summary.json",
+      "receipt_sha256": "40aa4ba6f15f0fb61b01be0ac40534e5e1efd010bc32546d3b43c8036ce0f9c1",
+      "raw_report_sha256": "0ed88ce5ac309dc374b3457bf7e8d0453841b83ef903ceca78e7710ded5403a6"
+    },
+    {
+      "case": "field-2-selene",
+      "passed": 52,
+      "failed": 0,
+      "outcome": "passed",
+      "receipt": "Reports/FieldOperations20261104/package-review-1920x1080-20261104-074005-994/run-summary.json",
+      "receipt_sha256": "40aa4ba6f15f0fb61b01be0ac40534e5e1efd010bc32546d3b43c8036ce0f9c1",
+      "raw_report_sha256": "64999a8600005393aa23aec914d6e0cc5b691efb84065a4d706af2760941582c"
+    },
+    {
+      "case": "field-2-mars",
+      "passed": 52,
+      "failed": 0,
+      "outcome": "passed",
+      "receipt": "Reports/FieldOperations20261104/package-review-1920x1080-20261104-074005-994/run-summary.json",
+      "receipt_sha256": "40aa4ba6f15f0fb61b01be0ac40534e5e1efd010bc32546d3b43c8036ce0f9c1",
+      "raw_report_sha256": "64999a8600005393aa23aec914d6e0cc5b691efb84065a4d706af2760941582c"
+    },
+    {
+      "case": "field-3-apollo",
+      "passed": 215,
+      "failed": 0,
+      "outcome": "passed",
+      "receipt": "Reports/FieldOperations20261104/package-test-1280x720-20261104-073757-439/run-summary.json",
+      "receipt_sha256": "617918685185548ea6781af77bff678baabc61f3895e3cb17016c90edcc37747",
+      "raw_report_sha256": "818ea02d2f3fd157186163d831e5446663de2904f5081defdea2855b2fe0fd8d"
+    },
+    {
+      "case": "field-3-selene",
+      "passed": 220,
+      "failed": 0,
+      "outcome": "passed",
+      "receipt": "Reports/FieldOperations20261104/package-test-1280x720-20261104-073757-439/run-summary.json",
+      "receipt_sha256": "617918685185548ea6781af77bff678baabc61f3895e3cb17016c90edcc37747",
+      "raw_report_sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2"
+    },
+    {
+      "case": "field-3-mars",
+      "passed": 220,
+      "failed": 0,
+      "outcome": "passed",
+      "receipt": "Reports/FieldOperations20261104/package-test-1280x720-20261104-073757-439/run-summary.json",
+      "receipt_sha256": "617918685185548ea6781af77bff678baabc61f3895e3cb17016c90edcc37747",
+      "raw_report_sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2"
+    }
+  ],
+  "regressions": [
+    {
+      "case": "gameplay-functional-00",
+      "passed": 181,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Gameplay20261103/package-test-1280x720-20261104-074128-165/apollo-checks.txt",
+      "report_sha256": "b4cd2835d9d7a9a08b6b782b970837ea3743d4e9124dc92dbf42a3ae5040b6a8"
+    },
+    {
+      "case": "gameplay-functional-01",
+      "passed": 152,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Gameplay20261103/package-test-1280x720-20261104-074128-165/mars-checks.txt",
+      "report_sha256": "ff8e0fff10b3ecec08072da3c43d9b7432044d08aa0dc8905ccbe2f02e4048ba"
+    },
+    {
+      "case": "gameplay-functional-02",
+      "passed": 167,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Gameplay20261103/package-test-1280x720-20261104-074128-165/selene-checks.txt",
+      "report_sha256": "f9ce10bc62118b6e5587d17f9463d467456c257316caf3852b5d2e014b1cb5ad"
+    },
+    {
+      "case": "gameplay-rendered-00",
+      "passed": 193,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Gameplay20261103/package-rendered-test-1280x720-20261104-074146-925/apollo-checks.txt",
+      "report_sha256": "7104475e64c15d4142ed761455137f3d12f06d51aefcca2c1f021c0b378f9fc1"
+    },
+    {
+      "case": "gameplay-rendered-01",
+      "passed": 164,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Gameplay20261103/package-rendered-test-1280x720-20261104-074146-925/mars-checks.txt",
+      "report_sha256": "9993723be12e766fa0213f4a533c542a935b30b19c1cddabccb1804a9387563e"
+    },
+    {
+      "case": "gameplay-rendered-02",
+      "passed": 179,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Gameplay20261103/package-rendered-test-1280x720-20261104-074146-925/selene-checks.txt",
+      "report_sha256": "a929711f3bac5a8d8b125d60b4f14bb6d1918756e8cbc0d6ba71fbcdee992f80"
+    },
+    {
+      "case": "gameplay-review720-00",
+      "passed": 18,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/apollo/gameplay-review-checks.txt",
+      "report_sha256": "8ab581018c892a82554694b841f705de910b9fe801c42f7c2658238fb7dd92c7"
+    },
+    {
+      "case": "gameplay-review720-01",
+      "passed": 16,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/mars/gameplay-review-checks.txt",
+      "report_sha256": "bf89b64057031f788a94ef7f84628af08ed2f1cd737106e8b2e060f96707aa9f"
+    },
+    {
+      "case": "gameplay-review720-02",
+      "passed": 21,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Gameplay20261103/package-review-1280x720-20261104-074213-717/selene/gameplay-review-checks.txt",
+      "report_sha256": "e4ba9f8c147aa0f393639805176a8ec4e4f04311a5280380c0005c03d99c5946"
+    },
+    {
+      "case": "gameplay-review1080-00",
+      "passed": 18,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/apollo/gameplay-review-checks.txt",
+      "report_sha256": "8ab581018c892a82554694b841f705de910b9fe801c42f7c2658238fb7dd92c7"
+    },
+    {
+      "case": "gameplay-review1080-01",
+      "passed": 16,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/mars/gameplay-review-checks.txt",
+      "report_sha256": "bf89b64057031f788a94ef7f84628af08ed2f1cd737106e8b2e060f96707aa9f"
+    },
+    {
+      "case": "gameplay-review1080-02",
+      "passed": 21,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Gameplay20261103/package-review-1920x1080-20261104-074335-583/selene/gameplay-review-checks.txt",
+      "report_sha256": "e4ba9f8c147aa0f393639805176a8ec4e4f04311a5280380c0005c03d99c5946"
+    },
+    {
+      "case": "apollo-regressions-00",
+      "passed": 57,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/package-apollo12-checks-result.txt",
+      "report_sha256": "1d8911bc084c6a7a1c2bb63b9fbebc6f33d1fe6ec51ae0d726d8ded7e9e7d44c"
+    },
+    {
+      "case": "apollo-regressions-01",
+      "passed": 39,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/package-apollo12-fieldwork-result.txt",
+      "report_sha256": "ea375f02581686b0e4ef8ad36e583622d000fb282c0b93ea71c68c216ad9b192"
+    },
+    {
+      "case": "apollo-regressions-02",
+      "passed": 47,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/package-apollo12-guidance-result.txt",
+      "report_sha256": "d9a16b9f4f62acc93b7534b308edfa4e36b0d6c8966064d288b4110112c86ffa"
+    },
+    {
+      "case": "apollo-regressions-03",
+      "passed": 50,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/package-apollo12-legacy-moon-result.txt",
+      "report_sha256": "6b4f590b824979b6e5dbaa629e5e4fc16fa4e2ec4d8050a432dbab8150846886"
+    },
+    {
+      "case": "apollo-regressions-04",
+      "passed": 54,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/package-apollo12-mars-result.txt",
+      "report_sha256": "fa5e80fd8a9073604fedda210da7ca12626bacbf5955d98d7302b97f53390de3"
+    },
+    {
+      "case": "apollo-regressions-05",
+      "passed": 55,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/package-apollo12-menu-result.txt",
+      "report_sha256": "11c6ab3438d78be5caeb4ef56d2c4426c6d5a2bc3de848e457cd31ed58cae9f9"
+    },
+    {
+      "case": "apollo-regressions-06",
+      "passed": 64,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/package-apollo12-polish-result.txt",
+      "report_sha256": "4a564bcfb9c92a97f43ba00fddc81ad71791fe72e69142fa06febec5ab092621"
+    },
+    {
+      "case": "apollo-regressions-07",
+      "passed": 7,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/package-apollo12-save-read-result.txt",
+      "report_sha256": "e0b31f0af7c9b70f375ccc1c6740cc612456916225adbf73425bc9d6540de24c"
+    },
+    {
+      "case": "apollo-regressions-08",
+      "passed": 51,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/package-apollo12-save-result.txt",
+      "report_sha256": "6f9761b2a673ceefe91006a49d46f19bffa922479b741b11295fe962fe6e97dc"
+    },
+    {
+      "case": "apollo-regressions-09",
+      "passed": 2,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/package-apollo12-save-write-result.txt",
+      "report_sha256": "925561c794fc7f059e796c96d107eec4f34e6b77bde7676e82b2985e42a002f4"
+    },
+    {
+      "case": "apollo-regressions-10",
+      "passed": 32,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/package-apollo12-suit-result.txt",
+      "report_sha256": "901df3df557c022d6624af6172f6cd46584b0324cbd46fa2d5de5654198f5a15"
+    },
+    {
+      "case": "apollo-regressions-11",
+      "passed": 2,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/package-apollo12-walk-result.txt",
+      "report_sha256": "95a158c972dd77a73193600ca2e2ab139b1d19c0dbf2c164d6816a645f0e3f1f"
+    },
+    {
+      "case": "nasa-regressions-00",
+      "passed": 12,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/intro-checks.txt",
+      "report_sha256": "0092db04c7d47e436d52321cdc5a55707f3fef74909097755d6d12c251e16146"
+    },
+    {
+      "case": "nasa-regressions-01",
+      "passed": 39,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/learning-apollo-checks.txt",
+      "report_sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123"
+    },
+    {
+      "case": "nasa-regressions-02",
+      "passed": 39,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/learning-mars-checks.txt",
+      "report_sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123"
+    },
+    {
+      "case": "nasa-regressions-03",
+      "passed": 39,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/learning-selene-checks.txt",
+      "report_sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123"
+    },
+    {
+      "case": "nasa-regressions-04",
+      "passed": 28,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/pov-checks.txt",
+      "report_sha256": "55a21933747d1e835455118ca60fba4beeeaf6f40167880ac8df464efa73a883"
+    },
+    {
+      "case": "nasa-regressions-05",
+      "passed": 12,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/restart-apollo-checks.txt",
+      "report_sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e"
+    },
+    {
+      "case": "nasa-regressions-06",
+      "passed": 12,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/restart-mars-checks.txt",
+      "report_sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e"
+    },
+    {
+      "case": "nasa-regressions-07",
+      "passed": 12,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/restart-selene-checks.txt",
+      "report_sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e"
+    },
+    {
+      "case": "nasa-regressions-08",
+      "passed": 24,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/ui-apollo-checks.txt",
+      "report_sha256": "1676fb5306f2e2c2328fca5914e549b8b9c57fe0d4e21ae6d4ff828dbaac331c"
+    },
+    {
+      "case": "nasa-regressions-09",
+      "passed": 28,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/ui-mars-checks.txt",
+      "report_sha256": "8ab57171547fbc61ceb13ccd95c2aab7c9b8f5a4c662580b4738938ccf304dc8"
+    },
+    {
+      "case": "nasa-regressions-10",
+      "passed": 30,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/NasaTasks20261101/package-test-1280x720-20261104-074725-451/ui-selene-checks.txt",
+      "report_sha256": "be6b0f2ccf91e157c1d88204f068662b4e6196da18a9f53b8efda3df1628cc6c"
+    },
+    {
+      "case": "selection-00",
+      "passed": 51,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/MissionSelection20261031/package-test-1280x720-20261104-074838-699-checks.txt",
+      "report_sha256": "bb8418653d8852295b19a5d27bba6f9040b3440c6fe80752150321a25db7444d"
+    },
+    {
+      "case": "frontend-00",
+      "passed": 20,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Frontend20261028/package-checks.txt",
+      "report_sha256": "2dc9c92382364d06916328347951cf3a73b38e1f6b9c43d27d022186adec7bc3"
+    },
+    {
+      "case": "experience-00",
+      "passed": 64,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/ExpeditionExperience20261029/package-test-nullrhi-silent-1280x720-20261104-074849-992-checks.txt",
+      "report_sha256": "9fbd8b15c9db5387b2b10b7838e66126bafb2f22ee875e601c010359c39d9fd2"
+    },
+    {
+      "case": "presentation-00",
+      "passed": 35,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/ExpeditionPolish20261029/package-test-dx11-audio-1280x720-20261104-074855-699-checks.txt",
+      "report_sha256": "3bb17c02eaa4fa46321ad6b31f9e5b4911eeedf474a0034c1ceb426384752ab7"
+    },
+    {
+      "case": "movement-00",
+      "passed": 3,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/ExpeditionExperience20261029/final-package-mars-ledge.txt",
+      "report_sha256": "31479744611ddcee36f31630d52ed5ec3585620d6976056c1cae96e7cbbd0c90"
+    },
+    {
+      "case": "movement-01",
+      "passed": 13,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/ExpeditionExperience20261029/final-package-mars-movement.txt",
+      "report_sha256": "8891fdcc14220149da1074436a7965479332a188d9487f0f5b674accd411b30b"
+    },
+    {
+      "case": "equipment-00",
+      "passed": 14,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Feedback20261102/package-test-1280x720-20261104-074935-605/assets-apollo-checks.txt",
+      "report_sha256": "8fae21338cf38713d7c13900d6f22336bb737afb850c562b423ce522bdfd2dfb"
+    },
+    {
+      "case": "equipment-01",
+      "passed": 12,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Feedback20261102/package-test-1280x720-20261104-074935-605/assets-mars-checks.txt",
+      "report_sha256": "97eb6e923aa43de828fd1d1fc9f97e9256ee41b02da82b19f7298f10088ca35f"
+    },
+    {
+      "case": "equipment-02",
+      "passed": 12,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Feedback20261102/package-test-1280x720-20261104-074935-605/assets-selene-checks.txt",
+      "report_sha256": "97eb6e923aa43de828fd1d1fc9f97e9256ee41b02da82b19f7298f10088ca35f"
+    },
+    {
+      "case": "equipment-03",
+      "passed": 38,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Feedback20261102/package-test-1280x720-20261104-074935-605/diagnostics-apollo-checks.txt",
+      "report_sha256": "ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19"
+    },
+    {
+      "case": "equipment-04",
+      "passed": 38,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Feedback20261102/package-test-1280x720-20261104-074935-605/diagnostics-mars-checks.txt",
+      "report_sha256": "ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19"
+    },
+    {
+      "case": "equipment-05",
+      "passed": 38,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Feedback20261102/package-test-1280x720-20261104-074935-605/diagnostics-selene-checks.txt",
+      "report_sha256": "ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19"
+    },
+    {
+      "case": "loading-font-00",
+      "passed": 55,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/LoadingTypography20261102/package-checks-1280x720-20261104-075010-216/loading-typography-checks.txt",
+      "report_sha256": "bdf1e38884c279b85eb5fc4478d1d66990c0baf6b53e90fcf3bf15d9954bcb0d"
+    },
+    {
+      "case": "loading-travel-00",
+      "passed": 76,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Loading20261029/package-offscreen-1280x720-20261104-075016-289-checks.txt",
+      "report_sha256": "9aae6c703448a34d34784c52360ac4a6b96cd7f33c9fb3412b19d972192d8010"
+    },
+    {
+      "case": "hud-review720-00",
+      "passed": 9,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-apollo-checks.txt",
+      "report_sha256": "e43a6d97e21671c34d1093a5e2ed4d08576f90b1825ad262f3da8c3ab41fe0ea"
+    },
+    {
+      "case": "hud-review720-01",
+      "passed": 8,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-mars-checks.txt",
+      "report_sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482"
+    },
+    {
+      "case": "hud-review720-02",
+      "passed": 8,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Feedback20261102/package-review-1280x720-20261104-075119-584/hud-selene-checks.txt",
+      "report_sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482"
+    },
+    {
+      "case": "hud-review1080-00",
+      "passed": 9,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-apollo-checks.txt",
+      "report_sha256": "e43a6d97e21671c34d1093a5e2ed4d08576f90b1825ad262f3da8c3ab41fe0ea"
+    },
+    {
+      "case": "hud-review1080-01",
+      "passed": 8,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-mars-checks.txt",
+      "report_sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482"
+    },
+    {
+      "case": "hud-review1080-02",
+      "passed": 8,
+      "failed": 0,
+      "outcome": "passed",
+      "report": "Reports/Feedback20261102/package-review-1920x1080-20261104-075209-991/hud-selene-checks.txt",
+      "report_sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482"
+    }
+  ],
+  "new_assertions": 1618,
+  "regression_assertions_or_outcomes": 2400,
+  "total_assertions_or_outcomes": 4018,
+  "failures": 0,
+  "functional_case_count": 12,
+  "regression_case_count": 55,
+  "total_cases": 67,
+  "human_playtests": 0,
+  "network_disconnected_test_performed": false,
+  "competition_eligibility": "unconfirmed",
+  "total_staged_pngs": 280,
+  "paired_pixel_checks": 8,
+  "counting_method": "Anchored C++ PASS lines in fresh unique raw reports; repeated mission/resolution executions included; no wrapper PASS lines, duplicate fixed outputs or human results counted.",
+  "verification_index": "Docs/FieldOperations20261104/verification-index.json"
+}

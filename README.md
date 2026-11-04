@@ -1,5 +1,73 @@
 # Lunar Rescue
 
+## Field operations — v0.8.0 (4 November 2026)
+
+**Windows download:** [v0.8.0 release](https://github.com/Shahzod1602/NASA/releases/tag/apollo12-v0.8.0) · [Windows ZIP](https://github.com/Shahzod1602/NASA/releases/download/apollo12-v0.8.0/LunarRescue-Expeditions-v0.8.0-Windows.zip).
+
+This release includes the dated November2–4 development records below. Their
+local/unreleased labels describe their original verification dates.
+
+Surface missions now include four ordered pre-EVA training checks and a required
+resource briefing. Choose and confirm a gameplay budget before surface work.
+**B** opens the board/map/inventory; yellow stars use current world positions.
+Selecting a support waypoint changes the displayed navigation, while the main
+mission target and objective stay intact. Select Main objective to follow it again.
+
+Inspect the authored training rover to unlock driving and the optical magnifier.
+**W/S** drive, **A/D** steer, the work key (default **E**) exits onto clear grounded
+space. **G** toggles the magnifier; hold **left click** to inspect a visible labelled
+cartridge, release to cancel, then **E** packs it. Cargo mass and data storage are
+limited. Deposit near the lander; restored mission power/ALSEP links enable timed
+recharge and downlink beside the board. SELENE/ARES cable installation now opens
+labelled terminal matching. B/G are reserved and cannot also be rebound to work.
+
+These are **fictional modern training additions**. Apollo 12 did not use an LRV.
+Vehicle/sampler geometry is authored; the NASA SEV model remains a reference.
+Cartridges label remote LCROSS publication evidence, never local water discovery
+or historical Apollo cargo. Existing LROC terrain and all four maps are retained.
+Legacy Apollo checkpoints without additive training data resume the original run.
+
+Final local Windows build: UE **5.8.3**, executable **08485e289426**.
+**4,018 C++ PASS executions / 0 FAIL**, 280 staged PNGs and 8 paired-pixel checks
+were verified on this executable. Counts include repeated mission/resolution cases,
+not unique tests or human participants. Opening performance was measured separately;
+whole-mission/occupied-driving performance and human playtesting remain unmeasured.
+See [test report](TEST_REPORT.md), [implementation](Docs/FieldOperations20261104/IMPLEMENTATION.md),
+[science](Docs/FieldOperations20261104/SCIENCE_RESEARCH.md),
+[story and assets](Docs/FieldOperations20261104/STORY_AND_REFERENCES.md),
+[verification index](Docs/FieldOperations20261104/verification-index.json).
+Competition eligibility remains unconfirmed; this is independent product work.
+
+Run the whole extracted Windows folder using Dist/Apollo12/Windows/LunarRescue.exe.
+Editable-project build: Tools/package_apollo12.ps1 -MaxCompileActions 2.
+Reproduce feature checks with Tools/verify_field_operations.ps1 -Packaged, then
+-Packaged -Rendered and -Packaged -Review at 1280x720 and 1920x1080. The existing
+Tools/verify_gameplay_regression.ps1 runs the 16 legacy suites.
+
+## Gameplay additions (local, unreleased - 3 November 2026)
+
+New missions have a short authored cabin departure before surface control. Enter
+starts it from the briefing; Enter/left click skips after the input guard, and
+Esc pauses. The mission resource clock starts at handover.
+
+Picked-up rescue cells now fit the first-person view across supported FOVs and
+have a third-person body proxy. Apollo's committed sample/hardware previews
+also support the body view and keep their existing automatic stow timing.
+
+Approach PIP-3 or Mira's communicator and use the displayed work binding, or
+press **I > Mission Crew**. Both are fictional, scripted guides. Moon missions
+also offer **I > Water Research**: interpret real LCROSS publication values,
+answer three short evidence questions and explicitly record an optional report.
+**Science & Sources** separates measured observations, inferred values and the
+hypothetical calculation. This remote Cabeus/2009 exercise does not detect
+water at Apollo 12 or grant historical cargo/resources.
+
+See [controls, scope and scientific limits](Docs/Gameplay20261103/FEATURE_GUIDE.md)
+and [current executable-specific validation](TEST_REPORT.md). Earlier 2 November
+counts below describe their named older executable. The public v0.7.0 download
+remains the previously published artifact; this iteration is a local build.
+
+
 Windows v0.7.0: [release and download](https://github.com/Shahzod1602/NASA/releases/tag/apollo12-v0.7.0).
 Extract the complete ZIP and run `LunarRescue.exe`; Unreal Editor is not required.
 
@@ -34,7 +102,7 @@ performance measurements and the completed **264/264 unchanged protected-file**
 comparison, see [TEST_REPORT](TEST_REPORT.md). One controlled performance run per
 scene does not establish sustained whole-mission FPS. No human playtest result
 is claimed. The public v0.7.0 download above is the
-previously published artifact; this local work is not a new release.
+previously published artifact; this paragraph records the pre-v0.8.0 local development state.
 
 The later equipment review found a tilted SELENE rover and buried cosmetic
 rocks. The supported Editor repair changed only the existing MoonBase rover

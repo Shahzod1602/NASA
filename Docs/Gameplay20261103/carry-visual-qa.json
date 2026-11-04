@@ -1,0 +1,196 @@
+{
+  "schema": 1,
+  "reviewer": "flight_hud",
+  "reviewed_on": "2026-11-03",
+  "executable_sha256": "5171c1b0a6142dfa4c35e373d731d441ce88eb8d7a41f768779bbeaded52f2f0",
+  "runtime": "Packaged Windows DX11 staged synthetic review",
+  "human_playtest": false,
+  "performance_measurement": false,
+  "source_or_engine_mutated": false,
+  "reviewed_count": 20,
+  "verdict": "ACCEPTED for requested functional power-cell visibility in final packaged SELENE and Mars, 720p and 1080p, normal and 150% HUD.",
+  "historical_finding": {
+    "id": "cell-forearm-occlusion",
+    "old_executable_sha256": "fefcbd434378d55458f0279d26286c6d600d86a5633d621abf9932004771a339",
+    "status": "resolved-in-this-packaged-build",
+    "old_evidence_preserved": "C:/Users/shaxz/LunarRescueAgentCandidates/20261103/package-visual-qa-fefcbd43.json"
+  },
+  "observations": [
+    "All eight visible/hidden-control pairs were actually opened. The visible frame shows a whole recognizable power cell exposed at screen center between the gloves; its paired control removes the cell while retaining hands and HUD.",
+    "Both normal and 150% Field Guide/HUD text remain readable below the cell, with no central cell obstruction in all four map/resolution combinations.",
+    "All four third-person body frames show the complete suited astronaut with the cell visibly carried at the hands.",
+    "No further material functional carried-cell visibility problem was found within these inspected fixtures."
+  ],
+  "remaining_cosmetic_limits": [
+    "First-person cuffs end as obvious round stubs/floating gloves and fingers remain simplified. Recognition of the carried object is clear, but this is not approval of polished final hand art.",
+    "SELENE lighting makes the cell and gloves dark blue; the silhouette remains readable in these inspected frames.",
+    "Still images do not establish continuous animation quality, real user comprehension, physics correctness or performance. Synthetic committed-cargo fixtures are not a human pickup walkthrough.",
+    "This review opened 20 carry-related frames; prior other feature review evidence belongs to the separately recorded older executable. No unchanged-feature revalidation is claimed here."
+  ],
+  "roots": {
+    "720": "Reports/Gameplay20261103/package-review-1280x720-20261103-080002-078",
+    "1080": "Reports/Gameplay20261103/package-review-1920x1080-20261103-080123-646"
+  },
+  "frames": [
+    {
+      "root": "720",
+      "path": "selene/cell-fp45-lookdown.png",
+      "sha256": "15e1db7b5e20e49becedf92c7c9cec932afd9faee234d1bccaeacb70a57a0f73",
+      "width": 1280,
+      "height": 720,
+      "actually_viewed": true
+    },
+    {
+      "root": "720",
+      "path": "selene/cell-fp45-text150.png",
+      "sha256": "69162daba458afef9ecbe9255e52ef9f4d53130603d970675e974159b3470313",
+      "width": 1280,
+      "height": 720,
+      "actually_viewed": true
+    },
+    {
+      "root": "720",
+      "path": "selene/cell-fp45-hidden-control.png",
+      "sha256": "04416905b62727c8adc815db45e2851057a6971119fb638d18536366cebae11f",
+      "width": 1280,
+      "height": 720,
+      "actually_viewed": true
+    },
+    {
+      "root": "720",
+      "path": "selene/cell-fp45-text150-hidden-control.png",
+      "sha256": "b44c0ad1e8e100a1eae74026ba58cb5e5e68d2d9ba77d39d5834c26868f27341",
+      "width": 1280,
+      "height": 720,
+      "actually_viewed": true
+    },
+    {
+      "root": "720",
+      "path": "selene/cell-body.png",
+      "sha256": "e4645c89a9ef2602d3d0e776250c35ee9f2d3f19f849a884ab18cd4ea04fdb48",
+      "width": 1280,
+      "height": 720,
+      "actually_viewed": true
+    },
+    {
+      "root": "720",
+      "path": "mars/cell-fp45-lookdown.png",
+      "sha256": "12f5d0a6a1847863ba2b8c5b69c5e00c5a97abc780e2166caa5b1367b201a498",
+      "width": 1280,
+      "height": 720,
+      "actually_viewed": true
+    },
+    {
+      "root": "720",
+      "path": "mars/cell-fp45-text150.png",
+      "sha256": "8ee83b5861738998033e1ad0a64cf492b9905f55b98944a3cbdf7ae41cd0c96b",
+      "width": 1280,
+      "height": 720,
+      "actually_viewed": true
+    },
+    {
+      "root": "720",
+      "path": "mars/cell-fp45-hidden-control.png",
+      "sha256": "34eb2d64f875f9b2be53c10ec41311764d5c061a11a8a6eb8fa174ac60d1d4c4",
+      "width": 1280,
+      "height": 720,
+      "actually_viewed": true
+    },
+    {
+      "root": "720",
+      "path": "mars/cell-fp45-text150-hidden-control.png",
+      "sha256": "8041cc7d20439fde828306f104b1c3e5631c699ed93c449d948b6ef74abe387e",
+      "width": 1280,
+      "height": 720,
+      "actually_viewed": true
+    },
+    {
+      "root": "720",
+      "path": "mars/cell-body.png",
+      "sha256": "7e2419ca21b9be189858299395150a007f9ae696addb9f16b80c4855c225abc4",
+      "width": 1280,
+      "height": 720,
+      "actually_viewed": true
+    },
+    {
+      "root": "1080",
+      "path": "selene/cell-fp45-lookdown.png",
+      "sha256": "c6861da5fe29a4bdb419e015a01d49de44ec7e4cf6b1612b856ebbca9a1b5bd3",
+      "width": 1920,
+      "height": 1080,
+      "actually_viewed": true
+    },
+    {
+      "root": "1080",
+      "path": "selene/cell-fp45-text150.png",
+      "sha256": "4effa5722ddc43c3c8e26bcd1665fdf9c863c106e454a78cec201e7f01dec695",
+      "width": 1920,
+      "height": 1080,
+      "actually_viewed": true
+    },
+    {
+      "root": "1080",
+      "path": "selene/cell-fp45-hidden-control.png",
+      "sha256": "cd0296c0cef3e3dd466d8f5283fb55ff02e2a1b2ab2698f53c02f65675f6f561",
+      "width": 1920,
+      "height": 1080,
+      "actually_viewed": true
+    },
+    {
+      "root": "1080",
+      "path": "selene/cell-fp45-text150-hidden-control.png",
+      "sha256": "86315f241a7ac1aa714187c1a325d124b9d92004d6180b0386ac3a005c07255c",
+      "width": 1920,
+      "height": 1080,
+      "actually_viewed": true
+    },
+    {
+      "root": "1080",
+      "path": "selene/cell-body.png",
+      "sha256": "9fba36ea8566ea4ddb7d33f33657020a7a01314f7dc359cb39b79fdd9f8b20dc",
+      "width": 1920,
+      "height": 1080,
+      "actually_viewed": true
+    },
+    {
+      "root": "1080",
+      "path": "mars/cell-fp45-lookdown.png",
+      "sha256": "06b47d1156941bfa8718483f8602f1778ca9163e13d7e3eead15bb592f767dc2",
+      "width": 1920,
+      "height": 1080,
+      "actually_viewed": true
+    },
+    {
+      "root": "1080",
+      "path": "mars/cell-fp45-text150.png",
+      "sha256": "6e3c8e7134b15add2b896186931b463afcd3f0b34fbbdaad973a8101c4509f55",
+      "width": 1920,
+      "height": 1080,
+      "actually_viewed": true
+    },
+    {
+      "root": "1080",
+      "path": "mars/cell-fp45-hidden-control.png",
+      "sha256": "921d1bbf12649bcde08b6a808143f4a6be18b94ebdd7ec4dc08e49d1bd70a441",
+      "width": 1920,
+      "height": 1080,
+      "actually_viewed": true
+    },
+    {
+      "root": "1080",
+      "path": "mars/cell-fp45-text150-hidden-control.png",
+      "sha256": "afa46deb6529203a206019e20fe2e7588385358858bfb99603e9e7817422b4fa",
+      "width": 1920,
+      "height": 1080,
+      "actually_viewed": true
+    },
+    {
+      "root": "1080",
+      "path": "mars/cell-body.png",
+      "sha256": "75e32631a1f5df46a99d18c34b1d4edf07d2488ebd05b4110a64c2695fb55eb4",
+      "width": 1920,
+      "height": 1080,
+      "actually_viewed": true
+    }
+  ]
+}

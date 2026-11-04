@@ -1,0 +1,209 @@
+{
+  "schema": 1,
+  "reviewed_utc": "2026-11-04T03:01:51.107Z",
+  "review_method": "Codex visual inspection performed again on all nine actual final 08485 stationary packaged-game screenshots; each image opened with view_image and exact identities cross-checked against the validated final 720p receipt. Previous 205bdd proof was not relabelled.",
+  "review_scope": "All three world frame types in Apollo, SELENE and Mars at 1280x720. Nine images visually inspected; this does not visually certify all 120 staged images.",
+  "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a",
+  "build_info": "Dist/Apollo12/Windows/BUILD_INFO.json",
+  "receipt": "Reports/FieldOperations20261104/package-review-1280x720-20261104-073845-396/run-summary.json",
+  "receipt_sha256": "acd8ff23db61fb3a3009dfe1423cf5bb7348e0b8e8e95ac606b734fd7951a8be",
+  "source_fingerprint": {
+    "sha256": "4ab005b9fe697ed1d75cda204bb55274e3817d9e371d5757710ec92704aae86b",
+    "file_count": 111,
+    "current_file_hash_mismatches": [],
+    "full_rows_in": "receipt.source_fingerprint.files"
+  },
+  "reviewed_png_count": 9,
+  "frames": [
+    {
+      "case": "apollo",
+      "map": "/Game/Lunar/Maps/Apollo12",
+      "name": "world-rover-mounted",
+      "png": "Reports/FieldOperations20261104/package-review-1280x720-20261104-073845-396/apollo/world-rover-mounted.png",
+      "png_sha256": "59a62172c4b3d4f0b4ad39f63ab00673a57d4cc217984122189c9ea85b90fb0e",
+      "width": 1280,
+      "height": 720,
+      "source_fingerprint_sha256": "4ab005b9fe697ed1d75cda204bb55274e3817d9e371d5757710ec92704aae86b",
+      "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a",
+      "production_follow_camera": true,
+      "fixture_state_seeded": true,
+      "observations": [
+        "The rover and forward terrain are visible; the previously observed Intrepid strut occlusion is absent in this final packaged stationary view.",
+        "Chassis, seat and wheels are visible; no player-mesh clipping is apparent in this frame.",
+        "Support card and radio overlay cover part of the lower vehicle; the deliberately hidden seated player leaves an empty-looking proxy seat."
+      ],
+      "blocking_stationary_camera_or_clipping_finding": false
+    },
+    {
+      "case": "apollo",
+      "map": "/Game/Lunar/Maps/Apollo12",
+      "name": "world-magnifier-cartridge",
+      "png": "Reports/FieldOperations20261104/package-review-1280x720-20261104-073845-396/apollo/world-magnifier-cartridge.png",
+      "png_sha256": "1caaf0535b12a38054f73996696de459dc2eb70bb70b24ebdce97f964ce5dd19",
+      "width": 1280,
+      "height": 720,
+      "source_fingerprint_sha256": "4ab005b9fe697ed1d75cda204bb55274e3817d9e371d5757710ec92704aae86b",
+      "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a",
+      "production_follow_camera": false,
+      "fixture_state_seeded": true,
+      "observations": [
+        "The magnifier aperture is centred on the crosshair and the front TRAINING-01 label reads forwards.",
+        "The target remains visible; the support card overlays its lower face and handle.",
+        "The ring is visibly faceted and no hand grip is shown; this remains authored proxy presentation."
+      ],
+      "blocking_stationary_camera_or_clipping_finding": false
+    },
+    {
+      "case": "apollo",
+      "map": "/Game/Lunar/Maps/Apollo12",
+      "name": "world-sampler-package",
+      "png": "Reports/FieldOperations20261104/package-review-1280x720-20261104-073845-396/apollo/world-sampler-package.png",
+      "png_sha256": "4f25da0b68d09552ee8b22708f8f8371ff479bc202ad563784d41ddbabbd3ec8",
+      "width": 1280,
+      "height": 720,
+      "source_fingerprint_sha256": "4ab005b9fe697ed1d75cda204bb55274e3817d9e371d5757710ec92704aae86b",
+      "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a",
+      "production_follow_camera": false,
+      "fixture_state_seeded": true,
+      "observations": [
+        "The front sampler/package body, cyan label panel and wheels are visible.",
+        "No severe terrain burial or player-model clipping is apparent in this reviewed still.",
+        "The robot and nearby rover remain simple box/cylinder authored proxies; the support card covers part of the lower sampler."
+      ],
+      "blocking_stationary_camera_or_clipping_finding": false
+    },
+    {
+      "case": "selene",
+      "map": "/Game/Lunar/Maps/MoonBase",
+      "name": "world-rover-mounted",
+      "png": "Reports/FieldOperations20261104/package-review-1280x720-20261104-073845-396/selene/world-rover-mounted.png",
+      "png_sha256": "64b40f70bca7ab8354e9e633c0da7a0514027fbbfaa222a82035b5fc24fcd0a2",
+      "width": 1280,
+      "height": 720,
+      "source_fingerprint_sha256": "4ab005b9fe697ed1d75cda204bb55274e3817d9e371d5757710ec92704aae86b",
+      "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a",
+      "production_follow_camera": true,
+      "fixture_state_seeded": true,
+      "observations": [
+        "The rover and forward terrain are visible without a large foreground structure occluding the follow view.",
+        "Chassis, seat and wheels are visible; no player-mesh clipping is apparent in this frame.",
+        "Support card and radio overlay cover part of the lower vehicle; the deliberately hidden seated player leaves an empty-looking proxy seat."
+      ],
+      "blocking_stationary_camera_or_clipping_finding": false
+    },
+    {
+      "case": "selene",
+      "map": "/Game/Lunar/Maps/MoonBase",
+      "name": "world-magnifier-cartridge",
+      "png": "Reports/FieldOperations20261104/package-review-1280x720-20261104-073845-396/selene/world-magnifier-cartridge.png",
+      "png_sha256": "44be1cc2affcec95b81f21c344d4de601a19c19c234580cbceaa327aa9d26bcb",
+      "width": 1280,
+      "height": 720,
+      "source_fingerprint_sha256": "4ab005b9fe697ed1d75cda204bb55274e3817d9e371d5757710ec92704aae86b",
+      "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a",
+      "production_follow_camera": false,
+      "fixture_state_seeded": true,
+      "observations": [
+        "The magnifier aperture is centred on the crosshair and the front TRAINING-01 label reads forwards.",
+        "The target remains visible; the support card overlays its lower face and handle.",
+        "The ring is visibly faceted and no hand grip is shown; this remains authored proxy presentation.",
+        "World-space training text is dark in shadow; UI instructions remain readable."
+      ],
+      "blocking_stationary_camera_or_clipping_finding": false
+    },
+    {
+      "case": "selene",
+      "map": "/Game/Lunar/Maps/MoonBase",
+      "name": "world-sampler-package",
+      "png": "Reports/FieldOperations20261104/package-review-1280x720-20261104-073845-396/selene/world-sampler-package.png",
+      "png_sha256": "2c4de95c61139b36d20248c5c92828ca708166b6b310a76b047a9a4f7e2361ea",
+      "width": 1280,
+      "height": 720,
+      "source_fingerprint_sha256": "4ab005b9fe697ed1d75cda204bb55274e3817d9e371d5757710ec92704aae86b",
+      "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a",
+      "production_follow_camera": false,
+      "fixture_state_seeded": true,
+      "observations": [
+        "The front sampler/package body, cyan label panel and wheels are visible.",
+        "No severe terrain burial or player-model clipping is apparent in this reviewed still.",
+        "The robot and nearby rover remain simple box/cylinder authored proxies; the support card covers part of the lower sampler.",
+        "Small world-space source labels have limited contrast at this distance/shadow."
+      ],
+      "blocking_stationary_camera_or_clipping_finding": false
+    },
+    {
+      "case": "mars",
+      "map": "/Game/Mars/Maps/MarsBase",
+      "name": "world-rover-mounted",
+      "png": "Reports/FieldOperations20261104/package-review-1280x720-20261104-073845-396/mars/world-rover-mounted.png",
+      "png_sha256": "674f3b6824bdaae7a5398afaaa54acacba1d1f761cfbaa2fd3bfe9a2c9dea2ff",
+      "width": 1280,
+      "height": 720,
+      "source_fingerprint_sha256": "4ab005b9fe697ed1d75cda204bb55274e3817d9e371d5757710ec92704aae86b",
+      "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a",
+      "production_follow_camera": true,
+      "fixture_state_seeded": true,
+      "observations": [
+        "The rover and forward terrain are visible without a large foreground structure occluding the follow view.",
+        "Chassis, seat and wheels are visible; no player-mesh clipping is apparent in this frame.",
+        "Support card and radio overlay cover part of the lower vehicle; the deliberately hidden seated player leaves an empty-looking proxy seat."
+      ],
+      "blocking_stationary_camera_or_clipping_finding": false
+    },
+    {
+      "case": "mars",
+      "map": "/Game/Mars/Maps/MarsBase",
+      "name": "world-magnifier-cartridge",
+      "png": "Reports/FieldOperations20261104/package-review-1280x720-20261104-073845-396/mars/world-magnifier-cartridge.png",
+      "png_sha256": "65a030154fa8414ca711522aeca17a41a5f1ab403a49f5c434f999d1e9536c8c",
+      "width": 1280,
+      "height": 720,
+      "source_fingerprint_sha256": "4ab005b9fe697ed1d75cda204bb55274e3817d9e371d5757710ec92704aae86b",
+      "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a",
+      "production_follow_camera": false,
+      "fixture_state_seeded": true,
+      "observations": [
+        "The magnifier aperture is centred on the crosshair and the front TRAINING-01 label reads forwards.",
+        "The target remains visible; the support card overlays its lower face and handle.",
+        "The ring is visibly faceted and no hand grip is shown; this remains authored proxy presentation.",
+        "World-space training text is dark in shadow; UI instructions remain readable."
+      ],
+      "blocking_stationary_camera_or_clipping_finding": false
+    },
+    {
+      "case": "mars",
+      "map": "/Game/Mars/Maps/MarsBase",
+      "name": "world-sampler-package",
+      "png": "Reports/FieldOperations20261104/package-review-1280x720-20261104-073845-396/mars/world-sampler-package.png",
+      "png_sha256": "0e5e75e6a21c0a08237dc6f2aada2ce8a7f3b3095aeea1a1dde726da00acf435",
+      "width": 1280,
+      "height": 720,
+      "source_fingerprint_sha256": "4ab005b9fe697ed1d75cda204bb55274e3817d9e371d5757710ec92704aae86b",
+      "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a",
+      "production_follow_camera": false,
+      "fixture_state_seeded": true,
+      "observations": [
+        "The front sampler/package body, cyan label panel and wheels are visible.",
+        "No severe terrain burial or player-model clipping is apparent in this reviewed still.",
+        "The robot and nearby rover remain simple box/cylinder authored proxies; the support card covers part of the lower sampler.",
+        "Small world-space source labels have limited contrast at this distance/shadow."
+      ],
+      "blocking_stationary_camera_or_clipping_finding": false
+    }
+  ],
+  "blocking_findings": [],
+  "remaining_limits": [
+    "Visuals remain authored training proxies, not replicas certified by NASA.",
+    "The magnifier has a faceted ring and no visible gripping hand in these frames.",
+    "World labels are small/dark in some SELENE/Mars views; the HUD card occludes lower equipment geometry.",
+    "The mounted player is intentionally hidden rather than represented by a seated animated driver.",
+    "Stationary screenshots do not demonstrate driving, camera transitions, wheel animation smoothness, safe exits or FPS. Functional and performance evidence is recorded separately."
+  ],
+  "human_playtest": false,
+  "performance_measurement": false,
+  "driving_motion_observed": false,
+  "camera_motion_observed": false,
+  "engine_launched_by_reviewer": false,
+  "prior_qa_preserved_at": "Reports/FieldOperations20261104/package-world-visual-qa-205bdd.json",
+  "prior_qa_sha256": "fc0b5d78639b03657b86579c378a2411a0708ecf26fbcf5bcecbaa93bf84c246"
+}

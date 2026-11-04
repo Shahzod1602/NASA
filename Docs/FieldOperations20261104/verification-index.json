@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "kind": "local_development_verification",
+  "checked_utc": "2026-11-04T03:07:23.782627+00:00",
+  "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a",
+  "engine_version": "5.8.3",
+  "base_git_commit": "54140321bb2607b836aa9ae12da468e9f56bf531",
+  "published_release": false,
+  "source_worktree_dirty": true,
+  "source_fingerprint": {
+    "total": 111,
+    "matched": 111,
+    "mismatches": [],
+    "sha256": "4ab005b9fe697ed1d75cda204bb55274e3817d9e371d5757710ec92704aae86b"
+  },
+  "counts": {
+    "cpp_pass_executions": 4018,
+    "cpp_failures": 0,
+    "raw_cpp_reports": 67,
+    "new_field_pass_executions": 1618,
+    "legacy_pass_executions": 2400,
+    "legacy_suites_passed": 16,
+    "legacy_suites_total": 16,
+    "staged_pngs": 280,
+    "paired_pixel_checks": 8,
+    "protected_player_files_matched": 84,
+    "human_participants": 0
+  },
+  "counting_method": "Anchored C++ PASS lines in fresh unique raw reports; repeated mission/resolution executions included; no wrapper PASS lines, duplicate fixed outputs or human results counted.",
+  "evidence": [
+    {
+      "path": "Reports/FieldOperations20261104/package-rendered-test-1280x720-20261104-073817-882/run-summary.json",
+      "sha256": "338a3d483a16eead0634beb3e6dd69aad6fb43657faa400aaa613e343c262771",
+      "kind": "new_field_functional"
+    },
+    {
+      "path": "Reports/FieldOperations20261104/package-review-1280x720-20261104-073845-396/run-summary.json",
+      "sha256": "acd8ff23db61fb3a3009dfe1423cf5bb7348e0b8e8e95ac606b734fd7951a8be",
+      "kind": "new_field_review"
+    },
+    {
+      "path": "Reports/FieldOperations20261104/package-review-1920x1080-20261104-074005-994/run-summary.json",
+      "sha256": "40aa4ba6f15f0fb61b01be0ac40534e5e1efd010bc32546d3b43c8036ce0f9c1",
+      "kind": "new_field_review"
+    },
+    {
+      "path": "Reports/FieldOperations20261104/package-test-1280x720-20261104-073757-439/run-summary.json",
+      "sha256": "617918685185548ea6781af77bff678baabc61f3895e3cb17016c90edcc37747",
+      "kind": "new_field_functional"
+    },
+    {
+      "path": "Docs/FieldOperations20261104/legacy-verification.json",
+      "sha256": "acad940d4d1c96fd0197935b342ab34b8a127e62a449723c3a28e736669ff39b",
+      "kind": "legacy_cpp_and_render"
+    },
+    {
+      "path": "Reports/FieldOperations20261104/performance-comparison.json",
+      "sha256": "c9ee05dd69ba684999be9324c536142ee17323282e346bbd29dabb20969716f0",
+      "kind": "rendered_opening_performance"
+    },
+    {
+      "path": "Reports/FieldOperations20261104/performance-final-20261104-075449/queue-summary.json",
+      "sha256": "4b84c68b1fd41ca945ca38a338b121adc9c2a4fcf820478864ee85ae32b2423d",
+      "kind": "performance_queue"
+    },
+    {
+      "path": "Reports/FieldOperations20261104/preservation-final.json",
+      "sha256": "2c74f80ab2389f8595e6deab21e197b7d193bd4298e8ec57bbc622e03f0a4c85",
+      "kind": "player_file_preservation"
+    },
+    {
+      "path": "Docs/FieldOperations20261104/package-world-visual-qa.json",
+      "sha256": "583e9649758c34c5fb2f9b74cdf2fd2c211fbf1967f8f11d4eab00a33f125693",
+      "kind": "assistant_stationary_world_visual_qa"
+    },
+    {
+      "path": "Docs/FieldOperations20261104/package-ui-visual-qa-1080.json",
+      "sha256": "7db7c8080a5ea82da61caec068387ae1937d592ffa966277fcee0aa56bd38b23",
+      "kind": "assistant_ui_visual_qa"
+    }
+  ],
+  "bundle_audit": "Docs/FieldOperations20261104/bundle-verification.json",
+  "science_role": "Existing LROC elevations shape Apollo terrain; local LCROSS publication facts label simulated remote-delivery cartridges. New rover/sampler/EVA/cost rules are authored training fiction. No new raw Mars/water raster or NASA approval.",
+  "limits": {
+    "network_isolation_tested": false,
+    "human_playtest_performed": false,
+    "whole_mission_performance_measured": false,
+    "occupied_vehicle_driving_performance_measured": false,
+    "full_continuous_route_traversal_proven": false,
+    "vehicle_art": "authored proxy, no imported NASA SEV or visible driver/gripping-hand polish",
+    "competition_eligibility": "unconfirmed"
+  },
+  "remote_actions_performed": []
+}

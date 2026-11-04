@@ -1,5 +1,8 @@
 #include "Components/AudioComponent.h"
 #include "LunarGame.h"
+#include "LunarFieldOperations.h"
+#include "LunarSurfaceVehicle.h"
+#include "LunarDeparture.h"
 #include "LunarSettings.h"
 #include "LunarPanels.h"
 #include "Camera/CameraComponent.h"
@@ -13,7 +16,7 @@ namespace {
 int Index(const TArray<TObjectPtr<AActor>>& A,AActor* V){return A.IndexOfByPredicate([V](const auto& P){return P.Get()==V;});}
 }
 bool ALunarGameMode::OpenApolloTool(){
- if(!Apollo||!IsActive()||Paused||ApolloTool||ApolloPhotoPending||!CanInteract()||Stage==ELunarStage::ApolloTraverse)return false;
+ if(!Apollo||!IsActive()||Paused||ALunarDepartureScene::Active(this)||ApolloTool||ApolloPhotoPending||!CanInteract()||Stage==ELunarStage::ApolloTraverse)return false;
  if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));P&&P->ThirdPerson)P->ToggleSuitView();
  ApolloWorkTarget=InteractionTarget();if(!ApolloWorkTarget)return false;
  ApolloInputHintRemaining=0;
@@ -90,22 +93,24 @@ void ALunarGameMode::ApolloToolClick(){
 void ALunarCharacter::OpenSettings(){
  if(ActivePanel){ClosePanel();return;}
  auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));auto* PC=Cast<APlayerController>(GetController());if(!G||!PC||(G->Menu&&G->MainMenu&&G->MainMenu->IsIntroActive()))return;
- G->CancelApolloTool();PanelWasPaused=G->Paused;if(G->IsActive()&&!G->Paused)PauseMission();
+ G->CancelApolloTool();PanelWasPaused=G->Paused;if((G->IsActive()||ALunarDepartureScene::Active(G))&&!G->Paused)PauseMission();
  ActivePanel=CreateWidget<ULunarPanel>(PC);ActivePanel->Settings=true;ActivePanel->AddToViewport(100);
  PC->bShowMouseCursor=true;FInputModeGameAndUI Input;Input.SetWidgetToFocus(ActivePanel->TakeWidget());Input.SetHideCursorDuringCapture(false);PC->SetInputMode(Input);
 }
 void ALunarCharacter::OpenEvidence(){
+ if(ALunarDepartureScene::Active(Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this))))return;
  if(ActivePanel){ClosePanel();return;}
  auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));auto* PC=Cast<APlayerController>(GetController());if(!G||G->Menu||!PC)return;
- G->CancelApolloTool();PanelWasPaused=G->Paused;if(G->IsActive()&&!G->Paused)PauseMission();
+ G->CancelApolloTool();PanelWasPaused=G->Paused;if((G->IsActive()||ALunarDepartureScene::Active(G))&&!G->Paused)PauseMission();
  ActivePanel=CreateWidget<ULunarPanel>(PC);ActivePanel->AddToViewport(100);PC->bShowMouseCursor=true;FInputModeGameAndUI Input;Input.SetWidgetToFocus(ActivePanel->TakeWidget());Input.SetHideCursorDuringCapture(false);PC->SetInputMode(Input);
 }
 void ALunarCharacter::ClosePanel(){
  if(!ActivePanel)return;ULunarSettings::Get()->RevertDisplay();ActivePanel->RemoveFromParent();ActivePanel=nullptr;
  if(auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this))){if(G->Paused&&!PanelWasPaused)PauseMission();if(auto* PC=Cast<APlayerController>(GetController())){PC->bShowMouseCursor=G->Menu;if(G->Menu)PC->SetInputMode(FInputModeGameAndUI());else PC->SetInputMode(FInputModeGameOnly());}}
+ if(auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));G&&G->FieldOperations)G->FieldOperations->OnPanelClosed();
  SyncPauseMenu();
 }
-void ALunarCharacter::ToggleApolloMode(){if(auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));G&&G->Apollo&&G->Stage==ELunarStage::Briefing&&!G->ApolloConfirmNew&&!ActivePanel)G->ApolloTimed=!G->ApolloTimed;}
+void ALunarCharacter::ToggleApolloMode(){if(auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));G&&G->Apollo&&G->Stage==ELunarStage::Briefing&&!G->ApolloConfirmNew&&!ActivePanel&&!ALunarDepartureScene::Active(G))G->ApolloTimed=!G->ApolloTimed;}
 
 FString ALunarGameMode::ApolloWorkStepLabel(int32 Tool,int32 Phase) const {
  if(Tool==4&&Phase==1)return SelectedSample==1?TEXT("Soil lifted. Seal the pouch to record the sample."):TEXT("Rock lifted. Seal the pouch to record the sample.");

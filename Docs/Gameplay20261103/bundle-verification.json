@@ -1,0 +1,33 @@
+{
+  "checked_utc": "2026-11-03T03:23:15.142276+00:00",
+  "executable_sha256": "5171c1b0a6142dfa4c35e373d731d441ce88eb8d7a41f768779bbeaded52f2f0",
+  "checks": {
+    "built_and_staged_executable_match": true,
+    "build_info_identity_matches": true,
+    "source_data_checksum_matches_manifest": true,
+    "bundled_data_matches_source": true,
+    "bundled_manifest_matches_source": true,
+    "bundled_credits_match_source": true,
+    "editor_module_matches_captured_build": true
+  },
+  "source_inputs": {
+    "total": 98,
+    "matched": 98,
+    "mismatches": []
+  },
+  "maps": {
+    "total": 4,
+    "matched": 4,
+    "mismatches": []
+  },
+  "original_player_files": {
+    "total": 544,
+    "matched": 544,
+    "mismatches": []
+  },
+  "data_id": "lcross-cabeus-published-estimate-v1",
+  "data_sha256": "40db698b4244ee7f6f28fcb5aa44c7dd3e60177694b34cb18d8bc32a24981105",
+  "human_playtest": false,
+  "network_isolation_test": false,
+  "passed": true
+}

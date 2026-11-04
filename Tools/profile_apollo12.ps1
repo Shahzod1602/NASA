@@ -3,6 +3,7 @@ param(
  [ValidateRange(1200,12000)][int]$Frames=4200,
  [ValidateRange(-1,2)][int]$Quality=-1,
  [switch]$FastStride,
+ [switch]$FieldOperationsProfile,
  [switch]$HideSkeletalMeshes,
  [switch]$Onscreen,
  [switch]$GpuTelemetry,
@@ -29,6 +30,7 @@ $captureArgs=@('/Game/Lunar/Maps/Apollo12','-game','-unattended','-ApolloWalkTes
 if($Onscreen){$captureArgs+=@('-windowed')}else{$captureArgs+='-RenderOffscreen'}
 if($Quality -ge 0){$captureArgs+="-ApolloQuality=$Quality"}
 if($FastStride){$captureArgs+='-ApolloProfileFastStride'}
+if($FieldOperationsProfile){$captureArgs+='-FieldOperationsProfile'}
 $configPath=Join-Path $gameRoot 'Saved\Config\Windows\GameUserSettings.ini'
 $configExisted=Test-Path -LiteralPath $configPath
 $configBytes=if($configExisted){[System.IO.File]::ReadAllBytes($configPath)}else{$null}
@@ -85,6 +87,8 @@ if($LASTEXITCODE -ne 0){throw 'CSV capture validation failed'}
  diagnostic_commands=$DiagnosticCommands
  fps_cap=$FpsCap
  quality=if($Quality -ge 0){$Quality}else{'existing configuration'}
+ field_operations_enabled=[bool]$FieldOperationsProfile
+ workload=if($FieldOperationsProfile){'scripted opening walk with enabled parked support actors; no occupied driving/scanning'}else{'legacy scripted opening walk; optional field extension disabled by automation'}
  fast_stride=[bool]$FastStride
  diagnostic_hide_skeletal_meshes=[bool]$HideSkeletalMeshes
  command_arguments=$captureArgs

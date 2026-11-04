@@ -1,4 +1,6 @@
 #include "LunarGame.h"
+#include "LunarDeparture.h"
+#include "LunarCarryPresentation.h"
 #include "LunarPovMotion.h"
 #include "Components/PoseableMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
@@ -35,15 +37,18 @@ void ALunarCharacter::PoseSuitRig(){
   }
   SuitRig->SetRelativeRotation(SuitCoordinate.Inverse());HandRig->SetRelativeRotation(SuitCoordinate.Inverse());
  }
- const bool Show=!G->Menu&&(G->IsActive()||G->Stage==ELunarStage::Briefing||G->Stage==ELunarStage::Won);
+ const bool Show=!G->Menu&&!ALunarDepartureScene::Active(G)&&(G->IsActive()||G->Stage==ELunarStage::Briefing||G->Stage==ELunarStage::Won);
  const bool CapturingPhoto=PhotoCaptureFrames>0||(FScreenshotRequest::IsScreenshotRequested()&&!FScreenshotRequest::ShouldShowUI());
  const bool CarryCell=!G->Apollo&&G->Stage==ELunarStage::RestorePower&&G->RepairStep==0;
  const bool TaskHands=G->ApolloTool||G->Holding||CarryCell||G->ApolloPackedPreviewRemaining>0||G->ApolloPackedPartRemaining>0;
  const bool FreeHandsVisible=LunarPovMotion::HandsVisible(Camera->GetComponentRotation().Pitch,TaskHands);
- SuitRig->SetVisibility(Show&&ThirdPerson);HandRig->SetVisibility(Show&&!ThirdPerson&&Camera->FieldOfView>60&&!CapturingPhoto&&FreeHandsVisible);
+ const bool ViewHands=LunarCarryPresentation::ShouldShow(this,G,true)&&(Camera->FieldOfView>60||TaskHands)&&!CapturingPhoto&&FreeHandsVisible;
+ SuitRig->SetVisibility(Show&&ThirdPerson);HandRig->SetVisibility(Show&&ViewHands);
  if(PhotoCaptureFrames>0)--PhotoCaptureFrames;
  if(!SuitRig->GetSkinnedAsset()||!HandRig->GetSkinnedAsset())return;
- for(const auto& C:SuitArms){C->SetVisibility(false);C->SetCastShadow(false);}for(int I=0;I<Gloves.Num();++I)Gloves[I]->SetVisibility((I==0||I==8)&&Show&&!ThirdPerson&&Camera->FieldOfView>60&&!CapturingPhoto&&FreeHandsVisible);
+ // The carry view retains the skinned forearms/hands. Its duplicate cloth
+ // forearm proxies must not sit over the same silhouette at narrow FOV.
+ for(const auto& C:SuitArms){C->SetVisibility(false);C->SetCastShadow(false);}for(int I=0;I<Gloves.Num();++I)Gloves[I]->SetVisibility((I==0||I==8)&&Show&&ViewHands&&!CarryCell);
  for(const auto& C:SuitBody)C->SetCastShadow(false);SuitRig->bCastHiddenShadow=true;
  if(ThirdPerson)for(const auto& C:SuitBody)C->SetVisibility(false,true);
  auto Set=[&](UPoseableMeshComponent* C,const FString& Name,FVector P,FQuat R=FQuat::Identity){

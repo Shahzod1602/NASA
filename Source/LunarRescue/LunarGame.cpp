@@ -1,5 +1,13 @@
 #include "UObject/Package.h"
 #include "LunarGame.h"
+#include "LunarFieldOperations.h"
+#include "LunarSurfaceVehicle.h"
+#include "LunarDeparture.h"
+#include "LunarCarryPresentation.h"
+#include "LunarCrew.h"
+#include "LunarWaterStudy.h"
+#include "Misc/CommandLine.h"
+#include "Misc/Parse.h"
 #include "LunarCargoFinale.h"
 #include "LunarApolloText.h"
 #include "LunarSettings.h"
@@ -65,6 +73,7 @@ void ALunarCharacter::BeginPlay() {
  CarriedModule->SetRelativeLocation(FVector(52,0,-33));CarriedModule->SetRelativeScale3D(FVector(.23));
  CarriedModule->SetCollisionEnabled(ECollisionEnabled::NoCollision);CarriedModule->SetCastShadow(false);
  CarriedModule->SetOnlyOwnerSee(true);CarriedModule->RegisterComponent();CarriedModule->SetVisibility(false);
+ LunarCarryPresentation::Build(this);LunarCarryPresentation::Update(this);
 }
 void ALunarCharacter::Tick(float D) {
  Super::Tick(D);auto* G=Mission(this);const bool Active=G&&G->IsActive()&&!G->Paused;
@@ -74,6 +83,7 @@ void ALunarCharacter::Tick(float D) {
   else BreathAudio->SetPaused(true);
  }
  if(IsValid(StepAudio)){StepAudio->SetVolumeMultiplier(.7f*(ULunarSettings::Get()->EffectsVolume*ULunarSettings::Get()->MasterVolume));StepAudio->SetPaused(!Active);}
+ if(ALunarSurfaceVehicle::IsRiding(G)){LastStepPosition=GetActorLocation();StepTravel=0;SyncPauseMenu();return;}
  const FVector Here=GetActorLocation();float Travel=FVector::Dist2D(Here,LastStepPosition);LastStepPosition=Here;
  if(Active) {
   SuitTime+=D;
@@ -89,8 +99,9 @@ void ALunarCharacter::Tick(float D) {
    }
   }
  }
- if(CarriedModule)CarriedModule->SetVisibility(G&&G->Stage==ELunarStage::RestorePower&&G->RepairStep==0&&Camera->FieldOfView>60);
- UpdateSuit(D);SyncPauseMenu();
+ const bool HideForPhoto=PhotoCaptureFrames>0||(FScreenshotRequest::IsScreenshotRequested()&&!FScreenshotRequest::ShouldShowUI());
+ LunarCarryPresentation::Update(this,HideForPhoto);
+ UpdateSuit(D);LunarCarryPresentation::Update(this,HideForPhoto);SyncPauseMenu();
 }
 
 void ALunarCharacter::Landed(const FHitResult& Hit) {
@@ -124,6 +135,9 @@ void ALunarCharacter::SetupPlayerInputComponent(UInputComponent* I) {
  I->BindAction("Route",IE_Pressed,this,&ALunarCharacter::ToggleRoute);
  I->BindAction("Start",IE_Pressed,this,&ALunarCharacter::StartMission);
  I->BindAction("PrimaryClick",IE_Pressed,this,&ALunarCharacter::PrimaryClick);
+ I->BindAction("PrimaryClick",IE_Released,this,&ALunarCharacter::ReleasePrimary);
+ I->BindKey(EKeys::B,IE_Pressed,this,&ALunarCharacter::OpenFieldOperations);
+ I->BindKey(EKeys::G,IE_Pressed,this,&ALunarCharacter::ToggleFieldScanner);
  I->BindAction("Restart",IE_Pressed,this,&ALunarCharacter::RestartMission);
  I->BindAction("Pause",IE_Pressed,this,&ALunarCharacter::PauseMission);
  I->BindKey(EKeys::One,IE_Pressed,this,&ALunarCharacter::ChooseMoon);
@@ -148,17 +162,17 @@ void ALunarCharacter::SetupPlayerInputComponent(UInputComponent* I) {
  I->BindKey(EKeys::LeftAlt,IE_Released,this,&ALunarCharacter::EndSuitOrbit);
  I->BindAction("Zoom",IE_Pressed,this,&ALunarCharacter::ZoomVisor);
 }
-void ALunarCharacter::Forward(float V) { auto* G=Mission(this); if(G&&G->IsActive()&&!G->Paused&&G->ApolloTool<=1&&!ActivePanel) AddMovementInput(FRotationMatrix(FRotator(0,GetControlRotation().Yaw,0)).GetUnitAxis(EAxis::X),V); }
-void ALunarCharacter::Right(float V) { auto* G=Mission(this); if(G&&G->IsActive()&&!G->Paused&&G->ApolloTool<=1&&!ActivePanel) AddMovementInput(FRotationMatrix(FRotator(0,GetControlRotation().Yaw,0)).GetUnitAxis(EAxis::Y),V); }
-void ALunarCharacter::Turn(float V) { auto* G=Mission(this); if(!G||G->Menu||G->Paused||ActivePanel||ALunarCargoFinale::Active(G))return;if(G->ApolloTool==2||G->ApolloTool==3){G->ApolloToolAxis(V,0);return;}if(G->ApolloTool>1)return;AddControllerYawInput(V*ULunarSettings::Get()->Sensitivity*Camera->FieldOfView/85.f); }
-void ALunarCharacter::Look(float V) { auto* G=Mission(this); if(!G||G->Menu||G->Paused||ActivePanel||ALunarCargoFinale::Active(G))return;if(G->ApolloTool==2||G->ApolloTool==3){G->ApolloToolAxis(0,V);return;}if(G->ApolloTool>1)return;AddControllerPitchInput(V*ULunarSettings::Get()->Sensitivity*(ULunarSettings::Get()->InvertY?-1.f:1.f)*Camera->FieldOfView/85.f); }
-void ALunarCharacter::ZoomVisor() { auto* G=Mission(this);if(G&&G->IsActive()&&!G->Paused&&!G->ApolloTool&&!ActivePanel) {if(ThirdPerson)ToggleSuitView();Camera->SetFieldOfView(Camera->FieldOfView<60?ULunarSettings::Get()->FieldOfView:18.f);} }
-void ALunarCharacter::Leap() { auto* G=Mission(this); if(G&&G->IsActive()&&!G->Paused&&!G->ApolloTool&&!ActivePanel) Jump(); }
+void ALunarCharacter::Forward(float V) { auto* G=Mission(this);if(G&&G->FieldOperations&&G->FieldOperations->Enabled&&G->IsActive()&&!G->FieldOperations->Briefed)return;if(ALunarSurfaceVehicle::IsRiding(G)){G->FieldOperations->Vehicle->SetForward(V);return;} if(G&&G->IsActive()&&!G->Paused&&G->ApolloTool<=1&&!ActivePanel) AddMovementInput(FRotationMatrix(FRotator(0,GetControlRotation().Yaw,0)).GetUnitAxis(EAxis::X),V); }
+void ALunarCharacter::Right(float V) { auto* G=Mission(this);if(G&&G->FieldOperations&&G->FieldOperations->Enabled&&G->IsActive()&&!G->FieldOperations->Briefed)return;if(ALunarSurfaceVehicle::IsRiding(G)){G->FieldOperations->Vehicle->SetSteer(V);return;} if(G&&G->IsActive()&&!G->Paused&&G->ApolloTool<=1&&!ActivePanel) AddMovementInput(FRotationMatrix(FRotator(0,GetControlRotation().Yaw,0)).GetUnitAxis(EAxis::Y),V); }
+void ALunarCharacter::Turn(float V) { auto* G=Mission(this); if(!G||G->Menu||G->Paused||ActivePanel||ALunarSurfaceVehicle::IsRiding(G)||ALunarCargoFinale::Active(G)||ALunarDepartureScene::Active(G))return;if(G->ApolloTool==2||G->ApolloTool==3){G->ApolloToolAxis(V,0);return;}if(G->ApolloTool>1)return;AddControllerYawInput(V*ULunarSettings::Get()->Sensitivity*Camera->FieldOfView/85.f); }
+void ALunarCharacter::Look(float V) { auto* G=Mission(this); if(!G||G->Menu||G->Paused||ActivePanel||ALunarSurfaceVehicle::IsRiding(G)||ALunarCargoFinale::Active(G)||ALunarDepartureScene::Active(G))return;if(G->ApolloTool==2||G->ApolloTool==3){G->ApolloToolAxis(0,V);return;}if(G->ApolloTool>1)return;AddControllerPitchInput(V*ULunarSettings::Get()->Sensitivity*(ULunarSettings::Get()->InvertY?-1.f:1.f)*Camera->FieldOfView/85.f); }
+void ALunarCharacter::ZoomVisor() { auto* G=Mission(this);if(ALunarSurfaceVehicle::IsRiding(G)||(G&&G->FieldOperations&&G->FieldOperations->ScannerActive))return;if(G&&G->IsActive()&&!G->Paused&&!G->ApolloTool&&!ActivePanel) {if(ThirdPerson)ToggleSuitView();Camera->SetFieldOfView(Camera->FieldOfView<60?ULunarSettings::Get()->FieldOfView:18.f);} }
+void ALunarCharacter::Leap() { auto* G=Mission(this);if(G&&G->FieldOperations&&G->FieldOperations->Enabled&&G->IsActive()&&!G->FieldOperations->Briefed)return;if(ALunarSurfaceVehicle::IsRiding(G))return; if(G&&G->IsActive()&&!G->Paused&&!G->ApolloTool&&!ActivePanel) Jump(); }
 void ALunarCharacter::Interact() { if(auto* G=Mission(this)) G->Interact(); }
 void ALunarCharacter::ReleaseInteract() {if(auto* G=Mission(this))G->ReleaseInteract();}
 void ALunarCharacter::ToggleRoute() {if(auto* G=Mission(this))G->ToggleRoute();}
 void ALunarCharacter::ToggleJournal() {
- if(ActivePanel)return;
+ if(ActivePanel||ALunarDepartureScene::Active(Mission(this))||ALunarSurfaceVehicle::IsRiding(Mission(this)))return;
  if(auto* G=Mission(this))if(G->Apollo&&G->IsActive()) {
   G->CancelApolloTool();
   if(G->Journal){G->Journal=false;if(G->Paused)PauseMission();}
@@ -168,6 +182,8 @@ void ALunarCharacter::ToggleJournal() {
 void ALunarCharacter::StartMission() {
  if(ActivePanel)return;
  if(auto* PausedMission=Mission(this);PausedMission&&PausedMission->Paused){if(PausedMission->Journal)PauseMission();else{SyncPauseMenu();if(PauseMenu)PauseMenu->Activate();}return;}
+ if(auto* G=Mission(this);G&&G->FieldOperations&&G->FieldOperations->Preparing){G->FieldOperations->OpenPanel(EFieldPanelView::Preflight);return;}
+ if(ALunarDepartureScene::Skip(Mission(this)))return;
  if(auto* SceneMission=Mission(this);ALunarCargoFinale::Active(SceneMission)){if(SceneMission->Paused)PauseMission();else ALunarCargoFinale::Skip(SceneMission);return;}
  if(auto* G=Mission(this)) {
   if(G->Menu){if(G->MainMenu)G->MainMenu->ConfirmSelection();}
@@ -179,6 +195,11 @@ void ALunarCharacter::StartMission() {
 void ALunarCharacter::PrimaryClick() {
  auto* G=Mission(this);if(!G)return;
  if(ActivePanel||G->Paused)return;
+ if(G->FieldOperations&&G->FieldOperations->Enabled&&G->IsActive()&&!G->FieldOperations->Briefed){G->FieldOperations->OpenPanel(EFieldPanelView::Briefing);return;}
+ if(G->FieldOperations&&G->FieldOperations->Preparing){G->FieldOperations->OpenPanel(EFieldPanelView::Preflight);return;}
+ if(G->FieldOperations&&G->FieldOperations->ScannerActive){G->FieldOperations->BeginScan();return;}
+ if(ALunarSurfaceVehicle::IsRiding(G))return;
+ if(ALunarDepartureScene::Skip(G))return;
  if(ALunarCargoFinale::Active(G)){if(G->Paused)StartMission();else ALunarCargoFinale::Skip(G);return;}
  if(G->ApolloTool){G->ApolloToolClick();return;}
  if(G->Apollo&&G->IsActive()){G->RequestApolloInputHint();return;}
@@ -187,7 +208,7 @@ void ALunarCharacter::PrimaryClick() {
 
 }
 // Keep ACharacter::Restart intact: possession calls it to enable walking physics.
-void ALunarCharacter::ContinueMission(){if(ActivePanel)return;if(auto* G=Mission(this))G->ContinueApollo();}
+void ALunarCharacter::ContinueMission(){if(ActivePanel||ALunarDepartureScene::Active(Mission(this)))return;if(auto* G=Mission(this))G->ContinueApollo();}
 void ALunarCharacter::RestartMission() {
  if(ActivePanel)return;
  auto* G=Mission(this);if(!G)return;
@@ -208,12 +229,13 @@ void ALunarCharacter::PauseMission() {
   if(G->Paused&&PauseMenu&&!G->Journal&&PauseMenu->HandleBack())return;
   if(G->ApolloTool)G->CancelApolloTool();
   if(G->ApolloConfirmNew){G->ApolloConfirmNew=false;return;}
-  if(!G->IsActive()&&!ALunarCargoFinale::Active(G))return;
+  if(!G->IsActive()&&!ALunarCargoFinale::Active(G)&&!ALunarDepartureScene::Active(G))return;
   auto* Move=GetCharacterMovement();
+  if(G->FieldOperations){G->FieldOperations->CancelScanner();if(G->FieldOperations->Vehicle){G->FieldOperations->Vehicle->SetForward(0);G->FieldOperations->Vehicle->SetSteer(0);}}
   G->Paused=!G->Paused; G->ReleaseInteract();if(!G->Paused)G->Journal=false;
   G->UpdateAudioPause();
   if(G->Paused) { PausedVelocity=Move->Velocity; Move->StopMovementImmediately();Move->SetComponentTickEnabled(false); }
-  else { Move->SetComponentTickEnabled(true);Move->Velocity=PausedVelocity; }
+  else { Move->SetComponentTickEnabled(!ALunarDepartureScene::Active(G)&&!ALunarSurfaceVehicle::IsRiding(G));Move->Velocity=PausedVelocity; }
   SyncPauseMenu();
  }
 }
@@ -229,6 +251,8 @@ void ALunarGameMode::BeginPlay() {
  IFileManager::Get().MakeDirectory(*(FPaths::ProjectDir()/TEXT("Reports")),true);
  if(FParse::Param(FCommandLine::Get(),TEXT("LunarMenuTest"))||FParse::Param(FCommandLine::Get(),TEXT("LoadingTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::TravelCheck,3,false);}
  if(Menu&&FParse::Param(FCommandLine::Get(),TEXT("LunarReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,[this](){FScreenshotRequest::RequestScreenshot(ReportPath(TEXT("mission-select.png")),true,false);FTimerHandle End;GetWorldTimerManager().SetTimer(End,[](){FPlatformMisc::RequestExitWithStatus(false,0);},3,false);},8,false);}
+ if(!Menu&&FParse::Param(FCommandLine::Get(),TEXT("FieldOperationsTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ValidateFieldOperationsChecks,3,false);}
+ if(!Menu&&FParse::Param(FCommandLine::Get(),TEXT("FieldOperationsReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ValidateFieldOperationsReview,4,false);}
  if(FParse::Param(FCommandLine::Get(),TEXT("NasaUITest"))&&!Menu){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::NasaUIChecks,3,false);}
  if(FParse::Param(FCommandLine::Get(),TEXT("NasaLearningTest"))&&!Menu){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::NasaLearningChecks,3,false);}
  if(FParse::Param(FCommandLine::Get(),TEXT("NasaPovTest"))&&!Menu){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::NasaPovChecks,3,false);}
@@ -238,6 +262,10 @@ void ALunarGameMode::BeginPlay() {
  if(!Menu&&FParse::Param(FCommandLine::Get(),TEXT("HUDReferenceReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::HUDReferenceReview,4,false);}
  if(!Menu&&FParse::Param(FCommandLine::Get(),TEXT("FeedbackAssetsTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::FeedbackAssetChecks,3,false);}
  if(!Menu&&FParse::Param(FCommandLine::Get(),TEXT("EquipmentDiagnosticsTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,[this](){LunarDiagnostics::RunChecks(this);},3,false);}
+ if(!Menu&&FParse::Param(FCommandLine::Get(),TEXT("GameplayTasksTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::GameplayTaskChecks,3,false);}
+ if(!Menu&&FParse::Param(FCommandLine::Get(),TEXT("GameplayTasksReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::GameplayTaskReview,4,false);}
+ if(!Menu&&FParse::Param(FCommandLine::Get(),TEXT("CarryPresentationTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,[this](){LunarCarryPresentation::RunChecks(this);},3,false);}
+ if(!Menu&&FParse::Param(FCommandLine::Get(),TEXT("WaterStudyTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,[this](){LunarWater::RunChecks(this);},3,false);}
  if(Menu&&FParse::Param(FCommandLine::Get(),TEXT("LoadingTypographyTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,[this](){LunarLoading::RunTypographyChecks(this);},3,false);}
  if(Menu&&FParse::Param(FCommandLine::Get(),TEXT("LoadingTypographyReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,[this](){LunarLoading::RunTypographyReview(GetWorld());},4,false);}
  if(Menu){
@@ -281,18 +309,25 @@ void ALunarGameMode::BeginPlay() {
 }
 bool ALunarGameMode::IsActive() const { return (Stage>=ELunarStage::FindModule&&Stage<=ELunarStage::ReturnHome)||Stage==ELunarStage::SurveySamples||Stage==ELunarStage::RecoverDrone||Stage==ELunarStage::ActivateBeacon||(Stage>=ELunarStage::ApolloCheckout&&Stage<=ELunarStage::ApolloReturn); }
 void ALunarGameMode::Tick(float D) {
- Super::Tick(D);if(Menu&&MainMenu)MainMenu->AdvanceIntro(D); AdvanceRadio(D); UpdateAudioPause(); AdvanceTime(D); AdvancePowerSequence(D); AdvanceExpedition(D); AdvanceInteraction(D);
+ Super::Tick(D);if(Menu&&MainMenu)MainMenu->AdvanceIntro(D);
+ if(FieldOperations)FieldOperations->Advance(D);
+ // A closed mandatory briefing is still a planning state, not free exploration.
+ if(FieldOperations&&FieldOperations->Enabled&&IsActive()&&!FieldOperations->Briefed){UpdateAudioPause();return;}
+ // The departure actor ticks after GameMode. Its final presentation delta is
+ // never charged to mission time, radio or resource clocks.
+ if(ALunarDepartureScene::Active(this)){UpdateAudioPause();return;}
+ AdvanceRadio(D); UpdateAudioPause(); AdvanceTime(D); AdvancePowerSequence(D); AdvanceExpedition(D); AdvanceInteraction(D);
  if(Apollo)TickApollo(D);
  if(WalkthroughEnabled)WalkthroughTick(D);
 }
 void ALunarGameMode::AdvanceRadio(float D) {
- if(!Paused)RadioRemaining=FMath::Max(0.f,RadioRemaining-FMath::Max(0.f,D));
+ if(!Paused&&!ALunarDepartureScene::Active(this))RadioRemaining=FMath::Max(0.f,RadioRemaining-FMath::Max(0.f,D));
 }
 void ALunarGameMode::UpdateAudioPause() {
  if(IsValid(RadioAudio))RadioAudio->SetVolumeMultiplier((ULunarSettings::Get()->RadioVolume*ULunarSettings::Get()->MasterVolume));
- if(IsValid(RadioAudio))RadioAudio->SetPaused(Paused);
+ if(IsValid(RadioAudio))RadioAudio->SetPaused(Paused||ALunarDepartureScene::Active(this));
  PowerSounds.RemoveAll([](const TObjectPtr<UAudioComponent>& C){return !IsValid(C.Get());});
- for(const auto& C:PowerSounds)C->SetPaused(Paused);
+ for(const auto& C:PowerSounds)C->SetPaused(Paused||ALunarDepartureScene::Active(this));
 }
 UAudioComponent* ALunarGameMode::PlayPowerSound(const TCHAR* Name,float Volume) {
  auto* Sound=LoadObject<USoundBase>(nullptr,*FString::Printf(TEXT("/Game/Lunar/Immersion/Audio/%s.%s"),Name,Name));
@@ -334,7 +369,7 @@ void ALunarGameMode::AdvancePowerSequence(float D) {
  Message("POWER RESTORED. Crew log: The rover did not fail. We shut it down.");
 }
 void ALunarGameMode::AdvanceTime(float D) {
- if(!IsActive()||Paused) return;
+ if(!IsActive()||Paused||ALunarDepartureScene::Active(this)) return;
  if(Apollo){
   if(ApolloTimed)Oxygen=FMath::Max(0.f,Oxygen-FMath::Max(0.f,D));
   if(ApolloTimed&&Oxygen>0&&Oxygen<180&&!LowOxygenWarned){LowOxygenWarned=true;Message(ApolloText::Get(TEXT("TimeWarning")));}
@@ -351,7 +386,24 @@ void ALunarGameMode::AdvanceTime(float D) {
   Stage=ELunarStage::Lost;ReleaseInteract();Message(FailureReason);
  }
 }
-void ALunarGameMode::StartMission() { if(!Menu&&Stage==ELunarStage::Briefing) { if(Apollo){StartApollo(ApolloConfirmNew);return;} Stage=ELunarStage::FindModule; Message("NAV: Find the rover power cell. SELENE has stopped responding."); } }
+void ALunarGameMode::StartMission(){
+ if(Menu||Paused||Stage!=ELunarStage::Briefing||ALunarDepartureScene::Active(this))return;
+ // Preserve the existing saved-expedition confirmation before showing any intro.
+ if(Apollo&&!ApolloConfirmNew&&ApolloSaveStatus!=EApolloSaveStatus::Missing){StartApollo(false);return;}
+ DepartureAuthorizedNewRun=ApolloConfirmNew;ApolloConfirmNew=false;
+ if(FieldOperations&&FieldOperations->GateMissionStart())return;
+ if((!ULunarSettings::IsAutomation()||FParse::Param(FCommandLine::Get(),TEXT("ForceDepartureIntro")))&&ALunarDepartureScene::Begin(this)){UpdateAudioPause();return;}
+ CommitMissionStart();
+}
+void ALunarGameMode::CommitMissionStart(){
+ if(Menu||Paused||Stage!=ELunarStage::Briefing)return;
+ const bool Authorized=DepartureAuthorizedNewRun;DepartureAuthorizedNewRun=false;
+ ALunarDepartureScene::Abort(this);
+ if(Apollo){StartApollo(Authorized);return;}
+ LunarWater::Reset(WaterStudy);CrewTalkCount=0;CrewSpeaker=0;
+ Stage=ELunarStage::FindModule;Message(Mars?TEXT("NAV: Find the rover power cell. ARES has stopped responding."):TEXT("NAV: Find the rover power cell. SELENE has stopped responding."));
+ if(FieldOperations)FieldOperations->OnMissionCommitted();
+}
 AActor* ALunarGameMode::Target() const {
  if(Apollo)return ApolloTarget();
  if(PowerSequenceActive)return nullptr;
@@ -397,7 +449,7 @@ float ALunarGameMode::InteractionReach(AActor* T) const {
  return Apollo&&ApolloToolsEnabled&&Stage==ELunarStage::ApolloRecover&&!SurveyorPhotographed&&T==DroneActor?700.f:300.f;
 }
 bool ALunarGameMode::CanInteractWith(AActor* T) const {
- if(PowerSequenceActive)return false;
+ if(PowerSequenceActive||ALunarDepartureScene::Active(this))return false;
  auto* P=UGameplayStatics::GetPlayerPawn(this,0);
  const float Reach=InteractionReach(T);
  if(!IsValid(T)||!P||Paused||!IsActive()||FVector::Dist(P->GetActorLocation(),T->GetActorLocation())>Reach) return false;
@@ -533,7 +585,15 @@ void ALunarGameMode::AdvanceInteraction(float D) {
  }
 }
 void ALunarGameMode::Interact() {
+ if(FieldOperations&&FieldOperations->Enabled&&IsActive()&&!FieldOperations->Briefed){if(!Paused)FieldOperations->OpenPanel(EFieldPanelView::Briefing);return;}
+ if(ALunarDepartureScene::Active(this))return; // E never skips the authored departure.
  if(ALunarCargoFinale::Skip(this))return;
+ if(Menu||Paused)return;
+ if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));P&&P->ActivePanel)return;
+ if(FieldOperations&&FieldOperations->TryInteract())return;
+ if(FieldOperations&&FieldOperations->Enabled&&!Apollo&&Stage==ELunarStage::RestorePower&&RepairStep==1&&!FieldOperations->WireComplete&&CanInteract()){FieldOperations->OpenPanel(EFieldPanelView::Wire);return;}
+ // Nearby mission work always wins over optional crew conversation.
+ if(!Holding&&!ApolloTool&&!ApolloPhotoPending&&!CanInteract()&&LunarCrew::Talk(this))return;
  if(Apollo){
   if(Holding)return;
   if(ApolloTool||ApolloPhotoPending||!CanInteract()||Stage==ELunarStage::ApolloTraverse){RequestApolloInputHint();return;}
@@ -564,7 +624,30 @@ void ALunarHUD::DrawHUD() {
  Super::DrawHUD(); auto* G=Mission(this); if(!G||!Canvas) return;
  if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));P&&P->PhotoCaptureFrames>0)return;
  auto* InterfacePilot=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));
- if((G->Paused&&!G->Journal&&InterfacePilot&&InterfacePilot->PauseMenu)||ULunarFlightHUD::ShouldShow(G,InterfacePilot))return;
+ if(G->Paused&&!G->Journal&&InterfacePilot&&InterfacePilot->PauseMenu)return;
+ if(ALunarDepartureScene::Active(G)){
+  if(InterfacePilot&&InterfacePilot->ActivePanel)return;
+  const float W=Canvas->SizeX,H=Canvas->SizeY,S=FMath::Min(W/1280.f,H/720.f),TextScale=FMath::Clamp(ULunarSettings::Get()->TextScale,.8f,1.5f);
+  const float CardX=32*S,CardWidth=FMath::Min(W-64*S,1040*S),Padding=20*S;
+  struct FDepartureLine {FString Text;float Scale,Height;FLinearColor Color;};TArray<FDepartureLine> Lines;
+  float FontWidth=0,FontHeight=0;GetTextSize(TEXT("Ag"),FontWidth,FontHeight,GEngine->GetLargeFont(),1.f);
+  auto Wrapped=[&](const FString& Value,float Pixels,FLinearColor Color){
+   const float FontScale=Pixels*S*TextScale/FMath::Max(1.f,FontHeight);TArray<FString> Words;Value.ParseIntoArrayWS(Words);FString Line;
+   auto Emit=[&](){if(Line.IsEmpty())return;float TW=0,TH=0;GetTextSize(Line,TW,TH,GEngine->GetLargeFont(),FontScale);Lines.Add({Line,FontScale,FMath::Max(TH,Pixels*S*TextScale)*1.14f,Color});Line.Empty();};
+   for(const auto& Word:Words){const FString Candidate=Line.IsEmpty()?Word:Line+TEXT(" ")+Word;float TW=0,TH=0;GetTextSize(Candidate,TW,TH,GEngine->GetLargeFont(),FontScale);if(TW>CardWidth-2*Padding&&!Line.IsEmpty())Emit();Line=Line.IsEmpty()?Word:Line+TEXT(" ")+Word;}Emit();
+  };
+  auto* Scene=G->DepartureScene.Get();
+  Wrapped(Scene->Title(),26.f,FLinearColor(.92f,.97f,1));
+  Wrapped(Scene->Caption(),19.f,FLinearColor(.85f,.93f,.98f));
+  Wrapped(Scene->Guide(),17.f,FLinearColor(.76f,.86f,.92f));
+  Wrapped(Scene->PresentationTime()<ALunarDepartureScene::SkipDelay?TEXT("Preparing departure..."):TEXT("Enter / Left click: skip departure   /   Esc: pause"),17.f,FLinearColor(.15f,.9f,.97f));
+  float CardHeight=Padding*2+16*S;for(const auto& Line:Lines)CardHeight+=Line.Height+6*S;
+  const float CardY=FMath::Max(24*S,H-CardHeight-24*S);Panel(CardX,CardY,CardWidth,CardHeight,.91f);DrawRect(FLinearColor(.12f,.86f,.92f),CardX,CardY,3*S,CardHeight);
+  float Y=CardY+Padding;for(const auto& Line:Lines){DrawText(Line.Text,Line.Color,CardX+Padding,Y,GEngine->GetLargeFont(),Line.Scale,false);Y+=Line.Height+6*S;}
+  const float Progress=Scene->Progress();DrawRect(FLinearColor(.08f,.16f,.20f),CardX+Padding,CardY+CardHeight-14*S,CardWidth-2*Padding,3*S);DrawRect(FLinearColor(.12f,.86f,.92f),CardX+Padding,CardY+CardHeight-14*S,(CardWidth-2*Padding)*Progress,3*S);
+  return;
+ }
+ if(ULunarFlightHUD::ShouldShow(G,InterfacePilot))return;
  if(G->Apollo){DrawApollo(G);return;}
  float W=Canvas->SizeX,H=Canvas->SizeY; float S=FMath::Min(W/1280.f,H/720.f);
  FLinearColor White(.87,.94,1),Muted(.46,.63,.73),Cyan(.12,.86,.92),Orange(1,.53,.17);

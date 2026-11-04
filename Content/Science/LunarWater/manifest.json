@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "dataset_id": "lcross-cabeus-published-estimate-v1",
+  "kind": "published_science_summary",
+  "file": "study.json",
+  "sha256": "40db698b4244ee7f6f28fcb5aa44c7dd3e60177694b34cb18d8bc32a24981105",
+  "bytes": 3863,
+  "checked_date": "2026-11-03",
+  "binary_downloads": 0,
+  "raw_spectra_included": false,
+  "runtime_network_required": false,
+  "source_provenance": "SourceArt/LunarWater/CREDITS.md"
+}

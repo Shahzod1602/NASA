@@ -1,6 +1,7 @@
 #include "LunarPauseMenu.h"
 #include "LunarCargoFinale.h"
 #include "LunarGame.h"
+#include "LunarDeparture.h"
 #include "LunarMissionCard.h"
 #include "LunarSettings.h"
 #include "LunarLoading.h"
@@ -111,7 +112,7 @@ void ULunarPauseMenu::Sync(){
  if(ResourceText)ResourceText->SetText(FText::FromString(Game->Apollo&&!Game->ApolloTimed?TEXT("Untimed historical exploration"):FString(Game->Apollo?TEXT("Exercise budget remaining  "):TEXT("Oxygen gameplay budget remaining  "))+PauseTime(Game->Oxygen)));
  if(ConfirmationBody)ConfirmationBody->SetText(FText::FromString(Game->Apollo&&Game->ApolloCachedCheckpoint?TEXT("Return to this mission's briefing? Your saved Apollo checkpoint stays available. Starting a new expedition uses its separate confirmation. Current unfinished work will be discarded."):TEXT("Return to this mission's briefing? The current run and unfinished work will be reset.")));
 }
-bool ULunarPauseMenu::CanAct() const {const auto* Game=PauseGame(this);const auto* Pilot=PausePilot(this);return Game&&Pilot&&Game->Paused&&!Game->Menu&&!Game->Journal&&(Game->IsActive()||ALunarCargoFinale::Active(Game))&&IsInViewport()&&GetVisibility()!=ESlateVisibility::Collapsed&&!Pilot->ActivePanel&&!LunarLoading::IsBusy();}
+bool ULunarPauseMenu::CanAct() const {const auto* Game=PauseGame(this);const auto* Pilot=PausePilot(this);return Game&&Pilot&&Game->Paused&&!Game->Menu&&!Game->Journal&&(Game->IsActive()||ALunarCargoFinale::Active(Game)||ALunarDepartureScene::Active(Game))&&IsInViewport()&&GetVisibility()!=ESlateVisibility::Collapsed&&!Pilot->ActivePanel&&!LunarLoading::IsBusy();}
 void ULunarPauseMenu::ShowConfirmation(bool Show){ConfirmingRestart=Show;if(ConfirmationLayer)ConfirmationLayer->SetVisibility(Show?ESlateVisibility::Visible:ESlateVisibility::Collapsed);}
 bool ULunarPauseMenu::HandleBack(){if(ConfirmingRestart){CancelRestart();return true;}return false;}
 void ULunarPauseMenu::PreviewAction(int32 Index){if(ConfirmingRestart||Index<0||Index>=ActionCards.Num())return;FocusedAction=Index;for(int32 Item=0;Item<ActionCards.Num();++Item)ActionCards[Item]->SetSelected(Item==Index);}

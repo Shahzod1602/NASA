@@ -203,10 +203,10 @@ TSharedRef<SWidget> ULunarMainMenu::RebuildWidget(){
    auto* P=Pilot(this);auto* S=ULunarSettings::Get();Check(P!=nullptr,TEXT("Menu player exists"));
    Check(LoadObject<UTexture2D>(nullptr,TEXT("/Game/Lunar/Frontend/T_MenuMoon.T_MenuMoon"))&&LoadObject<UTexture2D>(nullptr,TEXT("/Game/Lunar/Frontend/T_MenuMars.T_MenuMars")),TEXT("Both local menu art assets load"));
    PreviewMars();Check(Destination->GetText().ToString().Contains(TEXT("MARS")),TEXT("Mars preview identifies fictional destination"));PreviewMoon();Check(Destination->GetText().ToString().Contains(TEXT("MOON")),TEXT("Moon preview restores destination"));
-   S->TutorialHints=false;S->Crosshair=false;S->HudOpacity=.65f;S->MasterVolume=.37f;S->RenderScale=77;S->FrameLimit=120;S->VSync=true;S->Subtitles=false;S->TextureQuality=2;S->Rebind(TEXT("Interact"),EKeys::B);
+   S->TutorialHints=false;S->Crosshair=false;S->HudOpacity=.65f;S->MasterVolume=.37f;S->RenderScale=77;S->FrameLimit=120;S->VSync=true;S->Subtitles=false;S->TextureQuality=2;S->Rebind(TEXT("Interact"),EKeys::U);
    const FString Path=FPaths::ProjectSavedDir()/TEXT("AutomatedTests/FrontendSettings.ini");IFileManager::Get().MakeDirectory(*FPaths::GetPath(Path),true);S->SaveConfig(CPF_Config,*Path);auto* Loaded=NewObject<ULunarSettings>();Loaded->LoadConfig(nullptr,*Path);
    Check(FMath::IsNearlyEqual(Loaded->MasterVolume,.37f)&&Loaded->RenderScale==77&&Loaded->FrameLimit==120&&Loaded->VSync&&!Loaded->Subtitles&&Loaded->TextureQuality==2,TEXT("New graphics and sound settings survive serialization"));
-   Check(Loaded->Key(TEXT("Interact"))==EKeys::B,TEXT("New settings retain rebound work key"));
+   Check(Loaded->Key(TEXT("Interact"))==EKeys::U,TEXT("New settings retain rebound work key"));
    Check(!Loaded->TutorialHints&&!Loaded->Crosshair&&FMath::IsNearlyEqual(Loaded->HudOpacity,.65f),TEXT("Accessibility preferences survive independent config reload"));
    Check(FMath::IsNearlyEqual(S->HudPanelAlpha(.8f,true),.52f)&&FMath::IsNearlyEqual(S->HudPanelAlpha(.8f,false),.8f),TEXT("HUD opacity changes active backgrounds and preserves menu contrast"));
    S->HudOpacity=-1;S->Apply(P,false);Check(S->HudOpacity==.5f,TEXT("HUD opacity cannot fall below readable lower bound"));

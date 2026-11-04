@@ -105,7 +105,7 @@ void ULunarPanel::BuildFieldLessons(){
  Add(LessonText(this,TEXT("1 / 2: answer   |   Left / Right: question   |   Esc: close"),16,Dim));
  const FString Summary=LunarLearning::SessionSummary(Game);if(!Summary.IsEmpty())Add(LessonText(this,Summary,17,Cyan));
 }
-void ULunarPanel::ToggleFieldLessons(){if(!LessonPanelActive(this))return;ShowFieldLessons=!ShowFieldLessons;if(ShowFieldLessons)ShowExpeditionMap=false;Rebuild();}
+void ULunarPanel::ToggleFieldLessons(){if(!LessonPanelActive(this))return;ShowCrew=ShowWaterStudy=ShowWaterSources=false;ShowFieldLessons=!ShowFieldLessons;if(ShowFieldLessons)ShowExpeditionMap=false;Rebuild();}
 void ULunarPanel::AnswerFieldLessonA(){AnswerFromPanel(this,0);}
 void ULunarPanel::AnswerFieldLessonB(){AnswerFromPanel(this,1);}
 void ULunarPanel::NextFieldLesson(){if(LessonPanelActive(this)&&ShowFieldLessons){FieldLessonIndex=(FMath::Clamp(FieldLessonIndex,0,LunarLearning::Count-1)+1)%LunarLearning::Count;Rebuild();}}

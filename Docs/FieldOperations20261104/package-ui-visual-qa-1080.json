@@ -1,0 +1,163 @@
+{
+  "schema": 1,
+  "review_date": "2026-11-04",
+  "reviewer": "flight_hud independent agent",
+  "review_method": "All nine final 08485e packaged RHI PNGs were individually re-opened and directly visually inspected with view_image. PNG header dimensions and SHA-256 were independently read and matched to the final completed wrapper receipt; this is not a relabelling of the previous 205bdd review.",
+  "scope": "1920x1080, interface text scale 150%, resources/map, briefing and wire views for Apollo 12, SELENE and Mars; visible still-image content only.",
+  "receipt": {
+    "path": "Reports/FieldOperations20261104/package-review-1920x1080-20261104-074005-994/run-summary.json",
+    "sha256": "40aa4ba6f15f0fb61b01be0ac40534e5e1efd010bc32546d3b43c8036ce0f9c1",
+    "completed": true,
+    "completed_utc": "2026-11-04T02:41:27.1802084Z",
+    "packaged": true,
+    "rendered": true,
+    "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a",
+    "source_commit": "54140321bb2607b836aa9ae12da468e9f56bf531",
+    "source_fingerprint_sha256": "4ab005b9fe697ed1d75cda204bb55274e3817d9e371d5757710ec92704aae86b",
+    "note": "The source commit is the receipt's baseline; its source fingerprint identifies the tested working-tree source. Packaged executable hash is authoritative; game_module_sha256 is null in this packaged receipt.",
+    "case_assertions": {
+      "apollo": 50,
+      "selene": 52,
+      "mars": 52
+    },
+    "case_frames": {
+      "apollo": 20,
+      "selene": 20,
+      "mars": 20
+    }
+  },
+  "result": "No material visible text clipping or control overlap found in these nine inspected frames. This is scoped visual acceptance, not a claim that every control or every scroll position was visually inspected.",
+  "human_playtest": false,
+  "performance_measurement": false,
+  "network_isolation_tested": false,
+  "continuous_animation_tested": false,
+  "functional_tests_run_by_reviewer": false,
+  "material_issues": [],
+  "cosmetic_limits": [
+    "Faint underlying pause/HUD lettering remains visible through the panel but does not materially obscure the inspected foreground text.",
+    "Map callout leader lines cross in dense regions; numbered labels remain separated and readable."
+  ],
+  "scroll_limits": [
+    "Resources frames intentionally scroll the map into view, so content above and below the scroll viewport is cropped. The visible map, legend and waypoint rows are readable.",
+    "Briefing frames show all three difficulty choices and the proposed/current budgets. Additional ledger rows and confirmation controls below the fold were not visually verified by these stills.",
+    "Wire frames show the actionable port rows and reset/source controls for rescue missions; footer text continues below the scroll viewport."
+  ],
+  "images": [
+    {
+      "mission": "apollo",
+      "view": "resources150",
+      "relative_path": "apollo/resources150.png",
+      "sha256": "59e8d6ce066e562ac9997ed6a86d68b3cda6ba4bde04e51e6600eebdf30a9011",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 496399,
+      "visually_inspected": true,
+      "receipt_hash_matched": true,
+      "finding": "Orbital basemap, cyan player marker, separate numbered star callouts, legend and visible waypoint rows are readable; scroll crop is intentional."
+    },
+    {
+      "mission": "apollo",
+      "view": "briefing150",
+      "relative_path": "apollo/briefing150.png",
+      "sha256": "40a9b3752e3a6eb47870c8b66ff9220c81a45c0c6c8758935d83cd66c3c97268",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 357563,
+      "visually_inspected": true,
+      "receipt_hash_matched": true,
+      "finding": "Wrapped navigation, all three difficulty buttons, selected Professional state and forecast/current resource text are readable; lower content requires scrolling."
+    },
+    {
+      "mission": "apollo",
+      "view": "wire150",
+      "relative_path": "apollo/wire150.png",
+      "sha256": "01ae55fb2f744019a43a707049cbbb637138144f5fa0aba0b1a03fca471f1e5a",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 269768,
+      "visually_inspected": true,
+      "receipt_hash_matched": true,
+      "finding": "Explicit read-only SELENE/ARES cable-matching context is readable; Apollo does not show active rescue wire-matching buttons."
+    },
+    {
+      "mission": "selene",
+      "view": "resources150",
+      "relative_path": "selene/resources150.png",
+      "sha256": "d8aaa59672a7754858a1b72435f35346eeadc22288e0cb81427c8a6e12a4fc05",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 288567,
+      "visually_inspected": true,
+      "receipt_hash_matched": true,
+      "finding": "Actual-position schematic is explicitly labelled; separate numbered callouts, player marker, map explanation and visible waypoint buttons are readable."
+    },
+    {
+      "mission": "selene",
+      "view": "briefing150",
+      "relative_path": "selene/briefing150.png",
+      "sha256": "2340e9eedf5bb9781f371023338170038ffe19ad4a8db5ff9ade3b7ba1486d3a",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 358713,
+      "visually_inspected": true,
+      "receipt_hash_matched": true,
+      "finding": "Difficulty choices, selected Professional profile and authored-budget explanation/forecast are readable; continued ledger rows are below the scroll fold."
+    },
+    {
+      "mission": "selene",
+      "view": "wire150",
+      "relative_path": "selene/wire150.png",
+      "sha256": "93d599fa7fa54a3eabf2e6e780348d5fa4c882bbc68c19fa946c3ca0853d8a2a",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 327848,
+      "visually_inspected": true,
+      "receipt_hash_matched": true,
+      "finding": "All four labelled source/socket rows, selected source B, verified 1/4 state, reset and Science & Sources buttons are readable with text and colour cues."
+    },
+    {
+      "mission": "mars",
+      "view": "resources150",
+      "relative_path": "mars/resources150.png",
+      "sha256": "8c38cb1b449b6c482e05b67e41b64b94b133879fda9c57a69e636549f04dab7e",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 256843,
+      "visually_inspected": true,
+      "receipt_hash_matched": true,
+      "finding": "Seven separated numbered map callouts and actual-position schematic explanation are readable. Visible waypoint rows and selected main objective remain clear despite crossing leader lines."
+    },
+    {
+      "mission": "mars",
+      "view": "briefing150",
+      "relative_path": "mars/briefing150.png",
+      "sha256": "f2ccf7cde60f1b4d1a8ebfebe730836a5ab504153251c49d125320d553c5a88e",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 349977,
+      "visually_inspected": true,
+      "receipt_hash_matched": true,
+      "finding": "All difficulty choices, Professional not-confirmed status, 80 RU/0.8 MB/0.5 kg/384 gameplay oxygen-second proposal and current 480-second ledger are readable; confirmation is below the fold."
+    },
+    {
+      "mission": "mars",
+      "view": "wire150",
+      "relative_path": "mars/wire150.png",
+      "sha256": "e24601e49774034097e0738efbb16d06b20176b4e23c3d3d198d309fa5599133",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 316919,
+      "visually_inspected": true,
+      "receipt_hash_matched": true,
+      "finding": "Isolated status, verified 1/4, all four source/socket labels, source B highlight, reset and Science & Sources buttons are visible and readable."
+    }
+  ],
+  "changes_during_review": "Documentation only; no source, engine execution, screenshots or original receipt were modified.",
+  "superseded_review": {
+    "path": "Reports/FieldOperations20261104/package-ui-visual-qa-1080-205bdd.json",
+    "sha256": "9e83964b11b40b1a5b3b7f60ae5289f5e2a388bb39dd89eeec31e5e7815ce7c6",
+    "executable_sha256": "205bddb29a1e484e63f0f90d91d092f234e539f3ca984a4dd7330573975e094e",
+    "note": "Preserved byte-for-byte; its nine images were inspected separately before the final build review."
+  },
+  "fixture_limit": "These arranged review frames seed gameplay state for readable UI inspection. Ledger values here are displayed fixture values, not a measurement of mission endurance or a complete playthrough."
+}

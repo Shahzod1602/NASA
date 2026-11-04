@@ -1,0 +1,185 @@
+#include "LunarGame.h"
+#include "LunarFieldOperations.h"
+#include "LunarOperationsPanel.h"
+#include "LunarDeparture.h"
+#include "LunarSettings.h"
+#include "LunarSurfaceVehicle.h"
+#include "LunarFlightHUD.h"
+#include "Camera/CameraComponent.h"
+#include "Components/StaticMeshComponent.h"
+#include "Blueprint/WidgetTree.h"
+#include "Components/ScrollBox.h"
+#include "Components/TextBlock.h"
+#include "Components/VerticalBox.h"
+#include "Dom/JsonObject.h"
+#include "Engine/World.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/PlayerController.h"
+#include "HAL/FileManager.h"
+#include "Kismet/GameplayStatics.h"
+#include "Misc/FileHelper.h"
+#include "Misc/Paths.h"
+#include "Serialization/JsonSerializer.h"
+#include "Serialization/JsonWriter.h"
+#include "TimerManager.h"
+#include "UnrealClient.h"
+
+namespace {
+struct FFieldReview {
+ FString Folder,Report;
+ TArray<TSharedPtr<FJsonValue>> Frames;
+ int32 Step=0,Failed=0,ShotNumber=0;
+ bool Finished=false,Waiting=false,FeedChecks=false,AwaitProgress=false,AwaitReady=false;
+ double LastGameTime=0,StartedGameTime=0;
+ float OriginalText=1,OriginalSubtitle=1;
+ FTimerHandle Pump;
+ FDelegateHandle Screenshot;
+};
+using FFieldReviewState=TSharedRef<FFieldReview>;
+void Next(ALunarGameMode* G,FFieldReviewState S);
+void Capture(ALunarGameMode* G,FFieldReviewState S,const FString& Name,bool Seeded=false,bool ScrollEnd=false);
+void Check(FFieldReviewState S,bool Good,const FString& What){S->Report+=FString(Good?TEXT("PASS "):TEXT("FAIL "))+What+TEXT("\n");if(!Good)++S->Failed;}
+ULunarOperationsPanel* Panel(ALunarGameMode* G){auto* P=G?Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(G,0)):nullptr;return P?Cast<ULunarOperationsPanel>(P->ActivePanel):nullptr;}
+bool InPanelBody(const UWidget* W,const ULunarOperationsPanel* P){for(const UWidget* At=W;At;At=At->GetParent())if(At==P->OperationsBody.Get())return true;return false;}
+ULunarOperationsButton* FindButton(ULunarOperationsPanel* P,const FString& Prefix){
+ if(!P||!P->WidgetTree)return nullptr;TArray<UWidget*> Widgets;P->WidgetTree->GetAllWidgets(Widgets);
+ for(auto* W:Widgets)if(auto* B=Cast<ULunarOperationsButton>(W);B&&InPanelBody(B,P))if(auto* T=Cast<UTextBlock>(B->GetContent());T&&T->GetText().ToString().StartsWith(Prefix))return B;return nullptr;
+}
+bool Click(ALunarGameMode* G,const FString& Prefix){auto* B=FindButton(Panel(G),Prefix);if(!B||!B->GetIsEnabled())return false;B->Activate();return true;}
+const TCHAR* ViewKey(EFieldPanelView V){switch(V){case EFieldPanelView::Preflight:return TEXT("preflight");case EFieldPanelView::Briefing:return TEXT("briefing");case EFieldPanelView::Resources:return TEXT("resources");case EFieldPanelView::Vehicle:return TEXT("vehicle");case EFieldPanelView::Wire:return TEXT("wire");case EFieldPanelView::Inventory:return TEXT("inventory");default:return TEXT("sample");}}
+void Finish(ALunarGameMode* G,FFieldReviewState S){
+ if(S->Finished)return;S->Finished=true;
+ if(S->Screenshot.IsValid())FScreenshotRequest::OnScreenshotRequestProcessed().Remove(S->Screenshot);
+ if(G)G->GetWorldTimerManager().ClearTimer(S->Pump);
+ auto* Settings=ULunarSettings::Get();Settings->TextScale=S->OriginalText;Settings->SubtitleScale=S->OriginalSubtitle;
+ auto Manifest=MakeShared<FJsonObject>();Manifest->SetNumberField(TEXT("schema"),1);Manifest->SetBoolField(TEXT("synthetic"),true);Manifest->SetBoolField(TEXT("human_playtest"),false);Manifest->SetBoolField(TEXT("performance_measurement"),false);
+ Manifest->SetStringField(TEXT("description"),TEXT("Staged actual UMG operations panels. Preflight uses real button callbacks and component timer transitions driven by World::GetTimeSeconds deltas in a bounded review ticker, with a deliberate partial-progress freeze for its screenshot. Later mission phase, resource ledger, cable isolation and training cargo are explicitly seeded synthetic fixtures. Three added world frames use an actual stationary occupied rover, actual magnifier state aimed at a source-labelled cartridge, and a synthetic external sampler view. Their layout assertions validate the real flight HUD, not a nonexistent panel. No human mission completion, water detection, animation/performance result or driven-route result is claimed."));
+ Manifest->SetStringField(TEXT("map"),G?UGameplayStatics::GetCurrentLevelName(G,true):FString());Manifest->SetArrayField(TEXT("frames"),S->Frames);Manifest->SetNumberField(TEXT("frame_count"),S->Frames.Num());
+ FString Json;const auto Writer=TJsonWriterFactory<>::Create(&Json);const bool Serialized=FJsonSerializer::Serialize(Manifest,Writer);
+ Check(S,S->Frames.Num()==20,TEXT("Exactly seventeen panel and three world frames were processed"));
+ if(!Serialized||!FFileHelper::SaveStringToFile(Json,*(S->Folder/TEXT("field-operations-manifest.json"))))++S->Failed;
+ S->Report+=FString::Printf(TEXT("RESULT: %d failures\n"),S->Failed);
+ if(!FFileHelper::SaveStringToFile(S->Report,*(S->Folder/TEXT("field-operations-review-checks.txt"))))++S->Failed;
+ UE_LOG(LogTemp,Display,TEXT("FIELD_OPERATIONS_REVIEW %s frames=%d folder=%s\n%s"),S->Failed?TEXT("FAILED"):TEXT("COMPLETE"),S->Frames.Num(),*S->Folder,*S->Report);
+ FPlatformMisc::RequestExitWithStatus(false,S->Failed?1:0);
+}
+void GuardChecks(ALunarGameMode* G,FFieldReviewState S){
+ auto* C=G->FieldOperations.Get();auto* P=C?C->Pilot():nullptr;auto* UI=Panel(G);if(!C||!P||!UI){Check(S,false,TEXT("Briefing guard fixture has an actual operations panel"));return;}
+ auto* Old=FindButton(UI,TEXT("BEGINNER"));const int32 Difficulty=C->Difficulty,Revision=C->Revision;UI->Refresh(true);if(Old)Old->Activate();
+ Check(S,Old&&C->Difficulty==Difficulty&&C->Revision==Revision,TEXT("Detached previous-generation difficulty callback cannot change the component"));
+ auto* Fresh=FindButton(UI,TEXT("BEGINNER"));P->ActivePanel=nullptr;if(Fresh)Fresh->Activate();P->ActivePanel=UI;
+ Check(S,Fresh&&C->Difficulty==Difficulty&&C->Revision==Revision,TEXT("An unowned panel callback cannot change difficulty or revision"));
+ const auto Stage=G->Stage;G->Stage=ELunarStage::Won;if(Fresh)Fresh->Activate();G->Stage=Stage;
+ Check(S,Fresh&&C->Difficulty==Difficulty&&C->Revision==Revision,TEXT("A frozen end-state panel callback cannot change difficulty or revision"));
+ Check(S,Click(G,TEXT("PROFESSIONAL"))&&C->Difficulty==2,TEXT("A current owned difficulty button changes the real component selection"));
+}
+void Capture(ALunarGameMode* G,FFieldReviewState S,const FString& Name,bool Seeded,bool ScrollEnd){
+ if(S->Finished)return;auto* C=G?G->FieldOperations.Get():nullptr;auto* UI=Panel(G);if(!G||!C||!UI){Check(S,false,Name+TEXT(" / actual panel missing"));Finish(G,S);return;}
+ UI->Refresh(true);UI->ForceLayoutPrepass();if(UI->OperationsScroll){if(Name==TEXT("resources150")&&UI->OperationsMap)UI->OperationsScroll->ScrollWidgetIntoView(UI->OperationsMap.Get(),false,EDescendantScrollDestination::Center);else if(ScrollEnd)UI->OperationsScroll->ScrollToEnd();else UI->OperationsScroll->ScrollToStart();}
+ FTimerHandle LayoutWait;G->GetWorldTimerManager().SetTimer(LayoutWait,FTimerDelegate::CreateWeakLambda(G,[G,S,Name,Seeded,ScrollEnd](){
+  if(S->Finished)return;if(S->Screenshot.IsValid())FScreenshotRequest::OnScreenshotRequestProcessed().Remove(S->Screenshot);S->Waiting=true;const int32 Number=++S->ShotNumber;
+  S->Screenshot=FScreenshotRequest::OnScreenshotRequestProcessed().AddWeakLambda(G,[G,S,Name,Seeded,ScrollEnd,Number](){
+   if(S->Finished||!S->Waiting||Number!=S->ShotNumber)return;S->Waiting=false;auto* C=G->FieldOperations.Get();auto* UI=Panel(G);auto* P=C?C->Pilot():nullptr;auto* PC=UGameplayStatics::GetPlayerController(G,0);int32 Width=0,Height=0;if(PC)PC->GetViewportSize(Width,Height);FString Reason;
+   bool Good=UI&&C&&P&&PC&&Width>0&&Height>0&&C->CanUsePanel(UI,false)&&UI->ValidateLayout(Reason);
+   if(UI&&UI->View==EFieldPanelView::Preflight)Good=Good&&!G->Paused&&G->Stage==ELunarStage::Briefing;
+   else Good=Good&&G->Paused&&G->IsActive();
+   if(Name==TEXT("preflight-checking150"))Good=Good&&C&&C->PendingCheck==0&&C->ActionProgress()>0&&C->ActionProgress()<1;
+   if(Name==TEXT("preflight-ready150"))Good=Good&&C&&C->Prepared&&C->PreflightMask==15&&C->PendingCheck==INDEX_NONE;
+   Check(S,Good,Name+(Reason.IsEmpty()?FString():TEXT(" / ")+Reason));
+   auto Frame=MakeShared<FJsonObject>();Frame->SetStringField(TEXT("name"),Name);Frame->SetStringField(TEXT("view"),UI?ViewKey(UI->View):TEXT("missing"));Frame->SetBoolField(TEXT("layout_passed"),Good);Frame->SetNumberField(TEXT("width"),Width);Frame->SetNumberField(TEXT("height"),Height);Frame->SetNumberField(TEXT("text_scale"),ULunarSettings::Get()->TextScale);Frame->SetBoolField(TEXT("paused"),G->Paused);Frame->SetBoolField(TEXT("keyboard_focus"),UI&&UI->HasKeyboardFocus());Frame->SetBoolField(TEXT("fixture_state_seeded"),Seeded);Frame->SetBoolField(TEXT("scrolled_to_sources"),ScrollEnd&&Name==TEXT("sample-sources150"));Frame->SetBoolField(TEXT("map_focused"),Name==TEXT("resources150"));Frame->SetNumberField(TEXT("map_marker_count"),UI&&UI->OperationsMap?UI->OperationsMap->MarkerCount():0);
+   if(C){Frame->SetNumberField(TEXT("preflight_mask"),C->PreflightMask);Frame->SetNumberField(TEXT("pending_check"),C->PendingCheck);Frame->SetNumberField(TEXT("action_progress"),C->ActionProgress());Frame->SetBoolField(TEXT("briefed"),C->Briefed);Frame->SetBoolField(TEXT("vehicle_inspected"),C->VehicleInspected);Frame->SetNumberField(TEXT("wire_mask"),C->WireMask);Frame->SetNumberField(TEXT("wire_required"),C->WirePairs());Frame->SetStringField(TEXT("component_state"),C->ExportState());TArray<TSharedPtr<FJsonValue>> Markers;for(const auto& Point:C->MapPoints()){auto M=MakeShared<FJsonObject>();M->SetStringField(TEXT("label"),Point.Label);M->SetNumberField(TEXT("index"),Point.Index);M->SetNumberField(TEXT("x_cm"),Point.Position.X);M->SetNumberField(TEXT("y_cm"),Point.Position.Y);M->SetNumberField(TEXT("z_cm"),Point.Position.Z);M->SetBoolField(TEXT("completed"),Point.Completed);M->SetBoolField(TEXT("current"),Point.Current);Markers.Add(MakeShared<FJsonValueObject>(M));}Frame->SetArrayField(TEXT("actual_world_markers"),Markers);}
+   S->Frames.Add(MakeShared<FJsonValueObject>(Frame));FTimerHandle NextWait;G->GetWorldTimerManager().SetTimer(NextWait,FTimerDelegate::CreateWeakLambda(G,[G,S](){Next(G,S);}),.15f,false);
+  });
+  FScreenshotRequest::RequestScreenshot(S->Folder/(Name+TEXT(".png")),true,false);
+  FTimerHandle ShotTimeout;G->GetWorldTimerManager().SetTimer(ShotTimeout,FTimerDelegate::CreateWeakLambda(G,[G,S,Number](){if(!S->Finished&&S->Waiting&&S->ShotNumber==Number){Check(S,false,TEXT("Rendered screenshot callback timed out"));Finish(G,S);}}),12.f,false);
+ }),.45f,false);
+}
+int32 VisibleMeshes(AActor* Actor){if(!IsValid(Actor)||Actor->IsHidden())return 0;TArray<UStaticMeshComponent*> Parts;Actor->GetComponents(Parts);int32 Count=0;for(auto* Part:Parts)if(Part&&Part->GetStaticMesh()&&Part->IsVisible())++Count;return Count;}
+void CaptureWorld(ALunarGameMode* G,FFieldReviewState S,const FString& Name){
+ auto* C=G->FieldOperations.Get();auto* P=C?C->Pilot():nullptr;if(!C||!P||!G->FlightHUD){Check(S,false,Name+TEXT(" / world fixture missing"));Finish(G,S);return;}
+ if(Name!=TEXT("world-sampler-package"))P->UpdateSuit(0);C->RefreshWorldVisibility();G->FlightHUD->Refresh();FTimerHandle Wait;
+ G->GetWorldTimerManager().SetTimer(Wait,FTimerDelegate::CreateWeakLambda(G,[G,S,Name](){
+  if(S->Finished)return;if(S->Screenshot.IsValid())FScreenshotRequest::OnScreenshotRequestProcessed().Remove(S->Screenshot);S->Waiting=true;const int32 Number=++S->ShotNumber;
+  S->Screenshot=FScreenshotRequest::OnScreenshotRequestProcessed().AddWeakLambda(G,[G,S,Name,Number](){
+   if(S->Finished||!S->Waiting||Number!=S->ShotNumber)return;S->Waiting=false;auto* C=G->FieldOperations.Get();auto* P=C?C->Pilot():nullptr;auto* PC=UGameplayStatics::GetPlayerController(G,0);int32 W=0,H=0;if(PC)PC->GetViewportSize(W,H);FString Reason;
+   bool Good=C&&P&&PC&&W>0&&H>0&&!P->ActivePanel&&!G->Paused&&G->IsActive()&&G->FlightHUD&&G->FlightHUD->IsVisible()&&G->FlightHUD->ValidateLayout(Reason);
+   int32 ScannerParts=0;if(C)for(const auto& Part:C->ScannerVisuals)if(Part&&Part->IsVisible())++ScannerParts;
+   if(Name==TEXT("world-rover-mounted"))Good=Good&&C&&C->Riding()&&PC&&PC->GetViewTarget()==C->Vehicle.Get()&&VisibleMeshes(C->Vehicle.Get())>0;
+   if(Name==TEXT("world-magnifier-cartridge"))Good=Good&&C&&C->ScannerActive&&P&&P->Camera&&FMath::IsNearlyEqual(P->Camera->FieldOfView,35.f)&&C->NearbyPackage(false)==0&&ScannerParts>0;
+   if(Name==TEXT("world-sampler-package"))Good=Good&&C&&VisibleMeshes(C->SampleRobot.Get())>0&&C->SamplePackages.IsValidIndex(0)&&VisibleMeshes(C->SamplePackages[0].Get())>0;
+   Check(S,Good,Name+(Reason.IsEmpty()?FString():TEXT(" / ")+Reason));auto F=MakeShared<FJsonObject>();F->SetStringField(TEXT("name"),Name);F->SetStringField(TEXT("view"),TEXT("world"));F->SetBoolField(TEXT("world_no_panel"),true);F->SetStringField(TEXT("layout_scope"),TEXT("flight_hud"));F->SetBoolField(TEXT("panel_layout_tested"),false);F->SetBoolField(TEXT("layout_passed"),Good);F->SetBoolField(TEXT("fixture_state_seeded"),true);F->SetNumberField(TEXT("width"),W);F->SetNumberField(TEXT("height"),H);F->SetNumberField(TEXT("text_scale"),ULunarSettings::Get()->TextScale);F->SetBoolField(TEXT("paused"),G->Paused);F->SetBoolField(TEXT("vehicle_mounted"),C&&C->Riding());F->SetBoolField(TEXT("production_follow_camera"),Name==TEXT("world-rover-mounted"));F->SetBoolField(TEXT("scanner_active"),C&&C->ScannerActive);F->SetNumberField(TEXT("visible_scanner_parts"),ScannerParts);F->SetNumberField(TEXT("visible_vehicle_meshes"),C?VisibleMeshes(C->Vehicle.Get()):0);F->SetNumberField(TEXT("visible_sampler_meshes"),C?VisibleMeshes(C->SampleRobot.Get()):0);F->SetBoolField(TEXT("performance_measurement"),false);F->SetBoolField(TEXT("human_playtest"),false);
+   if(PC){FVector Eye;FRotator Aim;PC->GetPlayerViewPoint(Eye,Aim);F->SetNumberField(TEXT("camera_x_cm"),Eye.X);F->SetNumberField(TEXT("camera_y_cm"),Eye.Y);F->SetNumberField(TEXT("camera_z_cm"),Eye.Z);F->SetNumberField(TEXT("camera_pitch"),Aim.Pitch);F->SetNumberField(TEXT("camera_yaw"),Aim.Yaw);}
+   S->Frames.Add(MakeShared<FJsonValueObject>(F));FTimerHandle NextWait;G->GetWorldTimerManager().SetTimer(NextWait,FTimerDelegate::CreateWeakLambda(G,[G,S](){Next(G,S);}),.15f,false);
+  });FScreenshotRequest::RequestScreenshot(S->Folder/(Name+TEXT(".png")),true,false);
+  FTimerHandle Timeout;G->GetWorldTimerManager().SetTimer(Timeout,FTimerDelegate::CreateWeakLambda(G,[G,S,Number](){if(!S->Finished&&S->Waiting&&S->ShotNumber==Number){Check(S,false,TEXT("World screenshot callback timed out"));Finish(G,S);}}),12.f,false);
+ }),.5f,false);
+}
+void Next(ALunarGameMode* G,FFieldReviewState S){
+ if(S->Finished)return;auto* C=G?G->FieldOperations.Get():nullptr;auto* P=C?C->Pilot():nullptr;if(!G||!C||!P){Check(S,false,TEXT("Review retains its mission component and astronaut"));Finish(G,S);return;}
+ const int32 Index=S->Step++;auto* Settings=ULunarSettings::Get();
+ if(Index==0){Settings->TextScale=Settings->SubtitleScale=1;Check(S,C->BeginPreflight(),TEXT("Actual preflight flow opens its owned unpaused operations panel"));Capture(G,S,TEXT("preflight100"));return;}
+ if(Index==1){Settings->TextScale=Settings->SubtitleScale=1.5f;Capture(G,S,TEXT("preflight150"));return;}
+ if(Index==2){Check(S,Click(G,TEXT("1 / Inspect suit seals"))&&C->PendingCheck==0,TEXT("Actual first suit-check button starts the component timer"));S->FeedChecks=S->AwaitProgress=true;return;}
+ if(Index==3){S->FeedChecks=S->AwaitReady=true;return;}
+ if(Index==4){
+  if(P->ActivePanel)P->ClosePanel();ALunarDepartureScene::Abort(G);C->Preparing=false;G->Stage=G->Apollo?ELunarStage::ApolloCheckout:ELunarStage::FindModule;G->Paused=false;G->Journal=false;G->Holding=false;G->RadioRemaining=0;G->ApolloTool=0;
+ }
+ if(Index>=4&&Index<=15){
+  const auto View=EFieldPanelView((Index-4)/2+1);const bool Large=(Index&1)!=0;Settings->TextScale=Settings->SubtitleScale=Large?1.5f:1.f;
+  if(Index==6){Check(S,Click(G,TEXT("Confirm resource profile"))&&C->Briefed,TEXT("Actual briefing confirmation locks the gameplay budget"));C->ElapsedS=83.5f;C->WalkingDistanceM=35;C->VehicleDistanceM=112;C->VehicleTimeS=22.4f;C->UtilityCharge=FMath::Max(0.f,C->UtilityCapacity-2.1f);C->DataStoredMB=FMath::Min(.4f,C->DataCapacityMB);++C->Revision;}
+  if(Index==8&&C->Vehicle){P->SetActorLocation(C->Vehicle->GetActorLocation()+FVector(0,-180,120),false,nullptr,ETeleportType::TeleportPhysics);FVector Eye;FRotator Aim;P->GetActorEyesViewPoint(Eye,Aim);if(auto* PC=UGameplayStatics::GetPlayerController(G,0))PC->SetControlRotation((C->Vehicle->GetActorLocation()-Eye).Rotation());}
+  if(Index==10&&!G->Apollo){G->Stage=ELunarStage::RestorePower;G->RepairStep=1;C->WireIsolated=true;C->WireComplete=C->WirePendingCommit=false;C->WireMask=0;C->WireLeft=INDEX_NONE;++C->Revision;}
+  if(Index==12){C->ScannedMask=C->CollectedMask=3;C->DeliveredMask=1;C->CargoMassKG=C->TrainingPackageMassKG;C->LastPackage=1;++C->Revision;}
+  if(Index==14){C->ScannedMask=7;C->SelectedPackage=2;++C->Revision;}
+  Check(S,C->OpenPanel(View),FString::Printf(TEXT("Actual %s page opens or configures the owned panel"),ViewKey(View)));
+  if(auto* UI=Panel(G))UI->Refresh(true);
+  if(Index==4)GuardChecks(G,S);
+  if(Index==9)Check(S,Click(G,TEXT("Inspect vehicle systems"))&&C->VehicleInspected&&C->ScannerUnlocked,TEXT("Actual nearby vehicle-inspection button unlocks the scanner"));
+  if(Index==11&&!G->Apollo){
+   Check(S,Click(G,TEXT("SOURCE A"))&&C->WireLeft==0,TEXT("Actual source-port button selects the component port"));int32 Right=INDEX_NONE;for(int32 I=0;I<C->WirePairs();++I)if(C->WireRightLabel(I)==C->WireLeftLabel(0)){Right=I;break;}
+   const bool Clicked=Right!=INDEX_NONE&&Click(G,FString::Printf(TEXT("SOCKET %c"),TCHAR('A'+Right)));Check(S,Clicked&&(C->WireMask&1)!=0,TEXT("Actual matching-socket button verifies one seeded training connection"));Click(G,TEXT("SOURCE B"));
+  }
+  Capture(G,S,FString(ViewKey(View))+(Large?TEXT("150"):TEXT("100")),true);return;
+ }
+ if(Index==16){Settings->TextScale=Settings->SubtitleScale=1.5f;Check(S,Click(G,TEXT("Open Science & Sources")),TEXT("Actual source toggle opens its optional source section"));Capture(G,S,TEXT("sample-sources150"),true,true);return;}
+ if(Index==17){
+  if(P->ActivePanel)P->ClosePanel();G->Paused=G->Journal=G->Holding=false;Settings->TextScale=Settings->SubtitleScale=1;C->CancelScanner();P->GetCharacterMovement()->StopMovementImmediately();P->GetCharacterMovement()->DisableMovement();
+  if(!C->Vehicle){Check(S,false,TEXT("World rover fixture requires the actual training vehicle"));Finish(G,S);return;}
+  P->SetActorLocation(C->Vehicle->GetActorTransform().TransformPosition(FVector(-240,0,80)),false,nullptr,ETeleportType::TeleportPhysics);Check(S,ALunarSurfaceVehicle::TryInteract(G)&&C->Riding(),TEXT("World fixture mounts the actual stationary rover through production interaction"));
+  // Preserve the camera and stationary tick that actual mounted gameplay uses.
+  C->Vehicle->SetForward(0);C->Vehicle->SetSteer(0);C->Vehicle->SetActorTickEnabled(true);
+  CaptureWorld(G,S,TEXT("world-rover-mounted"));return;
+ }
+ if(Index==18){
+  ALunarSurfaceVehicle::Abort(G);auto* PC=UGameplayStatics::GetPlayerController(G,0);if(!PC||!C->SamplePackages.IsValidIndex(0)||!IsValid(C->SamplePackages[0])){Check(S,false,TEXT("Magnifier world fixture requires its actual labelled package"));Finish(G,S);return;}
+  C->ScannedMask=C->CollectedMask=C->DeliveredMask=0;C->CargoMassKG=C->DataStoredMB=0;C->UtilityCharge=FMath::Min(20.f,C->UtilityCapacity);C->RefreshWorldVisibility();auto* Package=C->SamplePackages[0].Get();FVector Focus=Package->GetActorLocation();TArray<UStaticMeshComponent*> Parts;Package->GetComponents(Parts);for(auto* Part:Parts)if(Part&&Part->ComponentHasTag(TEXT("work.focus"))){Focus=Part->GetComponentLocation();break;}
+  P->SetActorTickEnabled(false);P->GetCharacterMovement()->DisableMovement();P->ThirdPerson=false;P->SetActorHiddenInGame(false);P->Camera->bUsePawnControlRotation=true;P->Camera->SetRelativeLocation(FVector(0,0,68));PC->SetViewTarget(P);const FTransform PackageFrame=Package->GetActorTransform();Focus=PackageFrame.TransformPosition(FVector(-16,0,84));bool FrontAligned=false;
+  for(float Degrees:{0.f,-25.f,25.f,-45.f,45.f}){const float Angle=FMath::DegreesToRadians(Degrees);const FVector Local(-300*FMath::Cos(Angle),-300*FMath::Sin(Angle),100);P->SetActorLocation(PackageFrame.TransformPosition(Local),false,nullptr,ETeleportType::TeleportPhysics);const FRotator Aim=(Focus-P->Camera->GetComponentLocation()).Rotation();PC->SetControlRotation(Aim);P->Camera->SetWorldRotation(Aim);if(C->NearbyPackage(false)==0){FrontAligned=true;break;}}
+  Check(S,FrontAligned,TEXT("Local-front magnifier camera retains real package facing range and line-of-sight eligibility"));
+  Check(S,C->ToggleScanner()&&C->ScannerActive&&C->NearbyPackage(false)==0,TEXT("World magnifier uses its actual unlock and observed-package eligibility"));CaptureWorld(G,S,TEXT("world-magnifier-cartridge"));return;
+ }
+ if(Index==19){
+  C->CancelScanner();auto* PC=UGameplayStatics::GetPlayerController(G,0);if(!PC||!C->SamplePackages.IsValidIndex(0)||!IsValid(C->SamplePackages[0])){Check(S,false,TEXT("Sampler world fixture requires its authored package"));Finish(G,S);return;}
+  const FTransform Frame=C->SamplePackages[0]->GetActorTransform();const FVector Focus=Frame.TransformPosition(FVector(0,0,55)),Eye=Frame.TransformPosition(FVector(-250,-210,160));P->SetActorHiddenInGame(true);P->Camera->bUsePawnControlRotation=false;P->Camera->SetWorldLocation(Eye);P->Camera->SetWorldRotation((Focus-Eye).Rotation());P->Camera->SetFieldOfView(70);PC->SetViewTarget(P);CaptureWorld(G,S,TEXT("world-sampler-package"));return;
+ }
+ Finish(G,S);
+}
+void Pump(ALunarGameMode* G,FFieldReviewState S){
+ if(S->Finished)return;const double Now=G->GetWorld()->GetTimeSeconds(),Delta=FMath::Clamp(Now-S->LastGameTime,0.,2.);S->LastGameTime=Now;if(Now-S->StartedGameTime>100){Check(S,false,TEXT("Bounded rendered review exceeded its world-time deadline"));Finish(G,S);return;}
+ auto* C=G->FieldOperations.Get();if(!C){Check(S,false,TEXT("Operations component disappeared"));Finish(G,S);return;}
+ if(S->FeedChecks)C->Advance(float(Delta));
+ if(S->AwaitProgress&&C->PendingCheck==0&&C->ActionProgress()>=.35f){S->FeedChecks=S->AwaitProgress=false;Capture(G,S,TEXT("preflight-checking150"));return;}
+ if(S->AwaitReady){
+  if(C->Prepared){S->FeedChecks=S->AwaitReady=false;Check(S,C->PreflightMask==15&&C->PendingCheck==INDEX_NONE,TEXT("Four ordered real check callbacks complete through component game-time deltas"));Capture(G,S,TEXT("preflight-ready150"));return;}
+  if(C->PendingCheck==INDEX_NONE){if(auto* UI=Panel(G))UI->Refresh(true);const int32 CheckIndex=C->PreflightStep();Check(S,Click(G,FString::Printf(TEXT("%d /"),CheckIndex+1))&&C->PendingCheck==CheckIndex,FString::Printf(TEXT("Actual ordered suit-check button %d starts its timer"),CheckIndex+1));}
+ }
+}
+}
+
+void ALunarGameMode::ValidateFieldOperationsReview(){
+ auto S=MakeShared<FFieldReview>();S->Folder=FPaths::ProjectDir()/TEXT("Reports/FieldOperations20261104")/(Apollo?TEXT("review-apollo"):Mars?TEXT("review-mars"):TEXT("review-selene"));IFileManager::Get().MakeDirectory(*S->Folder,true);
+ auto* Settings=ULunarSettings::Get();S->OriginalText=Settings->TextScale;S->OriginalSubtitle=Settings->SubtitleScale;S->StartedGameTime=S->LastGameTime=GetWorld()->GetTimeSeconds();auto* C=FieldOperations.Get();auto* P=C?C->Pilot():nullptr;
+ Check(S,!Menu&&C&&C->Enabled&&P,TEXT("Rendered field review has an enabled extension in a playable mission world"));if(Menu||!C||!C->Enabled||!P){Finish(this,S);return;}
+ if(P->ActivePanel)P->ClosePanel();ALunarDepartureScene::Abort(this);Stage=ELunarStage::Briefing;Paused=Journal=Holding=false;C->ResetNewRun(false);SetActorTickEnabled(false);P->SetActorTickEnabled(false);P->GetCharacterMovement()->StopMovementImmediately();P->GetCharacterMovement()->DisableMovement();
+ GetWorldTimerManager().SetTimer(S->Pump,FTimerDelegate::CreateWeakLambda(this,[this,S](){Pump(this,S);}),.05f,true);Next(this,S);
+}

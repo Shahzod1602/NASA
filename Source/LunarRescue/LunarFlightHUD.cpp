@@ -1,5 +1,9 @@
 #include "LunarFlightHUD.h"
 #include "LunarGame.h"
+#include "LunarFieldOperations.h"
+#include "LunarSurfaceVehicle.h"
+#include "LunarDeparture.h"
+#include "LunarCrew.h"
 #include "LunarApolloText.h"
 #include "LunarSettings.h"
 #include "Blueprint/WidgetTree.h"
@@ -50,7 +54,7 @@ namespace {
 }
 
 bool ULunarFlightHUD::ShouldShow(const ALunarGameMode* G,const ALunarCharacter* P){
- return G&&P&&!G->Menu&&G->IsActive()&&!G->Paused&&!G->Journal&&!P->ActivePanel&&P->PhotoCaptureFrames<=0&&!(FScreenshotRequest::IsScreenshotRequested()&&!FScreenshotRequest::ShouldShowUI());
+ return G&&P&&!G->Menu&&!ALunarDepartureScene::Active(G)&&G->IsActive()&&!G->Paused&&!G->Journal&&!P->ActivePanel&&P->PhotoCaptureFrames<=0&&!(FScreenshotRequest::IsScreenshotRequested()&&!FScreenshotRequest::ShouldShowUI());
 }
 float ULunarFlightHUD::HoldFraction(const ALunarGameMode* G){
  if(!G||!G->Holding)return 0;const float Duration=G->HoldDuration();
@@ -115,6 +119,10 @@ FLunarFlightHUDState ULunarFlightHUD::ReadState(const ALunarGameMode* G,const AL
   if(G->PowerSequenceActive){R.GuideCaption=TEXT("FIELD GUIDE / SYSTEM CHECKS");R.GuideTitle=TEXT("STATION STARTING UP");R.GuideBody=TEXT("Wait for the station checks. The science terminal unlocks when startup is complete.");R.GuideAction.Empty();}
   if(G->Stage==ELunarStage::SurveySamples)R.RouteHint=TEXT("Next site");else if(G->Stage==ELunarStage::ReturnHome&&!G->RecorderRecovered)R.RouteHint=TEXT("Change destination");
  }
+ const FString CrewPrompt=(!R.Tool&&!R.Holding&&!G->CanInteract())?LunarCrew::Prompt(G):FString();
+ if(!CrewPrompt.IsEmpty()){R.ShowGuide=true;R.GuideCaption=TEXT("CREW / OPTIONAL");R.GuideTitle=TEXT("Speak with the expedition crew");R.GuideBody=TEXT("Authored mission guidance and modern science sources are available in the notebook.");R.GuideAction=CrewPrompt;}
+ if(G->FieldOperations&&G->FieldOperations->Enabled&&!R.Tool&&!R.Holding){const auto* Ops=G->FieldOperations.Get();const FString Context=Ops->Prompt();if(!Context.IsEmpty()||Ops->ScannerActive||Ops->Riding()||Ops->PendingCheck>=4){R.ShowGuide=true;R.GuideCaption=TEXT("FIELD SUPPORT / OPTIONAL");R.GuideTitle=TEXT("Modern training extension");R.GuideBody=Ops->HudHint();R.GuideAction=!Context.IsEmpty()?Context:Ops->ScannerActive?TEXT("[ G ] Stow magnifier / [ B ] Resource board"):Ops->Riding()?TEXT("[ E ] Exit training rover"):TEXT("[ B ] Resource board");}}
+ if(G->FieldOperations&&G->FieldOperations->Enabled&&G->IsActive()&&!G->FieldOperations->Briefed){R.ShowGuide=true;R.GuideCaption=TEXT("SURFACE BRIEFING / REQUIRED");R.GuideTitle=TEXT("Confirm your gameplay resource budget");R.GuideBody=TEXT("Mission clocks and surface work wait while you choose a profile. Press B to reopen the resource briefing.");R.GuideAction=TEXT("[ B ] Open required briefing");}
  // Hints may be hidden, but a nearby usable object must retain its work key.
  if(!R.ShowGuide&&!R.Holding&&G->CanInteract()&&!R.GuideAction.IsEmpty()){R.ShowGuide=true;R.GuideCaption=TEXT("INTERACTION");R.GuideTitle.Empty();R.GuideBody.Empty();}
  if(R.DustAnswers)R.ShowGuide=false;
@@ -122,6 +130,8 @@ FLunarFlightHUDState ULunarFlightHUD::ReadState(const ALunarGameMode* G,const AL
  if(S->Subtitles&&G->RadioRemaining>0)R.Subtitle=G->Radio;
  const auto* Target=G->Apollo?G->ApolloGuidanceTarget():G->Target();
  if(IsValid(Target)&&P&&!R.DustAnswers){R.HasNavigation=true;R.NavigationWorld=Target->GetActorLocation()+FVector(0,0,70);R.NavigationDistance=FVector::Dist2D(P->GetActorLocation(),Target->GetActorLocation())/100.f;R.NavigationName=G->Apollo?G->ApolloSiteName():LegacyName(G);}
+ // This optional marker changes presentation only; native interaction still uses G->Target().
+ if(G->FieldOperations&&G->FieldOperations->Enabled&&G->FieldOperations->WaypointIndex>=0&&P&&!R.DustAnswers){for(const auto& Point:G->FieldOperations->MapPoints())if(Point.Index==G->FieldOperations->WaypointIndex){if(Point.Label!=TEXT("Main objective")){R.HasNavigation=true;R.NavigationWorld=Point.Position+FVector(0,0,70);R.NavigationDistance=FVector::Dist2D(P->GetActorLocation(),Point.Position)/100.f;R.NavigationName=TEXT("SUPPORT / ")+Point.Label;}break;}}
  return R;
 }
 
@@ -176,7 +186,16 @@ void ULunarFlightHUD::Refresh(){
  static const TCHAR* Answers[]={TEXT("Intrepid landing exhaust moved the dust."),TEXT("Rain washed the coating."),TEXT("Earth-like wind eroded the surface.")};
  if(Current.DustAnswers)LayoutDirty|=Set(DustInstruction,TEXT("[ ")+Current.RouteKey+TEXT(" ] Choose answer / Left click: confirm / Esc: pause"));
  if(Current.DustAnswers)for(int32 I=0;I<3;++I){LayoutDirty|=Set(AnswerLabels[I],FString(I==Current.DustChoice?TEXT(">  "):TEXT("   "))+Answers[I]);AnswerLabels[I]->SetColorAndOpacity(I==Current.DustChoice?Cyan:Ink);}
- if(LayoutDirty){Content->ForceLayoutPrepass();RadioTop=Current.Subtitle.IsEmpty()?674.f:658.f-RadioPanel->GetDesiredSize().Y;const float Bottom=Current.Subtitle.IsEmpty()?652.f:RadioTop-12.f;if(auto* HUDSlot=Cast<UCanvasPanelSlot>(GuidePanel->Slot))HUDSlot->SetPosition(FVector2D(640,Bottom));GuideTop=Current.ShowGuide?Bottom-GuidePanel->GetDesiredSize().Y:Bottom;}
+ if(LayoutDirty)Content->ForceLayoutPrepass();
+ // Auto-wrapped text settles after Slate arrangement. Reflow using the actual
+ // panel height on later frames even when its text did not change again.
+ const float RadioHeight=FMath::Max(RadioPanel->GetDesiredSize().Y,RadioPanel->GetCachedGeometry().GetLocalSize().Y);
+ RadioTop=Current.Subtitle.IsEmpty()?674.f:658.f-RadioHeight;
+ const float Bottom=Current.Subtitle.IsEmpty()?652.f:RadioTop-16.f;
+ if(auto* HUDSlot=Cast<UCanvasPanelSlot>(GuidePanel->Slot);HUDSlot&&!HUDSlot->GetPosition().Equals(FVector2D(640,Bottom),.01f))HUDSlot->SetPosition(FVector2D(640,Bottom));
+ const float GuideHeight=FMath::Max(GuidePanel->GetDesiredSize().Y,GuidePanel->GetCachedGeometry().GetLocalSize().Y);
+ GuideTop=Current.ShowGuide?Bottom-GuideHeight:Bottom;
+
 }
 void ULunarFlightHUD::NativeTick(const FGeometry& Geometry,float DeltaTime){Super::NativeTick(Geometry,DeltaTime);Refresh();Fade=Current.Visible?FMath::Min(1.f,Fade+FMath::Clamp(DeltaTime,0.f,.1f)/.16f):0.f;if(Content)Content->SetRenderOpacity(Fade);}
 
