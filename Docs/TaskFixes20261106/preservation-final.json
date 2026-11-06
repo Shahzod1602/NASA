@@ -1,0 +1,35 @@
+{
+  "checked_utc": "2026-11-06T05:34:37.028973+00:00",
+  "protected_total": 567,
+  "protected_hashes_matched": 567,
+  "protected_mtimes_matched": 567,
+  "non_crash_protected_files": 84,
+  "restored_missing_crash_config_files": 483,
+  "restored_editor_timestamp_files": 1,
+  "restoration_note": "Old crash-reporter cache INIs removed during build/test housekeeping were restored from validated backups. The editor config differed only by LunarRescue.TimeStamp; its original bytes were restored. Gameplay saves/photos remained unchanged.",
+  "backup_manifest_sha256": "b5599b13a5764bec5b12281d63896cda009dade2e24a3750b4f261d83263ddc6",
+  "maps": [
+    {
+      "path": "Content/Lunar/Maps/Apollo12.umap",
+      "sha256": "7cd63371b866a7914ad9bd178b109e217d57b9032c639e0e9ee4f6ac897569f4",
+      "unchanged": true
+    },
+    {
+      "path": "Content/Lunar/Maps/MoonBase.umap",
+      "sha256": "d5a76deedb6e6d438834929bc46b59a71bcc5fd14cf30e45dd294cbcc121e1b6",
+      "unchanged": true
+    },
+    {
+      "path": "Content/Mars/Maps/MarsBase.umap",
+      "sha256": "d01d7605533777664a5dda974d09c4640a8a91e5830fe01b67198b54d1f7d4e4",
+      "unchanged": true
+    },
+    {
+      "path": "Content/Rescue/Maps/MissionSelect.umap",
+      "sha256": "9f098ec909532fa9284dd0e930ffeb055ccaf20acaa824123011fbbdb3c2dd25",
+      "unchanged": true
+    }
+  ],
+  "maps_unchanged": true,
+  "passed": true
+}

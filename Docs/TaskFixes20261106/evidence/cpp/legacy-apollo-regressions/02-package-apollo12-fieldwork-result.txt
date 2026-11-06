@@ -1,0 +1,40 @@
+PASS Rock work loads a source mesh and articulated tongs
+PASS Preloaded tool base and both jaw assets are available
+PASS Tongs tip contacts the actual rock and drives hand grip anchors
+PASS The right palm center follows the rotated tool grip in the current camera frame
+PASS Right glove orientation follows the angled tongs handle
+PASS Lift transfers the pending rock into the tongs without awarding cargo
+PASS Rapid repeated input cannot skip the lift animation
+PASS Pending rock moves continuously from the source toward the pouch
+PASS Cancel restores the original rock and removes pending payload
+PASS Final seal commits the rock and leaves a physical labeled stow preview
+PASS Completed stow preview ends without retaining a floating pouch
+PASS Tube placement has one moving tube rather than a duplicate
+PASS Placed tube remains at the surface while the hammer is held
+PASS Four hammer strokes and withdrawal still require the final cap
+PASS Capping commits the core and keeps both grips on its stow preview
+PASS Cutter tips meet the first physical cable fitting
+PASS Contact remains at the first fitting while the cutting motion plays
+PASS The tool advances to the second fitting only after its motion
+PASS Two released cable ends are not packed hardware
+PASS Packing transfers the actual hardware mesh into a visible carry preview
+PASS Optional coating study is available after the Surveyor context photo
+PASS K starts the optional investigation near Surveyor
+PASS Each coating face opens a context camera
+PASS A misframed coating photograph cannot be awarded
+PASS An aligned coating photograph creates its own evidence record
+PASS Each coating face opens a context camera
+PASS A misframed coating photograph cannot be awarded
+PASS An aligned coating photograph creates its own evidence record
+PASS Two optional photographs do not change main cargo or mission stage
+PASS Both photographs unlock the evidence interpretation
+PASS An unsupported explanation is rejected without awarding the study
+PASS The exhaust interpretation records the study and returns to the main task
+PASS Six-photo optional progress forms a valid backward-compatible checkpoint
+PASS Optional evidence can be serialized through the real checkpoint writer
+PASS A fresh checkpoint read retains all six evidence records and the comparison
+PASS Comparison without both prerequisite photos is rejected
+PASS The actual v0.5.2 binary checkpoint opens without requiring optional tasks
+PASS An old K route binding falls back safely to Q when K becomes the study key
+PASS The fixed study key cannot be rebound onto an action
+RESULT: 0 failures

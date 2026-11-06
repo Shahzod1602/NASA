@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.8.1 — Mission interaction fixes — 2026-11-06
+
+- Fill mission action frames with the button background and hit area, centre
+  captions, and preserve blue hover/press/keyboard-focus feedback.
+- Cache destination previews, ignore redundant hover updates and reduce layered
+  menu blur work while retaining frosted mission cards.
+- Place stationary PIP-3 and the communicator on terrain with structure and
+  capsule clearance instead of an unchecked offset beneath the lander.
+- Share visible-item grip transforms with hands, including cell waist, pouch,
+  core and Surveyor hardware in first and third person.
+- Make ALSEP prompts reflect distance, facing and blockage; guard registered
+  instrument commits and reset antenna alignment for a new expedition.
+- Restore fast-stride movement speed in SELENE/ARES and clear stride during
+  work, pause, planning and other UI states. Keep the elapsed-second oxygen model.
+- Add real input/velocity regressions, full Apollo interaction traversal and
+  rendered button/grip checks. Validation results are recorded in TEST_REPORT.
+
+Final local executable `06c1b022f92b`: 4,092 C++ PASS executions / 0 failures,
+16/16 regression suites, 230 staged PNGs and 8 paired-pixel checks. Editor
+selection: separate 66 PASS. Human participants: 0. See TEST_REPORT.md for
+menu-only performance controls and the untested limits.
+
 ## v0.8.0 — Modern field training — 2026-11-04
 
 - Four ordered timed EVA checks and a mandatory one-time resource/difficulty plan.

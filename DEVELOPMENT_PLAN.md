@@ -1,5 +1,24 @@
 # Development plan
 
+## Local interaction fixes — 6 November 2026
+
+This iteration addresses six reported problems in the mission picker, guide
+placement, ALSEP work guidance, carried-item contact and fast stride. It retains
+the measured Apollo terrain, original instrument positions and existing mission
+prerequisites. Implementation details and verification commands are in
+[the scoped update](Docs/TaskFixes20261106/IMPLEMENTATION.md); executable-specific
+results belong to TEST_REPORT. Publication is separate from local development.
+The user subsequently authorized source/Windows publication as v0.8.1 and a
+NASA group update; original verification records remain dated separately.
+
+Final local build and staging succeeded; all 16 legacy suites and focused
+stride/Apollo checks passed. The canonical packaged total is 4,092 PASS
+executions, with separate Editor verification. Human testing remains pending.
+
+The remaining priorities are real-player testing, sustained occupied rover and
+full-mission graphics measurements, and individually verified production art.
+The larger measured-terrain A/B route planner remains a separate development task.
+
 ## Current local work — 4 November 2026
 
 Completed and locally verified: ordered EVA gate, mandatory budget preview/lock,

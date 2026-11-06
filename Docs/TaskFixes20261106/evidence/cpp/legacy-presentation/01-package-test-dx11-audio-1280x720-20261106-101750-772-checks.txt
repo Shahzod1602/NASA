@@ -1,0 +1,36 @@
+PASS Debrief counts documentation and packed cargo independently
+PASS Untimed debrief does not invent an oxygen countdown
+PASS Optional study is not reported as a required or completed task
+PASS A coating photo does not claim a completed comparison
+PASS Two photographs still require an actual comparison
+PASS Recorded optional comparison is reflected in debrief
+PASS Negative exercise balance is displayed as zero
+PASS Non-finite exercise balance cannot corrupt the result panel
+PASS Displayed exercise balance is capped at the configured budget
+PASS Incomplete cargo produces a concrete next-attempt priority
+PASS Low measured exercise balance produces a budget recommendation
+PASS A successful required-only expedition remains valid without optional work
+PASS Complete untimed work offers a concrete next challenge
+PASS Debrief never invents unrecorded route choices or slope causation
+PASS Measured terrain and authored visual detail are distinguished
+PASS Accepted lift gives progress feedback without granting cargo
+PASS Rapid input cannot duplicate feedback, advance work or grant cargo
+PASS Pause holds feedback, mission clock and exercise balance
+PASS Escape pauses and clears transient feedback without recording unfinished work
+PASS A second Escape resumes before the sampling retry without granting cargo
+PASS Sealing records cargo and changes progress feedback to a recorded confirmation
+PASS Pending photo status cannot masquerade as recorded work
+PASS Failed photo is shown as status rather than completed work
+PASS Core feedback follows actual placement, hammer and cap steps
+PASS Cable feedback identifies the actual second end
+PASS Actual contact audio applies master/effects gain and the configured cable pitch
+PASS New attempt clears feedback and all result facts
+PASS Regolith detail stays in six bounded collision-free batches
+PASS Presentation changes retain the authored check/return interaction anchor
+PASS Retained reference lander received the contact/detail pass
+PASS Lander support posing preserves normalized height and mission X/Y
+PASS Lander visual posing cannot move an enabled gameplay collider
+PASS Four authored contact soles align to and rest on the imported terrain plane
+PASS Lander detail is bounded to six collision-free instanced batches
+PASS Repeated detail initialization cannot accumulate lander pose offsets
+RESULT: 0 failures

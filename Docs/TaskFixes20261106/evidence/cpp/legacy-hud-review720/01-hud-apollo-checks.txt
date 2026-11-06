@@ -1,0 +1,10 @@
+PASS hud-overview100
+PASS hud-overview150
+PASS hud-guide100
+PASS hud-guide150
+PASS hud-work150
+PASS hud-low-resource150
+PASS equipment-notebook100
+PASS equipment-notebook150
+PASS hud-optional-choice150
+RESULT: 0 failures

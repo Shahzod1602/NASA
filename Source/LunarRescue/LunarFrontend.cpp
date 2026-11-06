@@ -8,6 +8,7 @@
 #include "Components/CanvasPanelSlot.h"
 #include "Components/Border.h"
 #include "Components/Overlay.h"
+#include "Components/OverlaySlot.h"
 #include "Components/BackgroundBlur.h"
 #include "Brushes/SlateRoundedBoxBrush.h"
 #include "Components/Button.h"
@@ -54,17 +55,21 @@ void Place(UCanvasPanel* Canvas,UWidget* Widget,float X,float Y,float W,float H)
 UCanvasPanel* Frame(UWidgetTree* Tree){
  auto* Scale=Tree->ConstructWidget<UScaleBox>();Scale->SetStretch(EStretch::ScaleToFit);auto* Size=Tree->ConstructWidget<USizeBox>();Size->SetWidthOverride(1280);Size->SetHeightOverride(720);Scale->AddChild(Size);auto* C=Tree->ConstructWidget<UCanvasPanel>();Size->AddChild(C);Tree->RootWidget=Scale;return C;
 }
-UButton* FrontendButton(UWidgetTree* Tree,const FString& Text,bool Active=false,bool Focusable=true){
- auto* B=Focusable?Tree->ConstructWidget<UButton>():Tree->ConstructWidget<ULunarMissionButton>();auto Style=B->GetStyle();
- Style.Normal=FSlateRoundedBoxBrush(FLinearColor::Transparent,4.f,FLinearColor(.16f,.40f,.53f,.65f),1.f);
- Style.Hovered=FSlateRoundedBoxBrush(FLinearColor(.04f,.44f,.68f,.40f),4.f,FLinearColor(.05f,.85f,1.f,.9f),1.f);
- Style.Pressed=FSlateRoundedBoxBrush(FLinearColor(.03f,.38f,.60f,.65f),4.f,FLinearColor(.1f,.9f,1.f),1.f);
- Style.Disabled=FSlateRoundedBoxBrush(FLinearColor(.01f,.03f,.05f,.45f),4.f,FLinearColor(.14f,.23f,.29f,.5f),1.f);
- Style.NormalPadding=Style.PressedPadding=FMargin(0);B->SetStyle(Style);
- auto* Layers=Tree->ConstructWidget<UOverlay>();B->AddChild(Layers);if(auto* S=Cast<UButtonSlot>(Layers->Slot)){S->SetPadding(0);S->SetHorizontalAlignment(HAlign_Fill);S->SetVerticalAlignment(VAlign_Fill);}
- auto* Blur=Tree->ConstructWidget<UBackgroundBlur>();Blur->SetBlurStrength(2.f);Blur->SetCornerRadius(FVector4(4,4,4,4));FSlateBrush Fallback;Fallback.TintColor=FSlateColor(FLinearColor(.01f,.035f,.06f,.85f));Blur->SetLowQualityFallbackBrush(Fallback);Blur->SetVisibility(ESlateVisibility::HitTestInvisible);Layers->AddChild(Blur);
- auto* Face=Tree->ConstructWidget<UBorder>();Face->SetBrush(FSlateRoundedBoxBrush(FLinearColor::White,4.f));Face->SetBrushColor(Active?FLinearColor(.02f,.19f,.32f,.48f):FLinearColor(.008f,.03f,.055f,.46f));Face->SetPadding(Text==TEXT("X")?FMargin(0):FMargin(12,5));Face->SetVisibility(ESlateVisibility::HitTestInvisible);Layers->AddChild(Face);
- auto* T=Label(Tree,Text,12);T->SetAutoWrapText(false);T->SetJustification(ETextJustify::Center);Face->SetContent(T);return B;
+UButton* FrontendButton(UWidgetTree* Tree,const FString& Text,bool Active=false){
+ auto* B=Tree->ConstructWidget<ULunarFrontendButton>();auto Style=B->GetStyle();
+ Style.Normal=FSlateRoundedBoxBrush(Active?FLinearColor(.025f,.16f,.28f,.7f):FLinearColor(.009f,.035f,.06f,.65f),4.f,FLinearColor(.16f,.40f,.53f,.85f),1.f);
+ Style.Hovered=FSlateRoundedBoxBrush(FLinearColor(.04f,.36f,.58f,.78f),4.f,FLinearColor(.05f,.85f,1.f,.95f),1.f);
+ Style.Pressed=FSlateRoundedBoxBrush(FLinearColor(.03f,.27f,.46f,.9f),4.f,FLinearColor(.1f,.9f,1.f),1.f);
+ Style.Disabled=FSlateRoundedBoxBrush(FLinearColor(.01f,.03f,.05f,.65f),4.f,FLinearColor(.14f,.23f,.29f,.5f),1.f);
+ Style.NormalPadding=Style.PressedPadding=FMargin(0);B->SetGlassStyle(Style);
+ auto* Layers=Tree->ConstructWidget<UOverlay>();Layers->SetVisibility(ESlateVisibility::HitTestInvisible);B->AddChild(Layers);if(auto* Slot=Cast<UButtonSlot>(Layers->Slot)){Slot->SetPadding(0);Slot->SetHorizontalAlignment(HAlign_Fill);Slot->SetVerticalAlignment(VAlign_Fill);}
+ // Small action surfaces use the translucent glass tint directly. Keep the old
+ // independent blur pass only for an explicitly labelled same-build cost test.
+ if(FParse::Param(FCommandLine::Get(),TEXT("MissionFullGlassBaseline"))){
+  auto* Blur=Tree->ConstructWidget<UBackgroundBlur>();Blur->SetBlurStrength(2.f);Blur->SetCornerRadius(FVector4(4,4,4,4));FSlateBrush Fallback;Fallback.TintColor=FSlateColor(FLinearColor(.01f,.035f,.06f,.85f));Blur->SetLowQualityFallbackBrush(Fallback);Blur->SetVisibility(ESlateVisibility::HitTestInvisible);auto* Slot=Layers->AddChildToOverlay(Blur);Slot->SetHorizontalAlignment(HAlign_Fill);Slot->SetVerticalAlignment(VAlign_Fill);
+ }
+ auto* Face=Tree->ConstructWidget<UBorder>();Face->SetBrush(FSlateRoundedBoxBrush(FLinearColor::White,4.f));Face->SetBrushColor(FLinearColor(.015f,.08f,.13f,.18f));Face->SetPadding(Text==TEXT("X")?FMargin(0):FMargin(12,5));Face->SetHorizontalAlignment(HAlign_Center);Face->SetVerticalAlignment(VAlign_Center);Face->SetVisibility(ESlateVisibility::HitTestInvisible);auto* FaceSlot=Layers->AddChildToOverlay(Face);FaceSlot->SetHorizontalAlignment(HAlign_Fill);FaceSlot->SetVerticalAlignment(VAlign_Fill);
+ auto* T=Label(Tree,Text,12);T->SetAutoWrapText(false);T->SetJustification(ETextJustify::Center);Face->SetContent(T);B->GlassSurface=Face;B->Caption=T;return B;
 }
 void RefreshFrontendLabels(UWidgetTree* Tree,TArray<FLunarFrontendLabel>& Labels,float& Cached){
  const float Scale=FMath::Clamp(ULunarSettings::Get()->TextScale,1.f,1.5f);if(FMath::IsNearlyEqual(Cached,Scale))return;Cached=Scale;
@@ -150,7 +155,9 @@ void ULunarPanel::RevertDisplay(){ULunarSettings::Get()->RevertDisplay();FillSet
 void ULunarPanel::TestAudio(){auto* S=ULunarSettings::Get();if(auto* Sound=LoadObject<USoundBase>(nullptr,TEXT("/Game/Lunar/Immersion/Audio/Radio_Intro.Radio_Intro")))UGameplayStatics::PlaySound2D(this,Sound,S->RadioVolume*S->MasterVolume);}
 
 TSharedRef<SWidget> ULunarMainMenu::RebuildWidget(){
- FrontendLabels.Reset();FrontendTextScale=-1;auto* C=Frame(WidgetTree);Background=Backdrop(WidgetTree,C);Shade(WidgetTree,C,0,0,1280,720,FLinearColor(0,0,0,.2f));
+ ++FrontendBuilds;FrontendLabels.Reset();FrontendTextScale=-1;DestinationPreviewReady=false;DestinationTextureLoads=0;DestinationPresentationUpdates=0;NextSelectionProfileAt=0;SelectionProfileStep=0;SelectionProfileRequested=FParse::Param(FCommandLine::Get(),TEXT("MissionSelectionProfile"));
+ MoonBackdrop=LoadObject<UTexture2D>(nullptr,TEXT("/Game/Lunar/Frontend/T_MenuMoon.T_MenuMoon"));++DestinationTextureLoads;MarsBackdrop=LoadObject<UTexture2D>(nullptr,TEXT("/Game/Lunar/Frontend/T_MenuMars.T_MenuMars"));++DestinationTextureLoads;
+ auto* C=Frame(WidgetTree);Background=WidgetTree->ConstructWidget<UImage>();Background->SetBrushFromTexture(MoonBackdrop);Place(C,Background,0,0,1280,720);Shade(WidgetTree,C,0,0,1280,720,FLinearColor(0,0,0,.2f));
  HomeCards.Reset();ExtraHomeCards.Reset();MissionCards.Reset();MissionSelection=false;SelectedMission=INDEX_NONE;IntroState=FLunarIntroState();
  HomePage=WidgetTree->ConstructWidget<UCanvasPanel>();Place(C,HomePage,0,0,1280,720);
  Place(HomePage,Label(WidgetTree,TEXT("L U N A R R E S C U E"),31),84,84,650,48);Place(HomePage,Label(WidgetTree,TEXT("E X P E D I T I O N S"),16,Dim),87,133,600,30);
@@ -170,9 +177,9 @@ TSharedRef<SWidget> ULunarMainMenu::RebuildWidget(){
  for(int32 I=0;I<3;++I){auto* Card=CreateWidget<ULunarMissionCard>(GetOwningPlayer());Card->Configure(I,Titles[I],Tags[I],Descriptions[I]);Card->OnChosen.AddDynamic(this,&ULunarMainMenu::SelectMission);Place(SelectionPage,Card,I==0?268:I==1?656:462,216,356,312);MissionCards.Add(Card);}
  Shade(WidgetTree,SelectionPage,0,558,1280,162,FLinearColor(.001f,.004f,.009f,.91f));
  SelectionPrompt=Label(WidgetTree,TEXT("Select a mission to continue."),15);Place(SelectionPage,SelectionPrompt,70,574,780,64);
- LaunchButton=FrontendButton(WidgetTree,TEXT("START MISSION"),true,false);LaunchButton->OnClicked.AddDynamic(this,&ULunarMainMenu::LaunchMission);Place(SelectionPage,LaunchButton,922,580,288,50);
- auto* BackButton=FrontendButton(WidgetTree,TEXT("BACK"),false,false);BackButton->OnClicked.AddDynamic(this,&ULunarMainMenu::Back);Place(SelectionPage,BackButton,70,650,150,36);
- auto* PickerSettings=FrontendButton(WidgetTree,TEXT("SETTINGS"),false,false);PickerSettings->OnClicked.AddDynamic(this,&ULunarMainMenu::Settings);Place(SelectionPage,PickerSettings,1060,650,150,36);
+ LaunchButton=FrontendButton(WidgetTree,TEXT("START MISSION"),true);LaunchButton->OnClicked.AddDynamic(this,&ULunarMainMenu::LaunchMission);Place(SelectionPage,LaunchButton,922,580,288,50);
+ SelectionBackButton=FrontendButton(WidgetTree,TEXT("BACK"));SelectionBackButton->OnClicked.AddDynamic(this,&ULunarMainMenu::Back);Place(SelectionPage,SelectionBackButton,70,650,150,36);
+ SelectionSettingsButton=FrontendButton(WidgetTree,TEXT("SETTINGS"));SelectionSettingsButton->OnClicked.AddDynamic(this,&ULunarMainMenu::Settings);Place(SelectionPage,SelectionSettingsButton,1060,650,150,36);
  Place(SelectionPage,Label(WidgetTree,TEXT("LEFT / RIGHT  SELECT     ENTER  START     ESC  BACK     1 / 2  DESTINATION"),11,Dim),250,654,800,30);
  SelectionPage->SetVisibility(ESlateVisibility::Collapsed);LaunchButton->SetIsEnabled(false);PreviewMoon();
  IntroLayer=WidgetTree->ConstructWidget<UCanvasPanel>();Place(C,IntroLayer,0,0,1280,720);
@@ -222,12 +229,27 @@ TSharedRef<SWidget> ULunarMainMenu::RebuildWidget(){
  }
  return Super::RebuildWidget();
 }
-void ULunarMainMenu::NativeTick(const FGeometry& Geometry,float Delta){Super::NativeTick(Geometry,Delta);RefreshFrontendLabels(WidgetTree,FrontendLabels,FrontendTextScale);}
+void ULunarMainMenu::NativeTick(const FGeometry& Geometry,float Delta){
+ Super::NativeTick(Geometry,Delta);RefreshFrontendLabels(WidgetTree,FrontendLabels,FrontendTextScale);
+ // A bounded, screenshot-free profiling workload. It only browses the menu;
+ // capture startup/warmup and full-glass comparison are documented by the tool.
+ if(SelectionProfileRequested&&!IsIntroActive()&&GetWorld()&&GetWorld()->GetTimeSeconds()>=NextSelectionProfileAt){
+  auto* P=Pilot(this);if(P&&P->ActivePanel)return;
+  switch(SelectionProfileStep++%4){
+   case 0:Back();ExploreMoon();SelectMission(0);break;
+   case 1:SelectMission(1);break;
+   case 2:Back();ExploreMars();SelectMission(2);break;
+   default:Back();ExploreMoon();SelectMission(1);break;
+  }
+  NextSelectionProfileAt=GetWorld()->GetTimeSeconds()+2;
+  UE_LOG(LogTemp,Display,TEXT("MISSION_SELECTION_PROFILE step=%d destination=%s mission=%d loads=%d builds=%d full_glass_baseline=%d"),SelectionProfileStep,SelectionMars?TEXT("Mars"):TEXT("Moon"),SelectedMission,DestinationTextureLoads,FrontendBuilds,FParse::Param(FCommandLine::Get(),TEXT("MissionFullGlassBaseline")));
+ }
+}
 
 void ULunarMainMenu::PreviewHome(int32 Index){if(!IsIntroActive()&&!MissionSelection){if(Index==1)PreviewMoon();else if(Index==2)PreviewMars();}}
 void ULunarMainMenu::ChooseHome(int32 Index){if(IsIntroActive())return;if(Index==0)Continue();else if(Index==1)ExploreMoon();else if(Index==2)ExploreMars();else if(Index==3)Settings();else if(Index==4)ExitGame();}
-void ULunarMainMenu::PreviewMoon(){if(MissionSelection||IsIntroActive())return;PreviewingMars=false;if(Background)Background->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr,TEXT("/Game/Lunar/Frontend/T_MenuMoon.T_MenuMoon")));Destination->SetText(FText::FromString(TEXT("01 / MOON")));Details->SetText(FText::FromString(FString(TEXT("EXPEDITIONS\nAPOLLO 12 / HISTORICAL EXPLORATION\nSELENE / FICTIONAL RESCUE\n\nCHOOSE YOUR MISSION\nReview the mission guide before departure.\n\nOBJECTIVE\nExplore lunar worksites or restore the rescue station.")).ToUpper()));for(int32 I=0;I<HomeCards.Num();++I)HomeCards[I]->SetSelected(I==1);}
-void ULunarMainMenu::PreviewMars(){if(MissionSelection||IsIntroActive())return;PreviewingMars=true;if(Background)Background->SetBrushFromTexture(LoadObject<UTexture2D>(nullptr,TEXT("/Game/Lunar/Frontend/T_MenuMars.T_MenuMars")));Destination->SetText(FText::FromString(TEXT("02 / MARS")));Details->SetText(FText::FromString(FString(TEXT("EXPEDITION\nARES / FICTIONAL PROTOTYPE\n\nGAMEPLAY BUDGET\n8 MIN OXYGEN / 3.71 m/s2\n\nOBJECTIVE\nRestore the relay and recover ice survey data.")).ToUpper().Replace(TEXT("M/S2"),TEXT("m/s²"))));for(int32 I=0;I<HomeCards.Num();++I)HomeCards[I]->SetSelected(I==2);}
+void ULunarMainMenu::PreviewMoon(){if(MissionSelection||IsIntroActive()||(DestinationPreviewReady&&!PreviewingMars))return;DestinationPreviewReady=true;++DestinationPresentationUpdates;PreviewingMars=false;if(Background)Background->SetBrushFromTexture(MoonBackdrop);Destination->SetText(FText::FromString(TEXT("01 / MOON")));Details->SetText(FText::FromString(FString(TEXT("EXPEDITIONS\nAPOLLO 12 / HISTORICAL EXPLORATION\nSELENE / FICTIONAL RESCUE\n\nCHOOSE YOUR MISSION\nReview the mission guide before departure.\n\nOBJECTIVE\nExplore lunar worksites or restore the rescue station.")).ToUpper()));for(int32 I=0;I<HomeCards.Num();++I)HomeCards[I]->SetSelected(I==1);}
+void ULunarMainMenu::PreviewMars(){if(MissionSelection||IsIntroActive()||(DestinationPreviewReady&&PreviewingMars))return;DestinationPreviewReady=true;++DestinationPresentationUpdates;PreviewingMars=true;if(Background)Background->SetBrushFromTexture(MarsBackdrop);Destination->SetText(FText::FromString(TEXT("02 / MARS")));Details->SetText(FText::FromString(FString(TEXT("EXPEDITION\nARES / FICTIONAL PROTOTYPE\n\nGAMEPLAY BUDGET\n8 MIN OXYGEN / 3.71 m/s2\n\nOBJECTIVE\nRestore the relay and recover ice survey data.")).ToUpper().Replace(TEXT("M/S2"),TEXT("m/s²"))));for(int32 I=0;I<HomeCards.Num();++I)HomeCards[I]->SetSelected(I==2);}
 void ULunarMainMenu::OpenSelection(bool Mars){
  auto* G=Mission(this);auto* P=Pilot(this);if(!G||!G->Menu||IsIntroActive()||LunarLoading::IsBusy()||(P&&P->ActivePanel))return;
  MissionSelection=false;if(Mars)PreviewMars();else PreviewMoon();MissionSelection=true;SelectionMars=Mars;SelectedMission=INDEX_NONE;

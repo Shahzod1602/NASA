@@ -1,0 +1,604 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-06",
+  "generated_utc": "2026-11-06T05:36:04.819643+00:00",
+  "validation_status": "passed",
+  "hardware": {
+    "cpu": "AMD Ryzen 5 6600H with Radeon Graphics",
+    "gpu_selected_in_each_log": "NVIDIA GeForce RTX 3050 Laptop GPU",
+    "ram_bytes": 16312721408,
+    "operating_environment": "Windows x64; Unreal DX11 rendered offscreen"
+  },
+  "captures": [
+    {
+      "id": "before-home",
+      "scene": "Home",
+      "source_artifact": {
+        "capture.csv": {
+          "path": "Reports/MissionSelection20261031/performance-nov06-before-home/capture.csv",
+          "sha256": "7ecde328df5cfb279786f43c64ebd006c54d65e10ffbe66025d89ad2561b3d7f"
+        },
+        "summary.json": {
+          "path": "Reports/MissionSelection20261031/performance-nov06-before-home/summary.json",
+          "sha256": "45b9ba3ac59a904bcefead330d9ddf53f1bdf27b657c8d070437e4a2184a5438"
+        },
+        "environment.json": {
+          "path": "Reports/MissionSelection20261031/performance-nov06-before-home/environment.json",
+          "sha256": "64ad424a0e6a8c71aa8b3b9a15c017c782e247057dad0b0067ba801d26c3c25d"
+        },
+        "capture.log": {
+          "path": "Reports/MissionSelection20261031/performance-nov06-before-home/capture.log",
+          "sha256": "893e535f7cf3bdf93fe652773d67c736323ad0151fc30ce8ee3a78062086bfe7"
+        },
+        "memory-samples.json": {
+          "path": "Reports/MissionSelection20261031/performance-nov06-before-home/memory-samples.json",
+          "sha256": "2916ff5d24425797aa814e7a47875d24622d337a7c82c775c88488efdbe191f3"
+        }
+      },
+      "executable_sha256": "08485e289426127af57fca0bd79fa1b9bc1f67a3708f8d4385068140c8733a7a",
+      "capture_interval_utc": {
+        "process_started": "2026-11-06T02:36:34.5417737Z",
+        "csv_capture_ended": "2026-11-06T02:37:08.950Z",
+        "log_exit": "2026-11-06T02:37:09.710Z"
+      },
+      "conditions": {
+        "renderer": "DX11 / rendered offscreen",
+        "resolution": "1280x720",
+        "quality": 1,
+        "fps_cap": 60,
+        "vsync": false,
+        "audio": false,
+        "requested_frames": 1800,
+        "warmup_frames": 300
+      },
+      "csv_validation": {
+        "logic": "Same first-header FrameTime index and finite positive frame-row predicate as Tools/summarize_profile.py; numeric rows aligned for optional metrics. All included zero-valued optional counters are retained.",
+        "excluded_nondata_records": [
+          {
+            "csv_record_number": 1802,
+            "category": "repeated_header",
+            "columns": 306
+          },
+          {
+            "csv_record_number": 1803,
+            "category": "metadata_footer",
+            "columns": 89
+          }
+        ],
+        "invalid_frame_records": 0,
+        "exact_requested_frame_count": true,
+        "recomputed_summary_matches_all_fields": true,
+        "warmup_elapsed_seconds_from_frame_time": 8.414007599999993
+      },
+      "frame_summary": {
+        "captured_frames": 1800,
+        "warmup_frames_excluded": 300,
+        "sample_frames": 1500,
+        "sample_seconds": 25.00094140000002,
+        "mean_fps": 59.99774072507526,
+        "one_percent_low_fps": 56.48577161070307,
+        "p95_frame_ms": 17.2472,
+        "p99_frame_ms": 17.4696,
+        "largest_frame_ms": 18.5282
+      },
+      "maximum_sampled_working_set_bytes": 575401984,
+      "maximum_sampled_working_set_mib": 548.74609375,
+      "engine_csv_metrics": {
+        "GameThreadTime": {
+          "available": true,
+          "unit": "ms",
+          "valid_numeric_frames": 1500,
+          "positive_frames": 1500,
+          "zero_frames": 0,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 2.8134623333333333
+        },
+        "RenderThreadTime": {
+          "available": true,
+          "unit": "ms",
+          "valid_numeric_frames": 1500,
+          "positive_frames": 1500,
+          "zero_frames": 0,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 3.2419176
+        },
+        "GPUTime": {
+          "available": true,
+          "unit": "ms",
+          "valid_numeric_frames": 1500,
+          "positive_frames": 1500,
+          "zero_frames": 0,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 16.666111266666668
+        },
+        "GPU/SlateUI": {
+          "available": true,
+          "unit": "ms",
+          "valid_numeric_frames": 1500,
+          "positive_frames": 1498,
+          "zero_frames": 2,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 9.1444008
+        },
+        "Slate/PostProcessBlurPassCount": {
+          "available": true,
+          "unit": "count",
+          "valid_numeric_frames": 1500,
+          "positive_frames": 1498,
+          "zero_frames": 2,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 4.996666666666667
+        },
+        "CPUUsage_Process": {
+          "available": true,
+          "unit": "engine process-CPU counter",
+          "valid_numeric_frames": 1500,
+          "positive_frames": 1500,
+          "zero_frames": 0,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 2.2101424666666665
+        }
+      },
+      "profile_transition_count": 0,
+      "profile_destination_set": [],
+      "profile_loads_and_builds_stable": null,
+      "competing_work_seen": false,
+      "gpu_stats_in_command_line": true,
+      "historical_recorded_gpu_telemetry_requested": false,
+      "process_exit_code": 777003
+    },
+    {
+      "id": "after-home",
+      "scene": "Home",
+      "source_artifact": {
+        "capture.csv": {
+          "path": "Reports/MissionSelection20261031/performance-nov06-after-home/capture.csv",
+          "sha256": "664a60e02a2ead43382d6570c728c4671dbe3f736a8621451450050ad2497516"
+        },
+        "summary.json": {
+          "path": "Reports/MissionSelection20261031/performance-nov06-after-home/summary.json",
+          "sha256": "437f8d32b6b2e54d6522daffe36f763c3289a697f7202dbf8d8237ecb05b0cb8"
+        },
+        "environment.json": {
+          "path": "Reports/MissionSelection20261031/performance-nov06-after-home/environment.json",
+          "sha256": "121af8849b963562e1ca79949bc39a4bd3107a668054acb144623d94d31009c0"
+        },
+        "capture.log": {
+          "path": "Reports/MissionSelection20261031/performance-nov06-after-home/capture.log",
+          "sha256": "2abf80e169da7639d90cf45b946188dbd2c672dd8db3ab757c65df08444b4711"
+        },
+        "memory-samples.json": {
+          "path": "Reports/MissionSelection20261031/performance-nov06-after-home/memory-samples.json",
+          "sha256": "0612327bbab8fb9112377a0cdcf3fac092235ed157260dac2e9c9f4c39f3fe0f"
+        }
+      },
+      "executable_sha256": "06c1b022f92b4e13e8300fc8d71296f290ee4f2565ac8597ebcd337519facda8",
+      "capture_interval_utc": {
+        "process_started": "2026-11-06T05:25:28.5727545Z",
+        "csv_capture_ended": "2026-11-06T05:26:00.788Z",
+        "log_exit": "2026-11-06T05:26:01.540Z"
+      },
+      "conditions": {
+        "renderer": "DX11 / rendered offscreen",
+        "resolution": "1280x720",
+        "quality": 1,
+        "fps_cap": 60,
+        "vsync": false,
+        "audio": false,
+        "requested_frames": 1800,
+        "warmup_frames": 300
+      },
+      "csv_validation": {
+        "logic": "Same first-header FrameTime index and finite positive frame-row predicate as Tools/summarize_profile.py; numeric rows aligned for optional metrics. All included zero-valued optional counters are retained.",
+        "excluded_nondata_records": [
+          {
+            "csv_record_number": 1802,
+            "category": "repeated_header",
+            "columns": 306
+          },
+          {
+            "csv_record_number": 1803,
+            "category": "metadata_footer",
+            "columns": 89
+          }
+        ],
+        "invalid_frame_records": 0,
+        "exact_requested_frame_count": true,
+        "recomputed_summary_matches_all_fields": true,
+        "warmup_elapsed_seconds_from_frame_time": 6.872519599999998
+      },
+      "frame_summary": {
+        "captured_frames": 1800,
+        "warmup_frames_excluded": 300,
+        "sample_frames": 1500,
+        "sample_seconds": 25.016120599999994,
+        "mean_fps": 59.96133549180283,
+        "one_percent_low_fps": 53.39915907004297,
+        "p95_frame_ms": 17.1912,
+        "p99_frame_ms": 17.4559,
+        "largest_frame_ms": 24.649
+      },
+      "maximum_sampled_working_set_bytes": 568655872,
+      "maximum_sampled_working_set_mib": 542.3125,
+      "engine_csv_metrics": {
+        "GameThreadTime": {
+          "available": true,
+          "unit": "ms",
+          "valid_numeric_frames": 1500,
+          "positive_frames": 1500,
+          "zero_frames": 0,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 2.7763703333333334
+        },
+        "RenderThreadTime": {
+          "available": true,
+          "unit": "ms",
+          "valid_numeric_frames": 1500,
+          "positive_frames": 1500,
+          "zero_frames": 0,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 3.1292111333333334
+        },
+        "GPUTime": {
+          "available": true,
+          "unit": "ms",
+          "valid_numeric_frames": 1500,
+          "positive_frames": 1500,
+          "zero_frames": 0,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 16.671663066666667
+        },
+        "GPU/SlateUI": {
+          "available": true,
+          "unit": "ms",
+          "valid_numeric_frames": 1500,
+          "positive_frames": 1498,
+          "zero_frames": 2,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 9.916299266666666
+        },
+        "Slate/PostProcessBlurPassCount": {
+          "available": true,
+          "unit": "count",
+          "valid_numeric_frames": 1500,
+          "positive_frames": 1498,
+          "zero_frames": 2,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 5.0
+        },
+        "CPUUsage_Process": {
+          "available": true,
+          "unit": "engine process-CPU counter",
+          "valid_numeric_frames": 1500,
+          "positive_frames": 1500,
+          "zero_frames": 0,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 2.156808933333333
+        }
+      },
+      "profile_transition_count": 0,
+      "profile_destination_set": [],
+      "profile_loads_and_builds_stable": null,
+      "competing_work_seen": false,
+      "gpu_stats_in_command_line": true,
+      "historical_recorded_gpu_telemetry_requested": true,
+      "process_exit_code": 777003
+    },
+    {
+      "id": "picker-fullglass",
+      "scene": "Picker",
+      "source_artifact": {
+        "capture.csv": {
+          "path": "Reports/MissionSelection20261031/performance-nov06-picker-fullglass/capture.csv",
+          "sha256": "cfac4adc4384bf94bbb1aa19b8903f209afd636f2d307878c2166bd14dc4625f"
+        },
+        "summary.json": {
+          "path": "Reports/MissionSelection20261031/performance-nov06-picker-fullglass/summary.json",
+          "sha256": "008723c2cd8377c4fe27a4a99cea4c6c1cb3fb944a97826c83bb369d1f68f66d"
+        },
+        "environment.json": {
+          "path": "Reports/MissionSelection20261031/performance-nov06-picker-fullglass/environment.json",
+          "sha256": "65ac3ebca43abc354836167f3befad7ff8f35f945117415a7e56f9ab6061c2ca"
+        },
+        "capture.log": {
+          "path": "Reports/MissionSelection20261031/performance-nov06-picker-fullglass/capture.log",
+          "sha256": "0fc9e54494846f3a482b356dde6be5a58bb26eec920252e4048f9e24b28a3ecd"
+        },
+        "memory-samples.json": {
+          "path": "Reports/MissionSelection20261031/performance-nov06-picker-fullglass/memory-samples.json",
+          "sha256": "0bbc47bf91cd79f5fe742ecf8f9c0392ff96385712efa58b119d5b9da1577a32"
+        }
+      },
+      "executable_sha256": "06c1b022f92b4e13e8300fc8d71296f290ee4f2565ac8597ebcd337519facda8",
+      "capture_interval_utc": {
+        "process_started": "2026-11-06T05:26:12.3728578Z",
+        "csv_capture_ended": "2026-11-06T05:26:31.869Z",
+        "log_exit": "2026-11-06T05:26:32.190Z"
+      },
+      "conditions": {
+        "renderer": "DX11 / rendered offscreen",
+        "resolution": "1280x720",
+        "quality": 1,
+        "fps_cap": 0,
+        "vsync": false,
+        "audio": false,
+        "requested_frames": 6000,
+        "warmup_frames": 1500
+      },
+      "csv_validation": {
+        "logic": "Same first-header FrameTime index and finite positive frame-row predicate as Tools/summarize_profile.py; numeric rows aligned for optional metrics. All included zero-valued optional counters are retained.",
+        "excluded_nondata_records": [
+          {
+            "csv_record_number": 6002,
+            "category": "repeated_header",
+            "columns": 307
+          },
+          {
+            "csv_record_number": 6003,
+            "category": "metadata_footer",
+            "columns": 89
+          }
+        ],
+        "invalid_frame_records": 0,
+        "exact_requested_frame_count": true,
+        "recomputed_summary_matches_all_fields": true,
+        "warmup_elapsed_seconds_from_frame_time": 5.963514099999997
+      },
+      "frame_summary": {
+        "captured_frames": 6000,
+        "warmup_frames_excluded": 1500,
+        "sample_frames": 4500,
+        "sample_seconds": 13.289461500000021,
+        "mean_fps": 338.61417183833976,
+        "one_percent_low_fps": 211.63533444731902,
+        "p95_frame_ms": 3.668,
+        "p99_frame_ms": 4.0859,
+        "largest_frame_ms": 8.6752
+      },
+      "maximum_sampled_working_set_bytes": 552869888,
+      "maximum_sampled_working_set_mib": 527.2578125,
+      "engine_csv_metrics": {
+        "GameThreadTime": {
+          "available": true,
+          "unit": "ms",
+          "valid_numeric_frames": 4500,
+          "positive_frames": 4500,
+          "zero_frames": 0,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 2.6936708222222223
+        },
+        "RenderThreadTime": {
+          "available": true,
+          "unit": "ms",
+          "valid_numeric_frames": 4500,
+          "positive_frames": 4500,
+          "zero_frames": 0,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 2.9490465777777777
+        },
+        "GPUTime": {
+          "available": true,
+          "unit": "ms",
+          "valid_numeric_frames": 4500,
+          "positive_frames": 4500,
+          "zero_frames": 0,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 2.9469348444444443
+        },
+        "GPU/SlateUI": {
+          "available": true,
+          "unit": "ms",
+          "valid_numeric_frames": 4500,
+          "positive_frames": 4498,
+          "zero_frames": 2,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 1.6846246
+        },
+        "Slate/PostProcessBlurPassCount": {
+          "available": false,
+          "matching_columns": 0,
+          "sample_frames": 4500,
+          "reason": "column absent"
+        },
+        "CPUUsage_Process": {
+          "available": true,
+          "unit": "engine process-CPU counter",
+          "valid_numeric_frames": 4500,
+          "positive_frames": 4500,
+          "zero_frames": 0,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 9.263682466666667
+        }
+      },
+      "profile_transition_count": 8,
+      "profile_destination_set": [
+        "Mars",
+        "Moon"
+      ],
+      "profile_loads_and_builds_stable": true,
+      "competing_work_seen": false,
+      "gpu_stats_in_command_line": true,
+      "historical_recorded_gpu_telemetry_requested": true,
+      "process_exit_code": 777003
+    },
+    {
+      "id": "picker-optimized",
+      "scene": "Picker",
+      "source_artifact": {
+        "capture.csv": {
+          "path": "Reports/MissionSelection20261031/performance-nov06-picker-optimized/capture.csv",
+          "sha256": "3d0f336ca8242d4d06ada72f8c15e8278c471231f01d1bb5e2725d3ea1c2ee61"
+        },
+        "summary.json": {
+          "path": "Reports/MissionSelection20261031/performance-nov06-picker-optimized/summary.json",
+          "sha256": "79471ae86f0865c4cd3f9529714ee55600cca017b7b8faffb47bcef7be972b2a"
+        },
+        "environment.json": {
+          "path": "Reports/MissionSelection20261031/performance-nov06-picker-optimized/environment.json",
+          "sha256": "3c3abade431b51195022510623c2cd46667f25fb48dda6ed2068179367069f52"
+        },
+        "capture.log": {
+          "path": "Reports/MissionSelection20261031/performance-nov06-picker-optimized/capture.log",
+          "sha256": "3e508673354e018476d90cd3c0bc57b934570aff362c9ed20f6901bc4ccaae6e"
+        },
+        "memory-samples.json": {
+          "path": "Reports/MissionSelection20261031/performance-nov06-picker-optimized/memory-samples.json",
+          "sha256": "d0b28534db932f76d63ba93f64c7662639478949b81198ac64b01bbc989e276f"
+        }
+      },
+      "executable_sha256": "06c1b022f92b4e13e8300fc8d71296f290ee4f2565ac8597ebcd337519facda8",
+      "capture_interval_utc": {
+        "process_started": "2026-11-06T05:26:43.3024444Z",
+        "csv_capture_ended": "2026-11-06T05:27:02.393Z",
+        "log_exit": "2026-11-06T05:27:03.089Z"
+      },
+      "conditions": {
+        "renderer": "DX11 / rendered offscreen",
+        "resolution": "1280x720",
+        "quality": 1,
+        "fps_cap": 0,
+        "vsync": false,
+        "audio": false,
+        "requested_frames": 6000,
+        "warmup_frames": 1500
+      },
+      "csv_validation": {
+        "logic": "Same first-header FrameTime index and finite positive frame-row predicate as Tools/summarize_profile.py; numeric rows aligned for optional metrics. All included zero-valued optional counters are retained.",
+        "excluded_nondata_records": [
+          {
+            "csv_record_number": 6002,
+            "category": "repeated_header",
+            "columns": 306
+          },
+          {
+            "csv_record_number": 6003,
+            "category": "metadata_footer",
+            "columns": 89
+          }
+        ],
+        "invalid_frame_records": 0,
+        "exact_requested_frame_count": true,
+        "recomputed_summary_matches_all_fields": true,
+        "warmup_elapsed_seconds_from_frame_time": 5.965148000000011
+      },
+      "frame_summary": {
+        "captured_frames": 6000,
+        "warmup_frames_excluded": 1500,
+        "sample_frames": 4500,
+        "sample_seconds": 12.857572399999997,
+        "mean_fps": 349.9883072795297,
+        "one_percent_low_fps": 247.94781855509234,
+        "p95_frame_ms": 3.5135,
+        "p99_frame_ms": 3.8483,
+        "largest_frame_ms": 4.4928
+      },
+      "maximum_sampled_working_set_bytes": 550182912,
+      "maximum_sampled_working_set_mib": 524.6953125,
+      "engine_csv_metrics": {
+        "GameThreadTime": {
+          "available": true,
+          "unit": "ms",
+          "valid_numeric_frames": 4500,
+          "positive_frames": 4500,
+          "zero_frames": 0,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 2.692138511111111
+        },
+        "RenderThreadTime": {
+          "available": true,
+          "unit": "ms",
+          "valid_numeric_frames": 4500,
+          "positive_frames": 4500,
+          "zero_frames": 0,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 2.8345176444444444
+        },
+        "GPUTime": {
+          "available": true,
+          "unit": "ms",
+          "valid_numeric_frames": 4500,
+          "positive_frames": 4500,
+          "zero_frames": 0,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 2.8503942
+        },
+        "GPU/SlateUI": {
+          "available": true,
+          "unit": "ms",
+          "valid_numeric_frames": 4500,
+          "positive_frames": 4498,
+          "zero_frames": 2,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 1.6003787333333332
+        },
+        "Slate/PostProcessBlurPassCount": {
+          "available": false,
+          "matching_columns": 0,
+          "sample_frames": 4500,
+          "reason": "column absent"
+        },
+        "CPUUsage_Process": {
+          "available": true,
+          "unit": "engine process-CPU counter",
+          "valid_numeric_frames": 4500,
+          "positive_frames": 4500,
+          "zero_frames": 0,
+          "invalid_frames": 0,
+          "mean_including_zero_frames": 9.304214577777778
+        }
+      },
+      "profile_transition_count": 8,
+      "profile_destination_set": [
+        "Mars",
+        "Moon"
+      ],
+      "profile_loads_and_builds_stable": true,
+      "competing_work_seen": false,
+      "gpu_stats_in_command_line": true,
+      "historical_recorded_gpu_telemetry_requested": true,
+      "process_exit_code": 777003
+    }
+  ],
+  "comparisons": [
+    {
+      "before_or_control": "before-home",
+      "after_or_optimized": "after-home",
+      "comparison_kind": "Historical matched static Home workload; old08485 versus final06c, 1800frames/300warmup/60FPS cap",
+      "mean_fps_delta": -0.036405233272432724,
+      "mean_fps_delta_percent": -0.06067767357982312,
+      "p99_frame_ms_delta": -0.013700000000000045,
+      "sampled_working_set_bytes_delta": -6746112,
+      "observations_are_single_capture": true
+    },
+    {
+      "before_or_control": "picker-fullglass",
+      "after_or_optimized": "picker-optimized",
+      "comparison_kind": "Same final06c executable scripted Picker workload; FullGlassBaseline counterfactual blur-cost control versus optimized. Not an old-version before/after.",
+      "mean_fps_delta": 11.374135441189935,
+      "mean_fps_delta_percent": 3.3590252231439743,
+      "p99_frame_ms_delta": -0.2375999999999996,
+      "sampled_working_set_bytes_delta": -2686976,
+      "observations_are_single_capture": true
+    }
+  ],
+  "coordination": {
+    "final_capture_family_start_utc": "2026-11-06T05:25:28.5727545Z",
+    "final_capture_family_last_log_exit_utc": "2026-11-06T05:27:03.089Z",
+    "curation_start_utc": "2026-11-06T05:27:19Z",
+    "curation_start_origin": "Root coordination record: asset/report curation began at05:27:19UTC after all captures ended.",
+    "nonoverlap_with_curation": true,
+    "minimum_gap_seconds": 15.911
+  },
+  "limitations": [
+    "One controlled capture per condition; small observed differences do not establish repeatable improvement, causality or universal FPS.",
+    "Home is capped at60FPS. The Picker figures are uncapped scripted menu throughput, not in-mission gameplay FPS, occupied driving or human responsiveness.",
+    "Picker FullGlassBaseline is a same-build counterfactual rendering-cost experiment; no historical old-version Picker capture exists.",
+    "The two Picker workloads switch destinations every2seconds, so single captures contain slightly different per-state frame counts and animation timing.",
+    "Thread/GPU/SlateUI metrics are engine CSV counters in milliseconds, can overlap, and must not be added or treated as utilization or presentation latency.",
+    "Working set is the largest one-second sampled process value; not true peak, VRAM or dedicated GPU memory.",
+    "GPU/SlateUI contains two zero-valued rows in every post-warmup sample; these rows are included in means and availability counts.",
+    "Slate/PostProcessBlurPassCount is absent from both Picker CSVs; no measured Picker blur-pass-count reduction is claimed.",
+    "The old Home environment incorrectly recorded gpu_telemetry_requested=false although its command requested-csvGpuStats and raw counters are present. Historical metadata was preserved; actual availability is reported separately.",
+    "No human playtest, full mission, prolonged driving/scanning, onscreen smoothness, other hardware or graphics presets are established."
+  ]
+}

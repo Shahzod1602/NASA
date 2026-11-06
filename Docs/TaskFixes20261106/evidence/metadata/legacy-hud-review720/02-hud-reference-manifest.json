@@ -1,0 +1,89 @@
+{
+  "synthetic": true,
+  "human_playtest": false,
+  "performance_measurement": false,
+  "description": "Scripted HUD and optional notebook scenarios. HUD and notebook viewport checks use actual arranged Slate geometry at the requested font scale; notebook body scrolling is allowed. Mission states and hold values are fixtures, not human session results. PNG freshness and dimensions are checked by the external runner.",
+  "frames": [
+    {
+      "name": "hud-overview100",
+      "layout_passed": true,
+      "text_scale": 1.0,
+      "subtitle_scale": 1.0,
+      "hud_visible": true,
+      "notebook": false,
+      "hold_fraction": 0.0
+    },
+    {
+      "name": "hud-overview150",
+      "layout_passed": true,
+      "text_scale": 1.5,
+      "subtitle_scale": 1.5,
+      "hud_visible": true,
+      "notebook": false,
+      "hold_fraction": 0.0
+    },
+    {
+      "name": "hud-guide100",
+      "layout_passed": true,
+      "text_scale": 1.0,
+      "subtitle_scale": 1.0,
+      "hud_visible": true,
+      "notebook": false,
+      "hold_fraction": 0.0
+    },
+    {
+      "name": "hud-guide150",
+      "layout_passed": true,
+      "text_scale": 1.5,
+      "subtitle_scale": 1.5,
+      "hud_visible": true,
+      "notebook": false,
+      "hold_fraction": 0.0
+    },
+    {
+      "name": "hud-work150",
+      "layout_passed": true,
+      "text_scale": 1.5,
+      "subtitle_scale": 1.5,
+      "hud_visible": true,
+      "notebook": false,
+      "hold_fraction": 0.0
+    },
+    {
+      "name": "hud-low-resource150",
+      "layout_passed": true,
+      "text_scale": 1.5,
+      "subtitle_scale": 1.5,
+      "hud_visible": true,
+      "notebook": false,
+      "hold_fraction": 0.0
+    },
+    {
+      "name": "equipment-notebook100",
+      "layout_passed": true,
+      "text_scale": 1.0,
+      "subtitle_scale": 1.0,
+      "hud_visible": false,
+      "notebook": true,
+      "hold_fraction": 0.0
+    },
+    {
+      "name": "equipment-notebook150",
+      "layout_passed": true,
+      "text_scale": 1.5,
+      "subtitle_scale": 1.5,
+      "hud_visible": false,
+      "notebook": true,
+      "hold_fraction": 0.0
+    },
+    {
+      "name": "hud-optional-choice150",
+      "layout_passed": true,
+      "text_scale": 1.5,
+      "subtitle_scale": 1.5,
+      "hud_visible": true,
+      "notebook": false,
+      "hold_fraction": 0.0
+    }
+  ]
+}

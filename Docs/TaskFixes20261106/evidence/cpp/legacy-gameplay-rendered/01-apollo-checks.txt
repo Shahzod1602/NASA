@@ -1,0 +1,249 @@
+PASS Combined gameplay checks run in automation with owner checkpoint writes disabled
+PASS Combined checks begin with a fresh mission briefing and possessed astronaut
+PASS A real transient departure starts before mission state is committed
+PASS GameMode Tick freezes mission resources time and old radio during departure
+PASS Paused departure freezes both its actor clock and the old mission clocks
+PASS Natural departure hands control back and commits the mission once
+PASS Departure does not teleport the astronaut or award science cargo
+PASS Asymmetric carried bounds fit independent 45 FOV 1.333 aspect frustum
+PASS Asymmetric carried bounds fit independent 45 FOV 1.778 aspect frustum
+PASS Asymmetric carried bounds fit independent 45 FOV 2.333 aspect frustum
+PASS Asymmetric carried bounds fit independent 60 FOV 1.333 aspect frustum
+PASS Asymmetric carried bounds fit independent 60 FOV 1.778 aspect frustum
+PASS Asymmetric carried bounds fit independent 60 FOV 2.333 aspect frustum
+PASS Asymmetric carried bounds fit independent 85 FOV 1.333 aspect frustum
+PASS Asymmetric carried bounds fit independent 85 FOV 1.778 aspect frustum
+PASS Asymmetric carried bounds fit independent 85 FOV 2.333 aspect frustum
+PASS Asymmetric carried bounds fit independent 110 FOV 1.333 aspect frustum
+PASS Asymmetric carried bounds fit independent 110 FOV 1.778 aspect frustum
+PASS Asymmetric carried bounds fit independent 110 FOV 2.333 aspect frustum
+PASS Long asymmetric source bounds keep an interior margin instead of a floating-point edge failure
+PASS Carry fit rejects missing zero nonfinite and invalid frustum inputs
+PASS Carry checks have an actual possessed astronaut and camera
+PASS Carry viewmodel source and reusable body proxy exist in the playable world
+PASS Actual cell remains visible and bounded at 45 FOV and -75 pitch
+PASS Cell centre and upper face clear sampled visible hand-rig geometry at 45 FOV -75 pitch
+PASS Both rendered hands have a sampled fingertip within 3cm of the actual cell mesh and at most 1.5cm signed grip-region depth at 45 FOV -75 pitch
+PASS Actual rendered hand bones follow the cell grip frame at 45 FOV -75 pitch
+PASS Actual rendered cell-carry arm bones retain 28/24cm segment lengths and bounded reach at 45 FOV -75 pitch
+PASS Engine projects every actual cell corner inside viewport at 45 FOV -75 pitch
+PASS Actual cell remains visible and bounded at 45 FOV and 0 pitch
+PASS Cell centre and upper face clear sampled visible hand-rig geometry at 45 FOV 0 pitch
+PASS Both rendered hands have a sampled fingertip within 3cm of the actual cell mesh and at most 1.5cm signed grip-region depth at 45 FOV 0 pitch
+PASS Actual rendered hand bones follow the cell grip frame at 45 FOV 0 pitch
+PASS Actual rendered cell-carry arm bones retain 28/24cm segment lengths and bounded reach at 45 FOV 0 pitch
+PASS Engine projects every actual cell corner inside viewport at 45 FOV 0 pitch
+PASS Actual cell remains visible and bounded at 45 FOV and 65 pitch
+PASS Cell centre and upper face clear sampled visible hand-rig geometry at 45 FOV 65 pitch
+PASS Both rendered hands have a sampled fingertip within 3cm of the actual cell mesh and at most 1.5cm signed grip-region depth at 45 FOV 65 pitch
+PASS Actual rendered hand bones follow the cell grip frame at 45 FOV 65 pitch
+PASS Actual rendered cell-carry arm bones retain 28/24cm segment lengths and bounded reach at 45 FOV 65 pitch
+PASS Engine projects every actual cell corner inside viewport at 45 FOV 65 pitch
+PASS Actual cell remains visible and bounded at 60 FOV and -75 pitch
+PASS Cell centre and upper face clear sampled visible hand-rig geometry at 60 FOV -75 pitch
+PASS Both rendered hands have a sampled fingertip within 3cm of the actual cell mesh and at most 1.5cm signed grip-region depth at 60 FOV -75 pitch
+PASS Actual rendered hand bones follow the cell grip frame at 60 FOV -75 pitch
+PASS Actual rendered cell-carry arm bones retain 28/24cm segment lengths and bounded reach at 60 FOV -75 pitch
+PASS Engine projects every actual cell corner inside viewport at 60 FOV -75 pitch
+PASS Actual cell remains visible and bounded at 60 FOV and 0 pitch
+PASS Cell centre and upper face clear sampled visible hand-rig geometry at 60 FOV 0 pitch
+PASS Both rendered hands have a sampled fingertip within 3cm of the actual cell mesh and at most 1.5cm signed grip-region depth at 60 FOV 0 pitch
+PASS Actual rendered hand bones follow the cell grip frame at 60 FOV 0 pitch
+PASS Actual rendered cell-carry arm bones retain 28/24cm segment lengths and bounded reach at 60 FOV 0 pitch
+PASS Engine projects every actual cell corner inside viewport at 60 FOV 0 pitch
+PASS Actual cell remains visible and bounded at 60 FOV and 65 pitch
+PASS Cell centre and upper face clear sampled visible hand-rig geometry at 60 FOV 65 pitch
+PASS Both rendered hands have a sampled fingertip within 3cm of the actual cell mesh and at most 1.5cm signed grip-region depth at 60 FOV 65 pitch
+PASS Actual rendered hand bones follow the cell grip frame at 60 FOV 65 pitch
+PASS Actual rendered cell-carry arm bones retain 28/24cm segment lengths and bounded reach at 60 FOV 65 pitch
+PASS Engine projects every actual cell corner inside viewport at 60 FOV 65 pitch
+PASS Actual cell remains visible and bounded at 85 FOV and -75 pitch
+PASS Cell centre and upper face clear sampled visible hand-rig geometry at 85 FOV -75 pitch
+PASS Both rendered hands have a sampled fingertip within 3cm of the actual cell mesh and at most 1.5cm signed grip-region depth at 85 FOV -75 pitch
+PASS Actual rendered hand bones follow the cell grip frame at 85 FOV -75 pitch
+PASS Actual rendered cell-carry arm bones retain 28/24cm segment lengths and bounded reach at 85 FOV -75 pitch
+PASS Engine projects every actual cell corner inside viewport at 85 FOV -75 pitch
+PASS Actual cell remains visible and bounded at 85 FOV and 0 pitch
+PASS Cell centre and upper face clear sampled visible hand-rig geometry at 85 FOV 0 pitch
+PASS Both rendered hands have a sampled fingertip within 3cm of the actual cell mesh and at most 1.5cm signed grip-region depth at 85 FOV 0 pitch
+PASS Actual rendered hand bones follow the cell grip frame at 85 FOV 0 pitch
+PASS Actual rendered cell-carry arm bones retain 28/24cm segment lengths and bounded reach at 85 FOV 0 pitch
+PASS Engine projects every actual cell corner inside viewport at 85 FOV 0 pitch
+PASS Actual cell remains visible and bounded at 85 FOV and 65 pitch
+PASS Cell centre and upper face clear sampled visible hand-rig geometry at 85 FOV 65 pitch
+PASS Both rendered hands have a sampled fingertip within 3cm of the actual cell mesh and at most 1.5cm signed grip-region depth at 85 FOV 65 pitch
+PASS Actual rendered hand bones follow the cell grip frame at 85 FOV 65 pitch
+PASS Actual rendered cell-carry arm bones retain 28/24cm segment lengths and bounded reach at 85 FOV 65 pitch
+PASS Engine projects every actual cell corner inside viewport at 85 FOV 65 pitch
+PASS Actual cell remains visible and bounded at 110 FOV and -75 pitch
+PASS Cell centre and upper face clear sampled visible hand-rig geometry at 110 FOV -75 pitch
+PASS Both rendered hands have a sampled fingertip within 3cm of the actual cell mesh and at most 1.5cm signed grip-region depth at 110 FOV -75 pitch
+PASS Actual rendered hand bones follow the cell grip frame at 110 FOV -75 pitch
+PASS Actual rendered cell-carry arm bones retain 28/24cm segment lengths and bounded reach at 110 FOV -75 pitch
+PASS Engine projects every actual cell corner inside viewport at 110 FOV -75 pitch
+PASS Actual cell remains visible and bounded at 110 FOV and 0 pitch
+PASS Cell centre and upper face clear sampled visible hand-rig geometry at 110 FOV 0 pitch
+PASS Both rendered hands have a sampled fingertip within 3cm of the actual cell mesh and at most 1.5cm signed grip-region depth at 110 FOV 0 pitch
+PASS Actual rendered hand bones follow the cell grip frame at 110 FOV 0 pitch
+PASS Actual rendered cell-carry arm bones retain 28/24cm segment lengths and bounded reach at 110 FOV 0 pitch
+PASS Engine projects every actual cell corner inside viewport at 110 FOV 0 pitch
+PASS Actual cell remains visible and bounded at 110 FOV and 65 pitch
+PASS Cell centre and upper face clear sampled visible hand-rig geometry at 110 FOV 65 pitch
+PASS Both rendered hands have a sampled fingertip within 3cm of the actual cell mesh and at most 1.5cm signed grip-region depth at 110 FOV 65 pitch
+PASS Actual rendered hand bones follow the cell grip frame at 110 FOV 65 pitch
+PASS Actual rendered cell-carry arm bones retain 28/24cm segment lengths and bounded reach at 110 FOV 65 pitch
+PASS Engine projects every actual cell corner inside viewport at 110 FOV 65 pitch
+PASS Cell palms derive from the actual fitted source side bounds
+PASS Third-person cell uses a capsule-attached body proxy instead of floating in the camera
+PASS Actual third-person hand and fingertip bones support the body-carried cell
+PASS Body cell stays clear of the torso while both actual arm segments remain within authored reach
+PASS A synthetic fast-stride crouch keeps actual body carry segments and chest clearance bounded
+PASS Orbit and look pitch do not detach the body-carried cell
+PASS Seating the cell clears both carried proxies immediately
+PASS Pause hides carried proxies without advancing their transform or gameplay
+PASS Notebook and settings panels suppress carried items
+PASS Journal overlay suppresses the cell viewmodel
+PASS Mission menus never retain a carried cell
+PASS Evidence photo frames suppress all carried proxies
+PASS Latched photo suppression survives the rig decrementing its frame counter
+PASS Cell returns after photograph suppression without new cargo or pickup
+PASS Restart briefing clears both carried representations
+PASS Committed Apollo sample has a body pouch in third person without a camera payload
+PASS A preview timer alone cannot fabricate committed body cargo
+PASS Automatic stow ends the body preview without losing recorded cargo
+PASS Committed core uses the actual capped tube body preview
+PASS Committed hardware body preview copies the actual retrieved source mesh
+PASS Starting another task cannot replace the already-recorded carried hardware
+PASS Paused hardware carry neither advances stow time nor changes cargo
+PASS Switching to first person restores the existing hardware carry preview
+PASS A screenshot also clears an already-visible Apollo payload
+PASS Hardware stow removes both previews while keeping the committed item
+PASS Recorded hardware 0 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 45 FOV in first person
+PASS Recorded hardware 0 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 45 FOV in body view
+PASS Recorded hardware 0 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 85 FOV in first person
+PASS Recorded hardware 0 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 85 FOV in body view
+PASS Recorded hardware 1 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 45 FOV in first person
+PASS Recorded hardware 1 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 45 FOV in body view
+PASS Recorded hardware 1 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 85 FOV in first person
+PASS Recorded hardware 1 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 85 FOV in body view
+PASS Recorded hardware 2 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 45 FOV in first person
+PASS Recorded hardware 2 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 45 FOV in body view
+PASS Recorded hardware 2 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 85 FOV in first person
+PASS Recorded hardware 2 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 85 FOV in body view
+PASS Recorded sample 0 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 45 FOV in first person
+PASS Recorded sample 0 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 45 FOV in body view
+PASS Recorded sample 0 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 85 FOV in first person
+PASS Recorded sample 0 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 85 FOV in body view
+PASS Recorded sample 1 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 45 FOV in first person
+PASS Recorded sample 1 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 45 FOV in body view
+PASS Recorded sample 1 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 85 FOV in first person
+PASS Recorded sample 1 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 85 FOV in body view
+PASS Recorded sample 2 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 45 FOV in first person
+PASS Recorded sample 2 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 45 FOV in body view
+PASS Recorded sample 2 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 85 FOV in first person
+PASS Recorded sample 2 has bounded actual arm segments, torso clearance and sampled mesh-surface fingertip support within its explicit solid/cloth domain at 85 FOV in body view
+PASS Stowing clears the carry grip and leaves the normal hand pose untouched
+PASS Carry proxies have no collision navigation or independent Tick
+PASS Carry checks restore mission cargo and never change resources time or capsule position
+PASS Crew checks use an isolated playable automation world
+PASS Both fictional guides have visible retained-asset representations
+PASS Repeated crew build preserves guide actors and all mission facts
+PASS Two crew displays stay within the 40-total-component budget
+PASS Crew models have no collision navigation actor Tick or mesh Tick
+PASS Both stationary guides stand on the actual mission terrain rather than floating above it
+PASS Guide bases stay outside the return structure and reference lander footprint including access margin
+PASS An actual blocking structure rejects a candidate crew position
+PASS Paused input cannot talk behind a menu or mutate conversation counts
+PASS Invalid explicit speaker indices cannot start a conversation
+PASS Crew notebook builds wrapped English biographies and current-state advice
+PASS Reading crew biographies grants no work resources or conversation counts
+PASS Robot guidance reads the actual shared mission checklist
+PASS Scientist keeps modern Moon science separate from Apollo history and Mars story data
+PASS Crew interaction fixture has an idle player and a built robot
+PASS Crew prompt is unavailable outside the actual approach range
+PASS Facing the nearby robot exposes its real rebound-key talk prompt
+PASS Looking away hides the crew interaction prompt
+PASS An actual opaque world collider blocks talking through geometry
+PASS Actual robot conversation opens the crew notebook and records one local contact
+PASS Actual conversation and notebook opening grant no cargo work or resource changes
+PASS An open crew notebook cannot receive a second hidden world interaction
+PASS Synthetic crew fixtures restore the original player and mission facts
+PASS Water-study checks have an engine context
+PASS Bundled offline LCROSS publication record loads with its required provenance
+PASS Remote dataset has its actual site-study identity, date and original publication
+PASS Percent and percentage-point arithmetic preserve the cited estimate and its reported uncertainty
+PASS FOV water quantity and approximate crater context are distinct quantities
+PASS Missing source content disables only the optional dataset with an explicit error
+PASS Malformed JSON is not substituted with synthetic water evidence
+PASS Explicit NoData is unavailable rather than an invented zero-water measurement
+PASS Null water abundance is not treated as a real numeric value
+PASS Wrong physical units cannot enter the percent-by-mass activity
+PASS Relative percent cannot silently replace percentage-point uncertainty
+PASS Out-of-range context coordinates are rejected
+PASS Negative uncertainty is rejected
+PASS A substituted abundance cannot silently reuse the fixed published exercise
+PASS An unrelated source cannot claim this version of the LCROSS study
+PASS Publication facts are never accepted as raw spectral measurements
+PASS Fresh study has no prior decisions or committed report
+PASS A report cannot be committed before the evidence decisions
+PASS Out-of-range answer does not create an attempt or advance the study
+PASS Choosing Apollo 12 for the remote Cabeus observation gives feedback without completing a step
+PASS Identifying the real remote site advances only the optional study
+PASS The illustrative 100 kg comparison cannot become a player measurement
+PASS Correct interpretation of mass fraction advances to uncertainty reasoning
+PASS The range choice is computed from the bundled real published values
+PASS A relative-percent error remains an unfinished decision
+PASS Three correct decisions prepare but do not automatically commit a report
+PASS Explicit local report commit uses the actual six answer attempts in this fixture
+PASS Study summary reports session decisions without claiming an in-situ discovery
+PASS Repeated commit and extra answers cannot duplicate a completed study
+PASS Corrupted saved answers cannot imply completed evidence decisions
+PASS Restart/reset clears every local water-study answer and committed result
+PASS Presented evidence keeps observation, inference, explanatory arithmetic and historical scope distinct
+PASS Fresh mission commit resets optional water work and crew conversation counters
+PASS The actual water notebook opens as the owned paused mission panel
+PASS A hidden owned research panel cannot submit a water decision
+PASS An unowned panel cannot advance a mutable fresh research decision
+PASS A repeated research answer key does not skip a decision
+PASS Reading the water panel pauses mission time and gameplay resource use
+PASS The wrong first notebook answer produces feedback without granting progress
+PASS The correct remote-site answer advances exactly one optional decision
+PASS The mass-fraction answer advances to uncertainty reasoning
+PASS Finishing the three decisions still requires an explicit report commit
+PASS The actual notebook commit records only a valid completed research report
+PASS Duplicate commit and reset callbacks cannot rewrite an already recorded report
+PASS An unowned panel fixture can exercise callback ownership
+PASS Callbacks from an unowned panel cannot change the active research record
+PASS A stale closed panel cannot advance a mutable fresh decision
+PASS Callbacks from the closed stale notebook are harmless
+PASS The complete optional UI exercise awards no primary cargo setup time or resource
+PASS Apollo capture includes valid optional water decisions and their exact dataset identity
+PASS A real memory-only SaveGame roundtrip retains the optional research record
+PASS Invalid optional research does not invalidate or rewrite valid historical cargo
+PASS Version-one cargo remains valid when additive water fields are absent
+PASS A later new run clears the recorded optional study and conversation count
+PASS Departure checks use an isolated fresh mission briefing
+PASS Departure has a possessed camera and movement component
+PASS Menu cannot launch the in-mission departure scene
+PASS Completed missions cannot replay departure over their results
+PASS Fresh mission builds the authored 3D cabin
+PASS Repeated departure start is idempotent
+PASS Departure stays inside its 48-mesh component budget
+PASS Cabin geometry has retained materials and no collision navigation or per-component Tick
+PASS External departure view hides and freezes the unchanged player
+PASS Initial input is consumed without click-through skipping
+PASS Pause freezes cabin time and consumes skip without starting gameplay
+PASS An open UI panel freezes departure and blocks hidden skip input
+PASS Zero negative and nonfinite departure deltas leave the clock unchanged
+PASS Timed hatch opens with readable mission-specific guidance before exit
+PASS Bounded camera curve reaches the original surface view before handover
+PASS Cabin playback never consumes mission resources moves the pawn or edits mission progress
+PASS Abort removes the transient cabin without launching the mission
+PASS Abort restores camera visibility and movement without resetting progress
+PASS Departure preserves player aim FOV and camera-view preference
+PASS A fresh launch can begin after an aborted presentation
+PASS Allowed skip restores the surface view and commits the actual mission start
+PASS Committed handover restores the original player view without a teleport
+PASS A completed departure cannot commit twice or replay during active gameplay
+PASS Departure reset removes hidden presentation state after handover
+RESULT: 0 failures

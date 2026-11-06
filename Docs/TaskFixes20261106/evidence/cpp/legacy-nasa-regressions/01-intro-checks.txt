@@ -1,0 +1,13 @@
+PASS Intro test has an isolated home menu
+PASS Intro starts from black with a transparent illustration
+PASS Invalid intro deltas cannot advance or poison the presentation
+PASS Illustration fades in fully before the menu reveal
+PASS Menu reveal begins only after the illustration hold
+PASS Intro reaches its bounded end without leaving a blocking black layer
+PASS Finished intro cannot accumulate more presentation time
+PASS The actual startup layer owns a local illustration asset
+PASS Intro blocks destination, Enter, Continue and settings entry points
+PASS Real menu tick automatically completes startup and reveals the home page
+PASS All five home actions use the shared glass-card presentation
+PASS Rebuilding a menu in the same process does not replay the launch intro
+RESULT: 0 failures

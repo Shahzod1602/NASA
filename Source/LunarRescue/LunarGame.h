@@ -26,6 +26,7 @@ public:
  void UpdateSuit(float Delta);
  void ToggleSuitView();
  void BeginFastStride(); void EndFastStride();
+ bool CanFastStride() const; void UpdateStrideSpeed();
  void BeginSuitOrbit(); void EndSuitOrbit();
  void SuitReview();
  void SuitChecks();

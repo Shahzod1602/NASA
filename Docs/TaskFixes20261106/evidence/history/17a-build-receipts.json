@@ -1,0 +1,31 @@
+{
+  "kind": "sanitized_build_receipts",
+  "executable_sha256": "17a2d4f00256c6017a0ebc911ecce77b1588e109a219bb97505ee59467298e94",
+  "sources": [
+    {
+      "source": "Reports/TaskFixes20261106/LunarRescueEditor-final2-build.log",
+      "source_sha256": "a027d946782cde5a745129b370ad47871710065ada747bfa41d048aebf779f9c",
+      "semantic_lines": [
+        "Result: Succeeded",
+        "Total execution time: 30.77 seconds"
+      ]
+    },
+    {
+      "source": "Reports/TaskFixes20261106/LunarRescue-final2-build.log",
+      "source_sha256": "710eb09de205f3c407d1a849bc316d9e2b2c57244be80845c22ababa8ba6b8cb",
+      "semantic_lines": [
+        "Result: Succeeded",
+        "Total execution time: 60.78 seconds"
+      ]
+    },
+    {
+      "source": "Reports/TaskFixes20261106/final2-stage.log",
+      "source_sha256": "695e6603e522c22a9c1172c2e5a9a460879f49833de47efd754a3c9c4db09cb3",
+      "semantic_lines": [
+        "BuildCookRun time: 45.07 s",
+        "BUILD SUCCESSFUL",
+        "AutomationTool exiting with ExitCode=0 (Success)"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+PASS Travel phase is in the expected sequence
+PASS travel phase 0: MissionSelect
+PASS Missing map is rejected without trapping loading state
+PASS Home menu owns its mission-selection widget
+PASS Initial home page has not begun loading
+PASS Enter from home opens Moon selection without starting its default mission
+PASS Back returns to home without mission travel
+PASS Game mode planet selection opens the Mars picker without travel
+PASS Mission selection has a live frontend
+PASS Moon shortcut opens its picker without travel
+PASS Unselected picker cannot launch through button, Enter or background click
+PASS Invalid and other-destination mission indices are rejected
+PASS Browsing and rejected launch leave mission state and resource unchanged
+PASS Valid mission selection stays on the picker until confirmation
+PASS Explicit selected-mission confirmation queues loading
+PASS Duplicate input cannot replace the selected destination
+PASS Travel phase is in the expected sequence
+PASS travel phase 1: Apollo12
+PASS Matching destination completed; rendered progress has visible 0/100, monotonic order and held world time
+PASS Mission restart queues the current destination
+PASS Travel phase is in the expected sequence
+PASS travel phase 2: Apollo12
+PASS Matching destination completed; rendered progress has visible 0/100, monotonic order and held world time
+PASS Loading fixture saves committed Apollo state in its isolated profile
+PASS Return to mission menu queues local loading
+PASS Travel phase is in the expected sequence
+PASS travel phase 3: MissionSelect
+PASS Matching destination completed; rendered progress has visible 0/100, monotonic order and held world time
+PASS Menu retains the isolated resumable Apollo checkpoint
+PASS Continue queues saved Apollo loading independently of mission selection
+PASS Travel phase is in the expected sequence
+PASS travel phase 4: Apollo12
+PASS Matching destination completed; rendered progress has visible 0/100, monotonic order and held world time
+PASS Continue keeps ResumeApollo and restores the isolated checkpoint
+PASS Return to mission menu queues local loading
+PASS Travel phase is in the expected sequence
+PASS travel phase 5: MissionSelect
+PASS Matching destination completed; rendered progress has visible 0/100, monotonic order and held world time
+PASS Mission selection has a live frontend
+PASS Moon shortcut opens its picker without travel
+PASS Unselected picker cannot launch through button, Enter or background click
+PASS Invalid and other-destination mission indices are rejected
+PASS Browsing and rejected launch leave mission state and resource unchanged
+PASS Valid mission selection stays on the picker until confirmation
+PASS Explicit selected-mission confirmation queues loading
+PASS Duplicate input cannot replace the selected destination
+PASS Travel phase is in the expected sequence
+PASS travel phase 6: MoonBase
+PASS Matching destination completed; rendered progress has visible 0/100, monotonic order and held world time
+PASS Mission restart queues the current destination
+PASS Travel phase is in the expected sequence
+PASS travel phase 7: MoonBase
+PASS Matching destination completed; rendered progress has visible 0/100, monotonic order and held world time
+PASS Return to mission menu queues local loading
+PASS Travel phase is in the expected sequence
+PASS travel phase 8: MissionSelect
+PASS Matching destination completed; rendered progress has visible 0/100, monotonic order and held world time
+PASS Mission selection has a live frontend
+PASS Mars shortcut opens its picker without travel
+PASS Unselected picker cannot launch through button, Enter or background click
+PASS Invalid and other-destination mission indices are rejected
+PASS Browsing and rejected launch leave mission state and resource unchanged
+PASS Valid mission selection stays on the picker until confirmation
+PASS Explicit selected-mission confirmation queues loading
+PASS Duplicate input cannot replace the selected destination
+PASS Travel phase is in the expected sequence
+PASS travel phase 9: MarsBase
+PASS Matching destination completed; rendered progress has visible 0/100, monotonic order and held world time
+PASS Mission restart queues the current destination
+PASS Travel phase is in the expected sequence
+PASS travel phase 10: MarsBase
+PASS Matching destination completed; rendered progress has visible 0/100, monotonic order and held world time
+PASS Return to mission menu queues local loading
+PASS Travel phase is in the expected sequence
+PASS travel phase 11: MissionSelect
+PASS Matching destination completed; rendered progress has visible 0/100, monotonic order and held world time
+RESULT: 0 failures

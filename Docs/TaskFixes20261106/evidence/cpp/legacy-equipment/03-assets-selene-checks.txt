@@ -1,0 +1,13 @@
+PASS Equipment detail checks have a playable world
+PASS Mission received visible authored equipment detail
+PASS Equipment detail remains within 128 component and 1400 instance caps
+PASS Added equipment uses existing meshes/materials with no collision, navigation or Tick
+PASS Asymmetric source rock box on flat ground spans -20% to +80% desired height
+PASS Asymmetric source rock box follows known terrain normal without changing burial depth
+PASS Rock pose rejects zero negative invalid and nonfinite inputs
+PASS Every actual authored Basalt instance bbox extends above its measured terrain plane
+PASS Actual authored Basalt source boxes are grounded with 20 percent burial and no floating base
+PASS Grounded Basalt remains cosmetic with no collision navigation or Tick
+PASS Repeating equipment build adds no geometry and preserves mission anchor transforms
+PASS Equipment presentation does not advance mission work or change resources
+RESULT: 0 failures

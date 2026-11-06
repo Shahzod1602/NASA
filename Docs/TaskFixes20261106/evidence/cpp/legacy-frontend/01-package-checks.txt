@@ -1,0 +1,21 @@
+PASS Menu player exists
+PASS Both local menu art assets load
+PASS Mars preview identifies fictional destination
+PASS Moon preview restores destination
+PASS New graphics and sound settings survive serialization
+PASS New settings retain rebound work key
+PASS Accessibility preferences survive independent config reload
+PASS HUD opacity changes active backgrounds and preserves menu contrast
+PASS HUD opacity cannot fall below readable lower bound
+PASS HUD opacity cannot exceed full opacity
+PASS Non-finite HUD opacity falls back to full contrast
+PASS Player renderer choices override project AA, motion blur and FPS defaults
+PASS Automation cannot change the user's display mode
+PASS Restore defaults resets new fields
+PASS Settings builds independently of evidence album
+PASS Tab contains indicator and two-column content
+PASS Tab contains indicator and two-column content
+PASS Tab contains indicator and two-column content
+PASS Tab contains indicator and two-column content
+PASS Settings closes without leaving input overlay
+RESULT: 0 failures

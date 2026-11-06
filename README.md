@@ -1,5 +1,44 @@
 # Lunar Rescue
 
+## v0.8.1 — Mission interaction fixes (6 November 2026)
+
+**Windows download:** [v0.8.1 release](https://github.com/Shahzod1602/NASA/releases/tag/apollo12-v0.8.1) · [Windows ZIP](https://github.com/Shahzod1602/NASA/releases/download/apollo12-v0.8.1/LunarRescue-Expeditions-v0.8.1-Windows.zip).
+
+This patch improves mission-picker responsiveness and full-area action buttons,
+places PIP-3 outside the lander, aligns existing carried items with the gloves,
+clarifies ALSEP work guidance and restores rescue fast stride. Extract the entire
+ZIP and run `LunarRescue.exe`; Unreal Editor is not required. The Microsoft C++
+runtime installer is included if Windows needs it.
+
+The verified inner executable is `06c1b022f92b`: 4,092 packaged C++ PASS
+executions / 0 failures and 16/16 regression suites. Editor selection is a
+separate 66 PASS. Human participants: 0. Historical local verification records
+below retain their dates and compile-time provenance. See the
+[release notes](Docs/TaskFixes20261106/RELEASE_NOTES.md) and [test report](TEST_REPORT.md).
+
+
+## Local verification record — 6 November 2026 (before v0.8.1 publication)
+
+Mission actions now fill their outlined button areas and share centred labels,
+hover, press and keyboard-focus feedback. The picker reuses destination textures
+and avoids redundant hover updates; performance evidence is scoped to the menu.
+PIP-3 is a stationary fictional guide placed on clear terrain outside the lander.
+Carried items and gloves use a common grip frame in first and third person.
+
+ALSEP guidance distinguishes the lander from the distant registered instrument
+sites and only offers work input when it is reachable. Hold the configured
+**Fast stride** key (default **Left Shift**) to move faster; release to walk.
+Toggle mode remains available in Settings. Movement speeds are gameplay tuning;
+the oxygen clock continues to count active gameplay seconds.
+
+See [scope and reproduction](Docs/TaskFixes20261106/IMPLEMENTATION.md) and
+[current test results](TEST_REPORT.md). The original local verification predates v0.8.1 publication;
+its dates, source hashes and compile-time provenance are retained.
+
+Final local Windows build: **4,092 packaged C++ PASS executions / 0 failures**,
+16/16 regression suites; Editor selection adds a separate 66 PASS.
+Human participants: 0. Launch `Dist/Apollo12/Windows/LunarRescue.exe`.
+
 ## Field operations — v0.8.0 (4 November 2026)
 
 **Windows download:** [v0.8.0 release](https://github.com/Shahzod1602/NASA/releases/tag/apollo12-v0.8.0) · [Windows ZIP](https://github.com/Shahzod1602/NASA/releases/download/apollo12-v0.8.0/LunarRescue-Expeditions-v0.8.0-Windows.zip).

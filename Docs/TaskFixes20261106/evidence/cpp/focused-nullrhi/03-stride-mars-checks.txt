@@ -1,0 +1,20 @@
+PASS Stride fixture is isolated from owner checkpoint writes
+PASS Movement fixture starts active with resource briefing satisfied
+PASS Flat collision fixture actor component and cube asset are available
+PASS Normal speed uses mission-specific centimetres per second
+PASS Real W input reaches walking speed on a flat collision fixture
+PASS Real held Shift increases actual capsule velocity in this mission
+PASS Fast stride covers more ground than the normal one-second walk
+PASS Fast stride retains the same elapsed-second gameplay oxygen formula
+PASS Releasing Shift restores both normal speed and actual walking velocity
+PASS Configured toggle mode starts fast stride
+PASS Configured toggle mode retains stride on release
+PASS Second toggle press restores walking
+PASS Pause cancels held fast stride immediately
+PASS Paused mission rejects stride and freezes the gameplay oxygen clock
+PASS Settings focus cannot start sprint
+PASS Unconfirmed mandatory planning cannot enable sprint
+PASS Stationary work cannot start fast stride
+PASS Normal active control can sprint again after UI closes
+PASS New briefing clears stride state and restores base speed
+RESULT: 0 failures

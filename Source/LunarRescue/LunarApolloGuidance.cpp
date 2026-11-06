@@ -1,6 +1,7 @@
 #include "LunarGame.h"
 #include "LunarApolloText.h"
 #include "LunarSettings.h"
+#include "LunarFieldOperations.h"
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -43,7 +44,27 @@ FString ALunarGameMode::ApolloPrompt() const {
  else if(Stage==ELunarStage::ApolloSamples)Action=I>=0&&!(ApolloPhotos&(1<<I))?TEXT("Take a site photo"):I==2?TEXT("Open core-tube tool"):I==1?TEXT("Collect soil"):TEXT("Collect the rock");
  else if(Stage==ELunarStage::ApolloRecover)Action=!SurveyorPhotographed?TEXT("Photograph Surveyor 3"):Part==0?TEXT("Work on the TV camera"):Part==1?TEXT("Work on the soil scoop"):TEXT("Work on the cable");
  else if(Stage==ELunarStage::ApolloReturn)Action=TEXT("Open cargo list");
- return Action.IsEmpty()?FString():FString::Printf(TEXT("[ %s ]  %s"),*Key(TEXT("Interact")),*Action);
+ if(Action.IsEmpty())return FString();
+ // The guide describes the actual work site, not a selected support waypoint.
+ // In particular ALSEP is about 125 m from the lander field kit: showing an E
+ // prompt there implied that the kit could open the distant PSE adjustment.
+ if(IsActive()&&!Paused&&!ApolloTool){
+  if(FieldOperations&&FieldOperations->Enabled&&!FieldOperations->Briefed)
+   return TEXT("B  Confirm the resource briefing before field work.");
+  if(ApolloPhotoPending)return TEXT("Photograph saving. Wait for work to finish.");
+  auto* P=UGameplayStatics::GetPlayerPawn(this,0);
+  if(IsValid(Focus)&&P){
+   const float Reach=InteractionReach(const_cast<AActor*>(Focus));
+   const float Distance=FVector::Dist(P->GetActorLocation(),Focus->GetActorLocation());
+   if(Distance>Reach)return FString::Printf(TEXT("Main objective / %s: %.0f m away. Work within %.0f m."),*ApolloSiteName(),Distance/100.f,Reach/100.f);
+   FVector Eye;FRotator Aim;P->GetActorEyesViewPoint(Eye,Aim);
+   if(FVector::DotProduct(Aim.Vector(),(Focus->GetActorLocation()-Eye).GetSafeNormal())<.35f)
+    return TEXT("Face the marked work site to use its adjustment.");
+   if(!CanInteractWith(const_cast<AActor*>(Focus)))
+    return TEXT("Reach blocked. Step around the obstacle toward the marked work site.");
+  }
+ }
+ return FString::Printf(TEXT("[ %s ]  %s"),*Key(TEXT("Interact")),*Action);
 }
 
 FString ALunarGameMode::ApolloInstruction() const {

@@ -1,5 +1,7 @@
 #include "LunarMissionCard.h"
 #include "LunarSettings.h"
+#include "Misc/CommandLine.h"
+#include "Misc/Parse.h"
 #include "Blueprint/WidgetTree.h"
 #include "Components/BackgroundBlur.h"
 #include "Components/Border.h"
@@ -32,10 +34,30 @@ UBorder* Layer(UWidgetTree* Tree,UOverlay* Overlay,float Inset,float Radius,floa
 
 ULunarMissionButton::ULunarMissionButton(const FObjectInitializer& ObjectInitializer):Super(ObjectInitializer){InitIsFocusable(false);}
 
+ULunarFrontendButton::ULunarFrontendButton(const FObjectInitializer& ObjectInitializer):Super(ObjectInitializer){
+ InitIsFocusable(true);OnReceivedFocus.BindUObject(this,&ULunarFrontendButton::FocusGlass);OnLostFocus.BindUObject(this,&ULunarFrontendButton::UnfocusGlass);
+}
+void ULunarFrontendButton::SetGlassStyle(const FButtonStyle& Style){UnfocusedStyle=Style;SetStyle(Style);}
+void ULunarFrontendButton::FocusGlass(){auto Focused=UnfocusedStyle;Focused.Normal=Focused.Hovered;SetStyle(Focused);}
+void ULunarFrontendButton::UnfocusGlass(){SetStyle(UnfocusedStyle);}
+bool ULunarFrontendButton::ValidateSurface(bool Arranged,FString& Reason)const{
+ auto* Layers=Cast<UOverlay>(GetContent());auto* ButtonSlot=Layers?Cast<UButtonSlot>(Layers->Slot):nullptr;
+ auto* FaceSlot=GlassSurface?Cast<UOverlaySlot>(GlassSurface->Slot):nullptr;
+ if(!GetIsFocusable()||!ButtonSlot||!FaceSlot||!Caption||ButtonSlot->GetHorizontalAlignment()!=HAlign_Fill||ButtonSlot->GetVerticalAlignment()!=VAlign_Fill||FaceSlot->GetHorizontalAlignment()!=HAlign_Fill||FaceSlot->GetVerticalAlignment()!=VAlign_Fill||GlassSurface->GetHorizontalAlignment()!=HAlign_Center||GlassSurface->GetVerticalAlignment()!=VAlign_Center){Reason=TEXT("Action glass, label or hit-area alignment is inconsistent.");return false;}
+ if(Arranged){
+  const auto& ButtonGeometry=GetCachedGeometry();const auto& FaceGeometry=GlassSurface->GetCachedGeometry();const auto& TextGeometry=Caption->GetCachedGeometry();
+  const FVector2D ButtonSize=ButtonGeometry.GetLocalSize(),FaceSize=FaceGeometry.GetLocalSize();
+  const FVector2D ButtonCentre=ButtonGeometry.LocalToAbsolute(ButtonSize*.5f),FaceCentre=FaceGeometry.LocalToAbsolute(FaceSize*.5f),TextCentre=TextGeometry.LocalToAbsolute(TextGeometry.GetLocalSize()*.5f);
+  if(ButtonSize.X<=0||ButtonSize.Y<=0||!ButtonSize.Equals(FaceSize,.5f)||!ButtonCentre.Equals(FaceCentre,.5f)||!ButtonCentre.Equals(TextCentre,1.f)){Reason=TEXT("Arranged action fill or caption does not cover and centre on its outlined box.");return false;}
+ }
+ Reason.Reset();return true;
+}
+
 void ULunarMissionCard::Configure(int32 Id,const FString& Title,const FString& Subtitle,const FString& Description,bool Compact){
  CardId=Id;CardTitle=Title;CardSubtitle=Subtitle;CardDescription=Description;CompactState=Compact;RefreshText();
 }
 TSharedRef<SWidget> ULunarMissionCard::RebuildWidget(){
+ FullGlassBaseline=FParse::Param(FCommandLine::Get(),TEXT("MissionFullGlassBaseline"));
  Button=WidgetTree->ConstructWidget<ULunarMissionButton>();auto Style=Button->GetStyle();
  Style.Normal.DrawAs=Style.Hovered.DrawAs=Style.Pressed.DrawAs=Style.Disabled.DrawAs=ESlateBrushDrawType::NoDrawType;
  Style.NormalPadding=Style.PressedPadding=FMargin(0);Button->SetStyle(Style);
@@ -114,7 +136,7 @@ void ULunarMissionCard::AdvancePresentation(float Delta){
  if(OldSelection!=SelectionValue||OldHover!=HoverValue)ApplyPresentation();
 }
 void ULunarMissionCard::ApplyPresentation(){
- if(!Face)return;
+ if(!Face)return;++PresentationUpdates;
  // Three bounded glow layers, not a looping pulse. Once settled, no brush updates.
  const float Blue=FMath::Max(SelectionValue,HoverValue*.45f);
  Face->SetBrushColor(FMath::Lerp(FLinearColor(.012f,.024f,.035f,.8f),FLinearColor(.015f,.19f,.34f,.62f),Blue));
@@ -123,6 +145,8 @@ void ULunarMissionCard::ApplyPresentation(){
  GlowInner->SetBrush(FSlateRoundedBoxBrush(FLinearColor::Transparent,6.f,FLinearColor(.025f,.46f,1.f,.22f*Blue),3.f));
  Glint->SetBrushColor(FLinearColor(.55f,.88f,1.f,.08f+.28f*Blue));
  Accent->SetBrushColor(FLinearColor(.035f,.8f,1.f,.14f+.86f*Blue));
- Frost->SetBlurStrength(2.f+3.f*Blue);
+ // Fixed frost keeps the selected glass while avoiding animated blur-kernel changes.
+ const float BlurStrength=FullGlassBaseline?2.f+3.f*Blue:2.f;
+ if(!FMath::IsNearlyEqual(Frost->GetBlurStrength(),BlurStrength))Frost->SetBlurStrength(BlurStrength);
  if(SelectionLabel)SelectionLabel->SetColorAndOpacity(FMath::Lerp(FLinearColor(.52f,.67f,.76f),FLinearColor(.28f,.87f,1.f),SelectionValue));
 }

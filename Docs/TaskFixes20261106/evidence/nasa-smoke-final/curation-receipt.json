@@ -1,0 +1,75 @@
+{
+  "kind": "additional_prequeue_nasa_smoke",
+  "executable_sha256": "06c1b022f92b4e13e8300fc8d71296f290ee4f2565ac8597ebcd337519facda8",
+  "counted_in_canonical_totals": false,
+  "reason": "Canonical totals select the later full-queue NASA execution to avoid mixing an extra smoke repeat into the main result. This separate execution passed.",
+  "cpp_pass_executions": 277,
+  "raw_reports": [
+    {
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-100543-237/intro-checks.txt",
+      "retained": "Docs/TaskFixes20261106/evidence/nasa-smoke-final/intro-checks.txt",
+      "sha256": "0092db04c7d47e436d52321cdc5a55707f3fef74909097755d6d12c251e16146",
+      "cpp_pass_executions": 12
+    },
+    {
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-100543-237/learning-apollo-checks.txt",
+      "retained": "Docs/TaskFixes20261106/evidence/nasa-smoke-final/learning-apollo-checks.txt",
+      "sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123",
+      "cpp_pass_executions": 39
+    },
+    {
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-100543-237/learning-mars-checks.txt",
+      "retained": "Docs/TaskFixes20261106/evidence/nasa-smoke-final/learning-mars-checks.txt",
+      "sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123",
+      "cpp_pass_executions": 39
+    },
+    {
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-100543-237/learning-selene-checks.txt",
+      "retained": "Docs/TaskFixes20261106/evidence/nasa-smoke-final/learning-selene-checks.txt",
+      "sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123",
+      "cpp_pass_executions": 39
+    },
+    {
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-100543-237/pov-checks.txt",
+      "retained": "Docs/TaskFixes20261106/evidence/nasa-smoke-final/pov-checks.txt",
+      "sha256": "77df500041c8ff5fce7604cc4a35a632005ecf1ab4c236d74dcac8112be82bde",
+      "cpp_pass_executions": 30
+    },
+    {
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-100543-237/restart-apollo-checks.txt",
+      "retained": "Docs/TaskFixes20261106/evidence/nasa-smoke-final/restart-apollo-checks.txt",
+      "sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e",
+      "cpp_pass_executions": 12
+    },
+    {
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-100543-237/restart-mars-checks.txt",
+      "retained": "Docs/TaskFixes20261106/evidence/nasa-smoke-final/restart-mars-checks.txt",
+      "sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e",
+      "cpp_pass_executions": 12
+    },
+    {
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-100543-237/restart-selene-checks.txt",
+      "retained": "Docs/TaskFixes20261106/evidence/nasa-smoke-final/restart-selene-checks.txt",
+      "sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e",
+      "cpp_pass_executions": 12
+    },
+    {
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-100543-237/ui-apollo-checks.txt",
+      "retained": "Docs/TaskFixes20261106/evidence/nasa-smoke-final/ui-apollo-checks.txt",
+      "sha256": "1676fb5306f2e2c2328fca5914e549b8b9c57fe0d4e21ae6d4ff828dbaac331c",
+      "cpp_pass_executions": 24
+    },
+    {
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-100543-237/ui-mars-checks.txt",
+      "retained": "Docs/TaskFixes20261106/evidence/nasa-smoke-final/ui-mars-checks.txt",
+      "sha256": "8ab57171547fbc61ceb13ccd95c2aab7c9b8f5a4c662580b4738938ccf304dc8",
+      "cpp_pass_executions": 28
+    },
+    {
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-100543-237/ui-selene-checks.txt",
+      "retained": "Docs/TaskFixes20261106/evidence/nasa-smoke-final/ui-selene-checks.txt",
+      "sha256": "be6b0f2ccf91e157c1d88204f068662b4e6196da18a9f53b8efda3df1628cc6c",
+      "cpp_pass_executions": 30
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "kind": "curation_closure_integrity",
+  "checked_utc": "2026-11-06T05:31:30.637100+00:00",
+  "executable_sha256": "06c1b022f92b4e13e8300fc8d71296f290ee4f2565ac8597ebcd337519facda8",
+  "canonical_raw_cpp_reports_matched": 65,
+  "metadata_sources_and_sanitized_copies_matched": 31,
+  "png_hashes_and_dimensions_matched": 230,
+  "source_fingerprint_entries_matched": 115,
+  "editor_game_module_matched": true,
+  "docs_privacy_scan_files": 138,
+  "pngs_copied_into_docs": 0,
+  "cpp_failures": 0,
+  "verification_index_sha256": "10b65555cf2bd73f3b3327af1e2ba24b78f69fa09e6734a494454143c4b1cad6"
+}

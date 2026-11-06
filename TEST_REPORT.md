@@ -1,5 +1,157 @@
 # Test reports
 
+## 2026-11-06 — Oltita interaction/presentation tuzatishi: yakuniy lokal Windows build
+
+**4 092 C++ PASS bajarilishi / 0 FAIL; 65 raw report; eski 16/16 suite o‘tdi.**
+Editor selection alohida **66 PASS / 0 FAIL**. Bu takroriy missiya, renderer va
+resolution bajarilishlarini ham sanaydi; 4 092 noyob test yoki inson sinovi emas.
+
+Final Win64 Development inner executable SHA256:
+
+    06c1b022f92b4e13e8300fc8d71296f290ee4f2565ac8597ebcd337519facda8
+
+Base Git: `67cd5e3cc5f80c993a9e58b4f582c3ef323426a9`; worktree dirty.
+**Dastlabki tekshiruv holati — lokal/unreleased:** quyidagi tekshiruvlar vaqtida
+commit/push, GitHub relizi yoki Telegram xabari yuborilmagan edi. Keyingi alohida
+foydalanuvchi ruxsati bilan ayni tekshirilgan executable v0.8.1 nashriga tayyorlandi.
+Bu asl test sanalari va compile provenance’ini o‘zgartirmaydi; source snapshot
+commit’i release metadata’da alohida saqlanadi. Public v0.8.0 ZIP’da bu tuzatishlar yo‘q.
+
+| Yakuniy packaged exe bo‘yicha dalil | PASS execution |
+| --- | ---: |
+| Mavjud 16-suite regressiya navbati | 2683 |
+| Yangi stride va to‘liq Apollo interaction/traversal | 99 |
+| Field Operations: NullRHI va DX11 functional, uch missiya | 1310 |
+| **Jami** | **4092** |
+
+Faqat tanlangan fresh raw C++ reportlardagi aniq PASS satrlari sanaldi; wrapper
+PASS va JSON summary sonlari qayta qo‘shilmadi. Qo‘shimcha standalone NASA smoke
+277 PASS bilan saqlandi, jami ichiga kiritilmadi. Editor’ning 66 PASS’i boshqa
+executable/game-module identifikatoriga tegishli. [Verification index](Docs/TaskFixes20261106/verification-index.json)
+va [dalil yaxlitligi](Docs/TaskFixes20261106/evidence/bundle-integrity.json) sonlar,
+raw fayllar, SHA va chegaralarni ajratib beradi.
+
+**Tuzatishlar va tekshiruvlar:**
+
+- Mission picker tekstura keshini qayta ishlatadi, tinch holatda ortiqcha UI
+  yangilanishini to‘xtatadi va blue glass tanlovini saqlagan holda ortiqcha blur
+  qatlamlarini kamaytiradi. Lag xabari aniq ekran/repro bermagan; picker ishchi
+  faraz sifatida olingan. Butun o‘yin lag’i tuzatildi degan xulosa yo‘q.
+- Start Mission/Settings/Back fon va hit area’lari tashqi ramkani to‘ldiradi;
+  caption markazda, hover/press/keyboard focus holatlari mos. 720p/1080p,
+  100%/150% text: 12 action record, 60 sampled hit-test path va 12 haqiqiy Slate
+  keyboard-focus record. Bu 60 ta click emas; mission kartalarida 6 real pointer
+  route alohida tekshirildi. Action-button click bajarilishi deb da’vo qilinmadi.
+- PIP-3 va communicator grounded, terrain/capsule approach clearance bilan lander
+  footprint’idan tashqarida joylashadi. PIP-3 stationary fictional guide;
+  follow-AI qo‘shilmadi.
+- Cell, sample pouch/core va hardware qo‘l bilan bir grip frame’dan joylashadi;
+  haqiqiy HandRig/SuitRig contact va arm-length tekshiruvlari kuchaytirildi.
+  Ochiq pouch uchun unsigned triangle proximity, belgilangan solid grip uchun
+  signed-depth tekshiruvi qo‘llanadi. Bu to‘liq glove physics/collision isboti emas.
+  Ikki mavjud sleeve mesh qayta ishlatiladi; 3-lumen pooled camera fill faqat
+  first-person owned materiallarni yoritadi. Yangi binary asset qo‘shilmadi.
+- ALSEP prompt uzoqlik, qarash tomoni, blockage va pending photo’ga mos. PSE
+  bubble va Earth-link antenna alohida tasdiqlanadi: 0/2 → 1/2 → 2/2. Landerdagi
+  field kit uzoqdagi instrumentni bajarmaydi; stale/unrelated commit rad etiladi,
+  restart antenna holatini tozalaydi. NASA work-site koordinatalari saqlandi.
+- Real controller input va CharacterMovement velocity bilan hold/release/toggle
+  stride tekshirildi: Apollo 140→220 cm/s, SELENE/ARES 320→500 cm/s. Pause,
+  planning, work, panel va vehicle gate’lari tekshirildi. Oxygen active gameplay
+  seconds bo‘lib qoldi; qo‘shimcha fiziologik sarf multiplikatori kiritilmadi.
+
+Yangi Apollo driver collision yoqilgan **1 285.90 m**, **946.24 game seconds**
+yo‘lni real W/E/U/arrows/click/Esc inputlari bilan bosib o‘tdi: ALSEP, samples,
+Surveyor hardware, return va haqiqiy R/map restart. Route teleport yoki to‘g‘ridan
+mission-complete chaqiruvi ishlatilmadi. Bu fixed 1/60 simulyatsiya, real-time yoki
+FPS dalili emas. Eski tashqi binary checkpoint fixture yangi driver’ga berilmagan
+va u aniq SKIP; independent legacy checkpoint suite alohida o‘tdi.
+
+230 staged PNG’ning hash/o‘lchami va 8 paired-pixel check tasdiqlandi. PNGlar
+lokal Reports’da; Docs ichiga nusxalanmagan. Pixel farqi render hissasini
+ko‘rsatadi, grasp aniqligini isbotlamaydi. Yakuniy qayta renderlar receiptlarda;
+qo‘l/pouch/hardware/cell va menu kadrlarining vizual ko‘rigi ham bajarildi.
+
+Muhit: Windows 11 x64, Ryzen 5 6600H, RTX 3050 Laptop GPU, taxminan 16 GB RAM,
+Unreal Engine 5.8.3, MSVC 14.44, Windows SDK 22621. Editor va Game UBT build
+`Succeeded`; UAT StageOnly `ExitCode=0`. Mavjud cook qayta ishlatildi, fresh full
+cook bajarilgan deb ko‘rsatilmaydi; bu iteratsiyada map/asset o‘zgarmagan.
+115/115 source/config/data fingerprint entry final source bilan mos.
+[Build receiptlari](Docs/TaskFixes20261106/evidence/build-receipts.json).
+
+Bajarilgan asosiy buyruqlar (repository root; aniq suite parametrlar indeksda):
+
+```powershell
+& 'D:/UnrealEngine/UE_5.8/Engine/Build/BatchFiles/Build.bat' LunarRescueEditor Win64 Development '-Project=D:/LunarRescue/LunarRescue.uproject' -WaitMutex -MaxParallelActions=2 -NoUBA -NoPCH -NoSharedPCH
+& 'D:/UnrealEngine/UE_5.8/Engine/Build/BatchFiles/Build.bat' LunarRescue Win64 Development '-Project=D:/LunarRescue/LunarRescue.uproject' -WaitMutex -MaxParallelActions=2 -NoUBA -NoPCH -NoSharedPCH -NoDebugInfo -NoLinkerDebugInfo
+Tools/package_apollo12.ps1 -StageOnly
+Tools/verify_task_fixes.ps1 -Packaged -Suite all
+Tools/verify_field_operations.ps1 -Packaged
+Tools/verify_field_operations.ps1 -Packaged -Rendered
+Tools/verify_gameplay_regression.ps1
+Tools/verify_mission_selection.ps1 -Packaged -Review -Width 1280 -Height 720
+Tools/verify_mission_selection.ps1 -Packaged -Review -Width 1920 -Height 1080
+Tools/verify_mission_selection.ps1
+Tools/profile_mission_menu.ps1 -Label nov06-after-home -Scene Home -Frames 1800 -WarmupFrames 300 -Width 1280 -Height 720 -Quality 1 -FpsCap 60
+Tools/profile_mission_menu.ps1 -Label nov06-picker-fullglass -Scene Picker -Frames 6000 -WarmupFrames 1500 -Width 1280 -Height 720 -Quality 1 -FpsCap 0 -FullGlassBaseline
+Tools/profile_mission_menu.ps1 -Label nov06-picker-optimized -Scene Picker -Frames 6000 -WarmupFrames 1500 -Width 1280 -Height 720 -Quality 1 -FpsCap 0
+```
+
+Ishga tushirish: `Dist/Apollo12/Windows/LunarRescue.exe`. Yangi cook bilan to‘liq
+qayta yig‘ish: `Tools/package_apollo12.ps1 -MaxCompileActions 2` (yuqoridagi
+StageOnly o‘rniga). Bu reproduction buyrug‘i; ayni final build fresh cook qildi
+va final testni qayta o‘tkazdi degani emas.
+
+Performance: DX11 offscreen, 1280×720, Quality1, bir xil hardware, har sharoitda
+bittadan capture. Home 1800 frame/300 warmup, cap60; Picker 6000/1500, uncapped.
+
+| Capture | Mean FPS | p99 frame ms | Sampled working-set max MiB |
+| --- | ---: | ---: | ---: |
+| Old Home (08485e), cap60 | 59.9977 | 17.4696 | 548.7461 |
+| Final Home (06c), cap60 | 59.9613 | 17.4559 | 542.3125 |
+| Final Picker, fullglass control | 338.6142 | 4.0859 | 527.2578 |
+| Final Picker, optimized | 349.9883 | 3.8483 | 524.6953 |
+
+Picker taqqoslashi **ayni final build’dagi synthetic blur-cost control**, eski
+versiya oldin/keyin testi emas. Kuzatilgan +3.359% universal kafolat emas.
+GPU/SlateUI mean 1.684625→1.600379 ms; raw CSV’da counter mavjud va valid.
+Max working set bir soniyalik sample’lardan, true peak yoki VRAM emas. Raw CSV
+footer recordlari frame deb sanalmadi. Capture’lar tugagach 15.911 soniyadan keyin
+curation boshlangan; ular ustma-ust tushmagan. Thermal/power to‘liq nazorat
+qilinmagan. NullRHI grafik performance emas; full-mission/occupied-driving FPS
+yoki “60 FPS stable” da’vosi yo‘q. [Performance dalili](Docs/TaskFixes20261106/performance-comparison.json).
+
+Saqlash: **567/567 protected file SHA va mtime mos**, to‘rtta map SHA o‘zgarmagan.
+Build/test housekeeping olib tashlagan 483 eski crash-reporter cache INI
+checksum-validated backupdan tiklandi; Editor config’dagi yagona TimeStamp
+farqi tekshirilib original baytlar tiklandi. Gameplay saves/photos o‘zgarmagan.
+[Saqlash dalili](Docs/TaskFixes20261106/preservation-final.json).
+
+Iteratsiyadagi xatolar yashirilmadi: carry/geometriya checklari tuzatilguncha
+29→6→3→0 FAIL; ortiqcha 140-lumen light 3 lumenga tushirildi; Editor diagnostic
+linker xatosi tuzatildi. 17a build’dagi obsolete POV fixture ikkita FAIL bergan;
+actual HandRig wrist va camera-local pouch/stow kontraktiga mos test correction
+qilingach final06c’da POV30 PASS, barcha16 suite PASS. Tarixiy receiptlar final
+hisobga qo‘shilmadi. [Kontrakt izohi](Docs/TaskFixes20261106/evidence/test-contract-correction.json).
+
+Chegaralar: human participants0, network/firewall isolation bajarilmadi. Mavjud
+lokal science payload paketda, yangi runtime internet dependency qo‘shilmadi.
+Mavjud LROC balandliklari saqlandi; yangi NASA dataset yoki yangi ilmiy terrain
+import qilinmadi. Grip/light/guide placement authored gameplay presentation.
+NASA endorsement va competition eligibility tasdiqlanmagan. Asosiy keyingi ishlar:
+real-player playtest, full-mission/occupied-rover performance va production-art
+contact/animation ko‘rigi.
+
+
+Static packaging tekshiruvi: o‘zgargan to‘rtta PowerShell script AST parse’dan
+o‘tdi. Oddiy `git diff --check` yangi Apollo regression .cpp/.h oxiridagi ortiqcha
+bo‘sh qatorni qayd etdi; ayni tekshirilgan source saqlandi. Boshqa whitespace
+tekshiruvi shu EOF ogohlantirishini ajratib o‘tdi. Dated evidence uchun `-text`
+qoidasi qo‘shilib, barcha Git-index baytlari va 65 raw-report SHA qayta solishtirildi.
+Reliz helper’ining tashqi generated JSON fayllari LF bilan yoziladi; bu ZIP ichidagi
+receipt va alohida yuklanadigan receipt xeshlari mosligini saqlaydi. Bu tooling
+va hujjat o‘zgarishlari engine source/config/data fingerprint’ini o‘zgartirmaydi.
+
 ## 2026-11-04 — Field operations: yakuniy mahalliy Windows build
 
 **4 018 C++ PASS bajarilishi / 0 FAIL; 16/16 eski suite; 280 PNG va 8 pixel-pair

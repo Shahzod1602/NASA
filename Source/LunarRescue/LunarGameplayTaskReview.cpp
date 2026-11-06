@@ -10,6 +10,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/ScrollBox.h"
 #include "Components/TextBlock.h"
+#include "Components/TextRenderComponent.h"
 #include "Components/VerticalBox.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
@@ -25,6 +26,32 @@
 namespace {
 struct FTaskReview {FString Folder,Report;TArray<FString> Frames;int32 Step=0,Failed=0,CellVariant=0;bool Waiting=false,HandoverCaptured=false;FDelegateHandle Shot;};
 using FTaskState=TSharedRef<FTaskReview>;
+// A fixture transition may clear transient view state, never recorded work.
+// Keep a separate before/after snapshot around that cleanup, after the next
+// fixture has selected its own declared mission stage.
+struct FReviewProgress {
+ ELunarStage Stage;uint8 Samples,Photos,Parts,Instruments;int32 Action,Repair,Evidence,Trail;float Oxygen,Elapsed,Distance;bool Surveyor,Recorder,Drone,Online;FGuid Run;
+ explicit FReviewProgress(const ALunarGameMode* G):Stage(G->Stage),Samples(G->SamplesCollected),Photos(G->ApolloPhotos),Parts(G->ApolloParts),Instruments(G->ApolloInstruments),Action(G->ApolloAction),Repair(G->RepairStep),Evidence(G->ApolloEvidence.Num()),Trail(G->ApolloTrail.Num()),Oxygen(G->Oxygen),Elapsed(G->ApolloElapsed),Distance(G->ApolloDistance),Surveyor(G->SurveyorPhotographed),Recorder(G->RecorderRecovered),Drone(G->DroneRecovered),Online(G->StationRebootComplete),Run(G->ApolloRunId){}
+ bool Same(const ALunarGameMode* G)const{return Stage==G->Stage&&Samples==G->SamplesCollected&&Photos==G->ApolloPhotos&&Parts==G->ApolloParts&&Instruments==G->ApolloInstruments&&Action==G->ApolloAction&&Repair==G->RepairStep&&Evidence==G->ApolloEvidence.Num()&&Trail==G->ApolloTrail.Num()&&Oxygen==G->Oxygen&&Elapsed==G->ApolloElapsed&&Distance==G->ApolloDistance&&Surveyor==G->SurveyorPhotographed&&Recorder==G->RecorderRecovered&&Drone==G->DroneRecovered&&Online==G->StationRebootComplete&&Run==G->ApolloRunId;}
+};
+bool ClearReviewPreviews(ALunarGameMode* G,ALunarCharacter* P){
+ if(!G||!P||!P->Camera)return false;const FReviewProgress Before(G);const FTransform PinnedView=P->Camera->GetComponentTransform();
+ G->ApolloPackedPreviewRemaining=G->ApolloPackedPartRemaining=0;G->ApolloPackedSample=G->ApolloPackedPart=INDEX_NONE;
+ G->ApolloTool=G->ApolloToolPhase=0;G->ApolloToolCooldown=0;G->ApolloWorkTarget=nullptr;
+ P->WorkSource=nullptr;P->WorkSourceMesh=nullptr;P->WorkGripActive=false;P->WorkBlend=0;
+ // Review deliberately disables pawn Tick. Explicitly refresh the old tool
+ // meshes as well as the carry proxy; hiding only the latter leaves CORE in
+ // the next crew camera even when the preview clock has already been cleared.
+ P->UpdateApolloWorkVisuals();LunarCarryPresentation::Update(P);P->UpdateSuit(0);P->Camera->SetWorldTransform(PinnedView);
+ return Before.Same(G);
+}
+bool VisibleReviewPayload(const ALunarCharacter* P){
+ if(!P)return false;
+ for(const UStaticMeshComponent* C:{P->CarriedModule.Get(),P->BodyCarryItem.Get(),P->WorkTool.Get(),P->WorkPayload.Get(),P->SamplePouch.Get(),P->DrivenTube.Get(),P->PouchSeal.Get()})if(IsValid(C)&&C->IsVisible())return true;
+ for(const auto& Jaw:P->ToolJaws)if(IsValid(Jaw)&&Jaw->IsVisible())return true;
+ return IsValid(P->PouchLabel)&&P->PouchLabel->IsVisible();
+}
+bool ActiveReviewPreview(const ALunarGameMode* G,const ALunarCharacter* P){return G&&P&&(G->ApolloPackedPreviewRemaining>0||G->ApolloPackedPartRemaining>0||G->ApolloTool!=0||P->WorkGripActive||LunarCarryPresentation::IsCellCarried(G));}
 void Next(ALunarGameMode* G,FTaskState S);
 void Finish(ALunarGameMode* G,FTaskState S){
  if(S->Shot.IsValid())FScreenshotRequest::OnScreenshotRequestProcessed().Remove(S->Shot);
@@ -56,7 +83,7 @@ void Next(ALunarGameMode* G,FTaskState S){
  if(!P||!PC||!G->FlightHUD){++S->Failed;Finish(G,S);return;}
  if(P->ActivePanel)P->ClosePanel();G->Paused=false;G->Journal=false;G->Holding=false;G->RadioRemaining=0;G->ApolloTool=0;G->ApolloPhotoPending=false;P->PhotoCaptureFrames=0;
  auto* Settings=ULunarSettings::Get();Settings->TextScale=Settings->SubtitleScale=1;
- const int32 Index=S->Step++;FString Name;bool Panel=false,Cabin=false,Carry=false,Handover=false,HiddenControl=false;int32 CrewIndex=INDEX_NONE;
+ const int32 RawIndex=S->Step++,CarryCount=LunarCarryPresentation::ReviewFixtureCount();const int32 Index=RawIndex<4+CarryCount?RawIndex:RawIndex-(CarryCount-4);FString Name;bool Panel=false,Cabin=false,Carry=false,Handover=false,HiddenControl=false,CosmeticCleanupPreserved=true;int32 CrewIndex=INDEX_NONE;
  if(Index<4){
   Cabin=true;if(Index==0){G->Stage=ELunarStage::Briefing;ALunarDepartureScene::Reset(G);auto* Scene=ALunarDepartureScene::Begin(G);if(Scene)Scene->SetActorTickEnabled(false);Name=TEXT("departure-cabin");}
   auto* Scene=G->DepartureScene.Get();if(!Scene){++S->Failed;Finish(G,S);return;}
@@ -66,7 +93,7 @@ void Next(ALunarGameMode* G,FTaskState S){
  }else if(Index==4&&!S->HandoverCaptured){
   Handover=true;S->HandoverCaptured=true;--S->Step;Name=TEXT("departure-handover");if(auto* Scene=G->DepartureScene.Get())Scene->AdvancePresentation(ALunarDepartureScene::Duration);P->UpdateSuit(0);LunarCarryPresentation::Update(P);
  }else{
-  if(Index>=4&&Index<8){Carry=true;if(!LunarCarryPresentation::ApplyReviewFixture(G,Index-4,Name)){++S->Failed;Finish(G,S);return;}P->WorkBlend=1;P->UpdateSuit(0);LunarCarryPresentation::ApplyReviewFixture(G,Index-4,Name);if(!G->Apollo&&Index==5){const int32 Variant=S->CellVariant++;if(Variant<3)--S->Step;if(Variant>=2)Settings->TextScale=Settings->SubtitleScale=1.5f;if(Variant==1){Name=TEXT("cell-fp45-hidden-control");HiddenControl=true;}else if(Variant==2)Name=TEXT("cell-fp45-text150");else if(Variant==3){Name=TEXT("cell-fp45-text150-hidden-control");HiddenControl=true;}if(HiddenControl)P->CarriedModule->SetVisibility(false);}}
+  if(RawIndex>=4&&RawIndex<4+CarryCount){Carry=true;if(!LunarCarryPresentation::ApplyReviewFixture(G,RawIndex-4,Name)){++S->Failed;Finish(G,S);return;}P->WorkBlend=1;P->UpdateSuit(0);LunarCarryPresentation::ApplyReviewFixture(G,RawIndex-4,Name);if(!G->Apollo&&RawIndex==5){const int32 Variant=S->CellVariant++;if(Variant<3)--S->Step;if(Variant>=2)Settings->TextScale=Settings->SubtitleScale=1.5f;if(Variant==1){Name=TEXT("cell-fp45-hidden-control");HiddenControl=true;}else if(Variant==2)Name=TEXT("cell-fp45-text150");else if(Variant==3){Name=TEXT("cell-fp45-text150-hidden-control");HiddenControl=true;}if(HiddenControl)P->CarriedModule->SetVisibility(false);}}
   else if(Index==8||Index==9){
    CrewIndex=Index-8;Name=Index==8?TEXT("crew-pip-model"):TEXT("crew-mira-communicator");
    if(!G->CrewActors.IsValidIndex(CrewIndex)||!IsValid(G->CrewActors[CrewIndex])){++S->Failed;Finish(G,S);return;}
@@ -84,18 +111,21 @@ void Next(ALunarGameMode* G,FTaskState S){
    P->OpenWaterNotebook();if(Index==16&&P->ActivePanel){P->ActivePanel->ShowWaterSources=true;P->ActivePanel->Rebuild();if(auto* Scroll=Cast<UScrollBox>(P->ActivePanel->Body->GetParent()))Scroll->ScrollToEnd();}
   }else{Finish(G,S);return;}
  }
+ if(!Carry)CosmeticCleanupPreserved=ClearReviewPreviews(G,P);
  if(Panel)P->UpdateSuit(0);P->SyncPauseMenu();G->FlightHUD->Refresh();
- FTimerHandle Wait;G->GetWorldTimerManager().SetTimer(Wait,FTimerDelegate::CreateWeakLambda(G,[G,S,Name,Panel,Cabin,Carry,Handover,HiddenControl,CrewIndex](){
+ FTimerHandle Wait;G->GetWorldTimerManager().SetTimer(Wait,FTimerDelegate::CreateWeakLambda(G,[G,S,Name,Panel,Cabin,Carry,Handover,HiddenControl,CosmeticCleanupPreserved,CrewIndex](){
   if(S->Shot.IsValid())FScreenshotRequest::OnScreenshotRequestProcessed().Remove(S->Shot);S->Waiting=true;
-  S->Shot=FScreenshotRequest::OnScreenshotRequestProcessed().AddWeakLambda(G,[G,S,Name,Panel,Cabin,Carry,Handover,HiddenControl,CrewIndex](){
+  S->Shot=FScreenshotRequest::OnScreenshotRequestProcessed().AddWeakLambda(G,[G,S,Name,Panel,Cabin,Carry,Handover,HiddenControl,CosmeticCleanupPreserved,CrewIndex](){
    if(!S->Waiting)return;S->Waiting=false;auto* Pilot=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(G,0));auto* PC=UGameplayStatics::GetPlayerController(G,0);FString Reason;
    int32 W=0,H=0;if(PC)PC->GetViewportSize(W,H);bool Good=Pilot&&PC&&W>0&&H>0;
    if(Panel)Good=Good&&Pilot->ActivePanel&&G->Paused&&NotebookLayout(Pilot->ActivePanel,Reason);
    if(Cabin)Good=Good&&ALunarDepartureScene::Active(G)&&G->Stage==ELunarStage::Briefing&&PC->GetViewTarget()==G->DepartureScene;
    if(Handover)Good=Good&&G->IsActive()&&!ALunarDepartureScene::Active(G)&&PC->GetViewTarget()==Pilot;
    if(Carry){const bool Expected=!HiddenControl&&Name!=TEXT("cell-seated")&&Name!=TEXT("apollo-stowed");const auto Shown=[](const UStaticMeshComponent* Component){return IsValid(Component)&&Component->IsVisible();};const bool Visible=Pilot&&(Shown(Pilot->CarriedModule)||Shown(Pilot->BodyCarryItem)||Shown(Pilot->WorkPayload)||Shown(Pilot->WorkTool)||Shown(Pilot->SamplePouch));Good=Good&&Visible==Expected;}
+   const bool ActiveCarryPreview=ActiveReviewPreview(G,Pilot),VisibleCarryPayload=VisibleReviewPayload(Pilot);
+   if(!Carry&&(!CosmeticCleanupPreserved||ActiveCarryPreview||VisibleCarryPayload)){Good=false;Reason=TEXT("Non-carry fixture retained a tool/carry visual or cleanup changed recorded progress.");}
    if(!Good)++S->Failed;S->Report+=FString(Good?TEXT("PASS "):TEXT("FAIL "))+Name+(Reason.IsEmpty()?FString():TEXT(" / ")+Reason)+TEXT("\n");
-   const auto* Scene=G->DepartureScene.Get();FBox2D CellRegion(ForceInit);bool RegionValid=false;if(Carry&&!G->Apollo&&Pilot&&Pilot->CarriedModule&&Pilot->CarriedModule->GetStaticMesh()&&Pilot->Camera->FieldOfView<=60)RegionValid=LunarCarryPresentation::ProjectViewBounds(Pilot->CarriedModule->GetStaticMesh()->GetBoundingBox(),Pilot->CarriedModule->GetComponentTransform().GetRelativeTransform(Pilot->Camera->GetComponentTransform()),Pilot->Camera->FieldOfView,float(W)/H,CellRegion);const FVector2D RegionMin=RegionValid?CellRegion.Min:FVector2D::ZeroVector,RegionMax=RegionValid?CellRegion.Max:FVector2D::ZeroVector;S->Frames.Add(FString::Printf(TEXT("{\"name\":\"%s\",\"layout_passed\":%s,\"notebook\":%s,\"text_scale\":%.2f,\"paused\":%s,\"departure_time\":%.3f,\"carry_fixture\":%s,\"crew_model\":%d,\"water_step\":%d,\"water_attempts\":%d,\"water_recorded\":%s,\"fov\":%.3f,\"cell_region\":[%.6f,%.6f,%.6f,%.6f],\"cell_hidden_control\":%s}"),*Name,Good?TEXT("true"):TEXT("false"),Panel?TEXT("true"):TEXT("false"),ULunarSettings::Get()->TextScale,G->Paused?TEXT("true"):TEXT("false"),Scene?Scene->PresentationTime():-1,Carry?TEXT("true"):TEXT("false"),CrewIndex,G->WaterStudy.Step,G->WaterStudy.Attempts,G->WaterStudy.Recorded?TEXT("true"):TEXT("false"),Pilot->Camera->FieldOfView,RegionMin.X,RegionMin.Y,RegionMax.X,RegionMax.Y,HiddenControl?TEXT("true"):TEXT("false")));
+   const auto* Scene=G->DepartureScene.Get();FBox2D CellRegion(ForceInit);bool RegionValid=false;if(Carry&&!G->Apollo&&Pilot&&Pilot->CarriedModule&&Pilot->CarriedModule->GetStaticMesh()&&Pilot->Camera->FieldOfView<=60)RegionValid=LunarCarryPresentation::ProjectViewBounds(Pilot->CarriedModule->GetStaticMesh()->GetBoundingBox(),Pilot->CarriedModule->GetComponentTransform().GetRelativeTransform(Pilot->Camera->GetComponentTransform()),Pilot->Camera->FieldOfView,float(W)/H,CellRegion);const FVector2D RegionMin=RegionValid?CellRegion.Min:FVector2D::ZeroVector,RegionMax=RegionValid?CellRegion.Max:FVector2D::ZeroVector;S->Frames.Add(FString::Printf(TEXT("{\"name\":\"%s\",\"layout_passed\":%s,\"notebook\":%s,\"text_scale\":%.2f,\"paused\":%s,\"departure_time\":%.3f,\"carry_fixture\":%s,\"crew_model\":%d,\"water_step\":%d,\"water_attempts\":%d,\"water_recorded\":%s,\"fov\":%.3f,\"cell_region\":[%.6f,%.6f,%.6f,%.6f],\"cell_hidden_control\":%s,\"active_carry_preview\":%s,\"visible_carry_payload\":%s,\"cosmetic_cleanup_applied\":%s,\"cosmetic_cleanup_preserved_progress\":%s}"),*Name,Good?TEXT("true"):TEXT("false"),Panel?TEXT("true"):TEXT("false"),ULunarSettings::Get()->TextScale,G->Paused?TEXT("true"):TEXT("false"),Scene?Scene->PresentationTime():-1,Carry?TEXT("true"):TEXT("false"),CrewIndex,G->WaterStudy.Step,G->WaterStudy.Attempts,G->WaterStudy.Recorded?TEXT("true"):TEXT("false"),Pilot->Camera->FieldOfView,RegionMin.X,RegionMin.Y,RegionMax.X,RegionMax.Y,HiddenControl?TEXT("true"):TEXT("false"),ActiveCarryPreview?TEXT("true"):TEXT("false"),VisibleCarryPayload?TEXT("true"):TEXT("false"),Carry?TEXT("false"):TEXT("true"),CosmeticCleanupPreserved?TEXT("true"):TEXT("false")));
    FTimerHandle T;G->GetWorldTimerManager().SetTimer(T,FTimerDelegate::CreateWeakLambda(G,[G,S](){Next(G,S);}),.2f,false);
   });FScreenshotRequest::RequestScreenshot(S->Folder/(Name+TEXT(".png")),true,false);
  }),.7f,false);

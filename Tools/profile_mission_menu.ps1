@@ -4,9 +4,13 @@ param(
  [ValidateRange(640,3840)][int]$Width=1280,
  [ValidateRange(480,2160)][int]$Height=720,
  [ValidateRange(0,240)][int]$FpsCap=60,
- [ValidateRange(0,2)][int]$Quality=1
+ [ValidateRange(0,2)][int]$Quality=1,
+ [ValidateRange(0,10000)][int]$WarmupFrames=300,
+ [ValidateSet('Home','Picker')][string]$Scene='Home',
+ [switch]$FullGlassBaseline
 )
 $ErrorActionPreference='Stop'
+if($Frames -lt $WarmupFrames+120){throw 'Capture requires at least 120 sample frames after the requested warmup.'}
 $root=Split-Path $PSScriptRoot -Parent
 $gameRoot=Join-Path $root 'Dist\Apollo12\Windows\LunarRescue'
 $exe=Join-Path $gameRoot 'Binaries\Win64\LunarRescue.exe'
@@ -21,15 +25,17 @@ function Get-ProfileBusyProcesses([int]$IgnoreId=0){
 if(@(Get-ProfileBusyProcesses).Count){throw 'Game/editor/shader/compiler/build work is running; finish it before a controlled menu capture.'}
 New-Item -ItemType Directory -Path $report | Out-Null
 $environment=[ordered]@{
- map='MissionSelect';scene='Static home menu; no mission selection or gameplay';cpu=(Get-CimInstance Win32_Processor).Name
+ map='MissionSelect';scene=$(if($Scene -eq 'Picker'){'Scripted Moon/Mars picker browsing and selected-card transitions; no travel or screenshots'}else{'Static home menu; no mission selection or gameplay'});full_glass_baseline=[bool]$FullGlassBaseline;comparison_scope='Same-build blur-cost experiment when comparing FullGlassBaseline; historical before/after requires matching source, scene and settings';cpu=(Get-CimInstance Win32_Processor).Name
  adapters=@((Get-CimInstance Win32_VideoController).Name);ram_bytes=(Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory
  renderer='DX11 / rendered offscreen';resolution="${Width}x${Height}";quality=$Quality;fps_cap=$FpsCap;vsync=$false;audio=$false
  executable=$exe;executable_sha256=(Get-FileHash -LiteralPath $exe -Algorithm SHA256).Hash.ToLowerInvariant()
- requested_frames=$Frames;warmup_frames_excluded=300;gpu_telemetry_requested=$false
+ requested_frames=$Frames;warmup_frames_excluded=$WarmupFrames;gpu_telemetry_requested=$true;gpu_telemetry_note='-csvGpuStats is requested; this flag does not establish counter availability or successful GPU measurement. Validate raw nonzero CSV values separately; working set is not VRAM.'
  memory_method='Maximum of one-second process working-set samples; not true peak, VRAM or dedicated GPU memory'
 }
 $log=Join-Path $report 'capture.log'
 $arguments=@('/Game/Rescue/Maps/MissionSelect','-game','-unattended','-dx11','-RenderOffscreen','-nosound','-ForceRes',"-ResX=$Width","-ResY=$Height","-ApolloQuality=$Quality","-ExecCmds=`"t.MaxFPS $FpsCap,r.VSync 0`"","-csvCaptureFrames=$Frames",'-csvGpuStats','-ExitAfterCsvProfiling',"-abslog=`"$log`"")
+if($Scene -eq 'Picker'){$arguments+='-MissionSelectionProfile'}
+if($FullGlassBaseline){$arguments+='-MissionFullGlassBaseline'}
 $config=Join-Path $gameRoot 'Saved\Config\Windows\GameUserSettings.ini'
 $hadConfig=Test-Path -LiteralPath $config -PathType Leaf
 $configBytes=if($hadConfig){[IO.File]::ReadAllBytes($config)}else{$null}
@@ -58,11 +64,14 @@ if($capture.ExitCode -notin @(0,777003)){throw "Unexpected capture process exit 
 $csv=Get-ChildItem -LiteralPath (Join-Path $gameRoot 'Saved\Profiling\CSV') -Filter '*.csv' | Where-Object {$_.LastWriteTime -ge $started} | Sort-Object LastWriteTime -Descending | Select-Object -First 1
 $logText=Get-Content -LiteralPath $log -Raw
 if(-not $csv -or $logText -notmatch 'Capture Ended' -or $logText -match 'Fatal error:|Unhandled Exception:|Assertion failed:|Failed to compile Material'){throw "No clean fresh completed CSV capture; see $log"}
+if($Scene -eq 'Picker' -and ([regex]::Matches($logText,'MISSION_SELECTION_PROFILE step=').Count -lt 4 -or $logText -notmatch 'MISSION_SELECTION_PROFILE .*destination=Moon' -or $logText -notmatch 'MISSION_SELECTION_PROFILE .*destination=Mars')){throw 'Picker profile did not confirm at least four scripted transitions across both destinations'}
 if($logText -notmatch ('systemresolution\.resx="'+$Width+'"') -or $logText -notmatch ('systemresolution\.resy="'+$Height+'"')){throw "Requested resolution was not confirmed in $log"}
 $destination=Join-Path $report 'capture.csv';Copy-Item -LiteralPath $csv.FullName -Destination $destination
-& python (Join-Path $PSScriptRoot 'summarize_profile.py') $destination --warmup 300 --expected-frames $Frames --fps-cap $FpsCap --output (Join-Path $report 'summary.json') | Out-Null
+& python (Join-Path $PSScriptRoot 'summarize_profile.py') $destination --warmup $WarmupFrames --expected-frames $Frames --fps-cap $FpsCap --output (Join-Path $report 'summary.json') | Out-Null
 if($LASTEXITCODE -ne 0){throw 'Menu CSV frame count or frame-time validation failed'}
 $summary=Get-Content -LiteralPath (Join-Path $report 'summary.json') -Raw | ConvertFrom-Json
-$summary.limitations="Rendered offscreen static home menu, $FpsCap FPS cap, VSync off; 300 warmup frames excluded. One controlled run, not whole-mission performance, a human playtest or animation smoothness validation. Working set is not VRAM or true peak."
+$summary | Add-Member -NotePropertyName scene -NotePropertyValue $Scene -Force
+$summary | Add-Member -NotePropertyName full_glass_baseline -NotePropertyValue ([bool]$FullGlassBaseline) -Force
+$summary.limitations="Rendered offscreen $Scene menu workload, $FpsCap FPS cap, VSync off; $WarmupFrames warmup frames excluded. One controlled run, not whole-mission performance, a human playtest or animation smoothness validation. Working set is not VRAM or true peak."
 $summary | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $report 'summary.json') -Encoding UTF8
 Write-Output "Menu CSV capture validated ($($summary.captured_frames) frames; raw process exit $($capture.ExitCode)): $report"

@@ -1,0 +1,38 @@
+{
+  "Cases": [
+    {
+      "Case": "hud-apollo",
+      "Map": "/Game/Lunar/Maps/Apollo12",
+      "Flag": "HUDReferenceReview",
+      "Assertions": 9,
+      "Failures": 0,
+      "Outcome": "passed",
+      "Frames": 9
+    },
+    {
+      "Case": "hud-selene",
+      "Map": "/Game/Lunar/Maps/MoonBase",
+      "Flag": "HUDReferenceReview",
+      "Assertions": 8,
+      "Failures": 0,
+      "Outcome": "passed",
+      "Frames": 8
+    },
+    {
+      "Case": "hud-mars",
+      "Map": "/Game/Mars/Maps/MarsBase",
+      "Flag": "HUDReferenceReview",
+      "Assertions": 8,
+      "Failures": 0,
+      "Outcome": "passed",
+      "Frames": 8
+    }
+  ],
+  "ExecutableSha256": "06c1b022f92b4e13e8300fc8d71296f290ee4f2565ac8597ebcd337519facda8",
+  "HumanPlaytest": false,
+  "SyntheticReview": true,
+  "PerformanceMeasurement": false,
+  "Width": 1280,
+  "Height": 720,
+  "CompletedUtc": "2026-11-06T05:21:04.2042841Z"
+}

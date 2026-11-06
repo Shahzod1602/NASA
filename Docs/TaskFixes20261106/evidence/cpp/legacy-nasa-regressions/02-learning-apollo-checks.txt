@@ -1,0 +1,40 @@
+PASS Field lessons start in a playable mission with a player
+PASS A new lesson session has three unanswered items and no debrief claim
+PASS Missing mission context has no question, score or correct answer
+PASS Mission 0 has three complete questions, distinct choices, explanations and sources
+PASS Mission 0 identifies measured versus authored terrain correctly
+PASS Mission 0 distinguishes sourced history from the fictional data-recovery scenario
+PASS Mission 1 has three complete questions, distinct choices, explanations and sources
+PASS Mission 1 identifies measured versus authored terrain correctly
+PASS Mission 1 distinguishes sourced history from the fictional data-recovery scenario
+PASS Mission 2 has three complete questions, distinct choices, explanations and sources
+PASS Mission 2 identifies measured versus authored terrain correctly
+PASS Mission 2 distinguishes sourced history from the fictional data-recovery scenario
+PASS Invalid question and answer values cannot change session responses
+PASS Invalid content requests have no fabricated question or answer
+PASS One accepted response produces one answered item and one matching latest response
+PASS Revising one response replaces its score rather than accumulating attempts
+PASS Out-of-range response data is not counted as reviewed or correct
+PASS The existing notebook pauses active play before optional lessons
+PASS An answer callback outside the lesson view cannot change responses
+PASS Field lessons open inside the notebook and do not leave the map active
+PASS An inactive panel cannot answer a background lesson
+PASS Settings mode rejects lesson answer callbacks
+PASS An invalid panel lesson index cannot record an answer
+PASS Lesson 0 builds its bound answer button
+PASS Lesson 0 UMG button records the latest response without granting mission work
+PASS Lesson 0 immediately displays its explanatory field note
+PASS Lesson 1 builds its bound answer button
+PASS Lesson 1 UMG button records the latest response without granting mission work
+PASS Lesson 1 immediately displays its explanatory field note
+PASS Lesson 2 builds its bound answer button
+PASS Lesson 2 UMG button records the latest response without granting mission work
+PASS Lesson 2 immediately displays its explanatory field note
+PASS Next lesson wraps from the third question to the first
+PASS Previous lesson wraps from the first question to the third
+PASS Lesson summary reports actual latest session responses
+PASS Debrief appends the observed answer summary when questions were answered
+PASS Lesson choices and navigation do not change resources, telemetry, evidence or cargo
+PASS Closing lessons blocks background answers and navigation
+PASS Reset clears session-only responses and removes the optional debrief line
+RESULT: 0 failures

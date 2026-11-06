@@ -1,0 +1,29 @@
+PASS UI tests run in an isolated mission without normal checkpoint writes
+PASS The active mission owns the new flight interface
+PASS Flight HUD reads current objective, resource clock and configured work key
+PASS Rescue return uses the actual destination mission stage count
+PASS Actual terminal hold drives the HUD ring from the gameplay clock
+PASS Holding presents the terminal action without duplicating the guide
+PASS Negative hold progress renders an empty ring
+PASS Excess hold progress is bounded to a full ring
+PASS Non-finite hold progress cannot corrupt the ring
+PASS Released work clears both gameplay hold and HUD progress
+PASS Disabling optional guidance retains a compact actionable work-key prompt
+PASS Hold and work labels reflect a rebound work key
+PASS Negative resource is clamped in the HUD
+PASS Non-finite resource is displayed safely
+PASS Pause opens five explicit mission actions
+PASS Each pause action has a live glass-card button
+PASS Pause interface fades in while gameplay is held
+PASS Pause entry reaches its bounded end and rejects invalid deltas
+PASS Paused updates freeze mission resource, work, power sequence and gait
+PASS Real world ticks also leave the paused mission and astronaut unchanged
+PASS A background click cannot resume or activate a paused mission
+PASS Enter's mission action opens the selected Settings item instead of resuming
+PASS Closing Settings returns to the paused menu
+PASS Restart first presents confirmation without changing worlds
+PASS Escape dismisses restart confirmation while keeping the mission paused
+PASS A second Escape resumes the mission and removes the pause widget
+PASS Full restart is guarded when the mission is not paused
+PASS UI interaction tests do not mutate existing Apollo checkpoint files
+RESULT: 0 failures

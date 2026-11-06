@@ -1,0 +1,222 @@
+{
+  "executable_sha256": "17a2d4f00256c6017a0ebc911ecce77b1588e109a219bb97505ee59467298e94",
+  "cases": [
+    {
+      "name": "gameplay-functional",
+      "script": "verify_gameplay_tasks.ps1",
+      "parameters": {
+        "Packaged": true
+      },
+      "started_utc": "2026-11-06T04:48:29.8995184Z",
+      "finished_utc": "2026-11-06T04:48:48.7515397Z",
+      "passed": true,
+      "error": null,
+      "log": "<REPO>\\Reports\\Gameplay20261103\\final-queue-20261106-094829\\gameplay-functional.log"
+    },
+    {
+      "name": "gameplay-rendered",
+      "script": "verify_gameplay_tasks.ps1",
+      "parameters": {
+        "Packaged": true,
+        "Rendered": true
+      },
+      "started_utc": "2026-11-06T04:48:48.7544882Z",
+      "finished_utc": "2026-11-06T04:49:15.2336706Z",
+      "passed": true,
+      "error": null,
+      "log": "<REPO>\\Reports\\Gameplay20261103\\final-queue-20261106-094829\\gameplay-rendered.log"
+    },
+    {
+      "name": "gameplay-review720",
+      "script": "verify_gameplay_tasks.ps1",
+      "parameters": {
+        "Height": 720,
+        "Width": 1280,
+        "Packaged": true,
+        "Review": true
+      },
+      "started_utc": "2026-11-06T04:49:15.2349905Z",
+      "finished_utc": "2026-11-06T04:50:52.8769760Z",
+      "passed": true,
+      "error": null,
+      "log": "<REPO>\\Reports\\Gameplay20261103\\final-queue-20261106-094829\\gameplay-review720.log"
+    },
+    {
+      "name": "gameplay-review1080",
+      "script": "verify_gameplay_tasks.ps1",
+      "parameters": {
+        "Height": 1080,
+        "Width": 1920,
+        "Packaged": true,
+        "Review": true
+      },
+      "started_utc": "2026-11-06T04:50:52.8780327Z",
+      "finished_utc": "2026-11-06T04:52:36.9256735Z",
+      "passed": true,
+      "error": null,
+      "log": "<REPO>\\Reports\\Gameplay20261103\\final-queue-20261106-094829\\gameplay-review1080.log"
+    },
+    {
+      "name": "apollo-regressions",
+      "script": "verify_apollo12.ps1",
+      "parameters": {
+        "Fieldwork": true,
+        "Regression": true,
+        "Polish": true,
+        "Packaged": true,
+        "Suit": true,
+        "Guidance": true,
+        "Walkthrough": true,
+        "Checkpoints": true
+      },
+      "started_utc": "2026-11-06T04:52:36.9267965Z",
+      "finished_utc": "2026-11-06T04:54:56.3488653Z",
+      "passed": true,
+      "error": null,
+      "log": "<REPO>\\Reports\\Gameplay20261103\\final-queue-20261106-094829\\apollo-regressions.log"
+    },
+    {
+      "name": "nasa-regressions",
+      "script": "verify_nasa_tasks.ps1",
+      "parameters": {
+        "Packaged": true
+      },
+      "started_utc": "2026-11-06T04:54:56.3503060Z",
+      "finished_utc": "2026-11-06T04:55:25.5989073Z",
+      "passed": false,
+      "error": "Failed assertions; see <REPO>\\Dist\\Apollo12\\Windows\\LunarRescue\\Reports\\pov-checks.txt",
+      "log": "<REPO>\\Reports\\Gameplay20261103\\final-queue-20261106-094829\\nasa-regressions.log"
+    },
+    {
+      "name": "selection",
+      "script": "verify_mission_selection.ps1",
+      "parameters": {
+        "Packaged": true
+      },
+      "started_utc": "2026-11-06T04:55:25.6006016Z",
+      "finished_utc": "2026-11-06T04:55:31.2602119Z",
+      "passed": true,
+      "error": null,
+      "log": "<REPO>\\Reports\\Gameplay20261103\\final-queue-20261106-094829\\selection.log"
+    },
+    {
+      "name": "frontend",
+      "script": "verify_frontend.ps1",
+      "parameters": {
+        "Packaged": true
+      },
+      "started_utc": "2026-11-06T04:55:31.2621379Z",
+      "finished_utc": "2026-11-06T04:55:36.9514169Z",
+      "passed": true,
+      "error": null,
+      "log": "<REPO>\\Reports\\Gameplay20261103\\final-queue-20261106-094829\\frontend.log"
+    },
+    {
+      "name": "experience",
+      "script": "verify_experience.ps1",
+      "parameters": {
+        "Packaged": true
+      },
+      "started_utc": "2026-11-06T04:55:36.9530555Z",
+      "finished_utc": "2026-11-06T04:55:42.6127190Z",
+      "passed": true,
+      "error": null,
+      "log": "<REPO>\\Reports\\Gameplay20261103\\final-queue-20261106-094829\\experience.log"
+    },
+    {
+      "name": "presentation",
+      "script": "verify_presentation.ps1",
+      "parameters": {
+        "Audio": true,
+        "Packaged": true,
+        "Graphics": true
+      },
+      "started_utc": "2026-11-06T04:55:42.6141630Z",
+      "finished_utc": "2026-11-06T04:55:52.0588221Z",
+      "passed": true,
+      "error": null,
+      "log": "<REPO>\\Reports\\Gameplay20261103\\final-queue-20261106-094829\\presentation.log"
+    },
+    {
+      "name": "movement",
+      "script": "verify_planet_movement.ps1",
+      "parameters": {
+        "Packaged": true
+      },
+      "started_utc": "2026-11-06T04:55:52.0600977Z",
+      "finished_utc": "2026-11-06T04:56:22.2933204Z",
+      "passed": true,
+      "error": null,
+      "log": "<REPO>\\Reports\\Gameplay20261103\\final-queue-20261106-094829\\movement.log"
+    },
+    {
+      "name": "equipment",
+      "script": "verify_feedback.ps1",
+      "parameters": {
+        "Packaged": true
+      },
+      "started_utc": "2026-11-06T04:56:22.2946365Z",
+      "finished_utc": "2026-11-06T04:56:56.7109513Z",
+      "passed": true,
+      "error": null,
+      "log": "<REPO>\\Reports\\Gameplay20261103\\final-queue-20261106-094829\\equipment.log"
+    },
+    {
+      "name": "loading-font",
+      "script": "verify_loading_typography.ps1",
+      "parameters": {
+        "Packaged": true
+      },
+      "started_utc": "2026-11-06T04:56:56.7121005Z",
+      "finished_utc": "2026-11-06T04:57:02.7095216Z",
+      "passed": true,
+      "error": null,
+      "log": "<REPO>\\Reports\\Gameplay20261103\\final-queue-20261106-094829\\loading-font.log"
+    },
+    {
+      "name": "loading-travel",
+      "script": "verify_loading.ps1",
+      "parameters": {
+        "Packaged": true,
+        "Graphics": true
+      },
+      "started_utc": "2026-11-06T04:57:02.7108803Z",
+      "finished_utc": "2026-11-06T04:58:05.9694694Z",
+      "passed": true,
+      "error": null,
+      "log": "<REPO>\\Reports\\Gameplay20261103\\final-queue-20261106-094829\\loading-travel.log"
+    },
+    {
+      "name": "hud-review720",
+      "script": "verify_feedback.ps1",
+      "parameters": {
+        "Height": 720,
+        "Width": 1280,
+        "Packaged": true,
+        "Review": true
+      },
+      "started_utc": "2026-11-06T04:58:05.9708814Z",
+      "finished_utc": "2026-11-06T04:58:56.4438840Z",
+      "passed": true,
+      "error": null,
+      "log": "<REPO>\\Reports\\Gameplay20261103\\final-queue-20261106-094829\\hud-review720.log"
+    },
+    {
+      "name": "hud-review1080",
+      "script": "verify_feedback.ps1",
+      "parameters": {
+        "Height": 1080,
+        "Width": 1920,
+        "Packaged": true,
+        "Review": true
+      },
+      "started_utc": "2026-11-06T04:58:56.4452907Z",
+      "finished_utc": "2026-11-06T04:59:49.8489828Z",
+      "passed": true,
+      "error": null,
+      "log": "<REPO>\\Reports\\Gameplay20261103\\final-queue-20261106-094829\\hud-review1080.log"
+    }
+  ],
+  "completed": true,
+  "failures": 1
+}

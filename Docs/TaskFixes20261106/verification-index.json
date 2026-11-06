@@ -1,0 +1,4093 @@
+{
+  "schema": 1,
+  "kind": "local_development_verification",
+  "checked_utc": "2026-11-06T05:27:28.373350+00:00",
+  "executable_sha256": "06c1b022f92b4e13e8300fc8d71296f290ee4f2565ac8597ebcd337519facda8",
+  "engine_version": "5.8.3",
+  "base_git_commit": "67cd5e3cc5f80c993a9e58b4f582c3ef323426a9",
+  "source_worktree_dirty": true,
+  "published_release": false,
+  "source_fingerprint": {
+    "sha256": "b32f9a491488f5baec78809cdc5cf985552a2816c49dc8deb13389eaadb06c23",
+    "total": 115,
+    "matched": 115,
+    "mismatches": []
+  },
+  "counts": {
+    "packaged_cpp_pass_executions": 4092,
+    "packaged_cpp_failures": 0,
+    "canonical_raw_cpp_reports": 65,
+    "legacy_cpp_pass_executions": 2683,
+    "focused_cpp_pass_executions": 99,
+    "field_cpp_pass_executions": 1310,
+    "legacy_suites_passed": 16,
+    "legacy_suites_total": 16,
+    "editor_cpp_pass_executions": 66,
+    "editor_cpp_failures": 0,
+    "extra_prequeue_nasa_smoke_pass_executions_excluded": 277,
+    "staged_pngs": 230,
+    "paired_pixel_checks": 8,
+    "menu_action_records": 12,
+    "menu_sampled_hit_paths": 60,
+    "menu_actual_keyboard_focus_records": 12,
+    "menu_actual_mission_card_pointer_routes": 6,
+    "menu_actual_action_button_clicks_claimed": 0,
+    "human_participants": 0
+  },
+  "counting_method": "Count anchored C++ PASS lines in each selected fresh raw execution report once; require no FAIL and exactly one RESULT:0 failures. Identical contents from separate mission/resolution executions remain executions, not unique tests. Wrapper PASS lines and JSON assertion summaries are not added. Extra standalone NASA smoke277 is retained but excluded; Editor66 has a separate identity.",
+  "canonical_scope": "Final06c packaged legacy16-suite queue plus focused99 and FieldOperations2x655; two menu review manifests contribute presentation metadata, no C++ assertion count.",
+  "raw_cpp_reports": [
+    {
+      "group": "focused-nullrhi",
+      "source": "Reports/TaskFixes20261106/package-all-nullrhi-20261106-100656-737/apollo-interaction-checks.txt",
+      "source_sha256": "76d4831e07a160f74673b2323a5e51960f6fceff69664099b2f5839e67e292f4",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/focused-nullrhi/01-apollo-interaction-checks.txt",
+      "retained_sha256": "76d4831e07a160f74673b2323a5e51960f6fceff69664099b2f5839e67e292f4",
+      "source_modified_utc": "2026-11-06T05:08:15.816441+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 42,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "NullRHI"
+    },
+    {
+      "group": "focused-nullrhi",
+      "source": "Reports/TaskFixes20261106/package-all-nullrhi-20261106-100656-737/stride-apollo-checks.txt",
+      "source_sha256": "fc81c06671890c198364ffd94b6974dfb68c9f28b28bb4cda6c61404cbb97271",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/focused-nullrhi/02-stride-apollo-checks.txt",
+      "retained_sha256": "fc81c06671890c198364ffd94b6974dfb68c9f28b28bb4cda6c61404cbb97271",
+      "source_modified_utc": "2026-11-06T05:07:08.646787+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 19,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "NullRHI"
+    },
+    {
+      "group": "focused-nullrhi",
+      "source": "Reports/TaskFixes20261106/package-all-nullrhi-20261106-100656-737/stride-mars-checks.txt",
+      "source_sha256": "fc81c06671890c198364ffd94b6974dfb68c9f28b28bb4cda6c61404cbb97271",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/focused-nullrhi/03-stride-mars-checks.txt",
+      "retained_sha256": "fc81c06671890c198364ffd94b6974dfb68c9f28b28bb4cda6c61404cbb97271",
+      "source_modified_utc": "2026-11-06T05:07:34.713742+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 19,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "NullRHI"
+    },
+    {
+      "group": "focused-nullrhi",
+      "source": "Reports/TaskFixes20261106/package-all-nullrhi-20261106-100656-737/stride-selene-checks.txt",
+      "source_sha256": "fc81c06671890c198364ffd94b6974dfb68c9f28b28bb4cda6c61404cbb97271",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/focused-nullrhi/04-stride-selene-checks.txt",
+      "retained_sha256": "fc81c06671890c198364ffd94b6974dfb68c9f28b28bb4cda6c61404cbb97271",
+      "source_modified_utc": "2026-11-06T05:07:21.996625+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 19,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "NullRHI"
+    },
+    {
+      "group": "field-nullrhi",
+      "source": "Reports/FieldOperations20261104/package-test-1280x720-20261106-100817-637/apollo-checks.txt",
+      "source_sha256": "818ea02d2f3fd157186163d831e5446663de2904f5081defdea2855b2fe0fd8d",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/field-nullrhi/01-apollo-checks.txt",
+      "retained_sha256": "818ea02d2f3fd157186163d831e5446663de2904f5081defdea2855b2fe0fd8d",
+      "source_modified_utc": "2026-11-06T05:08:22.595075+00:00",
+      "encoding": "utf16",
+      "cpp_pass_executions": 215,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "NullRHI"
+    },
+    {
+      "group": "field-nullrhi",
+      "source": "Reports/FieldOperations20261104/package-test-1280x720-20261106-100817-637/mars-checks.txt",
+      "source_sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/field-nullrhi/02-mars-checks.txt",
+      "retained_sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2",
+      "source_modified_utc": "2026-11-06T05:08:34.636675+00:00",
+      "encoding": "utf16",
+      "cpp_pass_executions": 220,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "NullRHI"
+    },
+    {
+      "group": "field-nullrhi",
+      "source": "Reports/FieldOperations20261104/package-test-1280x720-20261106-100817-637/selene-checks.txt",
+      "source_sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/field-nullrhi/03-selene-checks.txt",
+      "retained_sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2",
+      "source_modified_utc": "2026-11-06T05:08:28.903552+00:00",
+      "encoding": "utf16",
+      "cpp_pass_executions": 220,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "NullRHI"
+    },
+    {
+      "group": "field-rendered",
+      "source": "Reports/FieldOperations20261104/package-rendered-test-1280x720-20261106-100836-389/apollo-checks.txt",
+      "source_sha256": "818ea02d2f3fd157186163d831e5446663de2904f5081defdea2855b2fe0fd8d",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/field-rendered/01-apollo-checks.txt",
+      "retained_sha256": "818ea02d2f3fd157186163d831e5446663de2904f5081defdea2855b2fe0fd8d",
+      "source_modified_utc": "2026-11-06T05:08:44.635120+00:00",
+      "encoding": "utf16",
+      "cpp_pass_executions": 215,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "DX11 rendered offscreen functional"
+    },
+    {
+      "group": "field-rendered",
+      "source": "Reports/FieldOperations20261104/package-rendered-test-1280x720-20261106-100836-389/mars-checks.txt",
+      "source_sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/field-rendered/02-mars-checks.txt",
+      "retained_sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2",
+      "source_modified_utc": "2026-11-06T05:09:01.981861+00:00",
+      "encoding": "utf16",
+      "cpp_pass_executions": 220,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "DX11 rendered offscreen functional"
+    },
+    {
+      "group": "field-rendered",
+      "source": "Reports/FieldOperations20261104/package-rendered-test-1280x720-20261106-100836-389/selene-checks.txt",
+      "source_sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/field-rendered/03-selene-checks.txt",
+      "retained_sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2",
+      "source_modified_utc": "2026-11-06T05:08:53.359958+00:00",
+      "encoding": "utf16",
+      "cpp_pass_executions": 220,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "DX11 rendered offscreen functional"
+    },
+    {
+      "group": "legacy-gameplay-functional",
+      "source": "Reports/Gameplay20261103/package-test-1280x720-20261106-100955-641/apollo-checks.txt",
+      "source_sha256": "d10dea46ac963d4e53e7fcdf31b1184d0769c13f27a5ef3cdc7f571cb5a1c817",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-gameplay-functional/01-apollo-checks.txt",
+      "retained_sha256": "d10dea46ac963d4e53e7fcdf31b1184d0769c13f27a5ef3cdc7f571cb5a1c817",
+      "source_modified_utc": "2026-11-06T05:10:00.531835+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 236,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-gameplay-functional",
+      "source": "Reports/Gameplay20261103/package-test-1280x720-20261106-100955-641/mars-checks.txt",
+      "source_sha256": "d30a0b660d1ef1770b5cd7ae5eff465c6127c32c7746829597def896290d7223",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-gameplay-functional/02-mars-checks.txt",
+      "retained_sha256": "d30a0b660d1ef1770b5cd7ae5eff465c6127c32c7746829597def896290d7223",
+      "source_modified_utc": "2026-11-06T05:10:12.489436+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 182,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-gameplay-functional",
+      "source": "Reports/Gameplay20261103/package-test-1280x720-20261106-100955-641/selene-checks.txt",
+      "source_sha256": "f9708ad83af3659230bfa5474f60a48463f597d440af3f630fd0d8e397cbf471",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-gameplay-functional/03-selene-checks.txt",
+      "retained_sha256": "f9708ad83af3659230bfa5474f60a48463f597d440af3f630fd0d8e397cbf471",
+      "source_modified_utc": "2026-11-06T05:10:06.807618+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 197,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-gameplay-rendered",
+      "source": "Reports/Gameplay20261103/package-rendered-test-1280x720-20261106-101014-299/apollo-checks.txt",
+      "source_sha256": "70ad37876bcd2b2cb3866763b901f2995b2e1e2f62af57244681033f9ba7a2af",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-gameplay-rendered/01-apollo-checks.txt",
+      "retained_sha256": "70ad37876bcd2b2cb3866763b901f2995b2e1e2f62af57244681033f9ba7a2af",
+      "source_modified_utc": "2026-11-06T05:10:22.028830+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 248,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-gameplay-rendered",
+      "source": "Reports/Gameplay20261103/package-rendered-test-1280x720-20261106-101014-299/mars-checks.txt",
+      "source_sha256": "2d1980a7e9abd68a4077823a7d3aedac3bcd8f1bc8821a5108a41c25e2770b79",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-gameplay-rendered/02-mars-checks.txt",
+      "retained_sha256": "2d1980a7e9abd68a4077823a7d3aedac3bcd8f1bc8821a5108a41c25e2770b79",
+      "source_modified_utc": "2026-11-06T05:10:39.348403+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 194,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-gameplay-rendered",
+      "source": "Reports/Gameplay20261103/package-rendered-test-1280x720-20261106-101014-299/selene-checks.txt",
+      "source_sha256": "bf4259f4c86468742d3d6a55780a6fdbd4539196b9bb1ece04439e2a83e4eeb5",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-gameplay-rendered/03-selene-checks.txt",
+      "retained_sha256": "bf4259f4c86468742d3d6a55780a6fdbd4539196b9bb1ece04439e2a83e4eeb5",
+      "source_modified_utc": "2026-11-06T05:10:30.654826+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 209,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/gameplay-review-checks.txt",
+      "source_sha256": "b8feadb02b9f69e85450687e1ac556c78c2e5279db05f57602fc01820706c34b",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-gameplay-review720/01-gameplay-review-checks.txt",
+      "retained_sha256": "b8feadb02b9f69e85450687e1ac556c78c2e5279db05f57602fc01820706c34b",
+      "source_modified_utc": "2026-11-06T05:11:11.340872+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 24,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/gameplay-review-checks.txt",
+      "source_sha256": "e0236e2d9deb1035cdd046d99cedbb95a2f3f52f4cef4f7e2393bc87102cd32e",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-gameplay-review720/02-gameplay-review-checks.txt",
+      "retained_sha256": "e0236e2d9deb1035cdd046d99cedbb95a2f3f52f4cef4f7e2393bc87102cd32e",
+      "source_modified_utc": "2026-11-06T05:12:16.577057+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 22,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/gameplay-review-checks.txt",
+      "source_sha256": "9dec54e7a4e9602fdae266652a1f8fbab5a3855566f078866bfe1c48941f5a9d",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-gameplay-review720/03-gameplay-review-checks.txt",
+      "retained_sha256": "9dec54e7a4e9602fdae266652a1f8fbab5a3855566f078866bfe1c48941f5a9d",
+      "source_modified_utc": "2026-11-06T05:11:45.846436+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 27,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/gameplay-review-checks.txt",
+      "source_sha256": "b8feadb02b9f69e85450687e1ac556c78c2e5279db05f57602fc01820706c34b",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-gameplay-review1080/01-gameplay-review-checks.txt",
+      "retained_sha256": "b8feadb02b9f69e85450687e1ac556c78c2e5279db05f57602fc01820706c34b",
+      "source_modified_utc": "2026-11-06T05:12:50.788426+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 24,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/gameplay-review-checks.txt",
+      "source_sha256": "e0236e2d9deb1035cdd046d99cedbb95a2f3f52f4cef4f7e2393bc87102cd32e",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-gameplay-review1080/02-gameplay-review-checks.txt",
+      "retained_sha256": "e0236e2d9deb1035cdd046d99cedbb95a2f3f52f4cef4f7e2393bc87102cd32e",
+      "source_modified_utc": "2026-11-06T05:14:00.480704+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 22,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/gameplay-review-checks.txt",
+      "source_sha256": "9dec54e7a4e9602fdae266652a1f8fbab5a3855566f078866bfe1c48941f5a9d",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-gameplay-review1080/03-gameplay-review-checks.txt",
+      "retained_sha256": "9dec54e7a4e9602fdae266652a1f8fbab5a3855566f078866bfe1c48941f5a9d",
+      "source_modified_utc": "2026-11-06T05:13:27.958500+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 27,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-apollo-regressions",
+      "source": "Reports/package-apollo12-checks-result.txt",
+      "source_sha256": "1d8911bc084c6a7a1c2bb63b9fbebc6f33d1fe6ec51ae0d726d8ded7e9e7d44c",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-apollo-regressions/01-package-apollo12-checks-result.txt",
+      "retained_sha256": "1d8911bc084c6a7a1c2bb63b9fbebc6f33d1fe6ec51ae0d726d8ded7e9e7d44c",
+      "source_modified_utc": "2026-11-06T05:14:06.924485+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 57,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-apollo-regressions",
+      "source": "Reports/package-apollo12-fieldwork-result.txt",
+      "source_sha256": "ea375f02581686b0e4ef8ad36e583622d000fb282c0b93ea71c68c216ad9b192",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-apollo-regressions/02-package-apollo12-fieldwork-result.txt",
+      "retained_sha256": "ea375f02581686b0e4ef8ad36e583622d000fb282c0b93ea71c68c216ad9b192",
+      "source_modified_utc": "2026-11-06T05:16:00.889757+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 39,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-apollo-regressions",
+      "source": "Reports/package-apollo12-guidance-result.txt",
+      "source_sha256": "d9a16b9f4f62acc93b7534b308edfa4e36b0d6c8966064d288b4110112c86ffa",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-apollo-regressions/03-package-apollo12-guidance-result.txt",
+      "retained_sha256": "d9a16b9f4f62acc93b7534b308edfa4e36b0d6c8966064d288b4110112c86ffa",
+      "source_modified_utc": "2026-11-06T05:15:55.232074+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 47,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-apollo-regressions",
+      "source": "Reports/package-apollo12-legacy-moon-result.txt",
+      "source_sha256": "6b4f590b824979b6e5dbaa629e5e4fc16fa4e2ec4d8050a432dbab8150846886",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-apollo-regressions/04-package-apollo12-legacy-moon-result.txt",
+      "retained_sha256": "6b4f590b824979b6e5dbaa629e5e4fc16fa4e2ec4d8050a432dbab8150846886",
+      "source_modified_utc": "2026-11-06T05:14:11.719452+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 50,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-apollo-regressions",
+      "source": "Reports/package-apollo12-mars-result.txt",
+      "source_sha256": "fa5e80fd8a9073604fedda210da7ca12626bacbf5955d98d7302b97f53390de3",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-apollo-regressions/05-package-apollo12-mars-result.txt",
+      "retained_sha256": "fa5e80fd8a9073604fedda210da7ca12626bacbf5955d98d7302b97f53390de3",
+      "source_modified_utc": "2026-11-06T05:14:15.979673+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 54,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-apollo-regressions",
+      "source": "Reports/package-apollo12-menu-result.txt",
+      "source_sha256": "11c6ab3438d78be5caeb4ef56d2c4426c6d5a2bc3de848e457cd31ed58cae9f9",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-apollo-regressions/06-package-apollo12-menu-result.txt",
+      "retained_sha256": "11c6ab3438d78be5caeb4ef56d2c4426c6d5a2bc3de848e457cd31ed58cae9f9",
+      "source_modified_utc": "2026-11-06T05:14:49.083406+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 55,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-apollo-regressions",
+      "source": "Reports/package-apollo12-polish-result.txt",
+      "source_sha256": "4a564bcfb9c92a97f43ba00fddc81ad71791fe72e69142fa06febec5ab092621",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-apollo-regressions/07-package-apollo12-polish-result.txt",
+      "retained_sha256": "4a564bcfb9c92a97f43ba00fddc81ad71791fe72e69142fa06febec5ab092621",
+      "source_modified_utc": "2026-11-06T05:15:49.443608+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 64,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-apollo-regressions",
+      "source": "Reports/package-apollo12-save-read-result.txt",
+      "source_sha256": "e0b31f0af7c9b70f375ccc1c6740cc612456916225adbf73425bc9d6540de24c",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-apollo-regressions/08-package-apollo12-save-read-result.txt",
+      "retained_sha256": "e0b31f0af7c9b70f375ccc1c6740cc612456916225adbf73425bc9d6540de24c",
+      "source_modified_utc": "2026-11-06T05:16:20.526773+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 7,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-apollo-regressions",
+      "source": "Reports/package-apollo12-save-result.txt",
+      "source_sha256": "6f9761b2a673ceefe91006a49d46f19bffa922479b741b11295fe962fe6e97dc",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-apollo-regressions/09-package-apollo12-save-result.txt",
+      "retained_sha256": "6f9761b2a673ceefe91006a49d46f19bffa922479b741b11295fe962fe6e97dc",
+      "source_modified_utc": "2026-11-06T05:16:06.981928+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 51,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-apollo-regressions",
+      "source": "Reports/package-apollo12-save-write-result.txt",
+      "source_sha256": "925561c794fc7f059e796c96d107eec4f34e6b77bde7676e82b2985e42a002f4",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-apollo-regressions/10-package-apollo12-save-write-result.txt",
+      "retained_sha256": "925561c794fc7f059e796c96d107eec4f34e6b77bde7676e82b2985e42a002f4",
+      "source_modified_utc": "2026-11-06T05:16:12.129419+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 2,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-apollo-regressions",
+      "source": "Reports/package-apollo12-suit-result.txt",
+      "source_sha256": "901df3df557c022d6624af6172f6cd46584b0324cbd46fa2d5de5654198f5a15",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-apollo-regressions/11-package-apollo12-suit-result.txt",
+      "retained_sha256": "901df3df557c022d6624af6172f6cd46584b0324cbd46fa2d5de5654198f5a15",
+      "source_modified_utc": "2026-11-06T05:15:42.953943+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 32,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-apollo-regressions",
+      "source": "Reports/package-apollo12-walk-result.txt",
+      "source_sha256": "41d9238c529cf295b5dce891c73bb0934694c0a6bc108d31346c95b40bf30c17",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-apollo-regressions/12-package-apollo12-walk-result.txt",
+      "retained_sha256": "41d9238c529cf295b5dce891c73bb0934694c0a6bc108d31346c95b40bf30c17",
+      "source_modified_utc": "2026-11-06T05:15:25.957040+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 2,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-nasa-regressions",
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-101621-811/intro-checks.txt",
+      "source_sha256": "0092db04c7d47e436d52321cdc5a55707f3fef74909097755d6d12c251e16146",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-nasa-regressions/01-intro-checks.txt",
+      "retained_sha256": "0092db04c7d47e436d52321cdc5a55707f3fef74909097755d6d12c251e16146",
+      "source_modified_utc": "2026-11-06T05:16:25.966747+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 12,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-nasa-regressions",
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-101621-811/learning-apollo-checks.txt",
+      "source_sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-nasa-regressions/02-learning-apollo-checks.txt",
+      "retained_sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123",
+      "source_modified_utc": "2026-11-06T05:16:55.374913+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 39,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-nasa-regressions",
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-101621-811/learning-mars-checks.txt",
+      "source_sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-nasa-regressions/03-learning-mars-checks.txt",
+      "retained_sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123",
+      "source_modified_utc": "2026-11-06T05:17:06.355074+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 39,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-nasa-regressions",
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-101621-811/learning-selene-checks.txt",
+      "source_sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-nasa-regressions/04-learning-selene-checks.txt",
+      "retained_sha256": "496f7eee7b9a6f1728ad56450f16618ff9950d4522d7031a2fa875a7ba651123",
+      "source_modified_utc": "2026-11-06T05:17:01.157536+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 39,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-nasa-regressions",
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-101621-811/pov-checks.txt",
+      "source_sha256": "77df500041c8ff5fce7604cc4a35a632005ecf1ab4c236d74dcac8112be82bde",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-nasa-regressions/05-pov-checks.txt",
+      "retained_sha256": "77df500041c8ff5fce7604cc4a35a632005ecf1ab4c236d74dcac8112be82bde",
+      "source_modified_utc": "2026-11-06T05:16:49.747195+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 30,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-nasa-regressions",
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-101621-811/restart-apollo-checks.txt",
+      "source_sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-nasa-regressions/06-restart-apollo-checks.txt",
+      "retained_sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e",
+      "source_modified_utc": "2026-11-06T05:17:15.219606+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 12,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-nasa-regressions",
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-101621-811/restart-mars-checks.txt",
+      "source_sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-nasa-regressions/07-restart-mars-checks.txt",
+      "retained_sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e",
+      "source_modified_utc": "2026-11-06T05:17:32.276784+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 12,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-nasa-regressions",
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-101621-811/restart-selene-checks.txt",
+      "source_sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-nasa-regressions/08-restart-selene-checks.txt",
+      "retained_sha256": "e9d11c215274d97142e29b9e91f904a9212f05f11358c36a3721d1355a4fe26e",
+      "source_modified_utc": "2026-11-06T05:17:24.204454+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 12,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-nasa-regressions",
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-101621-811/ui-apollo-checks.txt",
+      "source_sha256": "1676fb5306f2e2c2328fca5914e549b8b9c57fe0d4e21ae6d4ff828dbaac331c",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-nasa-regressions/09-ui-apollo-checks.txt",
+      "retained_sha256": "1676fb5306f2e2c2328fca5914e549b8b9c57fe0d4e21ae6d4ff828dbaac331c",
+      "source_modified_utc": "2026-11-06T05:16:32.384612+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 24,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-nasa-regressions",
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-101621-811/ui-mars-checks.txt",
+      "source_sha256": "8ab57171547fbc61ceb13ccd95c2aab7c9b8f5a4c662580b4738938ccf304dc8",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-nasa-regressions/10-ui-mars-checks.txt",
+      "retained_sha256": "8ab57171547fbc61ceb13ccd95c2aab7c9b8f5a4c662580b4738938ccf304dc8",
+      "source_modified_utc": "2026-11-06T05:16:44.499927+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 28,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-nasa-regressions",
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-101621-811/ui-selene-checks.txt",
+      "source_sha256": "be6b0f2ccf91e157c1d88204f068662b4e6196da18a9f53b8efda3df1628cc6c",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-nasa-regressions/11-ui-selene-checks.txt",
+      "retained_sha256": "be6b0f2ccf91e157c1d88204f068662b4e6196da18a9f53b8efda3df1628cc6c",
+      "source_modified_utc": "2026-11-06T05:16:38.217579+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 30,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-selection",
+      "source": "Reports/MissionSelection20261031/package-test-1280x720-20261106-101734-038-checks.txt",
+      "source_sha256": "83bc6cdedccef4044e0dd3fcd9e082f374d2362501631f78ace79a7641541fc4",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-selection/01-package-test-1280x720-20261106-101734-038-checks.txt",
+      "retained_sha256": "83bc6cdedccef4044e0dd3fcd9e082f374d2362501631f78ace79a7641541fc4",
+      "source_modified_utc": "2026-11-06T05:17:38.219014+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 66,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-frontend",
+      "source": "Reports/Frontend20261028/package-checks.txt",
+      "source_sha256": "2dc9c92382364d06916328347951cf3a73b38e1f6b9c43d27d022186adec7bc3",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-frontend/01-package-checks.txt",
+      "retained_sha256": "2dc9c92382364d06916328347951cf3a73b38e1f6b9c43d27d022186adec7bc3",
+      "source_modified_utc": "2026-11-06T05:17:43.863840+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 20,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-experience",
+      "source": "Reports/ExpeditionExperience20261029/package-test-nullrhi-silent-1280x720-20261106-101745-177-checks.txt",
+      "source_sha256": "9fbd8b15c9db5387b2b10b7838e66126bafb2f22ee875e601c010359c39d9fd2",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-experience/01-package-test-nullrhi-silent-1280x720-20261106-101745-177-checks.txt",
+      "retained_sha256": "9fbd8b15c9db5387b2b10b7838e66126bafb2f22ee875e601c010359c39d9fd2",
+      "source_modified_utc": "2026-11-06T05:17:49.594728+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 64,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-presentation",
+      "source": "Reports/ExpeditionPolish20261029/package-test-dx11-audio-1280x720-20261106-101750-772-checks.txt",
+      "source_sha256": "3bb17c02eaa4fa46321ad6b31f9e5b4911eeedf474a0034c1ceb426384752ab7",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-presentation/01-package-test-dx11-audio-1280x720-20261106-101750-772-checks.txt",
+      "retained_sha256": "3bb17c02eaa4fa46321ad6b31f9e5b4911eeedf474a0034c1ceb426384752ab7",
+      "source_modified_utc": "2026-11-06T05:17:58.894732+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 35,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-movement",
+      "source": "Reports/ExpeditionExperience20261029/final-package-mars-ledge.txt",
+      "source_sha256": "91b5c0959528356e60b06c020d6fab210d94a311b80772968153e15f06dbb7e2",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-movement/01-final-package-mars-ledge.txt",
+      "retained_sha256": "91b5c0959528356e60b06c020d6fab210d94a311b80772968153e15f06dbb7e2",
+      "source_modified_utc": "2026-11-06T05:18:29.032528+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 3,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-movement",
+      "source": "Reports/ExpeditionExperience20261029/final-package-mars-movement.txt",
+      "source_sha256": "e7f9b1fd3438f1780d1403232a638f9c38b6b2a2c325e2ea33596d5fa12e6d1b",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-movement/02-final-package-mars-movement.txt",
+      "retained_sha256": "e7f9b1fd3438f1780d1403232a638f9c38b6b2a2c325e2ea33596d5fa12e6d1b",
+      "source_modified_utc": "2026-11-06T05:18:19.951609+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 13,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-equipment",
+      "source": "Reports/Feedback20261102/package-test-1280x720-20261106-101830-370/assets-apollo-checks.txt",
+      "source_sha256": "8fae21338cf38713d7c13900d6f22336bb737afb850c562b423ce522bdfd2dfb",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-equipment/01-assets-apollo-checks.txt",
+      "retained_sha256": "8fae21338cf38713d7c13900d6f22336bb737afb850c562b423ce522bdfd2dfb",
+      "source_modified_utc": "2026-11-06T05:18:34.787472+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 14,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-equipment",
+      "source": "Reports/Feedback20261102/package-test-1280x720-20261106-101830-370/assets-mars-checks.txt",
+      "source_sha256": "97eb6e923aa43de828fd1d1fc9f97e9256ee41b02da82b19f7298f10088ca35f",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-equipment/02-assets-mars-checks.txt",
+      "retained_sha256": "97eb6e923aa43de828fd1d1fc9f97e9256ee41b02da82b19f7298f10088ca35f",
+      "source_modified_utc": "2026-11-06T05:18:57.154882+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 12,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-equipment",
+      "source": "Reports/Feedback20261102/package-test-1280x720-20261106-101830-370/assets-selene-checks.txt",
+      "source_sha256": "97eb6e923aa43de828fd1d1fc9f97e9256ee41b02da82b19f7298f10088ca35f",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-equipment/03-assets-selene-checks.txt",
+      "retained_sha256": "97eb6e923aa43de828fd1d1fc9f97e9256ee41b02da82b19f7298f10088ca35f",
+      "source_modified_utc": "2026-11-06T05:18:46.288188+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 12,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-equipment",
+      "source": "Reports/Feedback20261102/package-test-1280x720-20261106-101830-370/diagnostics-apollo-checks.txt",
+      "source_sha256": "ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-equipment/04-diagnostics-apollo-checks.txt",
+      "retained_sha256": "ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19",
+      "source_modified_utc": "2026-11-06T05:18:40.430288+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 38,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-equipment",
+      "source": "Reports/Feedback20261102/package-test-1280x720-20261106-101830-370/diagnostics-mars-checks.txt",
+      "source_sha256": "ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-equipment/05-diagnostics-mars-checks.txt",
+      "retained_sha256": "ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19",
+      "source_modified_utc": "2026-11-06T05:19:02.749422+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 38,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-equipment",
+      "source": "Reports/Feedback20261102/package-test-1280x720-20261106-101830-370/diagnostics-selene-checks.txt",
+      "source_sha256": "ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-equipment/06-diagnostics-selene-checks.txt",
+      "retained_sha256": "ea42b8e4df1f112a70b21cc534756cc89a040843043420c3faac719e352b6a19",
+      "source_modified_utc": "2026-11-06T05:18:51.925965+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 38,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-loading-font",
+      "source": "Reports/LoadingTypography20261102/package-checks-1280x720-20261106-101904-563/loading-typography-checks.txt",
+      "source_sha256": "bdf1e38884c279b85eb5fc4478d1d66990c0baf6b53e90fcf3bf15d9954bcb0d",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-loading-font/01-loading-typography-checks.txt",
+      "retained_sha256": "bdf1e38884c279b85eb5fc4478d1d66990c0baf6b53e90fcf3bf15d9954bcb0d",
+      "source_modified_utc": "2026-11-06T05:19:08.812225+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 55,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-loading-travel",
+      "source": "Reports/Loading20261029/package-offscreen-1280x720-20261106-101910-628-checks.txt",
+      "source_sha256": "9aae6c703448a34d34784c52360ac4a6b96cd7f33c9fb3412b19d972192d8010",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-loading-travel/01-package-offscreen-1280x720-20261106-101910-628-checks.txt",
+      "retained_sha256": "9aae6c703448a34d34784c52360ac4a6b96cd7f33c9fb3412b19d972192d8010",
+      "source_modified_utc": "2026-11-06T05:20:12.263555+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 76,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-apollo-checks.txt",
+      "source_sha256": "e43a6d97e21671c34d1093a5e2ed4d08576f90b1825ad262f3da8c3ab41fe0ea",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-hud-review720/01-hud-apollo-checks.txt",
+      "retained_sha256": "e43a6d97e21671c34d1093a5e2ed4d08576f90b1825ad262f3da8c3ab41fe0ea",
+      "source_modified_utc": "2026-11-06T05:20:30.293462+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 9,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-mars-checks.txt",
+      "source_sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-hud-review720/02-hud-mars-checks.txt",
+      "retained_sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482",
+      "source_modified_utc": "2026-11-06T05:21:02.916574+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 8,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-selene-checks.txt",
+      "source_sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-hud-review720/03-hud-selene-checks.txt",
+      "retained_sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482",
+      "source_modified_utc": "2026-11-06T05:20:46.668612+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 8,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-apollo-checks.txt",
+      "source_sha256": "e43a6d97e21671c34d1093a5e2ed4d08576f90b1825ad262f3da8c3ab41fe0ea",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-hud-review1080/01-hud-apollo-checks.txt",
+      "retained_sha256": "e43a6d97e21671c34d1093a5e2ed4d08576f90b1825ad262f3da8c3ab41fe0ea",
+      "source_modified_utc": "2026-11-06T05:21:21.056715+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 9,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-mars-checks.txt",
+      "source_sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-hud-review1080/02-hud-mars-checks.txt",
+      "retained_sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482",
+      "source_modified_utc": "2026-11-06T05:21:55.556680+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 8,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-selene-checks.txt",
+      "source_sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482",
+      "retained": "Docs/TaskFixes20261106/evidence/cpp/legacy-hud-review1080/03-hud-selene-checks.txt",
+      "retained_sha256": "f0e9d5f4dcb3529b7af38591c5bcf5613535cd176c934d9461f92a9c48d50482",
+      "source_modified_utc": "2026-11-06T05:21:38.286861+00:00",
+      "encoding": "utf8",
+      "cpp_pass_executions": 8,
+      "cpp_failures": 0,
+      "single_result_zero": true,
+      "condition": "Final packaged legacy queue; see case parameters"
+    }
+  ],
+  "legacy_suites": [
+    {
+      "name": "gameplay-functional",
+      "passed": true,
+      "started_utc": "2026-11-06T05:09:55.6184278Z",
+      "finished_utc": "2026-11-06T05:10:14.2902684Z",
+      "script": "Tools/verify_gameplay_tasks.ps1",
+      "parameters": {
+        "Packaged": true
+      },
+      "cpp_pass_executions": 615,
+      "raw_cpp_reports": 3,
+      "wrapper_log_source": "Reports/Gameplay20261103/final-queue-20261106-100955/gameplay-functional.log",
+      "wrapper_log_sha256": "1f95fc8ddcf915732d48431e1e2611bd6c11df8e6d445ddec4af21dd81e59f5f"
+    },
+    {
+      "name": "gameplay-rendered",
+      "passed": true,
+      "started_utc": "2026-11-06T05:10:14.2919891Z",
+      "finished_utc": "2026-11-06T05:10:40.8309253Z",
+      "script": "Tools/verify_gameplay_tasks.ps1",
+      "parameters": {
+        "Packaged": true,
+        "Rendered": true
+      },
+      "cpp_pass_executions": 651,
+      "raw_cpp_reports": 3,
+      "wrapper_log_source": "Reports/Gameplay20261103/final-queue-20261106-100955/gameplay-rendered.log",
+      "wrapper_log_sha256": "d6f52a3958cd6cdfddb3f92b118f7b9c5570db98fdbd6999a474cccb05e1775a"
+    },
+    {
+      "name": "gameplay-review720",
+      "passed": true,
+      "started_utc": "2026-11-06T05:10:40.8339551Z",
+      "finished_utc": "2026-11-06T05:12:18.5304316Z",
+      "script": "Tools/verify_gameplay_tasks.ps1",
+      "parameters": {
+        "Width": 1280,
+        "Packaged": true,
+        "Review": true,
+        "Height": 720
+      },
+      "cpp_pass_executions": 73,
+      "raw_cpp_reports": 3,
+      "wrapper_log_source": "Reports/Gameplay20261103/final-queue-20261106-100955/gameplay-review720.log",
+      "wrapper_log_sha256": "b3c281991819a22d4a8524c4536fe126ba573e75706a3fd8e9eccad6553bbce2"
+    },
+    {
+      "name": "gameplay-review1080",
+      "passed": true,
+      "started_utc": "2026-11-06T05:12:18.5314864Z",
+      "finished_utc": "2026-11-06T05:14:02.5174488Z",
+      "script": "Tools/verify_gameplay_tasks.ps1",
+      "parameters": {
+        "Width": 1920,
+        "Packaged": true,
+        "Review": true,
+        "Height": 1080
+      },
+      "cpp_pass_executions": 73,
+      "raw_cpp_reports": 3,
+      "wrapper_log_source": "Reports/Gameplay20261103/final-queue-20261106-100955/gameplay-review1080.log",
+      "wrapper_log_sha256": "bc3ecb74de468efe47ca7ef568b496f58aa82a7c377c2b9d31308a25f818add6"
+    },
+    {
+      "name": "apollo-regressions",
+      "passed": true,
+      "started_utc": "2026-11-06T05:14:02.5184793Z",
+      "finished_utc": "2026-11-06T05:16:21.8031304Z",
+      "script": "Tools/verify_apollo12.ps1",
+      "parameters": {
+        "Packaged": true,
+        "Walkthrough": true,
+        "Suit": true,
+        "Guidance": true,
+        "Checkpoints": true,
+        "Fieldwork": true,
+        "Polish": true,
+        "Regression": true
+      },
+      "cpp_pass_executions": 460,
+      "raw_cpp_reports": 12,
+      "wrapper_log_source": "Reports/Gameplay20261103/final-queue-20261106-100955/apollo-regressions.log",
+      "wrapper_log_sha256": "eec0f1d5952f8577f7fccaf319fbd96a2eddc5d268ca63bc02edda2dcba08f53"
+    },
+    {
+      "name": "nasa-regressions",
+      "passed": true,
+      "started_utc": "2026-11-06T05:16:21.8050099Z",
+      "finished_utc": "2026-11-06T05:17:34.0264212Z",
+      "script": "Tools/verify_nasa_tasks.ps1",
+      "parameters": {
+        "Packaged": true
+      },
+      "cpp_pass_executions": 277,
+      "raw_cpp_reports": 11,
+      "wrapper_log_source": "Reports/Gameplay20261103/final-queue-20261106-100955/nasa-regressions.log",
+      "wrapper_log_sha256": "0ada356e457e3dfbd8583cbda5b8280914da87246f6d6a035a63b75b3e07111c"
+    },
+    {
+      "name": "selection",
+      "passed": true,
+      "started_utc": "2026-11-06T05:17:34.0280133Z",
+      "finished_utc": "2026-11-06T05:17:39.5172212Z",
+      "script": "Tools/verify_mission_selection.ps1",
+      "parameters": {
+        "Packaged": true
+      },
+      "cpp_pass_executions": 66,
+      "raw_cpp_reports": 1,
+      "wrapper_log_source": "Reports/Gameplay20261103/final-queue-20261106-100955/selection.log",
+      "wrapper_log_sha256": "d45f82c0dcfa0226be91c0c3dbb5a480d19229fe3666ee7b53406da384c8f4be"
+    },
+    {
+      "name": "frontend",
+      "passed": true,
+      "started_utc": "2026-11-06T05:17:39.5188504Z",
+      "finished_utc": "2026-11-06T05:17:45.1562258Z",
+      "script": "Tools/verify_frontend.ps1",
+      "parameters": {
+        "Packaged": true
+      },
+      "cpp_pass_executions": 20,
+      "raw_cpp_reports": 1,
+      "wrapper_log_source": "Reports/Gameplay20261103/final-queue-20261106-100955/frontend.log",
+      "wrapper_log_sha256": "05151b821c8d287b3f5a3779a124256ea9b182498cc1d8798b9aeb8eefc2b492"
+    },
+    {
+      "name": "experience",
+      "passed": true,
+      "started_utc": "2026-11-06T05:17:45.1576281Z",
+      "finished_utc": "2026-11-06T05:17:50.7565090Z",
+      "script": "Tools/verify_experience.ps1",
+      "parameters": {
+        "Packaged": true
+      },
+      "cpp_pass_executions": 64,
+      "raw_cpp_reports": 1,
+      "wrapper_log_source": "Reports/Gameplay20261103/final-queue-20261106-100955/experience.log",
+      "wrapper_log_sha256": "5fbbc547e6de39992b93ab367a21dab8470c5058ebad259da0429e9a962011c2"
+    },
+    {
+      "name": "presentation",
+      "passed": true,
+      "started_utc": "2026-11-06T05:17:50.7579550Z",
+      "finished_utc": "2026-11-06T05:18:00.1604006Z",
+      "script": "Tools/verify_presentation.ps1",
+      "parameters": {
+        "Graphics": true,
+        "Audio": true,
+        "Packaged": true
+      },
+      "cpp_pass_executions": 35,
+      "raw_cpp_reports": 1,
+      "wrapper_log_source": "Reports/Gameplay20261103/final-queue-20261106-100955/presentation.log",
+      "wrapper_log_sha256": "d43abd88104efc73a42a2b2359b89bf863f394a446d7d9eac8b5fa38fad8e10e"
+    },
+    {
+      "name": "movement",
+      "passed": true,
+      "started_utc": "2026-11-06T05:18:00.1621311Z",
+      "finished_utc": "2026-11-06T05:18:30.3514394Z",
+      "script": "Tools/verify_planet_movement.ps1",
+      "parameters": {
+        "Packaged": true
+      },
+      "cpp_pass_executions": 16,
+      "raw_cpp_reports": 2,
+      "wrapper_log_source": "Reports/Gameplay20261103/final-queue-20261106-100955/movement.log",
+      "wrapper_log_sha256": "d9c2002a6a0aa14256f903ad048f12be1771d1f9255ef9501f1851891e858b90"
+    },
+    {
+      "name": "equipment",
+      "passed": true,
+      "started_utc": "2026-11-06T05:18:30.3532208Z",
+      "finished_utc": "2026-11-06T05:19:04.5430567Z",
+      "script": "Tools/verify_feedback.ps1",
+      "parameters": {
+        "Packaged": true
+      },
+      "cpp_pass_executions": 152,
+      "raw_cpp_reports": 6,
+      "wrapper_log_source": "Reports/Gameplay20261103/final-queue-20261106-100955/equipment.log",
+      "wrapper_log_sha256": "d1e90e10b9e51000cdb565cd110400b9a9ced0a152d36eb044a265cf684fd106"
+    },
+    {
+      "name": "loading-font",
+      "passed": true,
+      "started_utc": "2026-11-06T05:19:04.5470632Z",
+      "finished_utc": "2026-11-06T05:19:10.6096846Z",
+      "script": "Tools/verify_loading_typography.ps1",
+      "parameters": {
+        "Packaged": true
+      },
+      "cpp_pass_executions": 55,
+      "raw_cpp_reports": 1,
+      "wrapper_log_source": "Reports/Gameplay20261103/final-queue-20261106-100955/loading-font.log",
+      "wrapper_log_sha256": "9c86c2816ae29d06ef4711dee213f0d689844f5de47a39a3bef2f4a4cc0cdf8c"
+    },
+    {
+      "name": "loading-travel",
+      "passed": true,
+      "started_utc": "2026-11-06T05:19:10.6112910Z",
+      "finished_utc": "2026-11-06T05:20:13.8228207Z",
+      "script": "Tools/verify_loading.ps1",
+      "parameters": {
+        "Graphics": true,
+        "Packaged": true
+      },
+      "cpp_pass_executions": 76,
+      "raw_cpp_reports": 1,
+      "wrapper_log_source": "Reports/Gameplay20261103/final-queue-20261106-100955/loading-travel.log",
+      "wrapper_log_sha256": "50225eb7fafbb00376454a2a68d7e2698b1a215034986505dc38067d1a4c003f"
+    },
+    {
+      "name": "hud-review720",
+      "passed": true,
+      "started_utc": "2026-11-06T05:20:13.8242372Z",
+      "finished_utc": "2026-11-06T05:21:04.2054647Z",
+      "script": "Tools/verify_feedback.ps1",
+      "parameters": {
+        "Width": 1280,
+        "Packaged": true,
+        "Review": true,
+        "Height": 720
+      },
+      "cpp_pass_executions": 25,
+      "raw_cpp_reports": 3,
+      "wrapper_log_source": "Reports/Gameplay20261103/final-queue-20261106-100955/hud-review720.log",
+      "wrapper_log_sha256": "2b5a3f8173124b9d036301c0d2683b37404b49530c0d66eac38f6f6207db321e"
+    },
+    {
+      "name": "hud-review1080",
+      "passed": true,
+      "started_utc": "2026-11-06T05:21:04.2077874Z",
+      "finished_utc": "2026-11-06T05:21:57.4321162Z",
+      "script": "Tools/verify_feedback.ps1",
+      "parameters": {
+        "Width": 1920,
+        "Packaged": true,
+        "Review": true,
+        "Height": 1080
+      },
+      "cpp_pass_executions": 25,
+      "raw_cpp_reports": 3,
+      "wrapper_log_source": "Reports/Gameplay20261103/final-queue-20261106-100955/hud-review1080.log",
+      "wrapper_log_sha256": "0ac1a4aee2a4899982c338f48f3117f3eafac56744311eca3ca1a267fc97b149"
+    }
+  ],
+  "metadata": [
+    {
+      "group": "focused-nullrhi",
+      "source": "Reports/TaskFixes20261106/package-all-nullrhi-20261106-100656-737/run-summary.json",
+      "source_sha256": "2b07cc30d195a38cf5658c4624c2e1c6ba0d3f692dc7deba9cca4efc88598479",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/focused-nullrhi/01-run-summary.json",
+      "retained_sha256": "437c87531717d7c8531d1c0320c89d682cc580873590a8416b396c5917d26bbd",
+      "source_modified_utc": "2026-11-06T05:08:17.592230+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "field-nullrhi",
+      "source": "Reports/FieldOperations20261104/package-test-1280x720-20261106-100817-637/run-summary.json",
+      "source_sha256": "21ea501812344c912bf02acf753e51c2a6c484c117990fd04ffcd14101ae8e05",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/field-nullrhi/01-run-summary.json",
+      "retained_sha256": "21ea501812344c912bf02acf753e51c2a6c484c117990fd04ffcd14101ae8e05",
+      "source_modified_utc": "2026-11-06T05:08:36.386145+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "field-rendered",
+      "source": "Reports/FieldOperations20261104/package-rendered-test-1280x720-20261106-100836-389/run-summary.json",
+      "source_sha256": "6635311a069ee655389c9366df17e241abfb2e411900c5997fb5848153f2210b",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/field-rendered/01-run-summary.json",
+      "retained_sha256": "6635311a069ee655389c9366df17e241abfb2e411900c5997fb5848153f2210b",
+      "source_modified_utc": "2026-11-06T05:09:03.423664+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-queue",
+      "source": "Reports/Gameplay20261103/final-queue-20261106-100955/queue-summary.json",
+      "source_sha256": "3025eacb61c57566e4ef63439860500cc81c4b5e2a3af918fc286e2a2dd6e03d",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-queue/01-queue-summary.json",
+      "retained_sha256": "9aca55130514b2d294104f56caabcbfd318bad2d0242d7e2afa531609251380f",
+      "source_modified_utc": "2026-11-06T05:21:57.446799+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-gameplay-functional",
+      "source": "Reports/Gameplay20261103/package-test-1280x720-20261106-100955-641/run-summary.json",
+      "source_sha256": "e0eb189f7a4d4aa373130d08eb78772a632d9bae7e3c4ccb7f94d6812d4f8b1f",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-gameplay-functional/01-run-summary.json",
+      "retained_sha256": "e0eb189f7a4d4aa373130d08eb78772a632d9bae7e3c4ccb7f94d6812d4f8b1f",
+      "source_modified_utc": "2026-11-06T05:10:14.284688+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-gameplay-rendered",
+      "source": "Reports/Gameplay20261103/package-rendered-test-1280x720-20261106-101014-299/run-summary.json",
+      "source_sha256": "90bb525f866a17a660b63ad6ce28367550620537d49a9a82aef6fa1924f0920c",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-gameplay-rendered/01-run-summary.json",
+      "retained_sha256": "90bb525f866a17a660b63ad6ce28367550620537d49a9a82aef6fa1924f0920c",
+      "source_modified_utc": "2026-11-06T05:10:40.829669+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/run-summary.json",
+      "source_sha256": "30e16926812b473d66173801385452cea82ed1d0fa4e37be9ba731dc54527921",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-gameplay-review720/01-run-summary.json",
+      "retained_sha256": "30e16926812b473d66173801385452cea82ed1d0fa4e37be9ba731dc54527921",
+      "source_modified_utc": "2026-11-06T05:12:18.529187+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/gameplay-manifest.json",
+      "source_sha256": "479ca972eaf7d0dd8b073a9e42a687d5584535e3523bed8d552eee4f12f04e82",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-gameplay-review720/02-gameplay-manifest.json",
+      "retained_sha256": "da745ec460260867af814ac87846549bf21caa7861a12979c0644d7d09e0562f",
+      "source_modified_utc": "2026-11-06T05:11:11.339819+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/carry-pixel-checks.json",
+      "source_sha256": "9d4e1533a3cd7182a07af4c16c60a6d6cb1ab3ed4c765465f5ec7a8491b87cf9",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-gameplay-review720/03-carry-pixel-checks.json",
+      "retained_sha256": "9d4e1533a3cd7182a07af4c16c60a6d6cb1ab3ed4c765465f5ec7a8491b87cf9",
+      "source_modified_utc": "2026-11-06T05:12:18.020093+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/gameplay-manifest.json",
+      "source_sha256": "38eb547016cf26c891ca8b9fea1be7940158d49e908bd4d70b383f2b7f5ccbf9",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-gameplay-review720/04-gameplay-manifest.json",
+      "retained_sha256": "333612629235e25b75e271b8634bcd79ac40a618f6705651ab02b534195dc6af",
+      "source_modified_utc": "2026-11-06T05:12:16.577057+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/carry-pixel-checks.json",
+      "source_sha256": "8c529e95036313e2ac81e11487fb45b30592ba897c0100fcb712e010d699a245",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-gameplay-review720/05-carry-pixel-checks.json",
+      "retained_sha256": "8c529e95036313e2ac81e11487fb45b30592ba897c0100fcb712e010d699a245",
+      "source_modified_utc": "2026-11-06T05:11:47.950767+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/gameplay-manifest.json",
+      "source_sha256": "e5522c9b44136043d3f0a7378ff035e64ae2f49b7f2248ef89c068b302d59672",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-gameplay-review720/06-gameplay-manifest.json",
+      "retained_sha256": "66766e2aaae4a22c646724c61ba4e2fb4ef3c063579b0429c164d1b8ef2497f1",
+      "source_modified_utc": "2026-11-06T05:11:45.846436+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/run-summary.json",
+      "source_sha256": "d1602df01d1e5b3b41d4c49b7501184bd5959838ba9f21cbd6095e011379ae80",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-gameplay-review1080/01-run-summary.json",
+      "retained_sha256": "d1602df01d1e5b3b41d4c49b7501184bd5959838ba9f21cbd6095e011379ae80",
+      "source_modified_utc": "2026-11-06T05:14:02.516571+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/gameplay-manifest.json",
+      "source_sha256": "479ca972eaf7d0dd8b073a9e42a687d5584535e3523bed8d552eee4f12f04e82",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-gameplay-review1080/02-gameplay-manifest.json",
+      "retained_sha256": "da745ec460260867af814ac87846549bf21caa7861a12979c0644d7d09e0562f",
+      "source_modified_utc": "2026-11-06T05:12:50.788426+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/carry-pixel-checks.json",
+      "source_sha256": "b5e635c90f3823331701b0b75d1c681d929a77bd8b7d82ac317ad584e8635a89",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-gameplay-review1080/03-carry-pixel-checks.json",
+      "retained_sha256": "b5e635c90f3823331701b0b75d1c681d929a77bd8b7d82ac317ad584e8635a89",
+      "source_modified_utc": "2026-11-06T05:14:02.016961+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/gameplay-manifest.json",
+      "source_sha256": "38eb547016cf26c891ca8b9fea1be7940158d49e908bd4d70b383f2b7f5ccbf9",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-gameplay-review1080/04-gameplay-manifest.json",
+      "retained_sha256": "333612629235e25b75e271b8634bcd79ac40a618f6705651ab02b534195dc6af",
+      "source_modified_utc": "2026-11-06T05:14:00.480704+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/carry-pixel-checks.json",
+      "source_sha256": "0e9c85460852a913d3c7b8bc749b9e72b6370ea957af23a78c2f893c37226f35",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-gameplay-review1080/05-carry-pixel-checks.json",
+      "retained_sha256": "0e9c85460852a913d3c7b8bc749b9e72b6370ea957af23a78c2f893c37226f35",
+      "source_modified_utc": "2026-11-06T05:13:29.697674+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/gameplay-manifest.json",
+      "source_sha256": "e5522c9b44136043d3f0a7378ff035e64ae2f49b7f2248ef89c068b302d59672",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-gameplay-review1080/06-gameplay-manifest.json",
+      "retained_sha256": "66766e2aaae4a22c646724c61ba4e2fb4ef3c063579b0429c164d1b8ef2497f1",
+      "source_modified_utc": "2026-11-06T05:13:27.957393+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-nasa-regressions",
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261106-101621-811/run-summary.json",
+      "source_sha256": "9018cbd0981c6f95d1dc6fd77ea2119074fea321573a3f91253ede0845575021",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-nasa-regressions/01-run-summary.json",
+      "retained_sha256": "b08fbee37d06326bf81b6a8e27a878662f6e29e9facb3c68d465cdfbbde88b33",
+      "source_modified_utc": "2026-11-06T05:17:34.016741+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-equipment",
+      "source": "Reports/Feedback20261102/package-test-1280x720-20261106-101830-370/run-summary.json",
+      "source_sha256": "c1b4aa95381a694c0426df67ff864196b5299f21475941ddb5136f5d2044136a",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-equipment/01-run-summary.json",
+      "retained_sha256": "c1b4aa95381a694c0426df67ff864196b5299f21475941ddb5136f5d2044136a",
+      "source_modified_utc": "2026-11-06T05:19:04.542514+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-loading-font",
+      "source": "Reports/LoadingTypography20261102/package-checks-1280x720-20261106-101904-563/run-summary.json",
+      "source_sha256": "5cecaf9d8b31fe80ae191ab15d31776da5aeb50c61395633625d0ceca58d3ff2",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-loading-font/01-run-summary.json",
+      "retained_sha256": "5cecaf9d8b31fe80ae191ab15d31776da5aeb50c61395633625d0ceca58d3ff2",
+      "source_modified_utc": "2026-11-06T05:19:10.609210+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/run-summary.json",
+      "source_sha256": "7741189941956b94d02dd29010cfad4d86eb0cb8683999f8fc8e203a9a19f2f3",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-hud-review720/01-run-summary.json",
+      "retained_sha256": "7741189941956b94d02dd29010cfad4d86eb0cb8683999f8fc8e203a9a19f2f3",
+      "source_modified_utc": "2026-11-06T05:21:04.204479+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-apollo/hud-reference-manifest.json",
+      "source_sha256": "fd2fcac4e242c4f97957ef8a0824b62f6d40ed36fb7f03e487255fff93c6a9ec",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-hud-review720/02-hud-reference-manifest.json",
+      "retained_sha256": "f8499143c98b518c89d5b8cbbb2dc1379d32ee563469d1e27a0b48aa73bd75b8",
+      "source_modified_utc": "2026-11-06T05:20:30.292463+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-mars/hud-reference-manifest.json",
+      "source_sha256": "0450d0e62a8fbcc40725ff4b5a9fed3989873cd62e4a837797a4fad9390c691e",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-hud-review720/03-hud-reference-manifest.json",
+      "retained_sha256": "97fbb48b39cf1955174afa81d1fec76c2e37e4c5681f6c76b5a1f6b1edf0a6ed",
+      "source_modified_utc": "2026-11-06T05:21:02.916574+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-selene/hud-reference-manifest.json",
+      "source_sha256": "0450d0e62a8fbcc40725ff4b5a9fed3989873cd62e4a837797a4fad9390c691e",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-hud-review720/04-hud-reference-manifest.json",
+      "retained_sha256": "97fbb48b39cf1955174afa81d1fec76c2e37e4c5681f6c76b5a1f6b1edf0a6ed",
+      "source_modified_utc": "2026-11-06T05:20:46.668612+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/run-summary.json",
+      "source_sha256": "7e7bd8f9e062b7e16c4b00e20add74dfca3f4712dfe977c6ef376f10b1f8f6f0",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-hud-review1080/01-run-summary.json",
+      "retained_sha256": "7e7bd8f9e062b7e16c4b00e20add74dfca3f4712dfe977c6ef376f10b1f8f6f0",
+      "source_modified_utc": "2026-11-06T05:21:57.426937+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-apollo/hud-reference-manifest.json",
+      "source_sha256": "fd2fcac4e242c4f97957ef8a0824b62f6d40ed36fb7f03e487255fff93c6a9ec",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-hud-review1080/02-hud-reference-manifest.json",
+      "retained_sha256": "f8499143c98b518c89d5b8cbbb2dc1379d32ee563469d1e27a0b48aa73bd75b8",
+      "source_modified_utc": "2026-11-06T05:21:21.055715+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-mars/hud-reference-manifest.json",
+      "source_sha256": "0450d0e62a8fbcc40725ff4b5a9fed3989873cd62e4a837797a4fad9390c691e",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-hud-review1080/03-hud-reference-manifest.json",
+      "retained_sha256": "97fbb48b39cf1955174afa81d1fec76c2e37e4c5681f6c76b5a1f6b1edf0a6ed",
+      "source_modified_utc": "2026-11-06T05:21:55.556680+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-selene/hud-reference-manifest.json",
+      "source_sha256": "0450d0e62a8fbcc40725ff4b5a9fed3989873cd62e4a837797a4fad9390c691e",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/legacy-hud-review1080/04-hud-reference-manifest.json",
+      "retained_sha256": "97fbb48b39cf1955174afa81d1fec76c2e37e4c5681f6c76b5a1f6b1edf0a6ed",
+      "source_modified_utc": "2026-11-06T05:21:38.286861+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "menu-review-720",
+      "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-100903-446/review-manifest.json",
+      "source_sha256": "dfd762defe1000b27b2f601333d67b1ae23d5da1cdf9a5b586c8ee5f63c72441",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/menu-review-720/01-review-manifest.json",
+      "retained_sha256": "f9aa0363e5fb7a292fec35cd5b514d09bade4f6a7dec410c17ba8f884077307f",
+      "source_modified_utc": "2026-11-06T05:09:27.334043+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    },
+    {
+      "group": "menu-review-1080",
+      "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-100928-727/review-manifest.json",
+      "source_sha256": "975821cf3689f8f8588f1bd13d07a904f19ffa5768621543f2678c64c2c7bf38",
+      "retained": "Docs/TaskFixes20261106/evidence/metadata/menu-review-1080/01-review-manifest.json",
+      "retained_sha256": "1b697186ed795232fd74c100deb3a6926738201f6d2ba3c7da4eac4992963df9",
+      "source_modified_utc": "2026-11-06T05:09:53.458555+00:00",
+      "sanitization": "Repository/user absolute prefixes replaced with placeholders; semantic fields retained."
+    }
+  ],
+  "staged_pngs": [
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/apollo-core-body.png",
+      "sha256": "93d0188c53a50dfda45f8a169524995495094af96904c9072e48eeb3f1d7bf74",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:01.276620+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/apollo-core-fp45.png",
+      "sha256": "380d77f1f73cf757ae082545efcefa6812b68fa67166b6337afaa1a87de6b2d0",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:10:55.865418+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/apollo-core-fp85.png",
+      "sha256": "780fa32736df90a9e0e561b0a5e187ed7f5c4b8e905ca47c3a0b069da6fe3a23",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:03.127975+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/apollo-hardware-body.png",
+      "sha256": "d69c3c76cb3bb8f811f4b0a30539d2885dd3e4e460486ff9925c4c0d45dd129c",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:10:56.741269+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/apollo-hardware-fp45.png",
+      "sha256": "6c5c35a48cde2b6c3622995a29869939349ccb6cf9f84db1d8fe96b39c466ea0",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:10:59.474904+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/apollo-hardware-fp85.png",
+      "sha256": "68c8041b6f0e4f797bb8111a2fba2a409fa82ff72f50dff5ea79defd33acdeb1",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:10:58.536853+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/apollo-pouch-body.png",
+      "sha256": "a62de15d5a748dc974def4c2c4cb7a62d9a5102498004c68e90c7ea65544ea62",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:00.364150+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/apollo-pouch-fp.png",
+      "sha256": "9d20aa174510ec51cf250494fd78c058392a213a1593503061c8b8766157342c",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:10:54.910903+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/apollo-pouch-fp45.png",
+      "sha256": "345ccacebea87145736a429a4d67a24f8e90aea1f1353612a7d30cfec6b295a6",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:02.151562+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/apollo-stowed.png",
+      "sha256": "483ba77f3fdc57556b12ca9fe791288c567d1884402177ba7f96be160a829210",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:10:57.629599+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/crew-mira-communicator.png",
+      "sha256": "7c4e08bd0c3e6410438c7a0e177c72b315d664deb8e6cec474234a6d749656b2",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:04.904643+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/crew-notebook100.png",
+      "sha256": "4b3007f9d32d33e5893a4d23555d775d05c99f6a28dd879bc56d2b19d75c7cd8",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:05.733331+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/crew-notebook150.png",
+      "sha256": "32e0406d3b23c64b77813be38435d5fd5104ae5c64b413db148d0869faeebfe2",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:06.649056+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/crew-pip-model.png",
+      "sha256": "44a28a0463c23c9e49349197818208b2481000d604f4d0ab3a7f853efe524653",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:04.003499+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/departure-cabin.png",
+      "sha256": "feba64014ee44775ead3aeab9c7f4aebf6bbbe685d5edfaebcb744022100c1d8",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:10:50.366229+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/departure-handover.png",
+      "sha256": "d6bcdac975275723cdedab08885d44aa7618eb0bbee7ca08dba6d194f3cf2672",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:10:53.996831+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/departure-hatch.png",
+      "sha256": "bdcdb43509d99de1efccbcffe578a7053a35b7913a579638f9d96b9bfaeeff25",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:10:51.284819+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/departure-near-surface.png",
+      "sha256": "91c3720254d6b99489baa786c4b7a27f43cc9812595fc16920d256941cd2683f",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:10:53.073909+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/departure-paused.png",
+      "sha256": "cfc8f18a0b316419bc2f63a4cbc8ec45b749675067b7a70d6dc9ab52367f4a48",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:10:52.116863+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/water-feedback.png",
+      "sha256": "6f750a65c92494a96a8fa1f0095ed1dad6a27ddb97cef671a7086cd12f761104",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:08.462763+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/water-first-decision.png",
+      "sha256": "538eba3eae3fb7e2b8371aaa8d61692eac6506f8efa5e22275e2dc59a6e45564",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:07.556720+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/water-ready.png",
+      "sha256": "e12fa373a063baa657882721ee98696eda8e989f1f518fd8aee7c0e9437cdfcc",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:09.371462+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/water-recorded.png",
+      "sha256": "230bd281b37f79f26615404a8493d59084a3a5107f9ed9dab45c8a2986346c6c",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:10.282177+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/apollo/water-sources150.png",
+      "sha256": "c1c06a310e3d6725fc8cf1d90dca9373758a4ec3c78b51e0b949ab62d3d36ed0",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:11.203117+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/cell-body-grip.png",
+      "sha256": "a38187013361e8a50ee689b6fbace70c6d823d3c3b8276a9dc6f134022a6bbc5",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:12:10.181850+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/cell-body-orbit.png",
+      "sha256": "7797b796976f6edfc6164d7d040d0069045d65003bf669cef7de99a2d8bffcb4",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:12:11.086667+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/cell-body.png",
+      "sha256": "748c0987a64d2bb4b4008b98455310907b3d8c96de733920956ddd3fc94485d4",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:12:06.527144+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/cell-fp45-grip.png",
+      "sha256": "964ee2dc04b8775f83100611c9edd83e3b5797429193b9e7c0468ea8cc80678e",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:12:09.253333+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/cell-fp45-hidden-control.png",
+      "sha256": "98f6ea81f21031e00c05a20438b4cd39cf6b61217d0633b5514a42ee3c72db3b",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:12:03.780537+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/cell-fp45-lookdown.png",
+      "sha256": "a44b570ada242251e632d54fb2de19fffec76ad63ea8771ff5a09616900b72ea",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:12:02.886902+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/cell-fp45-text150-hidden-control.png",
+      "sha256": "4091c2626c9d483dc12c626de7161d5fefd90a097a6fd702d6733bab0e6d8e84",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:12:05.612169+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/cell-fp45-text150.png",
+      "sha256": "a6f16ce80c7fac93c2270bcd45a43fbeafb8dea46f94d1eb17956986ae51897b",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:12:04.691904+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/cell-fp45-up.png",
+      "sha256": "3aa039daf6df3791f57e5424aac72097b11e7308fdbcda4577ef61c625b95e7f",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:12:11.941987+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/cell-fp85-down.png",
+      "sha256": "e77d186467d86bedb872171bc83e98cb3fae7362218e74231999a963a66224dd",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:12:12.882716+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/cell-fp85-grip.png",
+      "sha256": "acb3afdd41caaf951f030849c8d78590aba8d3cc16f4fafbd4579fcf5e549d68",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:12:08.342491+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/cell-fp85.png",
+      "sha256": "7e5625ad130be9ad1da9be8939af93cae9e90ddf77a8dceeb86d63d5fedadb8b",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:12:01.986144+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/cell-seated.png",
+      "sha256": "2accab8d0e30734d496de5ab6d38a120a77bd6f1590b9d4c40fdc237eca9ba3a",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:12:07.432649+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/crew-mira-communicator.png",
+      "sha256": "01f33386969edef0ee357c15dc5402ed7e6cdb05bb39cb4f3e979471dfae478f",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:12:14.711414+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/crew-notebook100.png",
+      "sha256": "1c575337c85cf4edd6a190ebf0ed593fc32080c0f70e935a8ba4ed104bf676a3",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:12:15.490865+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/crew-notebook150.png",
+      "sha256": "25708ae1acaee40b940de2c71cb5b96e86abd609fae0ed0ddcbfd50c57ced13e",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:12:16.407815+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/crew-pip-model.png",
+      "sha256": "2e6fd8c3b1a947571b65e978c20417669de84fa958e868f4ad19d667c5c76830",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:12:13.809788+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/departure-cabin.png",
+      "sha256": "df45b0034a253ad3c1555a3d25b5284f76bf5c7b81130d5c875c8e5a5636641b",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:57.436846+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/departure-handover.png",
+      "sha256": "7b2634ee2044f7ab31f27c89818430ffcc02aaf0acbf36036e097e746ec28cd7",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:12:01.078298+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/departure-hatch.png",
+      "sha256": "bcda6dfdb742ea01ae36f1968c19eee46a8694196e2ce7c0ce3c859d3981ecf6",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:58.334616+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/departure-near-surface.png",
+      "sha256": "be01eb11f011325d9eb238d373bc8da320575927b9e835ab51788c53e4f2e281",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:12:00.135123+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/departure-paused.png",
+      "sha256": "8455c70b6092e3ceb9ec644393e00c8441e2c4e87509c044aec70d8c003e2b3c",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:59.168810+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/cell-body-grip.png",
+      "sha256": "f12f2f915f3d8f5bd26c12a459702ccc60577046fed77d4bc30679539fbe0432",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:34.928152+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/cell-body-orbit.png",
+      "sha256": "b975f1b703f82c59cb8e6817cefb029826ec8b9555c30bba4cf540a2a8b25018",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:35.817188+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/cell-body.png",
+      "sha256": "07408db5b3fe7b847ea8b92df167a8bf326ec3d44eb6cd1512f7c57934441a75",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:31.279630+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/cell-fp45-grip.png",
+      "sha256": "c442831809a1b1b762bf7f4894235dcd9e6ceb23730c6d8231068948eaa23efe",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:33.983572+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/cell-fp45-hidden-control.png",
+      "sha256": "38df70727dcc486690a7fdddb03ee19ab6ecc2dbf466a69cd5baa993653c70cc",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:28.585776+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/cell-fp45-lookdown.png",
+      "sha256": "d73666a27667748b4b1570dfa9570ab35c77115c7ef4cc0b009d32d4897d6ce9",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:27.670192+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/cell-fp45-text150-hidden-control.png",
+      "sha256": "0150563853c1e8a251387bba8911750e0cc2ed2491305f4d958435632945bd86",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:30.405677+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/cell-fp45-text150.png",
+      "sha256": "1f42148c2337dcbda8830682fd9d9aca699268b4d4eaa2eb2ef174ccf80b214c",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:29.507546+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/cell-fp45-up.png",
+      "sha256": "7874a2ad7368f7675a30ae08ec676d0f95feb5c76dcfd8b00038c109d6079c2b",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:36.643321+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/cell-fp85-down.png",
+      "sha256": "22b9c09918334a9aaf81c0f2b5c92d84e3c684ee19e11a6b3badfb5c635fc328",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:37.677196+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/cell-fp85-grip.png",
+      "sha256": "3ee12143a4d323c39479b1a9c26bb1b3db757c4a0f853c5d97f2b33e1cda4afc",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:33.068301+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/cell-fp85.png",
+      "sha256": "815d1d8e1f52da41355e764aaed8c5f1f0b8acac52e9479bed83a262c09dee04",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:26.706366+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/cell-seated.png",
+      "sha256": "aed5ca99034976606d0ec1acbe452cb933fee47c6c520b5b6998e3557fa22c33",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:32.163768+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/crew-mira-communicator.png",
+      "sha256": "408d791836f2cf6e021f92041462491e7a1f68fd07324a96225c7d834fefb35d",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:39.444584+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/crew-notebook100.png",
+      "sha256": "72942f03760687a62eb59905ba2a7ab49a9bb3dfc0044bafd6343e3a65886873",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:40.254259+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/crew-notebook150.png",
+      "sha256": "b9d49eba2a286fdd44f45320735544efa62497cff372b1a3b496bfb4e6d0e239",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:41.166604+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/crew-pip-model.png",
+      "sha256": "3a2c1b6e8abf11368611ff46b9851580ea451a14dfb0849244143788b14da256",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:38.539516+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/departure-cabin.png",
+      "sha256": "962f6ffff6b1769a25db66130f6fdc532c5e2a2a3b30fbf4660a90d42bcd9ff0",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:22.190059+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/departure-handover.png",
+      "sha256": "fac67c3c9c54b74a0931a9025b7ff4fd7ce7fa0f0b63084389398b320e258855",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:25.817869+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/departure-hatch.png",
+      "sha256": "705fc72ba7f5f949c60247f1af0328d39312ea42b09b8081c43f226e973c6623",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:23.088887+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/departure-near-surface.png",
+      "sha256": "66a6984315e29393419b5bfc4d30fc488b3fcf0b6cf4aa8d1b3d68bddaad736d",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:24.902492+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/departure-paused.png",
+      "sha256": "95fd4d87737a7439d6344315550c1a98e94c578b7b566dc87480f368288b53a1",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:23.943183+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/water-feedback.png",
+      "sha256": "6c99a9c983c4ad40f6939ae19d8a7de23e8ad488753d2245478cd3428fb3d8c2",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:42.970750+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/water-first-decision.png",
+      "sha256": "26958f7e52ccafd276599f55f46a0b531025b2a19da52bf9ba3dc291fe0919cd",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:42.070364+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/water-ready.png",
+      "sha256": "9b40b6ccf64d806223b7710d554b6caaaa361bd1b4fcc20ff2c0cc2768cd171c",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:43.878547+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/water-recorded.png",
+      "sha256": "629fbc0e28d871d0eed46ca725dbd05d968c8c55b5cc0f1f987f7ca962ddb0b6",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:44.783009+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/water-sources150.png",
+      "sha256": "7fbb69296b10320075ee1cd386b8c07a6aafa3411e6b30d880bd713b370683ac",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:11:45.692854+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/apollo-core-body.png",
+      "sha256": "2dd070951b7ed5cdccd2829c2631c826ab679b5ee9a3e253832430dcb9453814",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:40.317065+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/apollo-core-fp45.png",
+      "sha256": "e1f08b3203c12b9e9add007c89518323262877ef1b8e109e97782705dc2aecef",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:34.161441+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/apollo-core-fp85.png",
+      "sha256": "3276f79c316d6d044f241b36b47d1cbfe0c38097a0c5c6c71913c6a718305bc5",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:42.385876+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/apollo-hardware-body.png",
+      "sha256": "a1a3b97213c4eb34ae29b7df1db69e2776890a5fcd138b85ffbb2d4d5c4878b5",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:35.194330+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/apollo-hardware-fp45.png",
+      "sha256": "55913d30a420245bcd2217d76c9a5ec302d4e625917e0a62a2855195fee4fa59",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:38.239928+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/apollo-hardware-fp85.png",
+      "sha256": "434826906871ce11a97e40aedb41e51c5a049db6b3059971e98c8efc37a896f1",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:37.181485+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/apollo-pouch-body.png",
+      "sha256": "b0dd6e50756780494781d8e012a3b574cc9520b1f84ec02f610846f34275e651",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:39.264767+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/apollo-pouch-fp.png",
+      "sha256": "0ea50bb0fc669acf32fe957bbd21e80aaf8ee68104f6f779fe4c8a8d02bd29bc",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:33.054377+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/apollo-pouch-fp45.png",
+      "sha256": "27237319ddb1d670fb1b00ad0258b5e39acc8dfd96d04b7d52dba9a5f62d35ab",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:41.280995+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/apollo-stowed.png",
+      "sha256": "fde0e3447cec6649d79a7adb85e4c1f1d0a82e0dacb540fdf51d3a767d85a078",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:36.183480+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/crew-mira-communicator.png",
+      "sha256": "6e427e7de257ca4c2425a17995cd0af3aa8716f8a266fc84075db5712f9334c6",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:44.428011+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/crew-notebook100.png",
+      "sha256": "dfb030db45670cf924d2e10740ced33481482de76d11aabdd5ec5223ca580d2c",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:45.253636+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/crew-notebook150.png",
+      "sha256": "d18138e1fede6f3916584cc59f7c275c67730a58b96927efaa6cca3e433b43c6",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:46.160969+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/crew-pip-model.png",
+      "sha256": "35631de7f526df3440d0651b9b2104e82fdcb69082fa4d44d689ea6ba0bd997a",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:43.399704+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/departure-cabin.png",
+      "sha256": "0c1d6f47024ebbd3ff84863864702242588e7c782d3fe3ccc61133d31126f3ab",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:28.175023+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/departure-handover.png",
+      "sha256": "59a1edba5263cd0d51894c35f7b7e66acdc2fe359ba767308027c9897e0c4bb7",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:32.055419+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/departure-hatch.png",
+      "sha256": "67601e7b299015ddbe03de3c962538ec005ad33a229064b1fc2aef527a952421",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:29.182845+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/departure-near-surface.png",
+      "sha256": "42b697dbff3155152bbe3cbc93abcfe461bf61f2d92f9e021d1ffd63241a768e",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:31.056735+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/departure-paused.png",
+      "sha256": "4c997f54d3e7d3149d583e2a889a289f89238033077518cb370c6c874990ab8a",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:30.028620+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/water-feedback.png",
+      "sha256": "27e2f636ab778975a0d992dd6ec1f065465739e2a6e4eb63499c1d69894cbc60",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:47.979514+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/water-first-decision.png",
+      "sha256": "1c91cb62406d7bee26c1e4425dbc6bd2c72806e72137bd548329f4f8e77454cc",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:47.062516+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/water-ready.png",
+      "sha256": "0140cddacce11ef5962882794206f1106cc84c3da2dcf791c11b27135005e180",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:48.880510+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/water-recorded.png",
+      "sha256": "563306e313cd4cd03c01fc786e17d4fb024187d52ccada7228f6d2c72a817187",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:49.785626+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/apollo/water-sources150.png",
+      "sha256": "73b3885914feb0ba1a95287069fe61c12b66ee911f956e256064acd4c691891f",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:12:50.700395+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/cell-body-grip.png",
+      "sha256": "d94d64910276aef26a3949012049113b4c939d8bcd43713e8bdc77b9cd7bcce6",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:53.531696+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/cell-body-orbit.png",
+      "sha256": "c5cd70a159382b027f706cb01ebb2dbd02b0cef9852559bac3fc91d84dd13286",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:54.601170+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/cell-body.png",
+      "sha256": "ec1efac37ac06adc8644e34e125b0331dc98e1b66c97f091f83cec26ade9786e",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:49.378608+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/cell-fp45-grip.png",
+      "sha256": "79f8719ed4ba516df047b90b06f39f3081950803ba17ca0202bdd56f5ed5f32c",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:52.479323+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/cell-fp45-hidden-control.png",
+      "sha256": "491423f5105801828d9fd03ce86e9b427e7c554076404e1c403ce4c8520b8a15",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:46.288428+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/cell-fp45-lookdown.png",
+      "sha256": "a46f6ba49175b8c1a156db8cfed7e46df09be259a023a9a5b449bbe1ba81d46f",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:45.276046+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/cell-fp45-text150-hidden-control.png",
+      "sha256": "dc11afd5ce2dee571c1e8a72c88f0ffe62cc27b403814f92032157d0762e5b12",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:48.318496+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/cell-fp45-text150.png",
+      "sha256": "ae5ff367d0f895c8106ebc79fb6c718b58507ee66482190ea0d71a94165cda4f",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:47.315204+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/cell-fp45-up.png",
+      "sha256": "4bc00194ee80793b6dfb2428369139a61178dde8f31ff8830558d233e64f434c",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:55.547682+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/cell-fp85-down.png",
+      "sha256": "8bcba2fb219cade20745c06e26d9ff56e511d495f0820f3d4357aa8b1fd34fbf",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:56.535693+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/cell-fp85-grip.png",
+      "sha256": "f56593e9fd372417277e95d40b7ae8a93c99008528595bfbe17392e739de5643",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:51.431663+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/cell-fp85.png",
+      "sha256": "b38d0872b72833b63965f017ef98d676e998da6bb1689a8f5d4ec7a911db0433",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:44.251039+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/cell-seated.png",
+      "sha256": "6a73cf8feb9bce041aa9c379705647de943c048fe5836f04f0260c0f45e50b17",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:50.404136+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/crew-mira-communicator.png",
+      "sha256": "7e28ccb1396aa0473854d4ff28b3e2462d93e4167b47ecf9ea13e41766057478",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:58.653103+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/crew-notebook100.png",
+      "sha256": "92b68e1d2a3f8626204b7d0717995853035dde5f2ce2cb1a4e37d09e29826a4c",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:59.436596+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/crew-notebook150.png",
+      "sha256": "8332a1687ae68d13610cae563b79228cd3ca313ce0d88d2c055a47ac2c8d8b84",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:14:00.360227+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/crew-pip-model.png",
+      "sha256": "c389c731924219abc8b37ebf4c11f06f6242823bec12e985cd166a3706a98681",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:57.596325+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/departure-cabin.png",
+      "sha256": "346c144cd20677a31b6177e20cd8ac69c9449d411dd5c2b661e5fceb08256bda",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:39.279362+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/departure-handover.png",
+      "sha256": "5bd4bc2dab27fb7966c012ce4c4e31beba1df8a70c85ae960b1f6bba8aaf9428",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:43.210672+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/departure-hatch.png",
+      "sha256": "1a36044ed8abe5677d5002158cd1612a0e21fc6837387a19592fe1e6820f25b9",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:40.279942+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/departure-near-surface.png",
+      "sha256": "23214ed62022c3e89f6a1a667107dfeab7bcbc75f3ef51992c8fb75fdd6312a9",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:42.168474+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/departure-paused.png",
+      "sha256": "e737c82e148db7ebc6b880edcd2c2585279183d0cbed847a0637a224243300da",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:41.116207+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/cell-body-grip.png",
+      "sha256": "6303a1fb59247157abc666d790a23dfa9865fedf26f15dace0d5b2a051756e60",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:16.451795+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/cell-body-orbit.png",
+      "sha256": "b483e9341e4e9a89cae23602a9343ba909664e77403aadf182b6abd5882cbb03",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:17.485110+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/cell-body.png",
+      "sha256": "540af862b0d64310e7b3591023ad965c1272fcf7c943916929fa283fa12fe083",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:12.423985+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/cell-fp45-grip.png",
+      "sha256": "38adbc71a83f7923efbafc8928d88f16cea75b01fb0f66d75eaf3cbd82447769",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:15.411150+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/cell-fp45-hidden-control.png",
+      "sha256": "0a9691e59e74065a41af471fe1901457446922c55c0b4a16315e597391523f7c",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:09.171225+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/cell-fp45-lookdown.png",
+      "sha256": "2f594d8143e30ff6cdff785db549135c503bbdca8ca8d97902bc6c4f90b4a9c4",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:08.043983+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/cell-fp45-text150-hidden-control.png",
+      "sha256": "2253a9b33d536e724f50de49e5641d416152ece399ef485e4b65a2e9bad5b546",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:11.388676+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/cell-fp45-text150.png",
+      "sha256": "fbc39788178287431f9b2b69e6a44a848d127941309f2dbb20d6aae5c6a4418f",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:10.278725+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/cell-fp45-up.png",
+      "sha256": "6282f08fd4f39752263a1cc9a14ae9371347d647ce177c05f4c354b360da6688",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:18.338775+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/cell-fp85-down.png",
+      "sha256": "3fd2443654f571f2c21b855ede7427350ef7972822eeb134e3f5d3ba9f89f368",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:19.528826+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/cell-fp85-grip.png",
+      "sha256": "daf01cf4263b1acb9a51dc09023592184badc8581499902741c2190075efc85e",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:14.400759+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/cell-fp85.png",
+      "sha256": "447b242264b1fcc339d29a53dd615be4e68282d0c3089de16bf46ca7b4408dec",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:06.922733+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/cell-seated.png",
+      "sha256": "77be45594e061a8795e7e8328af7e906ace1b7d910dbb574b41e42cf6b3b1676",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:13.404460+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/crew-mira-communicator.png",
+      "sha256": "3017d57dceacd4b2911132527ed80ffef1d52a1fb4b538b268cdfcbacc5e3ec7",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:21.613541+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/crew-notebook100.png",
+      "sha256": "48f029b4df47ab7a0296e9a31742d315db81d9e167299f07187dd28ea05aff6d",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:22.417967+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/crew-notebook150.png",
+      "sha256": "4055b0d312a3d3ff9c7e49b23fe075cd08077202d5930787820a868017158fbb",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:23.330333+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/crew-pip-model.png",
+      "sha256": "f996f5402a2eb07c3b75b4a023980bfb3ca260b4eb6c64862ad1a54399702d73",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:20.580267+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/departure-cabin.png",
+      "sha256": "6ac8b25cc092f8c44e096c6995355860f051e0bd597c741060056ecdb01ba522",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:01.990052+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/departure-handover.png",
+      "sha256": "67051ef08d95229bc0a9507b734488fec0967a70847b8ea2cfeeb3161424eb6d",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:05.930245+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/departure-hatch.png",
+      "sha256": "904a25cc129b78b725b1fa551375951ba2038e544574d2988a75570a8f757f3e",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:02.996277+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/departure-near-surface.png",
+      "sha256": "03a70bbbd8980a2564f757798fc591463fcae868113511659a34762817aa19a9",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:04.906365+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/departure-paused.png",
+      "sha256": "f6eb2bba81bb19659215918bedf965b911ab959daa7f49695290d38945526ac9",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:03.845708+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/water-feedback.png",
+      "sha256": "c1fb687a12dde650a50921a2cfc850c250e686f830c1e891d456e3402f453941",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:25.139691+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/water-first-decision.png",
+      "sha256": "2a10b42277f121c2ead1533102f6755f0e207ad16fac769f806d826e2d05605b",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:24.238362+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/water-ready.png",
+      "sha256": "a8a17388acd4c6b7b7817693468d6ef58bd8c9238b0edc04c7f6ee88bda6eb66",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:26.041009+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/water-recorded.png",
+      "sha256": "fbd781a9526677fb15f8461f539198d8e920fe43f3bc8dc35c3e60f190e9c461",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:26.948667+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "source": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/water-sources150.png",
+      "sha256": "9ab86c6481c92cf45a753e2b781b9c1ae03f48318f895d97476682ce7accb8c7",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:13:27.870319+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-apollo/equipment-notebook100.png",
+      "sha256": "90718a0d62dc17d12eabb39fb0a9e49cc832201885d9dc84d9625003f847d352",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:20:28.274579+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-apollo/equipment-notebook150.png",
+      "sha256": "1c1de6bee604a6ab2495c26c324c84bd3fb2c6c4068ee51cb0d14ae1a7b036b7",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:20:29.191586+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-apollo/hud-guide100.png",
+      "sha256": "ee262259de4158d9c7d58fa3a5f1c08cf0f1b980b811028c62a2afae16b80790",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:20:24.709477+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-apollo/hud-guide150.png",
+      "sha256": "eb6022ad08f025b88b50c6e6d3e401b2dc14e18c69d44da2c4134b46e8be2335",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:20:25.612799+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-apollo/hud-low-resource150.png",
+      "sha256": "89357b95059906175e7ef41ba42ce01be0e17ef3dd77830a1e69ad3c54e4eca3",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:20:27.480879+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-apollo/hud-optional-choice150.png",
+      "sha256": "0825e8044e6c0ffb93ca45e707d0c35e2356dfe3eb21b53c707c402ee4ece369",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:20:30.205876+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-apollo/hud-overview100.png",
+      "sha256": "9a4f9b3c2449505fabf47596ae187545e1efca9dd222e37b0cd72fac6c5fcd15",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:20:22.882114+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-apollo/hud-overview150.png",
+      "sha256": "0fb963e0b322b0ef5522689ade5e6a6bff37eac5460e0577b803a977490ae39f",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:20:23.802383+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-apollo/hud-work150.png",
+      "sha256": "132c3e32a6fd7ae5acae150a169057cbdca610bc75c0b73ba601cd2bc649ebfa",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:20:26.575149+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-mars/equipment-notebook100.png",
+      "sha256": "b4f7e2a5427e77b4b38bfe1decbac7b256e1e68a79720936109f13a0b24a22f7",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:21:01.780410+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-mars/equipment-notebook150.png",
+      "sha256": "c1311345410126bb279a7e31451ddcca12253dc2ef9fc28c905c99d09c52374e",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:21:02.696915+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-mars/hud-guide100.png",
+      "sha256": "7385df161b984367e4002958d2d2104c2e691abb11885089629f013715725955",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:20:58.243834+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-mars/hud-guide150.png",
+      "sha256": "fbcd114ce5c82760b85a4a490f0c25066d6f3c79a5107cc4fc6b07b826a6d0d6",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:20:59.150720+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-mars/hud-low-resource150.png",
+      "sha256": "11b5ebaa07df38a84d88e2c6bcd4c5d626794de919ac6fbbd9606a836402474c",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:21:00.971070+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-mars/hud-overview100.png",
+      "sha256": "77520e398595cee9ac88234bc5d8e300bbc787aabf74cd9048b0c045cb9a550b",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:20:56.428050+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-mars/hud-overview150.png",
+      "sha256": "2d6e49f260dd8828ee8d2dd5a65db0e813217009ff7a40830066178d520396d3",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:20:57.328895+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-mars/hud-work150.png",
+      "sha256": "2527bced869c3ac28f26b98fb28513d63769089a0ac4e7d40ccf604960513c6a",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:21:00.062198+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-selene/equipment-notebook100.png",
+      "sha256": "4220de77bc9b02a89980ace852bce5e7f50fad43a963fdaa39f69ccf4ccdce91",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:20:45.548804+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-selene/equipment-notebook150.png",
+      "sha256": "682f2fe20d550d0fdac62c31d32a1244aed52cfe9e7cbde587dfc41f51a4659c",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:20:46.465290+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-selene/hud-guide100.png",
+      "sha256": "7279ff19309380ca1d12a021e30b15640a6a7382866d7a5f014ea620706aca82",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:20:41.983819+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-selene/hud-guide150.png",
+      "sha256": "dd8104d134b0d0e272c1818231d4a7753c40dba704a87f5019c9f6f4a57d9cac",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:20:42.898168+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-selene/hud-low-resource150.png",
+      "sha256": "78141cc9b6c9887d739586a8265bacf5c84ae04b611f345bfe7dde32aec524dd",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:20:44.742302+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-selene/hud-overview100.png",
+      "sha256": "c013e2cd6cd7ff309bc56e0881cbd3ab2956c63a4c8a1b14a7c4468a7c3bee44",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:20:40.173685+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-selene/hud-overview150.png",
+      "sha256": "d114af8333fea03891808fc847b81ecb6821dd8463f81c432c9ac3b6d08351ea",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:20:41.070193+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review720",
+      "source": "Reports/Feedback20261102/package-review-1280x720-20261106-102013-830/hud-selene/hud-work150.png",
+      "sha256": "861c38da6f90597910b175b206f2b51e5d3d28d6593aebd2f1e156f6c5182560",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:20:43.823678+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-apollo/equipment-notebook100.png",
+      "sha256": "e60ef38b10f2a1c26f46d0122433e81ae258579a3b07325e3e63110e2035a336",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:18.982199+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-apollo/equipment-notebook150.png",
+      "sha256": "10c149e8ccce08bd317ccd9d5883cf541f7de4579810ab00678c99dc1a9898d1",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:19.902152+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-apollo/hud-guide100.png",
+      "sha256": "4607238f900fb7c63947f5f99d0b4ea44c50d4e7622e3d9a6d9cd50223b18b0e",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:15.152982+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-apollo/hud-guide150.png",
+      "sha256": "2cc2b8b8da8e1342e0f23cb9afaaabc17d618b067df8f2accc271290f3b0a62c",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:16.086611+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-apollo/hud-low-resource150.png",
+      "sha256": "8f2d8e8af0f4533ce2c7b69d0d7b96628e9b79ca1698ac75f98acf6697514908",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:18.171754+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-apollo/hud-optional-choice150.png",
+      "sha256": "387f4a8c5f07da915805caae89683e99d7f103eccdf39cce8cae76e46ca0aad5",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:21.051714+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-apollo/hud-overview100.png",
+      "sha256": "75c3b421617967dc8b39007befa00bd649eae6ec15b27e157bf5406154235fe0",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:13.276161+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-apollo/hud-overview150.png",
+      "sha256": "a3235efa3fbe2408b5785feaadc970e237e1b00471097398812f5ea4807f10ae",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:14.213823+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-apollo/hud-work150.png",
+      "sha256": "2ff9d4fcfbb1e77ad3f313bf61fd236fe51b2ea460d37d684194b7bf8ba5084d",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:17.126812+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-mars/equipment-notebook100.png",
+      "sha256": "7efd09be9b578a6f2c6a991b8655b7199bf208eec514de0a4a33eb4157fbe094",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:54.465221+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-mars/equipment-notebook150.png",
+      "sha256": "da32147181749ddbc954f974c813d3a558c036547b5806aed8181b461f3c627a",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:55.386775+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-mars/hud-guide100.png",
+      "sha256": "1588f155e5e2877771d6e87fcddd3f96a51c99a6dfb90940e4f673ec943a0aaf",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:50.739551+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-mars/hud-guide150.png",
+      "sha256": "5846a8e6e4b0ec2124f67a92d8107fded3ff573f39d0b684da6f3fe4ae032dce",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:51.726739+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-mars/hud-low-resource150.png",
+      "sha256": "767d440003ecb9cee90e68650aa09affc48d5668cfcf9fe2d26160b3a27d3c00",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:53.707189+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-mars/hud-overview100.png",
+      "sha256": "f67a2617608b648ac967ce3dcabecbac2abff3d29f0a734b44dd93364723d81c",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:48.841840+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-mars/hud-overview150.png",
+      "sha256": "5fcfde8b35b3475074cefcf770b6277d12445e3d839e778e3ceb4ac84c58d066",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:49.774302+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-mars/hud-work150.png",
+      "sha256": "5469614265424cb9d9d0a1ef69115dee033ceaa22fc51977a9f97cc526a86b92",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:52.724317+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-selene/equipment-notebook100.png",
+      "sha256": "8b8bf45029d53103a0656077e6a7e75452865ef4635efd87c4f9f0144bfaea2e",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:37.221947+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-selene/equipment-notebook150.png",
+      "sha256": "88d0238e7e2506991ea022eaed5063e1dc05a091cb62cc5767c0cb6078c357bf",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:38.133020+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-selene/hud-guide100.png",
+      "sha256": "c740db3156543feb75324187c5c507edabb44e321be851432d73e218466843f6",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:33.479897+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-selene/hud-guide150.png",
+      "sha256": "d8d8f032815c4e8269afb6413b796557a79924a044ffaebc791321b6b940af12",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:34.449590+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-selene/hud-low-resource150.png",
+      "sha256": "88191fa4290b478851633a516d92d994537159330cdcf3475a231a9dfd08fc87",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:36.452100+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-selene/hud-overview100.png",
+      "sha256": "d6a4db2d3593770249e0d326259ba934637df75e8d6d06a8b4e217ad8e99b39b",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:31.544707+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-selene/hud-overview150.png",
+      "sha256": "a030383f2a50935b98a71f1ec078f645c8dd5ee36b65fe7525edfbcaf14356ff",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:32.506708+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "legacy-hud-review1080",
+      "source": "Reports/Feedback20261102/package-review-1920x1080-20261106-102104-213/hud-selene/hud-work150.png",
+      "sha256": "96c7f07d0f06166552ac3533b9246b47456818892c16594059b15a7fb4d7908f",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:21:35.437211+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-720",
+      "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-100903-446/home.png",
+      "sha256": "8308c80b20b198fb45b5cb9797fa41e968bb1c47b2fc3b5be06a8c8a7c2880fd",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:09:09.347676+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-720",
+      "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-100903-446/moon-unselected.png",
+      "sha256": "23384748b054d0fc3c0b4e22abe332b722cb0bbf0a0c7452c43a2f1de67991d8",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:09:11.309979+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-720",
+      "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-100903-446/transition-00.png",
+      "sha256": "1cbba71b577ba58661ef158781a6d67f201490f8e11ea5e6fa71f7da9a3536df",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:09:12.338364+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-720",
+      "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-100903-446/transition-01.png",
+      "sha256": "ac171f6695e6013faef853e2f062b23334b9fd4a58812b4273b9246e6e11d50e",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:09:12.487603+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-720",
+      "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-100903-446/transition-02.png",
+      "sha256": "1bc08dc7c242501cd69a849a8b5f2935dbfd595f4bbde9cbd50f85db267ce9ca",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:09:12.636849+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-720",
+      "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-100903-446/transition-03.png",
+      "sha256": "1bc08dc7c242501cd69a849a8b5f2935dbfd595f4bbde9cbd50f85db267ce9ca",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:09:12.789673+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-720",
+      "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-100903-446/transition-04.png",
+      "sha256": "1bc08dc7c242501cd69a849a8b5f2935dbfd595f4bbde9cbd50f85db267ce9ca",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:09:12.939615+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-720",
+      "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-100903-446/transition-05.png",
+      "sha256": "1bc08dc7c242501cd69a849a8b5f2935dbfd595f4bbde9cbd50f85db267ce9ca",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:09:13.089405+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-720",
+      "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-100903-446/moon-apollo-selected.png",
+      "sha256": "1bc08dc7c242501cd69a849a8b5f2935dbfd595f4bbde9cbd50f85db267ce9ca",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:09:14.093910+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-720",
+      "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-100903-446/moon-selene-selected.png",
+      "sha256": "90906fb3a96d07ea954a0410d51e63340e4867fb33c5caa637d5086abd25393d",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:09:16.092478+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-720",
+      "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-100903-446/mars-unselected.png",
+      "sha256": "b9a95fabf8bb9cfed03fbdd2c957e37e9b5353905360a2798555bce27f7db05c",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:09:18.111376+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-720",
+      "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-100903-446/mars-ares-selected.png",
+      "sha256": "15885c27624e1dfcfc6c91e9a4ef119d22868376b7901f45ac848e85717fc2b2",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:09:20.120372+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-720",
+      "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-100903-446/moon150-selected.png",
+      "sha256": "9d074dcd418c2c429b792715fd426966e46f3d8048f7582fcab6e899b5dedb62",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:09:22.119174+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-720",
+      "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-100903-446/actions-focus.png",
+      "sha256": "e43499bac1b6bb149f146f80b3f0bffef0bf5fda3c20b37f5a7cfad2ca6d6dfe",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:09:23.441595+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-720",
+      "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-100903-446/actions-hover.png",
+      "sha256": "c2a1af52c6662bf6ecac2026ba39f45c29f0de96e5c27aa775a8e31c2c0ac525",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:09:24.440836+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-720",
+      "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-100903-446/actions-pressed.png",
+      "sha256": "1731852a711bb2618e145586b8b57bade3a854535ea134216f9a20e6790b2cdc",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:09:25.453284+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-720",
+      "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-100903-446/actions-idle.png",
+      "sha256": "c2a1af52c6662bf6ecac2026ba39f45c29f0de96e5c27aa775a8e31c2c0ac525",
+      "width": 1280,
+      "height": 720,
+      "source_modified_utc": "2026-11-06T05:09:26.464490+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-1080",
+      "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-100928-727/home.png",
+      "sha256": "e7fa71a16bf9ebf13b0b1ad9ef6b04f1909381badc1555e4f0eaae723b71c612",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:09:35.018867+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-1080",
+      "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-100928-727/moon-unselected.png",
+      "sha256": "13098909b30b3a5677f4f4219bf4ee24a179df755da1c5ecc6dd0af2b8e48f04",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:09:36.927166+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-1080",
+      "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-100928-727/transition-00.png",
+      "sha256": "771f9048ed5fcd7157ebace31049beda9e8e5d5109e0da9703ac97b4284987ce",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:09:37.936781+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-1080",
+      "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-100928-727/transition-01.png",
+      "sha256": "48b46911f2951269c924609a877c8963d8c0a18afa1081d5484c4fc2165aed19",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:09:38.222559+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-1080",
+      "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-100928-727/transition-02.png",
+      "sha256": "277b8e44e7d8d42d46cf32554de12cf14952041f96b5012f4cb209a6b4f5bc85",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:09:38.509698+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-1080",
+      "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-100928-727/transition-03.png",
+      "sha256": "277b8e44e7d8d42d46cf32554de12cf14952041f96b5012f4cb209a6b4f5bc85",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:09:38.792365+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-1080",
+      "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-100928-727/transition-04.png",
+      "sha256": "277b8e44e7d8d42d46cf32554de12cf14952041f96b5012f4cb209a6b4f5bc85",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:09:39.048234+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-1080",
+      "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-100928-727/transition-05.png",
+      "sha256": "277b8e44e7d8d42d46cf32554de12cf14952041f96b5012f4cb209a6b4f5bc85",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:09:39.297187+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-1080",
+      "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-100928-727/moon-apollo-selected.png",
+      "sha256": "277b8e44e7d8d42d46cf32554de12cf14952041f96b5012f4cb209a6b4f5bc85",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:09:40.363947+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-1080",
+      "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-100928-727/moon-selene-selected.png",
+      "sha256": "cf261032f95fb30baecd5c9dde52f11e6ccc275bb637e11aa7356f733a5e11d7",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:09:42.378426+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-1080",
+      "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-100928-727/mars-unselected.png",
+      "sha256": "7dacc86caa025da25ec2e80d4efac64d568785d069f8d63be81259ed2459822c",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:09:44.395725+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-1080",
+      "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-100928-727/mars-ares-selected.png",
+      "sha256": "30214d6aa659e24a311f304057c48f65fc348d82eabbe666626ac2fde3cf462f",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:09:46.412943+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-1080",
+      "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-100928-727/moon150-selected.png",
+      "sha256": "8f4bfdd5f812359031074c5e8f0acb21c0d210ec11c774c470170fa3df43d587",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:09:48.407971+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-1080",
+      "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-100928-727/actions-focus.png",
+      "sha256": "a9fe1a25edf377b440f11844b707d27267881708cc18bd20790cea53f148650a",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:09:49.722444+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-1080",
+      "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-100928-727/actions-hover.png",
+      "sha256": "ad71f40966ea29c25be5c7981bdc4173d4c3fb3c1ff536c99616790358c9243f",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:09:50.727524+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-1080",
+      "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-100928-727/actions-pressed.png",
+      "sha256": "c88c2d0ddca46ffae22cd9eb6cf154d14e33b4410b593d65dc60214e29393220",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:09:51.729599+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    },
+    {
+      "group": "menu-review-1080",
+      "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-100928-727/actions-idle.png",
+      "sha256": "ad71f40966ea29c25be5c7981bdc4173d4c3fb3c1ff536c99616790358c9243f",
+      "width": 1920,
+      "height": 1080,
+      "source_modified_utc": "2026-11-06T05:09:52.738518+00:00",
+      "local_evidence_only": true,
+      "copied_into_docs": false
+    }
+  ],
+  "paired_pixel_checks": [
+    {
+      "group": "legacy-gameplay-review720",
+      "report": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/carry-pixel-checks.json",
+      "shown": "cell-fp45-lookdown",
+      "control": "cell-fp45-hidden-control",
+      "passed": true,
+      "text_scale": 1.0,
+      "fov_checks": {
+        "fov": 45.0
+      },
+      "fov_checked": true,
+      "cell_region_uv": [
+        0.426803,
+        0.287012,
+        0.573197,
+        0.607012
+      ],
+      "central_region_uv": [
+        0.4560818,
+        0.351012,
+        0.5439182,
+        0.543012
+      ],
+      "central_region_pixels": [
+        583,
+        252,
+        697,
+        391
+      ],
+      "image_size": [
+        1280,
+        720
+      ],
+      "changed_pixels": 8864,
+      "roi_pixels": 15846,
+      "changed_fraction": 0.5593840716900164,
+      "shown_sha256": "a44b570ada242251e632d54fb2de19fffec76ad63ea8771ff5a09616900b72ea",
+      "control_sha256": "98f6ea81f21031e00c05a20438b4cd39cf6b61217d0633b5514a42ee3c72db3b"
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "report": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/mars/carry-pixel-checks.json",
+      "shown": "cell-fp45-text150",
+      "control": "cell-fp45-text150-hidden-control",
+      "passed": true,
+      "text_scale": 1.5,
+      "fov_checks": {
+        "fov": 45.0
+      },
+      "fov_checked": true,
+      "cell_region_uv": [
+        0.426803,
+        0.287012,
+        0.573197,
+        0.607012
+      ],
+      "central_region_uv": [
+        0.4560818,
+        0.351012,
+        0.5439182,
+        0.543012
+      ],
+      "central_region_pixels": [
+        583,
+        252,
+        697,
+        391
+      ],
+      "image_size": [
+        1280,
+        720
+      ],
+      "changed_pixels": 8794,
+      "roi_pixels": 15846,
+      "changed_fraction": 0.5549665530733308,
+      "shown_sha256": "a6f16ce80c7fac93c2270bcd45a43fbeafb8dea46f94d1eb17956986ae51897b",
+      "control_sha256": "4091c2626c9d483dc12c626de7161d5fefd90a097a6fd702d6733bab0e6d8e84"
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "report": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/carry-pixel-checks.json",
+      "shown": "cell-fp45-lookdown",
+      "control": "cell-fp45-hidden-control",
+      "passed": true,
+      "text_scale": 1.0,
+      "fov_checks": {
+        "fov": 45.0
+      },
+      "fov_checked": true,
+      "cell_region_uv": [
+        0.426803,
+        0.287012,
+        0.573197,
+        0.607012
+      ],
+      "central_region_uv": [
+        0.4560818,
+        0.351012,
+        0.5439182,
+        0.543012
+      ],
+      "central_region_pixels": [
+        583,
+        252,
+        697,
+        391
+      ],
+      "image_size": [
+        1280,
+        720
+      ],
+      "changed_pixels": 8778,
+      "roi_pixels": 15846,
+      "changed_fraction": 0.5539568345323741,
+      "shown_sha256": "d73666a27667748b4b1570dfa9570ab35c77115c7ef4cc0b009d32d4897d6ce9",
+      "control_sha256": "38df70727dcc486690a7fdddb03ee19ab6ecc2dbf466a69cd5baa993653c70cc"
+    },
+    {
+      "group": "legacy-gameplay-review720",
+      "report": "Reports/Gameplay20261103/package-review-1280x720-20261106-101040-842/selene/carry-pixel-checks.json",
+      "shown": "cell-fp45-text150",
+      "control": "cell-fp45-text150-hidden-control",
+      "passed": true,
+      "text_scale": 1.5,
+      "fov_checks": {
+        "fov": 45.0
+      },
+      "fov_checked": true,
+      "cell_region_uv": [
+        0.426803,
+        0.287012,
+        0.573197,
+        0.607012
+      ],
+      "central_region_uv": [
+        0.4560818,
+        0.351012,
+        0.5439182,
+        0.543012
+      ],
+      "central_region_pixels": [
+        583,
+        252,
+        697,
+        391
+      ],
+      "image_size": [
+        1280,
+        720
+      ],
+      "changed_pixels": 8651,
+      "roi_pixels": 15846,
+      "changed_fraction": 0.5459421936135302,
+      "shown_sha256": "1f42148c2337dcbda8830682fd9d9aca699268b4d4eaa2eb2ef174ccf80b214c",
+      "control_sha256": "0150563853c1e8a251387bba8911750e0cc2ed2491305f4d958435632945bd86"
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "report": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/carry-pixel-checks.json",
+      "shown": "cell-fp45-lookdown",
+      "control": "cell-fp45-hidden-control",
+      "passed": true,
+      "text_scale": 1.0,
+      "fov_checks": {
+        "fov": 45.0
+      },
+      "fov_checked": true,
+      "cell_region_uv": [
+        0.426803,
+        0.287012,
+        0.573197,
+        0.607012
+      ],
+      "central_region_uv": [
+        0.4560818,
+        0.351012,
+        0.5439182,
+        0.543012
+      ],
+      "central_region_pixels": [
+        875,
+        379,
+        1045,
+        587
+      ],
+      "image_size": [
+        1920,
+        1080
+      ],
+      "changed_pixels": 19608,
+      "roi_pixels": 35360,
+      "changed_fraction": 0.5545248868778281,
+      "shown_sha256": "a46f6ba49175b8c1a156db8cfed7e46df09be259a023a9a5b449bbe1ba81d46f",
+      "control_sha256": "491423f5105801828d9fd03ce86e9b427e7c554076404e1c403ce4c8520b8a15"
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "report": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/mars/carry-pixel-checks.json",
+      "shown": "cell-fp45-text150",
+      "control": "cell-fp45-text150-hidden-control",
+      "passed": true,
+      "text_scale": 1.5,
+      "fov_checks": {
+        "fov": 45.0
+      },
+      "fov_checked": true,
+      "cell_region_uv": [
+        0.426803,
+        0.287012,
+        0.573197,
+        0.607012
+      ],
+      "central_region_uv": [
+        0.4560818,
+        0.351012,
+        0.5439182,
+        0.543012
+      ],
+      "central_region_pixels": [
+        875,
+        379,
+        1045,
+        587
+      ],
+      "image_size": [
+        1920,
+        1080
+      ],
+      "changed_pixels": 19374,
+      "roi_pixels": 35360,
+      "changed_fraction": 0.5479072398190046,
+      "shown_sha256": "ae5ff367d0f895c8106ebc79fb6c718b58507ee66482190ea0d71a94165cda4f",
+      "control_sha256": "dc11afd5ce2dee571c1e8a72c88f0ffe62cc27b403814f92032157d0762e5b12"
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "report": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/carry-pixel-checks.json",
+      "shown": "cell-fp45-lookdown",
+      "control": "cell-fp45-hidden-control",
+      "passed": true,
+      "text_scale": 1.0,
+      "fov_checks": {
+        "fov": 45.0
+      },
+      "fov_checked": true,
+      "cell_region_uv": [
+        0.426803,
+        0.287012,
+        0.573197,
+        0.607012
+      ],
+      "central_region_uv": [
+        0.4560818,
+        0.351012,
+        0.5439182,
+        0.543012
+      ],
+      "central_region_pixels": [
+        875,
+        379,
+        1045,
+        587
+      ],
+      "image_size": [
+        1920,
+        1080
+      ],
+      "changed_pixels": 19436,
+      "roi_pixels": 35360,
+      "changed_fraction": 0.5496606334841629,
+      "shown_sha256": "2f594d8143e30ff6cdff785db549135c503bbdca8ca8d97902bc6c4f90b4a9c4",
+      "control_sha256": "0a9691e59e74065a41af471fe1901457446922c55c0b4a16315e597391523f7c"
+    },
+    {
+      "group": "legacy-gameplay-review1080",
+      "report": "Reports/Gameplay20261103/package-review-1920x1080-20261106-101218-537/selene/carry-pixel-checks.json",
+      "shown": "cell-fp45-text150",
+      "control": "cell-fp45-text150-hidden-control",
+      "passed": true,
+      "text_scale": 1.5,
+      "fov_checks": {
+        "fov": 45.0
+      },
+      "fov_checked": true,
+      "cell_region_uv": [
+        0.426803,
+        0.287012,
+        0.573197,
+        0.607012
+      ],
+      "central_region_uv": [
+        0.4560818,
+        0.351012,
+        0.5439182,
+        0.543012
+      ],
+      "central_region_pixels": [
+        875,
+        379,
+        1045,
+        587
+      ],
+      "image_size": [
+        1920,
+        1080
+      ],
+      "changed_pixels": 19221,
+      "roi_pixels": 35360,
+      "changed_fraction": 0.5435803167420814,
+      "shown_sha256": "fbc39788178287431f9b2b69e6a44a848d127941309f2dbb20d6aae5c6a4418f",
+      "control_sha256": "2253a9b33d536e724f50de49e5641d416152ece399ef485e4b65a2e9bad5b546"
+    }
+  ],
+  "menu_action_reviews": [
+    {
+      "group": "menu-review-720",
+      "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-100903-446/review-manifest.json",
+      "source_log": "Reports/MissionSelection20261031/package-review-1280x720-20261106-100903-446.log",
+      "source_log_sha256": "f5c41ab07e4ca98c7d2c80d77e204a6d0a163716a5eefacee549d6d58451c0f0",
+      "executable_binding": "Standalone review runner does not emit a per-run exe-hash JSON. Bound through the frozen final build and unchanged final executable across the enclosing root validation sequence.",
+      "staged_pngs": 17,
+      "action_records": 6,
+      "sampled_hit_paths_per_action_record": 5,
+      "actual_keyboard_focus_records": 6,
+      "actual_mission_card_pointer_routes": 3,
+      "actual_action_button_clicks_claimed": 0,
+      "cpp_pass_executions": 0
+    },
+    {
+      "group": "menu-review-1080",
+      "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-100928-727/review-manifest.json",
+      "source_log": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-100928-727.log",
+      "source_log_sha256": "b8bc18c24f1f2a20efd896f66cb15cd093837ef61c9dd47b9bbe677448f74b0a",
+      "executable_binding": "Standalone review runner does not emit a per-run exe-hash JSON. Bound through the frozen final build and unchanged final executable across the enclosing root validation sequence.",
+      "staged_pngs": 17,
+      "action_records": 6,
+      "sampled_hit_paths_per_action_record": 5,
+      "actual_keyboard_focus_records": 6,
+      "actual_mission_card_pointer_routes": 3,
+      "actual_action_button_clicks_claimed": 0,
+      "cpp_pass_executions": 0
+    }
+  ],
+  "editor_selection": {
+    "source": "Reports/MissionSelection20261031/editor-test-1280x720-20261106-102157-455-checks.txt",
+    "source_sha256": "83bc6cdedccef4044e0dd3fcd9e082f374d2362501631f78ace79a7641541fc4",
+    "retained": "Docs/TaskFixes20261106/evidence/editor-selection-checks.txt",
+    "cpp_pass_executions": 66,
+    "cpp_failures": 0,
+    "game_module_sha256": "1f4c55419f1a44e3cfbe9c01cf7fa589ee541a4ea66f5e0bc64349289d612352",
+    "included_in_packaged_executable_total": false,
+    "condition": "Editor selection test; separate executable/module identity from packaged game."
+  },
+  "additional_smoke_receipt": "Docs/TaskFixes20261106/evidence/nasa-smoke-final/curation-receipt.json",
+  "build_receipts": "Docs/TaskFixes20261106/evidence/build-receipts.json",
+  "test_contract_correction": "Docs/TaskFixes20261106/evidence/test-contract-correction.json",
+  "historical_failed_execution": "Docs/TaskFixes20261106/evidence/history/17a-pov-failure-receipt.json",
+  "limits": {
+    "human_playtest_performed": false,
+    "graphics_performance_measured_by_these_suites": false,
+    "network_isolation_tested": false,
+    "whole_mission_graphics_performance_measured": false,
+    "full_glove_physical_accuracy_proven": false,
+    "pixel_differences_prove_rendered_contribution_not_grasp_accuracy": true,
+    "all_pngs_local_evidence_only": true,
+    "competition_eligibility": "unconfirmed",
+    "fixed_step_traversal_is_simulation_not_realtime_performance": true
+  },
+  "remote_actions_performed": [],
+  "historical_visual_comparison": {
+    "path": "Docs/TaskFixes20261106/evidence/carry-highlight-comparison.json",
+    "scope": "Earlier01efe140-lumen versus17a3-lumen staged visual iteration; excluded from final06c execution counts. The06c change after17a was test-only as recorded by the source-delta audit."
+  },
+  "closure_integrity_receipt": "Docs/TaskFixes20261106/evidence/bundle-integrity.json"
+}

@@ -1,0 +1,46 @@
+PASS Apollo automation uses standard enabled extension and disables owner checkpoint writes
+PASS Mission starts at briefing with both registered ALSEP sites
+PASS Real start input enters the required pre-EVA panel before any surface task
+PASS Owned preflight callback starts the next timed check
+PASS Owned preflight callback starts the next timed check
+PASS Owned preflight callback starts the next timed check
+PASS Owned preflight callback starts the next timed check
+PASS Four elapsed training checks allow the owned hatch callback
+PASS Committed surface mission waits for its mandatory resource briefing
+PASS Actual briefing callbacks lock the Intermediate budget and release native work
+PASS Lander screenshot reproduction points to distant ALSEP instead of advertising a false E adjustment
+PASS Real E at the lander cannot complete or enter distant ALSEP
+PASS Unrelated field-kit callback cannot commit registered ALSEP work
+PASS Physical W input reaches the actual NASA-positioned PSE from the lander without teleporting
+PASS A real visibility obstacle suppresses the actionable ALSEP prompt
+PASS Actual E input cannot enter or award obstructed ALSEP work
+PASS A free alternate work key can be bound at the physical work site
+PASS Old E binding no longer opens the instrument after rebinding
+PASS Rebound U input opens the real ALSEP tool without awarding progress
+PASS Default work binding restores after the input regression check
+PASS Standard-extension E input reaches the native ALSEP handler instead of an optional support panel
+PASS Uncentered actual bubble refuses confirmation
+PASS Escape cancels unfinished adjustment and pauses without recording
+PASS Paused real-input attempts cannot move ALSEP or consume native/support resources
+PASS Real Escape resumes uncommitted ALSEP work
+PASS Standard-extension E input reaches the native ALSEP handler instead of an optional support panel
+PASS Centered bubble via held arrow input commits exactly 1/2 ALSEP
+PASS Actual 1/2 ALSEP checkpoint records the committed instrument only
+PASS Legacy version-1 checkpoint without additive training data survives memory serialization
+PASS Empty legacy field state disables optional extension without losing ALSEP progress
+PASS Legacy resumed-state contract still accepts the real work-key antenna input
+PASS Validated modern extension state restores without consuming an instrument action
+SKIP External old binary checkpoint fixture was not supplied; memory compatibility was checked, not a disk resume.
+PASS Standard-extension E input reaches the native ALSEP handler instead of an optional support panel
+PASS Weak real Earth link cannot complete the second ALSEP task
+PASS Two real instrument confirmations advance ALSEP 0/2 to 1/2 to 2/2 and unlock sampling
+PASS All three actual photo/sample workflows unlock the Surveyor traverse
+PASS Physical Surveyor arrival opens recovery without granting evidence or hardware
+PASS All three actual packed hardware workflows unlock the return
+PASS Full standard-extension Apollo mission completes with measured physical travel and original science cargo
+PASS Optional support pickups and recorder are not required to complete the historical mission
+Measured collision-enabled walkthrough before restart: 1285.90 m; 946.24 game seconds. No teleport or direct successful task completion.
+PASS Real R restart and map travel reset ALSEP masks bubble antenna and work context
+PASS Reloaded mission resets required training gates and both native and support telemetry
+Measured collision-enabled walking: 1285.90 m; game seconds: 946.24. No SetActorLocation, actor relocation, speed override or direct successful task completion is used for the walkthrough.
+RESULT: 0 failures

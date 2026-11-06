@@ -1,0 +1,99 @@
+{
+  "Cases": [
+    {
+      "Case": "intro",
+      "Flag": "NasaIntroTest",
+      "Map": "/Game/Rescue/Maps/MissionSelect",
+      "Assertions": 12,
+      "Failures": 0,
+      "Outcome": "passed"
+    },
+    {
+      "Case": "ui-apollo",
+      "Flag": "NasaUITest",
+      "Map": "/Game/Lunar/Maps/Apollo12",
+      "Assertions": 24,
+      "Failures": 0,
+      "Outcome": "passed"
+    },
+    {
+      "Case": "ui-selene",
+      "Flag": "NasaUITest",
+      "Map": "/Game/Lunar/Maps/MoonBase",
+      "Assertions": 30,
+      "Failures": 0,
+      "Outcome": "passed"
+    },
+    {
+      "Case": "ui-mars",
+      "Flag": "NasaUITest",
+      "Map": "/Game/Mars/Maps/MarsBase",
+      "Assertions": 28,
+      "Failures": 0,
+      "Outcome": "passed"
+    },
+    {
+      "Case": "pov",
+      "Flag": "NasaPovTest",
+      "Map": "/Game/Lunar/Maps/Apollo12",
+      "Assertions": 30,
+      "Failures": 0,
+      "Outcome": "passed"
+    },
+    {
+      "Case": "learning-apollo",
+      "Flag": "NasaLearningTest",
+      "Map": "/Game/Lunar/Maps/Apollo12",
+      "Assertions": 39,
+      "Failures": 0,
+      "Outcome": "passed"
+    },
+    {
+      "Case": "learning-selene",
+      "Flag": "NasaLearningTest",
+      "Map": "/Game/Lunar/Maps/MoonBase",
+      "Assertions": 39,
+      "Failures": 0,
+      "Outcome": "passed"
+    },
+    {
+      "Case": "learning-mars",
+      "Flag": "NasaLearningTest",
+      "Map": "/Game/Mars/Maps/MarsBase",
+      "Assertions": 39,
+      "Failures": 0,
+      "Outcome": "passed"
+    },
+    {
+      "Case": "restart-apollo",
+      "Flag": "NasaRestartTest",
+      "Map": "/Game/Lunar/Maps/Apollo12",
+      "Assertions": 12,
+      "Failures": 0,
+      "Outcome": "passed"
+    },
+    {
+      "Case": "restart-selene",
+      "Flag": "NasaRestartTest",
+      "Map": "/Game/Lunar/Maps/MoonBase",
+      "Assertions": 12,
+      "Failures": 0,
+      "Outcome": "passed"
+    },
+    {
+      "Case": "restart-mars",
+      "Flag": "NasaRestartTest",
+      "Map": "/Game/Mars/Maps/MarsBase",
+      "Assertions": 12,
+      "Failures": 0,
+      "Outcome": "passed"
+    }
+  ],
+  "Executable": "<REPO>\\Dist\\Apollo12\\Windows\\LunarRescue\\Binaries\\Win64\\LunarRescue.exe",
+  "ExecutableSha256": "06c1b022f92b4e13e8300fc8d71296f290ee4f2565ac8597ebcd337519facda8",
+  "HumanPlaytest": false,
+  "Review": false,
+  "Width": 1280,
+  "Height": 720,
+  "CompletedAtUtc": "2026-11-06T05:06:56.7076889Z"
+}

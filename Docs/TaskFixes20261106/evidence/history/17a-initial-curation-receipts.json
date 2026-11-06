@@ -1,0 +1,96 @@
+{
+  "kind": "interim_curation_receipts",
+  "final_index_pending": true,
+  "reports": [
+    {
+      "group": "focused-nullrhi",
+      "source": "Reports/TaskFixes20261106/package-all-nullrhi-20261106-094532-751/apollo-interaction-checks.txt",
+      "retained": "Docs/TaskFixes20261106/evidence/focused-nullrhi/apollo-interaction-checks.txt",
+      "sha256": "76d4831e07a160f74673b2323a5e51960f6fceff69664099b2f5839e67e292f4",
+      "encoding": "utf8",
+      "cpp_pass_executions": 42,
+      "source_modified_utc": "2026-11-06T04:46:51.690598+00:00"
+    },
+    {
+      "group": "focused-nullrhi",
+      "source": "Reports/TaskFixes20261106/package-all-nullrhi-20261106-094532-751/stride-apollo-checks.txt",
+      "retained": "Docs/TaskFixes20261106/evidence/focused-nullrhi/stride-apollo-checks.txt",
+      "sha256": "fc81c06671890c198364ffd94b6974dfb68c9f28b28bb4cda6c61404cbb97271",
+      "encoding": "utf8",
+      "cpp_pass_executions": 19,
+      "source_modified_utc": "2026-11-06T04:45:45.059094+00:00"
+    },
+    {
+      "group": "focused-nullrhi",
+      "source": "Reports/TaskFixes20261106/package-all-nullrhi-20261106-094532-751/stride-mars-checks.txt",
+      "retained": "Docs/TaskFixes20261106/evidence/focused-nullrhi/stride-mars-checks.txt",
+      "sha256": "fc81c06671890c198364ffd94b6974dfb68c9f28b28bb4cda6c61404cbb97271",
+      "encoding": "utf8",
+      "cpp_pass_executions": 19,
+      "source_modified_utc": "2026-11-06T04:46:11.204828+00:00"
+    },
+    {
+      "group": "focused-nullrhi",
+      "source": "Reports/TaskFixes20261106/package-all-nullrhi-20261106-094532-751/stride-selene-checks.txt",
+      "retained": "Docs/TaskFixes20261106/evidence/focused-nullrhi/stride-selene-checks.txt",
+      "sha256": "fc81c06671890c198364ffd94b6974dfb68c9f28b28bb4cda6c61404cbb97271",
+      "encoding": "utf8",
+      "cpp_pass_executions": 19,
+      "source_modified_utc": "2026-11-06T04:45:58.425739+00:00"
+    },
+    {
+      "group": "field-nullrhi",
+      "source": "Reports/FieldOperations20261104/package-test-1280x720-20261106-094653-368/apollo-checks.txt",
+      "retained": "Docs/TaskFixes20261106/evidence/field-nullrhi/apollo-checks.txt",
+      "sha256": "818ea02d2f3fd157186163d831e5446663de2904f5081defdea2855b2fe0fd8d",
+      "encoding": "utf16",
+      "cpp_pass_executions": 215,
+      "source_modified_utc": "2026-11-06T04:46:58.371189+00:00"
+    },
+    {
+      "group": "field-nullrhi",
+      "source": "Reports/FieldOperations20261104/package-test-1280x720-20261106-094653-368/mars-checks.txt",
+      "retained": "Docs/TaskFixes20261106/evidence/field-nullrhi/mars-checks.txt",
+      "sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2",
+      "encoding": "utf16",
+      "cpp_pass_executions": 220,
+      "source_modified_utc": "2026-11-06T04:47:10.315566+00:00"
+    },
+    {
+      "group": "field-nullrhi",
+      "source": "Reports/FieldOperations20261104/package-test-1280x720-20261106-094653-368/selene-checks.txt",
+      "retained": "Docs/TaskFixes20261106/evidence/field-nullrhi/selene-checks.txt",
+      "sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2",
+      "encoding": "utf16",
+      "cpp_pass_executions": 220,
+      "source_modified_utc": "2026-11-06T04:47:04.647691+00:00"
+    },
+    {
+      "group": "field-rendered",
+      "source": "Reports/FieldOperations20261104/package-rendered-test-1280x720-20261106-094712-119/apollo-checks.txt",
+      "retained": "Docs/TaskFixes20261106/evidence/field-rendered/apollo-checks.txt",
+      "sha256": "818ea02d2f3fd157186163d831e5446663de2904f5081defdea2855b2fe0fd8d",
+      "encoding": "utf16",
+      "cpp_pass_executions": 215,
+      "source_modified_utc": "2026-11-06T04:47:19.911452+00:00"
+    },
+    {
+      "group": "field-rendered",
+      "source": "Reports/FieldOperations20261104/package-rendered-test-1280x720-20261106-094712-119/mars-checks.txt",
+      "retained": "Docs/TaskFixes20261106/evidence/field-rendered/mars-checks.txt",
+      "sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2",
+      "encoding": "utf16",
+      "cpp_pass_executions": 220,
+      "source_modified_utc": "2026-11-06T04:47:37.245762+00:00"
+    },
+    {
+      "group": "field-rendered",
+      "source": "Reports/FieldOperations20261104/package-rendered-test-1280x720-20261106-094712-119/selene-checks.txt",
+      "retained": "Docs/TaskFixes20261106/evidence/field-rendered/selene-checks.txt",
+      "sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2",
+      "encoding": "utf16",
+      "cpp_pass_executions": 220,
+      "source_modified_utc": "2026-11-06T04:47:28.598916+00:00"
+    }
+  ]
+}

@@ -29,7 +29,7 @@ const TCHAR* DifficultyName(int32 D){return D==0?TEXT("Beginner"):D==2?TEXT("Pro
 UFieldOperationsComponent::UFieldOperationsComponent(){PrimaryComponentTick.bCanEverTick=false;}
 ALunarGameMode* UFieldOperationsComponent::Game()const{return Cast<ALunarGameMode>(GetOwner());}
 ALunarCharacter* UFieldOperationsComponent::Pilot()const{return Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));}
-bool UFieldOperationsComponent::IsNewAutomation(){const TCHAR* C=FCommandLine::Get();return FParse::Param(C,TEXT("FieldOperationsTest"))||FParse::Param(C,TEXT("FieldOperationsReview"))||FParse::Param(C,TEXT("FieldOperationsProfile"));}
+bool UFieldOperationsComponent::IsNewAutomation(){const TCHAR* C=FCommandLine::Get();return FParse::Param(C,TEXT("FieldOperationsTest"))||FParse::Param(C,TEXT("FieldOperationsReview"))||FParse::Param(C,TEXT("FieldOperationsProfile"))||FParse::Param(C,TEXT("ApolloInteractionRegressionTest"))||FParse::Param(C,TEXT("StrideRegressionTest"));}
 void UFieldOperationsComponent::Initialize(ALunarGameMode* Owner){
  if(!Owner||Owner!=GetOwner())return;Enabled=!Owner->Menu&&(!ULunarSettings::IsAutomation()||IsNewAutomation())&&!FParse::Param(FCommandLine::Get(),TEXT("NoFieldOperations"));
  if(!Enabled)return;BuildWorld();

@@ -109,6 +109,15 @@ public:
  UPROPERTY() TObjectPtr<class UTextBlock> SelectionTitle;
  UPROPERTY() TObjectPtr<class UTextBlock> SelectionPrompt;
  UPROPERTY() TObjectPtr<class UButton> LaunchButton;
+ UPROPERTY() TObjectPtr<class UButton> SelectionBackButton;
+ UPROPERTY() TObjectPtr<class UButton> SelectionSettingsButton;
+ UPROPERTY() TObjectPtr<class UTexture2D> MoonBackdrop;
+ UPROPERTY() TObjectPtr<class UTexture2D> MarsBackdrop;
+ int32 DestinationTextureLoads=0,DestinationPresentationUpdates=0,FrontendBuilds=0;
+ bool DestinationPreviewReady=false,SelectionProfileRequested=false;
+ int32 SelectionProfileStep=0;
+ double NextSelectionProfileAt=0;
+
  bool MissionSelection=false,SelectionMars=false,PreviewingMars=false;
  int32 SelectedMission=INDEX_NONE;
  virtual TSharedRef<SWidget> RebuildWidget() override;

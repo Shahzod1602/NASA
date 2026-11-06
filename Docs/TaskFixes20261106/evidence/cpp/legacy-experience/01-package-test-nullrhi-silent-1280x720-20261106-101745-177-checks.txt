@@ -1,0 +1,65 @@
+PASS Map northwest corner follows imported world-centimetre extent
+PASS Map southeast corner preserves horizontal metres and orientation
+PASS Outside and non-finite positions are rejected rather than edge-clamped
+PASS New mission starts a fresh local trace at time zero
+PASS Accepted ordinary movement extends the current trace
+PASS Pause preserves walking trace and mission timer
+PASS Zero and negative deltas cannot manufacture a walking trace
+PASS Teleport discontinuities are never drawn as walked segments
+PASS The latest accepted endpoint is retained even below display spacing
+PASS Checkpoint includes a valid bounded trace snapshot
+PASS Trace positions, boundaries and coverage survive actual save serialization
+PASS Legacy checkpoint with no optional trace stays valid
+PASS A checkpoint cannot contain future trace time
+PASS Non-finite checkpoint trace coordinates are rejected
+PASS Checkpoint trace capacity is enforced
+PASS Long traces decimate within capacity while preserving first and latest endpoints
+PASS Trace simplification carries discontinuities forward without inventing a connection
+PASS Old or resumed partial coverage is explained honestly
+PASS Restart clears prior trace, simplification and tread state
+PASS Stowage scene cannot begin before the mission is won
+PASS Stowage visualizes only the three actually packed mask entries
+PASS Repeated finale start is idempotent while playing
+PASS External cargo camera hides the pawn without moving it
+PASS Pause freezes the cargo animation
+PASS A paused input cannot accidentally skip stowage
+PASS An open panel freezes stowage and blocks game interaction from skipping behind it
+PASS Negative and non-finite presentation deltas are ignored
+PASS Current stowage caption follows the packed sample ID
+PASS Skip finishes the active scene immediately
+PASS Skip restores the original view and visibility without teleporting
+PASS Stowage preserves player aim and first-person camera FOV
+PASS Presentation and skip never award cargo or change mission telemetry
+PASS Reset clears transient stowage and does not replay completed results
+PASS Completed six-entry cargo manifest appears in the finale
+PASS The bounded finale automatically returns to the normal result view
+PASS Empty packed masks never fabricate samples or hardware
+PASS Actual return completion commits win before starting stowage
+PASS Enter resumes paused finale without skipping it
+PASS Background primary click leaves the finale paused without skipping or advancing it
+PASS Paused finale exposes its explicit pause actions
+PASS The actual Resume action preserves the same finale and presentation time
+PASS Camera-view input cannot alter the preserved player view during stowage
+PASS Normal pause input freezes finale and completed telemetry
+PASS Finale resume works and look input cannot change saved player aim
+PASS Rebound interaction path skips directly to completed results
+PASS Flat tread keeps the boot heading
+PASS Slope tread heading is a unit tangent to the measured surface
+PASS Slope decal projects down onto the surface with its long axis along the boot
+PASS Degenerate vertical boot direction is rejected
+PASS Equipment shapes and missing components are not regolith
+PASS Mission reset clears footprint components, counters and partial stride
+PASS Airborne calls cannot leave a footprint
+PASS Paused calls cannot create footprints
+PASS Footprint integration fixture locates real imported terrain
+PASS A grounded posed boot stamps one regolith tread
+PASS The tread follows the posed left boot rather than camera yaw
+PASS The emitted tread projection follows imported terrain normal
+PASS An explicit teleport cannot stamp a connecting footprint
+PASS A grounded equipment contact cannot project a tread through to regolith
+PASS Missing regolith contact cannot create a footprint
+PASS A long walk retains at most 160 visible tread components
+PASS Old footprint component is recycled rather than reallocated
+PASS Paused trail preserves its count and rendered transform
+PASS Restart removes the old trail and restarts left/right sequencing
+RESULT: 0 failures

@@ -82,8 +82,22 @@ void ALunarCharacter::BuildGloves(){
  if(FParse::Param(FCommandLine::Get(),TEXT("SuitReview"))||FParse::Param(FCommandLine::Get(),TEXT("ExpeditionMotionReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarCharacter::SuitReview,5,false);}
  if(FParse::Param(FCommandLine::Get(),TEXT("SuitTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarCharacter::SuitChecks,4,false);}
 }
-void ALunarCharacter::BeginFastStride(){auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));if(ActivePanel||!G||G->Paused||G->ApolloTool)return;FastStride=ULunarSettings::Get()->ToggleSprint?!FastStride:true;}
-void ALunarCharacter::EndFastStride(){if(!ULunarSettings::Get()->ToggleSprint)FastStride=false;}
+bool ALunarCharacter::CanFastStride() const {
+ auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));
+ return G&&G->IsActive()&&!G->Paused&&!G->Journal&&!ActivePanel&&!G->ApolloTool&&!G->Holding
+  &&!ALunarDepartureScene::Active(G)&&!ALunarCargoFinale::Active(G)&&!ALunarSurfaceVehicle::IsRiding(G)
+  &&(!G->FieldOperations||!G->FieldOperations->Enabled||G->FieldOperations->Briefed);
+}
+void ALunarCharacter::UpdateStrideSpeed(){
+ auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));auto* Move=GetCharacterMovement();
+ if(!CanFastStride())FastStride=false;
+ // Authored movement rates, not physiological EVA limits. Rescue previously
+ // changed only the pose flag on Shift, leaving MaxWalkSpeed at 320 cm/s.
+ Move->MaxWalkSpeed=G&&G->Apollo?(FastStride?220.f:140.f):(FastStride?500.f:320.f);
+ if(G&&G->Apollo){Move->MaxAcceleration=420;Move->BrakingDecelerationWalking=650;Move->GroundFriction=6;Move->AirControl=.12f;}
+}
+void ALunarCharacter::BeginFastStride(){if(!CanFastStride())return;FastStride=ULunarSettings::Get()->ToggleSprint?!FastStride:true;UpdateStrideSpeed();}
+void ALunarCharacter::EndFastStride(){if(!ULunarSettings::Get()->ToggleSprint)FastStride=false;UpdateStrideSpeed();}
 void ALunarCharacter::BeginSuitOrbit(){auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));if(!ALunarCargoFinale::Active(G)&&!ALunarDepartureScene::Active(G))SuitOrbit=true;}
 void ALunarCharacter::EndSuitOrbit(){SuitOrbit=false;}
 void ALunarCharacter::ToggleSuitView(){
@@ -100,10 +114,10 @@ void ALunarCharacter::GetActorEyesViewPoint(FVector& Location,FRotator& Rotation
  Super::GetActorEyesViewPoint(Location,Rotation);
 }
 void ALunarCharacter::UpdateSuit(float D){
+ UpdateStrideSpeed();
  if(SuitBody.Num()!=10||Gloves.Num()!=16||SuitArms.Num()!=18)return;
  auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));const bool Active=G&&G->IsActive();const bool Paused=G&&G->Paused;
  auto* Move=GetCharacterMovement();
- if(G&&G->Apollo){Move->MaxWalkSpeed=FastStride&&!G->Holding?220.f:140.f;Move->MaxAcceleration=420;Move->BrakingDecelerationWalking=650;Move->GroundFriction=6;Move->AirControl=.12f;}
  // Keep normal pause ticks completely still. Explicit zero-delta pose calls
  // remain available to view switches, review fixtures and photography checks.
  if(Paused&&D>0){PoseSuitRig();return;}
@@ -212,12 +226,9 @@ void ALunarCharacter::UpdateSuit(float D){
   FVector Shoulder(0,Side*25,40-Crouch),Wrist(12-Swing*8,Side*(28-WorkBlend*13),-10+WorkBlend*30-Crouch);
   Wrist.X+=WorkBlend*28;if(Move->IsFalling())Wrist.Z+=12;
   FRotator BodyGripRotation(8,-Side*12,Side*10);const FRotator* BodyGripFrame=nullptr;
-  if(ThirdPerson&&BodyCarryItem&&BodyCarryItem->IsVisible()&&BodyCarryItem->GetStaticMesh()){
-   const FBox CarryBounds=BodyCarryItem->GetStaticMesh()->GetBoundingBox();const FVector At(CarryBounds.GetCenter().X-CarryBounds.GetExtent().X*.15,CarryBounds.GetCenter().Y+Side*CarryBounds.GetExtent().Y,CarryBounds.GetCenter().Z);
-   Wrist=GetActorTransform().InverseTransformPosition(BodyCarryItem->GetComponentTransform().TransformPosition(At))-BodyGripRotation.RotateVector(FVector(5,0,0));BodyGripFrame=&BodyGripRotation;
-  }
+  if(ThirdPerson&&LunarCarryPresentation::GripPose(this,false,Side,Wrist,BodyGripRotation))BodyGripFrame=&BodyGripRotation;
   FVector Elbow=Joint(Shoulder,Wrist,28,24,FVector(0,Side,-.4f));Limb(SuitArms[S*9],Shoulder,Elbow,28);
-  Hand(SuitArms,S*9,Elbow,Wrist,Side,WorkBlend,true,BodyGripFrame);
+  Hand(SuitArms,S*9,Elbow,Wrist,Side,BodyGripFrame?1.f:WorkBlend,true,BodyGripFrame);
   const float Sway=HandMotion?FMath::Sin(Phase)*1.1f*GaitBlend*(1-Rest):0.f;
   FVector ViewElbow(8,Side*25,-28),ViewWrist(36+WorkBlend*3+Sway,Side*(20-WorkBlend*10),-15+FMath::Abs(Sway)*.35f-(HandMotion?LandBlend:0.f));
   if(G&&(G->ApolloTool==1||G->ApolloTool==4||G->ApolloTool==5||G->ApolloTool==6)){ViewElbow=FVector(7,Side*24,-28);ViewWrist=FVector(35,Side*10,-15);}
@@ -250,9 +261,9 @@ void ALunarCharacter::UpdateSuit(float D){
   if(G&&G->ApolloTool==6)ViewWrist=FVector(30,Side*7,-16);
   if(WorkGripActive){ViewWrist=WorkGrip[S]-FVector(5,0,0);ViewElbow=FVector(8,Side*25,-32);}
   FRotator GripRotation;const FRotator* GripFrame=nullptr;
-  FVector CellPalm;const bool FittedCellGrip=CarryCell&&LunarCarryPresentation::CellGrip(this,Side,CellPalm);
-  if(FittedCellGrip){GripRotation=FRotator(-8,-Side*30,Side*16);ViewWrist=CellPalm-GripRotation.RotateVector(FVector(5,0,0));ViewElbow=FVector(28,Side*26,-24);GripFrame=&GripRotation;}
-  if(WorkGripActive&&WorkTool&&WorkTool->IsVisible()&&(S==1||(G&&G->ApolloTool==1))){
+  const bool FittedCellGrip=LunarCarryPresentation::GripPose(this,true,Side,ViewWrist,GripRotation);
+  if(FittedCellGrip){ViewElbow=Joint(FVector(14,Side*25,-24),ViewWrist,28,24,FVector(0,Side*.12f,-1));GripFrame=&GripRotation;}
+  if(!FittedCellGrip&&WorkGripActive&&WorkTool&&WorkTool->IsVisible()&&(S==1||(G&&G->ApolloTool==1))){
    GripRotation=(WorkTool->GetRelativeRotation().Quaternion()*FRotator(8,-Side*5,Side*12).Quaternion()).Rotator();
    ViewWrist=WorkGrip[S]-GripRotation.RotateVector(FVector(5,0,0));GripFrame=&GripRotation;
   }
@@ -269,7 +280,14 @@ void ALunarCharacter::UpdateSuit(float D){
    }
    GripRotation=FreeRotation;GripFrame=&GripRotation;
   }
-  Hand(Gloves,S*8,ViewElbow,ViewWrist,Side,WorkBlend,false,GripFrame,MarsPoint);
+  Hand(Gloves,S*8,ViewElbow,ViewWrist,Side,FittedCellGrip?1.f:WorkBlend,false,GripFrame,MarsPoint);
+  if(CarryCell&&!ThirdPerson&&FittedCellGrip){
+   // Relax only the thumb's inward opposition at a narrow visor FOV. The
+   // thumb root, palm, other digits and actual item grip remain attached.
+   const float Narrow=FMath::Clamp((55.f-Camera->FieldOfView)/10.f,0.f,1.f);
+   auto* Thumb=Gloves[S*8+7].Get();
+   Thumb->SetRelativeRotation((FRotator(0,Side*22.f*Narrow,0).Quaternion()*Thumb->GetRelativeRotation().Quaternion()).Rotator());
+  }
  }
  PoseSuitRig();
 }

@@ -5,6 +5,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Components/TextRenderComponent.h"
 #include "Engine/StaticMesh.h"
+#include "GameFramework/PlayerController.h"
 #include "Kismet/GameplayStatics.h"
 #include "Materials/MaterialInterface.h"
 #include "UnrealClient.h"
@@ -13,6 +14,29 @@ namespace {
 // Visual minimum-jerk interpolation: zero speed and acceleration at both ends.
 // Tool input, commit points and cooldown durations remain owned by gameplay.
 float ApolloWorkMinimumJerk(float T){if(!FMath::IsFinite(T))return 0;T=FMath::Clamp(T,0.f,1.f);return T*T*T*(T*(T*6-15)+10);}
+// Committed carry is a bounded viewmodel, separate from the still-physical
+// work tool and source actor. Preserve source proportions/appearance while
+// keeping the item within the authored glove reach and supported view frustum.
+bool BoundedCommittedPreview(ALunarCharacter* P,UStaticMeshComponent* Item,float MaximumDimension,float Drop=0,float Lateral=0,float Depth=55){
+ if(!P||!P->Camera||!Item||!Item->GetStaticMesh())return false;
+ const FBox Bounds=Item->GetStaticMesh()->GetBoundingBox();if(!Bounds.IsValid||Bounds.Min.ContainsNaN()||Bounds.Max.ContainsNaN())return false;
+ const FTransform Original=Item->GetComponentTransform().GetRelativeTransform(P->Camera->GetComponentTransform());
+ if(Original.ContainsNaN()||Original.GetScale3D().GetAbsMin()<=UE_SMALL_NUMBER)return false;
+ const FQuat Rotation=Original.GetRotation();const FVector SourceScale=Original.GetScale3D();FBox Shape(ForceInit);
+ for(int32 I=0;I<8;++I){const FVector V((I&1)?Bounds.Max.X:Bounds.Min.X,(I&2)?Bounds.Max.Y:Bounds.Min.Y,(I&4)?Bounds.Max.Z:Bounds.Min.Z);Shape+=Rotation.RotateVector((V-Bounds.GetCenter())*SourceScale);}
+ const double Largest=Shape.GetSize().GetMax();if(!FMath::IsFinite(Largest)||Largest<=UE_SMALL_NUMBER)return false;
+ int32 W=0,H=0;if(auto* PC=Cast<APlayerController>(P->GetController()))PC->GetViewportSize(W,H);
+ const double Aspect=P->Camera->bConstrainAspectRatio?P->Camera->AspectRatio:W>0&&H>0?double(W)/H:16./9.;
+ const double TanH=FMath::Tan(FMath::DegreesToRadians(double(P->Camera->FieldOfView)*.5)),TanV=TanH/Aspect;
+ if(!FMath::IsFinite(TanH)||!FMath::IsFinite(TanV)||TanV<=0||!FMath::IsFinite(Drop)||!FMath::IsFinite(Lateral))return false;
+ const FVector Extent=Shape.GetExtent();const double CentreZ=.10*Depth*TanV;
+ double Factor=FMath::Min(1.,MaximumDimension/Largest);
+ Factor=FMath::Min(Factor,(.76*Depth*TanH-FMath::Abs(Lateral))/(Extent.Y+.76*TanH*Extent.X));
+ Factor=FMath::Min(Factor,(.76*Depth*TanV-FMath::Abs(CentreZ))/(Extent.Z+.76*TanV*Extent.X));
+ if(!FMath::IsFinite(Factor)||Factor<=UE_SMALL_NUMBER)return false;
+ const FVector Scale=SourceScale*Factor,Center(Depth,Lateral,CentreZ-Drop);
+ Item->SetRelativeTransform(FTransform(Rotation,Center-Rotation.RotateVector(Bounds.GetCenter()*Scale),Scale));return true;
+}
 UStaticMeshComponent* SourceMesh(AActor* A){
  if(!A)return nullptr;TArray<UStaticMeshComponent*> Parts;A->GetComponents(Parts);
  for(auto* C:Parts)if(C->ComponentHasTag(TEXT("work.focus")))return C;
@@ -65,7 +89,7 @@ void ALunarCharacter::UpdateApolloWorkVisuals(){
  const bool Packing=G->ApolloPackedPreviewRemaining>0;
  const int Sample=Packing?G->ApolloPackedSample:G->SelectedSample;
  if((Tool==4&&Phase>=1)||(Packing&&Sample<2)){
-  AssignToolMesh(SamplePouch,TEXT("SM_SamplePouch"));
+  AssignToolMesh(SamplePouch,TEXT("SM_SamplePouch"));PouchLabel->SetWorldSize(2.5f);
   const float PackedAge=FMath::Clamp(2.2f-G->ApolloPackedPreviewRemaining,0.f,2.2f);
   const float Drop=Packing?ApolloWorkMinimumJerk((PackedAge-1.35f)/.85f)*32:0;
   SamplePouch->SetRelativeLocation(FVector(80,-28,-24-Drop));SamplePouch->SetRelativeRotation(FRotator(0,-8,4));SamplePouch->SetRelativeScale3D(FVector::OneVector);
@@ -78,9 +102,18 @@ void ALunarCharacter::UpdateApolloWorkVisuals(){
    const FVector Carried=FMath::Lerp(FVector(90,18,-8),FVector(80,-28,-23),Deposit)+FVector(0,0,6*FMath::Sin(Deposit*PI)-Drop);
    if(Deposit<1)Payload(View.TransformPosition(Carried),Sample==1);
    PouchSeal->SetRelativeLocation(FVector(80,-28,-15-Drop));PouchSeal->SetRelativeScale3D(FVector(.04*Seal,.13,.009));PouchSeal->SetRelativeRotation(FRotator(0,-8,4));PouchSeal->SetVisibility(Seal>.025f);
-   WorkGrip[0]=FVector(64,-30,-25-Drop);
-   WorkGrip[1]=PackedAge<.65f?Carried+FVector(-7,5,0):FMath::Lerp(FVector(74,-15,-16-Drop),FVector(74,-35,-16-Drop),Seal);
-   WorkGripActive=true;
+   const FTransform OldPouch=SamplePouch->GetRelativeTransform();
+   if(BoundedCommittedPreview(this,SamplePouch,23,Drop*.625f)){
+    const FTransform NewPouch=SamplePouch->GetRelativeTransform();
+    PouchLabel->SetRelativeLocation(NewPouch.TransformPosition(OldPouch.InverseTransformPosition(PouchLabel->GetRelativeLocation())));
+    PouchLabel->SetRelativeRotation((NewPouch.GetRotation()*OldPouch.GetRotation().Inverse()*PouchLabel->GetRelativeRotation().Quaternion()).Rotator());
+    PouchLabel->SetWorldSize(2.5f*float(NewPouch.GetScale3D().GetAbsMax()/FMath::Max(.001,OldPouch.GetScale3D().GetAbsMax())));
+    PouchSeal->SetRelativeLocation(NewPouch.TransformPosition(OldPouch.InverseTransformPosition(PouchSeal->GetRelativeLocation())));
+    PouchSeal->SetRelativeRotation((NewPouch.GetRotation()*OldPouch.GetRotation().Inverse()*PouchSeal->GetRelativeRotation().Quaternion()).Rotator());
+    PouchSeal->SetRelativeScale3D(PouchSeal->GetRelativeScale3D()*NewPouch.GetScale3D().GetAbsMax()/FMath::Max(.001,OldPouch.GetScale3D().GetAbsMax()));
+   }
+   if(WorkPayload->IsVisible())BoundedCommittedPreview(this,WorkPayload,12,Drop*.625f-6*(1-Deposit),8*(1-Deposit));
+   WorkGrip[0]=FVector(49,-10,-4-Drop*.625f);WorkGrip[1]=FVector(49,10,-4-Drop*.625f);WorkGripActive=true;
   }
  }
  if(G->ApolloPackedPartRemaining>0){
@@ -90,9 +123,13 @@ void ALunarCharacter::UpdateApolloWorkVisuals(){
   auto* Packed=G->ApolloPartActors.IsValidIndex(G->ApolloPackedPart)?SourceMesh(G->ApolloPartActors[G->ApolloPackedPart]):nullptr;
   if(!Packed||!Packed->GetStaticMesh()){WorkGripActive=false;return;}
   Payload(FMath::Lerp(Packed->GetComponentLocation(),View.TransformPosition(FVector(105,10,-18-Drop)),Move),false,Packed);
-  WorkGrip[0]=FVector(65,-6,-29-Drop);WorkGrip[1]=FVector(65,18,-29-Drop);WorkGripActive=true;return;
+  // A committed viewmodel uses the authored part orientation, independent of
+  // world/camera yaw; the source actor and work camera remain untouched.
+  WorkPayload->SetRelativeRotation(Packed->GetRelativeRotation());
+  BoundedCommittedPreview(this,WorkPayload,25,Drop*.45f,4*(1-Move),FMath::Lerp(58.f,55.f,Move));
+  WorkGrip[0]=FVector(49,-10,-4-Drop*.45f);WorkGrip[1]=FVector(49,10,-4-Drop*.45f);WorkGripActive=true;return;
  }
- if(Packing&&Sample==2){AssignToolMesh(WorkTool,TEXT("SM_DriveTube"));WorkTool->SetRelativeLocation(FVector(51,0,-15-ApolloWorkMinimumJerk((1-G->ApolloPackedPreviewRemaining)/1.2f)*35));WorkTool->SetRelativeRotation(FRotator(0,0,12));WorkTool->SetRelativeScale3D(FVector::OneVector);WorkGrip[0]=WorkTool->GetRelativeLocation()+FVector(-7,-5,0);WorkGrip[1]=WorkTool->GetRelativeLocation()+FVector(-7,5,0);WorkGripActive=true;return;}
+ if(Packing&&Sample==2){AssignToolMesh(WorkTool,TEXT("SM_DriveTube"));const float Lower=ApolloWorkMinimumJerk((1-G->ApolloPackedPreviewRemaining)/1.2f)*20;WorkTool->SetRelativeLocation(FVector(51,0,-15-Lower));WorkTool->SetRelativeRotation(FRotator(0,0,12));WorkTool->SetRelativeScale3D(FVector::OneVector);BoundedCommittedPreview(this,WorkTool,23,Lower);WorkGrip[0]=FVector(49,-5,-4-Lower);WorkGrip[1]=FVector(49,5,-4-Lower);WorkGripActive=true;return;}
  if(Tool==1){AssignToolMesh(WorkTool,TEXT("SM_ContextCamera"));WorkTool->SetRelativeLocation(FVector(45,0,-15));WorkTool->SetRelativeRotation(FRotator::ZeroRotator);WorkTool->SetRelativeScale3D(FVector::OneVector);WorkGrip[0]=FVector(33,-8,-16);WorkGrip[1]=FVector(33,8,-16);WorkGripActive=true;return;}
  if(Tool!=4&&Tool!=5&&Tool!=6)return;
  FVector Contact=G->ApolloContactPoint(),Tip;

@@ -14,3 +14,6 @@
 
 # Preserve downloaded NASA/LROC originals byte-for-byte, including source whitespace.
 SourceArt/Apollo12/Raw/** -text -whitespace
+
+# Keep dated verification receipts byte-for-byte so published SHA values remain valid.
+Docs/TaskFixes20261106/** -text -whitespace

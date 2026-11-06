@@ -11,6 +11,9 @@
 #include "Framework/Application/SlateApplication.h"
 #include "Layout/WidgetPath.h"
 #include "Input/Events.h"
+#include "Components/Button.h"
+#include "Components/TextBlock.h"
+#include "LunarLoading.h"
 
 namespace {
 // This harness stages only menu presentation. It never launches a mission,
@@ -19,6 +22,7 @@ struct FMissionSelectionReviewState {
  FString Folder;
  TArray<FString> Frames;
  TArray<FString> PointerClicks;
+ TArray<FString> ActionChecks;
  FDelegateHandle ScreenshotHandle;
  bool WaitingForScreenshot=false;
  int32 Step=0;
@@ -36,7 +40,7 @@ void Finish(ALunarGameMode* Owner,FReviewState State,bool Success){
  if(Success){
   const FString Manifest=TEXT("{\n\"synthetic\":true,\"human_playtest\":false,\"performance_measurement\":false,\n")
    TEXT("\"description\":\"Staged menu states and naturally ticking selection transitions. No mission was launched and no checkpoint was written. Values are sampled when the screenshot request is processed; timer intervals are visual samples, not a frame-time or performance benchmark.\",\n")
-   TEXT("\"pointer_clicks\":[\n")+FString::Join(State->PointerClicks,TEXT(",\n"))+TEXT("\n],\n\"frames\":[\n")+FString::Join(State->Frames,TEXT(",\n"))+TEXT("\n]}\n");
+   TEXT("\"action_checks\":[\n")+FString::Join(State->ActionChecks,TEXT(",\n"))+TEXT("\n],\n\"pointer_clicks\":[\n")+FString::Join(State->PointerClicks,TEXT(",\n"))+TEXT("\n],\n\"frames\":[\n")+FString::Join(State->Frames,TEXT(",\n"))+TEXT("\n]}\n");
   Success=FFileHelper::SaveStringToFile(Manifest,*(State->Folder/TEXT("review-manifest.json")));
  }
  UE_LOG(LogTemp,Display,TEXT("MISSION_SELECTION_REVIEW %s"),Success?TEXT("COMPLETE"):TEXT("FAILED"));
@@ -100,6 +104,39 @@ bool ClickMissionDescription(ALunarGameMode* Owner,FReviewState State,int32 Inde
  UE_LOG(LogTemp,Display,TEXT("MISSION_SELECTION_POINTER index=%d hit=%d down=%d up=%d selected=%d leaf=%s"),Index,CardHit,DownHandled,UpHandled,Selected,*Leaf);
  return Selected;
 }
+bool InspectActionSurfaces(ALunarGameMode* Owner,FReviewState State){
+ auto* Main=Owner->MainMenu.Get();if(!Main||!FSlateApplication::IsInitialized())return false;
+ auto& Slate=FSlateApplication::Get();
+ UButton* Buttons[]={Main->LaunchButton.Get(),Main->SelectionBackButton.Get(),Main->SelectionSettingsButton.Get()};
+ const TCHAR* Names[]={TEXT("start"),TEXT("back"),TEXT("settings")};
+ for(int32 I=0;I<3;++I){
+  auto* Button=Cast<ULunarFrontendButton>(Buttons[I]);FString Reason;
+  const bool GeometryOK=Button&&Button->ValidateSurface(true,Reason);bool AllHit=GeometryOK;
+  if(Button){
+   const FGeometry& Geometry=Button->GetCachedGeometry();const FVector2D Size=Geometry.GetLocalSize();
+   const FVector2D Points[]={FVector2D(6,6),FVector2D(Size.X-6,6),FVector2D(6,Size.Y-6),FVector2D(Size.X-6,Size.Y-6),Size*.5f};
+   for(const auto& Point:Points){const auto Path=Slate.LocateWindowUnderMouse(Geometry.LocalToAbsolute(Point),Slate.GetTopLevelWindows());const auto Widget=Button->GetCachedWidget();AllHit=AllHit&&Path.IsValid()&&Widget.IsValid()&&Path.ContainsWidget(Widget.Get());}
+   Slate.SetKeyboardFocus(Button->GetCachedWidget(),EFocusCause::Navigation);
+  }
+  const bool FocusOK=Button&&Button->HasKeyboardFocus()&&Button->GetStyle().Normal.TintColor==Button->GetStyle().Hovered.TintColor;
+  State->ActionChecks.Add(FString::Printf(TEXT("{\"name\":\"%s\",\"text_scale\":%.2f,\"full_fill_and_centred_caption\":%s,\"five_hit_points\":%s,\"actual_keyboard_focus\":%s}"),Names[I],ULunarSettings::Get()->TextScale,GeometryOK?TEXT("true"):TEXT("false"),AllHit?TEXT("true"):TEXT("false"),FocusOK?TEXT("true"):TEXT("false")));
+  UE_LOG(LogTemp,Display,TEXT("MISSION_SELECTION_ACTION name=%s geometry=%d five_hits=%d focus=%d %s"),Names[I],GeometryOK,AllHit,FocusOK,*Reason);
+  if(!GeometryOK||!AllHit||!FocusOK)return false;
+ }
+ Slate.SetKeyboardFocus(Main->LaunchButton->GetCachedWidget(),EFocusCause::Navigation);return true;
+}
+bool PointerAction(ALunarGameMode* Owner,UButton* Button,int32 Stage){
+ if(!Owner||!Owner->MainMenu||!Button||!FSlateApplication::IsInitialized())return false;
+ auto& Slate=FSlateApplication::Get();const auto& Geometry=Button->GetCachedGeometry();
+ const FVector2D Position=Stage==2?Owner->MainMenu->GetCachedGeometry().LocalToAbsolute(FVector2D(20,20)):Geometry.LocalToAbsolute(Geometry.GetLocalSize()*.5f);
+ auto Path=Slate.LocateWindowUnderMouse(Position,Slate.GetTopLevelWindows());
+ TSet<FKey> Released,Pressed;Pressed.Add(EKeys::LeftMouseButton);
+ const FPointerEvent Move(0,FSlateApplication::CursorPointerIndex,Position,Position,Stage==2?Pressed:Released,EKeys::Invalid,0.f,FModifierKeysState());
+ Slate.RoutePointerMoveEvent(Path,Move,false);
+ if(Stage==1){const FPointerEvent Down(0,FSlateApplication::CursorPointerIndex,Position,Position,Pressed,EKeys::LeftMouseButton,0.f,FModifierKeysState());return Slate.RoutePointerDownEvent(Path,Down).IsEventHandled()&&Button->IsPressed();}
+ if(Stage==2){const FPointerEvent Up(0,FSlateApplication::CursorPointerIndex,Position,Position,Released,EKeys::LeftMouseButton,0.f,FModifierKeysState());Slate.RoutePointerUpEvent(Path,Up);return !Button->IsPressed()&&!LunarLoading::IsBusy();}
+ return Button->IsHovered();
+}
 void ReviewStep(ALunarGameMode* Owner,FReviewState State){
  auto* Main=Owner->MainMenu.Get();
  if(!Owner->Menu||!Main||Main->MissionCards.Num()!=3||Main->HomeCards.Num()!=3){Finish(Owner,State,false);return;}
@@ -122,6 +159,11 @@ void ReviewStep(ALunarGameMode* Owner,FReviewState State){
   case 15:Capture(Owner,State,TEXT("mars-ares-selected"));break;
   case 16:Main->Back();Main->ExploreMoon();Main->SelectMission(0);State->SelectedAt=Owner->GetWorld()->GetTimeSeconds();ULunarSettings::Get()->TextScale=1.5f;Schedule(Owner,State,1.f);break;
   case 17:Capture(Owner,State,TEXT("moon150-selected"));break;
+  case 18:if(!InspectActionSurfaces(Owner,State)){Finish(Owner,State,false);return;}ULunarSettings::Get()->TextScale=1.f;Schedule(Owner,State,.3f);break;
+  case 19:if(!InspectActionSurfaces(Owner,State)){Finish(Owner,State,false);return;}Capture(Owner,State,TEXT("actions-focus"));break;
+  case 20:FSlateApplication::Get().ClearKeyboardFocus(EFocusCause::Cleared);if(!PointerAction(Owner,Main->SelectionSettingsButton,0)){Finish(Owner,State,false);return;}Capture(Owner,State,TEXT("actions-hover"));break;
+  case 21:if(!PointerAction(Owner,Main->SelectionSettingsButton,1)){Finish(Owner,State,false);return;}Capture(Owner,State,TEXT("actions-pressed"));break;
+  case 22:if(!PointerAction(Owner,Main->SelectionSettingsButton,2)){Finish(Owner,State,false);return;}Capture(Owner,State,TEXT("actions-idle"));break;
   default:Finish(Owner,State,true);break;
  }
 }

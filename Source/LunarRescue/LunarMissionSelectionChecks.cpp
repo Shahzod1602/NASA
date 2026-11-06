@@ -112,6 +112,20 @@ void ALunarGameMode::MissionSelectionChecks(){
  if(!P||!Main||!Menu){Finish();return;}
  Check(Main->HomeCards.Num()==3&&Main->MissionCards.Num()==3&&Main->HomePage&&Main->SelectionPage&&Main->LaunchButton,TEXT("Frontend builds three shared expedition entries and three real mission cards"));
  if(Main->HomeCards.Num()!=3||Main->MissionCards.Num()!=3||!Main->HomePage||!Main->SelectionPage||!Main->LaunchButton){Finish();return;}
+ Check(Main->MoonBackdrop&&Main->MarsBackdrop&&Main->DestinationTextureLoads==2,TEXT("Destination textures are retained once before destination input"));
+ const int32 BuildsBefore=Main->FrontendBuilds,LoadsBefore=Main->DestinationTextureLoads;
+ Main->PreviewMoon();const int32 MoonUpdates=Main->DestinationPresentationUpdates;
+ for(int32 I=0;I<20;++I){Main->HomeCards[1]->Hover();Main->HomeCards[1]->Unhover();Main->PreviewMoon();}
+ Check(Main->DestinationPresentationUpdates==MoonUpdates,TEXT("Repeated same-destination hover does not reset text or background brushes"));
+ Main->PreviewMars();const int32 MarsUpdates=Main->DestinationPresentationUpdates;
+ for(int32 I=0;I<20;++I){Main->HomeCards[2]->Hover();Main->HomeCards[2]->Unhover();Main->PreviewMars();}
+ Main->PreviewMoon();
+ Check(Main->DestinationPresentationUpdates==MarsUpdates+1&&Main->DestinationTextureLoads==LoadsBefore&&Main->FrontendBuilds==BuildsBefore,TEXT("Repeated hover and destination switching reuse textures and the existing widget tree"));
+ for(UButton* Button:{Main->LaunchButton.Get(),Main->SelectionBackButton.Get(),Main->SelectionSettingsButton.Get()}){
+  auto* Action=Cast<ULunarFrontendButton>(Button);FString Reason;
+  Check(Action&&Action->ValidateSurface(false,Reason),TEXT("Picker action has full-size glass and centred label slots"));
+  if(Action){const auto Normal=Action->GetStyle().Normal;Action->OnReceivedFocus.ExecuteIfBound();Check(Action->GetStyle().Normal.TintColor==Action->GetStyle().Hovered.TintColor,TEXT("Keyboard focus uses the same visible blue action state as hover"));Action->OnLostFocus.ExecuteIfBound();Check(Action->GetStyle().Normal.TintColor==Normal.TintColor,TEXT("Leaving keyboard focus restores the normal action surface"));}
+ }
  bool Built=true;
  for(int32 I=0;I<3;++I){
   const bool Ready=Main->HomeCards[I]&&Main->HomeCards[I]->Button&&Main->MissionCards[I]&&Main->MissionCards[I]->Button&&Main->MissionCards[I]->SelectionLabel;
@@ -151,6 +165,9 @@ void ALunarGameMode::MissionSelectionChecks(){
   Check(Monotonic&&FMath::IsNearlyEqual(Card->SelectionBlend(),1.f),FString::Printf(TEXT("Mission %d selection smoothly rises through four bounded samples and settles within 280 ms"),I));
   Card->Button->OnHovered.Broadcast();Card->Button->OnUnhovered.Broadcast();Card->AdvancePresentation(1.f);
   Check(Card->IsSelected()&&FMath::IsNearlyEqual(Card->SelectionBlend(),1.f)&&Main->SelectedMission==I,FString::Printf(TEXT("Mission %d remains highlighted after hover exit and settling"),I));
+  const int32 IdlePresentationUpdates=Card->PresentationUpdateCount();
+  for(int32 IdleFrame=0;IdleFrame<120;++IdleFrame)Card->AdvancePresentation(1.f/60.f);
+  Check(Card->PresentationUpdateCount()==IdlePresentationUpdates,FString::Printf(TEXT("Settled mission %d does not rebuild glow or blur brushes on 120 idle frames"),I));
   const float Stable=Card->SelectionBlend();Card->AdvancePresentation(-1);Card->AdvancePresentation(0);Card->AdvancePresentation(std::numeric_limits<float>::quiet_NaN());Card->AdvancePresentation(std::numeric_limits<float>::infinity());
   Check(Card->SelectionBlend()==Stable&&FMath::IsFinite(Card->SelectionBlend()),FString::Printf(TEXT("Mission %d ignores zero, negative and non-finite animation deltas"),I));
   Card->SetSelected(false);Card->AdvancePresentation(.07f);const float Reversed=Card->SelectionBlend();

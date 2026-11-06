@@ -1,5 +1,6 @@
 #include "UObject/Package.h"
 #include "LunarGame.h"
+#include "LunarStrideRegression.h"
 #include "LunarFieldOperations.h"
 #include "LunarSurfaceVehicle.h"
 #include "LunarDeparture.h"
@@ -251,6 +252,7 @@ void ALunarGameMode::BeginPlay() {
  IFileManager::Get().MakeDirectory(*(FPaths::ProjectDir()/TEXT("Reports")),true);
  if(FParse::Param(FCommandLine::Get(),TEXT("LunarMenuTest"))||FParse::Param(FCommandLine::Get(),TEXT("LoadingTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::TravelCheck,3,false);}
  if(Menu&&FParse::Param(FCommandLine::Get(),TEXT("LunarReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,[this](){FScreenshotRequest::RequestScreenshot(ReportPath(TEXT("mission-select.png")),true,false);FTimerHandle End;GetWorldTimerManager().SetTimer(End,[](){FPlatformMisc::RequestExitWithStatus(false,0);},3,false);},8,false);}
+ if(!Menu&&FParse::Param(FCommandLine::Get(),TEXT("StrideRegressionTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,[this](){LunarStrideRegression::Start(this);},4,false);}
  if(!Menu&&FParse::Param(FCommandLine::Get(),TEXT("FieldOperationsTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ValidateFieldOperationsChecks,3,false);}
  if(!Menu&&FParse::Param(FCommandLine::Get(),TEXT("FieldOperationsReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ValidateFieldOperationsReview,4,false);}
  if(FParse::Param(FCommandLine::Get(),TEXT("NasaUITest"))&&!Menu){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::NasaUIChecks,3,false);}

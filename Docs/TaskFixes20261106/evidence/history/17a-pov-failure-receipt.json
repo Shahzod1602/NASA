@@ -1,0 +1,12 @@
+{
+  "kind": "failed_validation_execution",
+  "executable_sha256": "17a2d4f00256c6017a0ebc911ecce77b1588e109a219bb97505ee59467298e94",
+  "source": "Dist/Apollo12/Windows/LunarRescue/Reports/pov-checks.txt",
+  "source_modified_utc": "2026-11-06T04:55:24.399178+00:00",
+  "retained": "Docs/TaskFixes20261106/evidence/history/17a-pov-failed-checks.txt",
+  "sha256": "e0517b808ce473b01a0ced0daa00907c741b27f90bebcea70a1ef16c670f71e6",
+  "cpp_pass_lines": 26,
+  "cpp_fail_lines": 2,
+  "success_claim": false,
+  "note": "Retained separately; the enclosing legacy queue reported the NASA suite failed. It must not be represented as a passing final suite."
+}

@@ -1,0 +1,65 @@
+{
+  "Cases": [
+    {
+      "Case": "assets-apollo",
+      "Map": "/Game/Lunar/Maps/Apollo12",
+      "Flag": "FeedbackAssetsTest",
+      "Assertions": 14,
+      "Failures": 0,
+      "Outcome": "passed",
+      "Frames": 0
+    },
+    {
+      "Case": "diagnostics-apollo",
+      "Map": "/Game/Lunar/Maps/Apollo12",
+      "Flag": "EquipmentDiagnosticsTest",
+      "Assertions": 38,
+      "Failures": 0,
+      "Outcome": "passed",
+      "Frames": 0
+    },
+    {
+      "Case": "assets-selene",
+      "Map": "/Game/Lunar/Maps/MoonBase",
+      "Flag": "FeedbackAssetsTest",
+      "Assertions": 12,
+      "Failures": 0,
+      "Outcome": "passed",
+      "Frames": 0
+    },
+    {
+      "Case": "diagnostics-selene",
+      "Map": "/Game/Lunar/Maps/MoonBase",
+      "Flag": "EquipmentDiagnosticsTest",
+      "Assertions": 38,
+      "Failures": 0,
+      "Outcome": "passed",
+      "Frames": 0
+    },
+    {
+      "Case": "assets-mars",
+      "Map": "/Game/Mars/Maps/MarsBase",
+      "Flag": "FeedbackAssetsTest",
+      "Assertions": 12,
+      "Failures": 0,
+      "Outcome": "passed",
+      "Frames": 0
+    },
+    {
+      "Case": "diagnostics-mars",
+      "Map": "/Game/Mars/Maps/MarsBase",
+      "Flag": "EquipmentDiagnosticsTest",
+      "Assertions": 38,
+      "Failures": 0,
+      "Outcome": "passed",
+      "Frames": 0
+    }
+  ],
+  "ExecutableSha256": "06c1b022f92b4e13e8300fc8d71296f290ee4f2565ac8597ebcd337519facda8",
+  "HumanPlaytest": false,
+  "SyntheticReview": false,
+  "PerformanceMeasurement": false,
+  "Width": 1280,
+  "Height": 720,
+  "CompletedUtc": "2026-11-06T05:19:04.5405063Z"
+}

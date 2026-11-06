@@ -50,17 +50,38 @@ void ALunarGameMode::NasaPovChecks(){
    Check(Palm.Equals(P->WorkGrip[1],.2f),TEXT("The moving soil tool and right palm share the same grip frame"));
    CancelApolloTool();ApolloPackedSample=1;ApolloPackedPreviewRemaining=2.2f;P->UpdateSuit(0);
    Check(P->SamplePouch->IsVisible()&&!P->PouchSeal->IsVisible()&&P->WorkPayload->IsVisible(),TEXT("Packed preview begins with an open pouch and a visible deposit"));
-   ApolloPackedPreviewRemaining=1.2f;P->UpdateSuit(0);const FVector SealHand=P->WorkGrip[1];
+   ApolloPackedPreviewRemaining=1.2f;P->UpdateSuit(0);
+   const FVector SealedPouchView=P->Camera->GetComponentTransform().InverseTransformPosition(P->SamplePouch->GetComponentLocation());
    Check(P->PouchSeal->IsVisible()&&!P->WorkPayload->IsVisible(),TEXT("The actual preview seals after deposit rather than hiding both actions at once"));
    ApolloPackedPreviewRemaining=.2f;P->UpdateSuit(0);
-   Check(P->WorkGrip[1].Z<SealHand.Z-20&&SamplesCollected==CargoBefore,TEXT("Sealed cargo lowers away without awarding another sample"));
+   const FVector LoweredPouchView=P->Camera->GetComponentTransform().InverseTransformPosition(P->SamplePouch->GetComponentLocation());
+   const double ActualLowering=SealedPouchView.Z-LoweredPouchView.Z;
+   // Measure the rendered component in camera space. WorkGrip is no longer
+   // authoritative for committed carry, and its old >20 cm demand exceeded
+   // the entire bounded preview's available lowering travel.
+   Check(P->SamplePouch->IsVisible()&&!SealedPouchView.ContainsNaN()&&!LoweredPouchView.ContainsNaN()&&FMath::IsFinite(ActualLowering)&&ActualLowering>=3.&&ActualLowering<=20.1&&SamplesCollected==CargoBefore&&ApolloElapsed==ClockBefore&&Oxygen==BudgetBefore,TEXT("Actual sealed pouch lowers a positive bounded distance without changing cargo or resources"));
    const FVector FrozenWrist=P->Gloves[9]->GetRelativeLocation();const FTransform FrozenCamera=P->Camera->GetComponentTransform();
    Paused=true;P->UpdateSuit(.5f);
    Check(P->Gloves[9]->GetRelativeLocation().Equals(FrozenWrist,.001f)&&P->Camera->GetComponentTransform().Equals(FrozenCamera,.001f)&&ApolloPackedPreviewRemaining==.2f,TEXT("Pause freezes preview hands and camera instead of advancing presentation"));Paused=false;
+   ApolloPackedPreviewRemaining=0;P->UpdateSuit(0);LunarCarryPresentation::Update(P);
+   Check(!P->SamplePouch->IsVisible()&&!P->WorkPayload->IsVisible()&&!P->PouchSeal->IsVisible()&&SamplesCollected==CargoBefore&&ApolloElapsed==ClockBefore&&Oxygen==BudgetBefore,TEXT("Expired preview stows the actual pouch and payload without granting cargo or spending resources"));
   }
   // These are isolated hand-presentation states, not a Mars traversal claim.
-  CancelApolloTool();ApolloPackedPreviewRemaining=0;Apollo=false;Mars=true;Stage=ELunarStage::RestorePower;RepairStep=0;P->WorkBlend=1;P->UpdateSuit(0);
-  LunarCarryPresentation::Update(P);FVector CellPalm;
+  CancelApolloTool();ApolloPackedPreviewRemaining=0;Apollo=false;Mars=true;Stage=ELunarStage::RestorePower;RepairStep=0;P->WorkBlend=1;
+  // Match ALunarCharacter::Tick: present the current item before solving the
+  // gloves, then refresh carry visibility. A post-pose-only item update tests
+  // a stale transform that normal gameplay never presents.
+  LunarCarryPresentation::Update(P);P->UpdateSuit(0);LunarCarryPresentation::Update(P);FVector CellPalm;
+  bool RenderedWristsOnGrip=P->HandRig&&P->HandRig->IsVisible();
+  for(int32 Side=0;Side<2;++Side){
+   FVector Wrist;FRotator GripRotation;const bool HasGrip=LunarCarryPresentation::GripPose(P,true,Side?1.f:-1.f,Wrist,GripRotation);
+   const FName Bone(Side?TEXT("hand_r"):TEXT("hand_l"));
+   const bool HasBone=P->HandRig&&P->HandRig->GetBoneIndex(Bone)!=INDEX_NONE;
+   const FVector ActualWrist=HasBone?P->HandRig->GetBoneLocationByName(Bone,EBoneSpaces::WorldSpace):FVector::ZeroVector;
+   const FVector ExpectedWrist=HasGrip?P->Camera->GetComponentTransform().TransformPosition(Wrist):FVector::ZeroVector;
+   RenderedWristsOnGrip&=HasGrip&&HasBone&&!ActualWrist.ContainsNaN()&&ActualWrist.Equals(ExpectedWrist,.2f);
+  }
+  Check(RenderedWristsOnGrip,TEXT("Both actual first-person HandRig wrist bones follow their camera-transformed cell grips"));
   const FVector ActualCellPalm=P->Gloves[9]->GetRelativeLocation()+P->Gloves[10]->GetRelativeRotation().RotateVector(FVector(5,0,0));
   Check(P->HandRig->IsVisible()&&P->CarriedModule&&P->CarriedModule->IsVisible()&&LunarCarryPresentation::CellGrip(P,1,CellPalm)&&ActualCellPalm.Equals(CellPalm,.2f),TEXT("Power-cell carry has a visible fitted item and a palm on its actual source-side grip"));
   Stage=ELunarStage::CollectData;Holding=true;HoldProgress=1.95f;P->UpdateSuit(0);const FRotator DataRotation=P->Gloves[10]->GetRelativeRotation();const FVector DataHand=P->Gloves[9]->GetRelativeLocation();

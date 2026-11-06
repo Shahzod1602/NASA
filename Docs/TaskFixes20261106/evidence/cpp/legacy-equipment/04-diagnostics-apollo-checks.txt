@@ -1,0 +1,39 @@
+PASS Diagnostics checks have a playable mission context
+PASS Missing context produces no invented diagnostic records
+PASS Mission-selection menu has no equipment records
+PASS SELENE briefing introduces five dependencies without claiming startup
+PASS Cell recovery is ready only when its mission actor exists
+PASS A recovered cell enables seating, while the cable remains blocked
+PASS Seating the cell enables the cable but does not imply station power
+PASS A connected cable still requires a separate restart command
+PASS Entering CollectData does not falsely complete an unfinished station restart
+PASS Repeated paused inspection changes no stage, resource, telemetry, restart clock or hold progress
+PASS Actual reboot completion enables the story-data terminal
+PASS Moon post-download objectives remain separate from power diagnostics
+PASS ARES uses its actual extra relay dependency after the download
+PASS ReturnHome records completed Mars relay alignment
+PASS Failure without separate retained flags never invents earlier download or relay completion
+PASS Negative repair state is reported as unavailable
+PASS Out-of-range repair state never implies a connected cable
+PASS Missing cell actor has an explicit failure instead of a fictitious pickup
+PASS Missing station port is identified before suggesting an impossible repair
+PASS Missing science terminal never produces a download instruction
+PASS Apollo shows its actual checkout confirmations, not the rescue power-cell chain
+PASS Apollo setup explains the existing seismometer-before-Earth-link sequence
+PASS Only a committed seismometer step unlocks the link checklist row
+PASS A core without a committed context photo still asks for that photo
+PASS A withdrawn visual core is not counted as packed cargo
+PASS A committed context photo enables the normal collection-and-packing explanation
+PASS Pending asynchronous photos are never described as committed evidence
+PASS Completed sample cargo leads to the real traverse objective
+PASS Surveyor hardware stays blocked before its own context photograph
+PASS The committed Surveyor photo enables existing hardware work
+PASS All real cargo and instrument masks are required before the return row is ready
+PASS Entering the return stage cannot substitute for missing cargo records
+PASS Extra unsupported instrument bits do not pass the actual exact-mask stowage rule
+PASS Only the won mission records completed cargo stowage
+PASS Fresh mission state yields no stale diagnostic completion cache
+PASS The existing notebook builds the integrated read-only checklist
+PASS Settings panels cannot append mission diagnostics
+PASS Apollo diagnostics preserve the distinction between recorded actions and measured engineering
+RESULT: 0 failures

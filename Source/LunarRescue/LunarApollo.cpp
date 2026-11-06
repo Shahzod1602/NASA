@@ -6,6 +6,7 @@
 #include "LunarCargoFinale.h"
 #include "LunarPhotos.h"
 #include "LunarApolloText.h"
+#include "LunarApolloRegression.h"
 #include "LunarSettings.h"
 #include "LunarPanels.h"
 #include "ApolloData.h"
@@ -171,6 +172,7 @@ void ALunarGameMode::BuildApollo() {
  if(FParse::Param(FCommandLine::Get(),TEXT("ApolloFieldworkReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ApolloFieldworkReview,5,false);}
  if(FParse::Param(FCommandLine::Get(),TEXT("ApolloGuidanceReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ApolloGuidanceReview,5,false);}
  if(FParse::Param(FCommandLine::Get(),TEXT("ApolloReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ApolloReview,7,false);}
+ if(FParse::Param(FCommandLine::Get(),TEXT("ApolloInteractionRegressionTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,[this](){LunarApolloRegression::Start(this);},3.f,false);}
  ApolloWalking=FParse::Param(FCommandLine::Get(),TEXT("ApolloWalkTest"));
  RefreshApolloCheckpoint();
  if(UGameplayStatics::ParseOption(OptionsString,TEXT("ResumeApollo"))==TEXT("1")){
@@ -193,6 +195,7 @@ void ALunarGameMode::StartApollo(bool Confirmed){
  ALunarDepartureScene::Abort(this);DepartureAuthorizedNewRun=false;
  CancelApolloTool();ApolloLevel=FVector2D(.4f,-.3f);ApolloTranscript.Reset();
  if(!Confirmed&&ApolloSaveStatus!=EApolloSaveStatus::Missing){ApolloConfirmNew=true;return;}
+ ApolloAntennaAngle=-82.f;if(ApolloAntenna)ApolloAntenna->SetRelativeRotation(FRotator(-65,ApolloAntennaAngle,0));
  if(FieldOperations&&FieldOperations->Enabled)FieldOperations->ResetNewRun(Stage==ELunarStage::Briefing&&FieldOperations->Prepared);
  LunarWater::Reset(WaterStudy);CrewTalkCount=0;CrewSpeaker=0;
  ApolloInputHintRemaining=0;
@@ -304,12 +307,18 @@ void ALunarGameMode::InteractApollo(){
  if(EvidenceIndex!=INDEX_NONE){
   FString RelativePath;
   if(FApp::CanEverRender()&&!FParse::Param(FCommandLine::Get(),TEXT("ApolloTest"))&&!FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveTest"))&&!FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveWriteTest"))&&!FParse::Param(FCommandLine::Get(),TEXT("ApolloSaveReadTest"))){
-   RelativePath=FString(TEXT("Apollo12/Photos/"))+ApolloRunId.ToString(EGuidFormats::Digits)+TEXT("/")+PhotoName+TEXT(".png");
+   const TCHAR* PhotoRoot=FParse::Param(FCommandLine::Get(),TEXT("ApolloInteractionRegressionTest"))?TEXT("AutomatedTests/ApolloInteraction/Photos/"):TEXT("Apollo12/Photos/");
+   RelativePath=FString(PhotoRoot)+ApolloRunId.ToString(EGuidFormats::Digits)+TEXT("/")+PhotoName+TEXT(".png");
   }
   RequestApolloPhoto(EvidenceIndex,RelativePath);
  }
 }
 void ALunarGameMode::CompleteApolloInteraction(AActor* A){
+ // A stale or unrelated prop must never commit the next instrument's bit.
+ // Work is awarded only to the active registered site, including legacy holds.
+ if(Stage==ELunarStage::ApolloDeploy&&(!ApolloInstrumentActors.IsValidIndex(ApolloAction)||A!=ApolloInstrumentActors[ApolloAction]))return;
+ if(Stage==ELunarStage::ApolloCheckout&&A!=ModuleActor)return;
+ if(Stage==ELunarStage::ApolloReturn&&A!=HomeActor)return;
  const bool Returning=Stage==ELunarStage::ApolloReturn;
  PlayPowerSound(TEXT("PowerContact"),.35);
  if(Stage==ELunarStage::ApolloCheckout){

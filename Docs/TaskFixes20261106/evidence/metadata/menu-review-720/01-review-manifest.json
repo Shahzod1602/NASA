@@ -1,0 +1,419 @@
+{
+  "synthetic": true,
+  "human_playtest": false,
+  "performance_measurement": false,
+  "description": "Staged menu states and naturally ticking selection transitions. No mission was launched and no checkpoint was written. Values are sampled when the screenshot request is processed; timer intervals are visual samples, not a frame-time or performance benchmark.",
+  "action_checks": [
+    {
+      "name": "start",
+      "text_scale": 1.5,
+      "full_fill_and_centred_caption": true,
+      "five_hit_points": true,
+      "actual_keyboard_focus": true
+    },
+    {
+      "name": "back",
+      "text_scale": 1.5,
+      "full_fill_and_centred_caption": true,
+      "five_hit_points": true,
+      "actual_keyboard_focus": true
+    },
+    {
+      "name": "settings",
+      "text_scale": 1.5,
+      "full_fill_and_centred_caption": true,
+      "five_hit_points": true,
+      "actual_keyboard_focus": true
+    },
+    {
+      "name": "start",
+      "text_scale": 1.0,
+      "full_fill_and_centred_caption": true,
+      "five_hit_points": true,
+      "actual_keyboard_focus": true
+    },
+    {
+      "name": "back",
+      "text_scale": 1.0,
+      "full_fill_and_centred_caption": true,
+      "five_hit_points": true,
+      "actual_keyboard_focus": true
+    },
+    {
+      "name": "settings",
+      "text_scale": 1.0,
+      "full_fill_and_centred_caption": true,
+      "five_hit_points": true,
+      "actual_keyboard_focus": true
+    }
+  ],
+  "pointer_clicks": [
+    {
+      "mission_index": 0,
+      "region": "description_scroll_content",
+      "route": "LocateWindowUnderMouse, RoutePointerMoveEvent, RoutePointerDownEvent/RoutePointerUpEvent, pointer exit",
+      "leaf_widget": "SScrollBox",
+      "button_in_hit_path": true,
+      "down_handled": true,
+      "up_handled": true,
+      "selected": true,
+      "absolute_position": [
+        446.0,
+        390.72
+      ]
+    },
+    {
+      "mission_index": 1,
+      "region": "description_scroll_content",
+      "route": "LocateWindowUnderMouse, RoutePointerMoveEvent, RoutePointerDownEvent/RoutePointerUpEvent, pointer exit",
+      "leaf_widget": "SScrollBox",
+      "button_in_hit_path": true,
+      "down_handled": true,
+      "up_handled": true,
+      "selected": true,
+      "absolute_position": [
+        834.0,
+        390.72
+      ]
+    },
+    {
+      "mission_index": 2,
+      "region": "description_scroll_content",
+      "route": "LocateWindowUnderMouse, RoutePointerMoveEvent, RoutePointerDownEvent/RoutePointerUpEvent, pointer exit",
+      "leaf_widget": "SScrollBox",
+      "button_in_hit_path": true,
+      "down_handled": true,
+      "up_handled": true,
+      "selected": true,
+      "absolute_position": [
+        640.0,
+        390.72
+      ]
+    }
+  ],
+  "frames": [
+    {
+      "name": "home",
+      "mission_selection": false,
+      "selected_mission": -1,
+      "text_scale": 1.0,
+      "requested_world_seconds": 4.020287,
+      "processed_world_seconds": 4.020287,
+      "since_selection_seconds": 0.0,
+      "mission_blends": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "home_blends": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "moon-unselected",
+      "mission_selection": true,
+      "selected_mission": -1,
+      "text_scale": 1.0,
+      "requested_world_seconds": 6.021363,
+      "processed_world_seconds": 6.021363,
+      "since_selection_seconds": 0.0,
+      "mission_blends": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "home_blends": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "transition-00",
+      "mission_selection": true,
+      "selected_mission": 0,
+      "text_scale": 1.0,
+      "requested_world_seconds": 7.033874,
+      "processed_world_seconds": 7.033874,
+      "since_selection_seconds": 0.0,
+      "mission_blends": [
+        0.010249,
+        0.0,
+        0.0
+      ],
+      "home_blends": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "transition-01",
+      "mission_selection": true,
+      "selected_mission": 0,
+      "text_scale": 1.0,
+      "requested_world_seconds": 7.196023,
+      "processed_world_seconds": 7.196023,
+      "since_selection_seconds": 0.162149,
+      "mission_blends": [
+        0.993447,
+        0.0,
+        0.0
+      ],
+      "home_blends": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "transition-02",
+      "mission_selection": true,
+      "selected_mission": 0,
+      "text_scale": 1.0,
+      "requested_world_seconds": 7.344626,
+      "processed_world_seconds": 7.344626,
+      "since_selection_seconds": 0.310751,
+      "mission_blends": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "home_blends": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "transition-03",
+      "mission_selection": true,
+      "selected_mission": 0,
+      "text_scale": 1.0,
+      "requested_world_seconds": 7.493344,
+      "processed_world_seconds": 7.493344,
+      "since_selection_seconds": 0.45947,
+      "mission_blends": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "home_blends": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "transition-04",
+      "mission_selection": true,
+      "selected_mission": 0,
+      "text_scale": 1.0,
+      "requested_world_seconds": 7.647149,
+      "processed_world_seconds": 7.647149,
+      "since_selection_seconds": 0.613275,
+      "mission_blends": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "home_blends": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "transition-05",
+      "mission_selection": true,
+      "selected_mission": 0,
+      "text_scale": 1.0,
+      "requested_world_seconds": 7.796782,
+      "processed_world_seconds": 7.796782,
+      "since_selection_seconds": 0.762908,
+      "mission_blends": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "home_blends": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "moon-apollo-selected",
+      "mission_selection": true,
+      "selected_mission": 0,
+      "text_scale": 1.0,
+      "requested_world_seconds": 8.797596,
+      "processed_world_seconds": 8.797596,
+      "since_selection_seconds": 1.763721,
+      "mission_blends": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "home_blends": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "moon-selene-selected",
+      "mission_selection": true,
+      "selected_mission": 1,
+      "text_scale": 1.0,
+      "requested_world_seconds": 10.800736,
+      "processed_world_seconds": 10.800736,
+      "since_selection_seconds": 1.000025,
+      "mission_blends": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "home_blends": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "mars-unselected",
+      "mission_selection": true,
+      "selected_mission": -1,
+      "text_scale": 1.0,
+      "requested_world_seconds": 12.816375,
+      "processed_world_seconds": 12.816375,
+      "since_selection_seconds": 0.0,
+      "mission_blends": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "home_blends": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "mars-ares-selected",
+      "mission_selection": true,
+      "selected_mission": 2,
+      "text_scale": 1.0,
+      "requested_world_seconds": 14.818794,
+      "processed_world_seconds": 14.818794,
+      "since_selection_seconds": 1.00033,
+      "mission_blends": [
+        0.0,
+        1.0,
+        1.0
+      ],
+      "home_blends": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "moon150-selected",
+      "mission_selection": true,
+      "selected_mission": 0,
+      "text_scale": 1.5,
+      "requested_world_seconds": 16.828364,
+      "processed_world_seconds": 16.828364,
+      "since_selection_seconds": 1.000015,
+      "mission_blends": [
+        1.0,
+        0.0,
+        1.0
+      ],
+      "home_blends": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "actions-focus",
+      "mission_selection": true,
+      "selected_mission": 0,
+      "text_scale": 1.0,
+      "requested_world_seconds": 18.143186,
+      "processed_world_seconds": 18.143186,
+      "since_selection_seconds": 2.314837,
+      "mission_blends": [
+        1.0,
+        0.0,
+        1.0
+      ],
+      "home_blends": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "actions-hover",
+      "mission_selection": true,
+      "selected_mission": 0,
+      "text_scale": 1.0,
+      "requested_world_seconds": 19.149316,
+      "processed_world_seconds": 19.149316,
+      "since_selection_seconds": 3.320966,
+      "mission_blends": [
+        1.0,
+        0.0,
+        1.0
+      ],
+      "home_blends": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "actions-pressed",
+      "mission_selection": true,
+      "selected_mission": 0,
+      "text_scale": 1.0,
+      "requested_world_seconds": 20.164529,
+      "processed_world_seconds": 20.164529,
+      "since_selection_seconds": 4.33618,
+      "mission_blends": [
+        1.0,
+        0.0,
+        1.0
+      ],
+      "home_blends": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    },
+    {
+      "name": "actions-idle",
+      "mission_selection": true,
+      "selected_mission": 0,
+      "text_scale": 1.0,
+      "requested_world_seconds": 21.177619,
+      "processed_world_seconds": 21.177619,
+      "since_selection_seconds": 5.34927,
+      "mission_blends": [
+        1.0,
+        0.0,
+        1.0
+      ],
+      "home_blends": [
+        0.0,
+        1.0,
+        0.0
+      ]
+    }
+  ]
+}

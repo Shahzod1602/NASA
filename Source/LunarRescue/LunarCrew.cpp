@@ -7,6 +7,7 @@
 #include "LunarSettings.h"
 #include "Blueprint/WidgetTree.h"
 #include "Components/SceneComponent.h"
+#include "Components/PrimitiveComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/TextRenderComponent.h"
 #include "Components/TextBlock.h"
@@ -41,6 +42,36 @@ UStaticMeshComponent* CrewTerrain(ALunarGameMode* Game){
  for(TActorIterator<AStaticMeshActor> It(Game->GetWorld());It;++It){auto* C=It->GetStaticMeshComponent();if(C&&C->GetStaticMesh()&&C->GetStaticMesh()->GetName()==Wanted)return C;}
  return nullptr;
 }
+// Static guides use a terrain-supported apron, never a raw offset that can
+// land under the non-colliding reference lander. No path/follow simulation is
+// implied: placement is resolved once and crew actors remain stationary.
+bool WithinFootprint(const FBox& Bounds,const FVector& At,float Margin){
+ return Bounds.IsValid&&At.X>=Bounds.Min.X-Margin&&At.X<=Bounds.Max.X+Margin&&At.Y>=Bounds.Min.Y-Margin&&At.Y<=Bounds.Max.Y+Margin;
+}
+bool CrewGround(UStaticMeshComponent* Terrain,const FVector& At,FHitResult& Hit){
+ if(!Terrain||At.ContainsNaN())return false;FCollisionQueryParams Q;Q.bTraceComplex=true;
+ return Terrain->LineTraceComponent(Hit,At+FVector(0,0,4000),At-FVector(0,0,4000),Q)&&!Hit.ImpactPoint.ContainsNaN()&&!Hit.ImpactNormal.ContainsNaN()&&Hit.ImpactNormal.Z>=.85f;
+}
+bool CrewClearance(ALunarGameMode* Game,UStaticMeshComponent* Terrain,AActor* Anchor,const FVector& Ground,const AActor* IgnoreGuide=nullptr){
+ if(!Game||!Game->GetWorld()||!Terrain||!Anchor||Ground.ContainsNaN())return false;
+ if(WithinFootprint(Anchor->GetComponentsBoundingBox(true),Ground,125))return false;
+ for(TActorIterator<AActor> It(Game->GetWorld());It;++It){
+  if(It->ActorHasTag(TEXT("apollo.reference-lander"))&&WithinFootprint(It->GetComponentsBoundingBox(true),Ground,155))return false;
+ }
+ for(const auto& Other:Game->CrewActors)if(IsValid(Other)&&Other.Get()!=IgnoreGuide&&FVector::Dist2D(Other->GetActorLocation(),Ground)<240)return false;
+ // Include blocking scenery above the terrain and enough room for the player
+ // to approach. Ignore only terrain, the player and our non-blocking displays.
+ FCollisionQueryParams Q;Q.bTraceComplex=true;Q.AddIgnoredActor(Terrain->GetOwner());
+ if(auto* P=UGameplayStatics::GetPlayerPawn(Game,0))Q.AddIgnoredActor(P);
+ for(const auto& Other:Game->CrewActors)if(IsValid(Other))Q.AddIgnoredActor(Other.Get());
+ if(Game->GetWorld()->OverlapBlockingTestByChannel(Ground+FVector(0,0,105),FQuat::Identity,ECC_Pawn,FCollisionShape::MakeCapsule(90,100),Q))return false;
+ // The base and approach apron must both be grounded; a single centre ray
+ // could otherwise park the robot on a steep ledge or between lander feet.
+ for(const FVector& Offset:{FVector(130,0,0),FVector(-130,0,0),FVector(0,130,0),FVector(0,-130,0)}){
+  FHitResult Edge;if(!CrewGround(Terrain,Ground+Offset,Edge)||FMath::Abs(Edge.ImpactPoint.Z-Ground.Z)>30)return false;
+ }
+ return true;
+}
 struct FCrewBuilder {
  ALunarGameMode* Game;UStaticMeshComponent* Terrain=nullptr;UStaticMesh* Cube=nullptr;UStaticMesh* Cylinder=nullptr;UStaticMesh* Sphere=nullptr;UMaterialInterface* Materials[4]={};int32 Components=0;
  explicit FCrewBuilder(ALunarGameMode* G):Game(G){
@@ -51,10 +82,20 @@ struct FCrewBuilder {
  }
  bool Ready() const{return Terrain&&Cube&&Cylinder&&Sphere&&Materials[0]&&Materials[1]&&Materials[2]&&Materials[3];}
  bool Place(AActor* Anchor,int32 Index,FVector& Position,FQuat& Rotation){
-  if(!Anchor||!Terrain)return false;const FVector Choices[]={FVector(450,Index==0?300:-260,0),FVector(-450,Index==0?300:-260,0),FVector(450,Index==0?-300:260,0),FVector(-450,Index==0?-300:260,0)};
-  for(const FVector& Offset:Choices){const FVector P=Anchor->GetActorLocation()+Offset;FHitResult Hit;FCollisionQueryParams Query;Query.bTraceComplex=true;
-   if(!Terrain->LineTraceComponent(Hit,P+FVector(0,0,4000),P-FVector(0,0,4000),Query)||Hit.ImpactPoint.ContainsNaN()||Hit.ImpactNormal.ContainsNaN()||Hit.ImpactNormal.Z<.8f)continue;
-   Position=Hit.ImpactPoint+Hit.ImpactNormal*.2f;FVector Facing=Anchor->GetActorLocation()-Position;if(auto* Pawn=UGameplayStatics::GetPlayerPawn(Game,0))Facing=Pawn->GetActorLocation()-Position;Facing.Z=0;if(!Facing.Normalize())Facing=FVector::ForwardVector;
+  if(!Anchor||!Terrain)return false;
+  const FVector Origin=Anchor->GetActorLocation();FVector Toward=FVector(1,Index==0?1.f:-1.f,0);
+  if(auto* Pawn=UGameplayStatics::GetPlayerPawn(Game,0)){Toward=Pawn->GetActorLocation()-Origin;Toward.Z=0;}
+  if(!Toward.Normalize())Toward=FVector::ForwardVector;const float Preferred=Toward.Rotation().Yaw;
+  // A bounded deterministic ring search handles the real lander footprint as
+  // well as small rescue return markers. No mission object or map is moved.
+  const float Radii[]={700,1000,1400,1900};
+  for(float Radius:Radii)for(int32 Step=0;Step<16;++Step){
+   const float Offset=Step==0?0.f:((Step+1)/2)*(Step%2?22.5f:-22.5f);
+   const FVector At=Origin+FRotator(0,Preferred+Offset,0).Vector()*Radius;FHitResult Hit;
+   if(!CrewGround(Terrain,At,Hit)||!CrewClearance(Game,Terrain,Anchor,Hit.ImpactPoint))continue;
+   Position=Hit.ImpactPoint+Hit.ImpactNormal*.2f;FVector Facing=Origin-Position;
+   if(auto* Pawn=UGameplayStatics::GetPlayerPawn(Game,0))Facing=Pawn->GetActorLocation()-Position;
+   Facing.Z=0;if(!Facing.Normalize())Facing=FVector::ForwardVector;
    Rotation=FQuat::FindBetweenNormals(FVector::UpVector,Hit.ImpactNormal)*FRotator(0,Facing.Rotation().Yaw+180,0).Quaternion();return true;
   }return false;
  }
@@ -120,7 +161,7 @@ void LunarCrew::BuildNotebook(ULunarPanel* Panel){
  auto Add=[&](const FString& Value,int32 Size,FLinearColor Color,float Space=5.f){Panel->Body->AddChildToVerticalBox(CrewText(Panel,Value,Size,Color))->SetPadding(FMargin(4,Space));};
  Add(TEXT("CREW / FICTIONAL GUIDES"),24,Accent,9);Add(TEXT("Optional conversations. These characters do not perform work, grant cargo, refill resources or diagnose real hardware."),16,Muted);
  Add(Game->CrewTalkCount>0?TEXT("LAST CONTACT / ")+CrewName(FMath::Clamp(Game->CrewSpeaker,0,1)):TEXT("No conversation recorded in this session."),17,Ink);
- Add(TEXT("PIP-3 / FIELD ROBOT"),20,Accent,9);Add(TEXT("An authored companion display near the return point. PIP-3 reads the same recorded mission checklist as your equipment notebook; it cannot complete a task on your behalf."),17,Ink);
+ Add(TEXT("PIP-3 / FIELD ROBOT"),20,Accent,9);Add(TEXT("A stationary authored guide on clear ground near the return point. PIP-3 does not follow the player. It reads the same recorded mission checklist as your equipment notebook; it cannot complete a task on your behalf."),17,Ink);
  Add(TEXT("DR. MIRA VALE / REMOTE SCIENCE GUIDE"),20,Accent,9);Add(TEXT("A fictional present-day scientist represented by a communicator icon. She is not an Apollo 12 crew member or a NASA employee. Her modern annotations are separate from the historical mission narrative."),17,Ink);
  Add(TEXT("CURRENT MISSION GUIDANCE"),19,Accent,9);Add(CrewAdvice(Game),18,Ink);Add(ScienceNote(Game),17,Ink,9);
  if(!Game->Mars)Add(TEXT("Scientific source: NASA Science / LCROSS. The 9 October 2009 impact studied Cabeus near the lunar south pole. https://science.nasa.gov/mission/lcross/"),15,Muted);
@@ -133,6 +174,21 @@ void LunarCrew::ValidateChecks(ALunarGameMode* Game,TFunctionRef<void(bool,const
  const auto Actors=Game->CrewActors;Build(Game);Check(Game->CrewActors==Actors&&Before.Same(Game),TEXT("Repeated crew build preserves guide actors and all mission facts"));
  int32 Total=0,Visible=0;bool Cosmetic=true;for(const auto& A:Game->CrewActors)if(IsValid(A)){TArray<UActorComponent*> All;A->GetComponents(All);Total+=All.Num();Cosmetic&=!A->IsActorTickEnabled();TArray<UStaticMeshComponent*> Meshes;A->GetComponents(Meshes);for(auto* C:Meshes){++Visible;Cosmetic&=C->GetStaticMesh()&&C->GetMaterial(0)&&C->GetCollisionEnabled()==ECollisionEnabled::NoCollision&&!C->CanEverAffectNavigation()&&!C->IsComponentTickEnabled();}}
  Check(Total<=MaxComponents&&Visible>=20,TEXT("Two crew displays stay within the 40-total-component budget"));Check(Cosmetic,TEXT("Crew models have no collision navigation actor Tick or mesh Tick"));
+ UStaticMeshComponent* Terrain=CrewTerrain(Game);bool Grounded=true,OutsideStructure=true;
+ for(int32 Index=0;Index<Count&&Game->CrewActors.IsValidIndex(Index);++Index)if(auto* Guide=Game->CrewActors[Index].Get()){
+  FHitResult Hit;Grounded&=CrewGround(Terrain,Guide->GetActorLocation(),Hit)&&FMath::Abs(Guide->GetActorLocation().Z-Hit.ImpactPoint.Z)<1;
+  AActor* Anchor=Index==0?Game->HomeActor.Get():IsValid(Game->PowerActor)?Game->PowerActor.Get():Game->HomeActor.Get();
+  OutsideStructure&=Anchor&&!WithinFootprint(Anchor->GetComponentsBoundingBox(true),Guide->GetActorLocation(),125)&&CrewClearance(Game,Terrain,Anchor,Guide->GetActorLocation(),Guide);
+  for(TActorIterator<AActor> It(Game->GetWorld());It;++It)if(It->ActorHasTag(TEXT("apollo.reference-lander")))OutsideStructure&=!WithinFootprint(It->GetComponentsBoundingBox(true),Guide->GetActorLocation(),155);
+ }
+ Check(Grounded,TEXT("Both stationary guides stand on the actual mission terrain rather than floating above it"));
+ Check(OutsideStructure,TEXT("Guide bases stay outside the return structure and reference lander footprint including access margin"));
+ if(Terrain&&IsValid(Game->HomeActor)&&IsValid(Game->CrewActors[0])){
+  const FVector At=Game->CrewActors[0]->GetActorLocation();auto* Blocker=Game->GetWorld()->SpawnActor<AStaticMeshActor>();
+  if(Blocker){auto* C=Blocker->GetStaticMeshComponent();C->SetMobility(EComponentMobility::Movable);C->SetStaticMesh(LoadObject<UStaticMesh>(nullptr,TEXT("/Engine/BasicShapes/Cube.Cube")));C->SetCollisionProfileName(TEXT("BlockAll"));C->SetCollisionEnabled(ECollisionEnabled::QueryOnly);Blocker->SetActorLocation(At+FVector(0,0,90));Blocker->SetActorScale3D(FVector(1.4,1.4,1.8));Blocker->SetActorHiddenInGame(true);}
+  Check(Blocker&&!CrewClearance(Game,Terrain,Game->HomeActor,At,Game->CrewActors[0]),TEXT("An actual blocking structure rejects a candidate crew position"));if(Blocker)Blocker->Destroy();
+ }
+
  const bool Paused=Game->Paused;const int32 Speaker=Game->CrewSpeaker,Talks=Game->CrewTalkCount;Game->Paused=true;Check(Nearby(Game)==INDEX_NONE&&!Talk(Game)&&Game->CrewTalkCount==Talks,TEXT("Paused input cannot talk behind a menu or mutate conversation counts"));Game->Paused=Paused;
  Check(!Talk(Game,-2)&&!Talk(Game,Count)&&Game->CrewTalkCount==Talks,TEXT("Invalid explicit speaker indices cannot start a conversation"));
  auto* PC=UGameplayStatics::GetPlayerController(Game,0);auto* Panel=PC?CreateWidget<ULunarPanel>(PC):nullptr;if(Panel){Panel->WidgetTree=NewObject<UWidgetTree>(Panel);Panel->Body=Panel->WidgetTree->ConstructWidget<UVerticalBox>();Panel->Settings=false;BuildNotebook(Panel);}

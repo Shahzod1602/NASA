@@ -1,0 +1,281 @@
+{
+  "kind": "sanitized_menu_review_receipts",
+  "executable_sha256": "17a2d4f00256c6017a0ebc911ecce77b1588e109a219bb97505ee59467298e94",
+  "conditions": {
+    "synthetic": true,
+    "human_playtest": false,
+    "performance_measurement": false
+  },
+  "reviews": [
+    {
+      "source_manifest": "Reports/MissionSelection20261031/package-review-1280x720-20261106-094738-707/review-manifest.json",
+      "source_manifest_sha256": "e98fa022d479b0771eca7e9100d8c7b6586da477e1702baa15a154032dbe1c2f",
+      "retained_manifest": "Docs/TaskFixes20261106/evidence/menu-review-720/review-manifest.json",
+      "log": "Reports/MissionSelection20261031/package-review-1280x720-20261106-094738-707.log",
+      "log_sha256": "e445882e42b569131402a3a4f37f7bfea9f00bb79ddb3cd1b03eb1a98eedf1e5",
+      "executable_binding": "Final packaged executable fixed by enclosing root validation sequence; this standalone review runner does not emit its own executable-hash JSON.",
+      "staged_pngs": [
+        {
+          "name": "home",
+          "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-094738-707/home.png",
+          "sha256": "8308c80b20b198fb45b5cb9797fa41e968bb1c47b2fc3b5be06a8c8a7c2880fd",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "name": "moon-unselected",
+          "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-094738-707/moon-unselected.png",
+          "sha256": "23384748b054d0fc3c0b4e22abe332b722cb0bbf0a0c7452c43a2f1de67991d8",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "name": "transition-00",
+          "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-094738-707/transition-00.png",
+          "sha256": "1cbba71b577ba58661ef158781a6d67f201490f8e11ea5e6fa71f7da9a3536df",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "name": "transition-01",
+          "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-094738-707/transition-01.png",
+          "sha256": "ac171f6695e6013faef853e2f062b23334b9fd4a58812b4273b9246e6e11d50e",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "name": "transition-02",
+          "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-094738-707/transition-02.png",
+          "sha256": "1bc08dc7c242501cd69a849a8b5f2935dbfd595f4bbde9cbd50f85db267ce9ca",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "name": "transition-03",
+          "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-094738-707/transition-03.png",
+          "sha256": "1bc08dc7c242501cd69a849a8b5f2935dbfd595f4bbde9cbd50f85db267ce9ca",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "name": "transition-04",
+          "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-094738-707/transition-04.png",
+          "sha256": "1bc08dc7c242501cd69a849a8b5f2935dbfd595f4bbde9cbd50f85db267ce9ca",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "name": "transition-05",
+          "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-094738-707/transition-05.png",
+          "sha256": "1bc08dc7c242501cd69a849a8b5f2935dbfd595f4bbde9cbd50f85db267ce9ca",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "name": "moon-apollo-selected",
+          "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-094738-707/moon-apollo-selected.png",
+          "sha256": "1bc08dc7c242501cd69a849a8b5f2935dbfd595f4bbde9cbd50f85db267ce9ca",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "name": "moon-selene-selected",
+          "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-094738-707/moon-selene-selected.png",
+          "sha256": "90906fb3a96d07ea954a0410d51e63340e4867fb33c5caa637d5086abd25393d",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "name": "mars-unselected",
+          "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-094738-707/mars-unselected.png",
+          "sha256": "b9a95fabf8bb9cfed03fbdd2c957e37e9b5353905360a2798555bce27f7db05c",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "name": "mars-ares-selected",
+          "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-094738-707/mars-ares-selected.png",
+          "sha256": "15885c27624e1dfcfc6c91e9a4ef119d22868376b7901f45ac848e85717fc2b2",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "name": "moon150-selected",
+          "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-094738-707/moon150-selected.png",
+          "sha256": "9d074dcd418c2c429b792715fd426966e46f3d8048f7582fcab6e899b5dedb62",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "name": "actions-focus",
+          "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-094738-707/actions-focus.png",
+          "sha256": "e43499bac1b6bb149f146f80b3f0bffef0bf5fda3c20b37f5a7cfad2ca6d6dfe",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "name": "actions-hover",
+          "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-094738-707/actions-hover.png",
+          "sha256": "c2a1af52c6662bf6ecac2026ba39f45c29f0de96e5c27aa775a8e31c2c0ac525",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "name": "actions-pressed",
+          "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-094738-707/actions-pressed.png",
+          "sha256": "1731852a711bb2618e145586b8b57bade3a854535ea134216f9a20e6790b2cdc",
+          "width": 1280,
+          "height": 720
+        },
+        {
+          "name": "actions-idle",
+          "source": "Reports/MissionSelection20261031/package-review-1280x720-20261106-094738-707/actions-idle.png",
+          "sha256": "c2a1af52c6662bf6ecac2026ba39f45c29f0de96e5c27aa775a8e31c2c0ac525",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "action_records": 6,
+      "action_hit_paths_per_record": 5,
+      "actual_action_keyboard_focus_records": 6,
+      "actual_mission_card_pointer_routes": 3,
+      "action_pointer_clicks_claimed": 0,
+      "cpp_pass_executions": 0
+    },
+    {
+      "source_manifest": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-094804-039/review-manifest.json",
+      "source_manifest_sha256": "d5d1c68f9d7554dc06c171eb72f977b6ccd037b92d5a765374d4deb9a38c33ba",
+      "retained_manifest": "Docs/TaskFixes20261106/evidence/menu-review-1080/review-manifest.json",
+      "log": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-094804-039.log",
+      "log_sha256": "da42bdd691df1c42b8c64be25ee0706585ae0fe36823c051f48671188f191ead",
+      "executable_binding": "Final packaged executable fixed by enclosing root validation sequence; this standalone review runner does not emit its own executable-hash JSON.",
+      "staged_pngs": [
+        {
+          "name": "home",
+          "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-094804-039/home.png",
+          "sha256": "e7fa71a16bf9ebf13b0b1ad9ef6b04f1909381badc1555e4f0eaae723b71c612",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "name": "moon-unselected",
+          "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-094804-039/moon-unselected.png",
+          "sha256": "13098909b30b3a5677f4f4219bf4ee24a179df755da1c5ecc6dd0af2b8e48f04",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "name": "transition-00",
+          "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-094804-039/transition-00.png",
+          "sha256": "5f8357a0723b71aa2aae43657cc56e0062e3f6d2cbef29b8c81306241c2fe41e",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "name": "transition-01",
+          "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-094804-039/transition-01.png",
+          "sha256": "3032941ee95b7fd136dd66f18465edf259f95e45a7d50db35d03eba2d8e47449",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "name": "transition-02",
+          "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-094804-039/transition-02.png",
+          "sha256": "277b8e44e7d8d42d46cf32554de12cf14952041f96b5012f4cb209a6b4f5bc85",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "name": "transition-03",
+          "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-094804-039/transition-03.png",
+          "sha256": "277b8e44e7d8d42d46cf32554de12cf14952041f96b5012f4cb209a6b4f5bc85",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "name": "transition-04",
+          "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-094804-039/transition-04.png",
+          "sha256": "277b8e44e7d8d42d46cf32554de12cf14952041f96b5012f4cb209a6b4f5bc85",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "name": "transition-05",
+          "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-094804-039/transition-05.png",
+          "sha256": "277b8e44e7d8d42d46cf32554de12cf14952041f96b5012f4cb209a6b4f5bc85",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "name": "moon-apollo-selected",
+          "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-094804-039/moon-apollo-selected.png",
+          "sha256": "277b8e44e7d8d42d46cf32554de12cf14952041f96b5012f4cb209a6b4f5bc85",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "name": "moon-selene-selected",
+          "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-094804-039/moon-selene-selected.png",
+          "sha256": "cf261032f95fb30baecd5c9dde52f11e6ccc275bb637e11aa7356f733a5e11d7",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "name": "mars-unselected",
+          "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-094804-039/mars-unselected.png",
+          "sha256": "7dacc86caa025da25ec2e80d4efac64d568785d069f8d63be81259ed2459822c",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "name": "mars-ares-selected",
+          "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-094804-039/mars-ares-selected.png",
+          "sha256": "30214d6aa659e24a311f304057c48f65fc348d82eabbe666626ac2fde3cf462f",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "name": "moon150-selected",
+          "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-094804-039/moon150-selected.png",
+          "sha256": "8f4bfdd5f812359031074c5e8f0acb21c0d210ec11c774c470170fa3df43d587",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "name": "actions-focus",
+          "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-094804-039/actions-focus.png",
+          "sha256": "a9fe1a25edf377b440f11844b707d27267881708cc18bd20790cea53f148650a",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "name": "actions-hover",
+          "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-094804-039/actions-hover.png",
+          "sha256": "ad71f40966ea29c25be5c7981bdc4173d4c3fb3c1ff536c99616790358c9243f",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "name": "actions-pressed",
+          "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-094804-039/actions-pressed.png",
+          "sha256": "c88c2d0ddca46ffae22cd9eb6cf154d14e33b4410b593d65dc60214e29393220",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "name": "actions-idle",
+          "source": "Reports/MissionSelection20261031/package-review-1920x1080-20261106-094804-039/actions-idle.png",
+          "sha256": "ad71f40966ea29c25be5c7981bdc4173d4c3fb3c1ff536c99616790358c9243f",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "action_records": 6,
+      "action_hit_paths_per_record": 5,
+      "actual_action_keyboard_focus_records": 6,
+      "actual_mission_card_pointer_routes": 3,
+      "action_pointer_clicks_claimed": 0,
+      "cpp_pass_executions": 0
+    }
+  ]
+}

@@ -60,7 +60,8 @@ void ALunarCharacter::PoseSuitRig(){
   for(int S=0;S<2;++S){
    const FString Side=S?TEXT("r"):TEXT("l");const float Sign=S?1:-1;
    const auto& Parts=View?Gloves:SuitArms;const int B=S*(View?8:9),F=B+(View?0:1);
-   const FVector Shoulder(0,Sign*25,40);const FVector Elbow=Parts[F]->GetRelativeLocation(),Wrist=Parts[F+1]->GetRelativeLocation();
+   // Camera-space shoulders are below the visor; body coordinates stay in capsule space.
+   const FVector Shoulder=View?FVector(14,Sign*25,-24):SuitArms.IsValidIndex(S*9)&&SuitArms[S*9]?SuitArms[S*9]->GetRelativeLocation():FVector(0,Sign*25,40);const FVector Elbow=Parts[F]->GetRelativeLocation(),Wrist=Parts[F+1]->GetRelativeLocation();
    const FVector RefUpper=FVector(3,Sign*9,-26).GetSafeNormal(),RefLower=FVector(3,Sign*4,-23).GetSafeNormal();
    Set(C,TEXT("upperarm_")+Side,Shoulder,FQuat::FindBetweenNormals(RefUpper,(Elbow-Shoulder).GetSafeNormal()));
    Set(C,TEXT("lowerarm_")+Side,Elbow,FQuat::FindBetweenNormals(RefLower,(Wrist-Elbow).GetSafeNormal()));

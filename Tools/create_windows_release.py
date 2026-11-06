@@ -239,8 +239,8 @@ def assemble_release(root, package, output, version, bundle, commit, validation,
         raise
     checksum = file_digest(archive)
     for name, content in generated.items():
-        (output / name).write_text(content, encoding='utf-8')
-    (output / (archive.name + '.sha256')).write_text(checksum + '  ' + archive.name + '\n', encoding='ascii')
+        (output / name).write_text(content, encoding='utf-8', newline='\n')
+    (output / (archive.name + '.sha256')).write_text(checksum + '  ' + archive.name + '\n', encoding='ascii', newline='\n')
     return {'archive': str(archive), 'bytes': archive.stat().st_size, 'sha256': checksum,
             'source_commit': commit, 'executable_sha256': executable_hash,
             'assertions_or_outcomes': normalized['assertions_or_outcomes'], 'cases': normalized['case_count'],

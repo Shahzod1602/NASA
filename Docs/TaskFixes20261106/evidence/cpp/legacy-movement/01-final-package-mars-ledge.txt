@@ -1,0 +1,6 @@
+PASS Real Space + W jump lands on survey ledge
+PASS Recorder is visible and usable after landing
+PASS Optional log recovered
+Player: X=18481.437 Y=0.000 Z=178.403
+Recorder: X=18600.000 Y=0.000 Z=95.000
+RESULT: 0 failures

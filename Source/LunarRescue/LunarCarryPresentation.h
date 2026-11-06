@@ -12,6 +12,8 @@ bool ProjectViewBounds(const FBox& SourceBounds,const FTransform& Relative,float
 bool ShouldShow(const ALunarCharacter* Player,const ALunarGameMode* Game,bool FirstPerson,bool SuppressPhoto=false);
 bool IsCellCarried(const ALunarGameMode* Game);
 bool CellGrip(const ALunarCharacter* Player,float Side,FVector& CameraSpacePoint);
+// The source item and both gloves share one measured component frame.
+bool GripPose(const ALunarCharacter* Player,bool FirstPerson,float Side,FVector& Wrist,FRotator& Rotation);
 void Build(ALunarCharacter* Player);
 void Update(ALunarCharacter* Player,bool SuppressPhoto=false);
 void ValidateChecks(ALunarGameMode* Game,TFunctionRef<void(bool,const TCHAR*)> Check);

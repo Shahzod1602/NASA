@@ -1,0 +1,16 @@
+Spawn: X=-7350.000 Y=900.000 Z=90.150, pawn=BP_Astronaut_C, movement mode=1
+Walking key coverage: 8 (WASD and arrow keys)
+PASS W held 1.5 seconds: 457.6 cm along intended direction, delta=X=457.632 Y=0.000 Z=0.000 velocity=X=320.000 Y=0.000 Z=0.000 mode=1
+PASS D held 1.5 seconds: 457.6 cm along intended direction, delta=X=0.000 Y=457.613 Z=0.000 velocity=X=0.000 Y=320.000 Z=0.000 mode=1
+PASS S held 1.5 seconds: 457.6 cm along intended direction, delta=X=-457.617 Y=0.000 Z=0.000 velocity=X=-320.000 Y=0.000 Z=0.000 mode=1
+PASS A held 1.5 seconds: 457.6 cm along intended direction, delta=X=0.000 Y=-457.609 Z=0.000 velocity=X=0.000 Y=-320.000 Z=0.000 mode=1
+PASS Up held 1.5 seconds: 457.7 cm along intended direction, delta=X=457.665 Y=0.000 Z=0.000 velocity=X=320.000 Y=0.000 Z=0.000 mode=1
+PASS Right held 1.5 seconds: 457.9 cm along intended direction, delta=X=0.000 Y=457.887 Z=0.000 velocity=X=0.000 Y=320.000 Z=0.000 mode=1
+PASS Down held 1.5 seconds: 457.6 cm along intended direction, delta=X=-457.638 Y=0.000 Z=0.000 velocity=X=-320.000 Y=0.000 Z=0.000 mode=1
+PASS Left held 1.5 seconds: 460.2 cm along intended direction, delta=X=0.000 Y=-460.235 Z=0.000 velocity=X=0.000 Y=-320.000 Z=0.000 mode=1
+PASS Space jump: 92.6 cm rise
+PASS Grounded walking leaves bootprints: 56
+PASS Suit meshes, decal and step sounds loaded
+PASS Jump landing emits bounded grain particles
+PASS Pause freezes footprints, particles and oxygen
+RESULT: 0 failures

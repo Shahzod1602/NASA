@@ -1,0 +1,16 @@
+{
+  "kind": "source_delta_audit",
+  "previous_executable_sha256": "17a2d4f00256c6017a0ebc911ecce77b1588e109a219bb97505ee59467298e94",
+  "final_executable_sha256": "06c1b022f92b4e13e8300fc8d71296f290ee4f2565ac8597ebcd337519facda8",
+  "previous_source_entries": 115,
+  "changed_entries": [
+    {
+      "path": "Source/LunarRescue/LunarNasaPovChecks.cpp",
+      "previous_sha256": "a8c4c79ffd38383d2e9cd8a868b7a1b05d9825da7a7808e26cd3e09eb9925aa1",
+      "final_sha256": "d45b05a87a9733c4e43730c5bd65b35cd60e2ea982836f7b31e96764f3c49f98"
+    }
+  ],
+  "unchanged_entries": 114,
+  "production_source_changed": false,
+  "description": "Legacy POV checks now measure actual camera-relative pouch lowering and stow/resource invariants, use the production carry/suit update order, and check actual rendered HandRig wrists. Original0.2cm palm tolerance and independent mesh-contact checks are retained."
+}

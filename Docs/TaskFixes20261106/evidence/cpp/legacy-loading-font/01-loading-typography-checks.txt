@@ -1,0 +1,56 @@
+PASS Loading layout checks have actual Slate font measurement
+PASS Accessibility scale rejects non-finite values and stays in its configured range
+PASS Apollo12 gives the illustration more room by default and expands for 150% text
+PASS Apollo12 at 100% measured text stays inside safe screen bounds
+PASS Apollo12 at 100% text and progress ring do not overlap and keep their column gutter
+PASS Apollo12 at 100% retains an open illustration area between header and footer
+PASS Apollo12 at 100% applies the smaller hierarchy while respecting the selected text scale
+PASS Apollo12 at 100% retains the illustration and fictional-spacecraft disclosure
+PASS Apollo12 at 100% has room for every displayed percent and preparation stage caption
+PASS Apollo12 at 150% measured text stays inside safe screen bounds
+PASS Apollo12 at 150% text and progress ring do not overlap and keep their column gutter
+PASS Apollo12 at 150% retains an open illustration area between header and footer
+PASS Apollo12 at 150% applies the smaller hierarchy while respecting the selected text scale
+PASS Apollo12 at 150% retains the illustration and fictional-spacecraft disclosure
+PASS Apollo12 at 150% has room for every displayed percent and preparation stage caption
+PASS MoonBase gives the illustration more room by default and expands for 150% text
+PASS MoonBase at 100% measured text stays inside safe screen bounds
+PASS MoonBase at 100% text and progress ring do not overlap and keep their column gutter
+PASS MoonBase at 100% retains an open illustration area between header and footer
+PASS MoonBase at 100% applies the smaller hierarchy while respecting the selected text scale
+PASS MoonBase at 100% retains the illustration and fictional-spacecraft disclosure
+PASS MoonBase at 100% has room for every displayed percent and preparation stage caption
+PASS MoonBase at 150% measured text stays inside safe screen bounds
+PASS MoonBase at 150% text and progress ring do not overlap and keep their column gutter
+PASS MoonBase at 150% retains an open illustration area between header and footer
+PASS MoonBase at 150% applies the smaller hierarchy while respecting the selected text scale
+PASS MoonBase at 150% retains the illustration and fictional-spacecraft disclosure
+PASS MoonBase at 150% has room for every displayed percent and preparation stage caption
+PASS MarsBase gives the illustration more room by default and expands for 150% text
+PASS MarsBase at 100% measured text stays inside safe screen bounds
+PASS MarsBase at 100% text and progress ring do not overlap and keep their column gutter
+PASS MarsBase at 100% retains an open illustration area between header and footer
+PASS MarsBase at 100% applies the smaller hierarchy while respecting the selected text scale
+PASS MarsBase at 100% retains the illustration and fictional-spacecraft disclosure
+PASS MarsBase at 100% has room for every displayed percent and preparation stage caption
+PASS MarsBase at 150% measured text stays inside safe screen bounds
+PASS MarsBase at 150% text and progress ring do not overlap and keep their column gutter
+PASS MarsBase at 150% retains an open illustration area between header and footer
+PASS MarsBase at 150% applies the smaller hierarchy while respecting the selected text scale
+PASS MarsBase at 150% retains the illustration and fictional-spacecraft disclosure
+PASS MarsBase at 150% has room for every displayed percent and preparation stage caption
+PASS MissionSelect gives the illustration more room by default and expands for 150% text
+PASS MissionSelect at 100% measured text stays inside safe screen bounds
+PASS MissionSelect at 100% text and progress ring do not overlap and keep their column gutter
+PASS MissionSelect at 100% retains an open illustration area between header and footer
+PASS MissionSelect at 100% applies the smaller hierarchy while respecting the selected text scale
+PASS MissionSelect at 100% retains the illustration and fictional-spacecraft disclosure
+PASS MissionSelect at 100% has room for every displayed percent and preparation stage caption
+PASS MissionSelect at 150% measured text stays inside safe screen bounds
+PASS MissionSelect at 150% text and progress ring do not overlap and keep their column gutter
+PASS MissionSelect at 150% retains an open illustration area between header and footer
+PASS MissionSelect at 150% applies the smaller hierarchy while respecting the selected text scale
+PASS MissionSelect at 150% retains the illustration and fictional-spacecraft disclosure
+PASS MissionSelect at 150% has room for every displayed percent and preparation stage caption
+PASS Both local illustrated loading backgrounds are available
+RESULT: 0 failures

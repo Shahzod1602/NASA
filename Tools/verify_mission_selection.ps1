@@ -51,9 +51,15 @@ if($Review){
  if(-not(Test-Path -LiteralPath $manifestFile) -or (Get-Item -LiteralPath $manifestFile).LastWriteTimeUtc -lt $started){throw "Missing fresh review manifest: $manifestFile"}
  $manifest=Get-Content -LiteralPath $manifestFile -Raw | ConvertFrom-Json
  if(-not $manifest.synthetic -or $manifest.human_playtest -or $manifest.performance_measurement){throw 'Review must declare synthetic presentation samples without human or performance claims'}
- $names=@('home','moon-unselected','moon-apollo-selected','moon-selene-selected','mars-unselected','mars-ares-selected','moon150-selected')+@(0..5 | ForEach-Object {'transition-{0:D2}' -f $_})
+ $names=@('home','moon-unselected','moon-apollo-selected','moon-selene-selected','mars-unselected','mars-ares-selected','moon150-selected','actions-focus','actions-hover','actions-pressed','actions-idle')+@(0..5 | ForEach-Object {'transition-{0:D2}' -f $_})
  if(@($manifest.frames).Count -ne $names.Count){throw 'Unexpected review frame count'}
  if(@($manifest.pointer_clicks).Count -ne 3){throw 'Missing three actual Slate pointer-route checks'}
+ if(@($manifest.action_checks).Count -ne 6){throw 'Missing action hit/focus checks at 100% and 150% text'}
+ foreach($textScale in @(1.0,1.5)){foreach($actionName in @('start','back','settings')){
+  $action=@($manifest.action_checks|Where-Object { $_.name -eq $actionName -and [Math]::Abs([double]$_.text_scale-$textScale) -lt .001 })
+  if($action.Count -ne 1 -or -not $action[0].full_fill_and_centred_caption -or -not $action[0].five_hit_points -or -not $action[0].actual_keyboard_focus){throw "Action surface/geometry/keyboard focus failed: $actionName at text scale$textScale"}
+ }}
+
  foreach($index in 0..2){
   $click=@($manifest.pointer_clicks | Where-Object mission_index -EQ $index)
   if($click.Count -ne 1 -or -not $click[0].button_in_hit_path -or -not $click[0].down_handled -or -not $click[0].up_handled -or -not $click[0].selected){throw "Actual description-region Slate click did not select mission $index"}
@@ -105,7 +111,7 @@ if($Review){
 
  Copy-Item -LiteralPath $manifestFile -Destination $destination
  if($runLog -notmatch 'MISSION_SELECTION_REVIEW COMPLETE'){throw 'Review did not report successful completion'}
- Write-Output "PASS: seven menu states and six naturally ticking transition samples at ${Width}x${Height}: $destination"
+ Write-Output "PASS: eleven menu/action states, six naturally ticking transition samples and six action hit/focus checks at ${Width}x${Height}: $destination"
  Write-Output 'These are staged visual samples, not a human playtest or performance benchmark.'
 }else{
  $result=Join-Path $projectRoot 'Reports\mission-selection-checks.txt'

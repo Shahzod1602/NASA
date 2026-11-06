@@ -1,0 +1,13 @@
+PASS Full restart test has a mission and normal saves are disabled
+PASS Restart starts from the actual pause interface
+PASS Restart confirmation preserves the current run until confirmed
+PASS Confirmed restart queues the current map through the real loading path
+PASS Full restart test has a mission and normal saves are disabled
+PASS Restart returns to the same actual destination and completes loading
+PASS New world opens at briefing with a full mission resource
+PASS Restart clears required, optional and unfinished mission work
+PASS Restart clears local timer, distance and route telemetry
+PASS Restart resets all three local learning answers
+PASS Fresh briefing has no stale pause menu
+PASS Full restart leaves existing saved Apollo checkpoints byte-identical
+RESULT: 0 failures

@@ -1,0 +1,58 @@
+{
+  "kind": "rendered-readability-comparison",
+  "before_lumens": 140,
+  "after_lumens": 3,
+  "before_executable_sha256": "01efe903c30d876b553abb8202b3513c3fffd7f608f4c480ad2313d25d92bc14",
+  "after_executable_sha256": "17a2d4f00256c6017a0ebc911ecce77b1588e109a219bb97505ee59467298e94",
+  "before": [
+    {
+      "frame": "apollo/apollo-hardware-fp85.png",
+      "sha256": "8e01fb4811fe728e3278419aaea3a72bc112648d7ddae94ce2a5e1379175c737",
+      "pixels": 921600,
+      "rgb250_fraction": 0.23448567708333334,
+      "rgb245_fraction": 0.24655164930555556
+    },
+    {
+      "frame": "apollo/apollo-pouch-fp45.png",
+      "sha256": "cb953fcbbbfa297263c4aa787140b909817e0dde7acb8e581c7b29488e106aa2",
+      "pixels": 921600,
+      "rgb250_fraction": 0.3524479166666667,
+      "rgb245_fraction": 0.4119411892361111
+    },
+    {
+      "frame": "selene/cell-fp45-grip.png",
+      "sha256": "8a7f2f47d758926b70123e7d97b0299a5aa0d7e12b3ddf72ef8b89a8ed1fa00f",
+      "pixels": 921600,
+      "rgb250_fraction": 0.044767795138888886,
+      "rgb245_fraction": 0.05706597222222222
+    }
+  ],
+  "after": [
+    {
+      "frame": "apollo/apollo-hardware-fp85.png",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261106-094254-692/apollo/apollo-hardware-fp85.png",
+      "sha256": "1e25c95d255512c8cb375c2369f5586070973c046569cc0bcab84f8f5539e80c",
+      "pixels": 921600,
+      "rgb250_fraction": 0.0,
+      "rgb245_fraction": 0.002553168402777778
+    },
+    {
+      "frame": "apollo/apollo-pouch-fp45.png",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261106-094254-692/apollo/apollo-pouch-fp45.png",
+      "sha256": "363c371284aa116c725a74a65cbe10976c891d1aa7f687f54ce054e3f84b0dcc",
+      "pixels": 921600,
+      "rgb250_fraction": 0.0,
+      "rgb245_fraction": 0.0025629340277777777
+    },
+    {
+      "frame": "selene/cell-fp45-grip.png",
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261106-094328-855/selene/cell-fp45-grip.png",
+      "sha256": "2fc15db362eb1a99a407103c08fcaaa2fc72bcdf4ab44cfa083decabe7ea62d0",
+      "pixels": 921600,
+      "rgb250_fraction": 4.6657986111111113e-05,
+      "rgb245_fraction": 0.002409939236111111
+    }
+  ],
+  "root_visual_review": "Pouch label readable; hardware/cloth detail retained; floating forearm ends covered; no visible glare washout in these staged views.",
+  "limitations": "Whole-frame RGB threshold includes scene and HUD; comparative highlight clipping indicator, not isolated material photometry or a human playtest."
+}

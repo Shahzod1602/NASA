@@ -1,0 +1,58 @@
+PASS Apollo map and complete expedition props loaded
+PASS NASA orbital field map is packaged
+PASS Lunar gravity 1.62 m/s2
+PASS Route walk speed uses metres rather than compressed geography
+PASS Imported terrain elevation matches Intrepid source point
+PASS Imported terrain elevation matches Surveyor source point
+PASS Sample collision height matches source DTM triangle
+PASS Sample collision height matches source DTM triangle
+PASS Sample collision height matches source DTM triangle
+PASS Mapped LM-Surveyor separation is preserved at full scale
+PASS Briefing starts with 30-minute exercise budget
+PASS Briefing does not consume time
+PASS Expedition starts with checkout
+PASS Apollo objectives and checkpoint controls use English
+PASS Checkout starts with nonblocking look and movement guidance
+PASS Paused tutorial does not advance
+PASS Looking around advances guidance without requiring a key
+PASS Walking away from the start introduces the work instruction
+PASS Cannot bypass checkout at Surveyor
+PASS Interrupted hold cannot finish checkout
+PASS Pause freezes work and mission budget
+PASS Three checkout actions unlock ALSEP
+PASS Seismometer deploys before central station
+PASS Antenna rejects wrong Earth bearing
+PASS Aimed antenna and verified link unlock samples
+PASS Journal pauses play and Q changes history page
+PASS Closing journal resumes play
+PASS Q cycles sample navigation
+PASS Sample can be selected by proximity independently of marker
+PASS First sample action records context without collecting
+PASS Looking away cancels collection
+PASS Photographed sample is sealed once
+PASS Collected sample cannot be counted twice
+PASS Sample can be selected by proximity independently of marker
+PASS First sample action records context without collecting
+PASS Looking away cancels collection
+PASS Photographed sample is sealed once
+PASS Collected sample cannot be counted twice
+PASS Sample can be selected by proximity independently of marker
+PASS First sample action records context without collecting
+PASS Looking away cancels collection
+PASS Photographed sample is sealed once
+PASS Collected sample cannot be counted twice
+PASS All documented samples unlock historical approach
+PASS Approach navigates to Surveyor rather than a hidden waypoint sequence
+PASS Historical route remains optional and does not award Surveyor evidence
+PASS Arriving directly at Surveyor unlocks recovery without visiting twelve markers
+PASS Surveyor must be documented before removal
+PASS Surveyor hardware can be packed in any order
+PASS Surveyor hardware can be packed in any order
+PASS Surveyor hardware can be packed in any order
+PASS Camera scoop and cable unlock return
+PASS Hardware recovery provides no fictional oxygen reward
+PASS All science and hardware stowed completes expedition
+PASS Completed expedition freezes the budget
+PASS Negative time cannot increase budget
+PASS Timeout ends the exercise without claiming astronaut death
+RESULT: 0 failures

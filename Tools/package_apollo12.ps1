@@ -66,7 +66,7 @@ Copy-Item -LiteralPath "$root\LOADING_UPDATE.md" -Destination "$credits\Apollo12
 Copy-Item -LiteralPath "$root\EXPEDITION_POLISH.md" -Destination "$credits\Apollo12"
 Copy-Item -LiteralPath "$root\EXPEDITION_EXPERIENCE.md" -Destination "$credits\Apollo12"
 Copy-Item -LiteralPath "$root\MISSION_SELECTION_UPDATE.md" -Destination "$credits\Apollo12"
-Copy-Item -LiteralPath "$root\NASA_TASKS_UPDATE.md","$root\SCIENCE_AND_SOURCES.md","$root\CREDITS.md" -Destination $credits
+Copy-Item -LiteralPath "$root\NASA_TASKS_UPDATE.md","$root\SCIENCE_AND_SOURCES.md","$root\CREDITS.md","$root\README.md","$root\CHANGELOG.md","$root\DEVELOPMENT_PLAN.md","$root\COMPETITION_READINESS.md" -Destination $credits
 # Ship local feature/provenance notes alongside the retained source credits.
 New-Item -ItemType Directory -Force -Path "$credits\Feedback" | Out-Null
 Copy-Item -LiteralPath "$root\ASSET_IMPROVEMENTS_UPDATE.md","$root\ASSET_SOURCE_CATALOG.md","$root\GAMEPLAY_REFERENCE_UPDATE.md","$root\LOADING_TYPOGRAPHY_UPDATE.md" -Destination "$credits\Feedback"
@@ -109,6 +109,22 @@ $localBuild=[ordered]@{
  verification_status='Not certified by packaging; run verification for this build and its assets.'
 }
 $localBuild | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath (Join-Path $root 'Dist\Apollo12\Windows\BUILD_INFO.json') -Encoding UTF8
+# Validation belongs to an exact build; archive, then invalidate an older receipt.
+$validationReceipt=Join-Path $root 'Dist/Apollo12/Windows/LOCAL_VALIDATION.json'
+if(Test-Path -LiteralPath $validationReceipt -PathType Leaf){
+ $receiptHistory=Join-Path $root 'Reports/TaskFixes20261106/history/package-validation'
+ New-Item -ItemType Directory -Force -Path $receiptHistory | Out-Null
+ Copy-Item -LiteralPath $validationReceipt -Destination (Join-Path $receiptHistory ((Get-Date -Format 'yyyyMMdd-HHmmss-fff')+'-LOCAL_VALIDATION.json'))
+}
+[ordered]@{
+ schema_version=2
+ published_release=$false
+ verification_completed=$false
+ generated_utc=[DateTime]::UtcNow.ToString('o')
+ executable_sha256=$localBuild.executable_sha256
+ verification_status='Not run for this packaging invocation. Historical test notes in Credits are not certification of this build.'
+ build_info='BUILD_INFO.json'
+} | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath $validationReceipt -Encoding UTF8
 Write-Output "Apollo 12 package: $root\Dist\Apollo12\Windows\LunarRescue.exe"
 
 # Bundle the November gameplay notes; verification remains executable-specific.
@@ -125,4 +141,18 @@ if(Test-Path -LiteralPath $fieldNotes){
  $fieldTarget=Join-Path $credits 'Docs/FieldOperations20261104'
  New-Item -ItemType Directory -Force -Path $fieldTarget | Out-Null
  Get-ChildItem -LiteralPath $fieldNotes -File | Where-Object {$_.Extension -in @('.md','.json')} | Copy-Item -Destination $fieldTarget
+}
+
+# Local interaction-fix notes travel with the same offline credits as prior work.
+$taskNotes=Join-Path $root 'Docs/TaskFixes20261106'
+if(Test-Path -LiteralPath $taskNotes){
+ $taskTarget=Join-Path $credits 'Docs/TaskFixes20261106'
+ New-Item -ItemType Directory -Force -Path $taskTarget | Out-Null
+ foreach($noteFile in Get-ChildItem -LiteralPath $taskNotes -File -Recurse | Where-Object {$_.Extension -in @('.md','.json','.txt')}){
+  if($noteFile.Attributes -band [IO.FileAttributes]::ReparsePoint){throw 'Task evidence copy refuses linked files'}
+  $noteRelative=$noteFile.FullName.Substring($taskNotes.Length).TrimStart([char[]]'\/')
+  $noteDestination=Join-Path $taskTarget $noteRelative
+  New-Item -ItemType Directory -Force -Path (Split-Path $noteDestination -Parent) | Out-Null
+  Copy-Item -LiteralPath $noteFile.FullName -Destination $noteDestination
+ }
 }
