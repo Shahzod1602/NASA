@@ -1,0 +1,52 @@
+PASS Save tests are isolated from player saves
+PASS Starting an expedition creates an initial checkpoint
+PASS New expedition confirmation leaves the existing checkpoint untouched
+PASS An extra mouse click cannot accept the destructive new-run confirmation
+PASS Escape cancels the new-run confirmation
+PASS Enter confirms a new run and replaces the checkpoint only after confirmation
+PASS The pause R handler restores the checkpoint and resumes movement
+PASS Partial work is discarded rather than falsely completed on reload
+PASS Checkout checkpoint restores committed work and telemetry
+PASS Checkout checkpoint restores committed work and telemetry
+PASS Checkout checkpoint restores committed work and telemetry
+PASS Seismometer checkpoint restores deployment
+PASS Partially aimed antenna survives checkpoint loading
+PASS Verified antenna checkpoint opens science
+PASS Context photo ID and site survive reload
+PASS Collected sample remains collected after reload
+PASS Loading does not respawn a collected sample
+PASS Context photo ID and site survive reload
+PASS Collected sample remains collected after reload
+PASS Loading does not respawn a collected sample
+PASS Context photo ID and site survive reload
+PASS Collected sample remains collected after reload
+PASS Loading does not respawn a collected sample
+PASS Surveyor arrival checkpoint restores the approach gate
+PASS Surveyor context photograph survives reload
+PASS Hardware retrieval checkpoint restores named parts
+PASS Loading does not respawn retrieved hardware
+PASS Hardware retrieval checkpoint restores named parts
+PASS Loading does not respawn retrieved hardware
+PASS Hardware retrieval checkpoint restores named parts
+PASS Loading does not respawn retrieved hardware
+PASS Completed expedition reloads its result rather than restarting
+PASS All seventeen committed work IDs describe the completed expedition
+PASS Persistent work IDs are independent of their serialized ordering
+PASS Unsupported schema cannot overwrite a valid checkpoint
+PASS Hardware without its prerequisite photograph is rejected
+PASS Unknown task identifiers are rejected
+PASS Evidence paths cannot escape the run's photo folder
+PASS Non-finite resource values are rejected
+PASS Out-of-area positions are rejected
+PASS A valid binary for another mission is reported as incompatible
+PASS Failed temporary write preserves the previous checkpoint
+PASS Failed backup rotation preserves the primary
+PASS Corrupt primary recovers the previous verified backup
+PASS A recovered checkpoint can create a healthy primary again
+PASS Missing photo files preserve progress and show a clear warning
+PASS Saving in the air uses the last grounded location
+PASS Reload resets velocity, work and airborne state
+PASS Two damaged copies report corruption without loading invalid state
+PASS An uncommitted temporary file is never silently loaded
+PASS Oversized files are rejected before deserialization
+RESULT: 0 failures

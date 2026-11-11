@@ -1,0 +1,68 @@
+{
+  "passed": true,
+  "kind": "review",
+  "assertions": 40,
+  "artifacts": [
+    {
+      "path": "checks.txt",
+      "bytes": 2956,
+      "sha256": "eb16d57aa14891e112195a65dbb00e1ea6a4394ac736c68c3d14be9a5d0669d9"
+    },
+    {
+      "path": "fp-ground-q0.png",
+      "bytes": 1283423,
+      "sha256": "c5c8e86dd8efa5f209c22b99884fdb8e082a7aba61aa68a7ac98b72649abab4f"
+    },
+    {
+      "path": "fp-ground-q1.png",
+      "bytes": 1539376,
+      "sha256": "cb984054b855f4c33bae42ff2259a8fe08d783d1e0263d01b86a663ae59fd663"
+    },
+    {
+      "path": "height-grid.csv",
+      "bytes": 4771,
+      "sha256": "be65d7a67f5fcd85be9585521449c6ad08831521843e9bc07feda16829899e94"
+    },
+    {
+      "path": "intrepid-wide-q0.png",
+      "bytes": 672677,
+      "sha256": "bf13853f1007a114449643b4ee2ebe185328f07e88c357e419106405a0f4071a"
+    },
+    {
+      "path": "intrepid-wide-q1.png",
+      "bytes": 804426,
+      "sha256": "1e726a9fb1a26fccb761472ba9e693660ff46f00372a5c6e38e3ac0d223b08c3"
+    },
+    {
+      "path": "ladder-foot-q0.png",
+      "bytes": 847627,
+      "sha256": "9d1c6d50944411f6d6e091ec862f6379bd4f803971ca206a34740f55403226ef"
+    },
+    {
+      "path": "ladder-foot-q1.png",
+      "bytes": 933401,
+      "sha256": "46ae1a52282b84e8fdc5ddf2444392264e2c7f1f112b8d6625660e0b27b19afc"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 21776,
+      "sha256": "2b9ec5a8d4a722fed63916f9d4b4a8b3f48ffc727c3f59c01067c69859f77e72"
+    },
+    {
+      "path": "outside-ground-q0.png",
+      "bytes": 1163034,
+      "sha256": "d84b82f8e4db26c16402f148353cb2c140a64d780acb1f49db167b6d1fe3a5c0"
+    },
+    {
+      "path": "outside-ground-q1.png",
+      "bytes": 1456134,
+      "sha256": "b26cbea464d06f7c56a9c1810bb6e52896ee051e553a29c1bbdd0eeaa55ad500"
+    },
+    {
+      "path": "outside-instances.txt",
+      "bytes": 1283269,
+      "sha256": "14dbae181f7ad35af3dd1be875edc3ab7907fd30e64a3cc69931a12cfaaf473d"
+    }
+  ],
+  "manifest_sha256": "2b9ec5a8d4a722fed63916f9d4b4a8b3f48ffc727c3f59c01067c69859f77e72"
+}

@@ -1,5 +1,305 @@
 # Test reports
 
+## v0.8.2 release preparation — 2026-11-11
+
+The Windows release packages the exact `59d4f795b114` executable and cooked
+payloads verified in the dated cabin record below. The canonical result remains
+1,763 C++ PASS executions / 0 FAIL in 31 reports. Original compile and local
+validation records are preserved under Docs/Releases/apollo12-v0.8.2; the release
+source commit is recorded separately by the archive tool. Earlier statements
+that no release was published describe the original local verification stage.
+Any later clean-extracted release smoke is separate evidence in the release's
+RELEASE_SMOKE.json and does not increase this canonical total.
+
+## 2026-11-11 — Intrepid cabin: asl normallarni tiklash
+
+**Final packaged tekshiruvlar: 1 763 C++ PASS bajarilishi / 0 FAIL,
+31 raw hisobot va 32 valid PNG.** Bu takroriy konfiguratsiyalardagi bajarilishlar,
+1 763 noyob test emas. Editor’ning dastlabki 4 review’i alohida: 182 PASS / 0 FAIL,
+24 PNG. Asset builder’ning 46 tekshiruvi, source mapping’ning 9 fixture’i va
+wrapper fixture’lari gameplay PASS soniga qo‘shilmadi. Inson playtesti: **0**.
+
+Win64 Development inner executable SHA256:
+
+    59d4f795b1141694741264370efe9b79dad66eaa9b4487270ffe7f9517fc358c
+
+Compile base Git: `4d1d651f43809071da42409f483506487099f164`, worktree dirty.
+Build metadata 2026-11-11 17:45:25 UTC’da yozilgan va keyingi test sanasidan
+ajratilgan. Bu lokal bosqichda push, reliz yoki Telegram xabari yuborilmadi.
+[Dalillar indeksi](Docs/IntrepidCabin20261111/verification-index.json).
+
+| Bir xil final EXE’dagi lokal bajarilishlar | Raw C++ PASS |
+| --- | ---: |
+| Source/cabin NullRHI va cabin DX11 collision-enabled yurish — 3 run | 129 |
+| Ikki yaqin kamera, Q0/Q1, 720p/1080p, control/feature — 4 run | 172 |
+| Mavjud to‘rtta keng kamera, Q0/Q1, 720p, control/feature — 2 run | 96 |
+| Normal-delta, 6 000-frame profillar — 2 run | 86 |
+| **Lokal jami — 11 raw report** | **483** |
+| Uch missiya stride va to‘liq Apollo interaction/traversal — 4 report | 99 |
+| Apollo/SELENE/Mars/menu/walk/suit/polish/guidance/fieldwork/checkpoint — 12 report | 460 |
+| Mission selection — 1 report | 66 |
+| Field Operations Apollo/SELENE/Mars — 3 report | 655 |
+| **Final umumiy — 31 raw report** | **1763** |
+
+PASS sonlari raw reportlardan bir marta sanaldi; wrapper stdout yoki shu
+reportning JSON nusxasi yana qo‘shilmadi. Har fresh reportda bitta RESULT 0 va
+FAIL yo‘qligi tekshirildi. Quyidagi avvalgi surface/foil build `dc0b5864…`
+natijalari bu yangi EXE uchun qayta ishlatilmagan.
+Regressiya recount yordamchisi dastlab uchta UTF16 Field Operations faylini
+UTF8 deb o‘qib to‘xtagan; BOM decoder tuzatilib, 20 raw fayl va SHA qayta
+tekshirildi: 1 280 PASS / 0 FAIL. Buning uchun o‘yin qayta ishga tushirilmadi.
+Oldingi conventional Apollo report yo‘llari backup’dan bayt/mtime bilan tiklandi;
+yangi canonical nusxalar Cabin regression papkasida alohida saqlandi.
+
+**Nima tuzatildi.** Asl GLB’da mavjud bo‘lgan normal vektorlari oldingi
+Trimesh scene-copy/OBJ eksportida yo‘qolgan: OBJ’da `vn` yoki smoothing record
+yo‘q edi. Alohida source vositasi 226 776 geometry/UV/group/face record’ni aynan
+qayta hosil qilib, ikki cabin obyektidagi 1 237 triangle / 3 711 corner uchun
+asl normalni oldi. GLB’ning 716 840 bayti NASA rasmiy download’i bilan solishtirildi;
+SHA256 `379101dfcee399267addf771709107c35e826b0b9e5233272f123e4c8a585c4e`
+mos. Bu modelning badiiy normallari; yangi relyef o‘lchovi emas.
+
+Unreal Editor vositasi original assetni alohida `SM_IntrepidCabin` nusxasiga
+ko‘chiradi. Mavjud UE meshida 96 460 render triangle, 289 380 vertex instance
+bor; uning hisoblangan rendering frame’lari nusxaga bake qilinadi. Original
+MD’da tangentlar nol bo‘lgani uchun ularni oddiy nusxalash to‘g‘ri natija bermagan.
+836 source-degenerate tangent 570 face, beshta material slotida aniq predicate
+(nol yoki normalga parallel X) bilan qayta qurildi. Cabin ichida 3 699 tangent
+source-computed X’dan proyeksiya qilindi, 12 tasida ortogonal o‘q ishlatildi.
+Bular yangi UV yoki GLB-authored tangent degani emas.
+
+Geometriya, indeks/topology, UV, material joylashuvi va boshqa MD atributlari
+qat’iy saqlandi; original fayl/MD/sidecar/dirty holati o‘zgarmadi. Cabin tashqarisi
+uchun bitwise render identity **da’vo qilinmaydi**. Barcha normal va valid
+tangentlar haqiqiy SNorm8 component step `1/127 + 0.000002` chegarasida;
+faqat oldindan yaroqsiz source tangent uchun qayta qurish alohida sanaladi.
+W/sign aniq saqlanadi. Cabin normallari actual GPU buffer’da packing half-step
+chegarasida tekshirildi. [Asset va frame siyosati](Docs/IntrepidCabin20261111/IMPLEMENTATION.md).
+
+Ikki shared white slot uchun alohida mato materiali qo‘shildi; bu slotlarda
+cabin bilan birga eski trim ham bor. GLB ranglari `.498039216` va `.678431392`
+MID parametrlarida alohida saqlandi. Roughness `.78`, specular `.18`, metallic
+`0`, 2.5% rangli panel izi — authored tuning. 80 source-local cm naqsh hozirgi
+masshtabda taxminan 110 cm; tarixiy panel o‘lchovi emas. WPO, yangi vertex,
+collision, navigation, yorug‘lik yoki Tick qo‘shilmadi. LROC terrain, 698 cm
+reference normalization va to‘rtta pad anchor joyi paired runlarda mos.
+
+**Vizual ko‘rik.** Yangi `.uasset` yangi Editor jarayonida va packaged EXE’da
+yuklandi. 720p/1080p yaqin old/yon kadrlar hamda keng/narvon kadrlarining
+tanlangan namunalari ko‘rildi. Ayrim keskin qoramtir choklar yumshagan; siluet
+hanuz qirrali, quyoshdagi oq joylar kam kontrastli. 720p’da mato izi juda nozik.
+Mustaqil ROI ko‘rigida literal clipping tasdiqlanmadi: maksimum 247,
+RGB uchalasi >=254 bo‘lgan pixel yo‘q. Antenna, narvon va terrain framing saqlandi.
+Bu staged screenshotlar: HUD/pawn/world TextRender yashirilgan. Barcha PNG’lar
+alohida estetik ko‘rikdan o‘tdi degan da’vo yo‘q; temporal shimmer yoki fotoreal
+sifat isbotlanmadi. Alohida fresh-process MD/render-buffer reload audit yo‘q;
+fresh-load visual/runtime evidence shu auditdan ajratilgan.
+
+**Matched performance.** Windows 11 x64; Ryzen 5 6600H; RTX 3050 Laptop GPU
+4 GB; taxminan 16 GB RAM; UE 5.8.3; MSVC 14.44; Windows SDK 22621.
+DX11 rendered offscreen, 1280 × 720, Medium/Q1, FOV 85, VSync off, cap 60.
+Bir xil to‘rtta kamera (bittasi hudud tashqarisida), parked support actors,
+frozen pawn/missiya va normal engine delta. Har capture’dan oldin 300 settle
+frame, so‘ng 6 000 CSV frame; CSV’dan warmup chiqarilmagan.
+
+| Shu EXE: cabin o‘chiq → yoqilgan | Control | Cabin |
+| --- | ---: | ---: |
+| O‘rtacha FPS | 59.9024 | 59.9837 |
+| p95 frame, ms | 16.6919 | 16.6872 |
+| p99 frame, ms | 16.7491 | 16.7256 |
+| 1% low FPS | 51.6663 | 58.2050 |
+| GameThreadTime o‘rtacha, ms | 2.0761 | 1.9136 |
+| RenderThreadTime o‘rtacha, ms | 4.4573 | 4.0621 |
+| Pollingdagi maksimal working set, MiB | 627.2227 | 610.7188 |
+
+Bitta capped juftlik tezlashish yoki xotira optimizatsiyasi sababini isbotlamaydi.
+Bu butun missiya/rover FPS’i emas; yaqin FOV60 camera uchun alohida performance
+capture yo‘q. Working set haqiqiy peak yoki VRAM emas. GPUTime ikkala capture’da
+6 000 finite/positive qator, lekin cap/pacing headroom xulosasini bermaydi.
+`GPUMem/LocalUsedMB` positive qatorlar 5 994 / 5 998; engine counter’i mustaqil
+dedicated-VRAM o‘lchovi deb yozilmaydi. Sample alignment va mustaqil hisoblar
+verification index’da saqlanadi. Xotira polling’i nominal 1 000 ms kutadi,
+ammo instrumentatsiya bilan haqiqiy median interval 1.3685 / 1.3486 s;
+82 / 83 sample butun jarayon, startup va settle’ni ham qamraydi. CSV-only
+yoki aniq 1-second peak emas. CSV’dagi haqiqiy kamera qatorlari ikkala yozuvda
+1501/1500/1500/1499; o‘tishlar metadata’dan bir qator keyin. Control’da uchta
+33.333 ms’dan uzun frame bor, cabin’da nol; bitta fixed-order capture bu
+farqning sababini aniqlamaydi.
+
+**Build va buyruqlar.** Editor `editor-build-g.log`, Game `game-build-a.log`
+Succeeded; to‘rtta map uchun fresh cook va StageOnly/archive exit 0. Default
+map regeneration yoki suit/global material rebinding ishlatilmadi. Asset `g`
+runida mesh saqlangach Python interpolator pin nomi xato chiqdi; tuzatilgan
+`material-build-h` faqat materialni yaratdi, mesh hashini saqlab, exit 0 bilan
+tugadi. Bundan oldingi tangent/pointer diagnostika xatolari tarixda saqlandi,
+final PASS sonlariga kirmadi.
+
+```powershell
+./Tools/verify_intrepid_visual.ps1 -Packaged -Cabin -Label new-cabin-functional
+./Tools/verify_intrepid_visual.ps1 -Packaged -Review -Cabin -CabinReview -CabinBaseline -Label new-close-control
+./Tools/verify_intrepid_visual.ps1 -Packaged -Review -Cabin -CabinReview -Label new-close-feature
+./Tools/profile_intrepid_slice.ps1 -Packaged -Cabin -CabinBaseline -Label new-profile-control -GpuTelemetry
+./Tools/profile_intrepid_slice.ps1 -Packaged -Cabin -Label new-profile-feature -GpuTelemetry
+```
+
+Har run uchun yangi label; 1080p uchun `-Width 1920 -Height 1080`.
+`-CabinBaseline` faqat yangi cabin nusxasi/finish’ini o‘chiradi;
+`-Baseline` esa oldingi ground/foil qatlamini mustaqil boshqaradi.
+Python topilmasa `-Python` bilan Python 3 yo‘lini bering. NullRHI FPS testi emas.
+
+**Yakuniy preservation.** Yangi bosqich boshlanishidagi 906 Saved, 5 Config va
+4 map — jami 915 original fayl bayt/mtime bo‘yicha mos. 80 ta owner save/photo
+tiklashsiz o‘zgarmagan. Sakkiz izolyatsiyalangan/config faylda 11 tiklash amali
+bajarildi; ulardan uchtasi AutomatedTests save fixture’i. 46 yangi engine INI
+saqlandi, yangi owner save/photo yo‘q. Avvalgi to‘rt material, original lander
+assetlari va manbalar — 32 identity file — bayt/mtime bilan mos; oldingi
+154 ilmiy/model payload SHA va original 860 manifest ham o‘zgarmagan.
+Tasdiqlangan source/stage nusxasi ortga qaytarilmadi. Shaxsiy save/photo
+ro‘yxatlari faqat lokal Reports’da, Docs’da sanitizatsiyalangan hisoblar bor.
+
+Yangi inson playtesti, clean extracted-distribution, firewall/network-isolation,
+actual missing-asset injection, temporal video va full-mission performance
+bajarilmagan. Runtime yangi internet xizmatini talab qilmaydi. Space Apps
+eligibility va NASA tasdig‘i ushbu mahalliy art bosqichining natijasi emas.
+
+## 2026-11-11 — Intrepid atrofidagi 50 × 50 m vizual bosqich
+
+**Yakuniy lokal Windows build: 1 615 C++ PASS bajarilishi / 0 FAIL, 29 raw
+hisobot.** Bular takroriy konfiguratsiyalardagi bajarilishlar; 1 615 noyob test
+yoki inson sinovi emas. Editor c ko‘rigi alohida: 80 PASS / 0 FAIL, 16 PNG.
+GitHub relizi, push yoki Telegram xabari ushbu bosqichda bajarilmadi.
+
+Win64 Development inner executable SHA256:
+
+    dc0b5864f7dd539006711408c00c7c0a880e7a40dc55afffe58d5b26f13bcfe2
+
+Base Git: `4d1d651f43809071da42409f483506487099f164`; worktree dirty.
+Source/art fingerprint:
+`fd44dc95d2e648e0605a56e6a096270f3e301fc517c6134a2ec264fafeb836da`.
+[Verification index](Docs/IntrepidVisual20261111/verification-index.json)
+raw hisobotlar, build, kadr, CSV va saqlash dalillarini ajratadi.
+
+| Yakuniy packaged tekshiruv | Raw C++ PASS |
+| --- | ---: |
+| Lokal yurish: baseline, yangi qatlam, DX11 yangi qatlam | 105 |
+| 720p/1080p × baseline/yangi × Low/Medium kadr ko‘rigi | 160 |
+| Ikki normal-delta 6 000-frame profile driver tekshiruvi | 70 |
+| Uch missiyada stride va to‘liq Apollo interaction/traversal | 99 |
+| Apollo, SELENE, Mars, menu, walk, suit, polish, guidance, fieldwork, checkpoint — 12 case | 460 |
+| Mission selection | 66 |
+| Field Operations — Apollo, SELENE, Mars | 655 |
+| **Jami — 29 fresh raw report** | **1615** |
+
+Har bir raw report bir marta sanaldi; bitta `RESULT: 0 failures`, ijobiy PASS
+soni va FAIL yo‘qligi mustaqil tekshirildi. Wrapper stdout, manifest va CSV
+qatorlari yana PASS sifatida qo‘shilmadi. Regressiya yig‘uvchisida
+`Measure-Object` OrderedDictionary sonlarini yig‘olmagani uchun dastlab jami
+bo‘sh chiqqan; 20 raw report va SHA qayta o‘qilib 1 280 soni tasdiqlandi.
+O‘yin natijalari almashtirilmadi va bu uchun o‘yin qayta ishga tushirilmadi.
+
+**Natija va ilmiy chegaralar.** Yangi qatlam 2 048 mayda va 64 ajratilgan
+soyali fragmentni to‘qqiz collision/navigation-free HISM batch’da joylaydi.
+Meshning haqiqiy burilgan chegaralari, qisman yerga kirishi, kit/narvon apron’i
+va uch yurish yo‘lagi tekshiriladi. Har lokal functional run’da taxminan
+28,36 m haqiqiy CharacterMovement yurishi, kitga yetib borish va resurs/missiya
+holati o‘zgarmasligi tasdiqlandi. Bu tabiiy o‘yinchi sinovi emas.
+
+Intrepidning uch untextured foil slot’i va bir metall slot’i yangilandi;
+12 sayoz folga burmasi mavjud olti batch’dan foydalanadi: baseline 42, yangi
+ko‘rinish 54 instance. Asl narvon, rasmli panellar, suit assetlari va import
+geometriyasi saqlandi. Yangi regolit normal/grain, toshlar, folga va lokal AO
+badiiy qatlam: ular NASA o‘lchagan mikrorelyef yoki tarixiy tosh tarqalishi emas.
+Asosiy balandlik/collision manbai mavjud **LROC NAC_DTM_APOLLO12 v1.9, 2 m grid**;
+100 Unreal cm = 1 m. Terrain displacement va yangi dataset kiritilmadi.
+
+**Kadrlar.** Bir xil EXE’da to‘rt kamera, FOV 85, haqiqiy Q0/Q1, 720p va
+1080p bo‘yicha 32 valid PNG olindi. Paired 85 terrain height/normal sample,
+8 057 tashqi original instance inventari, kamera va uch directional-light
+holati mos. Tanlangan keng, tuproq va haqiqiy +Y narvon kadrlari ko‘rildi.
+Yorug‘ folga burmasi va mayda toshlar o‘qiladi; oq yuqori cover hali qo‘pol
+qirrali, soyadagi folga esa qoramtir. Kadrlar HUD/pawn va world TextRender
+yozuvlarini yashiradigan staged fixture; ular oddiy gameplay video emas.
+
+**Grafik o‘lchov.** Windows 11 x64; Ryzen 5 6600H; RTX 3050 Laptop GPU,
+4 GB; 16 312 721 408 byte tizim RAM; UE 5.8.3; MSVC 14.44; Windows SDK 22621.
+DX11 rendered offscreen, 1280 × 720, Medium/Q1, FOV 85, VSync off, cap 60;
+normal engine delta, production parked support actors, frozen pawn/mission.
+Har sinovda CSV’dan oldin 300 settle frame, keyin 6 000 haqiqiy frame;
+CSV ichidan warmup chiqarilmadi. Boshqa UE/compiler/shader jarayoni kuzatilmadi.
+
+| Bir xil build: qatlam o‘chiq → yoqilgan | Control | Yangi |
+| --- | ---: | ---: |
+| O‘rtacha FPS | 59.9821 | 59.9961 |
+| p95 frame, ms | 16.6805 | 16.6769 |
+| p99 frame, ms | 16.7302 | 16.6994 |
+| 1% low FPS | 58.3277 | 59.6849 |
+| GameThreadTime o‘rtacha, ms | 1.7576 | 1.6915 |
+| RenderThreadTime o‘rtacha, ms | 3.6055 | 3.4710 |
+| Maksimal 1-second sampled working set, MiB | 596.1563 | 596.8789 |
+
+Bu bitta capped juftlik; tezlashishning sababi yoki butun o‘yinda barqaror
+60 FPS isbotlanmadi. Working set haqiqiy peak yoki VRAM emas. CSV GPUTime
+6 000/6 000 finite/positive (16.6619 → 16.6631 ms), ammo cap/pacing bilan
+qo‘shimcha GPU headroom chiqarilmaydi. `GPUMem/LocalUsedMB` 247.4883 → 248.7383
+engine counter bo‘lib, mustaqil dedicated-VRAM o‘lchovi emas. Bitta kamera ROI
+tashqarisidagi control. CSV View/Pos o‘tishlari ikkala yozuvda ham metadata’dan
+bir qator keyin: 1501/3001/4501; haqiqiy kamera qatorlari
+1501/1500/1500/1499. Bu sampling moslashuvi cheklovi ochiq saqlandi.
+
+Oldingi EXE `06c1b022…` bilan boshqa — moving-opening — 2 400/600-frame tarixiy
+sinov ham qaytarildi: mean 59.9950 → 59.9982 FPS, p99 18.2171 → 17.8246 ms.
+U local four-camera baseline emas; sababiy yaxshilanish da’vosi yo‘q.
+Generic auto-CSV exit `777003` raw holida qayd etildi: wrapper fresh finite CSV
+va log bo‘yicha qabul qiladi, uni functional exit 0 deb ko‘rsatmaydi. Wrapper
+EXE hashini o‘zi qayd qilmagani uchun bu qo‘shimcha capture qo‘shni final-build
+konteksti sifatida saqlangan; canonical to‘qqiz run hashni tekshiradi.
+
+**Build va takrorlash.** Editor va Game Win64 Development UBT buildlari
+`Succeeded`. To‘rt map uchun fresh UAT cook va keyingi StageOnly/archive
+`ExitCode=0`; eski cook qayta ishlatildi deb ko‘rsatilmaydi. Yangi to‘rt material
+Unreal Python material API bilan yaratildi va paketda yuklandi; binary fayllar
+matn tarzida tahrir qilinmadi. Map regeneration, global/suit material rebinding
+skriptlari ishlatilmadi. To‘liq build/test buyruqlari
+[implementation](Docs/IntrepidVisual20261111/IMPLEMENTATION.md) va build
+receiptlarda. Asosiy test buyruqlari:
+
+```powershell
+./Tools/verify_intrepid_visual.ps1 -Packaged -Label new-functional
+./Tools/verify_intrepid_visual.ps1 -Packaged -Review -Baseline -Label new-control
+./Tools/verify_intrepid_visual.ps1 -Packaged -Review -Label new-feature
+./Tools/profile_intrepid_slice.ps1 -Packaged -Baseline -Label new-control-q1 -GpuTelemetry
+./Tools/profile_intrepid_slice.ps1 -Packaged -Label new-feature-q1 -GpuTelemetry
+./Tools/verify_task_fixes.ps1 -Packaged -Suite all
+./Tools/verify_apollo12.ps1 -Packaged -Regression -Walkthrough -Suit -Guidance -Polish -Checkpoints -Fieldwork
+./Tools/verify_mission_selection.ps1 -Packaged
+./Tools/verify_field_operations.ps1 -Packaged -Mission all
+```
+
+Har Intrepid run uchun yangi label talab qilinadi. 1080p uchun
+`-Width 1920 -Height 1080`; wrapper Python’ni topmasa `-Python` bilan mahalliy
+Python 3 yo‘lini bering. NullRHI functional natijalar FPS sinovi emas.
+
+**Saqlash va bajarilmagan ishlar.** 154/154 original science/model/material
+payload size/SHA mosligi mustaqil tekshirildi. Original 860 Saved fayl va
+5 Config/4 map — jami 869 original — yakunda bayt/mtime bo‘yicha mos.
+128 faylda 251 tiklash amali bajarildi: engine INI’lari va uchta izolyatsiyalangan
+AutomatedTests save fixture’i; 80 haqiqiy owner save/photo faylga tiklash
+kerak bo‘lmadi, bayt/mtime holati o‘zgarmagan. Yangi 46 engine INI saqlandi;
+yangi save/photo yo‘q. Shaxsiy save/photo inventari Docs’ga ko‘chirilmaydi.
+Runtime kerakli ma’lumot/materiallarni lokal paketdan yukladi; yangi internet
+bog‘liqligi yo‘q. Alohida clean extraction, firewall/network-isolation va boshqa
+hardware’da sinov bajarilmadi. Yangi inson playtest ishtirokchilari: **0**.
+To‘liq missiya/rover FPS, tabiiy kamera harakatidagi shimmer, barcha ROI
+chegaralarining video ko‘rigi va haqiqiy assetni olib tashlash fallback sinovi
+bajarilgan deb ko‘rsatilmaydi. Fallback preflight kodi tekshirildi.
+
+Ilk Editor a screenshot callback lifetime xatosi (8 FAIL) tuzatildi; b
+iteration harness’i o‘tgan bo‘lsa ham qora folga va noto‘g‘ri qo‘shimcha rung
+tasmalari vizual rad etildi. Yakuniy c va package kadrlarida bu tasmalar yo‘q,
+asl narvon saqlangan. Oldingi noto‘g‘ri capture/compile loglari tarixda qoldi;
+ular canonical PASS sonlariga kirmaydi. Bu lokal mahsulot bosqichi NASA
+tasdig‘i yoki Space Apps eligibility qarori emas; tanlovga yuborish bajarilmadi.
+
 ## 2026-11-06 — Oltita interaction/presentation tuzatishi: yakuniy lokal Windows build
 
 **4 092 C++ PASS bajarilishi / 0 FAIL; 65 raw report; eski 16/16 suite o‘tdi.**

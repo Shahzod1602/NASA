@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "kind": "test",
+  "assertions": 43,
+  "artifacts": [
+    {
+      "path": "checks.txt",
+      "bytes": 3482,
+      "sha256": "654bb3f15725d569a29e6647eb1af8f52abd0eb7a3f06021fd18327f3367b34e"
+    },
+    {
+      "path": "height-grid.csv",
+      "bytes": 4771,
+      "sha256": "be65d7a67f5fcd85be9585521449c6ad08831521843e9bc07feda16829899e94"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 24244,
+      "sha256": "b63fca47135a3337ec729d80c5b2d803ec247b4ae302730acf41ec241e739f81"
+    },
+    {
+      "path": "outside-instances.txt",
+      "bytes": 1283269,
+      "sha256": "14dbae181f7ad35af3dd1be875edc3ab7907fd30e64a3cc69931a12cfaaf473d"
+    }
+  ],
+  "manifest_sha256": "b63fca47135a3337ec729d80c5b2d803ec247b4ae302730acf41ec241e739f81"
+}

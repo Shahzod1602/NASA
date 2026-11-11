@@ -1,0 +1,366 @@
+{
+  "schema_version": 1,
+  "release_tag": "apollo12-v0.8.2",
+  "generated_utc": "2026-11-11T18:40:23.463517+00:00",
+  "scope": "Existing final-executable canonical reports, recounted before publication; no new gameplay executions.",
+  "executable_sha256": "59d4f795b1141694741264370efe9b79dad66eaa9b4487270ffe7f9517fc358c",
+  "packaged_assertions_passed": 1763,
+  "packaged_assertions_failed": 0,
+  "case_count": 31,
+  "cases": [
+    {
+      "case": "package-cabin-control-test-a",
+      "passed": 43,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-control-test-a/checks.txt",
+        "bytes": 3482,
+        "sha256": "654bb3f15725d569a29e6647eb1af8f52abd0eb7a3f06021fd18327f3367b34e",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "package-cabin-feature-test-a",
+      "passed": 43,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-feature-test-a/checks.txt",
+        "bytes": 3482,
+        "sha256": "654bb3f15725d569a29e6647eb1af8f52abd0eb7a3f06021fd18327f3367b34e",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "package-cabin-feature-rendered-a",
+      "passed": 43,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-feature-rendered-a/checks.txt",
+        "bytes": 3482,
+        "sha256": "654bb3f15725d569a29e6647eb1af8f52abd0eb7a3f06021fd18327f3367b34e",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "package-cabin-close-control-720-a",
+      "passed": 43,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-close-control-720-a/checks.txt",
+        "bytes": 3486,
+        "sha256": "1ef0950a36176cf291ada5d8feae9ac2a25859d1155b56f9bd1b19389811cfa5",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "package-cabin-close-feature-720-a",
+      "passed": 43,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-close-feature-720-a/checks.txt",
+        "bytes": 3486,
+        "sha256": "1ef0950a36176cf291ada5d8feae9ac2a25859d1155b56f9bd1b19389811cfa5",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "package-cabin-close-control-1080-a",
+      "passed": 43,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-close-control-1080-a/checks.txt",
+        "bytes": 3486,
+        "sha256": "1ef0950a36176cf291ada5d8feae9ac2a25859d1155b56f9bd1b19389811cfa5",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "package-cabin-close-feature-1080-a",
+      "passed": 43,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-close-feature-1080-a/checks.txt",
+        "bytes": 3486,
+        "sha256": "1ef0950a36176cf291ada5d8feae9ac2a25859d1155b56f9bd1b19389811cfa5",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "package-cabin-wide-control-a",
+      "passed": 48,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-wide-control-a/checks.txt",
+        "bytes": 3819,
+        "sha256": "3c0fb2a1f996f550ff70c077d895b3a35c982af20247df47157311d13f9aa203",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "package-cabin-wide-feature-a",
+      "passed": 48,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-wide-feature-a/checks.txt",
+        "bytes": 3819,
+        "sha256": "3c0fb2a1f996f550ff70c077d895b3a35c982af20247df47157311d13f9aa203",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "package-cabin-control-q1",
+      "passed": 43,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-control-q1/checks.txt",
+        "bytes": 3480,
+        "sha256": "8ed556244b986aa2c80d3abaa6e7de329d0f112db7a9af5bce53cc3603365d73",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "package-cabin-feature-q1",
+      "passed": 43,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-feature-q1/checks.txt",
+        "bytes": 3480,
+        "sha256": "8ed556244b986aa2c80d3abaa6e7de329d0f112db7a9af5bce53cc3603365d73",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "regression-01-stride-and-apollo-input",
+      "passed": 42,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/regressions/01-apollo-interaction-checks.txt",
+        "bytes": 3710,
+        "sha256": "76d4831e07a160f74673b2323a5e51960f6fceff69664099b2f5839e67e292f4",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "regression-02-stride-and-apollo-input",
+      "passed": 19,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/regressions/02-stride-apollo-checks.txt",
+        "bytes": 1170,
+        "sha256": "fc81c06671890c198364ffd94b6974dfb68c9f28b28bb4cda6c61404cbb97271",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "regression-03-stride-and-apollo-input",
+      "passed": 19,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/regressions/03-stride-mars-checks.txt",
+        "bytes": 1170,
+        "sha256": "fc81c06671890c198364ffd94b6974dfb68c9f28b28bb4cda6c61404cbb97271",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "regression-04-stride-and-apollo-input",
+      "passed": 19,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/regressions/04-stride-selene-checks.txt",
+        "bytes": 1170,
+        "sha256": "fc81c06671890c198364ffd94b6974dfb68c9f28b28bb4cda6c61404cbb97271",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "regression-05-apollo-and-rescue-regression",
+      "passed": 57,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/regressions/05-package-apollo12-checks-result.txt",
+        "bytes": 2949,
+        "sha256": "1d8911bc084c6a7a1c2bb63b9fbebc6f33d1fe6ec51ae0d726d8ded7e9e7d44c",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "regression-06-apollo-and-rescue-regression",
+      "passed": 50,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/regressions/06-package-apollo12-legacy-moon-result.txt",
+        "bytes": 2055,
+        "sha256": "6b4f590b824979b6e5dbaa629e5e4fc16fa4e2ec4d8050a432dbab8150846886",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "regression-07-apollo-and-rescue-regression",
+      "passed": 54,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/regressions/07-package-apollo12-mars-result.txt",
+        "bytes": 2180,
+        "sha256": "fa5e80fd8a9073604fedda210da7ca12626bacbf5955d98d7302b97f53390de3",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "regression-08-apollo-and-rescue-regression",
+      "passed": 55,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/regressions/08-package-apollo12-menu-result.txt",
+        "bytes": 2899,
+        "sha256": "11c6ab3438d78be5caeb4ef56d2c4426c6d5a2bc3de848e457cd31ed58cae9f9",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "regression-09-apollo-and-rescue-regression",
+      "passed": 2,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/regressions/09-package-apollo12-walk-result.txt",
+        "bytes": 341,
+        "sha256": "6f8c217028b51621528222e80808bbc96a3af44be9eb54730c357f71c5e22795",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "regression-10-apollo-and-rescue-regression",
+      "passed": 32,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/regressions/10-package-apollo12-suit-result.txt",
+        "bytes": 1975,
+        "sha256": "901df3df557c022d6624af6172f6cd46584b0324cbd46fa2d5de5654198f5a15",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "regression-11-apollo-and-rescue-regression",
+      "passed": 64,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/regressions/11-package-apollo12-polish-result.txt",
+        "bytes": 3794,
+        "sha256": "4a564bcfb9c92a97f43ba00fddc81ad71791fe72e69142fa06febec5ab092621",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "regression-12-apollo-and-rescue-regression",
+      "passed": 47,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/regressions/12-package-apollo12-guidance-result.txt",
+        "bytes": 3029,
+        "sha256": "d9a16b9f4f62acc93b7534b308edfa4e36b0d6c8966064d288b4110112c86ffa",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "regression-13-apollo-and-rescue-regression",
+      "passed": 39,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/regressions/13-package-apollo12-fieldwork-result.txt",
+        "bytes": 2612,
+        "sha256": "ea375f02581686b0e4ef8ad36e583622d000fb282c0b93ea71c68c216ad9b192",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "regression-14-apollo-and-rescue-regression",
+      "passed": 51,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/regressions/14-package-apollo12-save-result.txt",
+        "bytes": 2936,
+        "sha256": "6f9761b2a673ceefe91006a49d46f19bffa922479b741b11295fe962fe6e97dc",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "regression-15-apollo-and-rescue-regression",
+      "passed": 2,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/regressions/15-package-apollo12-save-write-result.txt",
+        "bytes": 130,
+        "sha256": "925561c794fc7f059e796c96d107eec4f34e6b77bde7676e82b2985e42a002f4",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "regression-16-apollo-and-rescue-regression",
+      "passed": 7,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/regressions/16-package-apollo12-save-read-result.txt",
+        "bytes": 452,
+        "sha256": "e0b31f0af7c9b70f375ccc1c6740cc612456916225adbf73425bc9d6540de24c",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "regression-17-mission-selection",
+      "passed": 66,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/regressions/17-package-test-1280x720-20261111-230858-236-checks.txt",
+        "bytes": 4642,
+        "sha256": "83bc6cdedccef4044e0dd3fcd9e082f374d2362501631f78ace79a7641541fc4",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "regression-18-field-operations",
+      "passed": 215,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/regressions/18-apollo-checks.txt",
+        "bytes": 15051,
+        "sha256": "68323aabbdd159d83cf8134e2fd60568a2f0dac899d13f8acea5bcb5254d7761",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "regression-19-field-operations",
+      "passed": 220,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/regressions/19-mars-checks.txt",
+        "bytes": 15329,
+        "sha256": "b8d70a389ba22165a11eae0b8555747991ee0ec47ee64cb0cc36821db4294c59",
+        "local_evidence_only": false
+      }
+    },
+    {
+      "case": "regression-20-field-operations",
+      "passed": 220,
+      "failed": 0,
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/regressions/20-selene-checks.txt",
+        "bytes": 15329,
+        "sha256": "b8d70a389ba22165a11eae0b8555747991ee0ec47ee64cb0cc36821db4294c59",
+        "local_evidence_only": false
+      }
+    }
+  ],
+  "counting_policy": "Each raw C++ report counted once per execution, not unique checks. Separate Editor/history/offline source fixtures/previous IntrepidVisual phase are excluded.",
+  "verification_index": {
+    "path": "Docs/IntrepidCabin20261111/verification-index.json",
+    "sha256": "8d648c507d0f3bb08070cfe3d07e169b2525dd1c64cd1742c37753ad74c13fea"
+  },
+  "source_art_inputs_sha256": "d9336b2dbdda2eacbb184893e7a2186ce1ac879e9eed403efa837203866cefa9",
+  "original_local_validation_sha256": "fa785952b757b19d9970d5589ca6920dad71a27748ac4408e3d45123a261790e",
+  "original_compile_metadata_sha256": "713e5214513a9e5f92f296c9b8f5a346b68f81634a334620d50c20ee47cecb82",
+  "total_staged_pngs": 32,
+  "human_playtests": 0,
+  "network_disconnected_test_performed": false,
+  "competition_eligibility": "unconfirmed",
+  "clean_extracted_release_smoke": "Separate post-archive receipt; not part of canonical count."
+}

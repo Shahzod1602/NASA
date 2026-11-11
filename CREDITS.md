@@ -1,5 +1,33 @@
 # Credits va litsenziya holati
 
+## Intrepid cabin derivative — 11 November 2026
+
+The retained Apollo Lunar Module model is credited to NASA / Michael D. Carbajal:
+[official model source](https://science.nasa.gov/3d-resources/apollo-lunar-module/).
+The retained GLB was compared byte for byte with the official download on
+2026-11-11. A separate derivative recovers selected authored normals, bakes
+computed rendering frames and repairs invalid tangent bases. The two shared
+white-slot cloth shaders are project-authored art; they are not measured optical
+properties. Original geometry, UVs, material references and source files remain.
+See [source credits](SourceArt/IntrepidCabin20261111/CREDITS.md) and the scoped
+development notes. AI coding assistance helped audit the conversion, implement
+the Editor tools, rendering checks and documentation. No new AI bitmap or paid
+model was generated. Existing licenses and third-party credits below remain
+applicable to their own materials; this derivative does not imply NASA endorsement.
+
+## Intrepid visual slice — 11 November 2026
+
+The four dedicated material graphs, bounded C++ rock placement/contact shading,
+small blanket-fold arrangements and review/profiling tools are authored project
+work with OpenAI Codex coding, research and documentation assistance. They reuse
+the retained AI-authored regolith bitmap, six authored basalt meshes, Unreal basic
+shapes and the existing NASA/Michael D. Carbajal Apollo lander reference model.
+No new external model, texture photograph or paid renderer was acquired.
+Original LROC/NASA/ASU, model, bitmap and engine credits/licenses remain in force.
+This art pass neither changes the unresolved project-wide code licence nor applies
+it to third-party material. [Full science/art notes](Docs/IntrepidVisual20261111/SCIENCE_AND_ART.md).
+
+
 ## Modern field-training additions — 4 November 2026
 
 Training rover geometry, wheels, sampler proxy props, magnifier, resource-board

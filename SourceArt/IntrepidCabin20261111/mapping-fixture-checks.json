@@ -1,0 +1,43 @@
+{
+  "fixture": "Synthetic geometry mapping checks, not a gameplay or visual test",
+  "checks": [
+    {
+      "check": "Coincident source vertices retain distinct authored hard-edge normals",
+      "passed": true
+    },
+    {
+      "check": "Only requested cabin faces are emitted",
+      "passed": true
+    },
+    {
+      "check": "Normal mapping output is deterministic",
+      "passed": true
+    },
+    {
+      "check": "Changed UV is rejected",
+      "passed": true
+    },
+    {
+      "check": "Changed triangle order is rejected",
+      "passed": true
+    },
+    {
+      "check": "Missing source normal is rejected",
+      "passed": true
+    },
+    {
+      "check": "Non-finite source normal is rejected",
+      "passed": true
+    },
+    {
+      "check": "Zero source normal is rejected",
+      "passed": true
+    },
+    {
+      "check": "Duplicate position/material triangle ambiguity is rejected",
+      "passed": true
+    }
+  ],
+  "result": "PASS",
+  "check_count": 9
+}

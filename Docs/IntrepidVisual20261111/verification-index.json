@@ -1,0 +1,1950 @@
+{
+  "schema_version": 1,
+  "generated_utc": "2026-11-11T15:13:44.295705+00:00",
+  "status": "canonical_runs_complete_additional_limits_explicit",
+  "base_commit": "4d1d651f43809071da42409f483506487099f164",
+  "source_dirty_at_execution": true,
+  "final_staged_inner_executable_sha256": "dc0b5864f7dd539006711408c00c7c0a880e7a40dc55afffe58d5b26f13bcfe2",
+  "source_art_inputs_sha256": "fd44dc95d2e648e0605a56e6a096270f3e301fc517c6134a2ec264fafeb836da",
+  "selected_input_file_count": 131,
+  "curation_started_utc": "2026-11-11T15:13:43.591988+00:00",
+  "counting_policy": "Each raw C++ report counted once per execution; repeated executions are not distinct checks. Editor, historical iterations and offline helper fixtures excluded from packaged totals.",
+  "totals": {
+    "packaged_executions": 29,
+    "packaged_raw_cpp_pass": 1615,
+    "packaged_raw_cpp_fail": 0,
+    "packaged_review_pngs": 32,
+    "editor_review_pngs_separate": 16,
+    "editor_executions_separate": 2,
+    "editor_raw_cpp_pass_separate": 80,
+    "human_playtests": 0,
+    "local_visual_packaged_executions": 9,
+    "local_visual_packaged_raw_cpp_pass": 335,
+    "local_visual_packaged_raw_cpp_fail": 0,
+    "local_visual_packaged_by_kind": {
+      "test": {
+        "executions": 3,
+        "raw_cpp_pass": 105
+      },
+      "review": {
+        "executions": 4,
+        "raw_cpp_pass": 160
+      },
+      "profile": {
+        "executions": 2,
+        "raw_cpp_pass": 70
+      }
+    },
+    "regression_packaged_raw_reports": 20,
+    "regression_packaged_raw_cpp_pass": 1280,
+    "regression_packaged_raw_cpp_fail": 0
+  },
+  "runs": [
+    {
+      "label": "package-control-test-a",
+      "kind": "test",
+      "packaged": true,
+      "baseline": true,
+      "scope": "canonical_final_packaged",
+      "raw_cpp_pass": 35,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "executable_sha256": "dc0b5864f7dd539006711408c00c7c0a880e7a40dc55afffe58d5b26f13bcfe2",
+      "source_art_inputs_sha256": "fd44dc95d2e648e0605a56e6a096270f3e301fc517c6134a2ec264fafeb836da",
+      "raw_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-control-test-a/checks.txt",
+        "bytes": 2619,
+        "sha256": "470ad3bfd95746827c043436aade6625ba3a3552fe99f4de4cad31b5e1afba28",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-control-test-a/manifest.json",
+        "bytes": 19021,
+        "sha256": "5c8730445654571e193f14d94d5bee37fe72b64ff8f832f2e61646f6d7795c7c",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-control-test-a/environment.json",
+        "bytes": 2720,
+        "sha256": "fbd45b895d2d7e6480858af909a36c9d32d12c9188d7c7c903cc503692e7c8e7",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-control-test-a/validation.json",
+        "bytes": 772,
+        "sha256": "07a177ed07100cf28de815a9e149a9a7da7e734aef173e792b088bfaa65c3c0a",
+        "local_evidence_only": false
+      },
+      "driver_folder": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-test-a",
+      "controller_folder": "Reports/IntrepidVisual20261111/runs/package-control-test-a",
+      "started_utc": "2026-11-11T14:52:21.0954939Z",
+      "finished_utc": "2026-11-11T14:52:49.8997150Z",
+      "human_playtest": false,
+      "synthetic": true,
+      "performance_measurement": false,
+      "images": [],
+      "height_grid_sha1": "def58c9c1a2151d3679ea3140b9d1d0ddeef8de9",
+      "outside_instances_sha1": "02397833a2ef8135195f8d95eea52a5262015e0a",
+      "outside_instance_count": 8057,
+      "micro_instances": 0,
+      "shadow_instances": 0,
+      "burial_samples": 0,
+      "physical_walk_metres": 28.364097685450005,
+      "preservation": {
+        "all_original_bytes_and_mtimes_match": true,
+        "snapshot_sha256": "13777d927e6a9a854e3dd06af676c17dd5bced7d0015a54e7575d367e4efbb7c",
+        "counts": {
+          "project_config": 5,
+          "map": 4,
+          "player_saved_config": 756
+        },
+        "changed_files_restored_count": 1,
+        "generated_engine_ini_files_retained_count": 1,
+        "errors_count": 0,
+        "private_saved_file_inventory_omitted": true
+      },
+      "log": {
+        "path": "Reports/IntrepidVisual20261111/runs/package-control-test-a/run.log",
+        "bytes": 77071,
+        "sha256": "dd4bc628aa01191d34ac489dd8bdef3e6996939c5db331bc25d840abd28412d7",
+        "local_evidence_only": true
+      },
+      "lander_fixture": {
+        "contacts": 4,
+        "batches": 6,
+        "instances": 42,
+        "foil_slots": 0,
+        "metal_slots": 0,
+        "added_folds": 0
+      }
+    },
+    {
+      "label": "package-feature-test-a",
+      "kind": "test",
+      "packaged": true,
+      "baseline": false,
+      "scope": "canonical_final_packaged",
+      "raw_cpp_pass": 35,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "executable_sha256": "dc0b5864f7dd539006711408c00c7c0a880e7a40dc55afffe58d5b26f13bcfe2",
+      "source_art_inputs_sha256": "fd44dc95d2e648e0605a56e6a096270f3e301fc517c6134a2ec264fafeb836da",
+      "raw_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-feature-test-a/checks.txt",
+        "bytes": 2619,
+        "sha256": "470ad3bfd95746827c043436aade6625ba3a3552fe99f4de4cad31b5e1afba28",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-feature-test-a/manifest.json",
+        "bytes": 19028,
+        "sha256": "e7838ac9a706dc91143eebd2230db77bd0ca3d7024045e19615c01bdc65e99cc",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-feature-test-a/environment.json",
+        "bytes": 2690,
+        "sha256": "db41bd122fc5961f0f3451477a6a4ca07322ee2003efcc85c67122d7a827d903",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-feature-test-a/validation.json",
+        "bytes": 772,
+        "sha256": "4db05074d82d5e27ebeaa900f28894fc81605961de552c830713399021d9a2bc",
+        "local_evidence_only": false
+      },
+      "driver_folder": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-test-a",
+      "controller_folder": "Reports/IntrepidVisual20261111/runs/package-feature-test-a",
+      "started_utc": "2026-11-11T14:53:15.0546660Z",
+      "finished_utc": "2026-11-11T14:53:42.6252234Z",
+      "human_playtest": false,
+      "synthetic": true,
+      "performance_measurement": false,
+      "images": [],
+      "height_grid_sha1": "def58c9c1a2151d3679ea3140b9d1d0ddeef8de9",
+      "outside_instances_sha1": "02397833a2ef8135195f8d95eea52a5262015e0a",
+      "outside_instance_count": 8057,
+      "micro_instances": 2048,
+      "shadow_instances": 64,
+      "burial_samples": 132,
+      "physical_walk_metres": 28.355823040000658,
+      "preservation": {
+        "all_original_bytes_and_mtimes_match": true,
+        "snapshot_sha256": "0215781d5fd1f1764e890198227a2136a0d007236ef8ca8b54f5b29c60b4ce15",
+        "counts": {
+          "project_config": 5,
+          "map": 4,
+          "player_saved_config": 757
+        },
+        "changed_files_restored_count": 1,
+        "generated_engine_ini_files_retained_count": 1,
+        "errors_count": 0,
+        "private_saved_file_inventory_omitted": true
+      },
+      "log": {
+        "path": "Reports/IntrepidVisual20261111/runs/package-feature-test-a/run.log",
+        "bytes": 77364,
+        "sha256": "a401b6820abd52ffb0907da48f402c67ba79f1ad6dc4ea01eadd41d3f8ff08a8",
+        "local_evidence_only": true
+      },
+      "lander_fixture": {
+        "contacts": 4,
+        "batches": 6,
+        "instances": 54,
+        "foil_slots": 3,
+        "metal_slots": 1,
+        "added_folds": 12
+      }
+    },
+    {
+      "label": "package-feature-rendered-a",
+      "kind": "test",
+      "packaged": true,
+      "baseline": false,
+      "scope": "canonical_final_packaged",
+      "raw_cpp_pass": 35,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "executable_sha256": "dc0b5864f7dd539006711408c00c7c0a880e7a40dc55afffe58d5b26f13bcfe2",
+      "source_art_inputs_sha256": "fd44dc95d2e648e0605a56e6a096270f3e301fc517c6134a2ec264fafeb836da",
+      "raw_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-feature-rendered-a/checks.txt",
+        "bytes": 2619,
+        "sha256": "470ad3bfd95746827c043436aade6625ba3a3552fe99f4de4cad31b5e1afba28",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-feature-rendered-a/manifest.json",
+        "bytes": 19032,
+        "sha256": "f2c72821f071486a4597da10e6aa6d03649a194a4ebb9b1d834dc72cf44fa28c",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-feature-rendered-a/environment.json",
+        "bytes": 2768,
+        "sha256": "207e3ea9beea766a6da6e03b54a99d6a81dbd133418d820769c96e9ec52a5cc0",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-feature-rendered-a/validation.json",
+        "bytes": 772,
+        "sha256": "54eff59f6f4d25cc17534031e1ce13b7d25d90d7c1aed47503f52f18990fba6f",
+        "local_evidence_only": false
+      },
+      "driver_folder": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-rendered-a",
+      "controller_folder": "Reports/IntrepidVisual20261111/runs/package-feature-rendered-a",
+      "started_utc": "2026-11-11T14:54:07.2819095Z",
+      "finished_utc": "2026-11-11T14:54:37.7361325Z",
+      "human_playtest": false,
+      "synthetic": true,
+      "performance_measurement": false,
+      "images": [],
+      "height_grid_sha1": "def58c9c1a2151d3679ea3140b9d1d0ddeef8de9",
+      "outside_instances_sha1": "02397833a2ef8135195f8d95eea52a5262015e0a",
+      "outside_instance_count": 8057,
+      "micro_instances": 2048,
+      "shadow_instances": 64,
+      "burial_samples": 132,
+      "physical_walk_metres": 28.363508326984075,
+      "preservation": {
+        "all_original_bytes_and_mtimes_match": true,
+        "snapshot_sha256": "65239dc027ae5264d9e09bdce1c46603664166d5c72637ccb0d263067912bdb8",
+        "counts": {
+          "project_config": 5,
+          "map": 4,
+          "player_saved_config": 758
+        },
+        "changed_files_restored_count": 1,
+        "generated_engine_ini_files_retained_count": 1,
+        "errors_count": 0,
+        "private_saved_file_inventory_omitted": true
+      },
+      "log": {
+        "path": "Reports/IntrepidVisual20261111/runs/package-feature-rendered-a/run.log",
+        "bytes": 91035,
+        "sha256": "1131e912d6f41d9c5265bef9ca4622e33a47539b0753f48f2ac2172adb9cca83",
+        "local_evidence_only": true
+      },
+      "lander_fixture": {
+        "contacts": 4,
+        "batches": 6,
+        "instances": 54,
+        "foil_slots": 3,
+        "metal_slots": 1,
+        "added_folds": 12
+      }
+    },
+    {
+      "label": "package-control-720-a",
+      "kind": "review",
+      "packaged": true,
+      "baseline": true,
+      "scope": "canonical_final_packaged",
+      "raw_cpp_pass": 40,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "executable_sha256": "dc0b5864f7dd539006711408c00c7c0a880e7a40dc55afffe58d5b26f13bcfe2",
+      "source_art_inputs_sha256": "fd44dc95d2e648e0605a56e6a096270f3e301fc517c6134a2ec264fafeb836da",
+      "raw_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-control-720-a/checks.txt",
+        "bytes": 2956,
+        "sha256": "eb16d57aa14891e112195a65dbb00e1ea6a4394ac736c68c3d14be9a5d0669d9",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-control-720-a/manifest.json",
+        "bytes": 23389,
+        "sha256": "0ed91a7cc0fb5dff44f6296cfa75421cb2be585f94ac6dfa796015e16d10010b",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-control-720-a/environment.json",
+        "bytes": 2829,
+        "sha256": "fe00edfe5206abb3a6fa48b61adde2433ac8bbfdbe0d0ea91c4468c5901f429d",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-control-720-a/validation.json",
+        "bytes": 2024,
+        "sha256": "fa8f58ad833e9bf2778b81d0dd9a8eb3f5608e38999861cc83e33119b9a65f6d",
+        "local_evidence_only": false
+      },
+      "driver_folder": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-720-a",
+      "controller_folder": "Reports/IntrepidVisual20261111/runs/package-control-720-a",
+      "started_utc": "2026-11-11T14:55:02.4862500Z",
+      "finished_utc": "2026-11-11T14:55:24.4066272Z",
+      "human_playtest": false,
+      "synthetic": true,
+      "performance_measurement": false,
+      "images": [
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-720-a/intrepid-wide-q0.png",
+          "bytes": 672677,
+          "sha256": "bf13853f1007a114449643b4ee2ebe185328f07e88c357e419106405a0f4071a",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "intrepid-wide-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 0
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-720-a/fp-ground-q0.png",
+          "bytes": 1283423,
+          "sha256": "c5c8e86dd8efa5f209c22b99884fdb8e082a7aba61aa68a7ac98b72649abab4f",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "fp-ground-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 1
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-720-a/ladder-foot-q0.png",
+          "bytes": 847627,
+          "sha256": "9d1c6d50944411f6d6e091ec862f6379bd4f803971ca206a34740f55403226ef",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "ladder-foot-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 2
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-720-a/outside-ground-q0.png",
+          "bytes": 1163034,
+          "sha256": "d84b82f8e4db26c16402f148353cb2c140a64d780acb1f49db167b6d1fe3a5c0",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "outside-ground-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 3
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-720-a/intrepid-wide-q1.png",
+          "bytes": 804426,
+          "sha256": "1e726a9fb1a26fccb761472ba9e693660ff46f00372a5c6e38e3ac0d223b08c3",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "intrepid-wide-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 0
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-720-a/fp-ground-q1.png",
+          "bytes": 1539376,
+          "sha256": "cb984054b855f4c33bae42ff2259a8fe08d783d1e0263d01b86a663ae59fd663",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "fp-ground-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 1
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-720-a/ladder-foot-q1.png",
+          "bytes": 933401,
+          "sha256": "46ae1a52282b84e8fdc5ddf2444392264e2c7f1f112b8d6625660e0b27b19afc",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "ladder-foot-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 2
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-720-a/outside-ground-q1.png",
+          "bytes": 1456134,
+          "sha256": "b26cbea464d06f7c56a9c1810bb6e52896ee051e553a29c1bbdd0eeaa55ad500",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "outside-ground-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 3
+        }
+      ],
+      "height_grid_sha1": "def58c9c1a2151d3679ea3140b9d1d0ddeef8de9",
+      "outside_instances_sha1": "02397833a2ef8135195f8d95eea52a5262015e0a",
+      "outside_instance_count": 8057,
+      "micro_instances": 0,
+      "shadow_instances": 0,
+      "burial_samples": 0,
+      "physical_walk_metres": null,
+      "preservation": {
+        "all_original_bytes_and_mtimes_match": true,
+        "snapshot_sha256": "d00c8283b6592a94f8c822a7d10c2d07ff2f263ba83226a8bacd35c5048f273c",
+        "counts": {
+          "project_config": 5,
+          "map": 4,
+          "player_saved_config": 759
+        },
+        "changed_files_restored_count": 1,
+        "generated_engine_ini_files_retained_count": 1,
+        "errors_count": 0,
+        "private_saved_file_inventory_omitted": true
+      },
+      "log": {
+        "path": "Reports/IntrepidVisual20261111/runs/package-control-720-a/run.log",
+        "bytes": 118856,
+        "sha256": "ee407265ec63f64640363af5c1400a45c1e5412b896c156cc9c9d2ad7d7120bb",
+        "local_evidence_only": true
+      },
+      "lander_fixture": {
+        "contacts": 4,
+        "batches": 6,
+        "instances": 42,
+        "foil_slots": 0,
+        "metal_slots": 0,
+        "added_folds": 0
+      }
+    },
+    {
+      "label": "package-feature-720-a",
+      "kind": "review",
+      "packaged": true,
+      "baseline": false,
+      "scope": "canonical_final_packaged",
+      "raw_cpp_pass": 40,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "executable_sha256": "dc0b5864f7dd539006711408c00c7c0a880e7a40dc55afffe58d5b26f13bcfe2",
+      "source_art_inputs_sha256": "fd44dc95d2e648e0605a56e6a096270f3e301fc517c6134a2ec264fafeb836da",
+      "raw_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-feature-720-a/checks.txt",
+        "bytes": 2956,
+        "sha256": "eb16d57aa14891e112195a65dbb00e1ea6a4394ac736c68c3d14be9a5d0669d9",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-feature-720-a/manifest.json",
+        "bytes": 23396,
+        "sha256": "c059875b3fc5c4d3335861f0b1d9586ea4be17e312bb809bd49314b92a3d6d2d",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-feature-720-a/environment.json",
+        "bytes": 2800,
+        "sha256": "65359f118b1081fa7db817086821350a5f3685bad731c3e45225840bc879f266",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-feature-720-a/validation.json",
+        "bytes": 2024,
+        "sha256": "4703dc3c6a770e93963e118dbc6af72f02beb73215627e159032a6979223642e",
+        "local_evidence_only": false
+      },
+      "driver_folder": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-720-a",
+      "controller_folder": "Reports/IntrepidVisual20261111/runs/package-feature-720-a",
+      "started_utc": "2026-11-11T14:55:49.2454360Z",
+      "finished_utc": "2026-11-11T14:56:11.1870954Z",
+      "human_playtest": false,
+      "synthetic": true,
+      "performance_measurement": false,
+      "images": [
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-720-a/intrepid-wide-q0.png",
+          "bytes": 726241,
+          "sha256": "e200b01ee25ea193e61896818d8d5767451fc3a0793b9f0777892ae1494c6e40",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "intrepid-wide-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 0
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-720-a/fp-ground-q0.png",
+          "bytes": 1214055,
+          "sha256": "c936bafb81df5ac2c6634f18ef56a2b38a74d7496f201e2be3c05426f7b59f23",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "fp-ground-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 1
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-720-a/ladder-foot-q0.png",
+          "bytes": 895327,
+          "sha256": "85ed26c226f90e2423ac929643f979d2efa88496dae225ad8ec7e67d6ebdb62c",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "ladder-foot-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 2
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-720-a/outside-ground-q0.png",
+          "bytes": 1202377,
+          "sha256": "dc13ae9521ea58326437749ccc4db95d95c76742b95c438a54691034f5eb8560",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "outside-ground-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 3
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-720-a/intrepid-wide-q1.png",
+          "bytes": 818689,
+          "sha256": "351bd378d0f1d76bc2fc6a8d696e21a81427fdf3055c00160505c24181a59d3e",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "intrepid-wide-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 0
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-720-a/fp-ground-q1.png",
+          "bytes": 1500386,
+          "sha256": "5cda358a50115f638ffb30952b7ecc02c432743f0910007db22d89d652ede195",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "fp-ground-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 1
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-720-a/ladder-foot-q1.png",
+          "bytes": 959420,
+          "sha256": "6c4dcf32aa92ac99258f87cb804ef738612bf7e64cfac6bb76db751a55019b4d",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "ladder-foot-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 2
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-720-a/outside-ground-q1.png",
+          "bytes": 1453611,
+          "sha256": "31579f2f298a2fe6f790ed4745238b3c40687fcba1684446139233225a732498",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "outside-ground-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 3
+        }
+      ],
+      "height_grid_sha1": "def58c9c1a2151d3679ea3140b9d1d0ddeef8de9",
+      "outside_instances_sha1": "02397833a2ef8135195f8d95eea52a5262015e0a",
+      "outside_instance_count": 8057,
+      "micro_instances": 2048,
+      "shadow_instances": 64,
+      "burial_samples": 132,
+      "physical_walk_metres": null,
+      "preservation": {
+        "all_original_bytes_and_mtimes_match": true,
+        "snapshot_sha256": "2bc74fdc9d52d622a5e72ff7807a95accc77b33d159967fff385b2562aead5ae",
+        "counts": {
+          "project_config": 5,
+          "map": 4,
+          "player_saved_config": 760
+        },
+        "changed_files_restored_count": 1,
+        "generated_engine_ini_files_retained_count": 1,
+        "errors_count": 0,
+        "private_saved_file_inventory_omitted": true
+      },
+      "log": {
+        "path": "Reports/IntrepidVisual20261111/runs/package-feature-720-a/run.log",
+        "bytes": 119149,
+        "sha256": "498605f82e2a7345f3de1739c9d9fcda0d182cdaf9e5a158131f330346009cc5",
+        "local_evidence_only": true
+      },
+      "lander_fixture": {
+        "contacts": 4,
+        "batches": 6,
+        "instances": 54,
+        "foil_slots": 3,
+        "metal_slots": 1,
+        "added_folds": 12
+      }
+    },
+    {
+      "label": "package-control-1080-a",
+      "kind": "review",
+      "packaged": true,
+      "baseline": true,
+      "scope": "canonical_final_packaged",
+      "raw_cpp_pass": 40,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "executable_sha256": "dc0b5864f7dd539006711408c00c7c0a880e7a40dc55afffe58d5b26f13bcfe2",
+      "source_art_inputs_sha256": "fd44dc95d2e648e0605a56e6a096270f3e301fc517c6134a2ec264fafeb836da",
+      "raw_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-control-1080-a/checks.txt",
+        "bytes": 2956,
+        "sha256": "eb16d57aa14891e112195a65dbb00e1ea6a4394ac736c68c3d14be9a5d0669d9",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-control-1080-a/manifest.json",
+        "bytes": 23390,
+        "sha256": "d54e4a1a94df30bc1beacc48bbed097c60869bdbecb7008f5fdcf4f6116c1e1d",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-control-1080-a/environment.json",
+        "bytes": 2835,
+        "sha256": "68627890de954d171aca8e5a7dec58ad32fe1a9e1cbf415f881878ea2c178ae2",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-control-1080-a/validation.json",
+        "bytes": 2028,
+        "sha256": "c06a971af958b6411434fdab9869c9eab84eb049144ff696289220f27abcc619",
+        "local_evidence_only": false
+      },
+      "driver_folder": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-1080-a",
+      "controller_folder": "Reports/IntrepidVisual20261111/runs/package-control-1080-a",
+      "started_utc": "2026-11-11T14:56:35.6097158Z",
+      "finished_utc": "2026-11-11T14:56:58.5250791Z",
+      "human_playtest": false,
+      "synthetic": true,
+      "performance_measurement": false,
+      "images": [
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-1080-a/intrepid-wide-q0.png",
+          "bytes": 1546993,
+          "sha256": "15d26751133517393efb0e306a34e6e0ac758e80c49472b1df4fd5b585ca307b",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "name": "intrepid-wide-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 0
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-1080-a/fp-ground-q0.png",
+          "bytes": 2914335,
+          "sha256": "ae8ca63d6f647037ad3d1876c73ca07038592552bc8d21a0fc4ee814c1000b60",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "name": "fp-ground-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 1
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-1080-a/ladder-foot-q0.png",
+          "bytes": 1887624,
+          "sha256": "5d30b59572a1f4aca0d2f8cf1c053f7cdfaca07ec80013e2df9975a4e28f90fb",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "name": "ladder-foot-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 2
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-1080-a/outside-ground-q0.png",
+          "bytes": 2825442,
+          "sha256": "de67bc22e47b520e74230c3d20b652406d45b1330051d3ca434fbec537c16389",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "name": "outside-ground-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 3
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-1080-a/intrepid-wide-q1.png",
+          "bytes": 1802107,
+          "sha256": "7d38b64f7f5fb98602559117471f99ed347f25ddb8c8478d49060405cab8eed8",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "name": "intrepid-wide-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 0
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-1080-a/fp-ground-q1.png",
+          "bytes": 3586421,
+          "sha256": "6bef73e4f9ebe5cc429e9576b069c90fdff1519292b8943682caeefe3b7699fe",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "name": "fp-ground-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 1
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-1080-a/ladder-foot-q1.png",
+          "bytes": 2053958,
+          "sha256": "603ea5333a9767fa7adc10b7bd778681bce2454b1831d524796dd88da3c00dfe",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "name": "ladder-foot-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 2
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-1080-a/outside-ground-q1.png",
+          "bytes": 3418624,
+          "sha256": "7a02c480b6d875bcb723d0645997a298fbe0db1a30c0a02dcc0781439e6bbd4d",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "name": "outside-ground-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 3
+        }
+      ],
+      "height_grid_sha1": "def58c9c1a2151d3679ea3140b9d1d0ddeef8de9",
+      "outside_instances_sha1": "02397833a2ef8135195f8d95eea52a5262015e0a",
+      "outside_instance_count": 8057,
+      "micro_instances": 0,
+      "shadow_instances": 0,
+      "burial_samples": 0,
+      "physical_walk_metres": null,
+      "preservation": {
+        "all_original_bytes_and_mtimes_match": true,
+        "snapshot_sha256": "1d877e8e882fdf2222c9b26c941bc3360eca72ca6f67a05bd366f7f160e7240d",
+        "counts": {
+          "project_config": 5,
+          "map": 4,
+          "player_saved_config": 761
+        },
+        "changed_files_restored_count": 1,
+        "generated_engine_ini_files_retained_count": 1,
+        "errors_count": 0,
+        "private_saved_file_inventory_omitted": true
+      },
+      "log": {
+        "path": "Reports/IntrepidVisual20261111/runs/package-control-1080-a/run.log",
+        "bytes": 119062,
+        "sha256": "affc6b373cbbc7d5696f069889bfb712b71acc5a71e64eb57d5499de469824fc",
+        "local_evidence_only": true
+      },
+      "lander_fixture": {
+        "contacts": 4,
+        "batches": 6,
+        "instances": 42,
+        "foil_slots": 0,
+        "metal_slots": 0,
+        "added_folds": 0
+      }
+    },
+    {
+      "label": "package-feature-1080-a",
+      "kind": "review",
+      "packaged": true,
+      "baseline": false,
+      "scope": "canonical_final_packaged",
+      "raw_cpp_pass": 40,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "executable_sha256": "dc0b5864f7dd539006711408c00c7c0a880e7a40dc55afffe58d5b26f13bcfe2",
+      "source_art_inputs_sha256": "fd44dc95d2e648e0605a56e6a096270f3e301fc517c6134a2ec264fafeb836da",
+      "raw_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-feature-1080-a/checks.txt",
+        "bytes": 2956,
+        "sha256": "eb16d57aa14891e112195a65dbb00e1ea6a4394ac736c68c3d14be9a5d0669d9",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-feature-1080-a/manifest.json",
+        "bytes": 23397,
+        "sha256": "04d8cba933e799407a664f00e8475e303e2067d33a505ff86bfa63fd461038c4",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-feature-1080-a/environment.json",
+        "bytes": 2805,
+        "sha256": "4511bea021dd1c17eb2770ae8554cd44321c097cfa45332f63c65bfe12678543",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-feature-1080-a/validation.json",
+        "bytes": 2028,
+        "sha256": "b0443b564bc3dfdcbf53b71716720e261ef27ede9f461bf9857a5fa57cf51b4f",
+        "local_evidence_only": false
+      },
+      "driver_folder": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-1080-a",
+      "controller_folder": "Reports/IntrepidVisual20261111/runs/package-feature-1080-a",
+      "started_utc": "2026-11-11T14:57:23.0297678Z",
+      "finished_utc": "2026-11-11T14:57:45.9556732Z",
+      "human_playtest": false,
+      "synthetic": true,
+      "performance_measurement": false,
+      "images": [
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-1080-a/intrepid-wide-q0.png",
+          "bytes": 1586140,
+          "sha256": "0d92730a8da554b2d1e6eb442df780058dfe08faacf510102f97a3965e05c63a",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "name": "intrepid-wide-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 0
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-1080-a/fp-ground-q0.png",
+          "bytes": 2803257,
+          "sha256": "378a83bcb41245b381f2151df22c0329954f2e129e877343f3f93dc02d6a4b80",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "name": "fp-ground-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 1
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-1080-a/ladder-foot-q0.png",
+          "bytes": 1957673,
+          "sha256": "d8b3209b7e2ba5342d027ff18d422984bd77c8d88fd9abe7ced9817bb46aec65",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "name": "ladder-foot-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 2
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-1080-a/outside-ground-q0.png",
+          "bytes": 2825492,
+          "sha256": "d4d3cee857ad8556ff2ab15a453aee2b9d28b2bbbe5f56ede9cf1b427d737c5f",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "name": "outside-ground-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 3
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-1080-a/intrepid-wide-q1.png",
+          "bytes": 1839283,
+          "sha256": "68a98ea89dcae2f018f81ac32b9a402cfe39e9c5ecbdcceb7c3f374d0c565906",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "name": "intrepid-wide-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 0
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-1080-a/fp-ground-q1.png",
+          "bytes": 3469620,
+          "sha256": "9bf518a8e41d7373770b2768623db83589da01639084d95256a7e7da8fb245f5",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "name": "fp-ground-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 1
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-1080-a/ladder-foot-q1.png",
+          "bytes": 2098783,
+          "sha256": "96c8762d2383ff7407fa2f497788bd7dd95c0ece1584d30bc7a8455aa4b6a44c",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "name": "ladder-foot-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 2
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-1080-a/outside-ground-q1.png",
+          "bytes": 3418494,
+          "sha256": "bbb3773f44e1d324dec6badf5198ea283eb8c74c9666016be0240f1c98db413c",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "name": "outside-ground-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 3
+        }
+      ],
+      "height_grid_sha1": "def58c9c1a2151d3679ea3140b9d1d0ddeef8de9",
+      "outside_instances_sha1": "02397833a2ef8135195f8d95eea52a5262015e0a",
+      "outside_instance_count": 8057,
+      "micro_instances": 2048,
+      "shadow_instances": 64,
+      "burial_samples": 132,
+      "physical_walk_metres": null,
+      "preservation": {
+        "all_original_bytes_and_mtimes_match": true,
+        "snapshot_sha256": "761de180f549d85dd7dba37731a08f79c2c37c39671cd03b26935ef8861e0886",
+        "counts": {
+          "project_config": 5,
+          "map": 4,
+          "player_saved_config": 762
+        },
+        "changed_files_restored_count": 1,
+        "generated_engine_ini_files_retained_count": 1,
+        "errors_count": 0,
+        "private_saved_file_inventory_omitted": true
+      },
+      "log": {
+        "path": "Reports/IntrepidVisual20261111/runs/package-feature-1080-a/run.log",
+        "bytes": 119355,
+        "sha256": "4282eabc680e29deeebae042913dd9f9e05a6c90a7ac056f1a5cd220c831a5e2",
+        "local_evidence_only": true
+      },
+      "lander_fixture": {
+        "contacts": 4,
+        "batches": 6,
+        "instances": 54,
+        "foil_slots": 3,
+        "metal_slots": 1,
+        "added_folds": 12
+      }
+    },
+    {
+      "label": "package-control-q1",
+      "kind": "profile",
+      "packaged": true,
+      "baseline": true,
+      "scope": "canonical_final_packaged",
+      "raw_cpp_pass": 35,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "executable_sha256": "dc0b5864f7dd539006711408c00c7c0a880e7a40dc55afffe58d5b26f13bcfe2",
+      "source_art_inputs_sha256": "fd44dc95d2e648e0605a56e6a096270f3e301fc517c6134a2ec264fafeb836da",
+      "raw_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-control-q1/checks.txt",
+        "bytes": 2617,
+        "sha256": "ef5b83751fa9914d402e932d627ceba2569a7264e5e91fe8dd1dffd7bd3d1119",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-control-q1/manifest.json",
+        "bytes": 21626,
+        "sha256": "dd524f25feb0d5d796bf2b66f7e960b260b2580b279578c335f9c10873431950",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-control-q1/environment.json",
+        "bytes": 2869,
+        "sha256": "2b08d04a39d06adaa1006153477db37ea3955b75acd3a41b1ad1fb0a6d944e8b",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-control-q1/validation.json",
+        "bytes": 933,
+        "sha256": "481e6cc9303631e7ddd3215e5e79d2515b273a25a15854246a96fb481219fabc",
+        "local_evidence_only": false
+      },
+      "driver_folder": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-q1",
+      "controller_folder": "Reports/IntrepidVisual20261111/runs/package-control-q1",
+      "started_utc": "2026-11-11T14:58:41.6079415Z",
+      "finished_utc": "2026-11-11T15:00:36.9915969Z",
+      "human_playtest": false,
+      "synthetic": true,
+      "performance_measurement": true,
+      "images": [],
+      "height_grid_sha1": "def58c9c1a2151d3679ea3140b9d1d0ddeef8de9",
+      "outside_instances_sha1": "02397833a2ef8135195f8d95eea52a5262015e0a",
+      "outside_instance_count": 8057,
+      "micro_instances": 0,
+      "shadow_instances": 0,
+      "burial_samples": 0,
+      "physical_walk_metres": null,
+      "preservation": {
+        "all_original_bytes_and_mtimes_match": true,
+        "snapshot_sha256": "94367ac3f227a50b61ccad090eacf57d726d759d0a17f79fcb24f0e8441a7492",
+        "counts": {
+          "project_config": 5,
+          "map": 4,
+          "player_saved_config": 763
+        },
+        "changed_files_restored_count": 1,
+        "generated_engine_ini_files_retained_count": 1,
+        "errors_count": 0,
+        "private_saved_file_inventory_omitted": true
+      },
+      "log": {
+        "path": "Reports/IntrepidVisual20261111/runs/package-control-q1/run.log",
+        "bytes": 103675,
+        "sha256": "8e62919520ed5bcf18a976abe003d2fe4f709874e04dc9b760e0a5c800bf91fa",
+        "local_evidence_only": true
+      },
+      "lander_fixture": {
+        "contacts": 4,
+        "batches": 6,
+        "instances": 42,
+        "foil_slots": 0,
+        "metal_slots": 0,
+        "added_folds": 0
+      },
+      "profile_summary": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-control-q1/summary.json",
+        "bytes": 2121,
+        "sha256": "00414596a18da6d4d9417fc6b6c24da35c1c7a3981cf258d9d0eae50ece2c594",
+        "local_evidence_only": false
+      },
+      "csv": {
+        "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-q1/intrepid-profile.csv",
+        "bytes": 9928509,
+        "sha256": "20171090df9bec757180ab7fad5e418134a4c777f20d3aad30a11a791632b859",
+        "local_evidence_only": true
+      },
+      "optional_counter_coverage": {
+        "GameThreadTime": {
+          "present": true,
+          "rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "mean_including_zero": 1.7575893833333334
+        },
+        "RenderThreadTime": {
+          "present": true,
+          "rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "mean_including_zero": 3.6055172833333335
+        },
+        "GPUTime": {
+          "present": true,
+          "rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "mean_including_zero": 16.66193835
+        },
+        "GPU/SlateUI": {
+          "present": true,
+          "rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 5999,
+          "mean_including_zero": 9.557989133333333
+        },
+        "GPUMem/LocalUsedMB": {
+          "present": true,
+          "rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "mean_including_zero": 247.4883
+        }
+      },
+      "maximum_sampled_working_set_bytes": 625115136,
+      "memory_limitation": "One-second sampled process working set, not true peak or VRAM; optional GPU/VRAM counters require finite positive coverage."
+    },
+    {
+      "label": "package-feature-q1",
+      "kind": "profile",
+      "packaged": true,
+      "baseline": false,
+      "scope": "canonical_final_packaged",
+      "raw_cpp_pass": 35,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "executable_sha256": "dc0b5864f7dd539006711408c00c7c0a880e7a40dc55afffe58d5b26f13bcfe2",
+      "source_art_inputs_sha256": "fd44dc95d2e648e0605a56e6a096270f3e301fc517c6134a2ec264fafeb836da",
+      "raw_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-feature-q1/checks.txt",
+        "bytes": 2617,
+        "sha256": "ef5b83751fa9914d402e932d627ceba2569a7264e5e91fe8dd1dffd7bd3d1119",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-feature-q1/manifest.json",
+        "bytes": 21633,
+        "sha256": "1f42e0693a5ea813f19f5ef24cb38b359cd4dd7eed0e50c5d31d532232b2e316",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-feature-q1/environment.json",
+        "bytes": 2839,
+        "sha256": "8597c0ae06f66fdfe7aa8774f54c4103c4e2646acbda38056236b6f099d38aef",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-feature-q1/validation.json",
+        "bytes": 933,
+        "sha256": "fe85544786f54938f5cd68462554f83f88df318528247aabca6915f821287ab9",
+        "local_evidence_only": false
+      },
+      "driver_folder": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-q1",
+      "controller_folder": "Reports/IntrepidVisual20261111/runs/package-feature-q1",
+      "started_utc": "2026-11-11T15:01:01.6835938Z",
+      "finished_utc": "2026-11-11T15:02:56.2467620Z",
+      "human_playtest": false,
+      "synthetic": true,
+      "performance_measurement": true,
+      "images": [],
+      "height_grid_sha1": "def58c9c1a2151d3679ea3140b9d1d0ddeef8de9",
+      "outside_instances_sha1": "02397833a2ef8135195f8d95eea52a5262015e0a",
+      "outside_instance_count": 8057,
+      "micro_instances": 2048,
+      "shadow_instances": 64,
+      "burial_samples": 132,
+      "physical_walk_metres": null,
+      "preservation": {
+        "all_original_bytes_and_mtimes_match": true,
+        "snapshot_sha256": "aa018c19ef1a2587cda8f981dd9e9031dbb139092a647a1406ff2b315faa3d9c",
+        "counts": {
+          "project_config": 5,
+          "map": 4,
+          "player_saved_config": 764
+        },
+        "changed_files_restored_count": 1,
+        "generated_engine_ini_files_retained_count": 1,
+        "errors_count": 0,
+        "private_saved_file_inventory_omitted": true
+      },
+      "log": {
+        "path": "Reports/IntrepidVisual20261111/runs/package-feature-q1/run.log",
+        "bytes": 103970,
+        "sha256": "d758be6193b32bae7754df7a60e0b0f28a2404b58fa330ed637871aa7f7efa08",
+        "local_evidence_only": true
+      },
+      "lander_fixture": {
+        "contacts": 4,
+        "batches": 6,
+        "instances": 54,
+        "foil_slots": 3,
+        "metal_slots": 1,
+        "added_folds": 12
+      },
+      "profile_summary": {
+        "path": "Docs/IntrepidVisual20261111/evidence/package-feature-q1/summary.json",
+        "bytes": 2122,
+        "sha256": "1b1647db9bc8f3374be08eb1417de90d4b62484de7751c3b898d889ef129ed3b",
+        "local_evidence_only": false
+      },
+      "csv": {
+        "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-q1/intrepid-profile.csv",
+        "bytes": 9926625,
+        "sha256": "3988bd7bb3baf202448e73767bbcee847b1833e2af7be8d65f6bd01d02b6005c",
+        "local_evidence_only": true
+      },
+      "optional_counter_coverage": {
+        "GameThreadTime": {
+          "present": true,
+          "rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "mean_including_zero": 1.6914595333333333
+        },
+        "RenderThreadTime": {
+          "present": true,
+          "rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "mean_including_zero": 3.4709845666666665
+        },
+        "GPUTime": {
+          "present": true,
+          "rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "mean_including_zero": 16.66308515
+        },
+        "GPU/SlateUI": {
+          "present": true,
+          "rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 5999,
+          "mean_including_zero": 9.573036766666666
+        },
+        "GPUMem/LocalUsedMB": {
+          "present": true,
+          "rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "mean_including_zero": 248.7383
+        }
+      },
+      "maximum_sampled_working_set_bytes": 625872896,
+      "memory_limitation": "One-second sampled process working set, not true peak or VRAM; optional GPU/VRAM counters require finite positive coverage."
+    }
+  ],
+  "paired_comparisons": [
+    {
+      "control": "package-control-720-a",
+      "feature": "package-feature-720-a",
+      "manifest_fields_equal": {
+        "height_grid": true,
+        "height_grid_sha1": true,
+        "outside_instances_sha1": true,
+        "outside_instance_count": true,
+        "light_snapshot": true,
+        "terrain_asset": true,
+        "cameras": true,
+        "width": true,
+        "height": true
+      },
+      "environment_fields_equal": {
+        "executable_sha256": true,
+        "game_module_sha256": true,
+        "source_art_inputs_sha256": true,
+        "renderer": true,
+        "width": true,
+        "height": true,
+        "quality": true,
+        "fps_cap": true,
+        "vsync": true,
+        "audio": true,
+        "packaged": true
+      },
+      "same_final_binary_counterfactual": true,
+      "pixel_identity_claimed": false,
+      "scope": "Recorded fixed cameras and sampled/state inventories only; not every outside pixel or a human mission."
+    },
+    {
+      "control": "package-control-1080-a",
+      "feature": "package-feature-1080-a",
+      "manifest_fields_equal": {
+        "height_grid": true,
+        "height_grid_sha1": true,
+        "outside_instances_sha1": true,
+        "outside_instance_count": true,
+        "light_snapshot": true,
+        "terrain_asset": true,
+        "cameras": true,
+        "width": true,
+        "height": true
+      },
+      "environment_fields_equal": {
+        "executable_sha256": true,
+        "game_module_sha256": true,
+        "source_art_inputs_sha256": true,
+        "renderer": true,
+        "width": true,
+        "height": true,
+        "quality": true,
+        "fps_cap": true,
+        "vsync": true,
+        "audio": true,
+        "packaged": true
+      },
+      "same_final_binary_counterfactual": true,
+      "pixel_identity_claimed": false,
+      "scope": "Recorded fixed cameras and sampled/state inventories only; not every outside pixel or a human mission."
+    },
+    {
+      "control": "package-control-q1",
+      "feature": "package-feature-q1",
+      "manifest_fields_equal": {
+        "height_grid": true,
+        "height_grid_sha1": true,
+        "outside_instances_sha1": true,
+        "outside_instance_count": true,
+        "light_snapshot": true,
+        "terrain_asset": true,
+        "cameras": true,
+        "width": true,
+        "height": true
+      },
+      "environment_fields_equal": {
+        "executable_sha256": true,
+        "game_module_sha256": true,
+        "source_art_inputs_sha256": true,
+        "renderer": true,
+        "width": true,
+        "height": true,
+        "quality": true,
+        "fps_cap": true,
+        "vsync": true,
+        "audio": true,
+        "packaged": true
+      },
+      "same_final_binary_counterfactual": true,
+      "pixel_identity_claimed": false,
+      "scope": "Recorded fixed cameras and sampled/state inventories only; not every outside pixel or a human mission."
+    }
+  ],
+  "editor_separate": [
+    {
+      "label": "editor-control-720-c",
+      "kind": "review",
+      "packaged": false,
+      "baseline": true,
+      "scope": "preliminary_editor_separate",
+      "raw_cpp_pass": 40,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "executable_sha256": "5db233608a7d82102cc92cf9f591b8a9657ae16a5b7b09b131d00bbe0a4cc715",
+      "source_art_inputs_sha256": "fd44dc95d2e648e0605a56e6a096270f3e301fc517c6134a2ec264fafeb836da",
+      "raw_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/editor-control-720-c/checks.txt",
+        "bytes": 2956,
+        "sha256": "eb16d57aa14891e112195a65dbb00e1ea6a4394ac736c68c3d14be9a5d0669d9",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidVisual20261111/evidence/editor-control-720-c/manifest.json",
+        "bytes": 23389,
+        "sha256": "32fe039d1c50e68ac35795a4b071fef57501bbe6d1337278b62d4a1ab63d0403",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidVisual20261111/evidence/editor-control-720-c/environment.json",
+        "bytes": 2946,
+        "sha256": "e22ece55ce24cbd99e3fcfc90e52d78489ce4661d6195db5983d96b3e39e8a36",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidVisual20261111/evidence/editor-control-720-c/validation.json",
+        "bytes": 2024,
+        "sha256": "181e7f501b9430cf9ea942f25a54a158a756120733a81d4baaf1869c6279ee65",
+        "local_evidence_only": false
+      },
+      "driver_folder": "Reports/IntrepidVisual20261111/editor-control-720-c",
+      "controller_folder": "Reports/IntrepidVisual20261111/runs/editor-control-720-c",
+      "started_utc": "2026-11-11T14:42:01.0440122Z",
+      "finished_utc": "2026-11-11T14:42:41.2661716Z",
+      "human_playtest": false,
+      "synthetic": true,
+      "performance_measurement": false,
+      "images": [
+        {
+          "path": "Reports/IntrepidVisual20261111/editor-control-720-c/intrepid-wide-q0.png",
+          "bytes": 700689,
+          "sha256": "f08e4ecc3089fc43d32f2311d46df8ec255b5b5af88d99802a2cc7d3593cbe33",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "intrepid-wide-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 0
+        },
+        {
+          "path": "Reports/IntrepidVisual20261111/editor-control-720-c/fp-ground-q0.png",
+          "bytes": 1259779,
+          "sha256": "6aa23e85ac7c116841d7a8237ca55514b3cd0938d878b63d9d308c197e400e4b",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "fp-ground-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 1
+        },
+        {
+          "path": "Reports/IntrepidVisual20261111/editor-control-720-c/ladder-foot-q0.png",
+          "bytes": 865342,
+          "sha256": "d8c842d38a3b715a0c82682d218604d7413d407751c8159961ddd6486f989c5c",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "ladder-foot-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 2
+        },
+        {
+          "path": "Reports/IntrepidVisual20261111/editor-control-720-c/outside-ground-q0.png",
+          "bytes": 1163143,
+          "sha256": "11f030d7cc314b2c759bd1496324c6a60800396f04c732991547fd2089dedc81",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "outside-ground-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 3
+        },
+        {
+          "path": "Reports/IntrepidVisual20261111/editor-control-720-c/intrepid-wide-q1.png",
+          "bytes": 803740,
+          "sha256": "d84a4d6b7f6f817d930e674758797eeac8ffd94626eccb37aaf081875c9d8144",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "intrepid-wide-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 0
+        },
+        {
+          "path": "Reports/IntrepidVisual20261111/editor-control-720-c/fp-ground-q1.png",
+          "bytes": 1542903,
+          "sha256": "ac471596d04342d7900f328dd03a24cf49ddbb8f84ceab171e1b9c2721fbd4ec",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "fp-ground-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 1
+        },
+        {
+          "path": "Reports/IntrepidVisual20261111/editor-control-720-c/ladder-foot-q1.png",
+          "bytes": 933858,
+          "sha256": "b4f4fce0d6a4dd219d81b3509ac1af61d39b3a123c2d1db0f0d7a3a35c27b3f1",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "ladder-foot-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 2
+        },
+        {
+          "path": "Reports/IntrepidVisual20261111/editor-control-720-c/outside-ground-q1.png",
+          "bytes": 1453584,
+          "sha256": "1092cebaa8099347f35e5c6c9b92714ebc51e41552126f847fd6c4b1dec018c6",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "outside-ground-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 3
+        }
+      ],
+      "height_grid_sha1": "def58c9c1a2151d3679ea3140b9d1d0ddeef8de9",
+      "outside_instances_sha1": "280b43e980d9837783ca8f74dc9d81e88faf3f66",
+      "outside_instance_count": 8057,
+      "micro_instances": 0,
+      "shadow_instances": 0,
+      "burial_samples": 0,
+      "physical_walk_metres": null,
+      "preservation": {
+        "all_original_bytes_and_mtimes_match": true,
+        "snapshot_sha256": "4c101f50755c90d3eecfbe329fa6f28dcc700b43338e6cbc28c197f006b6ad1a",
+        "counts": {
+          "project_config": 5,
+          "map": 4,
+          "player_saved_config": 751
+        },
+        "changed_files_restored_count": 2,
+        "generated_engine_ini_files_retained_count": 1,
+        "errors_count": 0,
+        "private_saved_file_inventory_omitted": true
+      },
+      "log": {
+        "path": "Reports/IntrepidVisual20261111/runs/editor-control-720-c/run.log",
+        "bytes": 211893,
+        "sha256": "1e471200efe7f7aa3f2eb144509bddeb1ed225723f285045dcbbefe475382209",
+        "local_evidence_only": true
+      },
+      "lander_fixture": {
+        "contacts": 4,
+        "batches": 6,
+        "instances": 42,
+        "foil_slots": 0,
+        "metal_slots": 0,
+        "added_folds": 0
+      }
+    },
+    {
+      "label": "editor-feature-720-c",
+      "kind": "review",
+      "packaged": false,
+      "baseline": false,
+      "scope": "preliminary_editor_separate",
+      "raw_cpp_pass": 40,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "executable_sha256": "5db233608a7d82102cc92cf9f591b8a9657ae16a5b7b09b131d00bbe0a4cc715",
+      "source_art_inputs_sha256": "fd44dc95d2e648e0605a56e6a096270f3e301fc517c6134a2ec264fafeb836da",
+      "raw_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/editor-feature-720-c/checks.txt",
+        "bytes": 2956,
+        "sha256": "eb16d57aa14891e112195a65dbb00e1ea6a4394ac736c68c3d14be9a5d0669d9",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidVisual20261111/evidence/editor-feature-720-c/manifest.json",
+        "bytes": 23396,
+        "sha256": "4f89a5ed538f915e71ad918561cefd4b5185168a59d2745330d35dd0919262db",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidVisual20261111/evidence/editor-feature-720-c/environment.json",
+        "bytes": 2916,
+        "sha256": "02cd658819010e605235b0df2fdab03013e5971c46c62819bd2ea93b9c6398b3",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidVisual20261111/evidence/editor-feature-720-c/validation.json",
+        "bytes": 2024,
+        "sha256": "42baedd67a781ce2d34928b5e9a1dd8027eda178dcc168c7f4efde57aacb46be",
+        "local_evidence_only": false
+      },
+      "driver_folder": "Reports/IntrepidVisual20261111/editor-feature-720-c",
+      "controller_folder": "Reports/IntrepidVisual20261111/runs/editor-feature-720-c",
+      "started_utc": "2026-11-11T14:40:29.0498487Z",
+      "finished_utc": "2026-11-11T14:41:34.9946962Z",
+      "human_playtest": false,
+      "synthetic": true,
+      "performance_measurement": false,
+      "images": [
+        {
+          "path": "Reports/IntrepidVisual20261111/editor-feature-720-c/intrepid-wide-q0.png",
+          "bytes": 693976,
+          "sha256": "b70a7cd0832133ba5dc0b2e665dc045449ea04079ed8a16dd1224beab8e34268",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "intrepid-wide-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 0
+        },
+        {
+          "path": "Reports/IntrepidVisual20261111/editor-feature-720-c/fp-ground-q0.png",
+          "bytes": 1242639,
+          "sha256": "82cf4586adc01e8f8b4f73cd0090fa30714d7f8a12c10bfedfc23d391dde1fb0",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "fp-ground-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 1
+        },
+        {
+          "path": "Reports/IntrepidVisual20261111/editor-feature-720-c/ladder-foot-q0.png",
+          "bytes": 893271,
+          "sha256": "02d560f19add00d946a203f7858acc55b3b1722c94bd445442d9e57288416de2",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "ladder-foot-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 2
+        },
+        {
+          "path": "Reports/IntrepidVisual20261111/editor-feature-720-c/outside-ground-q0.png",
+          "bytes": 1210659,
+          "sha256": "2220ff72fa19752e134edd3df47033bbb9285e88b46106024975d7ab438e2ba7",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "outside-ground-q0",
+          "quality": 0,
+          "actual_quality": 0,
+          "camera_index": 3
+        },
+        {
+          "path": "Reports/IntrepidVisual20261111/editor-feature-720-c/intrepid-wide-q1.png",
+          "bytes": 819218,
+          "sha256": "9ad8a4e763bd19a1de8e5bf83af348898bcf4e67f0fa277d9de16191c8e8498e",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "intrepid-wide-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 0
+        },
+        {
+          "path": "Reports/IntrepidVisual20261111/editor-feature-720-c/fp-ground-q1.png",
+          "bytes": 1502515,
+          "sha256": "2c7062d13c88626027b504a661b26e65eacbda2c3d8057f49cb97b9a0cfe3578",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "fp-ground-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 1
+        },
+        {
+          "path": "Reports/IntrepidVisual20261111/editor-feature-720-c/ladder-foot-q1.png",
+          "bytes": 959956,
+          "sha256": "69113f37e2bc91054418cc80b60f7d65f3a78186fb64fa884ab556fa5d8f5a4d",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "ladder-foot-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 2
+        },
+        {
+          "path": "Reports/IntrepidVisual20261111/editor-feature-720-c/outside-ground-q1.png",
+          "bytes": 1453968,
+          "sha256": "6bea68957e594998b159eff6ef3732fc35adda2cfbf0a94ae93c3cef00e3a494",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "name": "outside-ground-q1",
+          "quality": 1,
+          "actual_quality": 1,
+          "camera_index": 3
+        }
+      ],
+      "height_grid_sha1": "def58c9c1a2151d3679ea3140b9d1d0ddeef8de9",
+      "outside_instances_sha1": "280b43e980d9837783ca8f74dc9d81e88faf3f66",
+      "outside_instance_count": 8057,
+      "micro_instances": 2048,
+      "shadow_instances": 64,
+      "burial_samples": 132,
+      "physical_walk_metres": null,
+      "preservation": {
+        "all_original_bytes_and_mtimes_match": true,
+        "snapshot_sha256": "89a4a3d500a490f7e865d95b76ea808e0bf6a1f2fb2bd72d98686b8530dc5c5c",
+        "counts": {
+          "project_config": 5,
+          "map": 4,
+          "player_saved_config": 750
+        },
+        "changed_files_restored_count": 2,
+        "generated_engine_ini_files_retained_count": 1,
+        "errors_count": 0,
+        "private_saved_file_inventory_omitted": true
+      },
+      "log": {
+        "path": "Reports/IntrepidVisual20261111/runs/editor-feature-720-c/run.log",
+        "bytes": 218767,
+        "sha256": "334db3aa2952638a88dcf6c8a127d6f7ba34d40829e9aa176007b23c6131c2f6",
+        "local_evidence_only": true
+      },
+      "lander_fixture": {
+        "contacts": 4,
+        "batches": 6,
+        "instances": 54,
+        "foil_slots": 3,
+        "metal_slots": 1,
+        "added_folds": 12
+      }
+    }
+  ],
+  "editor_pair_separate": {
+    "control": "editor-control-720-c",
+    "feature": "editor-feature-720-c",
+    "manifest_fields_equal": {
+      "height_grid": true,
+      "height_grid_sha1": true,
+      "outside_instances_sha1": true,
+      "outside_instance_count": true,
+      "light_snapshot": true,
+      "terrain_asset": true,
+      "cameras": true,
+      "width": true,
+      "height": true
+    },
+    "environment_fields_equal": {
+      "executable_sha256": true,
+      "game_module_sha256": true,
+      "source_art_inputs_sha256": true,
+      "renderer": true,
+      "width": true,
+      "height": true,
+      "quality": true,
+      "fps_cap": true,
+      "vsync": true,
+      "audio": true,
+      "packaged": true
+    },
+    "same_final_binary_counterfactual": true,
+    "pixel_identity_claimed": false,
+    "scope": "Recorded fixed cameras and sampled/state inventories only; not every outside pixel or a human mission."
+  },
+  "history_excluded": [
+    {
+      "labels": [
+        "editor-control-720-a"
+      ],
+      "status": "rejected_capture_driver",
+      "reason": "Invalid screenshot-name lifetime/file output; failed images excluded."
+    },
+    {
+      "labels": [
+        "editor-control-720-b",
+        "editor-feature-720-b"
+      ],
+      "status": "rejected_visual_iteration",
+      "reason": "Harness passed but dark foil and extra rung-strip placement were rejected; not current presentation acceptance."
+    },
+    {
+      "labels": [
+        "editor-local-test-a"
+      ],
+      "status": "earlier_functional_iteration",
+      "reason": "Earlier Editor NullRHI 35/0; separate source snapshot, excluded from final packaged totals."
+    }
+  ],
+  "build_receipts": {
+    "path": "Docs/IntrepidVisual20261111/evidence/build-receipts.json",
+    "bytes": 2326,
+    "sha256": "7683a12a4917abbb13f361a4ce272fdca0a22db57001d0096a52a535dadf84e9",
+    "local_evidence_only": false
+  },
+  "limitations": [
+    "Local cosmetic Apollo pass; retained LROC 2m terrain is separate from authored detail.",
+    "Staged reviews/profile hide HUD/player/TextRender labels and freeze mission/pawn.",
+    "Profiles cover four static Medium cameras only, including one outside-ROI camera, not driving or universal/whole-game FPS.",
+    "PNG/CSV/log payloads remain local and are not copied into public docs.",
+    "No human playtest or NASA endorsement/competition-eligibility claim.",
+    "Broader legacy regressions are included separately; a clean extracted offline distribution has not been tested or released for this pass."
+  ],
+  "protected_science_and_assets_receipt": {
+    "path": "Reports/IntrepidVisual20261111/original-payload-identity.json",
+    "bytes": 37051,
+    "sha256": "b08826d07aa7896caab73af65658067d316c7168ea4c572558a3c3716ad23e09",
+    "local_evidence_only": true
+  },
+  "protected_science_and_assets": {
+    "status": "separate_receipt",
+    "summary": {
+      "schema_version": 1,
+      "generated_utc": "2026-11-11T15:06:30.229508+00:00",
+      "total_original_payloads": 154,
+      "content_payloads": 38,
+      "source_art_payloads": 116,
+      "matching_payloads": 154,
+      "all_original_payload_bytes_match": true,
+      "mode": "Read-only existence/size/SHA256 comparison; no payload or player-state restoration",
+      "unreal_launched": false
+    },
+    "private_file_inventory_omitted": true
+  },
+  "performance_independent_analysis": {
+    "source": {
+      "path": "Reports/IntrepidVisual20261111/performance-independent.json",
+      "bytes": 31017,
+      "sha256": "0ca0d0a9fe8b46218857052f183cd989d5ff13ad76cbe90695ad215a5d341a29",
+      "local_evidence_only": true
+    },
+    "curated": {
+      "path": "Docs/IntrepidVisual20261111/evidence/performance-independent.json",
+      "bytes": 31013,
+      "sha256": "17dc02d4c5b46b909a38532ed997398093b8d7b3bf70af145c3519dfc6f89fec",
+      "local_evidence_only": false
+    }
+  },
+  "profile_csv_alignment": {
+    "driver_nominal_phase_rows": [
+      1500,
+      1500,
+      1500,
+      1500
+    ],
+    "observed_camera_rows_both_captures": [
+      1501,
+      1500,
+      1500,
+      1499
+    ],
+    "observed_transition_zero_based_row_indices": [
+      0,
+      1501,
+      3001,
+      4501
+    ],
+    "captured_rows_excluded": 0,
+    "limitation": "CSV View/Pos changes trail game-thread metadata by one row in both captures. Aggregate same-workload comparison is retained; metadata is not exact rendered per-camera row attribution."
+  },
+  "global_all_run_preservation": {
+    "status": "passed",
+    "summary": {
+      "path": "Docs/IntrepidVisual20261111/evidence/final-preservation-summary.json",
+      "bytes": 1960,
+      "sha256": "b2f4adb4546a92a19adf1964047aa8001bf236545a42f98b8e87fdbbcd15021b",
+      "local_evidence_only": false
+    },
+    "protected_original_files": 869,
+    "owner_save_photo_files_unchanged_without_restoration": 80,
+    "isolated_automated_save_photo_files_separate": 9,
+    "private_file_inventories_omitted": true
+  },
+  "regressions_separate": {
+    "receipt": {
+      "path": "Docs/IntrepidVisual20261111/evidence/regression-receipt.json",
+      "bytes": 16848,
+      "sha256": "e34296bcef09c0acbad03059c0e9fb15bec560736b13a58046bf73648d97b4a5",
+      "local_evidence_only": false
+    },
+    "raw_report_executions": 20,
+    "raw_cpp_pass": 1280,
+    "raw_cpp_fail": 0,
+    "by_group": {
+      "stride-and-apollo-input": 99,
+      "apollo-and-rescue-regression": 460,
+      "mission-selection": 66,
+      "field-operations": 655
+    },
+    "human_playtest": false,
+    "performance_measurement": false
+  },
+  "final_executable_current_identity": {
+    "path": "Dist/Apollo12/Windows/LunarRescue/Binaries/Win64/LunarRescue.exe",
+    "bytes": 333880320,
+    "sha256": "dc0b5864f7dd539006711408c00c7c0a880e7a40dc55afffe58d5b26f13bcfe2",
+    "local_evidence_only": true
+  },
+  "material_build": {
+    "path": "Docs/IntrepidVisual20261111/evidence/material-build.json",
+    "bytes": 882,
+    "sha256": "3dd5ed3be9cf40efcae7291b158efd714be3e0752e944d0fe91575c6737c7682",
+    "local_evidence_only": false
+  },
+  "curation_finished_utc": "2026-11-11T15:13:44.807034+00:00"
+}

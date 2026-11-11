@@ -1,0 +1,15 @@
+{
+  "kind": "authored_material_build",
+  "created_materials": [
+    "/Game/Lunar/Apollo12/IntrepidVisual/M_IntrepidRegolith.M_IntrepidRegolith",
+    "/Game/Lunar/Apollo12/IntrepidVisual/M_IntrepidRock.M_IntrepidRock",
+    "/Game/Lunar/Apollo12/IntrepidVisual/M_IntrepidFoil.M_IntrepidFoil",
+    "/Game/Lunar/Apollo12/IntrepidVisual/M_IntrepidMetal.M_IntrepidMetal"
+  ],
+  "retained_texture": "/Game/Lunar/Apollo12/Realism/T_RegolithAuthored.T_RegolithAuthored",
+  "retained_texture_source_sha256": "3c1b4fc0e37a24e53a626434ae5d6e5751f299491ffd7138af34e77c3293ddab",
+  "source_role": "AI-authored regolith bitmap retained unchanged; new shaders authored in code. No measured microgeometry.",
+  "scope": "50 m square material mask; ground outside preserves original shader formula; no displacement.",
+  "maps_loaded_or_saved": false,
+  "original_materials_or_textures_saved": false
+}

@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "kind": "profile",
+  "assertions": 43,
+  "artifacts": [
+    {
+      "path": "checks.txt",
+      "bytes": 3480,
+      "sha256": "8ed556244b986aa2c80d3abaa6e7de329d0f112db7a9af5bce53cc3603365d73"
+    },
+    {
+      "path": "height-grid.csv",
+      "bytes": 4771,
+      "sha256": "be65d7a67f5fcd85be9585521449c6ad08831521843e9bc07feda16829899e94"
+    },
+    {
+      "path": "intrepid-profile.csv",
+      "bytes": 9929971,
+      "sha256": "a29ff88271427f27620a2f33a67b330acabbaf390e150c36eae95b8bc748e085"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 26659,
+      "sha256": "77cc9e691e5783a9710b2ec1b437cdf4290f70211f3c9dd954b11ea7f349485b"
+    },
+    {
+      "path": "outside-instances.txt",
+      "bytes": 1283269,
+      "sha256": "14dbae181f7ad35af3dd1be875edc3ab7907fd30e64a3cc69931a12cfaaf473d"
+    }
+  ],
+  "manifest_sha256": "77cc9e691e5783a9710b2ec1b437cdf4290f70211f3c9dd954b11ea7f349485b"
+}

@@ -1,0 +1,5 @@
+{
+  "normal_payload_unchanged_sha256": "fa414e9de7f9f478ca6dcb3fd0dffd30b0c4aab64ae305e6c883ae052666ec3f",
+  "source_reproduction_and_nine_fixtures_repeated": true,
+  "reason": "Clarify current Editor frame-bake workflow; input normal payload remains byte-identical."
+}

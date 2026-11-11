@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "generated_utc": "2026-11-11T15:13:43.591988+00:00",
+  "status": "builds_completed_runtime_verification_separate",
+  "expected_staged_inner_executable_sha256": "dc0b5864f7dd539006711408c00c7c0a880e7a40dc55afffe58d5b26f13bcfe2",
+  "builds": [
+    {
+      "kind": "editor",
+      "passed": true,
+      "log": {
+        "path": "Reports/IntrepidVisual20261111/editor-final-build.log",
+        "bytes": 2057,
+        "sha256": "88c85f429c30c816e256f41f8b7efccc1f83f610bfef9e67aeb1b52cc09dc57c",
+        "local_evidence_only": true
+      },
+      "required_markers": [
+        "Result: Succeeded"
+      ],
+      "modified_utc": "2026-11-11T14:40:01.096137+00:00"
+    },
+    {
+      "kind": "game",
+      "passed": true,
+      "log": {
+        "path": "Reports/IntrepidVisual20261111/game-accepted-build.log",
+        "bytes": 1987,
+        "sha256": "fa92a59b508f280f82b148eabfb2868ed76c0c5ec081c4093960f4eef9bc1a19",
+        "local_evidence_only": true
+      },
+      "required_markers": [
+        "Result: Succeeded"
+      ],
+      "modified_utc": "2026-11-11T14:48:27.537014+00:00"
+    },
+    {
+      "kind": "cook",
+      "passed": true,
+      "log": {
+        "path": "Reports/IntrepidVisual20261111/fresh-cook.log",
+        "bytes": 68423,
+        "sha256": "5267e2f91faa57137079da86d06458fcd44f32777aae1337b1a568fae2e2a519",
+        "local_evidence_only": true
+      },
+      "required_markers": [
+        "COOK COMMAND COMPLETED",
+        "BUILD SUCCESSFUL",
+        "AutomationTool exiting with ExitCode=0 (Success)"
+      ],
+      "modified_utc": "2026-11-11T14:50:33.647220+00:00"
+    },
+    {
+      "kind": "stage_archive",
+      "passed": true,
+      "log": {
+        "path": "Reports/IntrepidVisual20261111/stage.log",
+        "bytes": 26778,
+        "sha256": "d7ee0da483a24d8c30e5359a6dd3de879555c25eb1c45e6b09e5e45de373655a",
+        "local_evidence_only": true
+      },
+      "required_markers": [
+        "STAGE COMMAND COMPLETED",
+        "ARCHIVE COMMAND COMPLETED",
+        "BUILD SUCCESSFUL",
+        "AutomationTool exiting with ExitCode=0 (Success)"
+      ],
+      "modified_utc": "2026-11-11T14:51:22.989372+00:00"
+    }
+  ],
+  "limitations": "Build/cook/stage success does not establish packaged gameplay, visual quality, performance, clean extraction or human playtesting."
+}

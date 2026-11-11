@@ -7,6 +7,7 @@
 #include "LunarPhotos.h"
 #include "LunarApolloText.h"
 #include "LunarApolloRegression.h"
+#include "LunarIntrepidVisualChecks.h"
 #include "LunarSettings.h"
 #include "LunarPanels.h"
 #include "ApolloData.h"
@@ -160,6 +161,9 @@ void ALunarGameMode::BuildApollo() {
  SurveyorCore->SetCollisionEnabled(ECollisionEnabled::QueryOnly);SurveyorCore->SetCollisionResponseToAllChannels(ECR_Ignore);SurveyorCore->SetCollisionResponseToChannel(ECC_Pawn,ECR_Block);
  for(const FVector& P:ApolloData::Approach)ApolloRouteActors.Add(Site(P));
  BuildApolloSurfaceDetail();BuildApolloFieldwork();BuildApolloLanderDetail();
+ if(FParse::Param(FCommandLine::Get(),TEXT("IntrepidVisualTest"))||FParse::Param(FCommandLine::Get(),TEXT("IntrepidVisualReview"))||FParse::Param(FCommandLine::Get(),TEXT("IntrepidVisualProfile"))){
+  FTimerHandle H;GetWorldTimerManager().SetTimer(H,[this](){LunarIntrepidVisualChecks::Start(this,FParse::Param(FCommandLine::Get(),TEXT("IntrepidVisualReview")),FParse::Param(FCommandLine::Get(),TEXT("IntrepidVisualProfile")));},3.f,false);
+ }
  Message(ApolloText::Get(TEXT("ReadyMessage")));
  if(FParse::Param(FCommandLine::Get(),TEXT("ExpeditionExperienceTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ApolloExperienceChecks,3,false);}
  if(FParse::Param(FCommandLine::Get(),TEXT("ExpeditionExperienceReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::ApolloExperienceReview,5,false);}

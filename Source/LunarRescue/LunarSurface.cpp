@@ -1,5 +1,6 @@
 #include "LunarGame.h"
 #include "ApolloData.h"
+#include "LunarIntrepidVisual.h"
 #include "Components/HierarchicalInstancedStaticMeshComponent.h"
 #include "Components/SceneComponent.h"
 #include "Engine/StaticMesh.h"
@@ -46,6 +47,7 @@ void ALunarGameMode::BuildApolloSurfaceDetail(){
  FRandomStream Rand(19691120);
  const FVector Route[]={ApolloData::Check,ApolloData::Instruments[0],ApolloData::Samples[0],ApolloData::Samples[1],ApolloData::Samples[2],ApolloData::Surveyor,ApolloData::Check};
  const FVector WorkSites[]={ApolloData::Check,ApolloData::Instruments[0],ApolloData::Instruments[1],ApolloData::Samples[0],ApolloData::Samples[1],ApolloData::Samples[2],ApolloData::Surveyor};
+ const bool LocalVisual=LunarIntrepidVisual::Available(Terrain);
  int Added=0,FineFragments=0,LocalClusters=0;
  for(int I=0;I<9000;++I){
   // Redistribute a bounded part of the existing budget toward the places the
@@ -64,11 +66,17 @@ void ALunarGameMode::BuildApolloSurfaceDetail(){
   // with sparse larger fragments. Partial burial avoids floating silhouettes.
   const bool Fine=NearWork&&Rand.FRand()<.3f;
   const float Scale=Fine?Rand.FRandRange(.005f,.016f):Rand.FRand()<.035f?Rand.FRandRange(.055f,.14f):Rand.FRandRange(.009f,.045f);
-  if(Fine)++FineFragments;
   const FQuat R=FQuat::FindBetweenNormals(FVector::UpVector,Hit.ImpactNormal)*FRotator(Rand.FRandRange(-8,8),Rand.FRandRange(0,360),Rand.FRandRange(-8,8)).Quaternion();
-  Batches[I%6]->AddInstance(FTransform(R,Hit.ImpactPoint-Hit.ImpactNormal*(Scale*7),FVector(Scale,Scale*Rand.FRandRange(.65f,1.2f),Scale*.55f)));
+  const FVector OriginalScale(Scale,Scale*Rand.FRandRange(.65f,1.2f),Scale*.55f);
+  const FVector OriginalPosition=Hit.ImpactPoint-Hit.ImpactNormal*(Scale*7);
+  // Consume the original random sequence before replacing the bounded local
+  // layer, so every retained fragment outside the square stays in place.
+  if(LocalVisual&&LunarIntrepidVisual::Inside(OriginalPosition))continue;
+  if(Fine)++FineFragments;
+  Batches[I%6]->AddInstance(FTransform(R,OriginalPosition,OriginalScale));
   ++Added;
  }
  for(auto* C:Batches)C->BuildTreeIfOutdated(false,true);
  UE_LOG(LogTemp,Display,TEXT("APOLLO_SURFACE_DETAIL %d cosmetic fragments in six collision-free batches; fine=%d work_cluster_attempts=%d cap=9000"),Added,FineFragments,LocalClusters);
+ LunarIntrepidVisual::Build(this,Terrain);
 }

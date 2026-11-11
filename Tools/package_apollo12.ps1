@@ -156,3 +156,38 @@ if(Test-Path -LiteralPath $taskNotes){
   Copy-Item -LiteralPath $noteFile.FullName -Destination $noteDestination
  }
 }
+
+# Keep the bounded Intrepid art/science distinction available offline.
+$intrepidNotes=Join-Path $root 'Docs/IntrepidVisual20261111'
+if(Test-Path -LiteralPath $intrepidNotes){
+ $intrepidTarget=Join-Path $credits 'Docs/IntrepidVisual20261111'
+ foreach($noteFile in Get-ChildItem -LiteralPath $intrepidNotes -File -Recurse | Where-Object {$_.Extension -in @('.md','.json','.txt')}){
+  if($noteFile.Attributes -band [IO.FileAttributes]::ReparsePoint){throw 'Intrepid notes copy refuses linked files'}
+  $noteRelative=$noteFile.FullName.Substring($intrepidNotes.Length).TrimStart([char[]]'\/')
+  $noteDestination=Join-Path $intrepidTarget $noteRelative
+  New-Item -ItemType Directory -Force -Path (Split-Path $noteDestination -Parent) | Out-Null
+  Copy-Item -LiteralPath $noteFile.FullName -Destination $noteDestination
+ }
+}
+
+# Cabin normal-recovery notes describe a separate local derivative, not new DEM data.
+$cabinNotes=Join-Path $root 'Docs/IntrepidCabin20261111'
+if(Test-Path -LiteralPath $cabinNotes){
+ $cabinTarget=Join-Path $credits 'Docs/IntrepidCabin20261111'
+ foreach($noteFile in Get-ChildItem -LiteralPath $cabinNotes -File -Recurse | Where-Object {$_.Extension -in @('.md','.json','.txt')}){
+  if($noteFile.Attributes -band [IO.FileAttributes]::ReparsePoint){throw 'Cabin notes copy refuses linked files'}
+  $noteRelative=$noteFile.FullName.Substring($cabinNotes.Length).TrimStart([char[]]'\/')
+  $noteDestination=Join-Path $cabinTarget $noteRelative
+  New-Item -ItemType Directory -Force -Path (Split-Path $noteDestination -Parent) | Out-Null
+  Copy-Item -LiteralPath $noteFile.FullName -Destination $noteDestination
+ }
+}
+$cabinSources=Join-Path $root 'SourceArt/IntrepidCabin20261111'
+foreach($sourceNote in @('README.md','CREDITS.md','source-normal-recovery-report.json','mapping-fixture-checks.json')){
+ $sourceNotePath=Join-Path $cabinSources $sourceNote
+ if(Test-Path -LiteralPath $sourceNotePath -PathType Leaf){
+  $sourceNoteDestination=Join-Path $credits ('SourceArt/IntrepidCabin20261111/'+$sourceNote)
+  New-Item -ItemType Directory -Force -Path (Split-Path $sourceNoteDestination -Parent) | Out-Null
+  Copy-Item -LiteralPath $sourceNotePath -Destination $sourceNoteDestination
+ }
+}

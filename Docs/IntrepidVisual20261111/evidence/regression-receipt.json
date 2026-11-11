@@ -1,0 +1,438 @@
+{
+  "schema_version": 1,
+  "completed": true,
+  "executable_sha256": "dc0b5864f7dd539006711408c00c7c0a880e7a40dc55afffe58d5b26f13bcfe2",
+  "human_playtest": false,
+  "performance_measurement": false,
+  "renderer": "NullRHI",
+  "started_utc": "2026-11-11T15:04:44.3139094Z",
+  "finished_utc": "2026-11-11T15:09:15.8372283Z",
+  "commands": [
+    "./Tools/verify_task_fixes.ps1 -Packaged -Suite all",
+    "./Tools/verify_apollo12.ps1 -Packaged -Regression -Walkthrough -Suit -Guidance -Polish -Checkpoints -Fieldwork",
+    "./Tools/verify_mission_selection.ps1 -Packaged",
+    "./Tools/verify_field_operations.ps1 -Packaged -Mission all"
+  ],
+  "reports": [
+    {
+      "group": "stride-and-apollo-input",
+      "raw_cpp_pass": 42,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "source": {
+        "path": "Reports/TaskFixes20261106/package-all-nullrhi-20261111-200452-364/apollo-interaction-checks.txt",
+        "bytes": 3710,
+        "sha256": "76d4831e07a160f74673b2323a5e51960f6fceff69664099b2f5839e67e292f4",
+        "local_evidence_only": true
+      },
+      "curated_semantic_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/regressions/01-apollo-interaction-checks.txt",
+        "bytes": 3710,
+        "sha256": "76d4831e07a160f74673b2323a5e51960f6fceff69664099b2f5839e67e292f4",
+        "local_evidence_only": false
+      },
+      "source_encoding": "UTF-8",
+      "curated_encoding": "UTF-8"
+    },
+    {
+      "group": "stride-and-apollo-input",
+      "raw_cpp_pass": 19,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "source": {
+        "path": "Reports/TaskFixes20261106/package-all-nullrhi-20261111-200452-364/stride-apollo-checks.txt",
+        "bytes": 1170,
+        "sha256": "fc81c06671890c198364ffd94b6974dfb68c9f28b28bb4cda6c61404cbb97271",
+        "local_evidence_only": true
+      },
+      "curated_semantic_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/regressions/02-stride-apollo-checks.txt",
+        "bytes": 1170,
+        "sha256": "fc81c06671890c198364ffd94b6974dfb68c9f28b28bb4cda6c61404cbb97271",
+        "local_evidence_only": false
+      },
+      "source_encoding": "UTF-8",
+      "curated_encoding": "UTF-8"
+    },
+    {
+      "group": "stride-and-apollo-input",
+      "raw_cpp_pass": 19,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "source": {
+        "path": "Reports/TaskFixes20261106/package-all-nullrhi-20261111-200452-364/stride-mars-checks.txt",
+        "bytes": 1170,
+        "sha256": "fc81c06671890c198364ffd94b6974dfb68c9f28b28bb4cda6c61404cbb97271",
+        "local_evidence_only": true
+      },
+      "curated_semantic_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/regressions/03-stride-mars-checks.txt",
+        "bytes": 1170,
+        "sha256": "fc81c06671890c198364ffd94b6974dfb68c9f28b28bb4cda6c61404cbb97271",
+        "local_evidence_only": false
+      },
+      "source_encoding": "UTF-8",
+      "curated_encoding": "UTF-8"
+    },
+    {
+      "group": "stride-and-apollo-input",
+      "raw_cpp_pass": 19,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "source": {
+        "path": "Reports/TaskFixes20261106/package-all-nullrhi-20261111-200452-364/stride-selene-checks.txt",
+        "bytes": 1170,
+        "sha256": "fc81c06671890c198364ffd94b6974dfb68c9f28b28bb4cda6c61404cbb97271",
+        "local_evidence_only": true
+      },
+      "curated_semantic_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/regressions/04-stride-selene-checks.txt",
+        "bytes": 1170,
+        "sha256": "fc81c06671890c198364ffd94b6974dfb68c9f28b28bb4cda6c61404cbb97271",
+        "local_evidence_only": false
+      },
+      "source_encoding": "UTF-8",
+      "curated_encoding": "UTF-8"
+    },
+    {
+      "group": "apollo-and-rescue-regression",
+      "raw_cpp_pass": 57,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "source": {
+        "path": "Reports/package-apollo12-checks-result.txt",
+        "bytes": 2949,
+        "sha256": "1d8911bc084c6a7a1c2bb63b9fbebc6f33d1fe6ec51ae0d726d8ded7e9e7d44c",
+        "local_evidence_only": true
+      },
+      "curated_semantic_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/regressions/05-package-apollo12-checks-result.txt",
+        "bytes": 2949,
+        "sha256": "1d8911bc084c6a7a1c2bb63b9fbebc6f33d1fe6ec51ae0d726d8ded7e9e7d44c",
+        "local_evidence_only": false
+      },
+      "source_encoding": "UTF-8",
+      "curated_encoding": "UTF-8"
+    },
+    {
+      "group": "apollo-and-rescue-regression",
+      "raw_cpp_pass": 50,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "source": {
+        "path": "Reports/package-apollo12-legacy-moon-result.txt",
+        "bytes": 2055,
+        "sha256": "6b4f590b824979b6e5dbaa629e5e4fc16fa4e2ec4d8050a432dbab8150846886",
+        "local_evidence_only": true
+      },
+      "curated_semantic_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/regressions/06-package-apollo12-legacy-moon-result.txt",
+        "bytes": 2055,
+        "sha256": "6b4f590b824979b6e5dbaa629e5e4fc16fa4e2ec4d8050a432dbab8150846886",
+        "local_evidence_only": false
+      },
+      "source_encoding": "UTF-8",
+      "curated_encoding": "UTF-8"
+    },
+    {
+      "group": "apollo-and-rescue-regression",
+      "raw_cpp_pass": 54,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "source": {
+        "path": "Reports/package-apollo12-mars-result.txt",
+        "bytes": 2180,
+        "sha256": "fa5e80fd8a9073604fedda210da7ca12626bacbf5955d98d7302b97f53390de3",
+        "local_evidence_only": true
+      },
+      "curated_semantic_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/regressions/07-package-apollo12-mars-result.txt",
+        "bytes": 2180,
+        "sha256": "fa5e80fd8a9073604fedda210da7ca12626bacbf5955d98d7302b97f53390de3",
+        "local_evidence_only": false
+      },
+      "source_encoding": "UTF-8",
+      "curated_encoding": "UTF-8"
+    },
+    {
+      "group": "apollo-and-rescue-regression",
+      "raw_cpp_pass": 55,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "source": {
+        "path": "Reports/package-apollo12-menu-result.txt",
+        "bytes": 2899,
+        "sha256": "11c6ab3438d78be5caeb4ef56d2c4426c6d5a2bc3de848e457cd31ed58cae9f9",
+        "local_evidence_only": true
+      },
+      "curated_semantic_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/regressions/08-package-apollo12-menu-result.txt",
+        "bytes": 2899,
+        "sha256": "11c6ab3438d78be5caeb4ef56d2c4426c6d5a2bc3de848e457cd31ed58cae9f9",
+        "local_evidence_only": false
+      },
+      "source_encoding": "UTF-8",
+      "curated_encoding": "UTF-8"
+    },
+    {
+      "group": "apollo-and-rescue-regression",
+      "raw_cpp_pass": 2,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "source": {
+        "path": "Reports/package-apollo12-walk-result.txt",
+        "bytes": 341,
+        "sha256": "2689585f7222efaf6970ca27e89078ee8143ee22c8ef9f56bc1641672466d888",
+        "local_evidence_only": true
+      },
+      "curated_semantic_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/regressions/09-package-apollo12-walk-result.txt",
+        "bytes": 341,
+        "sha256": "2689585f7222efaf6970ca27e89078ee8143ee22c8ef9f56bc1641672466d888",
+        "local_evidence_only": false
+      },
+      "source_encoding": "UTF-8",
+      "curated_encoding": "UTF-8"
+    },
+    {
+      "group": "apollo-and-rescue-regression",
+      "raw_cpp_pass": 32,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "source": {
+        "path": "Reports/package-apollo12-suit-result.txt",
+        "bytes": 1975,
+        "sha256": "901df3df557c022d6624af6172f6cd46584b0324cbd46fa2d5de5654198f5a15",
+        "local_evidence_only": true
+      },
+      "curated_semantic_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/regressions/10-package-apollo12-suit-result.txt",
+        "bytes": 1975,
+        "sha256": "901df3df557c022d6624af6172f6cd46584b0324cbd46fa2d5de5654198f5a15",
+        "local_evidence_only": false
+      },
+      "source_encoding": "UTF-8",
+      "curated_encoding": "UTF-8"
+    },
+    {
+      "group": "apollo-and-rescue-regression",
+      "raw_cpp_pass": 64,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "source": {
+        "path": "Reports/package-apollo12-polish-result.txt",
+        "bytes": 3794,
+        "sha256": "4a564bcfb9c92a97f43ba00fddc81ad71791fe72e69142fa06febec5ab092621",
+        "local_evidence_only": true
+      },
+      "curated_semantic_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/regressions/11-package-apollo12-polish-result.txt",
+        "bytes": 3794,
+        "sha256": "4a564bcfb9c92a97f43ba00fddc81ad71791fe72e69142fa06febec5ab092621",
+        "local_evidence_only": false
+      },
+      "source_encoding": "UTF-8",
+      "curated_encoding": "UTF-8"
+    },
+    {
+      "group": "apollo-and-rescue-regression",
+      "raw_cpp_pass": 47,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "source": {
+        "path": "Reports/package-apollo12-guidance-result.txt",
+        "bytes": 3029,
+        "sha256": "d9a16b9f4f62acc93b7534b308edfa4e36b0d6c8966064d288b4110112c86ffa",
+        "local_evidence_only": true
+      },
+      "curated_semantic_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/regressions/12-package-apollo12-guidance-result.txt",
+        "bytes": 3029,
+        "sha256": "d9a16b9f4f62acc93b7534b308edfa4e36b0d6c8966064d288b4110112c86ffa",
+        "local_evidence_only": false
+      },
+      "source_encoding": "UTF-8",
+      "curated_encoding": "UTF-8"
+    },
+    {
+      "group": "apollo-and-rescue-regression",
+      "raw_cpp_pass": 39,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "source": {
+        "path": "Reports/package-apollo12-fieldwork-result.txt",
+        "bytes": 2612,
+        "sha256": "ea375f02581686b0e4ef8ad36e583622d000fb282c0b93ea71c68c216ad9b192",
+        "local_evidence_only": true
+      },
+      "curated_semantic_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/regressions/13-package-apollo12-fieldwork-result.txt",
+        "bytes": 2612,
+        "sha256": "ea375f02581686b0e4ef8ad36e583622d000fb282c0b93ea71c68c216ad9b192",
+        "local_evidence_only": false
+      },
+      "source_encoding": "UTF-8",
+      "curated_encoding": "UTF-8"
+    },
+    {
+      "group": "apollo-and-rescue-regression",
+      "raw_cpp_pass": 51,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "source": {
+        "path": "Reports/package-apollo12-save-result.txt",
+        "bytes": 2936,
+        "sha256": "6f9761b2a673ceefe91006a49d46f19bffa922479b741b11295fe962fe6e97dc",
+        "local_evidence_only": true
+      },
+      "curated_semantic_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/regressions/14-package-apollo12-save-result.txt",
+        "bytes": 2936,
+        "sha256": "6f9761b2a673ceefe91006a49d46f19bffa922479b741b11295fe962fe6e97dc",
+        "local_evidence_only": false
+      },
+      "source_encoding": "UTF-8",
+      "curated_encoding": "UTF-8"
+    },
+    {
+      "group": "apollo-and-rescue-regression",
+      "raw_cpp_pass": 2,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "source": {
+        "path": "Reports/package-apollo12-save-write-result.txt",
+        "bytes": 130,
+        "sha256": "925561c794fc7f059e796c96d107eec4f34e6b77bde7676e82b2985e42a002f4",
+        "local_evidence_only": true
+      },
+      "curated_semantic_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/regressions/15-package-apollo12-save-write-result.txt",
+        "bytes": 130,
+        "sha256": "925561c794fc7f059e796c96d107eec4f34e6b77bde7676e82b2985e42a002f4",
+        "local_evidence_only": false
+      },
+      "source_encoding": "UTF-8",
+      "curated_encoding": "UTF-8"
+    },
+    {
+      "group": "apollo-and-rescue-regression",
+      "raw_cpp_pass": 7,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "source": {
+        "path": "Reports/package-apollo12-save-read-result.txt",
+        "bytes": 452,
+        "sha256": "e0b31f0af7c9b70f375ccc1c6740cc612456916225adbf73425bc9d6540de24c",
+        "local_evidence_only": true
+      },
+      "curated_semantic_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/regressions/16-package-apollo12-save-read-result.txt",
+        "bytes": 452,
+        "sha256": "e0b31f0af7c9b70f375ccc1c6740cc612456916225adbf73425bc9d6540de24c",
+        "local_evidence_only": false
+      },
+      "source_encoding": "UTF-8",
+      "curated_encoding": "UTF-8"
+    },
+    {
+      "group": "mission-selection",
+      "raw_cpp_pass": 66,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "source": {
+        "path": "Reports/MissionSelection20261031/package-test-1280x720-20261111-200850-024-checks.txt",
+        "bytes": 4642,
+        "sha256": "83bc6cdedccef4044e0dd3fcd9e082f374d2362501631f78ace79a7641541fc4",
+        "local_evidence_only": true
+      },
+      "curated_semantic_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/regressions/17-package-test-1280x720-20261111-200850-024-checks.txt",
+        "bytes": 4642,
+        "sha256": "83bc6cdedccef4044e0dd3fcd9e082f374d2362501631f78ace79a7641541fc4",
+        "local_evidence_only": false
+      },
+      "source_encoding": "UTF-8",
+      "curated_encoding": "UTF-8"
+    },
+    {
+      "group": "field-operations",
+      "raw_cpp_pass": 215,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "source": {
+        "path": "Reports/FieldOperations20261104/package-test-1280x720-20261111-200855-863/apollo-checks.txt",
+        "bytes": 30100,
+        "sha256": "818ea02d2f3fd157186163d831e5446663de2904f5081defdea2855b2fe0fd8d",
+        "local_evidence_only": true
+      },
+      "curated_semantic_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/regressions/18-apollo-checks.txt",
+        "bytes": 15051,
+        "sha256": "68323aabbdd159d83cf8134e2fd60568a2f0dac899d13f8acea5bcb5254d7761",
+        "local_evidence_only": false
+      },
+      "source_encoding": "UTF-16",
+      "curated_encoding": "UTF-8"
+    },
+    {
+      "group": "field-operations",
+      "raw_cpp_pass": 220,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "source": {
+        "path": "Reports/FieldOperations20261104/package-test-1280x720-20261111-200855-863/mars-checks.txt",
+        "bytes": 30656,
+        "sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2",
+        "local_evidence_only": true
+      },
+      "curated_semantic_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/regressions/19-mars-checks.txt",
+        "bytes": 15329,
+        "sha256": "b8d70a389ba22165a11eae0b8555747991ee0ec47ee64cb0cc36821db4294c59",
+        "local_evidence_only": false
+      },
+      "source_encoding": "UTF-16",
+      "curated_encoding": "UTF-8"
+    },
+    {
+      "group": "field-operations",
+      "raw_cpp_pass": 220,
+      "raw_cpp_fail": 0,
+      "result_zero_failures_count": 1,
+      "source": {
+        "path": "Reports/FieldOperations20261104/package-test-1280x720-20261111-200855-863/selene-checks.txt",
+        "bytes": 30656,
+        "sha256": "12603b969873811afb0fad6d95d3267699d1527ad1ec407c1178a901825c2ae2",
+        "local_evidence_only": true
+      },
+      "curated_semantic_report": {
+        "path": "Docs/IntrepidVisual20261111/evidence/regressions/20-selene-checks.txt",
+        "bytes": 15329,
+        "sha256": "b8d70a389ba22165a11eae0b8555747991ee0ec47ee64cb0cc36821db4294c59",
+        "local_evidence_only": false
+      },
+      "source_encoding": "UTF-16",
+      "curated_encoding": "UTF-8"
+    }
+  ],
+  "raw_report_executions": 20,
+  "raw_cpp_pass": 1280,
+  "raw_cpp_fail": 0,
+  "by_group": {
+    "stride-and-apollo-input": 99,
+    "apollo-and-rescue-regression": 460,
+    "mission-selection": 66,
+    "field-operations": 655
+  },
+  "source_receipt": {
+    "path": "Reports/IntrepidVisual20261111/regression-final/receipt.json",
+    "bytes": 6811,
+    "sha256": "1a927ad87149f641c23ff5ebb19607acfe4ba804497f8a38b0573b06b5e33351",
+    "local_evidence_only": true
+  },
+  "aggregation_history": {
+    "utc": "2026-11-11T15:09:54.821239+00:00",
+    "reason": "PowerShell Measure-Object did not sum OrderedDictionary entries; independently re-read all 20 raw reports and hashes. No game rerun or test result changed."
+  },
+  "counting_note": "20 actual raw reports independently re-read/hashed once; UTF-16 sources are faithfully transcoded to UTF-8 semantic copies. A wrapper OrderedDictionary summation error was corrected by recount; no test rerun/result was changed."
+}

@@ -7,5 +7,8 @@ public class LunarRescue : ModuleRules {
   // File-local helpers must remain isolated in clean and adaptive builds.
   bUseUnity = false;
   PublicDependencyModuleNames.AddRange(new string[]{"Core","CoreUObject","Engine","InputCore","UMG","Slate","SlateCore","ImageWriteQueue","MoviePlayer","Json"});
+  if (Target.bBuildEditor) {
+   PrivateDependencyModuleNames.AddRange(new string[]{"MeshDescription","StaticMeshDescription","AssetRegistry"});
+  }
  }
 }

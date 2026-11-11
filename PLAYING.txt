@@ -1,5 +1,14 @@
 LUNARRESCUE - APOLLO 12: SURVEYOR'S LEGACY
 
+WINDOWS RELEASE v0.8.2 - INTREPID SURFACE AND CABIN
+Release: https://github.com/Shahzod1602/NASA/releases/tag/apollo12-v0.8.2
+This release packages the dated Intrepid surface/cabin work described below.
+The old local/unreleased labels describe the original development stage.
+BUILD_INFO.json records the release source snapshot separately from the original
+dirty compile provenance. The original compile/local verification JSON records
+are retained under Credits/Docs/Releases/apollo12-v0.8.2.
+Player saves, photos, generated logs/reports and debug files are not distributed.
+
 GET STARTED
 Extract the entire Windows ZIP into a folder, then run LunarRescue.exe.
 Unreal Editor is not required. Keep Engine, LunarRescue and Credits
@@ -11,7 +20,43 @@ At the Apollo briefing, Enter begins a new expedition.
 T selects historical exploration (untimed) or a 30-minute exercise.
 All game text and guidance are in English.
 
-LOCAL UNRELEASED FEEDBACK UPDATE - 2 NOVEMBER 2026
+LOCAL CABIN DEVELOPMENT BUILD - 11 NOVEMBER 2026
+The current Apollo model restores authored cabin normals in a separate mesh,
+bakes the source rendering frames and explicitly repairs invalid legacy tangent
+bases. Shared white cabin/trim surfaces have a subtle cloth finish. Original
+geometry, UVs, terrain, mission locations and the previous ground/foil pass remain.
+The original coarse silhouette remains; this is not a new photoreal reconstruction.
+
+Verified current inner executable SHA256:
+59d4f795b1141694741264370efe9b79dad66eaa9b4487270ffe7f9517fc358c
+Current local verification: 1,763 raw C++ PASS executions / 0 failures across
+31 reports, 32 packaged Low/Medium review PNGs at 720p/1080p. Human playtests: 0.
+The capped four-camera 720p Medium feature capture averages 59.98 FPS.
+It does not establish whole-game or all-hardware FPS. See Credits/TEST_REPORT.md
+and Credits/Docs/IntrepidCabin20261111 for exact evidence and limitations.
+This is a local development build, not a new published GitHub release.
+
+HISTORICAL SURFACE DEVELOPMENT BUILD - 11 NOVEMBER 2026
+The Apollo landing area now has a bounded 50 x 50 m regolith/rock art layer,
+revised Intrepid foil and metal materials, and small blanket folds. The original
+LROC terrain, mission locations and ladder remain in use. These surface details
+are authored art, not new NASA measurements. SELENE and Mars remain available.
+
+Verified inner executable SHA256:
+dc0b5864f7dd539006711408c00c7c0a880e7a40dc55afffe58d5b26f13bcfe2
+Local checks: 1,615 raw C++ PASS executions / 0 failures across 29 reports;
+32 packaged Low/Medium review PNGs at 720p/1080p. This is not a human playtest.
+The Medium/720p capped four-camera feature capture averages 60.00 FPS;
+it is not a whole-game or all-hardware performance claim.
+Read Credits/TEST_REPORT.md and Credits/Docs/IntrepidVisual20261111 for the
+exact test scope, scientific limits and build provenance. This local build
+has not been published as a new GitHub release. BUILD_INFO.json records the
+build identity; LOCAL_VALIDATION.json records the later local verification.
+
+Earlier dated sections below describe historical iterations and their own
+executables. Their old test totals do not certify this current executable.
+
+HISTORICAL LOCAL FEEDBACK UPDATE - 2 NOVEMBER 2026
 The source/current local build adds borderless mission/resource text and a
 compact loading guide. Preparation percentage is a staged progress indicator,
 not the percentage of file bytes loaded. The published v0.7.0 ZIP is an earlier

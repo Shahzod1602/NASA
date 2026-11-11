@@ -1,0 +1,68 @@
+{
+  "passed": true,
+  "kind": "review",
+  "assertions": 48,
+  "artifacts": [
+    {
+      "path": "checks.txt",
+      "bytes": 3819,
+      "sha256": "3c0fb2a1f996f550ff70c077d895b3a35c982af20247df47157311d13f9aa203"
+    },
+    {
+      "path": "fp-ground-q0.png",
+      "bytes": 1237535,
+      "sha256": "5aad50348cd73d0e0f90caff5fae5659de77169952e5ebde99beba65bd06d031"
+    },
+    {
+      "path": "fp-ground-q1.png",
+      "bytes": 1494771,
+      "sha256": "5c6f10114cc1794ff06ee9a27853103230e73a6ea1397c05b1c396361b867296"
+    },
+    {
+      "path": "height-grid.csv",
+      "bytes": 4771,
+      "sha256": "be65d7a67f5fcd85be9585521449c6ad08831521843e9bc07feda16829899e94"
+    },
+    {
+      "path": "intrepid-wide-q0.png",
+      "bytes": 681632,
+      "sha256": "e0dd59c08494d9f3e6761a554cd9fa762e00f642d06248ba607f948829b63b42"
+    },
+    {
+      "path": "intrepid-wide-q1.png",
+      "bytes": 820507,
+      "sha256": "96168ea176f2d80c34aa24eb95a9b04000cb76289d2716110989bf6f743951e1"
+    },
+    {
+      "path": "ladder-foot-q0.png",
+      "bytes": 887534,
+      "sha256": "b2c3e026d540a6797d4b458b0f139e33265b1534ca1563719694c7226b9dc154"
+    },
+    {
+      "path": "ladder-foot-q1.png",
+      "bytes": 959024,
+      "sha256": "64a3260a907fec10866c528e8f4775d398c5895e22172543113607a6a827966c"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 27870,
+      "sha256": "c39bebaadc43354c9a652ff1ec501175cb29cd51bfae48d8951fdbdc91c91574"
+    },
+    {
+      "path": "outside-ground-q0.png",
+      "bytes": 1210450,
+      "sha256": "737f52d1ac29a1a73735033f688053d15fc219707b5228576a6d85815249954d"
+    },
+    {
+      "path": "outside-ground-q1.png",
+      "bytes": 1455084,
+      "sha256": "a779bcc3e07b2b6126ef0214ba370306932aa056ff46bad3ed835935a74c6556"
+    },
+    {
+      "path": "outside-instances.txt",
+      "bytes": 1283269,
+      "sha256": "14dbae181f7ad35af3dd1be875edc3ab7907fd30e64a3cc69931a12cfaaf473d"
+    }
+  ],
+  "manifest_sha256": "c39bebaadc43354c9a652ff1ec501175cb29cd51bfae48d8951fdbdc91c91574"
+}

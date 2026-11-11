@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "generated_utc": "2026-11-11T18:11:18.693580+00:00",
+  "completed": true,
+  "protected_baseline_counts": {
+    "project_config": 5,
+    "map": 4,
+    "player_saved_config": 906
+  },
+  "protected_original_files": 915,
+  "all_original_protected_bytes_and_mtimes_match": true,
+  "restore_operations": 8,
+  "distinct_original_files_restored": 8,
+  "owner_save_photo_files": 80,
+  "owner_save_photo_restored_files": 0,
+  "owner_save_photo_unchanged_without_restoration": true,
+  "isolated_automated_save_photo_restored_files": 3,
+  "generated_files_retained_count": 46,
+  "generated_file_class_counts": {
+    "engine_ini": 46
+  },
+  "generated_owner_saves_or_photos": 0,
+  "original_identity_counts": {
+    "accepted_visual_material": 4,
+    "original_mesh_source_or_provenance": 6,
+    "original_lander_asset": 16,
+    "external_original_source": 6
+  },
+  "original_identity_files_checked": 32,
+  "all_original_asset_bytes_and_mtimes_match": true,
+  "original_154_science_asset_payloads_match": true,
+  "previous_Nov11_860_manifest_sha_verified": true,
+  "accepted_source_or_stage_rollback_performed": false,
+  "new_unreal_or_compiler_launched": false,
+  "canonical_packaged_pass_executions": 1763,
+  "canonical_packaged_fail_executions": 0,
+  "canonical_packaged_raw_reports": 31,
+  "packaged_pngs": 32,
+  "evidence": [
+    {
+      "path": "Reports/IntrepidCabin20261111/preservation/final-protected.json",
+      "sha256": "cbbf97abdf4e6af5ab04f9e5f82b2ad79ef76daa48f9939f6685ff4a5950d9f8"
+    },
+    {
+      "path": "Reports/IntrepidCabin20261111/preservation/final-protected-verification.json",
+      "sha256": "80609d8e2a8ffcb9eeb9fed21c02451226bd05410ee2b20f8484ec77aa487549"
+    },
+    {
+      "path": "Reports/IntrepidCabin20261111/verification-final/raw-recount.json",
+      "sha256": "cf58111c08cc060d138af39072a1560412fccafdfdf95254f18d4fab326d7076"
+    },
+    {
+      "path": "Reports/IntrepidCabin20261111/profiles-final/raw-recount.json",
+      "sha256": "ece6d240fe94fbde2fad04c72c75995aee9aef1cd831f202cd94aaf1f486f7cc"
+    },
+    {
+      "path": "Reports/IntrepidCabin20261111/regression-final/raw-recount.json",
+      "sha256": "04e28fca4c9625e76854d040122f3f38a5736dccba1923e99e45fc4747c00cd7"
+    }
+  ],
+  "privacy": "Aggregate counts and project-relative evidence references only. Owner save/photo filenames and inventories remain in local ignored preservation records, not this summary.",
+  "restored_file_records": 8,
+  "byte_restore_file_count": 3,
+  "mtime_restore_file_count": 8,
+  "byte_or_mtime_operations": 11,
+  "restore_operations_note": "The raw helper groups byte and mtime restoration into one record per file; restore_operations=8 in that raw receipt means eight file records. Separate actual operation counts are provided here."
+}

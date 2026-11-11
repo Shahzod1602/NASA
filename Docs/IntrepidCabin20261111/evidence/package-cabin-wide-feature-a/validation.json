@@ -1,0 +1,68 @@
+{
+  "passed": true,
+  "kind": "review",
+  "assertions": 48,
+  "artifacts": [
+    {
+      "path": "checks.txt",
+      "bytes": 3819,
+      "sha256": "3c0fb2a1f996f550ff70c077d895b3a35c982af20247df47157311d13f9aa203"
+    },
+    {
+      "path": "fp-ground-q0.png",
+      "bytes": 1214283,
+      "sha256": "43cfc4c90fe8de560ac39429772c86eecea1c9da1b2f34f7def8895409fae76c"
+    },
+    {
+      "path": "fp-ground-q1.png",
+      "bytes": 1500492,
+      "sha256": "87e8730eebdff24ea2bf320b11c622b860126f39a1196f7ed1cb0336ce207347"
+    },
+    {
+      "path": "height-grid.csv",
+      "bytes": 4771,
+      "sha256": "be65d7a67f5fcd85be9585521449c6ad08831521843e9bc07feda16829899e94"
+    },
+    {
+      "path": "intrepid-wide-q0.png",
+      "bytes": 727427,
+      "sha256": "9bbc93428d4f414d20ee0b5f8ffad701895faac72d35f52bc58eb5abe21fca50"
+    },
+    {
+      "path": "intrepid-wide-q1.png",
+      "bytes": 819146,
+      "sha256": "27d6bce537b186fa01cc1e0aab5372ed64d731d97317e867ba72d8d52609a20b"
+    },
+    {
+      "path": "ladder-foot-q0.png",
+      "bytes": 900158,
+      "sha256": "d40121e593e2a94d12025c51c01a19fb20d9ce66a0a10f54956445bde5afa340"
+    },
+    {
+      "path": "ladder-foot-q1.png",
+      "bytes": 963685,
+      "sha256": "a3a099c34ca194b916b4237ac84268591c9efe9fc0f3f07f0d6f3b6f75370bf0"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 28261,
+      "sha256": "6f21d4228859e1de8073a2917eda868f2a4a7081dff7a0e1f519e967bf17687f"
+    },
+    {
+      "path": "outside-ground-q0.png",
+      "bytes": 1202377,
+      "sha256": "dc13ae9521ea58326437749ccc4db95d95c76742b95c438a54691034f5eb8560"
+    },
+    {
+      "path": "outside-ground-q1.png",
+      "bytes": 1453611,
+      "sha256": "31579f2f298a2fe6f790ed4745238b3c40687fcba1684446139233225a732498"
+    },
+    {
+      "path": "outside-instances.txt",
+      "bytes": 1283269,
+      "sha256": "14dbae181f7ad35af3dd1be875edc3ab7907fd30e64a3cc69931a12cfaaf473d"
+    }
+  ],
+  "manifest_sha256": "6f21d4228859e1de8073a2917eda868f2a4a7081dff7a0e1f519e967bf17687f"
+}

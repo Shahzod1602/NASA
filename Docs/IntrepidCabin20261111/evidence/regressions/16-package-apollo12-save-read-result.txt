@@ -1,0 +1,8 @@
+PASS Fresh process discovers the saved mission in the menu
+PASS Save tests are isolated from player saves
+PASS C input crosses maps and restores progress in a new process
+PASS Named evidence, ALSEP and selected destination survive restart
+PASS Evidence metadata and collected-object visibility are restored
+PASS Exercise time and distance resume without resetting
+PASS A resumed expedition can collect and checkpoint the next sample
+RESULT: 0 failures

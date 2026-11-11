@@ -1,0 +1,959 @@
+{
+  "schema_version": 1,
+  "generated_utc": "2026-11-11T15:07:38.710995+00:00",
+  "analysis_started_utc": "2026-11-11T15:06:27.403763+00:00",
+  "analysis_started_after_all_profile_captures": true,
+  "unreal_launched": false,
+  "player_state_restored": false,
+  "paired_captures": {
+    "package-control-q1": {
+      "frames": 6000,
+      "mean_fps": 59.98207405725762,
+      "one_percent_low_fps": 58.32774926144917,
+      "p95_frame_ms": 16.6805,
+      "p99_frame_ms": 16.7302,
+      "largest_frame_ms": 23.4549,
+      "mean_frame_ms": 16.671647583333332,
+      "captured_frames": 6000,
+      "warmup_frames_excluded": 0,
+      "nonnumeric_header_footer_rows": 2,
+      "invalid_numeric_frames": 0,
+      "csv": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-control-q1/intrepid-profile.csv",
+      "csv_sha256": "20171090df9bec757180ab7fad5e418134a4c777f20d3aad30a11a791632b859",
+      "counters": {
+        "GameThreadTime": {
+          "present": true,
+          "sampled_rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "unavailable_rows": 0,
+          "mean_including_zero": 1.7575893833333334
+        },
+        "RenderThreadTime": {
+          "present": true,
+          "sampled_rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "unavailable_rows": 0,
+          "mean_including_zero": 3.6055172833333335
+        },
+        "GPUTime": {
+          "present": true,
+          "sampled_rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "unavailable_rows": 0,
+          "mean_including_zero": 16.66193835
+        },
+        "GPU/SlateUI": {
+          "present": true,
+          "sampled_rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 5999,
+          "unavailable_rows": 0,
+          "mean_including_zero": 9.557989133333333
+        },
+        "GPUMem/LocalUsedMB": {
+          "present": true,
+          "sampled_rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "unavailable_rows": 0,
+          "mean_including_zero": 247.4883
+        }
+      },
+      "camera_phases": [
+        {
+          "camera_index": 0,
+          "first_frame": 0,
+          "last_frame": 1499,
+          "eye": {
+            "x": -1600,
+            "y": -1400,
+            "z": 443.58988680903667
+          },
+          "rotation": {
+            "pitch": -6.5361592012928,
+            "yaw": 41.18592516570965,
+            "roll": 0
+          },
+          "frames": 1500,
+          "mean_fps": 59.963405772578724,
+          "one_percent_low_fps": 56.74754831675422,
+          "p95_frame_ms": 16.6829,
+          "p99_frame_ms": 16.7491,
+          "largest_frame_ms": 23.4549,
+          "mean_frame_ms": 16.676837933333335,
+          "raw_csv_view_positions": {
+            "x": {
+              "min": -1600.0,
+              "max": -1600.0,
+              "finite_rows": 1500,
+              "expected": -1600,
+              "max_absolute_expected_error": 0.0
+            },
+            "y": {
+              "min": -1400.0,
+              "max": -1400.0,
+              "finite_rows": 1500,
+              "expected": -1400,
+              "max_absolute_expected_error": 0.0
+            },
+            "z": {
+              "min": 443.5899,
+              "max": 443.5899,
+              "finite_rows": 1500,
+              "expected": 443.58988680903667,
+              "max_absolute_expected_error": 1.3190963329634542e-05
+            }
+          },
+          "actual_camera_row_counts": [
+            {
+              "camera_index": 0,
+              "rows": 1500
+            }
+          ]
+        },
+        {
+          "camera_index": 1,
+          "first_frame": 1500,
+          "last_frame": 2999,
+          "eye": {
+            "x": -780,
+            "y": -260,
+            "z": 135.22593837109707
+          },
+          "rotation": {
+            "pitch": -35.010304361200554,
+            "yaw": 37.568592028827496,
+            "roll": 0
+          },
+          "frames": 1500,
+          "mean_fps": 59.989238890370885,
+          "one_percent_low_fps": 59.11285787416764,
+          "p95_frame_ms": 16.6846,
+          "p99_frame_ms": 16.7453,
+          "largest_frame_ms": 18.0106,
+          "mean_frame_ms": 16.6696564,
+          "raw_csv_view_positions": {
+            "x": {
+              "min": -1600.0,
+              "max": -780.0,
+              "finite_rows": 1500,
+              "expected": -780,
+              "max_absolute_expected_error": 820.0
+            },
+            "y": {
+              "min": -1400.0,
+              "max": -260.0,
+              "finite_rows": 1500,
+              "expected": -260,
+              "max_absolute_expected_error": 1140.0
+            },
+            "z": {
+              "min": 135.2259,
+              "max": 443.5899,
+              "finite_rows": 1500,
+              "expected": 135.22593837109707,
+              "max_absolute_expected_error": 308.3639616289029
+            }
+          },
+          "actual_camera_row_counts": [
+            {
+              "camera_index": 0,
+              "rows": 1
+            },
+            {
+              "camera_index": 1,
+              "rows": 1499
+            }
+          ]
+        },
+        {
+          "camera_index": 2,
+          "first_frame": 3000,
+          "last_frame": 4499,
+          "eye": {
+            "x": -162.35381206159173,
+            "y": 737.0261323604417,
+            "z": 81.90477120357158
+          },
+          "rotation": {
+            "pitch": 2.518688437844419,
+            "yaw": -66.80790178904053,
+            "roll": 0
+          },
+          "frames": 1500,
+          "mean_fps": 59.97773938198386,
+          "one_percent_low_fps": 57.815855728626246,
+          "p95_frame_ms": 16.6779,
+          "p99_frame_ms": 16.7302,
+          "largest_frame_ms": 20.4381,
+          "mean_frame_ms": 16.672852466666665,
+          "raw_csv_view_positions": {
+            "x": {
+              "min": -780.0,
+              "max": -162.3538,
+              "finite_rows": 1500,
+              "expected": -162.35381206159173,
+              "max_absolute_expected_error": 617.6461879384083
+            },
+            "y": {
+              "min": -260.0,
+              "max": 737.0261,
+              "finite_rows": 1500,
+              "expected": 737.0261323604417,
+              "max_absolute_expected_error": 997.0261323604417
+            },
+            "z": {
+              "min": 81.9048,
+              "max": 135.2259,
+              "finite_rows": 1500,
+              "expected": 81.90477120357158,
+              "max_absolute_expected_error": 53.32112879642841
+            }
+          },
+          "actual_camera_row_counts": [
+            {
+              "camera_index": 1,
+              "rows": 1
+            },
+            {
+              "camera_index": 2,
+              "rows": 1499
+            }
+          ]
+        },
+        {
+          "camera_index": 3,
+          "first_frame": 4500,
+          "last_frame": 5999,
+          "eye": {
+            "x": -17680,
+            "y": -2070,
+            "z": 236.63177606123008
+          },
+          "rotation": {
+            "pitch": -31.974983003308463,
+            "yaw": 55.175510843043206,
+            "roll": 0
+          },
+          "frames": 1500,
+          "mean_fps": 59.99792335187694,
+          "one_percent_low_fps": 59.81514726888025,
+          "p95_frame_ms": 16.6788,
+          "p99_frame_ms": 16.6932,
+          "largest_frame_ms": 16.7654,
+          "mean_frame_ms": 16.667243533333334,
+          "raw_csv_view_positions": {
+            "x": {
+              "min": -17680.0,
+              "max": -162.3538,
+              "finite_rows": 1500,
+              "expected": -17680,
+              "max_absolute_expected_error": 17517.6462
+            },
+            "y": {
+              "min": -2070.0,
+              "max": 737.0261,
+              "finite_rows": 1500,
+              "expected": -2070,
+              "max_absolute_expected_error": 2807.0261
+            },
+            "z": {
+              "min": 81.9048,
+              "max": 236.6318,
+              "finite_rows": 1500,
+              "expected": 236.63177606123008,
+              "max_absolute_expected_error": 154.7269760612301
+            }
+          },
+          "actual_camera_row_counts": [
+            {
+              "camera_index": 2,
+              "rows": 1
+            },
+            {
+              "camera_index": 3,
+              "rows": 1499
+            }
+          ]
+        }
+      ],
+      "baseline": true,
+      "executable_sha256": "dc0b5864f7dd539006711408c00c7c0a880e7a40dc55afffe58d5b26f13bcfe2",
+      "source_art_inputs_sha256": "fd44dc95d2e648e0605a56e6a096270f3e301fc517c6134a2ec264fafeb836da",
+      "source_commit": "4d1d651f43809071da42409f483506487099f164",
+      "source_dirty": true,
+      "cpu": [
+        "AMD Ryzen 5 6600H with Radeon Graphics         "
+      ],
+      "ram_bytes": 16312721408,
+      "selected_gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+      "renderer": "DX11 / rendered offscreen",
+      "width": 1280,
+      "height": 720,
+      "quality": 1,
+      "fps_cap": 60,
+      "vsync": false,
+      "field_operations_enabled": true,
+      "height_grid_sha1": "def58c9c1a2151d3679ea3140b9d1d0ddeef8de9",
+      "outside_instances_sha1": "02397833a2ef8135195f8d95eea52a5262015e0a",
+      "outside_instance_count": 8057,
+      "maximum_sampled_working_set_bytes": 625115136,
+      "working_set_sample_count": 85,
+      "nvidia_sample_rows": 17,
+      "started_utc": "2026-11-11T14:58:41.6079415Z",
+      "finished_utc": "2026-11-11T15:00:36.9915969Z",
+      "competing_work_seen": false,
+      "assertions": 35,
+      "settle_frames_before_csv": 300,
+      "profile_manifest_sha256": "e2c9f57c50722768c63d2eb3cf2a8ba12f54f79e43c1d2317f27103d6d09b818",
+      "raw_csv_camera_transitions": [
+        {
+          "first_frame": 0,
+          "camera_index": 0,
+          "eye": {
+            "x": -1600.0,
+            "y": -1400.0,
+            "z": 443.5899
+          }
+        },
+        {
+          "first_frame": 1501,
+          "camera_index": 1,
+          "eye": {
+            "x": -780.0,
+            "y": -260.0,
+            "z": 135.2259
+          }
+        },
+        {
+          "first_frame": 3001,
+          "camera_index": 2,
+          "eye": {
+            "x": -162.3538,
+            "y": 737.0261,
+            "z": 81.9048
+          }
+        },
+        {
+          "first_frame": 4501,
+          "camera_index": 3,
+          "eye": {
+            "x": -17680.0,
+            "y": -2070.0,
+            "z": 236.6318
+          }
+        }
+      ],
+      "raw_csv_camera_row_counts": [
+        {
+          "camera_index": 0,
+          "rows": 1501
+        },
+        {
+          "camera_index": 1,
+          "rows": 1500
+        },
+        {
+          "camera_index": 2,
+          "rows": 1500
+        },
+        {
+          "camera_index": 3,
+          "rows": 1499
+        }
+      ],
+      "csv_phase_alignment_note": "Driver phase metadata changes at0/1500/3000/4500; sampled View/Pos changes at0/1501/3001/4501. The two captures share the identical one-row boundary lag. Each reported 1500-row quarter after the first includes one prior-camera row; aggregate6000 statistics keep every frame."
+    },
+    "package-feature-q1": {
+      "frames": 6000,
+      "mean_fps": 59.99610385301578,
+      "one_percent_low_fps": 59.68491735280281,
+      "p95_frame_ms": 16.6769,
+      "p99_frame_ms": 16.6994,
+      "largest_frame_ms": 17.2367,
+      "mean_frame_ms": 16.667749,
+      "captured_frames": 6000,
+      "warmup_frames_excluded": 0,
+      "nonnumeric_header_footer_rows": 2,
+      "invalid_numeric_frames": 0,
+      "csv": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidVisual20261111/package-feature-q1/intrepid-profile.csv",
+      "csv_sha256": "3988bd7bb3baf202448e73767bbcee847b1833e2af7be8d65f6bd01d02b6005c",
+      "counters": {
+        "GameThreadTime": {
+          "present": true,
+          "sampled_rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "unavailable_rows": 0,
+          "mean_including_zero": 1.6914595333333333
+        },
+        "RenderThreadTime": {
+          "present": true,
+          "sampled_rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "unavailable_rows": 0,
+          "mean_including_zero": 3.4709845666666665
+        },
+        "GPUTime": {
+          "present": true,
+          "sampled_rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "unavailable_rows": 0,
+          "mean_including_zero": 16.66308515
+        },
+        "GPU/SlateUI": {
+          "present": true,
+          "sampled_rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 5999,
+          "unavailable_rows": 0,
+          "mean_including_zero": 9.573036766666666
+        },
+        "GPUMem/LocalUsedMB": {
+          "present": true,
+          "sampled_rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "unavailable_rows": 0,
+          "mean_including_zero": 248.7383
+        }
+      },
+      "camera_phases": [
+        {
+          "camera_index": 0,
+          "first_frame": 0,
+          "last_frame": 1499,
+          "eye": {
+            "x": -1600,
+            "y": -1400,
+            "z": 443.58988680903667
+          },
+          "rotation": {
+            "pitch": -6.5361592012928,
+            "yaw": 41.18592516570965,
+            "roll": 0
+          },
+          "frames": 1500,
+          "mean_fps": 59.99602610321502,
+          "one_percent_low_fps": 59.70928742140268,
+          "p95_frame_ms": 16.6794,
+          "p99_frame_ms": 16.7119,
+          "largest_frame_ms": 16.9373,
+          "mean_frame_ms": 16.6677706,
+          "raw_csv_view_positions": {
+            "x": {
+              "min": -1600.0,
+              "max": -1600.0,
+              "finite_rows": 1500,
+              "expected": -1600,
+              "max_absolute_expected_error": 0.0
+            },
+            "y": {
+              "min": -1400.0,
+              "max": -1400.0,
+              "finite_rows": 1500,
+              "expected": -1400,
+              "max_absolute_expected_error": 0.0
+            },
+            "z": {
+              "min": 443.5899,
+              "max": 443.5899,
+              "finite_rows": 1500,
+              "expected": 443.58988680903667,
+              "max_absolute_expected_error": 1.3190963329634542e-05
+            }
+          },
+          "actual_camera_row_counts": [
+            {
+              "camera_index": 0,
+              "rows": 1500
+            }
+          ]
+        },
+        {
+          "camera_index": 1,
+          "first_frame": 1500,
+          "last_frame": 2999,
+          "eye": {
+            "x": -780,
+            "y": -260,
+            "z": 135.22593837109707
+          },
+          "rotation": {
+            "pitch": -35.010304361200554,
+            "yaw": 37.568592028827496,
+            "roll": 0
+          },
+          "frames": 1500,
+          "mean_fps": 59.99522102067437,
+          "one_percent_low_fps": 59.626191480371254,
+          "p95_frame_ms": 16.676,
+          "p99_frame_ms": 16.7009,
+          "largest_frame_ms": 16.9031,
+          "mean_frame_ms": 16.667994266666668,
+          "raw_csv_view_positions": {
+            "x": {
+              "min": -1600.0,
+              "max": -780.0,
+              "finite_rows": 1500,
+              "expected": -780,
+              "max_absolute_expected_error": 820.0
+            },
+            "y": {
+              "min": -1400.0,
+              "max": -260.0,
+              "finite_rows": 1500,
+              "expected": -260,
+              "max_absolute_expected_error": 1140.0
+            },
+            "z": {
+              "min": 135.2259,
+              "max": 443.5899,
+              "finite_rows": 1500,
+              "expected": 135.22593837109707,
+              "max_absolute_expected_error": 308.3639616289029
+            }
+          },
+          "actual_camera_row_counts": [
+            {
+              "camera_index": 0,
+              "rows": 1
+            },
+            {
+              "camera_index": 1,
+              "rows": 1499
+            }
+          ]
+        },
+        {
+          "camera_index": 2,
+          "first_frame": 3000,
+          "last_frame": 4499,
+          "eye": {
+            "x": -162.35381206159173,
+            "y": 737.0261323604417,
+            "z": 81.90477120357158
+          },
+          "rotation": {
+            "pitch": 2.518688437844419,
+            "yaw": -66.80790178904053,
+            "roll": 0
+          },
+          "frames": 1500,
+          "mean_fps": 59.99646020884769,
+          "one_percent_low_fps": 59.71107007412532,
+          "p95_frame_ms": 16.6765,
+          "p99_frame_ms": 16.6962,
+          "largest_frame_ms": 16.9583,
+          "mean_frame_ms": 16.66765,
+          "raw_csv_view_positions": {
+            "x": {
+              "min": -780.0,
+              "max": -162.3538,
+              "finite_rows": 1500,
+              "expected": -162.35381206159173,
+              "max_absolute_expected_error": 617.6461879384083
+            },
+            "y": {
+              "min": -260.0,
+              "max": 737.0261,
+              "finite_rows": 1500,
+              "expected": 737.0261323604417,
+              "max_absolute_expected_error": 997.0261323604417
+            },
+            "z": {
+              "min": 81.9048,
+              "max": 135.2259,
+              "finite_rows": 1500,
+              "expected": 81.90477120357158,
+              "max_absolute_expected_error": 53.32112879642841
+            }
+          },
+          "actual_camera_row_counts": [
+            {
+              "camera_index": 1,
+              "rows": 1
+            },
+            {
+              "camera_index": 2,
+              "rows": 1499
+            }
+          ]
+        },
+        {
+          "camera_index": 3,
+          "first_frame": 4500,
+          "last_frame": 5999,
+          "eye": {
+            "x": -17680,
+            "y": -2070,
+            "z": 236.63177606123008
+          },
+          "rotation": {
+            "pitch": -31.974983003308463,
+            "yaw": 55.175510843043206,
+            "roll": 0
+          },
+          "frames": 1500,
+          "mean_fps": 59.99670810061994,
+          "one_percent_low_fps": 59.71273397937204,
+          "p95_frame_ms": 16.675,
+          "p99_frame_ms": 16.6895,
+          "largest_frame_ms": 17.2367,
+          "mean_frame_ms": 16.667581133333332,
+          "raw_csv_view_positions": {
+            "x": {
+              "min": -17680.0,
+              "max": -162.3538,
+              "finite_rows": 1500,
+              "expected": -17680,
+              "max_absolute_expected_error": 17517.6462
+            },
+            "y": {
+              "min": -2070.0,
+              "max": 737.0261,
+              "finite_rows": 1500,
+              "expected": -2070,
+              "max_absolute_expected_error": 2807.0261
+            },
+            "z": {
+              "min": 81.9048,
+              "max": 236.6318,
+              "finite_rows": 1500,
+              "expected": 236.63177606123008,
+              "max_absolute_expected_error": 154.7269760612301
+            }
+          },
+          "actual_camera_row_counts": [
+            {
+              "camera_index": 2,
+              "rows": 1
+            },
+            {
+              "camera_index": 3,
+              "rows": 1499
+            }
+          ]
+        }
+      ],
+      "baseline": false,
+      "executable_sha256": "dc0b5864f7dd539006711408c00c7c0a880e7a40dc55afffe58d5b26f13bcfe2",
+      "source_art_inputs_sha256": "fd44dc95d2e648e0605a56e6a096270f3e301fc517c6134a2ec264fafeb836da",
+      "source_commit": "4d1d651f43809071da42409f483506487099f164",
+      "source_dirty": true,
+      "cpu": [
+        "AMD Ryzen 5 6600H with Radeon Graphics         "
+      ],
+      "ram_bytes": 16312721408,
+      "selected_gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+      "renderer": "DX11 / rendered offscreen",
+      "width": 1280,
+      "height": 720,
+      "quality": 1,
+      "fps_cap": 60,
+      "vsync": false,
+      "field_operations_enabled": true,
+      "height_grid_sha1": "def58c9c1a2151d3679ea3140b9d1d0ddeef8de9",
+      "outside_instances_sha1": "02397833a2ef8135195f8d95eea52a5262015e0a",
+      "outside_instance_count": 8057,
+      "maximum_sampled_working_set_bytes": 625872896,
+      "working_set_sample_count": 86,
+      "nvidia_sample_rows": 17,
+      "started_utc": "2026-11-11T15:01:01.6835938Z",
+      "finished_utc": "2026-11-11T15:02:56.2467620Z",
+      "competing_work_seen": false,
+      "assertions": 35,
+      "settle_frames_before_csv": 300,
+      "profile_manifest_sha256": "9a8f0a878b1c0c987370387d3e16d236cecca5f9438f22e04ff02079bd7b78bb",
+      "raw_csv_camera_transitions": [
+        {
+          "first_frame": 0,
+          "camera_index": 0,
+          "eye": {
+            "x": -1600.0,
+            "y": -1400.0,
+            "z": 443.5899
+          }
+        },
+        {
+          "first_frame": 1501,
+          "camera_index": 1,
+          "eye": {
+            "x": -780.0,
+            "y": -260.0,
+            "z": 135.2259
+          }
+        },
+        {
+          "first_frame": 3001,
+          "camera_index": 2,
+          "eye": {
+            "x": -162.3538,
+            "y": 737.0261,
+            "z": 81.9048
+          }
+        },
+        {
+          "first_frame": 4501,
+          "camera_index": 3,
+          "eye": {
+            "x": -17680.0,
+            "y": -2070.0,
+            "z": 236.6318
+          }
+        }
+      ],
+      "raw_csv_camera_row_counts": [
+        {
+          "camera_index": 0,
+          "rows": 1501
+        },
+        {
+          "camera_index": 1,
+          "rows": 1500
+        },
+        {
+          "camera_index": 2,
+          "rows": 1500
+        },
+        {
+          "camera_index": 3,
+          "rows": 1499
+        }
+      ],
+      "csv_phase_alignment_note": "Driver phase metadata changes at0/1500/3000/4500; sampled View/Pos changes at0/1501/3001/4501. The two captures share the identical one-row boundary lag. Each reported 1500-row quarter after the first includes one prior-camera row; aggregate6000 statistics keep every frame."
+    }
+  },
+  "comparability": {
+    "executable_sha256": true,
+    "source_art_inputs_sha256": true,
+    "source_commit": true,
+    "source_dirty": true,
+    "cpu": true,
+    "ram_bytes": true,
+    "selected_gpu": true,
+    "renderer": true,
+    "width": true,
+    "height": true,
+    "quality": true,
+    "fps_cap": true,
+    "vsync": true,
+    "field_operations_enabled": true,
+    "height_grid_sha1": true,
+    "outside_instances_sha1": true,
+    "outside_instance_count": true,
+    "camera_definitions_equal": true,
+    "camera_phase_definitions_equal": true,
+    "source_fingerprint_files_equal": true,
+    "all_required_conditions_match": true,
+    "control_feature_nonoverlap": true,
+    "raw_csv_camera_transitions_equal": true,
+    "raw_csv_camera_row_counts_equal": true
+  },
+  "observed_feature_minus_control": {
+    "mean_fps": 0.014029795758162322,
+    "p99_frame_ms": -0.030799999999999272,
+    "one_percent_low_fps": 1.3571680913536426,
+    "maximum_sampled_working_set_bytes": 757760
+  },
+  "historical_opening": {
+    "before": {
+      "frames": 1800,
+      "mean_fps": 59.99499781706533,
+      "one_percent_low_fps": 53.79697559380653,
+      "p95_frame_ms": 17.7416,
+      "p99_frame_ms": 18.2171,
+      "largest_frame_ms": 19.5942,
+      "mean_frame_ms": 16.66805627777778,
+      "captured_frames": 2400,
+      "warmup_frames_excluded": 600,
+      "nonnumeric_header_footer_rows": 2,
+      "invalid_numeric_frames": 0,
+      "csv": "Reports/IntrepidVisual20261111/baseline-20261111-183741-467/opening-profile/capture.csv",
+      "csv_sha256": "033a7c9707dec19721f42ec8d63b628a3b9802d3ee6d3a37ea7ad846523990d8",
+      "counters": {
+        "GameThreadTime": {
+          "present": true,
+          "sampled_rows": 1800,
+          "finite_rows": 1800,
+          "positive_rows": 1800,
+          "unavailable_rows": 0,
+          "mean_including_zero": 4.240817666666667
+        },
+        "RenderThreadTime": {
+          "present": true,
+          "sampled_rows": 1800,
+          "finite_rows": 1800,
+          "positive_rows": 1800,
+          "unavailable_rows": 0,
+          "mean_including_zero": 4.133122055555556
+        },
+        "GPUTime": {
+          "present": true,
+          "sampled_rows": 1800,
+          "finite_rows": 1800,
+          "positive_rows": 1800,
+          "unavailable_rows": 0,
+          "mean_including_zero": 16.657178666666667
+        },
+        "GPU/SlateUI": {
+          "present": true,
+          "sampled_rows": 1800,
+          "finite_rows": 1800,
+          "positive_rows": 1800,
+          "unavailable_rows": 0,
+          "mean_including_zero": 9.15088488888889
+        },
+        "GPUMem/LocalUsedMB": {
+          "present": true,
+          "sampled_rows": 1800,
+          "finite_rows": 1800,
+          "positive_rows": 1800,
+          "unavailable_rows": 0,
+          "mean_including_zero": 247.5508
+        }
+      },
+      "cpu": "AMD Ryzen 5 6600H with Radeon Graphics         ",
+      "selected_gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+      "quality": 1,
+      "fps_cap": 60,
+      "field_operations_enabled": false,
+      "process_exit_code": 777003,
+      "maximum_sampled_working_set_bytes": 634408960,
+      "nvidia_sample_rows": 8,
+      "renderer": "DX11 / rendered offscreen / 1280x720 / configured scalability",
+      "command_arguments": [
+        "/Game/Lunar/Maps/Apollo12",
+        "-game",
+        "-unattended",
+        "-ApolloWalkTest",
+        "-ApolloSaveProfile",
+        "-dx11",
+        "-ForceRes",
+        "-ResX=1280",
+        "-ResY=720",
+        "-nosound",
+        "-ExecCmds=\"t.MaxFPS 60,r.VSync 0\"",
+        "-csvCaptureFrames=2400",
+        "-csvGpuStats",
+        "-ExitAfterCsvProfiling",
+        "-abslog=\"$PROJECT_ROOT\\Reports\\Performance\\intrepid-nov11-before-opening-q1-20261111-183741-467\\capture.log\"",
+        "-RenderOffscreen",
+        "-ApolloQuality=1"
+      ],
+      "finished_utc": "2026-11-11T13:39:30.6237360Z",
+      "executable_sha256_from_baseline_receipt": "06c1b022f92b4e13e8300fc8d71296f290ee4f2565ac8597ebcd337519facda8"
+    },
+    "after": {
+      "frames": 1800,
+      "mean_fps": 59.998196854190546,
+      "one_percent_low_fps": 55.364360546249394,
+      "p95_frame_ms": 17.4359,
+      "p99_frame_ms": 17.8246,
+      "largest_frame_ms": 18.738,
+      "mean_frame_ms": 16.667167555555555,
+      "captured_frames": 2400,
+      "warmup_frames_excluded": 600,
+      "nonnumeric_header_footer_rows": 2,
+      "invalid_numeric_frames": 0,
+      "csv": "Reports/Performance/intrepid-after-opening/capture.csv",
+      "csv_sha256": "97e4964c1738a8db870cc2b91cda244c9a2d662e005edc15772c86a32df250e1",
+      "counters": {
+        "GameThreadTime": {
+          "present": true,
+          "sampled_rows": 1800,
+          "finite_rows": 1800,
+          "positive_rows": 1800,
+          "unavailable_rows": 0,
+          "mean_including_zero": 3.948559611111111
+        },
+        "RenderThreadTime": {
+          "present": true,
+          "sampled_rows": 1800,
+          "finite_rows": 1800,
+          "positive_rows": 1800,
+          "unavailable_rows": 0,
+          "mean_including_zero": 3.7862429444444445
+        },
+        "GPUTime": {
+          "present": true,
+          "sampled_rows": 1800,
+          "finite_rows": 1800,
+          "positive_rows": 1800,
+          "unavailable_rows": 0,
+          "mean_including_zero": 16.665709555555555
+        },
+        "GPU/SlateUI": {
+          "present": true,
+          "sampled_rows": 1800,
+          "finite_rows": 1800,
+          "positive_rows": 1800,
+          "unavailable_rows": 0,
+          "mean_including_zero": 9.2384115
+        },
+        "GPUMem/LocalUsedMB": {
+          "present": true,
+          "sampled_rows": 1800,
+          "finite_rows": 1800,
+          "positive_rows": 1800,
+          "unavailable_rows": 0,
+          "mean_including_zero": 248.8008
+        }
+      },
+      "cpu": "AMD Ryzen 5 6600H with Radeon Graphics         ",
+      "selected_gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+      "quality": 1,
+      "fps_cap": 60,
+      "field_operations_enabled": false,
+      "process_exit_code": 777003,
+      "maximum_sampled_working_set_bytes": 632254464,
+      "nvidia_sample_rows": 8,
+      "renderer": "DX11 / rendered offscreen / 1280x720 / configured scalability",
+      "command_arguments": [
+        "/Game/Lunar/Maps/Apollo12",
+        "-game",
+        "-unattended",
+        "-ApolloWalkTest",
+        "-ApolloSaveProfile",
+        "-dx11",
+        "-ForceRes",
+        "-ResX=1280",
+        "-ResY=720",
+        "-nosound",
+        "-ExecCmds=\"t.MaxFPS 60,r.VSync 0\"",
+        "-csvCaptureFrames=2400",
+        "-csvGpuStats",
+        "-ExitAfterCsvProfiling",
+        "-abslog=\"$PROJECT_ROOT\\Reports\\Performance\\intrepid-after-opening\\capture.log\"",
+        "-RenderOffscreen",
+        "-ApolloQuality=1"
+      ],
+      "finished_utc": "2026-11-11T15:03:47.5974759Z",
+      "executable_sha256_context": "dc0b5864f7dd539006711408c00c7c0a880e7a40dc55afffe58d5b26f13bcfe2",
+      "executable_identity_note": "Opening wrapper does not independently record executable SHA; this is the adjacent final paired-capture binary context, not an opening-run hash assertion."
+    },
+    "matching": {
+      "hardware_gpu": true,
+      "quality": true,
+      "fps_cap": true,
+      "field_operations": true,
+      "frame_counts_and_warmup": true,
+      "render_resolution": "Both command lines DX11 rendered offscreen 1280x720, Q1, cap60, VSync0"
+    },
+    "limits": "Historical old/new generic scripted opening, not the four-camera 50m local scene. Opening wrapper returns auto CSV exit777003 and is not a functional exit0 test. Captures are single observations separated in time; no causal attribution. Before EXE identity comes from baseline safety receipt; after opening has adjacent final EXE context only."
+  },
+  "limitations": [
+    "One sample per condition, fixed order and 60FPS cap; differences do not prove a performance improvement or regression.",
+    "Four phases include three local cameras and one outside-ROI control: the aggregate is not a local-only rendering cost or whole-mission result.",
+    "GPU/SlateUI and GPUTime are reported timestamp counters, not independent exclusive material costs or a sum of all work; cap/pacing can dominate.",
+    "GPUMem/LocalUsedMB is a reported CSV counter, not validated peak/dedicated VRAM; process working set is a one-second sampled maximum.",
+    "Positive counter availability is reported per row; no unavailable GPU value is inferred.",
+    "No occupied driving, on-screen user smoothness or human playtest claim.",
+    "CSV View/Pos sampling trails the three game-thread phase changes by one row in both runs. Actual camera rows are1501/1500/1500/1499, not1500each; all6000rows remain in the aggregate without hidden exclusions."
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "result": "PASS",
+  "artifact": "cabin-normals.json",
+  "artifact_sha256": "fa414e9de7f9f478ca6dcb3fd0dffd30b0c4aab64ae305e6c883ae052666ec3f",
+  "source": {
+    "geometry_records_sha256": "adfaf47c2e46e2050144dd08d0a17105fd20b0e4067db6fca61dcc7fcbca9014",
+    "vertex_records_sha256": "4e0353b83f86310ccff742082c55d7e0cde5efa45cb29927554c6c5c87255867",
+    "uv_records_sha256": "1a6b3a240b436b201788308c4124a8c800467adb2d105f6a5905cf99d487b69c",
+    "face_records_sha256": "ee4f74305cc692ff73a8bea67bafae0f74525a976492f1a756dfa3ee175c0367",
+    "group_records_sha256": "e664d9cb8c96b3053a43f902d94b39fe6b0c49dc1e0c5ac3500236825c9f2eed",
+    "geometry_reproduction_exact": true,
+    "vertices": 64787,
+    "texture_coordinates": 64087,
+    "triangles": 97588,
+    "inherited_out_of_range_uv_corners": 3744,
+    "uv_policy": "Not repaired, reimported, or edited; the UE builder must duplicate the existing mesh attributes",
+    "obj_sha256": "7b034359fbfa5c42cd576e129e36e29a9272c178b5b99d95de0ed260c843b8d8",
+    "glb_sha256": "379101dfcee399267addf771709107c35e826b0b9e5233272f123e4c8a585c4e",
+    "obj_path": "Raw/ApolloLander.obj",
+    "glb_path": "Raw/Apollo Lunar Module.glb",
+    "trimesh_version": "5.1.0",
+    "numpy_version": "2.4.6",
+    "source_geometry_primitives": 157,
+    "original_width_conversion_scale": 101.12961992470782
+  },
+  "coverage": {
+    "triangles": 1237,
+    "corners": 3711,
+    "groups": [
+      {
+        "object_name": "polySurfac.002",
+        "material_name": "initialShadingGr.001",
+        "material_slot_name": "initialShadingGr_001"
+      },
+      {
+        "object_name": "polySurfac.002_1",
+        "material_name": "blinn3SG.001",
+        "material_slot_name": "blinn3SG_001"
+      }
+    ],
+    "duplicate_oriented_triangles": 0,
+    "duplicate_unordered_triangles": 0,
+    "all_normals_finite_and_unit": true,
+    "max_normal_squared_length_error": 4.440892098500626e-16,
+    "non_cabin_records_emitted": 0
+  },
+  "source_files_unchanged": true,
+  "geometry_changes": 0,
+  "ue_import_performed": false,
+  "editor_builder_required": "Duplicate the existing asset, bake computed render frames and explicitly repair invalid source tangent bases before applying selected GLB normals; preserve geometry, UV and material data. Do not import the inherited OBJ UV table. Consult the separate Editor receipt for frame changes and format bounds.",
+  "fixture_checks": 9
+}

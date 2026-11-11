@@ -1,5 +1,35 @@
 # Development plan
 
+## Intrepid cabin pass — 11 November 2026
+
+The next local art step recovers missing GLB cabin normals in a separate mesh
+and refines shared white surfaces. Geometry, UVs, material assignments and all
+mapped terrain/worksites remain fixed. Source audit, validated asset build,
+paired Editor/package reviews, selected regressions and matched profiles passed.
+Final executable-specific status is recorded in TEST_REPORT; earlier surface-pass
+results remain a separate record.
+
+After this pass, prioritize a real-player readability test, licensed production
+cabin geometry with better silhouette/detail, and sustained occupied-rover or
+full-mission graphics measurements. Static camera reviews cannot replace those
+checks. Local implementation does not authorize publication.
+
+## Intrepid visual slice — 11 November 2026
+
+The first art slice is bounded to the 50 m Apollo landing area. Existing source
+terrain/worksites and all maps are preserved; new materials, instanced fragments,
+limited shadows and blanket folds are separate authored presentation. Packaged
+paired Low/Medium reviews at 720p/1080p and matched capped four-camera profiles
+passed after rejecting dark foil and unsupported extra tread placements.
+Executable-specific regression, preservation and performance evidence belongs to
+the current TEST_REPORT; local completion does not authorize publication.
+
+After acceptance, priorities are a real-player readability check, more accurate
+production module/suit geometry under verified licences, and deliberate extension
+to another measured terrain area. The initial captured cameras do not establish
+whole-mission graphics performance or learning outcomes.
+
+
 ## Local interaction fixes — 6 November 2026
 
 This iteration addresses six reported problems in the mission picker, guide

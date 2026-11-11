@@ -1,0 +1,65 @@
+PASS Default product mode is untimed exploration with distinct tools
+PASS Historical exploration does not time out after 30 minutes
+PASS E opens checkout without committing it
+PASS Escape immediately pauses and cancels unfinished work without committing it
+PASS A second Escape resumes the uncommitted equipment check
+PASS Equipment checks advance through actual primary-action input
+PASS Unlevel seismometer cannot be committed
+PASS Paused tool axes do not change instrument state
+PASS Centered bubble commits the seismometer
+PASS Weak Earth signal prevents antenna confirmation
+PASS Mouse alignment and confirmation unlock samples
+PASS Camera opens without awarding photograph metadata
+PASS Shutter outside the framing guide does not award context evidence
+PASS Framed photograph creates exactly one evidence record
+PASS Rock/soil and drive core use different tool contexts
+PASS Cancelling partial sampling never adds cargo
+PASS Sample is pending until the final seal/cap action
+PASS Final cap or seal commits sample with its photograph
+PASS Camera opens without awarding photograph metadata
+PASS Shutter outside the framing guide does not award context evidence
+PASS Framed photograph creates exactly one evidence record
+PASS Rock/soil and drive core use different tool contexts
+PASS Cancelling partial sampling never adds cargo
+PASS Sample is pending until the final seal/cap action
+PASS Final cap or seal commits sample with its photograph
+PASS Camera opens without awarding photograph metadata
+PASS Shutter outside the framing guide does not award context evidence
+PASS Framed photograph creates exactly one evidence record
+PASS Rock/soil and drive core use different tool contexts
+PASS Cancelling partial sampling never adds cargo
+PASS Sample is pending until the final seal/cap action
+PASS Final cap or seal commits sample with its photograph
+PASS Three distinct sample workflows complete the science traverse
+PASS Close-up of only part of Surveyor is not a context photograph
+PASS Framed whole-Surveyor photograph precedes all hardware work
+PASS Cancelled component removal leaves original hardware visible
+PASS Released fittings alone do not count as packed hardware
+PASS Packed Surveyor component disappears from the original location
+PASS Cancelled component removal leaves original hardware visible
+PASS Released fittings alone do not count as packed hardware
+PASS Packed Surveyor component disappears from the original location
+PASS Cancelled component removal leaves original hardware visible
+PASS Released fittings alone do not count as packed hardware
+PASS Packed Surveyor component disappears from the original location
+PASS All real hardware workflows unlock return
+PASS Manifest confirmation stows actual cargo and finishes mission
+PASS Untimed checkpoint uses a validated explicit mode
+PASS Historical mode accepts elapsed time beyond exercise duration
+PASS Timed save rejects impossible exercise telemetry
+PASS Rebinding rejects reserved and duplicate keys
+PASS A free key can be assigned to work
+PASS Rebound U input opens the actual work tool
+PASS Settings and rebound keys survive independent config serialization
+PASS Settings panel pauses active gameplay
+PASS Closing settings restores the previous running state
+PASS Evidence album opens from an already paused game
+PASS Closing album preserves an existing pause
+PASS Full suit and first-person hands load real skinned skeletons
+PASS Time expiry closes unfinished work and reveals the result
+PASS Time expiry closes unfinished work and reveals the result
+PASS Time expiry closes unfinished work and reveals the result
+PASS Time expiry closes unfinished work and reveals the result
+PASS Pause instructions resolve the rebound journal key
+PASS Legacy work prompt follows the rebound interaction key
+RESULT: 0 failures

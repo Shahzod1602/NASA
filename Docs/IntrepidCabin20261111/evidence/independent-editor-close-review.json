@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "generated_utc": "2026-11-11T17:37:03.984515+00:00",
+  "scope": "Independent review of the existing Editor720p close-view pair; not packaged acceptance, performance or a human playtest",
+  "inspected_images": [
+    "editor-cabin-control-720-a/cabin-front-q1.png",
+    "editor-cabin-feature-720-a/cabin-front-q1.png",
+    "editor-cabin-control-720-a/cabin-side-q0.png",
+    "editor-cabin-feature-720-a/cabin-side-q0.png"
+  ],
+  "metadata_equal": {
+    "cabin_source_mesh": true,
+    "cabin_source_bounds": true,
+    "cabin_derived_bounds": true,
+    "cabin_pad_world": true,
+    "cabin_lights_sha1": true,
+    "height_grid_sha1": true,
+    "outside_instances_sha1": true,
+    "outside_instance_count": true,
+    "light_snapshot": true,
+    "cameras": true,
+    "width": true,
+    "height": true,
+    "terrain_asset": true
+  },
+  "camera_names": [
+    "cabin-front",
+    "cabin-side"
+  ],
+  "camera_fovs": [
+    60,
+    60
+  ],
+  "camera_fit_pullbacks": [
+    1,
+    1.477455443789063
+  ],
+  "four_pad_world": [
+    {
+      "x": -397.18490005663085,
+      "y": -3.199732301104301,
+      "z": -1.7042378632319348
+    },
+    {
+      "x": 397.18490005663085,
+      "y": -7.107759714684594,
+      "z": -34.59423010633309
+    },
+    {
+      "x": -4.206345255046097,
+      "y": -394.7026276355358,
+      "z": 28.314038416644564
+    },
+    {
+      "x": -4.336232400688549,
+      "y": 394.7247938996064,
+      "z": -65.48119897687279
+    }
+  ],
+  "source_bounds": {
+    "origin": {
+      "x": 0,
+      "y": 0,
+      "z": 253.47088623046875
+    },
+    "box_extent": {
+      "x": 325,
+      "y": 324.9603271484375,
+      "z": 253.47088623046875
+    },
+    "sphere_radius": 404.15054355252926
+  },
+  "control_white_materials": [
+    [
+      "blinn3SG_001",
+      false,
+      null
+    ],
+    [
+      "initialShadingGr_001",
+      false,
+      null
+    ]
+  ],
+  "feature_white_materials": [
+    [
+      "blinn3SG_001",
+      true,
+      0.6784313917160034
+    ],
+    [
+      "initialShadingGr_001",
+      true,
+      0.49803921580314636
+    ]
+  ],
+  "acceptance": "Accept the bounded authored-normal repair and shared-white-material finish for subsequent packaged verification, with the limitations below; not final photoreal quality",
+  "observations": [
+    "The side view loses the strong dark vertical discontinuity across the central cabin panels; several large shading transitions are smoother.",
+    "The original low-poly outline, antennas, pad/ladder placement and terrain framing appear unchanged across these pairs.",
+    "The cloth treatment is subtle at720p and these views do not establish detailed fabric readability."
+  ],
+  "limitations": [
+    "Large sun-facing cabin regions remain very bright and visually flat in both images. Literal channel clipping was not established: sampled central-white ROI [580,240,820,420] contains zero pixels with all channels>=254 in either image.",
+    "The hull silhouette remains visibly faceted; no geometric detail was added and this pass does not establish photoreal quality.",
+    "Large dark front/back panels are already present in the baseline; these images alone do not establish their source-material/lighting cause.",
+    "Only four explicitly listed existing images were visually inspected; no animation, FPS, human playtest or packaged build conclusion."
+  ],
+  "new_unreal_or_compiler_launched": false,
+  "source_or_tools_changed": false,
+  "player_state_restored": false,
+  "pixel_roi_check": {
+    "image": "cabin-side-q0.png",
+    "rectangle_xyxy": [
+      580,
+      240,
+      820,
+      420
+    ],
+    "pixels": 43200,
+    "control_channel_max": [
+      247,
+      239,
+      239
+    ],
+    "feature_channel_max": [
+      247,
+      239,
+      238
+    ],
+    "control_pixels_all_channels_ge254": 0,
+    "feature_pixels_all_channels_ge254": 0,
+    "scope": "Small central white-cabin ROI only; not a full HDR exposure or material diagnosis"
+  }
+}

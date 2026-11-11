@@ -1,0 +1,59 @@
+{
+  "capture": "$PROJECT_ROOT\\Dist\\Apollo12\\Windows\\LunarRescue\\Reports\\IntrepidCabin20261111\\package-cabin-feature-q1\\intrepid-profile.csv",
+  "captured_frames": 6000,
+  "warmup_frames_excluded": 0,
+  "sample_frames": 6000,
+  "sample_seconds": 100.02724459999983,
+  "mean_fps": 59.98365769239634,
+  "one_percent_low_fps": 58.204992940704436,
+  "p95_frame_ms": 16.6872,
+  "p99_frame_ms": 16.7256,
+  "largest_frame_ms": 25.1989,
+  "method": "1% low = 1000 / mean frame ms of the slowest 1% of sampled frames",
+  "limitations": "One rendered offscreen four-camera run at Medium with normal delta time, VSync off and the recorded FPS cap. The 300 settling frames occur before capture and no CSV frames are discarded. Baseline is an opt-out counterfactual in this same binary, not an earlier executable. Not occupied driving, a human playtest, universal FPS, animation-smoothness proof, true peak memory or VRAM. Zero/unavailable GPU counters do not establish GPU measurement. CabinBaseline controls only the derivative/shared white finish; VisualBaseline independently controls the earlier art layer.",
+  "workload": "Four fixed cameras; frozen mission/pawn; production parked support actors enabled; normal engine delta",
+  "settling_frames_before_csv": 300,
+  "csv_nonnumeric_header_footer_rows": 2,
+  "csv_nonpositive_or_nonfinite_frame_rows": 0,
+  "optional_counters": {
+    "GameThreadTime": {
+      "present": true,
+      "rows": 6000,
+      "finite_rows": 6000,
+      "positive_rows": 6000,
+      "mean_including_zero": 1.9136353833333333
+    },
+    "RenderThreadTime": {
+      "present": true,
+      "rows": 6000,
+      "finite_rows": 6000,
+      "positive_rows": 6000,
+      "mean_including_zero": 4.062131033333333
+    },
+    "GPUTime": {
+      "present": true,
+      "rows": 6000,
+      "finite_rows": 6000,
+      "positive_rows": 6000,
+      "mean_including_zero": 16.661205916666667
+    },
+    "GPU/SlateUI": {
+      "present": true,
+      "rows": 6000,
+      "finite_rows": 6000,
+      "positive_rows": 5999,
+      "mean_including_zero": 8.820571333333334
+    },
+    "GPUMem/LocalUsedMB": {
+      "present": true,
+      "rows": 6000,
+      "finite_rows": 6000,
+      "positive_rows": 5998,
+      "mean_including_zero": 252.21669973333334
+    }
+  },
+  "cabin_scope": true,
+  "cabin_baseline": false,
+  "intrepid_visual_baseline": false,
+  "comparison_scope": "Cabin-only opt-out in the same final binary; the independent visual-baseline flag controls the prior Nov11 layer. Four original camera phases remain unchanged."
+}

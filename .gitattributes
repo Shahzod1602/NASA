@@ -17,3 +17,10 @@ SourceArt/Apollo12/Raw/** -text -whitespace
 
 # Keep dated verification receipts byte-for-byte so published SHA values remain valid.
 Docs/TaskFixes20261106/** -text -whitespace
+Docs/IntrepidVisual20261111/** -text -whitespace
+Docs/IntrepidCabin20261111/** -text -whitespace
+Docs/Releases/apollo12-v0.8.2/** -text -whitespace
+
+# Retain source-model recovery inputs and checksums exactly.
+SourceArt/IntrepidCabin20261111/** -text -whitespace
+SourceArt/IntrepidCabin20261111/Raw/*.glb filter=lfs diff=lfs merge=lfs -text

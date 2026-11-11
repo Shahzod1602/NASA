@@ -1,5 +1,68 @@
 # Lunar Rescue
 
+## v0.8.2 — Intrepid surface and cabin (11 November 2026)
+
+**Play on Windows:** [v0.8.2 release](https://github.com/Shahzod1602/NASA/releases/tag/apollo12-v0.8.2) · [Windows ZIP](https://github.com/Shahzod1602/NASA/releases/download/apollo12-v0.8.2/LunarRescue-Expeditions-v0.8.2-Windows.zip).
+
+This release includes the two dated Intrepid development passes below: a bounded
+50 × 50 m landing-area art layer, refined foil/metal and recovered cabin shading
+with a subtle cloth finish. Existing NASA/LROC elevations, mission locations and
+Moon/Mars missions remain in use. Extract the whole ZIP and run `LunarRescue.exe`;
+Unreal Editor is not required. Choose **Explore the Moon → Apollo 12 → Start Mission**.
+
+The verified executable is `59d4f795b114`: 1,763 packaged C++ PASS executions / 0
+failures across 31 reports, plus 32 staged review PNGs. These are repeated automated
+executions, not unique tests or human playtests. The capped four-camera 720p Medium
+capture averages 59.98 FPS; full-mission performance is not established.
+[Release details](Docs/Releases/apollo12-v0.8.2/RELEASE_NOTES.md) · [Test report](TEST_REPORT.md).
+
+Dated local/unreleased records below retain their original development context.
+Release source identity and original dirty compile provenance are recorded separately.
+
+## Local development — Intrepid cabin shading (11 November 2026)
+
+The cabin pass recovers authored normals that were omitted by the original GLB
+to OBJ conversion. A separate static-mesh asset preserves the existing positions,
+UVs, material layout and lander placement. Its rendering frames are baked from
+the retained model and invalid legacy tangent bases are repaired explicitly.
+Two shared white material slots receive a subtle cloth finish; their original
+GLB neutral color factors remain distinct. No new measured terrain is added.
+
+The source still has a coarse silhouette. This is a shading improvement, not a
+new photoreal spacecraft reconstruction. The local Windows build passes 1,763
+C++ assertion executions across 31 raw reports, with 32 packaged review PNGs.
+Its capped 720p Medium four-camera feature capture averages 59.98 FPS; this does
+not establish whole-game performance. [Exact tests and limits](TEST_REPORT.md).
+[Implementation and limits](Docs/IntrepidCabin20261111/IMPLEMENTATION.md).
+The public v0.8.1 download below predates both local Intrepid passes.
+Run `Dist/Apollo12/Windows/LunarRescue.exe`, then choose **Explore the Moon →
+Apollo 12 → Start Mission**. Keep the complete Windows folder beside its launcher.
+
+## Earlier local build — Intrepid visual slice (11 November 2026)
+
+A bounded 50 × 50 m Apollo landing-area art pass adds distance-filtered regolith
+shading, grounded instanced fragments, limited small-rock shadows, revised foil
+and metal finishes, and restrained blanket folds. Existing LROC elevations,
+collision, mapped worksites and all four maps remain the source of ground truth.
+The original ladder is retained. The source model remains a simplified reference.
+
+This work uses the project's existing C++ instancing pipeline; no new PCG/MCP
+plugin, cloud world generator or runtime internet dependency is required.
+The earlier `dc0b5864…` Windows build compiled, cooked and staged successfully. Its focused
+visual checks pass: 335 C++ assertion executions, 32 packaged Low/Medium PNGs at
+720p/1080p, and paired 6,000-frame captures. At 1280 × 720 Medium with a 60 FPS
+cap, the four-camera feature capture averages 60.00 FPS; this is a limited
+offscreen workload, not a whole-game performance claim. Regression results,
+hardware and limitations are recorded in [TEST_REPORT](TEST_REPORT.md).
+[Scope and reproduction](Docs/IntrepidVisual20261111/IMPLEMENTATION.md) ·
+[Science and art](Docs/IntrepidVisual20261111/SCIENCE_AND_ART.md).
+The public v0.8.1 download below predates this local art pass.
+
+To play the local build, run `Dist/Apollo12/Windows/LunarRescue.exe`, then choose
+**Explore the Moon → Apollo 12 → Start Mission**. Keep the entire Windows folder;
+Unreal Editor and runtime internet are not required by the game.
+
+
 ## v0.8.1 — Mission interaction fixes (6 November 2026)
 
 **Windows download:** [v0.8.1 release](https://github.com/Shahzod1602/NASA/releases/tag/apollo12-v0.8.1) · [Windows ZIP](https://github.com/Shahzod1602/NASA/releases/download/apollo12-v0.8.1/LunarRescue-Expeditions-v0.8.1-Windows.zip).

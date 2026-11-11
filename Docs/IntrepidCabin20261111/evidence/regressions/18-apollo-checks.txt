@@ -1,0 +1,216 @@
+PASS Field tests use isolated automation with owner checkpoint writes disabled
+PASS Selected surface mission initializes field operations without starting mission
+PASS Field model checks have a surface GameMode and pilot
+PASS Unrendered fixture component is owned by the current mission
+PASS EVA checks reject skipping the first unfinished system
+PASS The first ordered EVA check starts without opening a viewport panel
+PASS Zero negative and nonfinite preflight deltas cannot complete a check
+PASS Partial EVA progress does not prematurely charge or commit a check
+PASS Paused component advancement freezes the active EVA check and native resource
+PASS A completed EVA check commits one bit and one authored cost
+PASS EVA check 2 cannot repeat an already committed system
+PASS Ordered EVA system 2 commits before the next unlock
+PASS EVA check 3 cannot repeat an already committed system
+PASS Ordered EVA system 3 commits before the next unlock
+PASS EVA check 4 cannot repeat an already committed system
+PASS Ordered EVA system 4 commits before the next unlock
+PASS Four completed checks unlock readiness once without duplicate spending
+PASS Component EVA completion does not start or alter the native mission
+PASS A zero utility cost is an exact no-op
+PASS Negative NaN and infinite utility costs reject without mutation
+PASS An exact remaining utility cost reaches zero and cannot overspend
+PASS A second unaffordable inspection cost leaves the remaining charge intact
+PASS Recorded drive travel charges the configured RU per metre and records actual supplied units
+PASS Invalid or discontinuous vehicle travel inputs leave charge and telemetry unchanged
+PASS Paused or stationary drive records do not invent travel time
+PASS Active briefed advancement uses the configured idle cost and seconds
+PASS Invalid deltas pause and journal freeze field resource and elapsed state
+PASS A finished mission does not continue field resource consumption
+PASS Difficulty 0 exposes unique labelled ports in the required permutation
+PASS Difficulty 0 requires isolation before matching
+PASS Difficulty 0 records a wrong match without erasing connections
+PASS Difficulty 0 rejects invalid port indices without a fabricated attempt
+PASS Difficulty 0 connection 1 updates only the required circuit bits
+PASS Difficulty 0 cannot commit the same terminal twice
+PASS Difficulty 0 connection 2 updates only the required circuit bits
+PASS Difficulty 0 completed puzzle awaits native-stage validation without advancing it
+PASS Difficulty 1 exposes unique labelled ports in the required permutation
+PASS Difficulty 1 requires isolation before matching
+PASS Difficulty 1 records a wrong match without erasing connections
+PASS Difficulty 1 rejects invalid port indices without a fabricated attempt
+PASS Difficulty 1 connection 1 updates only the required circuit bits
+PASS Difficulty 1 cannot commit the same terminal twice
+PASS Difficulty 1 connection 2 updates only the required circuit bits
+PASS Difficulty 1 connection 3 updates only the required circuit bits
+PASS Difficulty 1 completed puzzle awaits native-stage validation without advancing it
+PASS Difficulty 2 exposes unique labelled ports in the required permutation
+PASS Difficulty 2 requires isolation before matching
+PASS Difficulty 2 records a wrong match without erasing connections
+PASS Difficulty 2 rejects invalid port indices without a fabricated attempt
+PASS Difficulty 2 connection 1 updates only the required circuit bits
+PASS Difficulty 2 cannot commit the same terminal twice
+PASS Difficulty 2 connection 2 updates only the required circuit bits
+PASS Difficulty 2 connection 3 updates only the required circuit bits
+PASS Difficulty 2 connection 4 updates only the required circuit bits
+PASS Difficulty 2 completed puzzle awaits native-stage validation without advancing it
+PASS Difficulty 0 exports a bounded valid committed checkpoint
+PASS Difficulty 0 does not persist transient UI scanner or action fields
+PASS Difficulty 0 restores committed resources and clamps native remaining to its validated capacity
+PASS Difficulty 0 import clears transient scanner UI and operation state
+PASS Difficulty 1 exports a bounded valid committed checkpoint
+PASS Difficulty 1 does not persist transient UI scanner or action fields
+PASS Difficulty 1 restores committed resources and clamps native remaining to its validated capacity
+PASS Difficulty 1 import clears transient scanner UI and operation state
+PASS Difficulty 2 exports a bounded valid committed checkpoint
+PASS Difficulty 2 does not persist transient UI scanner or action fields
+PASS Difficulty 2 restores committed resources and clamps native remaining to its validated capacity
+PASS Difficulty 2 import clears transient scanner UI and operation state
+PASS Transactional corruption fixtures begin from a valid serialized checkpoint
+PASS Malformed JSON rejects transactionally
+PASS Oversized checkpoint text rejects transactionally
+PASS The 16 KB limit counts UTF-8 bytes rather than only TCHAR length
+PASS Deeply nested extra JSON rejects before live-state mutation
+PASS Unknown checkpoint schema rejects transactionally
+PASS An unsupported authored resource profile rejects transactionally
+PASS A mismatched science-product identity rejects transactionally
+PASS A checkpoint for another mission rejects transactionally
+PASS Missing required state rejects rather than applying partial defaults
+PASS A numeric string does not bypass resource type validation
+PASS A quoted schema number is rejected without coercion
+PASS A quoted difficulty number is rejected without coercion
+PASS A string cannot masquerade as the extension Boolean flag
+PASS A string cannot masquerade as readiness Boolean state
+PASS A number cannot masquerade as the extension Boolean flag
+PASS Negative stored utility rejects transactionally
+PASS Charge above the profile capacity rejects transactionally
+PASS A forged utility-capacity profile rejects transactionally
+PASS A forged data-capacity profile rejects transactionally
+PASS Stored data above capacity rejects transactionally
+PASS Negative transmitted data rejects transactionally
+PASS Cargo mass inconsistent with collected undelivered bits rejects transactionally
+PASS Collection without prior inspection rejects transactionally
+PASS Delivery outside the collected set rejects transactionally
+PASS Package masks cannot contain an unknown fourth cartridge
+PASS Semantic native-science flags remain a three-bit set
+PASS Prepared state without four committed checks rejects transactionally
+PASS Scanner unlock without vehicle inspection rejects transactionally
+PASS Unknown difficulty rejects transactionally
+PASS Fractional difficulty cannot truncate into a valid profile
+PASS Circuit completion without all matching bits rejects transactionally
+PASS Unbounded elapsed telemetry rejects transactionally
+PASS Negative travel telemetry rejects transactionally
+PASS Native checkpoint-compatible capacity is capped at 1800 gameplay seconds
+PASS Difficulty and effective mission capacity must agree
+PASS Enabled operations cannot restore a missing base mission capacity
+PASS An unusable auxiliary parked-pose record does not discard valid core training state
+PASS Delivered package history remains recorded while derived carried mass counts only undelivered cargo
+PASS Live-state validation catches derived-cargo drift before saving
+PASS Nonfinite live resources cannot be exported as a checkpoint
+PASS A geometry-free fixture actor is available for hidden-extension state checks
+PASS An empty legacy blob disables optional operations while preserving the native mission resource
+PASS Disabled legacy operations keep optional package actors hidden after visibility refresh
+PASS A disabled legacy extension does not fabricate a modern progress blob
+PASS Fixed board and scanner keys cannot also be rebound to a gameplay action
+PASS Legacy board-key binding falls back to its default
+PASS Legacy scanner-key binding falls back to its default
+PASS Start enters dedicated pre-EVA checks rather than committing mission
+PASS Owned visible preflight panel accepts checks while mission clock remains briefing
+PASS Hatch cannot open before all four suit checks
+PASS Preflight cannot skip the suit seal check
+PASS Real owned-panel callback begins next timed training check
+PASS Repeated callback cannot award an in-progress check twice
+PASS Partial check time does not mark completion
+PASS Pause freezes pending suit action and oxygen
+PASS Elapsed authored check timer completes exactly one step
+PASS Real owned-panel callback begins next timed training check
+PASS Repeated callback cannot award an in-progress check twice
+PASS Partial check time does not mark completion
+PASS Pause freezes pending suit action and oxygen
+PASS Elapsed authored check timer completes exactly one step
+PASS Real owned-panel callback begins next timed training check
+PASS Repeated callback cannot award an in-progress check twice
+PASS Partial check time does not mark completion
+PASS Pause freezes pending suit action and oxygen
+PASS Elapsed authored check timer completes exactly one step
+PASS Real owned-panel callback begins next timed training check
+PASS Repeated callback cannot award an in-progress check twice
+PASS Partial check time does not mark completion
+PASS Pause freezes pending suit action and oxygen
+PASS Elapsed authored check timer completes exactly one step
+PASS All four checks unlock hatch
+PASS Closing checks and skip cannot bypass a pending EVA gate
+PASS Enter reopens pending training checks
+PASS Completed owned panel launches departure
+PASS Departure enters surface briefing before active resource consumption
+PASS Closing mandatory briefing cannot consume resources time or enable movement
+PASS Work input reopens mandatory briefing without native progression
+PASS Primary click reopens mandatory briefing without native progression
+PASS Surface briefing accepts Professional gameplay tuning
+PASS One confirmation locks resource budget and starts surface play
+PASS Difficulty applies shared charge storage payload and pause state
+PASS Locked briefing remains readable
+PASS Reopening briefing cannot refill or change difficulty
+PASS Map contains bounded actual world support positions
+PASS Yellow-star support waypoint does not replace primary mission target
+PASS Selected support point is visibly marked without changing native interaction target
+PASS HUD support marker presents the selected real position without changing native work
+PASS Main-objective map entry restores mission navigation selection
+PASS Main-objective selection restores the native HUD marker
+PASS Paused resource board freezes mission and shared field clocks
+PASS Closed panel cannot authorize a retained callback
+PASS Magnifier remains locked before a real vehicle inspection
+PASS Owned nearby rover inspection unlocks optical magnifier
+PASS First cartridge has a clear grounded observation approach on actual terrain
+PASS Unlocked magnifier sets real optical view on an authored cartridge
+PASS Observed package begins real held inspection
+PASS Releasing incomplete inspection awards no record and spends no scan resource
+PASS Insufficient shared battery rejects inspection atomically
+PASS Full local storage rejects inspection without charge loss
+PASS A real opaque world blocker prevents optical inspection without resource loss
+PASS Inspection can retry after resource constraints clear
+PASS Completed observed hold records source label and exact shared scan costs once
+PASS Work key packs a scanned training cartridge into bounded real inventory
+PASS Packing hides only cartridge and never awards historical samples or hardware
+PASS Third cartridge has a clear grounded observation approach on actual terrain
+PASS Second cartridge has a clear grounded observation approach on actual terrain
+PASS Second cartridge can use the exact remaining 0.4 MB buffer / Reading a simulated remote-delivery label — no in-situ composition measurement.
+PASS Professional payload cap prevents a second pickup while preserving its inspected label
+PASS Stowing magnifier restores configured field of view
+PASS Base deposit clears carried training mass and retains delivery history
+PASS Powered nearby board begins actual recharge after closing its paused panel
+PASS Pause freezes an in-flight recharge and native oxygen together
+PASS Recharge adds 20 RU only after simulated mission time and native oxygen are spent
+PASS Powered board downlink reserves its documented shared utility cost
+PASS Completed real downlink frees local storage and records the transmitted amount
+PASS Vehicle checks require isolated field-operations automation and a possessed pawn
+PASS A bounded training rover finds real supported terrain near the mission base
+PASS Repeated vehicle construction reuses one existing rover
+PASS Parked rover has four proper wheels and bounded visuals with no idle Tick
+PASS Missing or out-of-map ground rejects parked state without moving the rover
+PASS Nonfinite controls are neutralized and rescaled parked transforms are rejected
+PASS A validated parked transform restores the unoccupied rover without moving the pawn
+PASS Restoring rover parking never teleports the player
+PASS Parking-overlap fixture uses a supported standing capsule on actual terrain
+PASS A terrain-valid parked pose overlapping the on-foot player is rejected without moving either actor
+PASS Uninspected training rover cannot be driven
+PASS Mounting keeps the existing possessed pawn in a hidden fixed seat and changes only the view target
+PASS Parked-state restore cannot relocate an occupied rover
+PASS A real blocking-wall fixture exists for swept driving
+PASS Rover moves continuously on terrain and stops before a real blocking wall
+PASS Only actual swept travel consumes shared RU and rotates the wheels
+PASS The original pawn remains at the moving seat without controller possession changes
+PASS Pause freezes rover position camera resources and driving telemetry
+PASS An open notebook cannot keep the rover driving in the background
+PASS Zero charge stops the rover with no negative resource or free travel
+PASS Blocked capsule exits keep the rider inside instead of placing them through a wall
+PASS The driver can exit on foot at zero charge with original ownership visibility and collision restored
+PASS Dismount restores previous view mode field of view and movement mode
+PASS A real rover dismount is not credited as native walking or connected to the historical trail and a zero-delta tick changes no elapsed time or oxygen
+PASS EndPlay fixture has a validated approach beside the parked rover
+PASS EndPlay fixture starts with an actual mounted rider
+PASS Vehicle EndPlay restores the original pawn and view without a hidden-rider leak
+PASS Driving checks never award primary science cargo or alter the legacy oxygen model
+PASS Native Apollo checkpoint carries validated additive training state
+PASS Actual SaveGame memory roundtrip retains additive state without version migration
+PASS Fresh run clears checks inventory scanner decisions and telemetry
+RESULT: 0 failures

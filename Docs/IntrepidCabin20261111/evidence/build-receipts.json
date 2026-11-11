@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "generated_utc": "2026-11-11T18:13:51.037925+00:00",
+  "expected_final_inner_executable_sha256": "59d4f795b1141694741264370efe9b79dad66eaa9b4487270ffe7f9517fc358c",
+  "builds": [
+    {
+      "kind": "editor",
+      "path": "Reports/IntrepidCabin20261111/editor-build-g.log",
+      "required_markers": [
+        "Result: Succeeded"
+      ],
+      "source": {
+        "path": "Reports/IntrepidCabin20261111/editor-build-g.log",
+        "bytes": 2096,
+        "sha256": "cddf9b8f88bac7f74babdcc313b99207c03442bc0aef240c63ac1fbc9c22d2c0",
+        "local_evidence_only": true
+      }
+    },
+    {
+      "kind": "game",
+      "path": "Reports/IntrepidCabin20261111/game-build-a.log",
+      "required_markers": [
+        "Result: Succeeded"
+      ],
+      "source": {
+        "path": "Reports/IntrepidCabin20261111/game-build-a.log",
+        "bytes": 2554,
+        "sha256": "79ed0c6803bf1b0aca69ab0bfc2b9bc5904dedd0f9371e6de7d5d2c4ccf0df51",
+        "local_evidence_only": true
+      }
+    },
+    {
+      "kind": "fresh_cook",
+      "path": "Reports/IntrepidCabin20261111/fresh-cook.log",
+      "required_markers": [
+        "Success - 0 error(s), 0 warning(s)",
+        "COOK COMMAND COMPLETED",
+        "BUILD SUCCESSFUL",
+        "AutomationTool exiting with ExitCode=0 (Success)"
+      ],
+      "source": {
+        "path": "Reports/IntrepidCabin20261111/fresh-cook.log",
+        "bytes": 70798,
+        "sha256": "88f26293b2142ec8d21483776140bb7759ba59f216b0040d311edce1f2061e11",
+        "local_evidence_only": true
+      }
+    },
+    {
+      "kind": "stage_archive",
+      "path": "Reports/IntrepidCabin20261111/stage.log",
+      "required_markers": [
+        "STAGE COMMAND COMPLETED",
+        "ARCHIVE COMMAND COMPLETED",
+        "BUILD SUCCESSFUL",
+        "AutomationTool exiting with ExitCode=0 (Success)"
+      ],
+      "source": {
+        "path": "Reports/IntrepidCabin20261111/stage.log",
+        "bytes": 26903,
+        "sha256": "80bd164445196a05f6d92e47f4d8be5ba469b9f2487c5379cb36b7cdf15e615f",
+        "local_evidence_only": true
+      }
+    },
+    {
+      "kind": "material_only_h",
+      "path": "Reports/IntrepidCabin20261111/material-build-h.log",
+      "required_markers": [
+        "INTREPID_CABIN_ASSETS_READY",
+        "Success - 0 error(s), 0 warning(s)"
+      ],
+      "source": {
+        "path": "Reports/IntrepidCabin20261111/material-build-h.log",
+        "bytes": 212097,
+        "sha256": "e109694b58e7799de93573e2742bdbbbcedb5649e05f8cbc531648060399c153",
+        "local_evidence_only": true
+      }
+    }
+  ],
+  "asset_builder": {
+    "mesh_receipt": {
+      "path": "Docs/IntrepidCabin20261111/evidence/mesh-build.json",
+      "bytes": 22962,
+      "sha256": "c04aa50bb1762eb4e14705f35f12b130d9478418a73aa150b5a5e0d6f5c11bad",
+      "local_evidence_only": false
+    },
+    "material_receipt": {
+      "path": "Docs/IntrepidCabin20261111/evidence/material-build.json",
+      "bytes": 818,
+      "sha256": "481c03d3efdceb3ec6852bf093b15aaa456f0459b60c7e5333c523c7aea177d5",
+      "local_evidence_only": false
+    },
+    "editor_mesh_checks_separate": 46,
+    "matched_cabin_triangles": 1237,
+    "source_cabin_corners": 3711,
+    "all_derived_md_frames_baked": 289380,
+    "outside_bit_identity": false,
+    "outside_quantization_only": false,
+    "outside_policy_verified": true,
+    "source_degenerate_tangent_repairs": {
+      "vertex_instances": 836,
+      "faces": 570,
+      "slots": {
+        "blinn4SG_002": 257,
+        "blinn6SG_001": 113,
+        "blinn2SG_002": 4,
+        "blinn3SG_001": 36,
+        "blinn1SG_002": 160
+      }
+    },
+    "caveats": [
+      "Geometry/UV/material/winding exact multiset equality does not require identical welded render vertex count.",
+      "All outside normals/valid tangents obey actual one-component-step bounds; only proven source zero/parallel tangent frames are reconstructed across the five recorded slots. W/sign exact; reconstructed tangents can differ by1component/90degrees.",
+      "3711 cabin GLB normals are targets; cabin tangents are projected/reconstructed rendering bases, not GLB-authored tangents or UV repair.",
+      "46-check builder g mesh succeeded before its later material-pin script failure; material-only h separately succeeded without rewriting the accepted mesh.",
+      "No binary saved-asset reload attribute audit is implemented. Fresh-process disk-loaded reviews are visual/runtime proof, not that audit."
+    ]
+  },
+  "official_source_identity": {
+    "path": "Docs/IntrepidCabin20261111/evidence/official-source-identity.json",
+    "bytes": 442,
+    "sha256": "5665250b2b4d637dd02b893e0553e38f58f6b097591d775d03df6e589be54a09",
+    "local_evidence_only": false
+  },
+  "protocol_clarification": {
+    "path": "Docs/IntrepidCabin20261111/evidence/protocol-clarification.json",
+    "bytes": 270,
+    "sha256": "7f5e968e0ff0daf383740bce90dc727816fc31e1f3277328af665d6878c571d8",
+    "local_evidence_only": false
+  },
+  "runtime_results_not_inferred": true
+}

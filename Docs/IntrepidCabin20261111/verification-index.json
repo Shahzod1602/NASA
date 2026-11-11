@@ -1,0 +1,1964 @@
+{
+  "schema_version": 1,
+  "phase": "Intrepid cabin normals and shared white finish",
+  "curation_started_utc": "2026-11-11T18:13:51.019043+00:00",
+  "curation_finished_utc": "2026-11-11T18:13:52.481686+00:00",
+  "expected_final_inner_executable_sha256": "59d4f795b1141694741264370efe9b79dad66eaa9b4487270ffe7f9517fc358c",
+  "source_commit_at_execution": "4d1d651f43809071da42409f483506487099f164",
+  "source_dirty_at_execution": true,
+  "counting_policy": "Each raw C++ report counted once per execution, not unique checks. Separate Editor/history/offline source fixtures/previous IntrepidVisual phase are excluded.",
+  "totals": {
+    "local_packaged_executions": 11,
+    "local_packaged_raw_cpp_pass": 483,
+    "local_packaged_raw_cpp_fail": 0,
+    "packaged_review_pngs": 32,
+    "editor_executions_separate": 4,
+    "editor_raw_cpp_pass_separate": 182,
+    "human_playtests": 0,
+    "regression_packaged_raw_reports": 20,
+    "regression_packaged_raw_cpp_pass": 1280,
+    "combined_packaged_raw_reports": 31,
+    "combined_packaged_raw_cpp_pass": 1763,
+    "combined_packaged_raw_cpp_fail": 0
+  },
+  "editor_scope_note": "Preliminary4 Editor runs precede source/protocol annotation clarification; their selected-input fingerprint must not be asserted equal to final Game. Runtime C++/assets did not change after these accepted views.",
+  "runs": [
+    {
+      "label": "package-cabin-control-test-a",
+      "kind": "test",
+      "cabin_baseline": true,
+      "cabin_review": false,
+      "packaged": true,
+      "width": 1280,
+      "height": 720,
+      "raw_cpp_pass": 43,
+      "raw_cpp_fail": 0,
+      "one_result_zero_failures": true,
+      "executable_sha256": "59d4f795b1141694741264370efe9b79dad66eaa9b4487270ffe7f9517fc358c",
+      "source_art_inputs_sha256": "d9336b2dbdda2eacbb184893e7a2186ce1ac879e9eed403efa837203866cefa9",
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-control-test-a/checks.txt",
+        "bytes": 3482,
+        "sha256": "654bb3f15725d569a29e6647eb1af8f52abd0eb7a3f06021fd18327f3367b34e",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-control-test-a/manifest.json",
+        "bytes": 25351,
+        "sha256": "efdd683f6d24b58114e61de894cea08f2dddd630aa8d2aa0d584fde26f890afd",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-control-test-a/environment.json",
+        "bytes": 2898,
+        "sha256": "6b31d575e8321ab16395d4267f0b6d23b01af4b0d1e3faf197cd7b8e45e1ab2f",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-control-test-a/validation.json",
+        "bytes": 772,
+        "sha256": "9800f9a7e70e638fff47b8770e8cc3b6154fcd8dcb7472edc23dfaf0e9457447",
+        "local_evidence_only": false
+      },
+      "controller_folder": "Reports/IntrepidCabin20261111/runs/package-cabin-control-test-a",
+      "driver_folder": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-control-test-a",
+      "images": [],
+      "human_playtest": false,
+      "synthetic": true,
+      "runtime_normals_directly_inspected": false
+    },
+    {
+      "label": "package-cabin-feature-test-a",
+      "kind": "test",
+      "cabin_baseline": false,
+      "cabin_review": false,
+      "packaged": true,
+      "width": 1280,
+      "height": 720,
+      "raw_cpp_pass": 43,
+      "raw_cpp_fail": 0,
+      "one_result_zero_failures": true,
+      "executable_sha256": "59d4f795b1141694741264370efe9b79dad66eaa9b4487270ffe7f9517fc358c",
+      "source_art_inputs_sha256": "d9336b2dbdda2eacbb184893e7a2186ce1ac879e9eed403efa837203866cefa9",
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-feature-test-a/checks.txt",
+        "bytes": 3482,
+        "sha256": "654bb3f15725d569a29e6647eb1af8f52abd0eb7a3f06021fd18327f3367b34e",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-feature-test-a/manifest.json",
+        "bytes": 25751,
+        "sha256": "b81adad01cc937ee5c19a6a9b7ec673f98ffe0193999c386278a579b3ae71a0b",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-feature-test-a/environment.json",
+        "bytes": 2869,
+        "sha256": "0697eeb3624707e25522877297d041f1d41867c450010400ebd0004532876191",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-feature-test-a/validation.json",
+        "bytes": 772,
+        "sha256": "01f444ba4d081c32346a3acb75f3615feeb3794a3b28fb49dc8df93aceef23ef",
+        "local_evidence_only": false
+      },
+      "controller_folder": "Reports/IntrepidCabin20261111/runs/package-cabin-feature-test-a",
+      "driver_folder": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-feature-test-a",
+      "images": [],
+      "human_playtest": false,
+      "synthetic": true,
+      "runtime_normals_directly_inspected": false
+    },
+    {
+      "label": "package-cabin-feature-rendered-a",
+      "kind": "test",
+      "cabin_baseline": false,
+      "cabin_review": false,
+      "packaged": true,
+      "width": 1280,
+      "height": 720,
+      "raw_cpp_pass": 43,
+      "raw_cpp_fail": 0,
+      "one_result_zero_failures": true,
+      "executable_sha256": "59d4f795b1141694741264370efe9b79dad66eaa9b4487270ffe7f9517fc358c",
+      "source_art_inputs_sha256": "d9336b2dbdda2eacbb184893e7a2186ce1ac879e9eed403efa837203866cefa9",
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-feature-rendered-a/checks.txt",
+        "bytes": 3482,
+        "sha256": "654bb3f15725d569a29e6647eb1af8f52abd0eb7a3f06021fd18327f3367b34e",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-feature-rendered-a/manifest.json",
+        "bytes": 25755,
+        "sha256": "9a50cb0b61d72b93a686fbcea84d593a07e4beaf022bffe67129b67cee1249d3",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-feature-rendered-a/environment.json",
+        "bytes": 2944,
+        "sha256": "0b28c97bc6d8bbe74604125b8106ff8e55dfea0ba023cb8d3e10848e93bcf215",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-feature-rendered-a/validation.json",
+        "bytes": 772,
+        "sha256": "3406807e24d5f174a2b3497e0d3f2cb1b42ea790dc77bc47b7d48fc2c498be23",
+        "local_evidence_only": false
+      },
+      "controller_folder": "Reports/IntrepidCabin20261111/runs/package-cabin-feature-rendered-a",
+      "driver_folder": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-feature-rendered-a",
+      "images": [],
+      "human_playtest": false,
+      "synthetic": true,
+      "runtime_normals_directly_inspected": false
+    },
+    {
+      "label": "package-cabin-close-control-720-a",
+      "kind": "review",
+      "cabin_baseline": true,
+      "cabin_review": true,
+      "packaged": true,
+      "width": 1280,
+      "height": 720,
+      "raw_cpp_pass": 43,
+      "raw_cpp_fail": 0,
+      "one_result_zero_failures": true,
+      "executable_sha256": "59d4f795b1141694741264370efe9b79dad66eaa9b4487270ffe7f9517fc358c",
+      "source_art_inputs_sha256": "d9336b2dbdda2eacbb184893e7a2186ce1ac879e9eed403efa837203866cefa9",
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-close-control-720-a/checks.txt",
+        "bytes": 3486,
+        "sha256": "1ef0950a36176cf291ada5d8feae9ac2a25859d1155b56f9bd1b19389811cfa5",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-close-control-720-a/manifest.json",
+        "bytes": 30321,
+        "sha256": "637ca9ef4627ee8a6870266f2650b7f9cefb30209026b468c245859181cb1c2e",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-close-control-720-a/environment.json",
+        "bytes": 3053,
+        "sha256": "4908b1e5bf8efe8f0605c3b567cb11a9d65b69adb8010d000f11353a87870ddf",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-close-control-720-a/validation.json",
+        "bytes": 1392,
+        "sha256": "a7b78d39879d825b79736188f3b49f9c7146895caa083b6316f44b1e1f8a6e58",
+        "local_evidence_only": false
+      },
+      "controller_folder": "Reports/IntrepidCabin20261111/runs/package-cabin-close-control-720-a",
+      "driver_folder": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-close-control-720-a",
+      "images": [
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-close-control-720-a/cabin-front-q0.png",
+          "bytes": 789486,
+          "sha256": "d245c26b9195e29c389afe8518019838d2a7c73fe9ce331f3a53706e355b9d37",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "cabin-front",
+          "quality": 0,
+          "fov": 60
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-close-control-720-a/cabin-side-q0.png",
+          "bytes": 769596,
+          "sha256": "15e9e13aa34b851e0b8c595b238c1199b8403601668d54ae7ffac20b98300456",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "cabin-side",
+          "quality": 0,
+          "fov": 60
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-close-control-720-a/cabin-front-q1.png",
+          "bytes": 902131,
+          "sha256": "0d35d0ba13cbdca57a2ec0936407eb6b2a40f333e125acafc9ea3306a4d74922",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "cabin-front",
+          "quality": 1,
+          "fov": 60
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-close-control-720-a/cabin-side-q1.png",
+          "bytes": 814417,
+          "sha256": "dc03160ef48abdf061ae855a0cc1c926a4f807fda4c997a86e3df9a2b05e6108",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "cabin-side",
+          "quality": 1,
+          "fov": 60
+        }
+      ],
+      "human_playtest": false,
+      "synthetic": true,
+      "runtime_normals_directly_inspected": false
+    },
+    {
+      "label": "package-cabin-close-feature-720-a",
+      "kind": "review",
+      "cabin_baseline": false,
+      "cabin_review": true,
+      "packaged": true,
+      "width": 1280,
+      "height": 720,
+      "raw_cpp_pass": 43,
+      "raw_cpp_fail": 0,
+      "one_result_zero_failures": true,
+      "executable_sha256": "59d4f795b1141694741264370efe9b79dad66eaa9b4487270ffe7f9517fc358c",
+      "source_art_inputs_sha256": "d9336b2dbdda2eacbb184893e7a2186ce1ac879e9eed403efa837203866cefa9",
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-close-feature-720-a/checks.txt",
+        "bytes": 3486,
+        "sha256": "1ef0950a36176cf291ada5d8feae9ac2a25859d1155b56f9bd1b19389811cfa5",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-close-feature-720-a/manifest.json",
+        "bytes": 30721,
+        "sha256": "24630a2ae460cd9ec6564a9647059e4e0a886726ef19b3de3df4f7948635253a",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-close-feature-720-a/environment.json",
+        "bytes": 3024,
+        "sha256": "91cc59f47f8743e468fe920718eb872080dcc4a3deeec696f80358aa6bf70543",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-close-feature-720-a/validation.json",
+        "bytes": 1392,
+        "sha256": "6e2c4d67a401d71ae5de6fc3a17d01fe7c15830f51c7f364041dcb8c4e7769c4",
+        "local_evidence_only": false
+      },
+      "controller_folder": "Reports/IntrepidCabin20261111/runs/package-cabin-close-feature-720-a",
+      "driver_folder": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-close-feature-720-a",
+      "images": [
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-close-feature-720-a/cabin-front-q0.png",
+          "bytes": 850218,
+          "sha256": "f45f47572dfca0fab6a9704c4732aa3b5b57c0bb8ad8ba996eccecabcfbcb36e",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "cabin-front",
+          "quality": 0,
+          "fov": 60
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-close-feature-720-a/cabin-side-q0.png",
+          "bytes": 758105,
+          "sha256": "b54923bb97db48c2aba68278f376e4e5f76faab9ac283b3d0107d75d5a67be99",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "cabin-side",
+          "quality": 0,
+          "fov": 60
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-close-feature-720-a/cabin-front-q1.png",
+          "bytes": 910227,
+          "sha256": "8b51c6582206001e53d699d3b31896936573277bc754e023a9f42b123ef11f21",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "cabin-front",
+          "quality": 1,
+          "fov": 60
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-close-feature-720-a/cabin-side-q1.png",
+          "bytes": 817577,
+          "sha256": "4df4c3a46410eba3841907c3b783bd05a0b4064e826207a132fa494d466afb8c",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "cabin-side",
+          "quality": 1,
+          "fov": 60
+        }
+      ],
+      "human_playtest": false,
+      "synthetic": true,
+      "runtime_normals_directly_inspected": false
+    },
+    {
+      "label": "package-cabin-close-control-1080-a",
+      "kind": "review",
+      "cabin_baseline": true,
+      "cabin_review": true,
+      "packaged": true,
+      "width": 1920,
+      "height": 1080,
+      "raw_cpp_pass": 43,
+      "raw_cpp_fail": 0,
+      "one_result_zero_failures": true,
+      "executable_sha256": "59d4f795b1141694741264370efe9b79dad66eaa9b4487270ffe7f9517fc358c",
+      "source_art_inputs_sha256": "d9336b2dbdda2eacbb184893e7a2186ce1ac879e9eed403efa837203866cefa9",
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-close-control-1080-a/checks.txt",
+        "bytes": 3486,
+        "sha256": "1ef0950a36176cf291ada5d8feae9ac2a25859d1155b56f9bd1b19389811cfa5",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-close-control-1080-a/manifest.json",
+        "bytes": 30322,
+        "sha256": "8b1f34f26a975859da34b342bee4bbdea07b2e1d656eda402919f77e9937d6de",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-close-control-1080-a/environment.json",
+        "bytes": 3058,
+        "sha256": "5bfb5e743548281cb087bf8d99ca646f269d084e0d7f0cc53eb9fe8a6ed72027",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-close-control-1080-a/validation.json",
+        "bytes": 1396,
+        "sha256": "adefdee41db90330724d0b36806020713f823ea7d26822a7c5810bbe4e820296",
+        "local_evidence_only": false
+      },
+      "controller_folder": "Reports/IntrepidCabin20261111/runs/package-cabin-close-control-1080-a",
+      "driver_folder": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-close-control-1080-a",
+      "images": [
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-close-control-1080-a/cabin-front-q0.png",
+          "bytes": 1730624,
+          "sha256": "6cb715a1cd8ae3681eeb25fa9ed346bc8d613067c5608a808a64854e48a17179",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "camera": "cabin-front",
+          "quality": 0,
+          "fov": 60
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-close-control-1080-a/cabin-side-q0.png",
+          "bytes": 1611229,
+          "sha256": "8c76189030d129247add064ed63a67554ae750f776fdc333f8d27857575f077e",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "camera": "cabin-side",
+          "quality": 0,
+          "fov": 60
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-close-control-1080-a/cabin-front-q1.png",
+          "bytes": 1953371,
+          "sha256": "84d108aa88b6cf2fe6c9971243894e98dcb06a1ac12e8a543fda77432cc58bc0",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "camera": "cabin-front",
+          "quality": 1,
+          "fov": 60
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-close-control-1080-a/cabin-side-q1.png",
+          "bytes": 1736214,
+          "sha256": "abb3012d1baf6f51168552669a4ef1b6ddf679df79e6944010666e35b050fa04",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "camera": "cabin-side",
+          "quality": 1,
+          "fov": 60
+        }
+      ],
+      "human_playtest": false,
+      "synthetic": true,
+      "runtime_normals_directly_inspected": false
+    },
+    {
+      "label": "package-cabin-close-feature-1080-a",
+      "kind": "review",
+      "cabin_baseline": false,
+      "cabin_review": true,
+      "packaged": true,
+      "width": 1920,
+      "height": 1080,
+      "raw_cpp_pass": 43,
+      "raw_cpp_fail": 0,
+      "one_result_zero_failures": true,
+      "executable_sha256": "59d4f795b1141694741264370efe9b79dad66eaa9b4487270ffe7f9517fc358c",
+      "source_art_inputs_sha256": "d9336b2dbdda2eacbb184893e7a2186ce1ac879e9eed403efa837203866cefa9",
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-close-feature-1080-a/checks.txt",
+        "bytes": 3486,
+        "sha256": "1ef0950a36176cf291ada5d8feae9ac2a25859d1155b56f9bd1b19389811cfa5",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-close-feature-1080-a/manifest.json",
+        "bytes": 30722,
+        "sha256": "8504ffcec80ad982e39c631b51ad8b56f0b332da6056d986f55d366323b79efe",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-close-feature-1080-a/environment.json",
+        "bytes": 3029,
+        "sha256": "e4a91b2f876077019d9e459fa633679ad87315a5f744423bcd1e70c72f82a3c9",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-close-feature-1080-a/validation.json",
+        "bytes": 1396,
+        "sha256": "3b712d9fed1c88c2e1e310404716c0f73c1bdab7f39d847a7fc861c01eeecce3",
+        "local_evidence_only": false
+      },
+      "controller_folder": "Reports/IntrepidCabin20261111/runs/package-cabin-close-feature-1080-a",
+      "driver_folder": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-close-feature-1080-a",
+      "images": [
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-close-feature-1080-a/cabin-front-q0.png",
+          "bytes": 1681978,
+          "sha256": "cfcdd02545705b5e9aa2c7fb57f5960f2eb6e656a580733014ae4b295750caed",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "camera": "cabin-front",
+          "quality": 0,
+          "fov": 60
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-close-feature-1080-a/cabin-side-q0.png",
+          "bytes": 1621842,
+          "sha256": "01cff6371cdf04afc489ab2defe37b1f420c8da686a0b4acc927757ce7f88f20",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "camera": "cabin-side",
+          "quality": 0,
+          "fov": 60
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-close-feature-1080-a/cabin-front-q1.png",
+          "bytes": 1970494,
+          "sha256": "826a59f3d99ce9f9a7b0e45c54d6292e49e04e09683be1efeef40b16c470895f",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "camera": "cabin-front",
+          "quality": 1,
+          "fov": 60
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-close-feature-1080-a/cabin-side-q1.png",
+          "bytes": 1741205,
+          "sha256": "db5bbb2154081f1fd0f91a00e08417f744e45c0b13824207898fcd47113f948f",
+          "local_evidence_only": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "camera": "cabin-side",
+          "quality": 1,
+          "fov": 60
+        }
+      ],
+      "human_playtest": false,
+      "synthetic": true,
+      "runtime_normals_directly_inspected": false
+    },
+    {
+      "label": "package-cabin-wide-control-a",
+      "kind": "review",
+      "cabin_baseline": true,
+      "cabin_review": false,
+      "packaged": true,
+      "width": 1280,
+      "height": 720,
+      "raw_cpp_pass": 48,
+      "raw_cpp_fail": 0,
+      "one_result_zero_failures": true,
+      "executable_sha256": "59d4f795b1141694741264370efe9b79dad66eaa9b4487270ffe7f9517fc358c",
+      "source_art_inputs_sha256": "d9336b2dbdda2eacbb184893e7a2186ce1ac879e9eed403efa837203866cefa9",
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-wide-control-a/checks.txt",
+        "bytes": 3819,
+        "sha256": "3c0fb2a1f996f550ff70c077d895b3a35c982af20247df47157311d13f9aa203",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-wide-control-a/manifest.json",
+        "bytes": 29719,
+        "sha256": "582d8b65ec44dcdda0d75b0fa140ad3c172643cd64d1340e8eaeaf05abd8b49d",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-wide-control-a/environment.json",
+        "bytes": 3011,
+        "sha256": "0cc732de483781d439c8365bcbfa55d261778cc078118f81e7e8df476a8d6686",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-wide-control-a/validation.json",
+        "bytes": 2024,
+        "sha256": "bc60cefa5b97000871f110f0961ff51df70b1b699bf17aa33d347a097617e772",
+        "local_evidence_only": false
+      },
+      "controller_folder": "Reports/IntrepidCabin20261111/runs/package-cabin-wide-control-a",
+      "driver_folder": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-wide-control-a",
+      "images": [
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-wide-control-a/intrepid-wide-q0.png",
+          "bytes": 681632,
+          "sha256": "e0dd59c08494d9f3e6761a554cd9fa762e00f642d06248ba607f948829b63b42",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "intrepid-wide",
+          "quality": 0,
+          "fov": 85
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-wide-control-a/fp-ground-q0.png",
+          "bytes": 1237535,
+          "sha256": "5aad50348cd73d0e0f90caff5fae5659de77169952e5ebde99beba65bd06d031",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "fp-ground",
+          "quality": 0,
+          "fov": 85
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-wide-control-a/ladder-foot-q0.png",
+          "bytes": 887534,
+          "sha256": "b2c3e026d540a6797d4b458b0f139e33265b1534ca1563719694c7226b9dc154",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "ladder-foot",
+          "quality": 0,
+          "fov": 85
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-wide-control-a/outside-ground-q0.png",
+          "bytes": 1210450,
+          "sha256": "737f52d1ac29a1a73735033f688053d15fc219707b5228576a6d85815249954d",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "outside-ground",
+          "quality": 0,
+          "fov": 85
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-wide-control-a/intrepid-wide-q1.png",
+          "bytes": 820507,
+          "sha256": "96168ea176f2d80c34aa24eb95a9b04000cb76289d2716110989bf6f743951e1",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "intrepid-wide",
+          "quality": 1,
+          "fov": 85
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-wide-control-a/fp-ground-q1.png",
+          "bytes": 1494771,
+          "sha256": "5c6f10114cc1794ff06ee9a27853103230e73a6ea1397c05b1c396361b867296",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "fp-ground",
+          "quality": 1,
+          "fov": 85
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-wide-control-a/ladder-foot-q1.png",
+          "bytes": 959024,
+          "sha256": "64a3260a907fec10866c528e8f4775d398c5895e22172543113607a6a827966c",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "ladder-foot",
+          "quality": 1,
+          "fov": 85
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-wide-control-a/outside-ground-q1.png",
+          "bytes": 1455084,
+          "sha256": "a779bcc3e07b2b6126ef0214ba370306932aa056ff46bad3ed835935a74c6556",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "outside-ground",
+          "quality": 1,
+          "fov": 85
+        }
+      ],
+      "human_playtest": false,
+      "synthetic": true,
+      "runtime_normals_directly_inspected": false
+    },
+    {
+      "label": "package-cabin-wide-feature-a",
+      "kind": "review",
+      "cabin_baseline": false,
+      "cabin_review": false,
+      "packaged": true,
+      "width": 1280,
+      "height": 720,
+      "raw_cpp_pass": 48,
+      "raw_cpp_fail": 0,
+      "one_result_zero_failures": true,
+      "executable_sha256": "59d4f795b1141694741264370efe9b79dad66eaa9b4487270ffe7f9517fc358c",
+      "source_art_inputs_sha256": "d9336b2dbdda2eacbb184893e7a2186ce1ac879e9eed403efa837203866cefa9",
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-wide-feature-a/checks.txt",
+        "bytes": 3819,
+        "sha256": "3c0fb2a1f996f550ff70c077d895b3a35c982af20247df47157311d13f9aa203",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-wide-feature-a/manifest.json",
+        "bytes": 30119,
+        "sha256": "5ad8fbf67bdbeb1e8ef716cd55107f55eb3fb1906cea5abe4c867a19b587896b",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-wide-feature-a/environment.json",
+        "bytes": 2982,
+        "sha256": "76674aeb9045492a835e111d10a2fc5e190572f7abb193a5783b8fde7e59554c",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-wide-feature-a/validation.json",
+        "bytes": 2024,
+        "sha256": "8314d6049e0b3b571a7981c59b66106228f5c24eb8351fa3ebcec5ca669d6c2f",
+        "local_evidence_only": false
+      },
+      "controller_folder": "Reports/IntrepidCabin20261111/runs/package-cabin-wide-feature-a",
+      "driver_folder": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-wide-feature-a",
+      "images": [
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-wide-feature-a/intrepid-wide-q0.png",
+          "bytes": 727427,
+          "sha256": "9bbc93428d4f414d20ee0b5f8ffad701895faac72d35f52bc58eb5abe21fca50",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "intrepid-wide",
+          "quality": 0,
+          "fov": 85
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-wide-feature-a/fp-ground-q0.png",
+          "bytes": 1214283,
+          "sha256": "43cfc4c90fe8de560ac39429772c86eecea1c9da1b2f34f7def8895409fae76c",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "fp-ground",
+          "quality": 0,
+          "fov": 85
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-wide-feature-a/ladder-foot-q0.png",
+          "bytes": 900158,
+          "sha256": "d40121e593e2a94d12025c51c01a19fb20d9ce66a0a10f54956445bde5afa340",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "ladder-foot",
+          "quality": 0,
+          "fov": 85
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-wide-feature-a/outside-ground-q0.png",
+          "bytes": 1202377,
+          "sha256": "dc13ae9521ea58326437749ccc4db95d95c76742b95c438a54691034f5eb8560",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "outside-ground",
+          "quality": 0,
+          "fov": 85
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-wide-feature-a/intrepid-wide-q1.png",
+          "bytes": 819146,
+          "sha256": "27d6bce537b186fa01cc1e0aab5372ed64d731d97317e867ba72d8d52609a20b",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "intrepid-wide",
+          "quality": 1,
+          "fov": 85
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-wide-feature-a/fp-ground-q1.png",
+          "bytes": 1500492,
+          "sha256": "87e8730eebdff24ea2bf320b11c622b860126f39a1196f7ed1cb0336ce207347",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "fp-ground",
+          "quality": 1,
+          "fov": 85
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-wide-feature-a/ladder-foot-q1.png",
+          "bytes": 963685,
+          "sha256": "a3a099c34ca194b916b4237ac84268591c9efe9fc0f3f07f0d6f3b6f75370bf0",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "ladder-foot",
+          "quality": 1,
+          "fov": 85
+        },
+        {
+          "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-wide-feature-a/outside-ground-q1.png",
+          "bytes": 1453611,
+          "sha256": "31579f2f298a2fe6f790ed4745238b3c40687fcba1684446139233225a732498",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "outside-ground",
+          "quality": 1,
+          "fov": 85
+        }
+      ],
+      "human_playtest": false,
+      "synthetic": true,
+      "runtime_normals_directly_inspected": false
+    },
+    {
+      "label": "package-cabin-control-q1",
+      "kind": "profile",
+      "cabin_baseline": true,
+      "cabin_review": false,
+      "packaged": true,
+      "width": 1280,
+      "height": 720,
+      "raw_cpp_pass": 43,
+      "raw_cpp_fail": 0,
+      "one_result_zero_failures": true,
+      "executable_sha256": "59d4f795b1141694741264370efe9b79dad66eaa9b4487270ffe7f9517fc358c",
+      "source_art_inputs_sha256": "d9336b2dbdda2eacbb184893e7a2186ce1ac879e9eed403efa837203866cefa9",
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-control-q1/checks.txt",
+        "bytes": 3480,
+        "sha256": "8ed556244b986aa2c80d3abaa6e7de329d0f112db7a9af5bce53cc3603365d73",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-control-q1/manifest.json",
+        "bytes": 27956,
+        "sha256": "5222616b75bc37b4f43f23c14149568adfe9bff221538ccc3d006e8debad1209",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-control-q1/environment.json",
+        "bytes": 3047,
+        "sha256": "a372b8ad5d8fc4de6e1877221e72e05588d07f3d43849864cb4a06e30a2bdde4",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-control-q1/validation.json",
+        "bytes": 933,
+        "sha256": "f08b960eb8f67bfa409c7f4f94a205ace68af80d51117f9dcac0e5913bc65b27",
+        "local_evidence_only": false
+      },
+      "controller_folder": "Reports/IntrepidCabin20261111/runs/package-cabin-control-q1",
+      "driver_folder": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-control-q1",
+      "images": [],
+      "human_playtest": false,
+      "synthetic": true,
+      "runtime_normals_directly_inspected": false,
+      "summary": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-control-q1/summary.json",
+        "bytes": 2524,
+        "sha256": "5cd27e1e976f5791509e1529e9183bb944ce9d8db257c85afcef435ff3c25975",
+        "local_evidence_only": false
+      },
+      "csv": {
+        "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-control-q1/intrepid-profile.csv",
+        "bytes": 9917816,
+        "sha256": "74b2d599074826635e6011ab206ed45bdaa78643729671fb1e56184e7949e8cc",
+        "local_evidence_only": true
+      },
+      "counter_coverage": {
+        "GameThreadTime": {
+          "present": true,
+          "rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "mean_including_zero": 2.076119633333333
+        },
+        "RenderThreadTime": {
+          "present": true,
+          "rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "mean_including_zero": 4.45733465
+        },
+        "GPUTime": {
+          "present": true,
+          "rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "mean_including_zero": 16.66979365
+        },
+        "GPU/SlateUI": {
+          "present": true,
+          "rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 5999,
+          "mean_including_zero": 8.380152583333333
+        },
+        "GPUMem/LocalUsedMB": {
+          "present": true,
+          "rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 5994,
+          "mean_including_zero": 252.24016586666667
+        }
+      },
+      "limitations": "One normal-delta capped four-camera Medium capture, not close-review performance, human playtest, full mission/VRAM/peak memory or causal speedup."
+    },
+    {
+      "label": "package-cabin-feature-q1",
+      "kind": "profile",
+      "cabin_baseline": false,
+      "cabin_review": false,
+      "packaged": true,
+      "width": 1280,
+      "height": 720,
+      "raw_cpp_pass": 43,
+      "raw_cpp_fail": 0,
+      "one_result_zero_failures": true,
+      "executable_sha256": "59d4f795b1141694741264370efe9b79dad66eaa9b4487270ffe7f9517fc358c",
+      "source_art_inputs_sha256": "d9336b2dbdda2eacbb184893e7a2186ce1ac879e9eed403efa837203866cefa9",
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-feature-q1/checks.txt",
+        "bytes": 3480,
+        "sha256": "8ed556244b986aa2c80d3abaa6e7de329d0f112db7a9af5bce53cc3603365d73",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-feature-q1/manifest.json",
+        "bytes": 28356,
+        "sha256": "75ac23c751ee98735e322dfb11a91faca4461c0e3b32759c81bb7479832765f8",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-feature-q1/environment.json",
+        "bytes": 3018,
+        "sha256": "02b4affcf4188db7415867451c368bb861363d88cc18d7c83b4988785bd24cec",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-feature-q1/validation.json",
+        "bytes": 933,
+        "sha256": "cf02a50cd30897c8a80e573537b762d19741db6c07eb3c8c07e70704c9baed05",
+        "local_evidence_only": false
+      },
+      "controller_folder": "Reports/IntrepidCabin20261111/runs/package-cabin-feature-q1",
+      "driver_folder": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-feature-q1",
+      "images": [],
+      "human_playtest": false,
+      "synthetic": true,
+      "runtime_normals_directly_inspected": false,
+      "summary": {
+        "path": "Docs/IntrepidCabin20261111/evidence/package-cabin-feature-q1/summary.json",
+        "bytes": 2541,
+        "sha256": "9758bf0af331f7c11880fffce04ef7813f2576bfe0e68c33fe80d8bb3e82d75e",
+        "local_evidence_only": false
+      },
+      "csv": {
+        "path": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-feature-q1/intrepid-profile.csv",
+        "bytes": 9929971,
+        "sha256": "a29ff88271427f27620a2f33a67b330acabbaf390e150c36eae95b8bc748e085",
+        "local_evidence_only": true
+      },
+      "counter_coverage": {
+        "GameThreadTime": {
+          "present": true,
+          "rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "mean_including_zero": 1.9136353833333333
+        },
+        "RenderThreadTime": {
+          "present": true,
+          "rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "mean_including_zero": 4.062131033333333
+        },
+        "GPUTime": {
+          "present": true,
+          "rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "mean_including_zero": 16.661205916666667
+        },
+        "GPU/SlateUI": {
+          "present": true,
+          "rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 5999,
+          "mean_including_zero": 8.820571333333334
+        },
+        "GPUMem/LocalUsedMB": {
+          "present": true,
+          "rows": 6000,
+          "finite_rows": 6000,
+          "positive_rows": 5998,
+          "mean_including_zero": 252.21669973333334
+        }
+      },
+      "limitations": "One normal-delta capped four-camera Medium capture, not close-review performance, human playtest, full mission/VRAM/peak memory or causal speedup."
+    }
+  ],
+  "editor_separate": [
+    {
+      "label": "editor-cabin-control-720-a",
+      "kind": "review",
+      "cabin_baseline": true,
+      "cabin_review": true,
+      "packaged": false,
+      "width": 1280,
+      "height": 720,
+      "raw_cpp_pass": 43,
+      "raw_cpp_fail": 0,
+      "one_result_zero_failures": true,
+      "executable_sha256": "5db233608a7d82102cc92cf9f591b8a9657ae16a5b7b09b131d00bbe0a4cc715",
+      "source_art_inputs_sha256": "97dff3eb59a485e2f4165bdfad20c9b14cd34a7f1f2fbd05f2c94a9536f89d46",
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/editor-cabin-control-720-a/checks.txt",
+        "bytes": 3486,
+        "sha256": "1ef0950a36176cf291ada5d8feae9ac2a25859d1155b56f9bd1b19389811cfa5",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidCabin20261111/evidence/editor-cabin-control-720-a/manifest.json",
+        "bytes": 30321,
+        "sha256": "766174850f763c4484db9e279dffae277c5f7250e7fa0d04274772048229d3c9",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidCabin20261111/evidence/editor-cabin-control-720-a/environment.json",
+        "bytes": 3151,
+        "sha256": "6097f729b6cf851f382de987fb7bd175eb7a45f9bff5ed59cfdae300fc3dae0f",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidCabin20261111/evidence/editor-cabin-control-720-a/validation.json",
+        "bytes": 1392,
+        "sha256": "72a4d33037e5a4d6774daf4e5cbb4050fb5f6ca47daa1e81b314e352560b7891",
+        "local_evidence_only": false
+      },
+      "controller_folder": "Reports/IntrepidCabin20261111/runs/editor-cabin-control-720-a",
+      "driver_folder": "Reports/IntrepidCabin20261111/editor-cabin-control-720-a",
+      "images": [
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-control-720-a/cabin-front-q0.png",
+          "bytes": 825667,
+          "sha256": "2c771a60ed227b4e8ffbcad678837e730259b585e3722f3ae4503f8b6690234a",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "cabin-front",
+          "quality": 0,
+          "fov": 60
+        },
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-control-720-a/cabin-side-q0.png",
+          "bytes": 770326,
+          "sha256": "cb97099ad3eabc27308393e522345ec0621007503139874b8a523a458632afb3",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "cabin-side",
+          "quality": 0,
+          "fov": 60
+        },
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-control-720-a/cabin-front-q1.png",
+          "bytes": 900179,
+          "sha256": "f3a987f9d96291e977e1fc2be0ddf0e6c8e849b51c78d4c3591dedeee0a925f1",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "cabin-front",
+          "quality": 1,
+          "fov": 60
+        },
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-control-720-a/cabin-side-q1.png",
+          "bytes": 816115,
+          "sha256": "0e7bca90748e74d016ff1f9b683e5d0c0205328367e8910a5f1bcadcf98f03bd",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "cabin-side",
+          "quality": 1,
+          "fov": 60
+        }
+      ],
+      "human_playtest": false,
+      "synthetic": true,
+      "runtime_normals_directly_inspected": false
+    },
+    {
+      "label": "editor-cabin-feature-720-a",
+      "kind": "review",
+      "cabin_baseline": false,
+      "cabin_review": true,
+      "packaged": false,
+      "width": 1280,
+      "height": 720,
+      "raw_cpp_pass": 43,
+      "raw_cpp_fail": 0,
+      "one_result_zero_failures": true,
+      "executable_sha256": "5db233608a7d82102cc92cf9f591b8a9657ae16a5b7b09b131d00bbe0a4cc715",
+      "source_art_inputs_sha256": "97dff3eb59a485e2f4165bdfad20c9b14cd34a7f1f2fbd05f2c94a9536f89d46",
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/editor-cabin-feature-720-a/checks.txt",
+        "bytes": 3486,
+        "sha256": "1ef0950a36176cf291ada5d8feae9ac2a25859d1155b56f9bd1b19389811cfa5",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidCabin20261111/evidence/editor-cabin-feature-720-a/manifest.json",
+        "bytes": 30703,
+        "sha256": "730bb2b713fbad33f8ebe393ee1a4dd4ea8e89885cfd906363c836521328c65a",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidCabin20261111/evidence/editor-cabin-feature-720-a/environment.json",
+        "bytes": 3122,
+        "sha256": "2bf2278ae29d63d9d785791fbe685a905220e8a65ed37b1c9a98be0057973ea8",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidCabin20261111/evidence/editor-cabin-feature-720-a/validation.json",
+        "bytes": 1392,
+        "sha256": "c560a6d661d7cd0f867070ece640a4e2d66bdd50a9426e3bb4e85d03189890c8",
+        "local_evidence_only": false
+      },
+      "controller_folder": "Reports/IntrepidCabin20261111/runs/editor-cabin-feature-720-a",
+      "driver_folder": "Reports/IntrepidCabin20261111/editor-cabin-feature-720-a",
+      "images": [
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-feature-720-a/cabin-front-q0.png",
+          "bytes": 804342,
+          "sha256": "dde56b095df5319d9fbd0ded39c9eff3fdc9c3e8395456fff4f84a467b7f5d49",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "cabin-front",
+          "quality": 0,
+          "fov": 60
+        },
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-feature-720-a/cabin-side-q0.png",
+          "bytes": 754035,
+          "sha256": "0f1f1054753387ce0feed4a8b40190b95d3667e434f7454fbdc052a7b7d7daf0",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "cabin-side",
+          "quality": 0,
+          "fov": 60
+        },
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-feature-720-a/cabin-front-q1.png",
+          "bytes": 912644,
+          "sha256": "8fce8bd10980944e17c9d0925ad7c330b926a55b7e651cb602c93e066fea0f4e",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "cabin-front",
+          "quality": 1,
+          "fov": 60
+        },
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-feature-720-a/cabin-side-q1.png",
+          "bytes": 816211,
+          "sha256": "8cc5a2a6749ba139a677e3d29fdd263adfd002c7733c2004209c5297cd7be8be",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "cabin-side",
+          "quality": 1,
+          "fov": 60
+        }
+      ],
+      "human_playtest": false,
+      "synthetic": true,
+      "runtime_normals_directly_inspected": false
+    },
+    {
+      "label": "editor-cabin-wide-control-a",
+      "kind": "review",
+      "cabin_baseline": true,
+      "cabin_review": false,
+      "packaged": false,
+      "width": 1280,
+      "height": 720,
+      "raw_cpp_pass": 48,
+      "raw_cpp_fail": 0,
+      "one_result_zero_failures": true,
+      "executable_sha256": "5db233608a7d82102cc92cf9f591b8a9657ae16a5b7b09b131d00bbe0a4cc715",
+      "source_art_inputs_sha256": "97dff3eb59a485e2f4165bdfad20c9b14cd34a7f1f2fbd05f2c94a9536f89d46",
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/editor-cabin-wide-control-a/checks.txt",
+        "bytes": 3819,
+        "sha256": "3c0fb2a1f996f550ff70c077d895b3a35c982af20247df47157311d13f9aa203",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidCabin20261111/evidence/editor-cabin-wide-control-a/manifest.json",
+        "bytes": 29719,
+        "sha256": "cb7f7a9ae0b2a1ef2d0f804ade86b299885a804db773661198dab9a025f111c4",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidCabin20261111/evidence/editor-cabin-wide-control-a/environment.json",
+        "bytes": 3126,
+        "sha256": "82e717715619bfad430c79a8d01a77e6674cfec2cc714b701144286514940926",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidCabin20261111/evidence/editor-cabin-wide-control-a/validation.json",
+        "bytes": 2024,
+        "sha256": "a9e3bca49ba9d390391c092317d283ec206646cb37196837c45a7ddee84a0c20",
+        "local_evidence_only": false
+      },
+      "controller_folder": "Reports/IntrepidCabin20261111/runs/editor-cabin-wide-control-a",
+      "driver_folder": "Reports/IntrepidCabin20261111/editor-cabin-wide-control-a",
+      "images": [
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-wide-control-a/intrepid-wide-q0.png",
+          "bytes": 726448,
+          "sha256": "988d05e2dbc5d03034de09ba6077acad408428f310080e613a7a295bacdcc632",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "intrepid-wide",
+          "quality": 0,
+          "fov": 85
+        },
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-wide-control-a/fp-ground-q0.png",
+          "bytes": 1229177,
+          "sha256": "0b7028bb92861d3a32fb01f70af5c88b79fad876ccebdb0cb8703ad148bd2b19",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "fp-ground",
+          "quality": 0,
+          "fov": 85
+        },
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-wide-control-a/ladder-foot-q0.png",
+          "bytes": 889742,
+          "sha256": "287f4b9cbb3e194f0bc729be41937f572a59d3ae91c2a6191556c6107c6f6fb1",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "ladder-foot",
+          "quality": 0,
+          "fov": 85
+        },
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-wide-control-a/outside-ground-q0.png",
+          "bytes": 1210396,
+          "sha256": "b05b9858910ba674d0aff1403bef7212fced37f5c3c876c14658793ec54a897e",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "outside-ground",
+          "quality": 0,
+          "fov": 85
+        },
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-wide-control-a/intrepid-wide-q1.png",
+          "bytes": 818929,
+          "sha256": "6835a4245367a7b8292e79c46cfe11979868db85691ccf9bff997adcae878fa3",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "intrepid-wide",
+          "quality": 1,
+          "fov": 85
+        },
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-wide-control-a/fp-ground-q1.png",
+          "bytes": 1504140,
+          "sha256": "253ca1b0d0fc5bce8618f502e2e3b0dbd1511588ad617f18156cc35a3c45d771",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "fp-ground",
+          "quality": 1,
+          "fov": 85
+        },
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-wide-control-a/ladder-foot-q1.png",
+          "bytes": 959086,
+          "sha256": "ec3769b636b222bba787e8617b8524892c8b97d11dfb6a28aef348417c83370c",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "ladder-foot",
+          "quality": 1,
+          "fov": 85
+        },
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-wide-control-a/outside-ground-q1.png",
+          "bytes": 1455231,
+          "sha256": "7637d15f3a71e0e3579cc3cec37ab42372e08cdc6c3be883930bd784d0aa305d",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "outside-ground",
+          "quality": 1,
+          "fov": 85
+        }
+      ],
+      "human_playtest": false,
+      "synthetic": true,
+      "runtime_normals_directly_inspected": false
+    },
+    {
+      "label": "editor-cabin-wide-feature-a",
+      "kind": "review",
+      "cabin_baseline": false,
+      "cabin_review": false,
+      "packaged": false,
+      "width": 1280,
+      "height": 720,
+      "raw_cpp_pass": 48,
+      "raw_cpp_fail": 0,
+      "one_result_zero_failures": true,
+      "executable_sha256": "5db233608a7d82102cc92cf9f591b8a9657ae16a5b7b09b131d00bbe0a4cc715",
+      "source_art_inputs_sha256": "97dff3eb59a485e2f4165bdfad20c9b14cd34a7f1f2fbd05f2c94a9536f89d46",
+      "raw_report": {
+        "path": "Docs/IntrepidCabin20261111/evidence/editor-cabin-wide-feature-a/checks.txt",
+        "bytes": 3819,
+        "sha256": "3c0fb2a1f996f550ff70c077d895b3a35c982af20247df47157311d13f9aa203",
+        "local_evidence_only": false
+      },
+      "manifest": {
+        "path": "Docs/IntrepidCabin20261111/evidence/editor-cabin-wide-feature-a/manifest.json",
+        "bytes": 30101,
+        "sha256": "2de79406de6b528f83dfe061935282deb065189a4454b874f8ba446bd0cfb191",
+        "local_evidence_only": false
+      },
+      "environment": {
+        "path": "Docs/IntrepidCabin20261111/evidence/editor-cabin-wide-feature-a/environment.json",
+        "bytes": 3098,
+        "sha256": "707f3dd0d527b040b2992469ea585e9538ce70e3b699f2466f59d42afa813ea7",
+        "local_evidence_only": false
+      },
+      "validation": {
+        "path": "Docs/IntrepidCabin20261111/evidence/editor-cabin-wide-feature-a/validation.json",
+        "bytes": 2024,
+        "sha256": "131a4f1511c37e4ccaac9cbf451333912ff268fd54aa37cae8a7966c1ec2101c",
+        "local_evidence_only": false
+      },
+      "controller_folder": "Reports/IntrepidCabin20261111/runs/editor-cabin-wide-feature-a",
+      "driver_folder": "Reports/IntrepidCabin20261111/editor-cabin-wide-feature-a",
+      "images": [
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-wide-feature-a/intrepid-wide-q0.png",
+          "bytes": 725979,
+          "sha256": "e618f5b338e57072f537b151bca04acf2a98b3b4ad10541fe58e5d789a727c07",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "intrepid-wide",
+          "quality": 0,
+          "fov": 85
+        },
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-wide-feature-a/fp-ground-q0.png",
+          "bytes": 1228195,
+          "sha256": "e1a78a0adb84eb23f294d07011920e2862c54efcc04306b049ee92f67dc75cc9",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "fp-ground",
+          "quality": 0,
+          "fov": 85
+        },
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-wide-feature-a/ladder-foot-q0.png",
+          "bytes": 905066,
+          "sha256": "d15e1a5fafded98cfdfb3174236b59677d61ee9c04d9c5b7af934d79d74a19ed",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "ladder-foot",
+          "quality": 0,
+          "fov": 85
+        },
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-wide-feature-a/outside-ground-q0.png",
+          "bytes": 1209229,
+          "sha256": "2b518c8ad781bd40daf1121d7c2347fff7cae8fdb82d0c153adbaa9f3f40813e",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "outside-ground",
+          "quality": 0,
+          "fov": 85
+        },
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-wide-feature-a/intrepid-wide-q1.png",
+          "bytes": 820611,
+          "sha256": "28b144094ed225a38c4fb3961b443552f934c47bc23b992ddb8b697dd37039ce",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "intrepid-wide",
+          "quality": 1,
+          "fov": 85
+        },
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-wide-feature-a/fp-ground-q1.png",
+          "bytes": 1500766,
+          "sha256": "4b92b9a99c91e24cf0245369a9c05b4db81e8f1812a21b9f0512400ee1d08f44",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "fp-ground",
+          "quality": 1,
+          "fov": 85
+        },
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-wide-feature-a/ladder-foot-q1.png",
+          "bytes": 963455,
+          "sha256": "1fc93048fccd470a8117783d81c1d390945ed5d060fb5a5841b84519d3e34096",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "ladder-foot",
+          "quality": 1,
+          "fov": 85
+        },
+        {
+          "path": "Reports/IntrepidCabin20261111/editor-cabin-wide-feature-a/outside-ground-q1.png",
+          "bytes": 1452252,
+          "sha256": "7bbc7f436dfd7fdd2bfea559e6018913c84cd23e5e408d6e9012d1fe1d45a8a6",
+          "local_evidence_only": true,
+          "dimensions": [
+            1280,
+            720
+          ],
+          "camera": "outside-ground",
+          "quality": 1,
+          "fov": 85
+        }
+      ],
+      "human_playtest": false,
+      "synthetic": true,
+      "runtime_normals_directly_inspected": false
+    }
+  ],
+  "pairs": [
+    {
+      "control": "package-cabin-close-control-720-a",
+      "feature": "package-cabin-close-feature-720-a",
+      "manifest_fields_equal": {
+        "height_grid": true,
+        "height_grid_sha1": true,
+        "outside_instances_sha1": true,
+        "outside_instance_count": true,
+        "light_snapshot": true,
+        "terrain_asset": true,
+        "cameras": true,
+        "width": true,
+        "height": true,
+        "cabin_source_mesh": true,
+        "cabin_source_bounds": true,
+        "cabin_derived_bounds": true,
+        "cabin_pad_world": true,
+        "cabin_lights_sha1": true
+      },
+      "environment_fields_equal": {
+        "executable_sha256": true,
+        "game_module_sha256": true,
+        "source_art_inputs_sha256": true,
+        "renderer": true,
+        "width": true,
+        "height": true,
+        "quality": true,
+        "fps_cap": true,
+        "vsync": true,
+        "audio": true,
+        "packaged": true,
+        "baseline": true,
+        "cabin_scope": true,
+        "cabin_review": true
+      },
+      "only_two_shared_white_slots_override": true,
+      "pixel_identity_claimed": false
+    },
+    {
+      "control": "package-cabin-close-control-1080-a",
+      "feature": "package-cabin-close-feature-1080-a",
+      "manifest_fields_equal": {
+        "height_grid": true,
+        "height_grid_sha1": true,
+        "outside_instances_sha1": true,
+        "outside_instance_count": true,
+        "light_snapshot": true,
+        "terrain_asset": true,
+        "cameras": true,
+        "width": true,
+        "height": true,
+        "cabin_source_mesh": true,
+        "cabin_source_bounds": true,
+        "cabin_derived_bounds": true,
+        "cabin_pad_world": true,
+        "cabin_lights_sha1": true
+      },
+      "environment_fields_equal": {
+        "executable_sha256": true,
+        "game_module_sha256": true,
+        "source_art_inputs_sha256": true,
+        "renderer": true,
+        "width": true,
+        "height": true,
+        "quality": true,
+        "fps_cap": true,
+        "vsync": true,
+        "audio": true,
+        "packaged": true,
+        "baseline": true,
+        "cabin_scope": true,
+        "cabin_review": true
+      },
+      "only_two_shared_white_slots_override": true,
+      "pixel_identity_claimed": false
+    },
+    {
+      "control": "package-cabin-wide-control-a",
+      "feature": "package-cabin-wide-feature-a",
+      "manifest_fields_equal": {
+        "height_grid": true,
+        "height_grid_sha1": true,
+        "outside_instances_sha1": true,
+        "outside_instance_count": true,
+        "light_snapshot": true,
+        "terrain_asset": true,
+        "cameras": true,
+        "width": true,
+        "height": true,
+        "cabin_source_mesh": true,
+        "cabin_source_bounds": true,
+        "cabin_derived_bounds": true,
+        "cabin_pad_world": true,
+        "cabin_lights_sha1": true
+      },
+      "environment_fields_equal": {
+        "executable_sha256": true,
+        "game_module_sha256": true,
+        "source_art_inputs_sha256": true,
+        "renderer": true,
+        "width": true,
+        "height": true,
+        "quality": true,
+        "fps_cap": true,
+        "vsync": true,
+        "audio": true,
+        "packaged": true,
+        "baseline": true,
+        "cabin_scope": true,
+        "cabin_review": true
+      },
+      "only_two_shared_white_slots_override": true,
+      "pixel_identity_claimed": false
+    },
+    {
+      "control": "package-cabin-control-q1",
+      "feature": "package-cabin-feature-q1",
+      "manifest_fields_equal": {
+        "height_grid": true,
+        "height_grid_sha1": true,
+        "outside_instances_sha1": true,
+        "outside_instance_count": true,
+        "light_snapshot": true,
+        "terrain_asset": true,
+        "cameras": true,
+        "width": true,
+        "height": true,
+        "cabin_source_mesh": true,
+        "cabin_source_bounds": true,
+        "cabin_derived_bounds": true,
+        "cabin_pad_world": true,
+        "cabin_lights_sha1": true
+      },
+      "environment_fields_equal": {
+        "executable_sha256": true,
+        "game_module_sha256": true,
+        "source_art_inputs_sha256": true,
+        "renderer": true,
+        "width": true,
+        "height": true,
+        "quality": true,
+        "fps_cap": true,
+        "vsync": true,
+        "audio": true,
+        "packaged": true,
+        "baseline": true,
+        "cabin_scope": true,
+        "cabin_review": true
+      },
+      "only_two_shared_white_slots_override": true,
+      "pixel_identity_claimed": false
+    },
+    {
+      "control": "editor-cabin-control-720-a",
+      "feature": "editor-cabin-feature-720-a",
+      "manifest_fields_equal": {
+        "height_grid": true,
+        "height_grid_sha1": true,
+        "outside_instances_sha1": true,
+        "outside_instance_count": true,
+        "light_snapshot": true,
+        "terrain_asset": true,
+        "cameras": true,
+        "width": true,
+        "height": true,
+        "cabin_source_mesh": true,
+        "cabin_source_bounds": true,
+        "cabin_derived_bounds": true,
+        "cabin_pad_world": true,
+        "cabin_lights_sha1": true
+      },
+      "environment_fields_equal": {
+        "executable_sha256": true,
+        "game_module_sha256": true,
+        "source_art_inputs_sha256": true,
+        "renderer": true,
+        "width": true,
+        "height": true,
+        "quality": true,
+        "fps_cap": true,
+        "vsync": true,
+        "audio": true,
+        "packaged": true,
+        "baseline": true,
+        "cabin_scope": true,
+        "cabin_review": true
+      },
+      "only_two_shared_white_slots_override": true,
+      "pixel_identity_claimed": false
+    },
+    {
+      "control": "editor-cabin-wide-control-a",
+      "feature": "editor-cabin-wide-feature-a",
+      "manifest_fields_equal": {
+        "height_grid": true,
+        "height_grid_sha1": true,
+        "outside_instances_sha1": true,
+        "outside_instance_count": true,
+        "light_snapshot": true,
+        "terrain_asset": true,
+        "cameras": true,
+        "width": true,
+        "height": true,
+        "cabin_source_mesh": true,
+        "cabin_source_bounds": true,
+        "cabin_derived_bounds": true,
+        "cabin_pad_world": true,
+        "cabin_lights_sha1": true
+      },
+      "environment_fields_equal": {
+        "executable_sha256": true,
+        "game_module_sha256": true,
+        "source_art_inputs_sha256": true,
+        "renderer": true,
+        "width": true,
+        "height": true,
+        "quality": true,
+        "fps_cap": true,
+        "vsync": true,
+        "audio": true,
+        "packaged": true,
+        "baseline": true,
+        "cabin_scope": true,
+        "cabin_review": true
+      },
+      "only_two_shared_white_slots_override": true,
+      "pixel_identity_claimed": false
+    }
+  ],
+  "builder": {
+    "mesh_receipt": {
+      "path": "Docs/IntrepidCabin20261111/evidence/mesh-build.json",
+      "bytes": 22962,
+      "sha256": "c04aa50bb1762eb4e14705f35f12b130d9478418a73aa150b5a5e0d6f5c11bad",
+      "local_evidence_only": false
+    },
+    "material_receipt": {
+      "path": "Docs/IntrepidCabin20261111/evidence/material-build.json",
+      "bytes": 818,
+      "sha256": "481c03d3efdceb3ec6852bf093b15aaa456f0459b60c7e5333c523c7aea177d5",
+      "local_evidence_only": false
+    },
+    "editor_mesh_checks_separate": 46,
+    "matched_cabin_triangles": 1237,
+    "source_cabin_corners": 3711,
+    "all_derived_md_frames_baked": 289380,
+    "outside_bit_identity": false,
+    "outside_quantization_only": false,
+    "outside_policy_verified": true,
+    "source_degenerate_tangent_repairs": {
+      "vertex_instances": 836,
+      "faces": 570,
+      "slots": {
+        "blinn4SG_002": 257,
+        "blinn6SG_001": 113,
+        "blinn2SG_002": 4,
+        "blinn3SG_001": 36,
+        "blinn1SG_002": 160
+      }
+    },
+    "caveats": [
+      "Geometry/UV/material/winding exact multiset equality does not require identical welded render vertex count.",
+      "All outside normals/valid tangents obey actual one-component-step bounds; only proven source zero/parallel tangent frames are reconstructed across the five recorded slots. W/sign exact; reconstructed tangents can differ by1component/90degrees.",
+      "3711 cabin GLB normals are targets; cabin tangents are projected/reconstructed rendering bases, not GLB-authored tangents or UV repair.",
+      "46-check builder g mesh succeeded before its later material-pin script failure; material-only h separately succeeded without rewriting the accepted mesh.",
+      "No binary saved-asset reload attribute audit is implemented. Fresh-process disk-loaded reviews are visual/runtime proof, not that audit."
+    ]
+  },
+  "history_excluded": [
+    {
+      "scope": "asset-b through asset-f",
+      "status": "rejected_before_save",
+      "reason": "Strict correspondence/render-frame preservation gates exposed invalid source tangent/packing assumptions; no result promoted to final acceptance."
+    },
+    {
+      "scope": "asset-g commandlet",
+      "status": "mesh_only_accepted_later_script_failed",
+      "reason": "46-check derivative mesh saved successfully; subsequent material pin error corrected in material-only h. Do not claim complete g commandlet success."
+    }
+  ],
+  "additional_receipts": [],
+  "limitations": [
+    "Previous IntrepidVisual reports remain immutable and are not new cabin acceptance.",
+    "CabinBaseline toggles only the new derivative/white finish; VisualBaseline is independent and remains off in both modes.",
+    "1237-triangle authored source normal recovery is distinct from an invented smooth/averaged normal field or a silhouette/topology rebuild; explicit derived source-degenerate tangent repairs can affect other slots.",
+    "Two shared white slots also affect retained trim; source neutral tints are preserved, cloth optical coefficients are authored tuning.",
+    "Staged close views use2 cameras/FOV60 and4 images; static profiles keep4 cameras/FOV85 and are not close-view cost tests.",
+    "No NASA endorsement, measured textile properties, human playtest, universal FPS or peak/VRAM claim.",
+    "Saved-asset binary reload attribute audit, clean extracted/disconnected distribution, temporal review and human playtest were not performed."
+  ],
+  "build_logs": [
+    {
+      "kind": "editor",
+      "path": "Reports/IntrepidCabin20261111/editor-build-g.log",
+      "required_markers": [
+        "Result: Succeeded"
+      ],
+      "source": {
+        "path": "Reports/IntrepidCabin20261111/editor-build-g.log",
+        "bytes": 2096,
+        "sha256": "cddf9b8f88bac7f74babdcc313b99207c03442bc0aef240c63ac1fbc9c22d2c0",
+        "local_evidence_only": true
+      }
+    },
+    {
+      "kind": "game",
+      "path": "Reports/IntrepidCabin20261111/game-build-a.log",
+      "required_markers": [
+        "Result: Succeeded"
+      ],
+      "source": {
+        "path": "Reports/IntrepidCabin20261111/game-build-a.log",
+        "bytes": 2554,
+        "sha256": "79ed0c6803bf1b0aca69ab0bfc2b9bc5904dedd0f9371e6de7d5d2c4ccf0df51",
+        "local_evidence_only": true
+      }
+    },
+    {
+      "kind": "fresh_cook",
+      "path": "Reports/IntrepidCabin20261111/fresh-cook.log",
+      "required_markers": [
+        "Success - 0 error(s), 0 warning(s)",
+        "COOK COMMAND COMPLETED",
+        "BUILD SUCCESSFUL",
+        "AutomationTool exiting with ExitCode=0 (Success)"
+      ],
+      "source": {
+        "path": "Reports/IntrepidCabin20261111/fresh-cook.log",
+        "bytes": 70798,
+        "sha256": "88f26293b2142ec8d21483776140bb7759ba59f216b0040d311edce1f2061e11",
+        "local_evidence_only": true
+      }
+    },
+    {
+      "kind": "stage_archive",
+      "path": "Reports/IntrepidCabin20261111/stage.log",
+      "required_markers": [
+        "STAGE COMMAND COMPLETED",
+        "ARCHIVE COMMAND COMPLETED",
+        "BUILD SUCCESSFUL",
+        "AutomationTool exiting with ExitCode=0 (Success)"
+      ],
+      "source": {
+        "path": "Reports/IntrepidCabin20261111/stage.log",
+        "bytes": 26903,
+        "sha256": "80bd164445196a05f6d92e47f4d8be5ba469b9f2487c5379cb36b7cdf15e615f",
+        "local_evidence_only": true
+      }
+    },
+    {
+      "kind": "material_only_h",
+      "path": "Reports/IntrepidCabin20261111/material-build-h.log",
+      "required_markers": [
+        "INTREPID_CABIN_ASSETS_READY",
+        "Success - 0 error(s), 0 warning(s)"
+      ],
+      "source": {
+        "path": "Reports/IntrepidCabin20261111/material-build-h.log",
+        "bytes": 212097,
+        "sha256": "e109694b58e7799de93573e2742bdbbbcedb5649e05f8cbc531648060399c153",
+        "local_evidence_only": true
+      }
+    }
+  ],
+  "independent_performance": {
+    "source": {
+      "path": "Reports/IntrepidCabin20261111/performance-independent.json",
+      "bytes": 17146,
+      "sha256": "98dbf108c68411236dad06116b6f38cacca609c14057ff671eb05d17ed3c5325",
+      "local_evidence_only": true
+    },
+    "curated": {
+      "path": "Docs/IntrepidCabin20261111/evidence/performance-independent.json",
+      "bytes": 17146,
+      "sha256": "98dbf108c68411236dad06116b6f38cacca609c14057ff671eb05d17ed3c5325",
+      "local_evidence_only": false
+    },
+    "extra_assertions_added_to_totals": 0,
+    "scope": "Independent recount of the same two profile executions; do not count86again. View/Pos rows are1501/1500/1500/1499 in both captures, not exact1500rows/camera."
+  },
+  "independent_editor_inspection": {
+    "source": {
+      "path": "Reports/IntrepidCabin20261111/independent-editor-close-review.json",
+      "bytes": 3931,
+      "sha256": "ed898ba19eddab3a07ed2e6d6b35753ef02f139ebdddde798b69ce5a328c8de5",
+      "local_evidence_only": true
+    },
+    "curated": {
+      "path": "Docs/IntrepidCabin20261111/evidence/independent-editor-close-review.json",
+      "bytes": 3931,
+      "sha256": "ed898ba19eddab3a07ed2e6d6b35753ef02f139ebdddde798b69ce5a328c8de5",
+      "local_evidence_only": false
+    },
+    "human_playtest": false,
+    "packaged_visual_proof": false
+  },
+  "regressions_separate": {
+    "status": "passed",
+    "receipt": {
+      "path": "Docs/IntrepidCabin20261111/evidence/regression-receipt.json",
+      "bytes": 16692,
+      "sha256": "b59b268aa32dd3676e85c3683537e7f5196c311b5e7ec76eae34d453c378e741",
+      "local_evidence_only": false
+    },
+    "raw_cpp_pass": 1280,
+    "raw_cpp_fail": 0,
+    "raw_report_executions": 20,
+    "by_group": {
+      "stride-and-apollo-input": 99,
+      "apollo-and-rescue-regression": 460,
+      "mission-selection": 66,
+      "field-operations": 655
+    }
+  },
+  "final_preservation": {
+    "status": "passed",
+    "summary": {
+      "path": "Docs/IntrepidCabin20261111/evidence/final-preservation-summary.json",
+      "bytes": 2789,
+      "sha256": "8001bc5f364198b93e9ae0cc429a76d5ecfd4b96d95cfa04163246bb7a5d3860",
+      "local_evidence_only": false
+    },
+    "source_summary": {
+      "path": "Reports/IntrepidCabin20261111/final-preservation-summary.json",
+      "bytes": 2789,
+      "sha256": "8001bc5f364198b93e9ae0cc429a76d5ecfd4b96d95cfa04163246bb7a5d3860",
+      "local_evidence_only": true
+    },
+    "private_inventories_copied": false,
+    "original_saved_files": 906,
+    "project_config_files": 5,
+    "map_files": 4,
+    "prior_visual_artifacts_unchanged": 114,
+    "prior_visual_artifact_scope": "109priorDocs files and5accepted receipt files independently checked against cabin baseline hashes/mtimes; source/stage changes intentionally retained"
+  },
+  "completion_status": "accepted_local_and_broader_regression_evidence_complete_explicit_untested_limits_remain"
+}

@@ -1,0 +1,647 @@
+{
+	"schema_version": 1,
+	"created_utc": "2026-11-11T17:25:32.613Z",
+	"source_asset": "/Game/Lunar/Imported/ApolloLander/ApolloLander.ApolloLander",
+	"derived_asset": "/Game/Lunar/Apollo12/IntrepidVisual/SM_IntrepidCabin.SM_IntrepidCabin",
+	"input": "SourceArt/IntrepidCabin20261111/cabin-normals.json",
+	"matching": "Exact slot plus unordered triangle/corner positions cast to imported float32 then rounded to1e-4cm after original OBJ (x,-y,z) reflection; no UV matching",
+	"hash_encoding": "Canonical positions/topology/UV/non-cabin frames: ordered element IDs, little-endian int32/float32 and length-prefixed UTF8 strings; all-attributes digest: same-process UE5.8 MeshDescription serialization; SHA1",
+	"maps_saved": false,
+	"source_assets_saved": false,
+	"normal_input_sha1": "3443f01826915ee168fbe899fac53f6dbcf7388a",
+	"normal_source_provenance":
+	{
+		"geometry_records_sha256": "adfaf47c2e46e2050144dd08d0a17105fd20b0e4067db6fca61dcc7fcbca9014",
+		"vertex_records_sha256": "4e0353b83f86310ccff742082c55d7e0cde5efa45cb29927554c6c5c87255867",
+		"uv_records_sha256": "1a6b3a240b436b201788308c4124a8c800467adb2d105f6a5905cf99d487b69c",
+		"face_records_sha256": "ee4f74305cc692ff73a8bea67bafae0f74525a976492f1a756dfa3ee175c0367",
+		"group_records_sha256": "e664d9cb8c96b3053a43f902d94b39fe6b0c49dc1e0c5ac3500236825c9f2eed",
+		"geometry_reproduction_exact": true,
+		"vertices": 64787,
+		"texture_coordinates": 64087,
+		"triangles": 97588,
+		"inherited_out_of_range_uv_corners": 3744,
+		"uv_policy": "Not repaired, reimported, or edited; the UE builder must duplicate the existing mesh attributes",
+		"obj_sha256": "7b034359fbfa5c42cd576e129e36e29a9272c178b5b99d95de0ed260c843b8d8",
+		"glb_sha256": "379101dfcee399267addf771709107c35e826b0b9e5233272f123e4c8a585c4e",
+		"obj_path": "Raw/ApolloLander.obj",
+		"glb_path": "Raw/Apollo Lunar Module.glb",
+		"trimesh_version": "5.1.0",
+		"numpy_version": "2.4.6",
+		"source_geometry_primitives": 157,
+		"original_width_conversion_scale": 101.12961992470782
+	},
+	"matched_triangles": 1237,
+	"matched_corners": 3711,
+	"target_vertex_instances": 3711,
+	"source_attributes":
+	{
+		"positions_sha1": "82041edeb04de72a262693a4cc95365ad1ba7f6f",
+		"topology_sha1": "8b535df098d207b14c0e1cb6ee4b61ddcce5ed9d",
+		"uv_sha1": "f97bbadeaadfd94425bb174ea7a2ac0f53b25065",
+		"non_cabin_frames_sha1": "46abb0564845dcdc3244af6c8031836e800a41db",
+		"materials_sha1": "bc07fda7aacc62880f11bb0d81b6611e752a2111",
+		"all_mesh_description_attributes_sha1": "c9e626a6ade291053789be4b8dc0bffcd21d6575"
+	},
+	"source_bounds":
+	{
+		"origin_cm": [
+			0,
+			0,
+			253.47088623046875
+		],
+		"extent_cm": [
+			325,
+			324.9603271484375,
+			253.47088623046875
+		],
+		"sphere_radius_cm": 404.15054355252926
+	},
+	"vertices": 64787,
+	"vertex_instances": 289380,
+	"triangles": 96460,
+	"material_slots": 12,
+	"source_uasset_sha1_before": "cdf287f6b1713240224a4dfcbe449de0fa2a76ad",
+	"render_comparison_scope": "LOD0 CPU index corners: exact position/UE-UV/material/winding and decoded packed tangent X/Z/W float bits; duplicate faces are multisets. Not shader output, vertex-color-buffer, GPU pixel, lighting, collision or performance equivalence.",
+	"original_build_settings":
+	{
+		"recompute_normals": false,
+		"recompute_tangents": true,
+		"use_mikk_tspace": true,
+		"compute_weighted_normals": true,
+		"high_precision_tangent_basis": false,
+		"full_precision_uvs": false,
+		"generate_lightmap_uvs": false
+	},
+	"original_render_before_build":
+	{
+		"cpu_buffers_available": true,
+		"render_vertices": 104651,
+		"render_triangles": 96460,
+		"non_cabin_render_triangles": 95223,
+		"cabin_render_triangles": 1237,
+		"uv_channels": 1,
+		"high_precision_tangent_basis": false,
+		"full_precision_uvs": false,
+		"geometry_uv_material_sha1": "61d307389f981fe272736512f273836bcece7f4f",
+		"non_cabin_decoded_frame_bits_sha1": "577b46c324f2b4cb0a4d0441a02f76a8b7509ed7",
+		"all_decoded_frame_bits_sha1": "db2583cd6eec93e21c995770ccdba375375497fd",
+		"authored_targets_evaluated": false,
+		"cabin_max_normal_component_error": 0,
+		"cabin_max_tangent_component_error": 0,
+		"cabin_max_normal_angle_degrees": 0,
+		"cabin_max_handedness_error": 0,
+		"packed_component_half_step_plus_float_epsilon": 0.0039390078740157482
+	},
+	"frame_bake_correspondence_uv_channels": [
+		0
+	],
+	"frame_bake_excluded_generated_lightmap_channel": -1,
+	"frame_bake_correspondence_full_precision_uv": false,
+	"frame_bake_correspondence_legacy_half_truncation": false,
+	"frame_bake_source_render_triangles": 96460,
+	"frame_bake_matched_md_triangles": 96460,
+	"frame_bake_unrendered_exact_zero_area_triangles": 0,
+	"frame_bake_zero_area_triangle_examples": [],
+	"frame_bake_vertex_instances": 289380,
+	"frame_bake_ambiguous_triangles": 0,
+	"source_decoded_normal_squared_length_error": 0.012710094451904297,
+	"source_decoded_tangent_squared_length_error": 1,
+	"cabin_tangent_projected_source_x": 3699,
+	"cabin_tangent_projected_source_binormal_fallback": 0,
+	"cabin_tangent_deterministic_axis_fallback": 12,
+	"cabin_tangent_policy": "Cabin only: project original computed tangent X onto GLB normal; if parallel, project original signed cross(N,X) binormal; if both collapse, use normal.FindBestAxisVectors. These projected/reconstructed rendering tangents are not GLB-authored tangents or repaired UV data. Source binormal sign is retained.",
+	"frame_bake_provenance": "Derived MD only: normal/tangent/binormal-sign frames baked from original cached computed LOD0 render corners. Exact material/triangle positions/cyclic winding and inherited UE UVs quantized to actual packing disambiguate corners; generated lightmap UV channel is excluded only from correspondence. Cabin normals then come from GLB and cabin tangents project or reconstruct the computed source basis, with explicit binormal/axis fallback counts. Outside the cabin, only demonstrably zero/collinear computed source tangents are reconstructed across affected slots; their normals and signs are retained and all other source tangents remain baked. Unrendered exact-zero-area unused frames remain original. No source rebuild or source MD mutation.",
+	"source_degenerate_tangent_repaired_vertex_instances": 836,
+	"source_degenerate_tangent_repaired_md_faces": 570,
+	"source_degenerate_tangent_repaired_md_slots":
+	{
+		"blinn4SG_002": 257,
+		"blinn6SG_001": 113,
+		"blinn2SG_002": 4,
+		"blinn3SG_001": 36,
+		"blinn1SG_002": 160
+	},
+	"source_degenerate_tangent_repair_policy": "Derived only, outside the1237 GLB cabin triangles: any source material slot, but only demonstrably zero/parallel computed source X against finite nonzero N. Construct normal.FindBestAxisVectors tangent; retain exact source decoded normal and binormal sign. No valid source tangents, source normals, UVs or source assets are repaired or waived; affected material slots are listed explicitly.",
+	"frame_bake_changed_normal_instances": 289380,
+	"frame_bake_changed_tangent_instances": 289380,
+	"frame_bake_changed_sign_instances": 289380,
+	"non_cabin_md_frames_intentionally_baked": true,
+	"changed_normal_instances": 3623,
+	"build_diagnostics": [],
+	"derived_attributes":
+	{
+		"positions_sha1": "82041edeb04de72a262693a4cc95365ad1ba7f6f",
+		"topology_sha1": "8b535df098d207b14c0e1cb6ee4b61ddcce5ed9d",
+		"uv_sha1": "f97bbadeaadfd94425bb174ea7a2ac0f53b25065",
+		"non_cabin_frames_sha1": "ab0be178ffa79a6305c3e094801f040f8fc58073",
+		"materials_sha1": "bc07fda7aacc62880f11bb0d81b6611e752a2111",
+		"all_mesh_description_attributes_sha1": "95a7ea4715ab6709a5b11bf2804c94d34a1396ad"
+	},
+	"derived_bounds":
+	{
+		"origin_cm": [
+			0,
+			0,
+			253.47088623046875
+		],
+		"extent_cm": [
+			325,
+			324.9603271484375,
+			253.47088623046875
+		],
+		"sphere_radius_cm": 404.15054355252926
+	},
+	"max_normal_squared_length_error": 1.1920928955078125e-07,
+	"max_tangent_squared_length_error": 3.5762786865234375e-07,
+	"max_normal_tangent_abs_dot": 1.4856923371553421e-05,
+	"derived_build_settings":
+	{
+		"recompute_normals": false,
+		"recompute_tangents": false,
+		"use_mikk_tspace": true,
+		"compute_weighted_normals": true,
+		"high_precision_tangent_basis": false,
+		"full_precision_uvs": false,
+		"generate_lightmap_uvs": false
+	},
+	"original_render_after_build":
+	{
+		"cpu_buffers_available": true,
+		"render_vertices": 104651,
+		"render_triangles": 96460,
+		"non_cabin_render_triangles": 95223,
+		"cabin_render_triangles": 1237,
+		"uv_channels": 1,
+		"high_precision_tangent_basis": false,
+		"full_precision_uvs": false,
+		"geometry_uv_material_sha1": "61d307389f981fe272736512f273836bcece7f4f",
+		"non_cabin_decoded_frame_bits_sha1": "577b46c324f2b4cb0a4d0441a02f76a8b7509ed7",
+		"all_decoded_frame_bits_sha1": "db2583cd6eec93e21c995770ccdba375375497fd",
+		"authored_targets_evaluated": false,
+		"cabin_max_normal_component_error": 0,
+		"cabin_max_tangent_component_error": 0,
+		"cabin_max_normal_angle_degrees": 0,
+		"cabin_max_handedness_error": 0,
+		"packed_component_half_step_plus_float_epsilon": 0.0039390078740157482
+	},
+	"derived_render":
+	{
+		"cpu_buffers_available": true,
+		"render_vertices": 102708,
+		"render_triangles": 96460,
+		"non_cabin_render_triangles": 95223,
+		"cabin_render_triangles": 1237,
+		"uv_channels": 1,
+		"high_precision_tangent_basis": false,
+		"full_precision_uvs": false,
+		"geometry_uv_material_sha1": "61d307389f981fe272736512f273836bcece7f4f",
+		"non_cabin_decoded_frame_bits_sha1": "78914c31bebd2d77b9f429136d1114ee88a392d9",
+		"all_decoded_frame_bits_sha1": "258f09797d5d062344e031f4e0f4c47ef709ebcf",
+		"authored_targets_evaluated": true,
+		"cabin_max_normal_component_error": 0.0039369547739624977,
+		"cabin_max_tangent_component_error": 0.0039369473233819008,
+		"cabin_max_normal_angle_degrees": 0.35718004326838104,
+		"cabin_max_handedness_error": 0,
+		"packed_component_half_step_plus_float_epsilon": 0.0039390078740157482
+	},
+	"original_render_mutations":
+	{
+		"source_only_rows": 0,
+		"derived_only_rows": 0,
+		"examples": []
+	},
+	"render_geometry_uv_material_delta":
+	{
+		"source_only_rows": 0,
+		"derived_only_rows": 0,
+		"examples": []
+	},
+	"non_cabin_render_frame_delta":
+	{
+		"source_only_rows": 7161,
+		"derived_only_rows": 7161,
+		"examples": [
+			{
+				"row_sha1": "3ee0d13b6d517f289d0b0b01d6ec8adb20ba35e6",
+				"material_index": 0,
+				"material_slot": "blinn10SG_001",
+				"first_corner_position_cm": [
+					0.86174893379211426,
+					126.27561950683594,
+					255.59181213378906
+				],
+				"first_corner_tangent_x_xyzw": [
+					0,
+					1,
+					0,
+					1
+				],
+				"first_corner_tangent_z_xyzw": [
+					-0.98425197601318359,
+					0,
+					-0.15748031437397003,
+					1
+				],
+				"side": "derived_only"
+			},
+			{
+				"row_sha1": "6ef903a397f6bf95fed83537e750599bb42e3389",
+				"material_index": 0,
+				"material_slot": "blinn10SG_001",
+				"first_corner_position_cm": [
+					0.86174893379211426,
+					126.27561950683594,
+					255.59181213378906
+				],
+				"first_corner_tangent_x_xyzw": [
+					0,
+					1,
+					0,
+					1
+				],
+				"first_corner_tangent_z_xyzw": [
+					-0.98425197601318359,
+					0,
+					-0.15748031437397003,
+					1
+				],
+				"side": "source_only"
+			},
+			{
+				"row_sha1": "4830a4a164edce33ba592867ea42b038176cf657",
+				"material_index": 0,
+				"material_slot": "blinn10SG_001",
+				"first_corner_position_cm": [
+					0.86174893379211426,
+					126.27561950683594,
+					255.59181213378906
+				],
+				"first_corner_tangent_x_xyzw": [
+					0,
+					1,
+					0,
+					1
+				],
+				"first_corner_tangent_z_xyzw": [
+					-0.98425197601318359,
+					0,
+					-0.15748031437397003,
+					1
+				],
+				"side": "derived_only"
+			},
+			{
+				"row_sha1": "e0a95ee7728a5d07be1b16b5bcc127512ffb8fa0",
+				"material_index": 0,
+				"material_slot": "blinn10SG_001",
+				"first_corner_position_cm": [
+					0.86174893379211426,
+					126.27561950683594,
+					255.59181213378906
+				],
+				"first_corner_tangent_x_xyzw": [
+					0,
+					1,
+					0,
+					1
+				],
+				"first_corner_tangent_z_xyzw": [
+					-0.98425197601318359,
+					0,
+					-0.15748031437397003,
+					1
+				],
+				"side": "source_only"
+			},
+			{
+				"row_sha1": "7cf0e711e2e3deb272d784d781455a5cdf0cfa4d",
+				"material_index": 0,
+				"material_slot": "blinn10SG_001",
+				"first_corner_position_cm": [
+					0.86174893379211426,
+					126.27561950683594,
+					256.3583984375
+				],
+				"first_corner_tangent_x_xyzw": [
+					0,
+					1,
+					0,
+					1
+				],
+				"first_corner_tangent_z_xyzw": [
+					-0.98425197601318359,
+					0,
+					0.15748031437397003,
+					1
+				],
+				"side": "derived_only"
+			},
+			{
+				"row_sha1": "19c47e6e4fca098c932317305e7b6bfcd66c7d16",
+				"material_index": 0,
+				"material_slot": "blinn10SG_001",
+				"first_corner_position_cm": [
+					0.86174893379211426,
+					126.27561950683594,
+					256.3583984375
+				],
+				"first_corner_tangent_x_xyzw": [
+					0,
+					1,
+					0,
+					1
+				],
+				"first_corner_tangent_z_xyzw": [
+					-0.98425197601318359,
+					0,
+					0.15748031437397003,
+					1
+				],
+				"side": "source_only"
+			},
+			{
+				"row_sha1": "491ed3d02cac611af898dfddf0b74229664678cc",
+				"material_index": 0,
+				"material_slot": "blinn10SG_001",
+				"first_corner_position_cm": [
+					0.86174893379211426,
+					126.27561950683594,
+					256.3583984375
+				],
+				"first_corner_tangent_x_xyzw": [
+					0,
+					1,
+					0,
+					1
+				],
+				"first_corner_tangent_z_xyzw": [
+					-0.98425197601318359,
+					0,
+					0.15748031437397003,
+					1
+				],
+				"side": "derived_only"
+			},
+			{
+				"row_sha1": "c29e5bb70fc8c8be039e05518d1540b7a89c5ea6",
+				"material_index": 0,
+				"material_slot": "blinn10SG_001",
+				"first_corner_position_cm": [
+					0.86174893379211426,
+					126.27561950683594,
+					256.3583984375
+				],
+				"first_corner_tangent_x_xyzw": [
+					0,
+					1,
+					0,
+					1
+				],
+				"first_corner_tangent_z_xyzw": [
+					-0.98425197601318359,
+					0,
+					0.15748031437397003,
+					1
+				],
+				"side": "source_only"
+			}
+		]
+	},
+	"outside_render_identity_verified": false,
+	"non_cabin_render_quantization_delta":
+	{
+		"actual_component_step": 0.007874015748031496,
+		"float_epsilon": 1.9999999999999999e-06,
+		"allowed_component_delta": 0.0078760157480314962,
+		"matching": "Exact material/position/UE-UV/cyclic-winding groups; duplicate frame multisets require a perfect bipartite match within one actual packed-component step plus float epsilon; tangent X.W and normal/sign Z.W remain bit-exact.",
+		"geometry_groups": 95223,
+		"maximum_duplicate_group": 1,
+		"matched_faces": 95223,
+		"matched_bitwise_changed_pairs": 7161,
+		"unmatched_source_faces": 0,
+		"unmatched_derived_faces": 0,
+		"max_normal_component_delta": 0.0078740715980529785,
+		"max_tangent_component_delta": 1,
+		"max_normal_angle_degrees": 0.34774235308024598,
+		"max_tangent_angle_degrees": 90,
+		"max_regular_tangent_component_delta": 0.0078740715980529785,
+		"max_regular_tangent_angle_degrees": 0.34491742076407844,
+		"max_repaired_tangent_component_delta": 1,
+		"max_repaired_tangent_angle_degrees": 90,
+		"repaired_source_degenerate_faces": 570,
+		"repaired_source_degenerate_corners": 836,
+		"repaired_faces_by_slot":
+		{
+			"blinn3SG_001": 36,
+			"blinn4SG_002": 257,
+			"blinn6SG_001": 113,
+			"blinn2SG_002": 4,
+			"blinn1SG_002": 160
+		},
+		"repair_unit_squared_and_abs_dot_error_bound": 0.01369167088751296,
+		"source_degenerate_tangent_exception": "Only demonstrably source-degenerate frames: source X zero/parallel to finite nonzero N, across any original material slot (relative cross squared <=1e-12). Derived packed X/N must be finite unit/orthogonal within packing error; normal delta still one component step and both W/sign values exact. Every valid source tangent retains the component-delta limit; no normal or W/sign exception is permitted.",
+		"over_bound_or_unmatched_examples": [],
+		"verified": true,
+		"bitwise_source_only_rows": 7161,
+		"bitwise_derived_only_rows": 7161
+	},
+	"outside_render_quantization_bound_verified": false,
+	"outside_render_policy_verified": true,
+	"outside_render_normal_bound_verified": true,
+	"outside_render_regular_tangent_bound_verified": true,
+	"outside_render_source_degenerate_repairs_verified": true,
+	"outside_render_frame_mode": "within_component_step_with_explicit_source_degenerate_tangent_repairs",
+	"source_uasset_sha1_after": "cdf287f6b1713240224a4dfcbe449de0fa2a76ad",
+	"derived_uasset_sha1": "c07a6878779b8c1a31af793d2df577139bb610ed",
+	"destination_file": "../../../../../LunarRescue/Content/Lunar/Apollo12/IntrepidVisual/SM_IntrepidCabin.uasset",
+	"passed": true,
+	"pass_assertions": 46,
+	"fail_assertions": 0,
+	"checks": [
+		{
+			"name": "Persistent authored-normal JSON is readable and valid",
+			"passed": true
+		},
+		{
+			"name": "Schema, 1e-4cm matching, Y reflection and exact 1237-triangle coverage are explicit",
+			"passed": true
+		},
+		{
+			"name": "Normal input contains exactly 1237 triangle records",
+			"passed": true
+		},
+		{
+			"name": "All 1237 slot/position keys are unique and all normals are finite unit vectors",
+			"passed": true
+		},
+		{
+			"name": "Imported source is one retained non-Nanite editable LOD",
+			"passed": true
+		},
+		{
+			"name": "The original imported source package has a readable preservation hash",
+			"passed": true
+		},
+		{
+			"name": "The original imported MeshDescription is available without reimport",
+			"passed": true
+		},
+		{
+			"name": "Imported mesh retains positions, frames, UVs and material-group attributes",
+			"passed": true
+		},
+		{
+			"name": "Every authored triangle matches exactly once in imported UE positions (matched 1237 /1237)",
+			"passed": true
+		},
+		{
+			"name": "Cabin vertex instances are isolated; frame projection waits for actual computed source render tangents",
+			"passed": true
+		},
+		{
+			"name": "Actual single-LOD render data is available",
+			"passed": true
+		},
+		{
+			"name": "Render comparison has readable CPU position, UV, tangent and index data without modifying source access flags",
+			"passed": true
+		},
+		{
+			"name": "Actual render vertex/index views have coherent lengths",
+			"passed": true
+		},
+		{
+			"name": "All 1237 cabin triangles are present exactly once in the actual LOD0 render index buffer",
+			"passed": true
+		},
+		{
+			"name": "Original computed source render data is available for frame baking",
+			"passed": true
+		},
+		{
+			"name": "Original computed-frame correspondence uses readable CPU buffers without source mutation",
+			"passed": true
+		},
+		{
+			"name": "Frame-bake correspondence has an unchanged identity source build scale",
+			"passed": true
+		},
+		{
+			"name": "Source computed frame recovery preserves duplicate-face multiplicity; only unrendered exact-zero-area faces may remain untouched",
+			"passed": true
+		},
+		{
+			"name": "Cabin tangents project or reconstruct actual computed source frames and remain orthogonal to exact GLB normals",
+			"passed": true
+		},
+		{
+			"name": "The new generated destination is absent; existing assets are never overwritten",
+			"passed": true
+		},
+		{
+			"name": "A separate destination package owns the duplicate and retains the LOD count",
+			"passed": true
+		},
+		{
+			"name": "The clone owns its body setup; building cannot mutate the original collider",
+			"passed": true
+		},
+		{
+			"name": "The untouched duplicate initially retains every MeshDescription attribute and material reference",
+			"passed": true
+		},
+		{
+			"name": "Recovered authored normals change the cabin shading rather than emitting a no-op duplicate",
+			"passed": true
+		},
+		{
+			"name": "Only explicitly baked normal/tangent/binormal-sign frames and cabin targets differ; geometry, UVs, materials and all other attributes remain byte-identical",
+			"passed": true
+		},
+		{
+			"name": "The supported synchronous static-mesh build reports no errors",
+			"passed": true
+		},
+		{
+			"name": "Build retains all original vertex, instance and triangle counts",
+			"passed": true
+		},
+		{
+			"name": "Commit/build do not mutate any prepared baked frame or preserved MeshDescription attribute",
+			"passed": true
+		},
+		{
+			"name": "Derived bounds, single LOD and non-Nanite settings preserve the original centimetre geometry",
+			"passed": true
+		},
+		{
+			"name": "Built cabin frames equal authored GLB normals and projected/reconstructed tangent targets and remain finite, unit and orthogonal",
+			"passed": true
+		},
+		{
+			"name": "The original package bytes, sidecars, dirty state, body setup, materials and mesh attributes remain unchanged",
+			"passed": true
+		},
+		{
+			"name": "Actual single-LOD render data is available",
+			"passed": true
+		},
+		{
+			"name": "Render comparison has readable CPU position, UV, tangent and index data without modifying source access flags",
+			"passed": true
+		},
+		{
+			"name": "Actual render vertex/index views have coherent lengths",
+			"passed": true
+		},
+		{
+			"name": "All 1237 cabin triangles are present exactly once in the actual LOD0 render index buffer",
+			"passed": true
+		},
+		{
+			"name": "Actual single-LOD render data is available",
+			"passed": true
+		},
+		{
+			"name": "Render comparison has readable CPU position, UV, tangent and index data without modifying source access flags",
+			"passed": true
+		},
+		{
+			"name": "Actual render vertex/index views have coherent lengths",
+			"passed": true
+		},
+		{
+			"name": "All 1237 cabin triangles are present exactly once in the actual LOD0 render index buffer",
+			"passed": true
+		},
+		{
+			"name": "Building the derivative leaves every actual original render corner and packed frame unchanged",
+			"passed": true
+		},
+		{
+			"name": "Actual tangent and UV precision formats match the retained source",
+			"passed": true
+		},
+		{
+			"name": "Every actual rendered triangle retains bitwise positions, UE UVs, material assignment and winding as an exact multiset",
+			"passed": true
+		},
+		{
+			"name": "Non-cabin render frames are bit-exact or within one actual packed-component step, with exact W/sign and duplicate multiplicity; only demonstrably source-degenerate tangents may be reconstructed, with all affected slots recorded",
+			"passed": true
+		},
+		{
+			"name": "All cabin render normals and projected/reconstructed tangent targets match within the actual packing half-step",
+			"passed": true
+		},
+		{
+			"name": "Only the validated new derivative package is saved through UPackage::SavePackage",
+			"passed": true
+		},
+		{
+			"name": "Saving the derivative does not save or dirty the original imported package",
+			"passed": true
+		}
+	]
+}

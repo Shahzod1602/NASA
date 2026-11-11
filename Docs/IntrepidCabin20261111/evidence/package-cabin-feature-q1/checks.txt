@@ -1,0 +1,44 @@
+PASS Driver owns an isolated Apollo world with a possessed astronaut
+PASS Automation never writes the owner's Apollo checkpoint
+PASS The retained imported LROC terrain mesh is used directly
+PASS Imported terrain retains its original centimetre transform
+PASS Imported terrain still blocks the actual capsule and visibility queries
+PASS Ground collision still uses the imported triangle surface
+PASS The registered equipment/return worksite keeps its original XY
+PASS Visual ROI rejects invalid/outside coordinates and includes the lander anchor
+PASS All 81 local and four outside collision-grid samples hit finite imported terrain
+PASS Outside original surface-instance inventory has a reproducible transform fingerprint
+PASS The scene retains one shadow-casting lunar sun
+PASS Baseline omits the new layer; feature mode owns one bounded layer actor
+PASS The local layer uses six fine and three shadowed instanced batches
+PASS Instance counts stay within the independent 2048 fine /64 shadow budget
+PASS Every added mesh is finite, collision-free, navigation-free and without component or actor Tick
+PASS Every transformed added-rock bound stays within the 50m square
+PASS The lander apron and registered kit foreground stay free of added rocks
+PASS Every local rock batch has the dedicated authored rock material
+PASS Only the limited medium batches cast dynamic shadows
+PASS Every batch has bounded fine/medium culling distances
+PASS Medium rock placements remain separated rather than forming dense shadow overdraw
+PASS Independent terrain rays place sampled rocks partially below and above ground without floating
+PASS The contact layer is bounded AO only, without added sun/fill/exposure/bloom changes
+PASS The baseline and local ground material modes are explicit
+PASS The local material carries the correct centimetre ROI and edge-fade parameters
+PASS Cabin derivative is present and compatible with the retained source bounds and section inventory
+PASS The separate cabin baseline selects the source mesh and feature mode selects its derivative
+PASS Source and derivative keep every material slot/default binding including exactly two independently audited shared white slots
+PASS Only the two approved shared white slots receive cabin material instances with retained neutral base factors
+PASS The cabin keeps the finite source bounds and uniform 698cm presentation normalization
+PASS All four model pad anchors equal the source-derived world anchors without moving terrain or the lander
+PASS Cabin presentation remains non-colliding and without actor/component Tick or lander light components
+PASS Review/profile uses an actual rendered viewport, not NullRHI
+PASS The ladder camera uses the retained model's finite uniform 698cm source datum and actual pose
+PASS Every fixed camera and target is anchored to a successful imported-terrain ray
+PASS Four source-terrain-based fixed cameras are available
+PASS Performance capture uses normal delta time without fixed-step acceleration
+PASS CSV capture begins only after the controlled 300-frame settling period
+PASS Normal-delta capture records four fixed camera phases
+PASS The finite normal-delta CSV capture was written successfully
+PASS Fixture execution leaves the source-derived cabin pose, four pad anchors and scene light inventory unchanged
+PASS Fixture execution leaves the actual terrain collision grid unchanged
+PASS Visual and movement fixtures never grant cargo or consume mission resources
+RESULT: 0 failures

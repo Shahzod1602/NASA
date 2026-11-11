@@ -1,0 +1,102 @@
+{
+  "schema_version": 4,
+  "published_release": false,
+  "verification_completed": true,
+  "verification_scope": "Local Intrepid cabin normal recovery, shared white finish and selected regressions; not all historical suites, human playtest or network-isolated clean extraction.",
+  "generated_utc": "2026-11-11T18:18:58.442301+00:00",
+  "executable": "LunarRescue/Binaries/Win64/LunarRescue.exe",
+  "executable_sha256": "59d4f795b1141694741264370efe9b79dad66eaa9b4487270ffe7f9517fc358c",
+  "source_art_inputs_sha256": "d9336b2dbdda2eacbb184893e7a2186ce1ac879e9eed403efa837203866cefa9",
+  "selected_input_file_count": 145,
+  "base_git_commit": "4d1d651f43809071da42409f483506487099f164",
+  "source_worktree_dirty": true,
+  "compile_metadata_preserved": {
+    "path": "BUILD_INFO.json",
+    "sha256": "713e5214513a9e5f92f296c9b8f5a346b68f81634a334620d50c20ee47cecb82",
+    "generated_utc": "2026-11-11T17:45:25.3701656Z"
+  },
+  "canonical_raw_cpp_pass_executions": 1763,
+  "canonical_raw_cpp_fail_executions": 0,
+  "canonical_raw_reports": 31,
+  "local_visual_pass": 483,
+  "selected_regression_pass": 1280,
+  "packaged_pngs": 32,
+  "editor_pass_separate": 182,
+  "asset_builder_checks_separate": 46,
+  "verification_index": {
+    "path": "Credits/Docs/IntrepidCabin20261111/verification-index.json",
+    "sha256": "8d648c507d0f3bb08070cfe3d07e169b2525dd1c64cd1742c37753ad74c13fea"
+  },
+  "evidence_integrity": {
+    "path": "Credits/Docs/IntrepidCabin20261111/bundle-integrity.json",
+    "sha256": "19caab9100ddf2ec56a8b892bcd9660fc7d73f6d0c1540e33cc33a8d03350c72"
+  },
+  "protected_original_saved_config_maps_match": 915,
+  "owner_save_photo_files_unchanged": 80,
+  "original_154_payloads_match": true,
+  "paired_graphics": {
+    "renderer": "DX11 rendered offscreen",
+    "resolution": [
+      1280,
+      720
+    ],
+    "quality": 1,
+    "fps_cap": 60,
+    "frames_each": 6000,
+    "settle_before_csv": 300,
+    "control_mean_fps": 59.90236214482205,
+    "feature_mean_fps": 59.98365769239634,
+    "control_p99_ms": 16.7491,
+    "feature_p99_ms": 16.7256,
+    "not_whole_game_fps": true
+  },
+  "post_test_cooked_payload_hashes": [
+    {
+      "path": "LunarRescue/Content/Paks/global.ucas",
+      "bytes": 3208544,
+      "sha256": "c559c04097b9109e8a36de1618a2d450a4953224fae89f753607d15738fdf71d"
+    },
+    {
+      "path": "LunarRescue/Content/Paks/global.utoc",
+      "bytes": 782,
+      "sha256": "87ce199f0b3b85ac0985c839b4c390455894c9e960f5f3c0b53c9a6aeacfd692"
+    },
+    {
+      "path": "LunarRescue/Content/Paks/LunarRescue-Windows.pak",
+      "bytes": 10663120,
+      "sha256": "4ba22d550452e135f8ad7ad80adb435d9518720c7788ddadf72ea719cb8e5494"
+    },
+    {
+      "path": "LunarRescue/Content/Paks/LunarRescue-Windows.ucas",
+      "bytes": 210805024,
+      "sha256": "0c859c9946aa605896933899a196553359d67ee1a875be7d87dfe0ac3d263152"
+    },
+    {
+      "path": "LunarRescue/Content/Paks/LunarRescue-Windows.utoc",
+      "bytes": 228730,
+      "sha256": "98c2e6a763653f80f7b381a5b489104af9292362ca88d6a6cec56f307be91fff"
+    }
+  ],
+  "science_jsons_source_equal": [
+    {
+      "path": "LunarRescue/Content/Science/LunarWater/manifest.json",
+      "sha256": "9319ebd61843c0859ff94ae32871090f657164c7a535e3a04909d494a16ca01b"
+    },
+    {
+      "path": "LunarRescue/Content/Science/LunarWater/study.json",
+      "sha256": "40db698b4244ee7f6f28fcb5aa44c7dd3e60177694b34cb18d8bc32a24981105"
+    }
+  ],
+  "offline_note_files_verified": 153,
+  "human_playtests": 0,
+  "network_isolation_tested": false,
+  "clean_extracted_distribution_tested": false,
+  "limits": [
+    "Original model silhouette remains coarse; cloth is subtle and bright white low-contrast.",
+    "Selected GLB normals are authored model data, not new measured terrain.",
+    "Explicit source-degenerate tangent repairs and packing differences prevent an outside-render bit-identity claim.",
+    "Single capped four-camera capture pair; no causal performance improvement, full-mission or close-camera FPS claim.",
+    "No fresh-process MD/render-buffer reload audit; fresh-load visual/runtime evidence is separate.",
+    "No new GitHub release or competition eligibility decision."
+  ]
+}

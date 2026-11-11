@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "kind": "review",
+  "assertions": 43,
+  "artifacts": [
+    {
+      "path": "cabin-front-q0.png",
+      "bytes": 804342,
+      "sha256": "dde56b095df5319d9fbd0ded39c9eff3fdc9c3e8395456fff4f84a467b7f5d49"
+    },
+    {
+      "path": "cabin-front-q1.png",
+      "bytes": 912644,
+      "sha256": "8fce8bd10980944e17c9d0925ad7c330b926a55b7e651cb602c93e066fea0f4e"
+    },
+    {
+      "path": "cabin-side-q0.png",
+      "bytes": 754035,
+      "sha256": "0f1f1054753387ce0feed4a8b40190b95d3667e434f7454fbdc052a7b7d7daf0"
+    },
+    {
+      "path": "cabin-side-q1.png",
+      "bytes": 816211,
+      "sha256": "8cc5a2a6749ba139a677e3d29fdd263adfd002c7733c2004209c5297cd7be8be"
+    },
+    {
+      "path": "checks.txt",
+      "bytes": 3486,
+      "sha256": "1ef0950a36176cf291ada5d8feae9ac2a25859d1155b56f9bd1b19389811cfa5"
+    },
+    {
+      "path": "height-grid.csv",
+      "bytes": 4771,
+      "sha256": "be65d7a67f5fcd85be9585521449c6ad08831521843e9bc07feda16829899e94"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 28735,
+      "sha256": "be5413964e1d7e448fff17adc2ed87b5f53c79d0781f666341eb43729cc0075f"
+    },
+    {
+      "path": "outside-instances.txt",
+      "bytes": 1283269,
+      "sha256": "901f7a7d3488e47699532ef9c718ae3a4cb1162f317d8e6f6bbf92f94acf8c80"
+    }
+  ],
+  "manifest_sha256": "be5413964e1d7e448fff17adc2ed87b5f53c79d0781f666341eb43729cc0075f"
+}

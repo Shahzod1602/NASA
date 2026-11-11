@@ -1,0 +1,8 @@
+PASS Real movement produces bounded My Expedition trace: 815 points, 1234.42 m sampled display length (independent of recorded horizontal distance)
+PASS real movement Apollo 12 expedition
+Elapsed 896.81 s
+Walked 1237.50 m
+Remaining exercise time 1800.00 s
+Samples 3/3; hardware mask 7; ALSEP mask 3
+Peak memory 485.93 MiB
+RESULT: 0 failures

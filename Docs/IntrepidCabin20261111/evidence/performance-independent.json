@@ -1,0 +1,559 @@
+{
+  "schema_version": 1,
+  "generated_utc": "2026-11-11T18:06:54.780453+00:00",
+  "passed": true,
+  "captures": {
+    "package-cabin-control-q1": {
+      "sample_frames": 6000,
+      "mean_fps": 59.90236214482205,
+      "one_percent_low_fps": 51.66634289091789,
+      "p99_frame_ms": 16.7491,
+      "p95_frame_ms": 16.6919,
+      "largest_frame_ms": 44.0685,
+      "frames_over_33_333ms": 3,
+      "captured_frames": 6000,
+      "warmup_frames_excluded": 0,
+      "settle_frames_before_csv": 300,
+      "invalid_numeric_frame_rows": 0,
+      "nonnumeric_header_footer_rows": 2,
+      "raw_csv": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-control-q1/intrepid-profile.csv",
+      "raw_csv_sha256": "74b2d599074826635e6011ab206ed45bdaa78643729671fb1e56184e7949e8cc",
+      "counters": {
+        "GameThreadTime": {
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "unavailable_rows": 0,
+          "mean_including_zero": 2.076119633333333,
+          "mean_positive_rows": 2.076119633333333
+        },
+        "RenderThreadTime": {
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "unavailable_rows": 0,
+          "mean_including_zero": 4.45733465,
+          "mean_positive_rows": 4.45733465
+        },
+        "GPUTime": {
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "unavailable_rows": 0,
+          "mean_including_zero": 16.66979365,
+          "mean_positive_rows": 16.66979365
+        },
+        "GPU/SlateUI": {
+          "finite_rows": 6000,
+          "positive_rows": 5999,
+          "zero_rows": 1,
+          "negative_rows": 0,
+          "unavailable_rows": 0,
+          "mean_including_zero": 8.380152583333333,
+          "mean_positive_rows": 8.381549508251375
+        },
+        "GPUMem/LocalUsedMB": {
+          "finite_rows": 6000,
+          "positive_rows": 5994,
+          "zero_rows": 6,
+          "negative_rows": 0,
+          "unavailable_rows": 0,
+          "mean_including_zero": 252.24016586666667,
+          "mean_positive_rows": 252.49265852519187
+        }
+      },
+      "metadata_camera_phases": [
+        {
+          "camera_index": 0,
+          "first_frame": 0,
+          "last_frame": 1499,
+          "eye": {
+            "x": -1600,
+            "y": -1400,
+            "z": 443.58988680903667
+          },
+          "rotation": {
+            "pitch": -6.5361592012928,
+            "yaw": 41.18592516570965,
+            "roll": 0
+          }
+        },
+        {
+          "camera_index": 1,
+          "first_frame": 1500,
+          "last_frame": 2999,
+          "eye": {
+            "x": -780,
+            "y": -260,
+            "z": 135.22593837109707
+          },
+          "rotation": {
+            "pitch": -35.010304361200554,
+            "yaw": 37.568592028827496,
+            "roll": 0
+          }
+        },
+        {
+          "camera_index": 2,
+          "first_frame": 3000,
+          "last_frame": 4499,
+          "eye": {
+            "x": -162.35381206159173,
+            "y": 737.0261323604417,
+            "z": 81.90477120357158
+          },
+          "rotation": {
+            "pitch": 2.518688437844419,
+            "yaw": -66.80790178904053,
+            "roll": 0
+          }
+        },
+        {
+          "camera_index": 3,
+          "first_frame": 4500,
+          "last_frame": 5999,
+          "eye": {
+            "x": -17680,
+            "y": -2070,
+            "z": 236.63177606123008
+          },
+          "rotation": {
+            "pitch": -31.974983003308463,
+            "yaw": 55.175510843043206,
+            "roll": 0
+          }
+        }
+      ],
+      "raw_csv_view_transitions": [
+        {
+          "first_frame": 0,
+          "camera_index": 0,
+          "eye": {
+            "x": -1600.0,
+            "y": -1400.0,
+            "z": 443.5899
+          }
+        },
+        {
+          "first_frame": 1501,
+          "camera_index": 1,
+          "eye": {
+            "x": -780.0,
+            "y": -260.0,
+            "z": 135.2259
+          }
+        },
+        {
+          "first_frame": 3001,
+          "camera_index": 2,
+          "eye": {
+            "x": -162.3538,
+            "y": 737.0261,
+            "z": 81.9048
+          }
+        },
+        {
+          "first_frame": 4501,
+          "camera_index": 3,
+          "eye": {
+            "x": -17680.0,
+            "y": -2070.0,
+            "z": 236.6318
+          }
+        }
+      ],
+      "raw_csv_view_counts": [
+        {
+          "camera_index": 0,
+          "rows": 1501
+        },
+        {
+          "camera_index": 1,
+          "rows": 1500
+        },
+        {
+          "camera_index": 2,
+          "rows": 1500
+        },
+        {
+          "camera_index": 3,
+          "rows": 1499
+        }
+      ],
+      "metadata_quarter_statistics": [
+        {
+          "camera_index": 0,
+          "sample_frames": 1500,
+          "mean_fps": 59.66935017237401,
+          "one_percent_low_fps": 38.98624331418416,
+          "p99_frame_ms": 17.0578,
+          "p95_frame_ms": 16.7023,
+          "largest_frame_ms": 44.0685,
+          "frames_over_33_333ms": 3
+        },
+        {
+          "camera_index": 1,
+          "sample_frames": 1500,
+          "mean_fps": 59.995993707524185,
+          "one_percent_low_fps": 59.59908884912967,
+          "p99_frame_ms": 16.7135,
+          "p95_frame_ms": 16.6887,
+          "largest_frame_ms": 17.141,
+          "frames_over_33_333ms": 0
+        },
+        {
+          "camera_index": 2,
+          "sample_frames": 1500,
+          "mean_fps": 59.99472958299559,
+          "one_percent_low_fps": 59.35368584410636,
+          "p99_frame_ms": 16.7224,
+          "p95_frame_ms": 16.6925,
+          "largest_frame_ms": 17.4501,
+          "frames_over_33_333ms": 0
+        },
+        {
+          "camera_index": 3,
+          "sample_frames": 1500,
+          "mean_fps": 59.95061220605975,
+          "one_percent_low_fps": 55.51498849174288,
+          "p99_frame_ms": 16.728,
+          "p95_frame_ms": 16.6877,
+          "largest_frame_ms": 30.0857,
+          "frames_over_33_333ms": 0
+        }
+      ],
+      "maximum_sampled_working_set_bytes": 657690624,
+      "maximum_sampled_working_set_mib": 627.22265625,
+      "working_set_sample_count": 82,
+      "actual_memory_poll_spacing_seconds": {
+        "min": 1.3224617999999992,
+        "median": 1.3685212000000035,
+        "max": 1.4931536000000003
+      },
+      "nvidia_sample_rows": 16,
+      "selected_gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+      "cpu": [
+        "AMD Ryzen 5 6600H with Radeon Graphics         "
+      ],
+      "ram_bytes": 16312721408,
+      "renderer": "DX11 / rendered offscreen",
+      "width": 1280,
+      "height": 720,
+      "quality": 1,
+      "fps_cap": 60,
+      "vsync": false,
+      "executable_sha256": "59d4f795b1141694741264370efe9b79dad66eaa9b4487270ffe7f9517fc358c",
+      "source_art_inputs_sha256": "d9336b2dbdda2eacbb184893e7a2186ce1ac879e9eed403efa837203866cefa9",
+      "cabin_baseline": true,
+      "visual_baseline": false,
+      "source_fingerprint_unchanged": true,
+      "started_utc": "2026-11-11T17:59:35.2298960Z",
+      "finished_utc": "2026-11-11T18:01:30.7408679Z",
+      "competing_work_seen": false,
+      "raw_cpp_assertions": 43
+    },
+    "package-cabin-feature-q1": {
+      "sample_frames": 6000,
+      "mean_fps": 59.98365769239634,
+      "one_percent_low_fps": 58.204992940704436,
+      "p99_frame_ms": 16.7256,
+      "p95_frame_ms": 16.6872,
+      "largest_frame_ms": 25.1989,
+      "frames_over_33_333ms": 0,
+      "captured_frames": 6000,
+      "warmup_frames_excluded": 0,
+      "settle_frames_before_csv": 300,
+      "invalid_numeric_frame_rows": 0,
+      "nonnumeric_header_footer_rows": 2,
+      "raw_csv": "Dist/Apollo12/Windows/LunarRescue/Reports/IntrepidCabin20261111/package-cabin-feature-q1/intrepid-profile.csv",
+      "raw_csv_sha256": "a29ff88271427f27620a2f33a67b330acabbaf390e150c36eae95b8bc748e085",
+      "counters": {
+        "GameThreadTime": {
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "unavailable_rows": 0,
+          "mean_including_zero": 1.9136353833333333,
+          "mean_positive_rows": 1.9136353833333333
+        },
+        "RenderThreadTime": {
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "unavailable_rows": 0,
+          "mean_including_zero": 4.062131033333333,
+          "mean_positive_rows": 4.062131033333333
+        },
+        "GPUTime": {
+          "finite_rows": 6000,
+          "positive_rows": 6000,
+          "zero_rows": 0,
+          "negative_rows": 0,
+          "unavailable_rows": 0,
+          "mean_including_zero": 16.661205916666667,
+          "mean_positive_rows": 16.661205916666667
+        },
+        "GPU/SlateUI": {
+          "finite_rows": 6000,
+          "positive_rows": 5999,
+          "zero_rows": 1,
+          "negative_rows": 0,
+          "unavailable_rows": 0,
+          "mean_including_zero": 8.820571333333334,
+          "mean_positive_rows": 8.822041673612269
+        },
+        "GPUMem/LocalUsedMB": {
+          "finite_rows": 6000,
+          "positive_rows": 5998,
+          "zero_rows": 2,
+          "negative_rows": 0,
+          "unavailable_rows": 0,
+          "mean_including_zero": 252.21669973333334,
+          "mean_positive_rows": 252.3008
+        }
+      },
+      "metadata_camera_phases": [
+        {
+          "camera_index": 0,
+          "first_frame": 0,
+          "last_frame": 1499,
+          "eye": {
+            "x": -1600,
+            "y": -1400,
+            "z": 443.58988680903667
+          },
+          "rotation": {
+            "pitch": -6.5361592012928,
+            "yaw": 41.18592516570965,
+            "roll": 0
+          }
+        },
+        {
+          "camera_index": 1,
+          "first_frame": 1500,
+          "last_frame": 2999,
+          "eye": {
+            "x": -780,
+            "y": -260,
+            "z": 135.22593837109707
+          },
+          "rotation": {
+            "pitch": -35.010304361200554,
+            "yaw": 37.568592028827496,
+            "roll": 0
+          }
+        },
+        {
+          "camera_index": 2,
+          "first_frame": 3000,
+          "last_frame": 4499,
+          "eye": {
+            "x": -162.35381206159173,
+            "y": 737.0261323604417,
+            "z": 81.90477120357158
+          },
+          "rotation": {
+            "pitch": 2.518688437844419,
+            "yaw": -66.80790178904053,
+            "roll": 0
+          }
+        },
+        {
+          "camera_index": 3,
+          "first_frame": 4500,
+          "last_frame": 5999,
+          "eye": {
+            "x": -17680,
+            "y": -2070,
+            "z": 236.63177606123008
+          },
+          "rotation": {
+            "pitch": -31.974983003308463,
+            "yaw": 55.175510843043206,
+            "roll": 0
+          }
+        }
+      ],
+      "raw_csv_view_transitions": [
+        {
+          "first_frame": 0,
+          "camera_index": 0,
+          "eye": {
+            "x": -1600.0,
+            "y": -1400.0,
+            "z": 443.5899
+          }
+        },
+        {
+          "first_frame": 1501,
+          "camera_index": 1,
+          "eye": {
+            "x": -780.0,
+            "y": -260.0,
+            "z": 135.2259
+          }
+        },
+        {
+          "first_frame": 3001,
+          "camera_index": 2,
+          "eye": {
+            "x": -162.3538,
+            "y": 737.0261,
+            "z": 81.9048
+          }
+        },
+        {
+          "first_frame": 4501,
+          "camera_index": 3,
+          "eye": {
+            "x": -17680.0,
+            "y": -2070.0,
+            "z": 236.6318
+          }
+        }
+      ],
+      "raw_csv_view_counts": [
+        {
+          "camera_index": 0,
+          "rows": 1501
+        },
+        {
+          "camera_index": 1,
+          "rows": 1500
+        },
+        {
+          "camera_index": 2,
+          "rows": 1500
+        },
+        {
+          "camera_index": 3,
+          "rows": 1499
+        }
+      ],
+      "metadata_quarter_statistics": [
+        {
+          "camera_index": 0,
+          "sample_frames": 1500,
+          "mean_fps": 59.967088862290595,
+          "one_percent_low_fps": 56.096869570290494,
+          "p99_frame_ms": 16.7884,
+          "p95_frame_ms": 16.6858,
+          "largest_frame_ms": 22.0,
+          "frames_over_33_333ms": 0
+        },
+        {
+          "camera_index": 1,
+          "sample_frames": 1500,
+          "mean_fps": 59.99445843186357,
+          "one_percent_low_fps": 59.46229436452052,
+          "p99_frame_ms": 16.7296,
+          "p95_frame_ms": 16.6866,
+          "largest_frame_ms": 17.1155,
+          "frames_over_33_333ms": 0
+        },
+        {
+          "camera_index": 2,
+          "sample_frames": 1500,
+          "mean_fps": 59.996225277490446,
+          "one_percent_low_fps": 59.67311069958765,
+          "p99_frame_ms": 16.7191,
+          "p95_frame_ms": 16.6871,
+          "largest_frame_ms": 16.8642,
+          "frames_over_33_333ms": 0
+        },
+        {
+          "camera_index": 3,
+          "sample_frames": 1500,
+          "mean_fps": 59.976868121502896,
+          "one_percent_low_fps": 57.771232083215224,
+          "p99_frame_ms": 16.7179,
+          "p95_frame_ms": 16.6895,
+          "largest_frame_ms": 25.1989,
+          "frames_over_33_333ms": 0
+        }
+      ],
+      "maximum_sampled_working_set_bytes": 640385024,
+      "maximum_sampled_working_set_mib": 610.71875,
+      "working_set_sample_count": 83,
+      "actual_memory_poll_spacing_seconds": {
+        "min": 1.3091035000000026,
+        "median": 1.348573400000003,
+        "max": 1.4807135000000002
+      },
+      "nvidia_sample_rows": 16,
+      "selected_gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+      "cpu": [
+        "AMD Ryzen 5 6600H with Radeon Graphics         "
+      ],
+      "ram_bytes": 16312721408,
+      "renderer": "DX11 / rendered offscreen",
+      "width": 1280,
+      "height": 720,
+      "quality": 1,
+      "fps_cap": 60,
+      "vsync": false,
+      "executable_sha256": "59d4f795b1141694741264370efe9b79dad66eaa9b4487270ffe7f9517fc358c",
+      "source_art_inputs_sha256": "d9336b2dbdda2eacbb184893e7a2186ce1ac879e9eed403efa837203866cefa9",
+      "cabin_baseline": false,
+      "visual_baseline": false,
+      "source_fingerprint_unchanged": true,
+      "started_utc": "2026-11-11T18:01:59.5571765Z",
+      "finished_utc": "2026-11-11T18:03:54.3833409Z",
+      "competing_work_seen": false,
+      "raw_cpp_assertions": 43
+    }
+  },
+  "comparability": {
+    "executable_sha256": true,
+    "source_art_inputs_sha256": true,
+    "selected_gpu": true,
+    "cpu": true,
+    "ram_bytes": true,
+    "renderer": true,
+    "width": true,
+    "height": true,
+    "quality": true,
+    "fps_cap": true,
+    "vsync": true,
+    "visual_baseline": true,
+    "raw_csv_view_transitions": true,
+    "raw_csv_view_counts": true,
+    "cabin_source_mesh_equal": true,
+    "cabin_source_bounds_equal": true,
+    "cabin_derived_bounds_equal": true,
+    "cabin_pad_world_equal": true,
+    "cabin_lights_sha1_equal": true,
+    "height_grid_sha1_equal": true,
+    "outside_instances_sha1_equal": true,
+    "outside_instance_count_equal": true,
+    "light_snapshot_equal": true,
+    "cameras_equal": true,
+    "camera_phases_equal": true,
+    "field_operations_enabled_equal": true,
+    "capture_intervals_nonoverlap": true
+  },
+  "raw_cpp_pass_executions": 86,
+  "raw_cpp_fail_executions": 0,
+  "observed_feature_minus_control": {
+    "mean_fps": 0.08129554757429247,
+    "one_percent_low_fps": 6.538650049786547,
+    "p99_frame_ms": -0.023499999999998522,
+    "maximum_sampled_working_set_bytes": -17305600
+  },
+  "limitations": [
+    "Same final binary, cabin-only opt-out; earlier Nov11 surface/foil remain enabled in both. This is not historicalold/newbuild comparison.",
+    "Single fixed-order sample per condition, capped60FPS, normal engine delta; no causal performance improvement/regression or universal60FPS claim.",
+    "Four original camera phases include an outside-ROI control. Close cabin-review cameras are not the profiling workload.",
+    "Raw View/Pos sampling changes one row after the1500/3000/4500 game-thread markers; actualrows1501/1500/1500/1499 in both. Every6000frame remains included.",
+    "Working set samples cover the whole spawned process including initialization/settling/capture/shutdown. WaitForExit1000ms polling has measured instrumentation overhead/spacing; sampled maximum is not truepeak, VRAM or dedicatedGPU memory.",
+    "GPUTime/SlateUI are raw timestamp counters; aggregate means do not identify exclusive cabin/material cost. GPUMem zero readings are reported, not treated as proof of zeroVRAM or silently discarded.",
+    "No occupied-driving performance, on-screen animation-smoothness proof, human playtest, cleanoffline distribution test or new UE launch."
+  ],
+  "player_state_restored": false,
+  "source_tools_modified": false
+}

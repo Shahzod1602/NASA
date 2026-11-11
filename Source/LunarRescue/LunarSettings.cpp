@@ -19,7 +19,7 @@ const TMap<FName,FKey>& Defaults(){static const TMap<FName,FKey> Keys={
 }
 bool ULunarSettings::IsAutomation(){
  const FString Args=FCommandLine::Get();
- return Args.Contains(TEXT("Test"))||Args.Contains(TEXT("Review"))||Args.Contains(TEXT("csvCapture"))||Args.Contains(TEXT("ApolloSaveProfile"))||Args.Contains(TEXT("FieldOperationsProfile"));
+ return Args.Contains(TEXT("Test"))||Args.Contains(TEXT("Review"))||Args.Contains(TEXT("csvCapture"))||Args.Contains(TEXT("ApolloSaveProfile"))||Args.Contains(TEXT("FieldOperationsProfile"))||Args.Contains(TEXT("IntrepidVisualProfile"));
 }
 ULunarSettings* ULunarSettings::Get(){
  static ULunarSettings* S=[](){auto* V=NewObject<ULunarSettings>();V->AddToRoot();if(IsAutomation())V->Reset();else V->LoadConfig();return V;}();return S;

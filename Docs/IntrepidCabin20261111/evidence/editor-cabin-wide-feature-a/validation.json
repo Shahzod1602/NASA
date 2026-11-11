@@ -1,0 +1,68 @@
+{
+  "passed": true,
+  "kind": "review",
+  "assertions": 48,
+  "artifacts": [
+    {
+      "path": "checks.txt",
+      "bytes": 3819,
+      "sha256": "3c0fb2a1f996f550ff70c077d895b3a35c982af20247df47157311d13f9aa203"
+    },
+    {
+      "path": "fp-ground-q0.png",
+      "bytes": 1228195,
+      "sha256": "e1a78a0adb84eb23f294d07011920e2862c54efcc04306b049ee92f67dc75cc9"
+    },
+    {
+      "path": "fp-ground-q1.png",
+      "bytes": 1500766,
+      "sha256": "4b92b9a99c91e24cf0245369a9c05b4db81e8f1812a21b9f0512400ee1d08f44"
+    },
+    {
+      "path": "height-grid.csv",
+      "bytes": 4771,
+      "sha256": "be65d7a67f5fcd85be9585521449c6ad08831521843e9bc07feda16829899e94"
+    },
+    {
+      "path": "intrepid-wide-q0.png",
+      "bytes": 725979,
+      "sha256": "e618f5b338e57072f537b151bca04acf2a98b3b4ad10541fe58e5d789a727c07"
+    },
+    {
+      "path": "intrepid-wide-q1.png",
+      "bytes": 820611,
+      "sha256": "28b144094ed225a38c4fb3961b443552f934c47bc23b992ddb8b697dd37039ce"
+    },
+    {
+      "path": "ladder-foot-q0.png",
+      "bytes": 905066,
+      "sha256": "d15e1a5fafded98cfdfb3174236b59677d61ee9c04d9c5b7af934d79d74a19ed"
+    },
+    {
+      "path": "ladder-foot-q1.png",
+      "bytes": 963455,
+      "sha256": "1fc93048fccd470a8117783d81c1d390945ed5d060fb5a5841b84519d3e34096"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 28244,
+      "sha256": "d6c18106dd99c142906992137fe91c93b02e2cf61684abb7f7d50c7f25e9241b"
+    },
+    {
+      "path": "outside-ground-q0.png",
+      "bytes": 1209229,
+      "sha256": "2b518c8ad781bd40daf1121d7c2347fff7cae8fdb82d0c153adbaa9f3f40813e"
+    },
+    {
+      "path": "outside-ground-q1.png",
+      "bytes": 1452252,
+      "sha256": "7bbc7f436dfd7fdd2bfea559e6018913c84cd23e5e408d6e9012d1fe1d45a8a6"
+    },
+    {
+      "path": "outside-instances.txt",
+      "bytes": 1283269,
+      "sha256": "901f7a7d3488e47699532ef9c718ae3a4cb1162f317d8e6f6bbf92f94acf8c80"
+    }
+  ],
+  "manifest_sha256": "d6c18106dd99c142906992137fe91c93b02e2cf61684abb7f7d50c7f25e9241b"
+}

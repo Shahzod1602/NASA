@@ -1,5 +1,38 @@
 # Science and sources
 
+## Intrepid cabin shading — 11 November 2026
+
+The recovered cabin normals are artist-authored vectors from the retained
+NASA / Michael D. Carbajal GLB. They are not elevation measurements, surveyed
+surface details or a new engineering reconstruction. Source topology/positions,
+UVs, material assignments, LROC terrain and mission coordinates are preserved.
+Computed source frames are baked into a separate asset; invalid tangent bases
+are reconstructed and their scope/format limits are recorded explicitly.
+
+The new cloth seams and roughness are authored art on two shared white slots,
+including their existing trim. The original GLB's neutral color factors are
+retained, but the shader is not a calibrated lunar thermal-blanket material.
+[Source and interpretation](Docs/IntrepidCabin20261111/SCIENCE_AND_ART.md).
+
+## Intrepid presentation layer — 11 November 2026
+
+The new 50 × 50 m shader mask, grain normals, rock placement, blanket folds,
+metallic/roughness coefficients and contact shading are authored presentation.
+They do not add measured lunar elevation, resolve sub-2-m terrain, establish a
+historical rock distribution or simulate dust transport. The retained regolith
+bitmap was AI-authored; it is not a NASA surface photograph or measured normal map.
+Existing LROC heights/collision, instrument coordinates and original source files
+remain unchanged. The retained NASA/Carbajal lander is a simplified reference,
+not a new engineering reconstruction.
+
+The black sky and existing sun/fill settings are retained. NASA's
+[lunar lighting explanation](https://www.nasa.gov/centers-and-facilities/ames/the-dark-side-of-the-crater-how-light-looks-different-on-the-moon-and-what-nasa-is-doing-about-it/)
+supports the airless lighting context; it does not validate the game's material
+coefficients or artistic readability fills. [Science/art scope](Docs/IntrepidVisual20261111/SCIENCE_AND_ART.md)
+records the distinction. No new NASA dataset, endorsement or competition status
+is claimed by this local update.
+
+
 ## Modern field-training extension — 4 November 2026
 
 Existing LROC Apollo 12 elevations continue to control terrain and work-site

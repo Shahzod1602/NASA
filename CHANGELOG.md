@@ -1,5 +1,48 @@
 # Changelog
 
+## v0.8.2 — Intrepid surface and cabin — 2026-11-11
+
+- Package the two Intrepid development passes below: local regolith/rock art,
+  foil/metal finishes, authored cabin normal recovery and restrained white cloth.
+- Preserve NASA/LROC terrain, mission coordinates, original model geometry/UVs
+  and the existing Apollo 12, SELENE and ARES mission flow.
+- Include offline science/credits and exact-executable verification evidence.
+  Exclude player saves/photos, generated reports, logs and debug files from ZIP.
+- Canonical validation: 1,763 packaged C++ PASS executions / 0 FAIL in 31 reports;
+  32 staged PNGs. Human participants: 0. Earlier totals remain historical.
+- Keep original compile/local-test records unchanged and link the prepared release
+  to its reviewed Git commit. See Docs/Releases/apollo12-v0.8.2/RELEASE_NOTES.md.
+
+The dated unreleased entries below are the original development records now
+included in v0.8.2; their dates and executable-specific evidence are retained.
+
+## Unreleased — Intrepid cabin normal recovery — 2026-11-11
+
+- Restore the retained GLB's authored normals on two main cabin objects in a
+  separate mesh, preserving positions, topology, UVs and material assignments.
+- Bake the source's computed rendering frames; explicitly repair invalid
+  legacy tangent bases without moving vertices or rewriting source assets.
+- Add a restrained authored cloth finish to the two shared white slots,
+  retaining their distinct neutral source color factors.
+- Add an independent cabin comparison control and two close Low/Medium camera
+  views while keeping the earlier four-camera profiling workload.
+- Preserve the existing ground/foil pass, all maps and mission coordinates.
+  Executable-specific results and limitations are recorded in TEST_REPORT.
+
+## Unreleased — Intrepid visual slice — 2026-11-11
+
+- Add a soft-edged 50 m local regolith material using the retained authored bitmap.
+- Place cosmetic fragments from actual mesh bounds with deliberate partial burial;
+  cap the new layer at 2,048 fine and 64 separated shadowed fragments in nine batches.
+- Preserve the old outside-fragment random sequence and the imported LROC surface.
+- Refine three untextured foil slots and the metal structure using four dedicated
+  new materials; reuse six lander batches for 12 shallow blanket folds.
+- Retain the original ladder and all source image-bearing panels. Added tread
+  strips were rejected during visual review and removed before final acceptance.
+- Add bounded contact shading, explicit same-build baseline controls, fixed-camera
+  Low/Medium review, physical corridor checks and a finite CSV profiling workload.
+
+
 ## v0.8.1 — Mission interaction fixes — 2026-11-06
 
 - Fill mission action frames with the button background and hit area, centre

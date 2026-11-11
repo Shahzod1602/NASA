@@ -1,0 +1,67 @@
+PASS Mission-selection fixture starts in the menu with its player and frontend
+PASS Frontend builds three shared expedition entries and three real mission cards
+PASS Destination textures are retained once before destination input
+PASS Repeated same-destination hover does not reset text or background brushes
+PASS Repeated hover and destination switching reuse textures and the existing widget tree
+PASS Picker action has full-size glass and centred label slots
+PASS Keyboard focus uses the same visible blue action state as hover
+PASS Leaving keyboard focus restores the normal action surface
+PASS Picker action has full-size glass and centred label slots
+PASS Keyboard focus uses the same visible blue action state as hover
+PASS Leaving keyboard focus restores the normal action surface
+PASS Picker action has full-size glass and centred label slots
+PASS Keyboard focus uses the same visible blue action state as hover
+PASS Leaving keyboard focus restores the normal action surface
+PASS Expedition entry and mission card 0 have their bound UMG controls
+PASS Expedition entry and mission card 1 have their bound UMG controls
+PASS Expedition entry and mission card 2 have their bound UMG controls
+PASS Home begins without a selected mission or pending travel
+PASS Explore Moon UMG click opens the lunar mission-selection page without travel
+PASS Destination click changes the visible frontend page
+PASS Moon picker exposes Apollo 12 and SELENE and hides ARES
+PASS Mission launch remains disabled before a card is selected
+PASS Disabled launch, Enter and background click cannot bypass mission selection
+PASS Invalid indices and a hidden other-planet mission cannot be selected
+PASS Mission 0 and expedition entries share one presentation class
+PASS Mission 0 UMG click selects a card without starting it
+PASS Mission 0 exposes a persistent textual selection cue
+PASS Mission 0 selection smoothly rises through four bounded samples and settles within 280 ms
+PASS Mission 0 remains highlighted after hover exit and settling
+PASS Settled mission 0 does not rebuild glow or blur brushes on 120 idle frames
+PASS Mission 0 ignores zero, negative and non-finite animation deltas
+PASS Mission 0 reverses and reselects without a jump outside the blend range
+PASS Mission 1 and expedition entries share one presentation class
+PASS Mission 1 UMG click selects a card without starting it
+PASS Mission 1 exposes a persistent textual selection cue
+PASS Mission 1 selection smoothly rises through four bounded samples and settles within 280 ms
+PASS Mission 1 remains highlighted after hover exit and settling
+PASS Settled mission 1 does not rebuild glow or blur brushes on 120 idle frames
+PASS Mission 1 ignores zero, negative and non-finite animation deltas
+PASS Mission 1 reverses and reselects without a jump outside the blend range
+PASS Mission 2 and expedition entries share one presentation class
+PASS Mission 2 UMG click selects a card without starting it
+PASS Mission 2 exposes a persistent textual selection cue
+PASS Mission 2 selection smoothly rises through four bounded samples and settles within 280 ms
+PASS Mission 2 remains highlighted after hover exit and settling
+PASS Settled mission 2 does not rebuild glow or blur brushes on 120 idle frames
+PASS Mission 2 ignores zero, negative and non-finite animation deltas
+PASS Mission 2 reverses and reselects without a jump outside the blend range
+PASS Hovering another mission never replaces the committed selection
+PASS Selecting another card clears the previous selection exclusively
+PASS Rejected selections preserve an existing valid chosen mission
+PASS Background gameplay click cannot launch a selected mission
+PASS Escape from mission selection returns to home without loading
+PASS Enter from home opens the picker without automatically choosing a mission
+PASS Right selects the first lunar mission without starting it
+PASS Right advances to SELENE without starting it
+PASS Left returns to Apollo 12 without starting it
+PASS Left wraps between the available lunar missions
+PASS Explore Mars UMG click exposes only ARES without travel
+PASS Hidden lunar card cannot select from the Mars picker
+PASS Both arrow directions retain the only available ARES mission without travel
+PASS Settings can overlay the mission-selection page
+PASS Settings blocks card selection, launch, destination shortcuts, arrows and Enter underneath it
+PASS Escape closes settings while preserving the chosen mission
+PASS Selection checks finish on the clean home page without pending loading
+PASS Browsing, animation and settings leave mission state, resource, pause and player position unchanged
+RESULT: 0 failures

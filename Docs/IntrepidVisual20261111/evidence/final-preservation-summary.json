@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "generated_utc": "2026-11-11T15:11:32.296644+00:00",
+  "phase": "final-protected",
+  "all_original_bytes_and_mtimes_match": true,
+  "counts": {
+    "project_config": 5,
+    "map": 4,
+    "player_saved_config": 860
+  },
+  "protected_original_files_verified": 869,
+  "baseline_manifest_sha256": "0d906e096f06cbd4dc961aa93c734a7347cd8a4f54e46f8b0a6098f0ea540043",
+  "restoration_report": "Reports/IntrepidVisual20261111/preservation/final-protected.json",
+  "restoration_report_sha256": "1347070da785aa6b0cc4f555b3eba6e1ae5478fb6944c55afcac4265e7e6b014",
+  "restoration_operations": 251,
+  "distinct_original_files_restored": 128,
+  "original_owner_save_photo_files": 80,
+  "owner_save_photo_bytes_and_mtimes_match": true,
+  "owner_save_photo_restored_files": 0,
+  "owner_save_photo_unchanged_without_restoration": true,
+  "generated_files_retained_count": 46,
+  "generated_file_classes": {
+    "engine_ini": 46
+  },
+  "no_games_or_compilers_launched": true,
+  "editable_source_backups_restored": false,
+  "scope": "Original saved/config/photo bytes and mtimes restored and independently rechecked; original project Config/maps never overwritten if their bytes change; new generated files retained and inventoried. Source/code edits are intentionally retained.",
+  "original_protected_save_photo_files_including_automated": 89,
+  "owner_save_photo_classification": "Original .sav and Photos/SaveGames files outside isolated Saved/AutomatedTests directories; those test fixtures are reported separately.",
+  "original_automated_save_photo_files": 9,
+  "automated_save_photo_restored_files": 3,
+  "source_receipt": {
+    "path": "Reports/IntrepidVisual20261111/preservation/final-protected-verification.json",
+    "bytes": 324983,
+    "sha256": "12c0d581adaa988d8c922db8638197ab46f12559964b1851f9440a158eb46eca",
+    "local_evidence_only": true
+  },
+  "private_file_inventories_omitted": true,
+  "source_receipt_bytes_not_copied": true
+}

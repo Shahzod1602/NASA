@@ -1,4 +1,5 @@
 #include "LunarGame.h"
+#include "LunarIntrepidCabin.h"
 #include "Components/HierarchicalInstancedStaticMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/SceneComponent.h"
@@ -7,6 +8,8 @@
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "Materials/MaterialInterface.h"
+#include "Misc/CommandLine.h"
+#include "Misc/Parse.h"
 
 void ALunarGameMode::BuildApolloLanderDetail(){
  UStaticMeshComponent* Terrain=nullptr;
@@ -27,6 +30,7 @@ void ALunarGameMode::BuildApolloLanderDetail(){
   bool HasCollision=false;TArray<UPrimitiveComponent*> Primitives;It->GetComponents(Primitives);
   if(It->GetActorEnableCollision())for(auto* Primitive:Primitives)HasCollision|=Primitive->GetCollisionEnabled()!=ECollisionEnabled::NoCollision;
   if(HasCollision){UE_LOG(LogTemp,Warning,TEXT("APOLLO_LANDER_DETAIL skipped: reference art has enabled collision"));continue;}
+  LunarIntrepidCabin::Apply(C);Mesh=C->GetStaticMesh();
   const auto Bounds=Mesh->GetBounds();const FVector Scale=It->GetActorScale3D();
   if(Scale.ContainsNaN()||Scale.X<=0||!Scale.Equals(FVector(Scale.X),.0001f))continue;
   const float Uniform=float(Scale.X);
@@ -53,7 +57,27 @@ void ALunarGameMode::BuildApolloLanderDetail(){
   if(auto* Metal=LoadObject<UMaterialInterface>(nullptr,TEXT("/Game/Lunar/Suit/Materials/M_Metal.M_Metal"))){
    for(int32 Slot=0;Slot<Mesh->GetStaticMaterials().Num();++Slot)if(Mesh->GetStaticMaterials()[Slot].MaterialSlotName.ToString().Contains(TEXT("blinn4SG")))C->SetMaterial(Slot,Metal);
   }
+  // Nov 11 finish is isolated from the original presentation and can be
+  // disabled for the identical-scene baseline. Missing optional finish assets
+  // retain the established materials/detail instead of showing a checkerboard.
+  const bool RequestIntrepidFinish=!FParse::Param(FCommandLine::Get(),TEXT("IntrepidVisualBaseline"));
+  UMaterialInterface* IntrepidFoil=RequestIntrepidFinish?LoadObject<UMaterialInterface>(nullptr,TEXT("/Game/Lunar/Apollo12/IntrepidVisual/M_IntrepidFoil.M_IntrepidFoil")):nullptr;
+  UMaterialInterface* IntrepidMetal=RequestIntrepidFinish?LoadObject<UMaterialInterface>(nullptr,TEXT("/Game/Lunar/Apollo12/IntrepidVisual/M_IntrepidMetal.M_IntrepidMetal")):nullptr;
+  const bool IntrepidFinish=IntrepidFoil&&IntrepidMetal;
+  int32 FoilSlots=0,MetalSlots=0,FinishInstances=0;
+  if(IntrepidFinish){
+   // Only the source model's untextured gold blankets and metal structure are
+   // replaced. Source image-bearing panels and engine stay. The independently
+   // guarded cabin derivative above retains its two approved white slots.
+   for(int32 Slot=0;Slot<Mesh->GetStaticMaterials().Num();++Slot){
+    const FString Key=Mesh->GetStaticMaterials()[Slot].MaterialSlotName.ToString();
+    if(Key==TEXT("blinn10SG_001")||Key==TEXT("blinn9SG_001")||Key==TEXT("blinn1SG_002")){C->SetMaterial(Slot,IntrepidFoil);++FoilSlots;}
+    else if(Key.Contains(TEXT("blinn4SG"))){C->SetMaterial(Slot,IntrepidMetal);++MetalSlots;}
+   }
+   C->ComponentTags.Add(TEXT("Apollo.IntrepidVisualFinish"));
+  }else if(RequestIntrepidFinish)UE_LOG(LogTemp,Warning,TEXT("APOLLO_INTREPID_VISUAL optional finish unavailable; original source presentation retained"));
   auto* DetailActor=GetWorld()->SpawnActor<AActor>();DetailActor->Tags.Add(TEXT("Apollo.LanderDetail"));
+  if(IntrepidFinish)DetailActor->Tags.Add(TEXT("Apollo.IntrepidVisual"));
   auto* Root=NewObject<USceneComponent>(DetailActor);DetailActor->SetRootComponent(Root);Root->SetMobility(EComponentMobility::Static);Root->RegisterComponent();
   TMap<FName,UHierarchicalInstancedStaticMeshComponent*> Batches;
   auto Batch=[&](const TCHAR* BatchKey,const TCHAR* Shape,const TCHAR* Material){
@@ -61,7 +85,9 @@ void ALunarGameMode::BuildApolloLanderDetail(){
    auto* B=NewObject<UHierarchicalInstancedStaticMeshComponent>(DetailActor,Key);B->SetupAttachment(Root);B->SetMobility(EComponentMobility::Static);
    B->SetStaticMesh(LoadObject<UStaticMesh>(nullptr,*FString::Printf(TEXT("/Engine/BasicShapes/%s.%s"),Shape,Shape)));
    const FString Folder=FString(Material)==TEXT("M_Metal")?TEXT("/Game/Lunar/Suit/Materials/"):TEXT("/Game/Lunar/Apollo12/Realism/");
-   B->SetMaterial(0,LoadObject<UMaterialInterface>(nullptr,*(Folder+Material+TEXT(".")+Material)));
+   UMaterialInterface* FinishMaterial=nullptr;
+   if(IntrepidFinish){if(FString(Material)==TEXT("M_LunarFoil"))FinishMaterial=IntrepidFoil;else if(FString(Material)==TEXT("M_Metal"))FinishMaterial=IntrepidMetal;}
+   B->SetMaterial(0,FinishMaterial?FinishMaterial:LoadObject<UMaterialInterface>(nullptr,*(Folder+Material+TEXT(".")+Material)));
    B->SetCollisionEnabled(ECollisionEnabled::NoCollision);B->SetCanEverAffectNavigation(false);B->SetCastShadow(false);B->SetCullDistances(4500,7000);B->bAutoRebuildTreeOnInstanceChanges=false;
    B->ComponentTags.Add(TEXT("Apollo.LanderDetail"));B->RegisterComponent();Batches.Add(Key,B);return B;
   };
@@ -91,6 +117,24 @@ void ALunarGameMode::BuildApolloLanderDetail(){
    AddLocal(Panels,Face(FVector(211.4f,0,184)),FVector(.012f,.34f,.24f),Turn);
    const FQuat BoltRotation=FRotationMatrix::MakeFromZ(Face(FVector::ForwardVector)).ToQuat();
    for(float Along:{-12.f,12.f})for(float Z:{176.f,192.f})AddLocal(Fasteners,Face(FVector(212.3f,Along,Z)),FVector(.018f,.018f,.006f),BoltRotation);
+  }
+  if(IntrepidFinish){
+   // Shallow authored folds sit just outside the retained cardinal blanket
+   // faces (2.1 m from the datum). Their small relief avoids a flat slab at
+   // close range; neither fold placement nor shader variation is NASA data.
+   for(int32 Side=0;Side<4;++Side){
+    const FQuat Turn=FRotator(0,Side*90.f,0).Quaternion();
+    for(int32 Fold=0;Fold<3;++Fold){
+     const float Along=(Fold-1)*34.f;
+     const FQuat Crease(FVector::ForwardVector,FMath::DegreesToRadians(Fold==1?-8.f:7.f));
+     AddLocal(Edges,Turn.RotateVector(FVector(211.2f,Along,231.f)),FVector(.008f,.035f,1.18f),Turn*Crease);++FinishInstances;
+    }
+   }
+   // Keep the source ladder intact. Extra OBJ-space tread strips were removed
+   // after rendered inspection exposed the importer's handedness conversion.
+   // The verified existing structure still receives the new metal finish.
+   Edges->ComponentTags.Add(TEXT("Apollo.IntrepidVisualFoil"));
+   UE_LOG(LogTemp,Display,TEXT("APOLLO_INTREPID_VISUAL foil_slots=%d metal_slots=%d added_instances=%d new_batches=0 source_geometry_preserved=1"),FoilSlots,MetalSlots,FinishInstances);
   }
   int32 Instances=0;for(auto& Pair:Batches){Pair.Value->BuildTreeIfOutdated(false,true);Instances+=Pair.Value->GetInstanceCount();}
   UE_LOG(LogTemp,Display,TEXT("APOLLO_LANDER_DETAIL contacts=%d batches=%d instances=%d height_cm=%.2f support_tilt_deg=%.2f z_correction_cm=%.2f max_rigid_residual_cm=%.2f collision_unchanged=1"),Contacts,Batches.Num(),Instances,float(Bounds.BoxExtent.Z*2*Uniform),FMath::RadiansToDegrees(FMath::Acos(FMath::Clamp(float(Normal.Z),-1.f,1.f))),Correction,LargestResidual);

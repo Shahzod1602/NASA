@@ -1,0 +1,13 @@
+{
+  "all_original_bytes_and_mtimes_match": true,
+  "snapshot_sha256": "89a4a3d500a490f7e865d95b76ea808e0bf6a1f2fb2bd72d98686b8530dc5c5c",
+  "counts": {
+    "project_config": 5,
+    "map": 4,
+    "player_saved_config": 750
+  },
+  "changed_files_restored_count": 2,
+  "generated_engine_ini_files_retained_count": 1,
+  "errors_count": 0,
+  "private_saved_file_inventory_omitted": true
+}
