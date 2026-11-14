@@ -1,0 +1,8 @@
+{
+  "loaded_static_mesh": "/Game/Lunar/Robots/Perseverance20261114/SM_NomadReference/StaticMeshes/SM_NomadReference",
+  "query": "obj list class=StaticMesh name=SM_NomadReference",
+  "found": true,
+  "source_log": "Reports/Feedback20261113/package-nomad-presence.log",
+  "source_log_sha256": "7787eb29185e162eeb713c21c2b224b66587d705272dc1429d65065ac1dfd190",
+  "note": "Object existence is separate from the Editor ground/render review and native recovery tests."
+}

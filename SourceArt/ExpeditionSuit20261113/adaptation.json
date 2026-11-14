@@ -1,0 +1,33 @@
+{
+  "source_sha256": "6008551be3e7f9668b73d2cfb12c1c7499db6e432303210f753791873f5c861d",
+  "uniform_source_scale": 0.007540505013289717,
+  "source_bones": 91,
+  "gameplay_bones": 36,
+  "arm_segment_endpoints_fit": true,
+  "outputs": [
+    {
+      "file": "SourceArt/ExpeditionSuit20261113/Derived/SK_ExpeditionSuit.glb",
+      "bytes": 31434748,
+      "sha256": "6908b00eaeccf02998faab9966623852c07bb98049ca6c4778b845a839d84c33",
+      "triangles": 58312,
+      "bones": 36,
+      "materials": 3
+    },
+    {
+      "file": "SourceArt/ExpeditionSuit20261113/Derived/SK_ExpeditionHands.glb",
+      "bytes": 20458724,
+      "sha256": "b2b7302fc0ddad2cff21181de578fefdbf02a8e46774c61b5afe638ab744c2af",
+      "triangles": 7444,
+      "bones": 36,
+      "materials": 3
+    }
+  ],
+  "limits": [
+    "Authored bind-pose adaptation; not a historical Apollo A7L reconstruction.",
+    "Original floating animation retained only in unchanged Raw source.",
+    "Helper weights folded to nearest mapped ancestor; deformation needs rendered review.",
+    "Legacy specular/glossiness adapted to core metallic/roughness after rendered colour failure.",
+    "Base colour/normal UVs preserved; authored metallic=0 and roughness=max(0.12,1-source glossiness).",
+    "Embedded images capped at 2K."
+  ]
+}

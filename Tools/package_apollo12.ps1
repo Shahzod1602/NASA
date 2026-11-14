@@ -191,3 +191,26 @@ foreach($sourceNote in @('README.md','CREDITS.md','source-normal-recovery-report
   Copy-Item -LiteralPath $sourceNotePath -Destination $sourceNoteDestination
  }
 }
+
+# Carry the November feedback asset attributions and reproducible adaptations
+# with the offline package; imported visuals are not a new NASA terrain dataset.
+foreach($feedbackAsset in @('ExpeditionSuit20261113','MuseumRover20261113','Perseverance20261114','PlanetContext20261114')){
+ $feedbackSource=Join-Path $root ('SourceArt/'+$feedbackAsset)
+ $feedbackDestination=Join-Path $credits ('SourceArt/'+$feedbackAsset)
+ New-Item -ItemType Directory -Force -Path $feedbackDestination | Out-Null
+ foreach($assetNote in @('CREDITS.md','adaptation.json','manifest.json')){
+  $assetNotePath=Join-Path $feedbackSource $assetNote
+  if(Test-Path -LiteralPath $assetNotePath -PathType Leaf){Copy-Item -LiteralPath $assetNotePath -Destination $feedbackDestination}
+ }
+}
+$feedbackNotes=Join-Path $root 'Docs/Feedback20261113'
+if(Test-Path -LiteralPath $feedbackNotes -PathType Container){
+ $feedbackTarget=Join-Path $credits 'Docs/Feedback20261113'
+ foreach($noteFile in Get-ChildItem -LiteralPath $feedbackNotes -File -Recurse | Where-Object {$_.Extension -in @('.md','.json','.txt','.png')}){
+  if($noteFile.Attributes -band [IO.FileAttributes]::ReparsePoint){throw 'Feedback notes copy refuses linked files'}
+  $noteRelative=$noteFile.FullName.Substring($feedbackNotes.Length).TrimStart([char[]]'\/')
+  $noteDestination=Join-Path $feedbackTarget $noteRelative
+  New-Item -ItemType Directory -Force -Path (Split-Path $noteDestination -Parent) | Out-Null
+  Copy-Item -LiteralPath $noteFile.FullName -Destination $noteDestination
+ }
+}

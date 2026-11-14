@@ -116,7 +116,7 @@ struct FCarrySurfaceProbe {
 bool ProtectedFaceClear(ALunarCharacter* P,float Aspect){
  if(!P||!P->Camera||!P->HandRig||!P->HandRig->IsVisible()||P->Gloves.Num()!=16)return false;
  FBox2D Cell;const bool Projected=ProjectEnvelope(P,P->CarriedModule,Aspect,Cell);
- if(!Projected||Cell.GetCenter().Y>.51||Cell.Max.Y>.64){UE_LOG(LogTemp,Warning,TEXT("CARRY_DIAG protected cell projected=%d fov=%.3f min=%s max=%s centreY=%.6f limitCentre=.51 limitBottom=.64"),Projected,P->Camera->FieldOfView,*Cell.Min.ToString(),*Cell.Max.ToString(),Cell.GetCenter().Y);return false;}
+ if(!Projected||Cell.GetCenter().Y<.60||Cell.GetCenter().Y>.76||Cell.Min.Y<.49||Cell.Max.Y>.92){UE_LOG(LogTemp,Warning,TEXT("CARRY_DIAG protected lower-centre cell projected=%d fov=%.3f min=%s max=%s centreY=%.6f"),Projected,P->Camera->FieldOfView,*Cell.Min.ToString(),*Cell.Max.ToString(),Cell.GetCenter().Y);return false;}
  const FVector2D Size=Cell.GetSize();const FBox2D Protected(Cell.Min+Size*FVector2D(.28,.20),Cell.Min+Size*FVector2D(.72,.72));
  FCarrySurfaceProbe Surface(P,P->CarriedModule);if(!Surface.Mesh)return false;
  const FTransform View=P->Camera->GetComponentTransform();const double H=FMath::Tan(FMath::DegreesToRadians(double(P->Camera->FieldOfView)*.5)),V=H/Aspect;int32 Samples=0;

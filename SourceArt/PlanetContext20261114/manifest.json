@@ -1,0 +1,26 @@
+[
+  {
+    "planet": "Moon",
+    "name": "SVS 4720 / December 2025 colour version",
+    "source_page": "https://svs.gsfc.nasa.gov/4720/",
+    "source_url": "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/lroc_color_2k.jpg",
+    "downloaded_at_utc": "2026-11-13T19:30:04.468897+00:00",
+    "credit": "NASA SVS / Ernie Wright; LRO LROC and LOLA teams",
+    "bytes": 457942,
+    "sha256": "f7130a1822681fa7512d7dcfd40db8c10b9ba4f06777910348698260ed7a2170",
+    "role": "Interactive globe colour context only; no terrain displacement, mission geolocation, grade or resource calculation",
+    "limits": "NASA colour illustrations; not quantitative elevation products. Moon poles include filled albedo and image processing. Mars texture page does not supply a numeric CRS. No survey precision is inferred."
+  },
+  {
+    "planet": "Mars",
+    "name": "Mars Image Texture / NASA 3D Resources",
+    "source_page": "https://science.nasa.gov/3d-resources/mars/",
+    "source_url": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/image/mars/Mars.jpg",
+    "downloaded_at_utc": "2026-11-13T19:30:06.542307+00:00",
+    "credit": "NASA/JPL-Caltech; Viking imagery processed at USGS",
+    "bytes": 972896,
+    "sha256": "12ec6bf02ebd42a246edc778cb2ce8c595b4d9f0892badf0bfff8abb2303c780",
+    "role": "Interactive globe colour context only; no terrain displacement, mission geolocation, grade or resource calculation",
+    "limits": "NASA colour illustrations; not quantitative elevation products. Moon poles include filled albedo and image processing. Mars texture page does not supply a numeric CRS. No survey precision is inferred."
+  }
+]

@@ -60,6 +60,16 @@ UStaticMeshComponent* ALunarSurfaceVehicle::Shape(UStaticMesh* Mesh,FVector P,FV
  C->RegisterComponent();Visuals.Add(C);return C;
 }
 bool ALunarSurfaceVehicle::BuildVisuals(){
+ if(Mission&&!Mission->Mars){
+  const FString Folder=TEXT("/Game/Lunar/Vehicles/Museum20261113/");TArray<UStaticMesh*> Imported;
+  for(int32 I=-1;I<4;++I){const FString Name=I<0?TEXT("SM_MuseumRover_Body"):FString::Printf(TEXT("SM_MuseumRover_Wheel%d"),I);Imported.Add(LoadObject<UStaticMesh>(nullptr,*(Folder+Name+TEXT("/StaticMeshes/")+Name+TEXT(".")+Name)));}
+  if(!Imported.Contains(nullptr)){
+   MuseumRover=true;TireRadiusCm=37.5848f;Hull->SetBoxExtent(FVector(166,93,86));
+   ContactOffset[0]=FVector(92.5155,-75.2804,0);ContactOffset[1]=FVector(92.5153,76.5557,0);ContactOffset[2]=FVector(-102.9777,-75.2805,0);ContactOffset[3]=FVector(-102.9778,76.5555,0);
+   for(int32 I=0;I<Imported.Num();++I){auto* C=NewObject<UStaticMeshComponent>(this);C->SetupAttachment(Hull);C->SetMobility(EComponentMobility::Movable);C->SetStaticMesh(Imported[I]);C->SetRelativeLocation(I==0?FVector(0,0,-LunarSurfaceVehiclePrivate::RideHeight):ContactOffset[I-1]+FVector(0,0,-LunarSurfaceVehiclePrivate::RideHeight+TireRadiusCm));C->SetCollisionEnabled(ECollisionEnabled::NoCollision);C->SetGenerateOverlapEvents(false);C->SetCanEverAffectNavigation(false);C->PrimaryComponentTick.bCanEverTick=false;C->RegisterComponent();Visuals.Add(C);if(I>0)Wheels.Add(C);}
+   UE_LOG(LogTemp,Display,TEXT("MUSEUM_ROVER body=1 source_wheels=4 source_design_preserved=1 authored_kinematic_drive=1"));return true;
+  }
+ }
  auto* Cube=LoadObject<UStaticMesh>(nullptr,TEXT("/Engine/BasicShapes/Cube.Cube"));auto* Cylinder=LoadObject<UStaticMesh>(nullptr,TEXT("/Engine/BasicShapes/Cylinder.Cylinder"));if(!Cube||!Cylinder)return false;
  const FLinearColor Paint(.64,.68,.65),Metal(.18,.23,.26),Dark(.035,.045,.05),Gold(.67,.42,.12);
  Shape(Cube,FVector::ZeroVector,FVector(260,154,54),Paint);Shape(Cube,FVector(0,0,31),FVector(225,145,8),Metal);
@@ -80,7 +90,7 @@ bool ALunarSurfaceVehicle::SampleGround(FVector Point,float Yaw,FGroundPose& Out
  FHitResult Centre;if(!GroundAt(Point,Centre))return false;FVector Normal=Centre.ImpactNormal;
  const float MinZ=FMath::Cos(FMath::DegreesToRadians(SlopeLimitDegrees));if(Normal.Z<MinZ)return false;
  const FQuat Heading=FRotator(0,Yaw,0).Quaternion();double MinHeight=Centre.ImpactPoint.Z,MaxHeight=MinHeight;
- for(int32 I=0;I<4;++I){FHitResult Hit;if(!GroundAt(Point+Heading.RotateVector(LunarSurfaceVehiclePrivate::WheelOffset[I]),Hit)||Hit.ImpactNormal.Z<MinZ)return false;
+ for(int32 I=0;I<4;++I){FHitResult Hit;if(!GroundAt(Point+Heading.RotateVector(ContactOffset[I]),Hit)||Hit.ImpactNormal.Z<MinZ)return false;
   Out.Wheel[I]=Hit.ImpactPoint;Normal+=Hit.ImpactNormal;MinHeight=FMath::Min(MinHeight,Hit.ImpactPoint.Z);MaxHeight=FMath::Max(MaxHeight,Hit.ImpactPoint.Z);
  }
  if(MaxHeight-MinHeight>90||!Normal.Normalize()||Normal.Z<MinZ)return false;
@@ -90,7 +100,7 @@ bool ALunarSurfaceVehicle::SampleGround(FVector Point,float Yaw,FGroundPose& Out
 bool ALunarSurfaceVehicle::ClearHull(FVector P,FQuat R,float Padding) const {
  if(!GetWorld()||P.ContainsNaN()||R.ContainsNaN()||!FMath::IsFinite(Padding)||Padding<0)return false;
  FCollisionQueryParams Q(SCENE_QUERY_STAT(TrainingRoverHull),false);Q.AddIgnoredActor(this);if(IsValid(Rider))Q.AddIgnoredActor(Rider);if(auto* Pawn=LunarSurfaceVehiclePrivate::Pilot(Mission))Q.AddIgnoredActor(Pawn);
- return !GetWorld()->OverlapBlockingTestByChannel(P,R,ECC_Vehicle,FCollisionShape::MakeBox(LunarSurfaceVehiclePrivate::HullExtent+FVector(Padding,Padding,0)),Q);
+ return !GetWorld()->OverlapBlockingTestByChannel(P,R,ECC_Vehicle,FCollisionShape::MakeBox(Hull->GetScaledBoxExtent()+FVector(Padding,Padding,0)),Q);
 }
 bool ALunarSurfaceVehicle::IsOccupied() const {return Occupied&&IsValid(Rider);}
 bool ALunarSurfaceVehicle::IsRiding(const ALunarGameMode* G){return G&&G->FieldOperations&&IsValid(G->FieldOperations->Vehicle)&&G->FieldOperations->Vehicle->IsOccupied();}
@@ -136,7 +146,7 @@ void ALunarSurfaceVehicle::Drive(float D){
  float BudgetCm=FMath::Min(Charge/Cost*100.f,800.f*D);double Desired=FVector::Dist(Before,Ground.Centre);
  if(Desired>BudgetCm){const double Ratio=BudgetCm/FMath::Max(Desired,.001)*.95;if(!SampleGround(Before+Heading*SpeedCm*D*Ratio,Yaw,Ground)||FVector::Dist(Before,Ground.Centre)>BudgetCm){Halt(TEXT("Insufficient charge for this terrain step. Exit and continue on foot."));return;}}
  const FQuat Rotation=LunarSurfaceVehiclePrivate::GroundRotation(Ground.Normal,Yaw);
- const float TurnPadding=FMath::Abs(FMath::DegreesToRadians(Turn))*160.f;
+ const float TurnPadding=FMath::Abs(FMath::DegreesToRadians(Turn))*float(Hull->GetScaledBoxExtent().Size2D());
  if(!ClearHull(Before,GetActorQuat())||(TurnPadding>.01f&&!ClearHull(Before,GetActorQuat(),TurnPadding))||!ClearHull(Ground.Centre,Rotation)){Halt(TEXT("Rover route blocked. Leave clearance around walls and equipment."));return;}
  FHitResult Hit;Hull->MoveComponent(Ground.Centre-Before,Rotation,true,&Hit);
  ActualSpeedMps=0;const FVector After=GetActorLocation();const float Meters=float(FVector::Dist(Before,After)*.01);
@@ -145,11 +155,11 @@ void ALunarSurfaceVehicle::Drive(float D){
  if(Operations->UtilityCharge<=UE_SMALL_NUMBER)SpeedCm=0;
 }
 void ALunarSurfaceVehicle::PoseWheels(const FGroundPose& Ground,float SignedCm){
- WheelPhase=FMath::Fmod(WheelPhase+SignedCm/LunarSurfaceVehiclePrivate::WheelRadius,2*PI);
- for(int32 I=0;I<4&&Wheels.IsValidIndex(I)&&Hubs.IsValidIndex(I);++I){if(!Wheels[I]||!Hubs[I])continue;
-  const FQuat Local=FQuat(FVector::UpVector,I<2?FMath::DegreesToRadians(Steering*22):0)*FQuat(FVector::RightVector,WheelPhase)*FRotator(0,0,90).Quaternion();
-  const FVector Centre=Ground.Wheel[I]+Ground.Normal*LunarSurfaceVehiclePrivate::WheelRadius;Wheels[I]->SetWorldLocation(Centre);Wheels[I]->SetRelativeRotation(Local);
-  Hubs[I]->SetWorldLocation(Centre+GetActorRightVector()*(I%2?11.f:-11.f));Hubs[I]->SetRelativeRotation(Local);
+ WheelPhase=FMath::Fmod(WheelPhase+SignedCm/FMath::Max(1.f,TireRadiusCm),2*PI);
+ for(int32 I=0;I<4&&Wheels.IsValidIndex(I);++I){if(!Wheels[I])continue;
+  const FQuat Local=FQuat(FVector::UpVector,I<2?FMath::DegreesToRadians(Steering*22):0)*FQuat(FVector::RightVector,WheelPhase)*(MuseumRover?FQuat::Identity:FRotator(0,0,90).Quaternion());
+  const FVector Centre=Ground.Wheel[I]+Ground.Normal*TireRadiusCm;Wheels[I]->SetWorldLocation(Centre);Wheels[I]->SetRelativeRotation(Local);
+  if(Hubs.IsValidIndex(I)&&Hubs[I]){Hubs[I]->SetWorldLocation(Centre+GetActorRightVector()*(I%2?11.f:-11.f));Hubs[I]->SetRelativeRotation(Local);}
  }
 }
 void ALunarSurfaceVehicle::PoseCamera(float D){
@@ -212,7 +222,7 @@ bool ALunarSurfaceVehicle::RestoreParkedPose(const FTransform& Pose){
  // Unlike driving with an attached rider, parking must include the restored
  // on-foot pawn in the actual world overlap query. Never enclose that pawn.
  FCollisionQueryParams Parking(SCENE_QUERY_STAT(TrainingRoverPark),false);Parking.AddIgnoredActor(this);
- if(GetWorld()->OverlapBlockingTestByChannel(Ground.Centre,Rotation,ECC_Vehicle,FCollisionShape::MakeBox(LunarSurfaceVehiclePrivate::HullExtent),Parking))return false;
+ if(GetWorld()->OverlapBlockingTestByChannel(Ground.Centre,Rotation,ECC_Vehicle,FCollisionShape::MakeBox(Hull->GetScaledBoxExtent()),Parking))return false;
  SetActorLocationAndRotation(Ground.Centre,Rotation,false,nullptr,ETeleportType::TeleportPhysics);SpeedCm=ActualSpeedMps=Throttle=Steering=0;PoseWheels(Ground,0);PoseCamera(0);return true;
 }
 FString ALunarSurfaceVehicle::InspectionText() const {

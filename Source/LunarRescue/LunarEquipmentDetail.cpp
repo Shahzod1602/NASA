@@ -3,6 +3,7 @@
 #include "Components/InstancedStaticMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/SceneComponent.h"
+#include "Components/BoxComponent.h"
 #include "Engine/StaticMeshActor.h"
 #include "Engine/StaticMesh.h"
 #include "Engine/World.h"
@@ -122,6 +123,13 @@ void Battery(FBuilder& B,AActor* A){
  for(float Y:{-S.Y*.35f,S.Y*.35f})B.Box(F,FVector(0,Y,3),FVector(S.X+3,2.2f,3.5f),Foil);
 }
 void Port(FBuilder& B,AActor* A){if(!A)return;const auto F=Local(A);
+ // Support the existing panel at its saved mission anchor. Moving that anchor
+ // would detach the installed cell and cable; terrain-tested legs close the gap.
+ const auto Asset=AssetFrame(A);if(Asset.Valid){const auto Base=Asset.Frame;const FFrame World{A,A->GetRootComponent(),FQuat::Identity,FVector::ZeroVector};
+  for(float X:{-.35f,.35f})for(float Y:{-.35f,.35f}){const FVector Top=Base.Point(FVector(Asset.Size.X*X,Asset.Size.Y*Y,2));FHitResult Hit;
+   if(B.Ground(Top,Hit)&&Top.Z-Hit.ImpactPoint.Z>2&&Top.Z-Hit.ImpactPoint.Z<500){B.Rod(World,Hit.ImpactPoint+FVector(0,0,1),Top,3.2f,Metal);B.Shape(World,TEXT("Cylinder"),Hit.ImpactPoint+FVector(0,0,1.5f),FVector(20,20,3),Dark);}
+  }
+ }
  // These exact positions match the existing installed-module and cable visual
  // anchors in BuildStoryProps; cosmetic collars never become interaction targets.
  for(const FVector P:{FVector(-77,0,-25),FVector(-57,28,35)}){B.Ring(F,P,6.2f,1.2f,Metal,FVector::ForwardVector);B.Ring(F,P+FVector(-2,0,0),7.6f,.7f,Foil,FVector::ForwardVector);}
@@ -168,11 +176,39 @@ void Rover(FBuilder& B,AActor* A){const auto Asset=AssetFrame(A);if(!Asset.Valid
  B.Cable(F,SourcePoint(Asset,Mast+FVector(0,0,5)),SourcePoint(Asset,FVector(42.26778f,-.6576f,119.89215f)),FVector(0,14,-12)*Scale,1.1f*Scale);
 }
 void Solar(FBuilder& B,AActor* A){const auto Asset=AssetFrame(A);if(!Asset.Valid)return;const auto F=Asset.Frame;const float Scale=SourceScale(Asset);
- // Retained panel underside plane: z - y = 95.000818 source centimetres.
- const FVector N(0,.70710678f,-.70710678f),Base(145,0,95.000818f);
+ // Runtime source-triangle probes establish z + y = 95.000818 cm.
+ // The negative normal points beneath that plane; the former mixed sign
+ // placed the junction/cable direction along the panel instead of beneath it.
+ const FVector N(0,-.70710678f,-.70710678f),Base(145,0,95.000818f);
  B.Shape(F,TEXT("Cube"),SourcePoint(Asset,Base+N*5.5f),FVector(23,17,11)*Scale,Dark,FRotationMatrix::MakeFromZX(N,FVector::ForwardVector).ToQuat());
  for(float X:{-125.f,125.f}){const FVector At(X,0,95.000818f);B.Rod(F,SourcePoint(Asset,At+N*2.5f-FVector(7,0,0)),SourcePoint(Asset,At+N*2.5f+FVector(7,0,0)),2.5f*Scale,Metal);}
- B.Cable(F,SourcePoint(Asset,Base+N*11),SourcePoint(Asset,FVector(-60,-35,60.000818f)+N*2),N*(8*Scale),.9f*Scale);
+ B.Cable(F,SourcePoint(Asset,Base+N*11),SourcePoint(Asset,FVector(-60,-35,130.000818f)+N*2),N*(8*Scale),.9f*Scale);
+}
+bool IsGroundedStructure(const FString& Name){return Name==TEXT("HabitatMain")||Name==TEXT("HabitatUtility")||Name==TEXT("SolarPanel");}
+bool StructureGround(FBuilder& B,AStaticMeshActor* Actor,TArray<FHitResult>& Hits,double& Highest){
+ Hits.Reset();Highest=-TNumericLimits<double>::Max();auto* C=Actor?Actor->GetStaticMeshComponent():nullptr;if(!C||!C->GetStaticMesh())return false;
+ const auto Bounds=C->Bounds;const FVector Center=Bounds.Origin,Extent=Bounds.BoxExtent;
+ for(const FVector2D Offset:{FVector2D::ZeroVector,FVector2D(-.7,-.7),FVector2D(-.7,.7),FVector2D(.7,-.7),FVector2D(.7,.7)}){
+  FHitResult Hit;if(!B.Ground(Center+FVector(Extent.X*Offset.X,Extent.Y*Offset.Y,0),Hit)||Hit.ImpactNormal.Z<.65f||!FMath::IsFinite(Hit.ImpactPoint.Z))return false;
+  Highest=FMath::Max(Highest,Hit.ImpactPoint.Z);Hits.Add(Hit);
+ }return Hits.Num()==5;
+}
+void GroundStructure(FBuilder& B,AStaticMeshActor* Actor){
+ TArray<FHitResult> Hits;double Highest;if(!StructureGround(B,Actor,Hits,Highest))return;
+ auto* C=Actor->GetStaticMeshComponent();const double Bottom=C->Bounds.Origin.Z-C->Bounds.BoxExtent.Z,Shift=Highest-Bottom;
+ if(!FMath::IsFinite(Shift)||FMath::Abs(Shift)>1200)return;
+ C->SetMobility(EComponentMobility::Movable);Actor->AddActorWorldOffset(FVector(0,0,Shift),false,nullptr,ETeleportType::TeleportPhysics);C->UpdateBounds();Actor->Tags.AddUnique(TEXT("Lunar.StructureGrounded"));
+ if(C->GetStaticMesh()->GetName()==TEXT("SolarPanel")){
+  // An authored conservative obstacle envelope prevents walking/driving
+  // through the non-colliding display mesh. It is not a precision contact
+  // mesh or a physics simulation of the solar-array structure.
+  auto* Collision=NewObject<UBoxComponent>(Actor);Collision->SetupAttachment(C);Collision->SetMobility(EComponentMobility::Movable);const auto Source=C->GetStaticMesh()->GetBounds();Collision->SetRelativeLocation(Source.Origin);Collision->SetBoxExtent(Source.BoxExtent);Collision->SetCollisionProfileName(TEXT("BlockAll"));Collision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);Collision->SetCanEverAffectNavigation(false);Collision->ComponentTags.Add(TEXT("Lunar.StructureCollision"));Collision->RegisterComponent();Actor->SetActorEnableCollision(true);
+ }
+ // Small authored adjustable feet span remaining uneven-ground gaps. Main
+ // structure collision remains intact. Measured terrain and mission anchors
+ // are not moved, regenerated, flattened or made to simulate physics.
+ const auto F=Local(Actor);for(int32 I=1;I<Hits.Num();++I){const FVector Ground=Hits[I].ImpactPoint;const double Gap=Highest-Ground.Z;if(Gap>3&&Gap<100){const FVector Top(Ground.X,Ground.Y,Highest+4);B.Rod(F,F.Rotation.UnrotateVector(Ground-F.Origin),F.Rotation.UnrotateVector(Top-F.Origin),5,Metal);}}
+ UE_LOG(LogTemp,Display,TEXT("STRUCTURE_GROUNDED mesh=%s dz_cm=%.2f terrain_samples=5 physics_simulation=0"),*C->GetStaticMesh()->GetName(),Shift);
 }
 void Rescue(FBuilder& B){auto* G=B.Game;Battery(B,G->ModuleActor);Port(B,G->PowerActor);Terminal(B,G->DataActor);Terminal(B,G->RecorderActor,true);if(G->RelayActor)Terminal(B,G->RelayActor);if(G->RelayDish)Dish(B,G->RelayDish);if(G->PowerAntenna)Dish(B,G->PowerAntenna);
  if(!G->Mars){
@@ -182,6 +218,7 @@ void Rescue(FBuilder& B){auto* G=B.Game;Battery(B,G->ModuleActor);Port(B,G->Powe
  }
  TArray<AStaticMeshActor*> Existing;for(TActorIterator<AStaticMeshActor> It(G->GetWorld());It;++It)Existing.Add(*It);int32 PoleCount=0;
  for(auto* A:Existing){auto* C=A->GetStaticMeshComponent();const FString Name=C&&C->GetStaticMesh()?C->GetStaticMesh()->GetName():FString();
+  if(IsGroundedStructure(Name))GroundStructure(B,A);
   if(Name==TEXT("ApolloLander"))Lander(B,A);else if(Name==TEXT("HabitatMain")||Name==TEXT("HabitatUtility"))Habitat(B,A);else if(Name==TEXT("Lunokhod"))Rover(B,A);else if(Name==TEXT("SolarPanel"))Solar(B,A);
   else if(Name==TEXT("Cylinder")&&PoleCount<16){const auto AF=AssetFrame(A);if(AF.Valid&&AF.Size.X<15&&AF.Size.Y<15&&AF.Size.Z>60&&AF.Size.Z<230){B.Ring(AF.Frame,FVector(0,0,AF.Size.Z*.86f),float(AF.Size.X)*.7f,.8f,Foil);++PoleCount;}}
   if(G->Mars&&G->HomeActor&&Name==TEXT("Cylinder")&&FVector::Dist2D(A->GetActorLocation(),G->HomeActor->GetActorLocation())<500){const auto AF=AssetFrame(A);if(AF.Valid&&AF.Size.Z>400&&AF.Size.X>200)Lander(B,A);}
@@ -226,6 +263,7 @@ void LunarEquipmentDetail::Build(ALunarGameMode* G){
 void LunarEquipmentDetail::AppendChecks(ALunarGameMode* G,FString& Report,int32& Failed){
  auto Check=[&](bool Good,const TCHAR* Name){Report+=FString(Good?TEXT("PASS "):TEXT("FAIL "))+Name+TEXT("\n");if(!Good)++Failed;};
  Check(G&&G->GetWorld()&&!G->Menu,TEXT("Equipment detail checks have a playable world"));if(!G||!G->GetWorld()||G->Menu)return;
+ if(!G->Apollo){FBuilder B(G);int32 Structures=0;bool Grounded=true;for(TActorIterator<AStaticMeshActor> It(G->GetWorld());It;++It){auto* C=It->GetStaticMeshComponent();if(!C||!C->GetStaticMesh()||!IsGroundedStructure(C->GetStaticMesh()->GetName()))continue;++Structures;TArray<FHitResult> Hits;double Highest;Grounded&=It->ActorHasTag(TEXT("Lunar.StructureGrounded"))&&StructureGround(B,*It,Hits,Highest)&&FMath::Abs(C->Bounds.Origin.Z-C->Bounds.BoxExtent.Z-Highest)<1.0&&!C->IsSimulatingPhysics();}Check(Structures>0&&Grounded,TEXT("Imported base modules and solar supports rest on sampled terrain without unstable physics"));}
  auto Count=[&](int32& Instances,bool& Cosmetic){int32 Components=0;Instances=0;Cosmetic=true;for(TActorIterator<AActor> It(G->GetWorld());It;++It){TArray<UInstancedStaticMeshComponent*> Meshes;It->GetComponents(Meshes);for(auto* C:Meshes)if(C->ComponentHasTag(DetailTag)){++Components;Instances+=C->GetInstanceCount();Cosmetic&=C->GetStaticMesh()!=nullptr&&C->GetMaterial(0)!=nullptr&&C->GetCollisionEnabled()==ECollisionEnabled::NoCollision&&!C->CanEverAffectNavigation()&&!C->IsComponentTickEnabled()&&C->InstanceEndCullDistance<=6500;}}return Components;};
  int32 Instances=0;bool Cosmetic=false;const int32 Components=Count(Instances,Cosmetic);Check(G->ActorHasTag(BuiltTag)&&Components>0&&Instances>0,TEXT("Mission received visible authored equipment detail"));Check(Components<=MaxComponents&&Instances<=MaxInstances,TEXT("Equipment detail remains within 128 component and 1400 instance caps"));Check(Cosmetic,TEXT("Added equipment uses existing meshes/materials with no collision, navigation or Tick"));
  // These checks exercise geometric requirements independently of any mesh

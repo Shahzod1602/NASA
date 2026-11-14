@@ -5,6 +5,8 @@
 #include "Camera/CameraComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/StaticMeshComponent.h"
+#include "Engine/StaticMesh.h"
 #include "Engine/World.h"
 #include "EngineUtils.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -34,7 +36,11 @@ void ALunarSurfaceVehicle::ValidateChecks(ALunarGameMode* G,TFunctionRef<void(bo
  TGuardValue<TObjectPtr<ULunarPanel>> Panel(P->ActivePanel,nullptr);
  auto* V=Build(G);Check(V!=nullptr,TEXT("A bounded training rover finds real supported terrain near the mission base"));if(!V)return;
  const FTransform Parked=V->GetActorTransform();Check(Build(G)==V,TEXT("Repeated vehicle construction reuses one existing rover"));
- Check(V->Visuals.Num()<=MaxVisualComponents&&V->Wheels.Num()==4&&V->Hubs.Num()==4&&!V->IsActorTickEnabled(),TEXT("Parked rover has four proper wheels and bounded visuals with no idle Tick"));
+ Check(V->Visuals.Num()<=MaxVisualComponents&&V->Wheels.Num()==4&&(V->MuseumRover?V->Hubs.IsEmpty():V->Hubs.Num()==4)&&!V->IsActorTickEnabled(),TEXT("Parked rover has four proper wheels and bounded visuals with no idle Tick"));
+ Check(G->Mars?!V->MuseumRover:V->MuseumRover&&FMath::IsNearlyEqual(V->TireRadiusCm,37.5848f,.01f),TEXT("Moon loads the credited museum rover with measured source-wheel pivots; Mars retains its own vehicle"));
+ bool BodyContained=!V->Visuals.IsEmpty()&&V->Visuals[0]&&V->Visuals[0]->GetStaticMesh();
+ if(BodyContained){const FBox Bounds=V->Visuals[0]->GetStaticMesh()->GetBoundingBox();const FVector Extent=V->Hull->GetUnscaledBoxExtent();for(int32 Corner=0;Corner<8;++Corner){const FVector Local=V->Visuals[0]->GetRelativeTransform().TransformPosition(FVector(Corner&1?Bounds.Max.X:Bounds.Min.X,Corner&2?Bounds.Max.Y:Bounds.Min.Y,Corner&4?Bounds.Max.Z:Bounds.Min.Z));BodyContained&=FMath::Abs(Local.X)<=Extent.X+.1&&FMath::Abs(Local.Y)<=Extent.Y+.1&&FMath::Abs(Local.Z)<=Extent.Z+.1;}}
+ Check(BodyContained,TEXT("The rendered rover body fits inside its swept collision hull using actual imported mesh bounds"));
  Check(!V->RestoreParkedPose(FTransform(FVector(1.e9,1.e9,1.e9)))&&V->GetActorTransform().Equals(Parked),TEXT("Missing or out-of-map ground rejects parked state without moving the rover"));
  const float NaN=std::numeric_limits<float>::quiet_NaN();
  V->SetForward(NaN);V->SetSteer(std::numeric_limits<float>::infinity());

@@ -86,7 +86,10 @@ void ALunarGameMode::NasaUIChecks(){
  }
  if(Apollo)AimUI(this,P,ModuleActor);
  auto* HintSettings=ULunarSettings::Get();const bool OldHints=HintSettings->TutorialHints,OldGuide=ApolloGuideEnabled;HintSettings->TutorialHints=false;ApolloGuideEnabled=false;
- const auto Minimal=ULunarFlightHUD::ReadState(this,P);Result->Check(CanInteract()&&Minimal.ShowGuide&&Minimal.GuideCaption==TEXT("INTERACTION")&&!Minimal.GuideAction.IsEmpty()&&Minimal.GuideBody.IsEmpty(),TEXT("Disabling optional guidance retains a compact actionable work-key prompt"));HintSettings->TutorialHints=OldHints;ApolloGuideEnabled=OldGuide;
+ const auto Minimal=ULunarFlightHUD::ReadState(this,P);Result->Check(CanInteract()&&!Minimal.ShowGuide&&!Minimal.InteractionPrompt.IsEmpty(),TEXT("Removing the field-guide card retains an actionable prompt beside the primary objective"));
+ HintSettings->TutorialHints=true;ApolloGuideEnabled=true;const auto NoCard=ULunarFlightHUD::ReadState(this,P);
+ Result->Check(!NoCard.ShowGuide&&!NoCard.InteractionPrompt.IsEmpty()&&!NoCard.Objective.IsEmpty()&&!NoCard.ResourceTime.IsEmpty(),TEXT("Tutorial hints do not restore the redundant field-guide card or hide mission resources"));
+ HintSettings->TutorialHints=OldHints;ApolloGuideEnabled=OldGuide;
  auto* Settings=ULunarSettings::Get();const auto OldBindings=Settings->Bindings;Settings->Bindings.Add(TEXT("Interact"),EKeys::U);Result->Check(ULunarFlightHUD::ReadState(this,P).WorkKey==EKeys::U.GetDisplayName().ToString(),TEXT("Hold and work labels reflect a rebound work key"));Settings->Bindings=OldBindings;
  const float OldOxygen=Oxygen;Oxygen=-2;Result->Check(ULunarFlightHUD::ReadState(this,P).ResourceFraction==0,TEXT("Negative resource is clamped in the HUD"));Oxygen=std::numeric_limits<float>::quiet_NaN();Result->Check(ULunarFlightHUD::ReadState(this,P).ResourceFraction==0,TEXT("Non-finite resource is displayed safely"));Oxygen=OldOxygen;
  P->PauseMission();P->SyncPauseMenu();auto* Pause=P->PauseMenu.Get();

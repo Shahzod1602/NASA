@@ -141,7 +141,7 @@ bool ReadSnapshot(const TSharedPtr<FJsonObject>& J,FOperationsSnapshot& S){
 }
 void ApplySnapshot(UFieldOperationsComponent& O,const FOperationsSnapshot& S){
  O.Enabled=S.Enabled;O.Prepared=S.Prepared;O.Briefed=S.Briefed;O.VehicleInspected=S.VehicleInspected;O.ScannerUnlocked=S.ScannerUnlocked;
- O.WireIsolated=S.WireIsolated;O.WireComplete=S.WireComplete;O.Difficulty=S.Difficulty;O.PreflightMask=S.PreflightMask;O.WireMask=S.WireMask;
+ O.WireIsolated=S.WireIsolated;O.WireComplete=S.WireComplete;O.Difficulty=S.Difficulty;O.PreflightMask=S.PreflightMask;O.PreflightCursor=S.Prepared?3:0;O.WireMask=S.WireMask;
  O.WireMistakes=S.WireMistakes;O.ScannedMask=S.ScannedMask;O.CollectedMask=S.CollectedMask;O.DeliveredMask=S.DeliveredMask;O.NativeScienceMask=S.NativeScienceMask;
  O.UtilityCharge=S.UtilityCharge;O.UtilityCapacity=S.UtilityCapacity;O.CargoMassKG=.5f*Bits3(S.CollectedMask&~S.DeliveredMask);
  O.DataStoredMB=S.DataStoredMB;O.DataTransmittedMB=S.DataTransmittedMB;O.DataCapacityMB=S.DataCapacityMB;

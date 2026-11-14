@@ -1,5 +1,31 @@
 # Lunar Rescue
 
+## v0.9.0 — EVA, Equipment and Exploration — 14 November 2026
+
+[Windows release](https://github.com/Shahzod1602/NASA/releases/tag/apollo12-v0.9.0) · [Download Windows ZIP](https://github.com/Shahzod1602/NASA/releases/download/apollo12-v0.9.0/LunarRescue-Expeditions-v0.9.0-Windows.zip).
+
+Extract the entire ZIP and run **LunarRescue.exe**; keep Engine, LunarRescue and Credits together. Unreal Editor/Python are not required to play. Explore the Moon or Mars, choose a mission, then start. This update adds ordered pre-EVA checks, functional Map/Inventory, offline NASA colour globes, a drag/Verify cable board, credited suit/gloves and lunar rover, stable hatch handover and grounded base supports.
+
+Exact packaged verification: **2,019 C++ PASS executions / zero FAIL in 20 case reports, with 109 staged review PNGs**. Counts include repeated configurations; human playtests: **0**. The short paired performance capture does not establish sustained improvement. Better habitat/lander models and the final FIELD GUIDE preference remain open. [Release notes and scientific/performance limits](Docs/Releases/apollo12-v0.9.0/RELEASE_NOTES.md).
+
+The dated local-development records below retain their original pre-publication context. Archive metadata links the release source snapshot separately from the true compile-time base/dirty provenance.
+
+## Local feedback development — 14 November 2026 (unreleased)
+
+The working tree adds four ordered pre-EVA checks with live progress and **Next**, read-only preflight **Map / Inventory**, an offline rotatable NASA planet overview, an explicit **Verify** cable board with drag and keyboard/click controls, credited astronaut and Moon-rover visuals, and grounded base/power/solar supports. Active play uses the balanced resource profile without an extra automatic modal. The hatch handover preserves the player's view instead of flying the camera through the cabin.
+
+See [implementation and limits](Docs/Feedback20261113/IMPLEMENTATION.md), [task intake](Docs/Feedback20261113/TASK_INTAKE.md) and [science/source notes](SCIENCE_AND_SOURCES.md). The lower field-guide card preference is awaiting clarification of a later Telegram follow-up. Historical performance and test counts in the published-release sections below do not certify this working tree. A fresh build and its dated verification receipt are required.
+
+The fresh local Windows candidate is now verified: **2,019 C++ PASS executions / zero FAIL across 20 case reports, with 109 staged review PNGs**. Run `Dist/Apollo12/Windows/LunarRescue.exe` with the complete Windows folder present. This candidate is unpublished; the existing public download below is v0.8.2. [Exact tests, executable/payload hashes and performance limits](Docs/Feedback20261113/TEST_REPORT.md). No human or network-isolated playtest is claimed.
+
+For editable development, fetch Git LFS content and open `LunarRescue.uproject` with the reviewed Unreal **5.8.3** installation. The bounded Windows Editor build used here is:
+
+```powershell
+& 'D:\UnrealEngine\UE_5.8\Engine\Build\BatchFiles\Build.bat' LunarRescueEditor Win64 Development -Project=D:/LunarRescue/LunarRescue.uproject -WaitMutex -MaxParallelActions=1 -NoUBA -NoPCH -NoSharedPCH
+```
+
+Asset-preparation scripts require Python with NumPy, Pillow, trimesh and DracoPy; they are development tools, not player/runtime dependencies. Raw models and source credits remain in their dated `SourceArt` directories. The original A7L assets and existing Mars training vehicle remain available. Do not regenerate the authored maps to import these new visuals.
+
 ## v0.8.2 — Intrepid surface and cabin (11 November 2026)
 
 **Play on Windows:** [v0.8.2 release](https://github.com/Shahzod1602/NASA/releases/tag/apollo12-v0.8.2) · [Windows ZIP](https://github.com/Shahzod1602/NASA/releases/download/apollo12-v0.8.2/LunarRescue-Expeditions-v0.8.2-Windows.zip).

@@ -50,6 +50,7 @@ void ALunarGameMode::ValidateFieldOperationsChecks(){
     C->Advance(.4f);Check((C->PreflightMask&(1<<I))==0,TEXT("Partial check time does not mark completion"));
     Paused=true;const float Remaining=C->ActionRemaining;C->Advance(5);Check(C->ActionRemaining==Remaining&&Oxygen==Before,TEXT("Pause freezes pending suit action and oxygen"));Paused=false;
     C->Advance(.7f);Check((C->PreflightMask&(1<<I))!=0&&C->PendingCheck==INDEX_NONE,TEXT("Elapsed authored check timer completes exactly one step"));
+    if(I<3)Check(C->PerformAction(TEXT("NextCheck")),TEXT("A completed system requires the explicit Next action before the next check"));
    }
    Check(C->Prepared&&C->PreflightMask==15,TEXT("All four checks unlock hatch"));
    P->ClosePanel();const float SceneBefore=DepartureScene?DepartureScene->PresentationTime():0;C->Preparing=true;
@@ -59,17 +60,12 @@ void ALunarGameMode::ValidateFieldOperationsChecks(){
    Check(C->PerformAction(TEXT("Launch")),TEXT("Completed owned panel launches departure"));
    if(DepartureScene)DepartureScene->AdvancePresentation(ALunarDepartureScene::Duration);else CommitMissionStart();
    Panel=Cast<ULunarOperationsPanel>(P->ActivePanel);
-   Check(IsActive()&&C->Prepared&&!C->Preparing&&Panel&&Panel->View==EFieldPanelView::Briefing&&Paused,TEXT("Departure enters surface briefing before active resource consumption"));
-   if(Panel){
-     P->ClosePanel();const float PlanningOxygen=Oxygen,PlanningCharge=C->UtilityCharge,PlanningElapsed=C->ElapsedS,PlanningApolloElapsed=ApolloElapsed;const auto PlanningStage=Stage;const FVector PlanningInput=P->GetPendingMovementInputVector();Tick(3);P->Forward(1);P->Right(1);
-     Check(!Paused&&Oxygen==PlanningOxygen&&C->UtilityCharge==PlanningCharge&&C->ElapsedS==PlanningElapsed&&ApolloElapsed==PlanningApolloElapsed&&P->GetPendingMovementInputVector().Equals(PlanningInput),TEXT("Closing mandatory briefing cannot consume resources time or enable movement"));
-     Interact();Panel=Cast<ULunarOperationsPanel>(P->ActivePanel);Check(Panel&&Panel->View==EFieldPanelView::Briefing&&Paused&&Stage==PlanningStage,TEXT("Work input reopens mandatory briefing without native progression"));if(Panel)P->ClosePanel();P->PrimaryClick();Panel=Cast<ULunarOperationsPanel>(P->ActivePanel);Check(Panel&&Panel->View==EFieldPanelView::Briefing&&Paused&&Stage==PlanningStage,TEXT("Primary click reopens mandatory briefing without native progression"));
-    Check(C->PerformAction(TEXT("Difficulty"),2),TEXT("Surface briefing accepts Professional gameplay tuning"));
-    Check(C->PerformAction(TEXT("ConfirmBriefing")),TEXT("One confirmation locks resource budget and starts surface play"));
-    Check(C->Briefed&&C->UtilityCapacity==80&&C->DataCapacityMB==.8f&&C->MaxCargoKg()==.5f&&!Paused&&!P->ActivePanel,TEXT("Difficulty applies shared charge storage payload and pause state"));
-    const float Locked=Oxygen;Check(C->OpenPanel(EFieldPanelView::Briefing),TEXT("Locked briefing remains readable"));
-    Check(!C->PerformAction(TEXT("Difficulty"),0)&&!C->PerformAction(TEXT("ConfirmBriefing"))&&Oxygen==Locked,TEXT("Reopening briefing cannot refill or change difficulty"));P->ClosePanel();
-   }
+   Check(IsActive()&&C->Prepared&&!C->Preparing&&C->Briefed&&!Panel&&!Paused,TEXT("Hatch handover starts surface play without an automatic resource modal"));
+   Check(C->Difficulty==1&&C->UtilityCapacity==100&&C->DataCapacityMB==1.2f,TEXT("Direct handover locks the balanced authored budget"));
+   const float Locked=Oxygen;const auto StartedStage=Stage;
+   Check(C->OpenPanel(EFieldPanelView::Briefing),TEXT("The optional locked resource briefing remains readable"));
+   Check(!C->PerformAction(TEXT("Difficulty"),0)&&!C->PerformAction(TEXT("ConfirmBriefing"))&&Oxygen==Locked,TEXT("Reading the locked profile cannot refill resources or change difficulty"));P->ClosePanel();
+   Check(C->OpenPanel(EFieldPanelView::Preflight)&&!C->PerformAction(TEXT("Launch"))&&Stage==StartedStage,TEXT("Reopening completed EVA checks cannot relaunch or reset an active mission"));P->ClosePanel();
   }
   const auto Points=C->MapPoints();Check(Points.Num()>=3&&Points.Num()<=32,TEXT("Map contains bounded actual world support positions"));
   AActor* NativeTarget=Target();const float Clock=Oxygen;
@@ -83,6 +79,11 @@ void ALunarGameMode::ValidateFieldOperationsChecks(){
    const float Charge=C->UtilityCharge,Time=C->ElapsedS;Tick(3);Check(Oxygen==Clock&&C->UtilityCharge==Charge&&C->ElapsedS==Time,TEXT("Paused resource board freezes mission and shared field clocks"));
    auto* Old=Cast<ULunarOperationsPanel>(P->ActivePanel);P->ClosePanel();Check(!C->CanUsePanel(Old,true),TEXT("Closed panel cannot authorize a retained callback"));
   }
+  // Explicit professional-budget fixture for the existing full-buffer and
+  // payload-cap cases below. This is not a player profile-selection claim;
+  // normal direct handover and its locked balanced budget were checked above.
+  C->Difficulty=2;C->UtilityCapacity=80;C->UtilityCharge=FMath::Min(C->UtilityCharge,80.f);C->DataCapacityMB=.8f;
+  OxygenCapacity=C->BaseMissionCapacity*.8f;Oxygen=FMath::Min(Oxygen,OxygenCapacity);if(Apollo)ApolloTimed=true;++C->Revision;
   // Actual authored world targets and camera line of sight, not a model-only scan fixture.
   if(C->SamplePackages.Num()==3&&IsValid(C->SamplePackages[0].Get())&&IsValid(C->SamplePackages[1].Get())&&IsValid(C->SamplePackages[2].Get())){
    Stage=Apollo?ELunarStage::ApolloCheckout:ELunarStage::FindModule;C->Prepared=C->Briefed=true;C->VehicleInspected=false;C->ScannerUnlocked=false;
@@ -140,7 +141,8 @@ void ALunarGameMode::ValidateFieldOperationsChecks(){
    if(Panel){
     Check(C->PerformAction(TEXT("WireIsolate")),TEXT("Paused owned wire UI validates physical reach and isolates toy circuit"));
     for(int32 I=0;I<C->WirePairs();++I){int32 Match=INDEX_NONE;for(int32 J=0;J<C->WirePairs();++J)if(C->WireLeftLabel(I)==C->WireRightLabel(J))Match=J;Check(Match!=INDEX_NONE&&C->PerformAction(TEXT("WireLeft"),I)&&C->PerformAction(TEXT("WireRight"),Match),TEXT("Matching text identifiers connect through real UI action authority"));}
-    Check(C->WireComplete&&RepairStep==2&&!Paused&&!P->ActivePanel,TEXT("Only complete cable matching commits existing power sequence exactly once"));
+    Check(C->WireComplete&&C->WirePendingCommit&&RepairStep==1&&Paused&&P->ActivePanel,TEXT("Matching every cable keeps the power sequence isolated until explicit verification"));
+    Check(C->PerformAction(TEXT("WireVerify"))&&RepairStep==2&&!C->WirePendingCommit&&Paused&&P->ActivePanel&&!C->PerformAction(TEXT("WireVerify")),TEXT("Verify commits the existing cable step exactly once and retains the online result panel"));
    }
   }
   if(P->ActivePanel)P->ClosePanel();

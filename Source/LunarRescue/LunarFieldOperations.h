@@ -25,6 +25,7 @@ public:
  int32 Difficulty=1,PreflightMask=0,WireMask=0,WireLeft=INDEX_NONE,WireMistakes=0;
  int32 CollectedMask=0,DeliveredMask=0,ScannedMask=0,SelectedPackage=INDEX_NONE,LastPackage=INDEX_NONE;
  int32 Revision=0,PendingCheck=INDEX_NONE,WaypointIndex=INDEX_NONE,NativeScienceMask=0;
+ int32 PreflightCursor=0;
  float UtilityCharge=100,UtilityCapacity=100,CargoMassKG=0,DataStoredMB=0,DataTransmittedMB=0,DataCapacityMB=4;
  float ElapsedS=0,VehicleDistanceM=0,VehicleTimeS=0,WalkingDistanceM=0;
  float ActionRemaining=0,ActionDuration=1.0f,ScanProgress=0,ScanDuration=1.2f,PackagePreviewSeconds=0;
@@ -55,6 +56,7 @@ public:
  bool CanOpenView(EFieldPanelView View) const;
  bool PerformAction(FName Action,int32 Argument=0);
  bool BeginCheck(int32 Index);
+ bool ContinuePreflight();
  int32 PreflightStep() const;
  float ActionProgress() const;
  int32 WirePairs() const;

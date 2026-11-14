@@ -136,7 +136,8 @@ UTextBlock* CrewText(ULunarPanel* P,const FString& Value,int32 Size,FLinearColor
 
 void LunarCrew::Build(ALunarGameMode* Game){
  if(!Game||!Game->GetWorld()||Game->Menu)return;Game->CrewActors.SetNum(Count);FCrewBuilder B(Game);if(!B.Ready()){UE_LOG(LogTemp,Warning,TEXT("FICTIONAL_CREW missing retained terrain or presentation asset; no substitute data/model created"));return;}
- if(!IsValid(Game->CrewActors[0])&&IsValid(Game->HomeActor))Game->CrewActors[0]=B.Robot(Game->HomeActor);
+ // PIP is retired. Keep its legacy slot empty so saved speaker indices remain compatible.
+ if(IsValid(Game->CrewActors[0]))Game->CrewActors[0]->Destroy();Game->CrewActors[0]=nullptr;
  AActor* Link=IsValid(Game->PowerActor)?Game->PowerActor.Get():Game->HomeActor.Get();if(!IsValid(Game->CrewActors[1])&&Link)Game->CrewActors[1]=B.Communicator(Link);
  UE_LOG(LogTemp,Display,TEXT("FICTIONAL_CREW robot=%d communicator=%d components=%d cap=%d"),IsValid(Game->CrewActors[0]),IsValid(Game->CrewActors[1]),B.Components,MaxComponents);
 }
@@ -161,7 +162,7 @@ void LunarCrew::BuildNotebook(ULunarPanel* Panel){
  auto Add=[&](const FString& Value,int32 Size,FLinearColor Color,float Space=5.f){Panel->Body->AddChildToVerticalBox(CrewText(Panel,Value,Size,Color))->SetPadding(FMargin(4,Space));};
  Add(TEXT("CREW / FICTIONAL GUIDES"),24,Accent,9);Add(TEXT("Optional conversations. These characters do not perform work, grant cargo, refill resources or diagnose real hardware."),16,Muted);
  Add(Game->CrewTalkCount>0?TEXT("LAST CONTACT / ")+CrewName(FMath::Clamp(Game->CrewSpeaker,0,1)):TEXT("No conversation recorded in this session."),17,Ink);
- Add(TEXT("PIP-3 / FIELD ROBOT"),20,Accent,9);Add(TEXT("A stationary authored guide on clear ground near the return point. PIP-3 does not follow the player. It reads the same recorded mission checklist as your equipment notebook; it cannot complete a task on your behalf."),17,Ink);
+
  Add(TEXT("DR. MIRA VALE / REMOTE SCIENCE GUIDE"),20,Accent,9);Add(TEXT("A fictional present-day scientist represented by a communicator icon. She is not an Apollo 12 crew member or a NASA employee. Her modern annotations are separate from the historical mission narrative."),17,Ink);
  Add(TEXT("CURRENT MISSION GUIDANCE"),19,Accent,9);Add(CrewAdvice(Game),18,Ink);Add(ScienceNote(Game),17,Ink,9);
  if(!Game->Mars)Add(TEXT("Scientific source: NASA Science / LCROSS. The 9 October 2009 impact studied Cabeus near the lunar south pole. https://science.nasa.gov/mission/lcross/"),15,Muted);
@@ -170,10 +171,10 @@ void LunarCrew::BuildNotebook(ULunarPanel* Panel){
 }
 void LunarCrew::ValidateChecks(ALunarGameMode* Game,TFunctionRef<void(bool,const TCHAR*)> Check){
  Check(Game&&Game->GetWorld()&&!Game->Menu&&ULunarSettings::IsAutomation(),TEXT("Crew checks use an isolated playable automation world"));if(!Game||!Game->GetWorld()||Game->Menu||!ULunarSettings::IsAutomation())return;
- const FCrewFacts Before(Game);Build(Game);Check(Game->CrewActors.Num()==Count&&IsValid(Game->CrewActors[0])&&IsValid(Game->CrewActors[1]),TEXT("Both fictional guides have visible retained-asset representations"));
+ const FCrewFacts Before(Game);Build(Game);Check(Game->CrewActors.Num()==Count&&!IsValid(Game->CrewActors[0])&&IsValid(Game->CrewActors[1]),TEXT("PIP has no world representation while the optional science communicator is retained"));
  const auto Actors=Game->CrewActors;Build(Game);Check(Game->CrewActors==Actors&&Before.Same(Game),TEXT("Repeated crew build preserves guide actors and all mission facts"));
  int32 Total=0,Visible=0;bool Cosmetic=true;for(const auto& A:Game->CrewActors)if(IsValid(A)){TArray<UActorComponent*> All;A->GetComponents(All);Total+=All.Num();Cosmetic&=!A->IsActorTickEnabled();TArray<UStaticMeshComponent*> Meshes;A->GetComponents(Meshes);for(auto* C:Meshes){++Visible;Cosmetic&=C->GetStaticMesh()&&C->GetMaterial(0)&&C->GetCollisionEnabled()==ECollisionEnabled::NoCollision&&!C->CanEverAffectNavigation()&&!C->IsComponentTickEnabled();}}
- Check(Total<=MaxComponents&&Visible>=20,TEXT("Two crew displays stay within the 40-total-component budget"));Check(Cosmetic,TEXT("Crew models have no collision navigation actor Tick or mesh Tick"));
+ Check(Total<=MaxComponents&&Visible>=10,TEXT("Retained science display stays within the component budget"));Check(Cosmetic,TEXT("Crew models have no collision navigation actor Tick or mesh Tick"));
  UStaticMeshComponent* Terrain=CrewTerrain(Game);bool Grounded=true,OutsideStructure=true;
  for(int32 Index=0;Index<Count&&Game->CrewActors.IsValidIndex(Index);++Index)if(auto* Guide=Game->CrewActors[Index].Get()){
   FHitResult Hit;Grounded&=CrewGround(Terrain,Guide->GetActorLocation(),Hit)&&FMath::Abs(Guide->GetActorLocation().Z-Hit.ImpactPoint.Z)<1;
@@ -181,12 +182,12 @@ void LunarCrew::ValidateChecks(ALunarGameMode* Game,TFunctionRef<void(bool,const
   OutsideStructure&=Anchor&&!WithinFootprint(Anchor->GetComponentsBoundingBox(true),Guide->GetActorLocation(),125)&&CrewClearance(Game,Terrain,Anchor,Guide->GetActorLocation(),Guide);
   for(TActorIterator<AActor> It(Game->GetWorld());It;++It)if(It->ActorHasTag(TEXT("apollo.reference-lander")))OutsideStructure&=!WithinFootprint(It->GetComponentsBoundingBox(true),Guide->GetActorLocation(),155);
  }
- Check(Grounded,TEXT("Both stationary guides stand on the actual mission terrain rather than floating above it"));
+ Check(Grounded,TEXT("The retained stationary communicator stands on the actual mission terrain rather than floating above it"));
  Check(OutsideStructure,TEXT("Guide bases stay outside the return structure and reference lander footprint including access margin"));
- if(Terrain&&IsValid(Game->HomeActor)&&IsValid(Game->CrewActors[0])){
-  const FVector At=Game->CrewActors[0]->GetActorLocation();auto* Blocker=Game->GetWorld()->SpawnActor<AStaticMeshActor>();
+ if(Terrain&&IsValid(Game->HomeActor)&&IsValid(Game->CrewActors[1])){
+  const FVector At=Game->CrewActors[1]->GetActorLocation();auto* Blocker=Game->GetWorld()->SpawnActor<AStaticMeshActor>();
   if(Blocker){auto* C=Blocker->GetStaticMeshComponent();C->SetMobility(EComponentMobility::Movable);C->SetStaticMesh(LoadObject<UStaticMesh>(nullptr,TEXT("/Engine/BasicShapes/Cube.Cube")));C->SetCollisionProfileName(TEXT("BlockAll"));C->SetCollisionEnabled(ECollisionEnabled::QueryOnly);Blocker->SetActorLocation(At+FVector(0,0,90));Blocker->SetActorScale3D(FVector(1.4,1.4,1.8));Blocker->SetActorHiddenInGame(true);}
-  Check(Blocker&&!CrewClearance(Game,Terrain,Game->HomeActor,At,Game->CrewActors[0]),TEXT("An actual blocking structure rejects a candidate crew position"));if(Blocker)Blocker->Destroy();
+  Check(Blocker&&!CrewClearance(Game,Terrain,Game->HomeActor,At,Game->CrewActors[1]),TEXT("An actual blocking structure rejects a candidate crew position"));if(Blocker)Blocker->Destroy();
  }
 
  const bool Paused=Game->Paused;const int32 Speaker=Game->CrewSpeaker,Talks=Game->CrewTalkCount;Game->Paused=true;Check(Nearby(Game)==INDEX_NONE&&!Talk(Game)&&Game->CrewTalkCount==Talks,TEXT("Paused input cannot talk behind a menu or mutate conversation counts"));Game->Paused=Paused;
@@ -198,21 +199,21 @@ void LunarCrew::ValidateChecks(ALunarGameMode* Game,TFunctionRef<void(bool,const
  // Synthetic actual-world approach/LOS/dialogue fixtures. No human session is
  // inferred; all player transforms and mission facts are restored before exit.
  auto* Pilot=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(Game,0));
- const bool CanFixture=Pilot&&PC&&!Pilot->ActivePanel&&IsValid(Game->CrewActors[0])&&!ALunarDepartureScene::Active(Game)&&!ALunarCargoFinale::Active(Game)&&!Game->Holding&&!Game->ApolloTool&&!Game->ApolloPhotoPending;
- Check(CanFixture,TEXT("Crew interaction fixture has an idle player and a built robot"));if(!CanFixture)return;
+ const bool CanFixture=Pilot&&PC&&!Pilot->ActivePanel&&IsValid(Game->CrewActors[1])&&!ALunarDepartureScene::Active(Game)&&!ALunarCargoFinale::Active(Game)&&!Game->Holding&&!Game->ApolloTool&&!Game->ApolloPhotoPending;
+ Check(CanFixture,TEXT("Crew interaction fixture has an idle player and a built communicator"));if(!CanFixture)return;
  const FTransform PlayerBefore=Pilot->GetActorTransform();const FRotator AimBefore=PC->GetControlRotation();auto* Move=Pilot->GetCharacterMovement();const auto ModeBefore=Move->MovementMode;const uint8 CustomBefore=Move->CustomMovementMode;const bool TickBefore=Move->IsComponentTickEnabled();const FVector VelocityBefore=Move->Velocity;
  const ELunarStage StageBefore=Game->Stage;const FString RadioBefore=Game->Radio;const float RadioTimeBefore=Game->RadioRemaining;
  Game->Paused=false;Game->Stage=Game->Apollo?ELunarStage::ApolloCheckout:ELunarStage::FindModule;Move->StopMovementImmediately();Move->DisableMovement();Move->SetComponentTickEnabled(false);
- auto* Robot=Game->CrewActors[0].Get();FVector Out=Robot->GetActorLocation()-(Game->HomeActor?Game->HomeActor->GetActorLocation():FVector::ZeroVector);Out.Z=0;if(!Out.Normalize())Out=FVector::ForwardVector;
- auto AimRobot=[&](float Range){Pilot->SetActorLocation(Robot->GetActorLocation()+Out*Range+FVector(0,0,95),false,nullptr,ETeleportType::TeleportPhysics);FVector Eye;FRotator Aim;Pilot->GetActorEyesViewPoint(Eye,Aim);PC->SetControlRotation((Focus(Robot,0)-Eye).Rotation());};
+ auto* Robot=Game->CrewActors[1].Get();FVector Out=Robot->GetActorLocation()-(Game->HomeActor?Game->HomeActor->GetActorLocation():FVector::ZeroVector);Out.Z=0;if(!Out.Normalize())Out=FVector::ForwardVector;
+ auto AimRobot=[&](float Range){Pilot->SetActorLocation(Robot->GetActorLocation()+Out*Range+FVector(0,0,95),false,nullptr,ETeleportType::TeleportPhysics);FVector Eye;FRotator Aim;Pilot->GetActorEyesViewPoint(Eye,Aim);PC->SetControlRotation((Focus(Robot,1)-Eye).Rotation());};
  AimRobot(900);Check(Nearby(Game)==INDEX_NONE,TEXT("Crew prompt is unavailable outside the actual approach range"));
- AimRobot(180);Check(Nearby(Game)==0&&Prompt(Game).Contains(TEXT("PIP-3")),TEXT("Facing the nearby robot exposes its real rebound-key talk prompt"));
+ AimRobot(180);Check(Nearby(Game)==1&&Prompt(Game).Contains(TEXT("Mira")),TEXT("Facing the nearby communicator exposes its real rebound-key talk prompt"));
  PC->SetControlRotation(PC->GetControlRotation()+FRotator(0,180,0));Check(Nearby(Game)==INDEX_NONE,TEXT("Looking away hides the crew interaction prompt"));AimRobot(180);
  FVector Eye;FRotator Aim;Pilot->GetActorEyesViewPoint(Eye,Aim);auto* Occluder=Game->GetWorld()->SpawnActor<AStaticMeshActor>();
- if(Occluder){auto* C=Occluder->GetStaticMeshComponent();C->SetMobility(EComponentMobility::Movable);C->SetStaticMesh(LoadObject<UStaticMesh>(nullptr,TEXT("/Engine/BasicShapes/Cube.Cube")));C->SetCanEverAffectNavigation(false);C->SetCollisionProfileName(TEXT("BlockAll"));C->SetCollisionEnabled(ECollisionEnabled::QueryOnly);Occluder->SetActorLocation((Eye+Focus(Robot,0))*.5f);Occluder->SetActorRotation((Focus(Robot,0)-Eye).Rotation());Occluder->SetActorScale3D(FVector(.10f,1,1));Occluder->SetActorHiddenInGame(true);}
+ if(Occluder){auto* C=Occluder->GetStaticMeshComponent();C->SetMobility(EComponentMobility::Movable);C->SetStaticMesh(LoadObject<UStaticMesh>(nullptr,TEXT("/Engine/BasicShapes/Cube.Cube")));C->SetCanEverAffectNavigation(false);C->SetCollisionProfileName(TEXT("BlockAll"));C->SetCollisionEnabled(ECollisionEnabled::QueryOnly);Occluder->SetActorLocation((Eye+Focus(Robot,1))*.5f);Occluder->SetActorRotation((Focus(Robot,1)-Eye).Rotation());Occluder->SetActorScale3D(FVector(.10f,1,1));Occluder->SetActorHiddenInGame(true);}
  Check(Occluder&&Nearby(Game)==INDEX_NONE,TEXT("An actual opaque world collider blocks talking through geometry"));if(Occluder)Occluder->Destroy();
- const FCrewFacts BeforeTalk(Game);const int32 BeforeCount=Game->CrewTalkCount;const bool Contact=Talk(Game,0);
- Check(Contact&&Pilot->ActivePanel&&Game->CrewSpeaker==0&&Game->CrewTalkCount==BeforeCount+1,TEXT("Actual robot conversation opens the crew notebook and records one local contact"));
+ const FCrewFacts BeforeTalk(Game);const int32 BeforeCount=Game->CrewTalkCount;const bool Contact=Talk(Game,1);
+ Check(Contact&&Pilot->ActivePanel&&Game->CrewSpeaker==1&&Game->CrewTalkCount==BeforeCount+1,TEXT("Actual scientist conversation opens the crew notebook and records one local contact"));
  Check(BeforeTalk.Same(Game),TEXT("Actual conversation and notebook opening grant no cargo work or resource changes"));const int32 ContactCount=Game->CrewTalkCount;
  Check(!Talk(Game)&&Game->CrewTalkCount==ContactCount,TEXT("An open crew notebook cannot receive a second hidden world interaction"));if(Pilot->ActivePanel)Pilot->ClosePanel();
  Game->Stage=StageBefore;Game->Paused=Paused;Game->CrewSpeaker=Speaker;Game->CrewTalkCount=Talks;Game->Radio=RadioBefore;Game->RadioRemaining=RadioTimeBefore;

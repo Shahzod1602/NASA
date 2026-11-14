@@ -59,10 +59,10 @@ struct FSupportBuilder {
  UStaticMeshComponent* Box(AActor* A,FVector P,FVector Size,int32 Material=0,const FName& Tag=NAME_None){return Mesh(A,Cube,P,Size,Material,FQuat::Identity,Tag);}
  void Rod(AActor* A,FVector From,FVector To,float Radius=2,int32 Material=2){const FVector D=To-From;Mesh(A,Cylinder,(From+To)*.5,FVector(Radius*2,Radius*2,D.Size()),Material,FRotationMatrix::MakeFromZ(D).ToQuat());}
  void Text(AActor* A,const FString& Value,FVector P,float Size){if(!A)return;auto* T=NewObject<UTextRenderComponent>(A);T->SetupAttachment(A->GetRootComponent());T->SetRelativeLocation(P);T->SetRelativeRotation(FRotator(0,180,0));T->SetText(FText::FromString(Value));T->SetWorldSize(Size);T->SetHorizontalAlignment(EHTA_Center);T->SetTextRenderColor(FColor(200,250,255));T->SetCollisionEnabled(ECollisionEnabled::NoCollision);T->SetCanEverAffectNavigation(false);T->SetCastShadow(false);T->PrimaryComponentTick.bCanEverTick=false;T->RegisterComponent();}
- void Robot(AActor* A){
-  Box(A,FVector(0,0,28),FVector(65,55,35));Box(A,FVector(0,0,48),FVector(57,47,5),1);
-  for(float X:{-22.f,22.f})for(float Y:{-34.f,34.f})Mesh(A,Cylinder,FVector(X,Y,14),FVector(28,28,10),1,FRotationMatrix::MakeFromZ(FVector::RightVector).ToQuat());
-  Rod(A,FVector(20,10,45),FVector(20,10,100),1);Mesh(A,Sphere,FVector(20,10,103),FVector(7),3);Box(A,FVector(-33,0,33),FVector(3,30,12),1);Text(A,TEXT("REMOTE DELIVERY / SIMULATED"),FVector(-5,0,83),5);
+ void PackageStand(AActor* A){
+  // The cartridge stays reachable at its existing interaction height. Its
+  // stationary decorative delivery robot has no gameplay role and is removed.
+  Box(A,FVector(0,0,4),FVector(48,42,8),1);Box(A,FVector(0,0,26),FVector(14,14,44),2);Box(A,FVector(0,0,48),FVector(42,38,4),1);
  }
 };
 }
@@ -82,10 +82,10 @@ void UFieldOperationsComponent::BuildWorld(){
   if(IsValid(SamplePackages[I]))continue;
   AActor* Anchor=I==0?G->HomeActor.Get():I==1?(G->PowerActor?G->PowerActor.Get():G->HomeActor.Get()):(G->DroneActor?G->DroneActor.Get():G->DataActor?G->DataActor.Get():G->HomeActor.Get());
   const FVector Offset=I==0?FVector(1800,900,0):I==1?FVector(950,-850,0):FVector(-1000,850,0);
-  FVector At=Anchor->GetActorLocation()+Offset;if(!B.Site(At)){UE_LOG(LogTemp,Warning,TEXT("FIELD_OPERATIONS no clear authored cartridge site %d; optional prop omitted rather than embedding it in geometry."),I);continue;}auto* Robot=B.Actor(At,FName(*FString::Printf(TEXT("Field.SampleRobot.%d"),I)));if(!Robot)continue;B.Robot(Robot);if(!SampleRobot)SampleRobot=Robot;
+  FVector At=Anchor->GetActorLocation()+Offset;if(!B.Site(At)){UE_LOG(LogTemp,Warning,TEXT("FIELD_OPERATIONS no clear authored cartridge site %d; optional prop omitted rather than embedding it in geometry."),I);continue;}auto* Robot=B.Actor(At,FName(*FString::Printf(TEXT("Field.SampleRobot.%d"),I)));if(!Robot)continue;B.PackageStand(Robot);if(!SampleRobot)SampleRobot=Robot;
   auto* Cartridge=B.Actor(At,FName(*FString::Printf(TEXT("Field.Package.%d"),I)));if(!Cartridge)continue;
   B.Box(Cartridge,FVector(0,0,64),FVector(34,30,28),0,TEXT("work.focus"));B.Box(Cartridge,FVector(0,0,80),FVector(38,34,4),2);B.Box(Cartridge,FVector(-18,0,65),FVector(2,22,15),1);B.Box(Cartridge,FVector(-20,0,67),FVector(1,14,3),3);
-  B.Text(Cartridge,FString::Printf(TEXT("TRAINING-%02d"),I+1),FVector(-22,0,100),6);SamplePackages[I]=Cartridge;
+  B.Text(Cartridge,FString::Printf(TEXT("TRAINING-%02d"),I+1),FVector(-22,0,68),3.5f);SamplePackages[I]=Cartridge;
  }
  if(ScannerVisuals.IsEmpty()&&P->Camera){
   auto Make=[&](FVector From,FVector To,float Radius){auto* C=NewObject<UStaticMeshComponent>(P);C->SetupAttachment(P->Camera);C->SetStaticMesh(B.Cylinder);C->SetMaterial(0,B.M[2]);const FVector D=To-From;C->SetRelativeLocation((From+To)*.5);C->SetRelativeRotation(FRotationMatrix::MakeFromZ(D).Rotator());C->SetRelativeScale3D(FVector(Radius*2/100,Radius*2/100,D.Size()/100));C->SetCollisionEnabled(ECollisionEnabled::NoCollision);C->SetCanEverAffectNavigation(false);C->SetOnlyOwnerSee(true);C->SetCastShadow(false);C->PrimaryComponentTick.bCanEverTick=false;C->SetVisibility(false);C->RegisterComponent();ScannerVisuals.Add(C);};

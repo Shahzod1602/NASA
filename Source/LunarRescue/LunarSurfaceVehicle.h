@@ -59,6 +59,9 @@ private:
  float PreviousFov=85,Throttle=0,Steering=0,SpeedCm=0,ActualSpeedMps=0,WheelPhase=0,TravelMeters=0;
  uint8 PreviousMoveMode=0,PreviousCustomMode=0;
  bool PreviousHidden=false,PreviousCollision=true,PreviousMoveTick=true,PreviousThird=false,PreviousCameraControl=true,Occupied=false,Ending=false;
+ bool MuseumRover=false;
+ float TireRadiusCm=34.f;
+ FVector ContactOffset[4]={FVector(85,-84,0),FVector(85,84,0),FVector(-85,-84,0),FVector(-85,84,0)};
  FString Notice;
  bool Initialize(ALunarGameMode* Game);
  bool BuildVisuals();

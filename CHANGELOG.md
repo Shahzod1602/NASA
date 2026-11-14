@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.9.0 — EVA, equipment and exploration — 2026-11-14
+
+- Package ordered pre-EVA checks, working Map/Inventory, offline NASA colour globe and retained progress updates.
+- Add drag/Verify cable matching and click/keyboard alternative; preserve native repair guards.
+- Adapt credited suit/glove and Moon-rover visuals; correct grip, arm fit, swept hull and base/solar supports.
+- Keep a stable hatch view, remove the automatic resource-profile modal and retire redundant props/PIP.
+- Use a credited Perseverance visual for fictional SELENE NOMAD-7; preserve mission controls/rewards and scientific/art distinctions.
+- Exact package: 2,019 assertion executions / zero FAIL, 20 case reports and 109 staged PNGs; no human playtest claim.
+- Retain performance uncertainty and pending FIELD GUIDE/model requests. See Docs/Releases/apollo12-v0.9.0/RELEASE_NOTES.md.
+
 ## v0.8.2 — Intrepid surface and cabin — 2026-11-11
 
 - Package the two Intrepid development passes below: local regolith/rock art,
@@ -328,3 +338,13 @@ automated repeated executions, not human playtests; see TEST_REPORT.md.
 - Ground existing tread decals at posed boots and reuse a fixed 160-component pool.
 - Show an 8.8-second skippable cargo vignette after committed expedition completion.
 - Extend the novice protocol; human sessions remain unperformed because participants are unavailable.
+# Unreleased — NASA group feedback, 14 November 2026
+
+- Ordered pre-EVA checks with in-place progress, explicit Next/Open Hatch gating and functional preflight Map/Inventory.
+- Bounded local-map zoom/pan and optional offline NASA planet context; real local waypoints remain separate from global colour imagery.
+- Minimal cable board with draggable signal cables, explicit Verify and an expandable keyboard/click alternative. Cable matching cannot apply station repair before verification.
+- Direct balanced-profile mission entry and stable short hatch handover.
+- Credited astronaut/body/hand retargets, supplied museum Moon rover with four wheel pivots and LODs, and NASA/JPL Perseverance appearance for fictional NOMAD-7.
+- Lower-centre power-cell carry framing; original mission interactions, rewards and cargo authority retained.
+- Terrain-tested base, solar and power-panel support placement; retired PIP and obsolete prototype/route decorations.
+- The duplicate lower HUD-card preference remains unconfirmed after a later “qolib tursin” follow-up; clarification was requested. This entry is local development, not a published release or human playtest result.

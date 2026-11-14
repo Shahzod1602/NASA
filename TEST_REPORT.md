@@ -1,5 +1,9 @@
 # Test reports
 
+## Local feedback development — 14 November 2026
+
+Current unpublished work is documented in [Docs/Feedback20261113/TEST_REPORT.md](Docs/Feedback20261113/TEST_REPORT.md). That record distinguishes exact Editor snapshots, the fresh package validation, synthetic graphical fixtures, performance captures and unrun human/network-isolation checks. The historical release results below apply to their original executable and payloads.
+
 ## v0.8.2 release preparation — 2026-11-11
 
 The Windows release packages the exact `59d4f795b114` executable and cooked

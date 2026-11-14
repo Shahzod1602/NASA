@@ -1,0 +1,48 @@
+PASS First instruction teaches looking; album is introduced after evidence
+PASS Skipping the guide never advances equipment or cargo
+PASS The guide can be shown again without restarting
+PASS Walking appears after the look instruction
+PASS Settings can hide tutorial without completing work
+PASS New expedition honors the saved tutorial preference
+PASS H updates the same preference as Settings
+PASS Paused H opens help without changing the tutorial preference
+PASS Guide displays rebound movement and reserves the help key
+PASS Distant work input explains the real reach without opening or awarding work
+PASS Input help never replaces mission radio or appends transcript entries
+PASS Repeated clicks and work input do not restart the hint timer
+PASS Pause hides and freezes input help
+PASS Settings input does not create mission hints
+PASS A nearby player facing away is told to look at the kit
+PASS Input help updates from distance to facing as the player approaches
+PASS Opening instruction uses the current work binding
+PASS Input help switches to the rebound work key once the site is reachable
+PASS An active hint follows a changed binding without another click
+PASS A real visibility obstacle explains blocked reach rather than claiming the site is usable
+PASS Work input during a pending photo explains why collection must wait
+PASS Hidden guidance stays hidden while valid work remains available
+PASS Traverse input explains that reaching Surveyor progresses the route
+PASS Surveyor context photography uses its actual seven metre opening reach
+PASS Terminal states suppress active mission hints
+PASS A new mission clears transient input guidance
+PASS Primary click teaches the work key without starting or completing a tool
+PASS Input help expires and returns the normal instruction
+PASS Opening the first check awards no completed work
+PASS Opening the tool clears the previous input hint
+PASS The opened check teaches its distinct confirmation action
+PASS Escape cancels unfinished first-check work and immediately pauses without completion
+PASS A second Escape resumes without committing the cancelled check
+PASS All three actual confirmations finish onboarding
+PASS Prompt, destination and action describe the aimed soil site rather than the selected rock
+PASS A pending soil pouch is visible before sealing and is not cargo
+PASS Cancelling hides the pending pouch and keeps cargo unchanged
+PASS Final seal adds the correct labeled cargo, confirmation and brief physical preview
+PASS Pausing freezes success feedback and the stow preview
+PASS Temporary stow feedback ends without altering cargo
+PASS Completed sample no longer receives navigation guidance
+PASS Album access is disclosed once evidence exists
+PASS Hardware guide points to its first physical fitting
+PASS The next action moves the marker to the second physical fitting
+PASS Aborted guided removal keeps the hardware on Surveyor
+PASS The paused game provides a revisitable how-to page
+PASS Journal cycles from help back to the route
+RESULT: 0 failures

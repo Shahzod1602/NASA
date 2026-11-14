@@ -42,6 +42,7 @@ void UFieldOperationsComponent::ValidateChecks(TFunctionRef<void(bool,const TCHA
  G->Paused=G->Journal=G->Holding=false;G->Stage=ELunarStage::Briefing;G->OxygenCapacity=Base;G->Oxygen=FMath::Min(73.f,Base);
  F->Enabled=F->Preparing=true;F->BaseMissionCapacity=Base;F->DataCapacityMB=4;
  const float PreflightOxygen=G->Oxygen;
+ Check(!F->ContinuePreflight()&&F->PreflightCursor==0,TEXT("Next cannot skip an unfinished system"));
  Check(!F->BeginCheck(1)&&F->PendingCheck==INDEX_NONE&&F->PreflightMask==0,TEXT("EVA checks reject skipping the first unfinished system"));
  Check(F->BeginCheck(0)&&F->PendingCheck==0,TEXT("The first ordered EVA check starts without opening a viewport panel"));
  F->Advance(0);F->Advance(-.25f);F->Advance(std::numeric_limits<float>::quiet_NaN());
@@ -53,6 +54,7 @@ void UFieldOperationsComponent::ValidateChecks(TFunctionRef<void(bool,const TCHA
  G->Paused=false;F->Advance(.61f);
  Check(F->PreflightMask==1&&F->PendingCheck==INDEX_NONE&&!F->Prepared&&FMath::IsNearlyEqual(F->UtilityCharge,99.8f,.001f),TEXT("A completed EVA check commits one bit and one authored cost"));
  for(int32 Step=1;Step<4;++Step){
+  Check(!F->BeginCheck(Step)&&F->ContinuePreflight()&&F->PreflightCursor==Step,TEXT("Next is required after a completed system and advances exactly one step"));
   Check(!F->BeginCheck(Step-1),*FString::Printf(TEXT("EVA check %d cannot repeat an already committed system"),Step+1));
   const bool Began=F->BeginCheck(Step);F->Advance(1.01f);
   Check(Began&&F->PreflightMask==((1<<(Step+1))-1)&&F->Prepared==(Step==3),*FString::Printf(TEXT("Ordered EVA system %d commits before the next unlock"),Step+1));

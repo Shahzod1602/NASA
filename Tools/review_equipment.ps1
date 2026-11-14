@@ -19,7 +19,7 @@ if(Test-Path -LiteralPath $Output){throw "Use a fresh review folder: $Output"}
 New-Item -ItemType Directory -Path $Output -Force | Out-Null
 $cases=@(
  [pscustomobject]@{Name='apollo';Select='Apollo';Map='/Game/Lunar/Maps/Apollo12';MapName='Apollo12';Frames=8;Names=@('surveyor-overview','surveyor-camera','surveyor-scoop','surveyor-cable','alsep-seismometer','alsep-central','intrepid-wide','intrepid-side-handles')},
- [pscustomobject]@{Name='selene';Select='Selene';Map='/Game/Lunar/Maps/MoonBase';MapName='MoonBase';Frames=4;Names=@('selene-power-socket','selene-hdu-contact','selene-rover-wheel-axes','selene-solar-underside')},
+ [pscustomobject]@{Name='selene';Select='Selene';Map='/Game/Lunar/Maps/MoonBase';MapName='MoonBase';Frames=5;Names=@('selene-power-socket','selene-hdu-contact','selene-rover-wheel-axes','selene-solar-underside','selene-nomad-reference')},
  [pscustomobject]@{Name='mars';Select='Mars';Map='/Game/Mars/Maps/MarsBase';MapName='MarsBase';Frames=2;Names=@('ares-outpost','ares-mesa-talus')}
 ) | Where-Object {$Mission -eq 'All' -or $_.Select -eq $Mission}
 $availableNames=@($cases | ForEach-Object {$_.Names})

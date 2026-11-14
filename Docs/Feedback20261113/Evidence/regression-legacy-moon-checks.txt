@@ -1,0 +1,51 @@
+PASS All four mission actors loaded
+PASS Story recorder and repair visuals spawned
+PASS Repair visuals belong to visible world actors
+PASS Seven English story radio clips loaded
+PASS Player spawned and possessed
+PASS Selected planet gravity is applied
+PASS Briefing does not consume oxygen
+PASS Start enters module search
+PASS Long pause preserves radio subtitle
+PASS Radio subtitle countdown resumes
+PASS Cannot interact remotely
+PASS Pause stops oxygen
+PASS Oxygen decrements by elapsed seconds
+PASS Target 0 is reachable and visible
+PASS Power cell picked up without enabling station
+PASS Mission transition 0
+PASS Target 1 is reachable and visible
+PASS Power cell visibly inserted
+PASS Cable connected as separate repair step
+PASS Released hold resets restart progress
+PASS Paused hold does not advance
+PASS Mission transition 1
+PASS Station restart begins after module installation
+PASS Science terminal waits for completed restart
+PASS Station restart freezes during pause
+PASS Station restart completes once
+PASS Science terminal screen powers on
+PASS Antenna points toward the relay
+PASS Station roof lights are energized
+PASS Station restart does not replay
+PASS Target 2 is reachable and visible
+PASS Looking away cancels download
+PASS Mission transition 2
+PASS Target 3 is reachable and visible
+PASS Mission transition 3
+PASS Optional recorder may be skipped for normal victory
+PASS Lander prompt works while recorder marker is selected
+PASS Lander completes mission without changing Q route
+PASS Q selects optional recorder
+PASS Optional detour can be abandoned
+PASS Recorder requires reaching the survey ledge
+PASS Recorder usable even with lander marker selected
+PASS Recorder reachable from survey ledge
+PASS Recorder reveals crew fate and restores home marker
+PASS Recovered recorder cannot be collected twice
+PASS Full story ending completes at lander
+PASS Victory freezes oxygen
+PASS Oxygen depletion causes failure
+PASS Oxygen loss has correct reason
+PASS Out-of-bounds fall has distinct reason with oxygen remaining
+RESULT: 0 failures

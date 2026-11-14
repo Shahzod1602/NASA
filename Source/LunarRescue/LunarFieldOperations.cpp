@@ -38,7 +38,7 @@ void UFieldOperationsComponent::Initialize(ALunarGameMode* Owner){
 void UFieldOperationsComponent::ResetNewRun(bool PreservePrepared){
  if(auto* G=Game();G&&FMath::IsFinite(BaseMissionCapacity)&&BaseMissionCapacity>0)G->OxygenCapacity=BaseMissionCapacity;
  ALunarSurfaceVehicle::Abort(Game());CancelScanner();const bool WasReady=PreservePrepared&&Prepared;const bool WasEnabled=Enabled;
- Preparing=false;Prepared=WasReady;PreflightMask=WasReady?15:0;Briefed=VehicleInspected=ScannerUnlocked=false;Difficulty=1;
+ Preparing=false;Prepared=WasReady;PreflightMask=WasReady?15:0;PreflightCursor=WasReady?3:0;Briefed=VehicleInspected=ScannerUnlocked=false;Difficulty=1;
  WireIsolated=WireComplete=WirePendingCommit=false;WireMask=WireMistakes=0;WireLeft=INDEX_NONE;
  CollectedMask=DeliveredMask=ScannedMask=NativeScienceMask=0;SelectedPackage=LastPackage=WaypointIndex=PendingCheck=INDEX_NONE;
  UtilityCapacity=100;UtilityCharge=WasReady?99.2f:100.f;CargoMassKG=DataStoredMB=DataTransmittedMB=ElapsedS=VehicleDistanceM=VehicleTimeS=WalkingDistanceM=0;DataCapacityMB=4.f;
@@ -55,13 +55,16 @@ bool UFieldOperationsComponent::GateMissionStart(){if(!PreflightRequired())retur
 void UFieldOperationsComponent::OnMissionCommitted(){
  auto* G=Game();if(!Enabled||!G||!G->IsActive())return;Preparing=false;BaseMissionCapacity=G->OxygenCapacity;BuildWorld();
  if(FParse::Param(FCommandLine::Get(),TEXT("FieldOperationsProfile"))){PreflightMask=15;Prepared=Briefed=VehicleInspected=ScannerUnlocked=true;DataCapacityMB=1.2f;return;}
- if(!Briefed)OpenPanel(EFieldPanelView::Briefing);
+ // Start surface play directly after the hatch. The former mandatory budget
+ // modal was the extra UI reported in the Nov 13 feedback. Keep the balanced
+ // authored budget and the optional board available without a surprise pause.
+ if(!Briefed){Difficulty=1;UtilityCapacity=100;DataCapacityMB=1.2f;Briefed=true;++Revision;}
 }
 void UFieldOperationsComponent::OnPanelClosed(){++Revision;}
 bool UFieldOperationsComponent::CanOpenView(EFieldPanelView View)const{
  const auto* G=Game();if(!Enabled||!G||G->Menu||LunarLoading::IsBusy())return false;
- if(View==EFieldPanelView::Preflight)return G->Stage==ELunarStage::Briefing&&Preparing;
- if(G->Stage==ELunarStage::Briefing)return false;
+ if(View==EFieldPanelView::Preflight)return Preparing||Prepared;
+ if(G->Stage==ELunarStage::Briefing)return Preparing&&(View==EFieldPanelView::Resources||View==EFieldPanelView::Inventory);
  return !ALunarDepartureScene::Active(G)&&!ALunarCargoFinale::Active(G);
 }
 bool UFieldOperationsComponent::OpenPanel(EFieldPanelView View){
@@ -74,15 +77,19 @@ bool UFieldOperationsComponent::OpenPanel(EFieldPanelView View){
 }
 bool UFieldOperationsComponent::CanUsePanel(const ULunarOperationsPanel* Panel,bool Mutating)const{
  const auto* G=Game();const auto* P=Pilot();if(!Enabled||!G||!P||!Panel||P->ActivePanel!=Panel||!Panel->IsInViewport()||!Panel->IsVisible()||G->Menu||LunarLoading::IsBusy())return false;
- if(Panel->View==EFieldPanelView::Preflight)return Preparing&&G->Stage==ELunarStage::Briefing&&!G->Paused;
+ if(G->Stage==ELunarStage::Briefing&&Preparing)return !G->Paused&&(!Mutating||Panel->View==EFieldPanelView::Preflight);
  if(ALunarDepartureScene::Active(G)||ALunarCargoFinale::Active(G))return false;
  return Mutating?G->IsActive()&&G->Paused:(!G->IsActive()||G->Paused);
 }
 int32 UFieldOperationsComponent::PreflightStep()const{for(int32 I=0;I<4;++I)if(!(PreflightMask&(1<<I)))return I;return 4;}
 float UFieldOperationsComponent::ActionProgress()const{return ActionDuration>0?FMath::Clamp(1-ActionRemaining/ActionDuration,0.f,1.f):0;}
 bool UFieldOperationsComponent::BeginCheck(int32 Index){
- auto* G=Game();if(!Preparing||!G||G->Stage!=ELunarStage::Briefing||G->Paused||Index!=PreflightStep()||Index<0||Index>=4||PendingCheck!=INDEX_NONE)return false;
+ auto* G=Game();if(!Preparing||!G||G->Stage!=ELunarStage::Briefing||G->Paused||Index!=PreflightStep()||Index!=PreflightCursor||Index<0||Index>=4||PendingCheck!=INDEX_NONE)return false;
  PendingCheck=Index;ActionDuration=ActionRemaining=1.f;Feedback=TEXT("Running an authored training check. This does not measure a real suit.");++Revision;return true;
+}
+bool UFieldOperationsComponent::ContinuePreflight(){
+ auto* G=Game();if(!Preparing||!G||G->Stage!=ELunarStage::Briefing||G->Paused||PendingCheck!=INDEX_NONE||PreflightCursor<0||PreflightCursor>=3||!(PreflightMask&(1<<PreflightCursor)))return false;
+ ++PreflightCursor;Feedback=TEXT("Next system ready. Start its training check when you are ready.");++Revision;return true;
 }
 bool UFieldOperationsComponent::SpendCharge(float Cost){
  if(!FMath::IsFinite(Cost)||Cost<0||!FMath::IsFinite(UtilityCapacity)||UtilityCapacity<0||!FMath::IsFinite(UtilityCharge)||UtilityCharge<0||UtilityCharge>UtilityCapacity||UtilityCharge<Cost)return false;UtilityCharge=FMath::Clamp(UtilityCharge-Cost,0.f,UtilityCapacity);return true;
@@ -118,10 +125,16 @@ void UFieldOperationsComponent::Advance(float Delta){
  AdvanceScanner(Delta);RefreshWorldVisibility();
 }
 bool UFieldOperationsComponent::PerformAction(FName Action,int32 Argument){
- auto* G=Game();auto* P=Pilot();auto* Panel=P?Cast<ULunarOperationsPanel>(P->ActivePanel):nullptr;if(!CanUsePanel(Panel,true))return false;
+ auto* G=Game();auto* P=Pilot();auto* Panel=P?Cast<ULunarOperationsPanel>(P->ActivePanel):nullptr;if(!CanUsePanel(Panel,Action!=TEXT("Waypoint")))return false;
  if(Action==TEXT("Check"))return Panel->View==EFieldPanelView::Preflight&&BeginCheck(Argument);
+ if(Action==TEXT("UseWorkTool")||Action==TEXT("UseScanner")){
+  if(Panel->View!=EFieldPanelView::Inventory||Preparing||!G->IsActive()||P->PanelWasPaused||Riding())return false;
+  if(Action==TEXT("UseWorkTool")){if(!G->Apollo||!G->CanInteract())return false;P->ClosePanel();return G->OpenApolloTool();}
+  if(!ScannerUnlocked)return false;P->ClosePanel();return ToggleScanner();
+ }
+ if(Action==TEXT("NextCheck"))return Panel->View==EFieldPanelView::Preflight&&ContinuePreflight();
  if(Action==TEXT("Launch")){
-  if(Panel->View!=EFieldPanelView::Preflight||!Prepared||PendingCheck!=INDEX_NONE)return false;Preparing=false;P->ClosePanel();if(!ALunarDepartureScene::Active(G))G->StartMission();++Revision;return true;
+  if(Panel->View!=EFieldPanelView::Preflight||!Preparing||G->Stage!=ELunarStage::Briefing||!Prepared||PendingCheck!=INDEX_NONE)return false;Preparing=false;P->ClosePanel();if(!ALunarDepartureScene::Active(G))G->StartMission();++Revision;return true;
  }
  if(Action==TEXT("Difficulty")){
   if(Panel->View!=EFieldPanelView::Briefing||Briefed||Argument<0||Argument>2)return false;Difficulty=Argument;Feedback=TEXT("Game difficulty selected. Review the resource budget, then confirm once.");++Revision;return true;
@@ -146,16 +159,21 @@ bool UFieldOperationsComponent::PerformAction(FName Action,int32 Argument){
   WireIsolated=true;Feedback=TEXT("Toy circuit isolated. Match port identifiers; this is not a real electrical-repair procedure.");++Revision;return true;
  }
  if(Action==TEXT("WireLeft")){
-  if(Panel->View!=EFieldPanelView::Wire||!WireIsolated||Argument<0||Argument>=WirePairs()||(WireMask&(1<<Argument)))return false;WireLeft=Argument;++Revision;return true;
+  if(Panel->View!=EFieldPanelView::Wire||G->Apollo||G->Stage!=ELunarStage::RestorePower||G->RepairStep!=1||!Visible(P,G->InteractionTarget(),G->InteractionReach(G->InteractionTarget()))||!WireIsolated||Argument<0||Argument>=WirePairs()||(WireMask&(1<<Argument)))return false;WireLeft=Argument;++Revision;return true;
  }
  if(Action==TEXT("WireRight")){
-  if(Panel->View!=EFieldPanelView::Wire||!ConnectWire(Argument))return false;
-  if(WirePendingCommit){P->ClosePanel();if(!G->Apollo&&G->Stage==ELunarStage::RestorePower&&G->RepairStep==1&&G->CanInteract())G->Interact();WirePendingCommit=false;}return true;
+  return Panel->View==EFieldPanelView::Wire&&!G->Apollo&&G->Stage==ELunarStage::RestorePower&&G->RepairStep==1&&Visible(P,G->InteractionTarget(),G->InteractionReach(G->InteractionTarget()))&&ConnectWire(Argument);
+ }
+ if(Action==TEXT("WireVerify")){
+  if(Panel->View!=EFieldPanelView::Wire||!WireComplete||!WirePendingCommit||G->Apollo||G->Stage!=ELunarStage::RestorePower||G->RepairStep!=1||P->PanelWasPaused||!Visible(P,G->InteractionTarget(),G->InteractionReach(G->InteractionTarget())))return false;
+  P->ClosePanel();if(!G->CanInteract())return false;G->Interact();if(G->RepairStep!=2)return false;
+  WirePendingCommit=false;Feedback=TEXT("Cable verified. Restart the station with the normal work control to restore power.");++Revision;OpenPanel(EFieldPanelView::Wire);return true;
  }
  if(Action==TEXT("WireReset")){
-  if(Panel->View!=EFieldPanelView::Wire||WireComplete)return false;WireMask=0;WireLeft=INDEX_NONE;WireIsolated=false;Feedback=TEXT("Uncommitted toy connections reset.");++Revision;return true;
+  if(Panel->View!=EFieldPanelView::Wire||WireComplete&&!WirePendingCommit)return false;WireMask=0;WireLeft=INDEX_NONE;WireIsolated=WireComplete=WirePendingCommit=false;Feedback=TEXT("Uncommitted toy connections reset.");++Revision;return true;
  }
  if(Action==TEXT("Waypoint")){
+  if(Panel->View!=EFieldPanelView::Resources&&Panel->View!=EFieldPanelView::Briefing||!Preparing&&!G->IsActive())return false;
   const auto Points=MapPoints();if(!Points.ContainsByPredicate([&](const auto& Point){return Point.Index==Argument;}))return false;WaypointIndex=Argument;Feedback=TEXT("Yellow-star waypoint selected. The primary mission target is unchanged.");++Revision;return true;
  }
   if(Action==TEXT("Deposit")){
@@ -203,10 +221,14 @@ FString UFieldOperationsComponent::Prompt()const{
 }
 void UFieldOperationsComponent::Shutdown(){CancelScanner();ALunarSurfaceVehicle::Abort(Game());Preparing=false;PendingCheck=INDEX_NONE;ActionRemaining=0;}
 FString UFieldOperationsComponent::Title(EFieldPanelView V)const{
+ if(Preparing&&V==EFieldPanelView::Resources)return TEXT("PRE-EVA / NAVIGATION");
+ if(V==EFieldPanelView::Inventory)return TEXT("ASTRONAUT BACKPACK / INVENTORY");
  switch(V){case EFieldPanelView::Preflight:return TEXT("PRE-EVA / TRAINING CHECKS");case EFieldPanelView::Briefing:return TEXT("SURFACE MISSION / RESOURCE BRIEFING");case EFieldPanelView::Vehicle:return TEXT("TRAINING ROVER / INSPECTION");case EFieldPanelView::Wire:return TEXT("POWER INTERFACE / MATCH THE PORTS");case EFieldPanelView::Inventory:return TEXT("TRAINING CARGO / DELIVERY LOG");case EFieldPanelView::Sample:return TEXT("REMOTE WATER / SOURCE LABEL");default:return TEXT("FIELD OPERATIONS / RESOURCE BOARD");}
 }
 FString UFieldOperationsComponent::Instructions(EFieldPanelView V)const{
- if(V==EFieldPanelView::Preflight)return TEXT("Complete four authored suit checks before opening the hatch. This simplified sequence is an educational game rule, not an operational EVA procedure. Esc pauses or closes this panel; Enter reopens pending checks.");
+ if(V==EFieldPanelView::Preflight)return TEXT("Run the highlighted system check. At 100%, choose Next. Complete all four checks to open the hatch.");
+ if(Preparing&&V==EFieldPanelView::Resources)return TEXT("Choose a local waypoint or inspect the planet overview. Mission time has not started.");
+ if(V==EFieldPanelView::Inventory)return TEXT("Inspect your equipment and collected items. Tools keep their normal mission requirements.");
  if(V==EFieldPanelView::Briefing)return TEXT("Choose a gameplay difficulty, inspect the forecast and confirm once. Budgets use authored tuning; Professional is a game label, not astronaut certification. Budget/finance is deferred.");
  if(V==EFieldPanelView::Wire&&Game()&&Game()->Apollo)return TEXT("Cable matching belongs to the SELENE and ARES rescue missions. Historical Apollo ALSEP deployment is separate.");
  if(V==EFieldPanelView::Wire)return TEXT("Isolate the toy circuit, select a left port, then the right port with the same identifier. Text and symbols accompany colour. Only the full match connects the mission cable; close/retry preserves committed work.");
@@ -236,7 +258,7 @@ TArray<FString> UFieldOperationsComponent::InventoryLines()const{
  TArray<FString> R;for(int32 I=0;I<3;++I)R.Add(FString::Printf(TEXT("TRAINING-%02d / %s / %.2f kg authored cartridge / remote Cabeus 2009 label"),I+1,DeliveredMask&(1<<I)?TEXT("DELIVERED"):CollectedMask&(1<<I)?TEXT("PACKED"):ScannedMask&(1<<I)?TEXT("INSPECTED"):TEXT("PENDING"),TrainingPackageMassKG));
  R.Add(TEXT("These are authored remote-delivery teaching props. No drilling, water extraction, actual water mass or historical Apollo cargo is generated."));return R;
 }
-FString UFieldOperationsComponent::SourcesText()const{return TEXT("MODERN TRAINING EXTENSION / Fictional rover deployment, utility costs, cartridge mass and storage sizes are gameplay tuning. Apollo 12 did not use a lunar rover; its historical tasks remain separate. The Mars SEV-inspired vehicle is a fictional deployment of a prototype concept. Remote-water labels use the bundled LCROSS publication record, not a local measurement.\n\n")+LunarWater::EvidenceText()+TEXT("\n\n")+LunarWater::ModelLimit()+TEXT("\nNASA EVA context: https://www.nasa.gov/missions/station/what-is-a-spacewalk/\nLRV history: https://www.nasa.gov/history/alsj/alsj-LRVdocs.html\nSEV concept: https://science.nasa.gov/3d-resources/space-exploration-vehicle/\nSee SCIENCE_AND_SOURCES for source limits and credits.");}
+FString UFieldOperationsComponent::SourcesText()const{return TEXT("MODERN TRAINING EXTENSION / Fictional rover deployment, utility costs, cartridge mass and storage sizes are gameplay tuning. Apollo 12 did not use a lunar rover; its historical tasks remain separate. The Mars SEV-inspired vehicle is a fictional deployment of a prototype concept. Remote-water labels use the bundled LCROSS publication record, not a local measurement.\n\n")+LunarWater::EvidenceText()+TEXT("\n\n")+LunarWater::ModelLimit()+TEXT("\nNASA EVA context: https://www.nasa.gov/missions/station/what-is-a-spacewalk/\nLRV history: https://www.nasa.gov/history/alsj/alsj-LRVdocs.html\nSEV concept: https://science.nasa.gov/3d-resources/space-exploration-vehicle/\nPlanet overview: NASA/LROC CGI Moon Kit and NASA/JPL-Caltech Viking Mars colour imagery; visual context only, not terrain elevations. Fictional NOMAD-7 uses NASA/JPL Perseverance visual reference: Perseverance is a Mars mission and did not visit the Moon.\nPerseverance model: https://science.nasa.gov/3d-resources/mars-2020-perseverance-rover/\nMoon vehicle model: Deutsches Museum | Digital, CC BY-SA 4.0.\nAstronaut: LasquetiSpice, CC BY 4.0; adapted gameplay rig.\nSee SCIENCE_AND_SOURCES and SourceArt credits for source limits, modifications and links.");}
 FString UFieldOperationsComponent::Summary()const{return FString::Printf(TEXT("Modern training extension / %s / rover %.1f m and %.1f s / charge %.1f RU / %d of 3 simulated cartridges delivered / %d wire mistakes. Historical cargo is recorded separately."),DifficultyName(Difficulty),VehicleDistanceM,VehicleTimeS,UtilityCharge,Bits(DeliveredMask),WireMistakes);}
 FString UFieldOperationsComponent::HudHint()const{
  if(!Enabled)return FString();if(Preparing)return TEXT("PRE-EVA / Enter: open pending training checks");if(!Briefed)return TEXT("RESOURCE BRIEFING / B: choose and lock a gameplay budget");
@@ -249,6 +271,10 @@ FString UFieldOperationsComponent::HudHint()const{
 TArray<FFieldMapPoint> UFieldOperationsComponent::MapPoints()const{
  TArray<FFieldMapPoint> R;auto* G=Game();if(!G)return R;auto Add=[&](const FString& Label,AActor* A,bool Done=false){if(!IsValid(A)||A->GetActorLocation().ContainsNaN()||R.Num()>=32)return;FFieldMapPoint M;M.Index=R.Num();M.Label=Label;M.Position=A->GetActorLocation();M.Completed=Done;M.Current=WaypointIndex>=0?WaypointIndex==M.Index:A==G->Target();R.Add(M);};
  Add(TEXT("Lander / deposit"),G->HomeActor);Add(TEXT("Resource board"),ResourceBoard);Add(TEXT("Training rover"),Vehicle);Add(TEXT("Main objective"),G->Target());
+ if(G->PowerActor!=G->Target())Add(TEXT("Power station"),G->PowerActor,G->StationRebootComplete);
+ if(G->DataActor!=G->Target())Add(TEXT("Science terminal"),G->DataActor);
+ if(G->ModuleActor!=G->Target())Add(TEXT("Power module"),G->ModuleActor,G->RepairStep>0);
+ if(G->RelayActor!=G->Target())Add(TEXT("Orbital relay"),G->RelayActor);
  for(int32 I=0;I<G->SampleActors.Num();++I)Add(FString::Printf(TEXT("Mission sample %d"),I+1),G->SampleActors[I],(G->SamplesCollected&(1<<I))!=0);
  for(int32 I=0;I<SamplePackages.Num();++I)Add(FString::Printf(TEXT("Training cartridge %d"),I+1),SamplePackages[I],(DeliveredMask&(1<<I))!=0);return R;
 }

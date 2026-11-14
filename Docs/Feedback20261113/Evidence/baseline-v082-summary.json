@@ -1,0 +1,14 @@
+{
+  "capture": "D:\\LunarRescue\\Reports\\Performance\\feedback-baseline-v082-20261114\\capture.csv",
+  "captured_frames": 2400,
+  "warmup_frames_excluded": 600,
+  "sample_frames": 1800,
+  "sample_seconds": 7.8178813999999965,
+  "mean_fps": 230.24140529939478,
+  "one_percent_low_fps": 149.9950001666611,
+  "p95_frame_ms": 5.2886,
+  "p99_frame_ms": 5.8647,
+  "largest_frame_ms": 12.34,
+  "method": "1% low = 1000 / mean frame ms of the slowest 1% of sampled frames",
+  "limitations": "Rendered offscreen opening route, normal delta time, uncapped rendering; not a human playtest; captures alone do not validate presentation smoothness. VRAM is not inferred from zero DX11 CSV counters."
+}

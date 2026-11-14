@@ -1,0 +1,11 @@
+{
+  "baseline_executable_sha256": "59d4f795b1141694741264370efe9b79dad66eaa9b4487270ffe7f9517fc358c",
+  "candidate_executable_sha256": "953d5f4abaefaca3e13b60b468c9d24c5742371a87256bb5fb47471d6a6637b2",
+  "same_requested_settings": true,
+  "captures_per_build": 1,
+  "sample_frames_each": 1800,
+  "warmup_frames_excluded_each": 600,
+  "mean_fps_percent_change": 1.3686781462579845,
+  "one_percent_low_fps_percent_change": -7.025103934721388,
+  "interpretation": "Short opening-walk captures only. Mean and p95 are similar, while the candidate has a worse 1% low and largest frame. No sustained-performance improvement or full-game 60 FPS claim."
+}

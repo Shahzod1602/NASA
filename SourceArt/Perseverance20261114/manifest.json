@@ -1,0 +1,23 @@
+{
+  "source_page": "https://science.nasa.gov/3d-resources/mars-2020-perseverance-rover/",
+  "source_url": "https://assets.science.nasa.gov/content/dam/science/cds/3d/resources/model/mars-2020-perseverance-rover/Mars%202020%20Perseverance%20Rover.glb",
+  "credit": "NASA/Jet Propulsion Laboratory",
+  "usage": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+  "repository_statement": "https://raw.githubusercontent.com/nasa/NASA-3D-Resources/master/README.md",
+  "downloaded_utc": "2026-11-13T20:17:43.999687+00:00",
+  "source_sha256": "10db7c03a5e63a5a3b3e7baa6243aa4918ba045fa8ff0a731d0217491adc727f",
+  "derivative_sha256": "82a65866ee88cd702859271b268b0876b8980b866b45da5185a5c07828d6bb4e",
+  "triangles": 199521,
+  "steps": [
+    "Decode Draco without simplification",
+    "Bake node transforms and merge static visual",
+    "Preserve source materials/UVs; translate minimum Y to zero",
+    "Import with authored static LODs"
+  ],
+  "coordinates": "glTF Y-up metres; Unreal converts to Z-up centimetres",
+  "gameplay_role": "Fictional NOMAD-7 visual only in SELENE; mission memory recovery remains unchanged",
+  "limits": [
+    "Perseverance is a Mars mission, never a historical Moon mission",
+    "This visual substitution does not model real rover operation or imply NASA endorsement"
+  ]
+}

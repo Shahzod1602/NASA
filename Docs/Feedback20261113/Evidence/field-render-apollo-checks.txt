@@ -1,0 +1,79 @@
+PASS Rendered field review has an enabled extension in a playable mission world
+PASS Actual preflight flow opens its owned unpaused operations panel
+PASS preflight100
+PASS preflight150
+PASS Preflight map preview opens through its owned button
+PASS preflight-map100
+PASS Preflight globe preview uses the retained offline context material
+PASS preflight-globe100
+PASS Preflight backpack preview opens through its owned button
+PASS preflight-inventory100
+PASS preflight-inventory150
+PASS Preflight map preview opens through its owned button
+PASS preflight-map150
+PASS Preflight globe preview uses the retained offline context material
+PASS preflight-globe150
+PASS Preflight Map opens as a read-only page without starting gameplay
+PASS Map zoom button changes the actual map viewport
+PASS Map reset restores a bounded overview
+PASS Planet overview button uses the actual map page callback
+PASS Offline NASA planet context uses a real retained material and texture
+PASS Planet drag math updates the actual sphere material rotation
+PASS Local map can be restored without changing mission state
+PASS Preflight location selection tracks a real point without completing checks or starting the mission
+PASS Preflight Inventory cannot award or deposit cargo
+PASS Actual backpack filter and item selection preserve the scanner unlock and cargo guards
+PASS Backpack All filter restores the actual available item cards
+PASS Returning to EVA checks preserves unfinished systems
+PASS Next and Open Hatch remain disabled before the required checks
+PASS Actual first suit-check button starts the component timer
+PASS Progress updates in place without rebuilding the page or replacing its widgets
+PASS preflight-checking150
+PASS Actual Next button advances only after the previous 100% check
+PASS Actual ordered suit-check button 2 starts its timer
+PASS Actual Next button advances only after the previous 100% check
+PASS Actual ordered suit-check button 3 starts its timer
+PASS Actual Next button advances only after the previous 100% check
+PASS Actual ordered suit-check button 4 starts its timer
+PASS Four ordered real check callbacks complete through component game-time deltas
+PASS preflight-ready150
+PASS Actual briefing page opens or configures the owned panel
+PASS Detached previous-generation difficulty callback cannot change the component
+PASS An unowned panel callback cannot change difficulty or revision
+PASS A frozen end-state panel callback cannot change difficulty or revision
+PASS A current owned difficulty button changes the real component selection
+PASS briefing100
+PASS Actual briefing page opens or configures the owned panel
+PASS briefing150
+PASS Actual briefing confirmation locks the gameplay budget
+PASS Actual resources page opens or configures the owned panel
+PASS resources100
+PASS Actual resources page opens or configures the owned panel
+PASS resources150
+PASS Actual vehicle page opens or configures the owned panel
+PASS vehicle100
+PASS Actual vehicle page opens or configures the owned panel
+PASS Actual nearby vehicle-inspection button unlocks the scanner
+PASS vehicle150
+PASS Actual wire page opens or configures the owned panel
+PASS wire100
+PASS Actual wire page opens or configures the owned panel
+PASS wire150
+PASS Actual inventory page opens or configures the owned panel
+PASS inventory100
+PASS Actual inventory page opens or configures the owned panel
+PASS inventory150
+PASS Actual sample page opens or configures the owned panel
+PASS sample100
+PASS Actual sample page opens or configures the owned panel
+PASS sample150
+PASS Actual source toggle opens its optional source section
+PASS sample-sources150
+PASS World fixture mounts the actual stationary rover through production interaction
+PASS world-rover-mounted
+PASS Local-front magnifier camera retains real package facing range and line-of-sight eligibility
+PASS World magnifier uses its actual unlock and observed-package eligibility
+PASS world-magnifier-cartridge
+PASS world-sampler-package
+PASS All preflight, panel, circuit-result and world frames were processed
+RESULT: 0 failures

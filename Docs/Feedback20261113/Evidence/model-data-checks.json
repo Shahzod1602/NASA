@@ -1,0 +1,63 @@
+[
+  {
+    "asset": "SK_ExpeditionSuit",
+    "vertices": 122158,
+    "triangles": 58312,
+    "finite_attributes": true,
+    "normalized_weights": true,
+    "legacy_bone_contract": true,
+    "derivative_degenerate_triangles": 0
+  },
+  {
+    "asset": "SK_ExpeditionHands",
+    "vertices": 4414,
+    "triangles": 7444,
+    "finite_attributes": true,
+    "normalized_weights": true,
+    "legacy_bone_contract": true,
+    "derivative_degenerate_triangles": 0
+  },
+  {
+    "asset": "SM_MuseumRover_Body",
+    "triangles": 271486,
+    "finite_positions": true,
+    "indices_in_range": true,
+    "sha256_verified": true
+  },
+  {
+    "asset": "SM_MuseumRover_Wheel0",
+    "triangles": 47890,
+    "finite_positions": true,
+    "indices_in_range": true,
+    "sha256_verified": true
+  },
+  {
+    "asset": "SM_MuseumRover_Wheel1",
+    "triangles": 47890,
+    "finite_positions": true,
+    "indices_in_range": true,
+    "sha256_verified": true
+  },
+  {
+    "asset": "SM_MuseumRover_Wheel2",
+    "triangles": 48425,
+    "finite_positions": true,
+    "indices_in_range": true,
+    "sha256_verified": true
+  },
+  {
+    "asset": "SM_MuseumRover_Wheel3",
+    "triangles": 48425,
+    "finite_positions": true,
+    "indices_in_range": true,
+    "sha256_verified": true
+  },
+  {
+    "asset": "SM_NomadReference",
+    "triangles": 199521,
+    "single_mesh": true,
+    "texture_max_dimension": 2048,
+    "finite_positions": true,
+    "indices_in_range": true
+  }
+]

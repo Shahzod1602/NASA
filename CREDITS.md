@@ -166,3 +166,9 @@ Apollo cargo-handling procedures. The procedural boot-tread material is reused.
 ## Mission-selection presentation - 31 October 2026
 
 The blue glass cards, mission picker and input flow are authored project UI implemented with AI coding assistance. The supplied menu videos informed the interaction reference; no reference recording was bundled as a game asset. The UI uses Unreal background blur and existing destination illustrations. No new planetary measurements or NASA affiliation are claimed.
+
+## NASA group feedback — 14 November 2026
+
+The cable board, drag presentation, preflight pages, resource-flow changes and terrain-tested authored supports were implemented with OpenAI Codex assistance. Telegram screenshots/videos informed the requested interaction; they are not distributed game artwork.
+
+Credited model and image sources: [LasquetiSpice astronaut](SourceArt/ExpeditionSuit20261113/CREDITS.md), [Deutsches Museum lunar rover](SourceArt/MuseumRover20261113/CREDITS.md), [NASA/JPL Perseverance reference](SourceArt/Perseverance20261114/CREDITS.md), and [NASA planet context](SourceArt/PlanetContext20261114/CREDITS.md). Each source retains its own usage terms; see its unchanged raw file, provenance manifest and description of adaptations.

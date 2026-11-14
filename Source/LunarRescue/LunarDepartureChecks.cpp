@@ -31,17 +31,18 @@ void ALunarDepartureScene::ValidateChecks(ALunarGameMode* Mission,TFunctionRef<v
  Check(Cosmetic,TEXT("Cabin geometry has retained materials and no collision navigation or per-component Tick"));
  Check(PC->GetViewTarget()==Scene&&Pawn->IsHidden()&&Move->MovementMode==MOVE_None,TEXT("External departure view hides and freezes the unchanged player"));
  Check(Skip(Mission)&&Active(Mission)&&Scene->PresentationTime()==0,TEXT("Initial input is consumed without click-through skipping"));
- Scene->AdvancePresentation(1);const float Time=Scene->PresentationTime();Mission->Paused=true;Scene->AdvancePresentation(3);
+ Check(Scene->ShotCamera->GetComponentLocation().Equals(Scene->FinalEye,.05f)&&Scene->ShotCamera->GetComponentRotation().Equals(Scene->FinalAim,.05f),TEXT("Departure begins at the exact original view without a zoom or travel curve"));
+ Scene->AdvancePresentation(.4f);const float Time=Scene->PresentationTime();Mission->Paused=true;Scene->AdvancePresentation(3);
  Check(Active(Mission)&&Scene->PresentationTime()==Time&&Skip(Mission)&&Active(Mission),TEXT("Pause freezes cabin time and consumes skip without starting gameplay"));Mission->Paused=false;
  const auto Panel=Pawn->ActivePanel;Pawn->ActivePanel=NewObject<ULunarPanel>(Pawn);Scene->AdvancePresentation(3);
  Check(Scene->PresentationTime()==Time&&Skip(Mission)&&Active(Mission),TEXT("An open UI panel freezes departure and blocks hidden skip input"));Pawn->ActivePanel=Panel;
  Scene->AdvancePresentation(0);Scene->AdvancePresentation(-10);Scene->AdvancePresentation(std::numeric_limits<float>::quiet_NaN());Scene->AdvancePresentation(std::numeric_limits<float>::infinity());
  Check(Scene->PresentationTime()==Time,TEXT("Zero negative and nonfinite departure deltas leave the clock unchanged"));
- Scene->AdvancePresentation(3.7f);Check(Scene->HatchFraction()==1&&Scene->Progress()>0&&Scene->Progress()<1&&!Scene->Caption().IsEmpty()&&!Scene->Guide().IsEmpty(),TEXT("Timed hatch opens with readable mission-specific guidance before exit"));
+ Scene->AdvancePresentation(.65f);Check(Scene->HatchFraction()==1&&Scene->Progress()>0&&Scene->Progress()<1&&!Scene->Caption().IsEmpty()&&!Scene->Guide().IsEmpty(),TEXT("Timed hatch opens with readable mission-specific guidance before exit"));
  Scene->AdvancePresentation(Duration-Scene->PresentationTime()-.01f);
  // Inspect the actual camera rather than a camera-manager cache in this
  // direct fixture; a separate staged rendered review is still required.
- Check(Scene->ShotCamera->GetComponentLocation().Equals(Scene->FinalEye,.05f)&&Scene->ShotCamera->GetComponentRotation().Equals(Scene->FinalAim,.05f),TEXT("Bounded camera curve reaches the original surface view before handover"));
+ Check(Scene->ShotCamera->GetComponentLocation().Equals(Scene->FinalEye,.05f)&&Scene->ShotCamera->GetComponentRotation().Equals(Scene->FinalAim,.05f)&&FMath::IsNearlyEqual(Scene->ShotCamera->FieldOfView,FOV),TEXT("Camera position rotation and FOV remain at the original surface view before handover"));
  Check(FactsUnchanged()&&Pawn->GetActorLocation().Equals(Location,.001f),TEXT("Cabin playback never consumes mission resources moves the pawn or edits mission progress"));
  Abort(Mission);Check(!Active(Mission)&&!Mission->DepartureScene,TEXT("Abort removes the transient cabin without launching the mission"));
  Check(FactsUnchanged()&&PC->GetViewTarget()==View&&Pawn->IsHidden()==Hidden&&Move->MovementMode==MoveMode&&Move->IsComponentTickEnabled()==MoveTick,TEXT("Abort restores camera visibility and movement without resetting progress"));

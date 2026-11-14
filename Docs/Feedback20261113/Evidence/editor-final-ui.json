@@ -1,0 +1,729 @@
+{
+  "schema": 1,
+  "completed": true,
+  "cases": [
+    {
+      "case": "selene",
+      "map": "/Game/Lunar/Maps/MoonBase",
+      "flag": "FieldOperationsReview",
+      "outcome": "passed",
+      "assertions": 89,
+      "frames": 28,
+      "config_restored": true,
+      "quality_results": [],
+      "frame_evidence": [
+        {
+          "name": "preflight100",
+          "sha256": "63589d17f20d7f4f23e13c934de3abefe4084669c72344aebf3351f7cdc96ec7",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "preflight150",
+          "sha256": "59ee11b61de76c23674c375e655aa9672a3bcf9f3752101376bbc906349eec89",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "preflight-map100",
+          "sha256": "bfaaa9fd30d3eaf54b3398b6a58e57b1be661c81383420c6fbcbb7666a8aab1d",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "preflight-globe100",
+          "sha256": "60cb68ef7892211f218924f7fa315ca7b5da2fcc0746b8f2449df41098355a50",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "preflight-inventory100",
+          "sha256": "9ac37d63e6221be7930c4898271963da01ecf435a5a701ffcfd0d69340d09d72",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "preflight-inventory150",
+          "sha256": "da30b0d9be7a620f0b930a7393585906de7af1a01a16cc1e9706f02e6abf42a7",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "preflight-map150",
+          "sha256": "8e02e008f44c43409c5d4007eeb555d7a741a4d2294fd9b24bd250d5d501c629",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "preflight-globe150",
+          "sha256": "a7d50b87c27cb4d55f49580f0f35bed3f5cfb8b4890248cd16a2f3a7b84dc9c7",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "preflight-checking150",
+          "sha256": "9fabdadf34ae4954afd6ca2d82f423f30743109d06a84a539b02eabb5b9edf4a",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "preflight-ready150",
+          "sha256": "78fa38a7c8fec8c067043c8807299fc91f1ff76bab780e9ee9afba32b865e8fc",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "briefing100",
+          "sha256": "4cd800d0e2ea647ce106c3f9226b9331bcfd8916452f85ca22a54c39eea8b676",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "briefing150",
+          "sha256": "00e81f7d5f28d90cdb4cba1dda9941252afa6885f5c49acb7db750c12cce301a",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "resources100",
+          "sha256": "8df037e6c1e4c05bbb4475d18f257c44ed409b7f321d1cd9d7340e10c00becf7",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "resources150",
+          "sha256": "ba409aaa8093c2bef59839de04409794147829448fda6fc1274afc4c017dc161",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "vehicle100",
+          "sha256": "21da7f462d964cc514809fd6a9c079b81f7e59c256e69f6b25f672a84976a3b7",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "vehicle150",
+          "sha256": "cc0a50eaacd8469a654f41e6912d6dd4fe724399a98739d4a3a64e49bb7ba7aa",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "wire100",
+          "sha256": "0125ffa48107ef46ebecf939ca04909fb0798aa0ad283fc8921df0d6b20e9039",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "wire150",
+          "sha256": "1097d9ac48c7802a3a0a822f9a6eb38b0b980c96f62c44fa2018d3e155510503",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "wire-ready-to-verify150",
+          "sha256": "20fd67817d976e58b981b2d699be4809fa6c57cbab407db3ff6a4b87a8bc47af",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "wire-online150",
+          "sha256": "e0fced2f3c5ed0d4613730189e1b8121b68b627db4267061df99d3246ffb6c19",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "inventory100",
+          "sha256": "4d143b7c59866ec6b17ef55d24c0b07071f57d5bcd1bd56934056a0cfa4d7556",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "inventory150",
+          "sha256": "536cce7a3bab0c00289bfe6a931243776cb12b85fe0e6eb7ddb2a474cb734fc4",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "sample100",
+          "sha256": "fcb2998439a6ff5d0d4481d0122de185c527ba9e5938ea6e915ccd62068d517b",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "sample150",
+          "sha256": "ddb265e0d1657e2e47df4d34957d3e9589e3aa35ddb23620aefb22cddf7201c4",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "sample-sources150",
+          "sha256": "ec805817be0145ec58dc0e9e761c1473ff33b89d2fb31c13bfdd42b75456c787",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "world-rover-mounted",
+          "sha256": "c1bfcfc5c0e6a7591c9e308d70ec631996db80341f437f7ba970230cda3c8510",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "world-magnifier-cartridge",
+          "sha256": "2cf8f022f61745332702b471e20c13aa502a4ddbe62fc2be8ce3d3db205b5029",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        },
+        {
+          "name": "world-sampler-package",
+          "sha256": "ac1df7e1c3920d0e2c1a8d5dc5dda28abdd8261af9064a9880c1b282172ce255",
+          "width": 1280,
+          "height": 720,
+          "layout_passed": true
+        }
+      ],
+      "started_utc": "2026-11-13T21:36:34.7323337Z",
+      "completed_utc": "2026-11-13T21:37:20.5977396Z"
+    }
+  ],
+  "executable_sha256": "5db233608a7d82102cc92cf9f591b8a9657ae16a5b7b09b131d00bbe0a4cc715",
+  "game_module_sha256": "4d5529c6f88ea9e29a40ca44f7696be4b33dbfdeda6fea13bb101cc033cb26ec",
+  "source_commit": "1b3bd3716a2f38d138bb084ae89c10e7ad3f267c",
+  "source_fingerprint": {
+    "sha256": "54c2214c697d70b042c2833cb868cf8ade4e1ae2e7abffdaeaee3f482ab46051",
+    "files": [
+      {
+        "path": "Config/DefaultEditor.ini",
+        "sha256": "c7706ac793050b6095065067712b8e370d08c2feb5a7504bca2c4dee6862c5df"
+      },
+      {
+        "path": "Config/DefaultEngine.ini",
+        "sha256": "a61331886f0946dd83dafc01f24514c5d9a7193dedc6aaca898b687570e02471"
+      },
+      {
+        "path": "Config/DefaultGame.ini",
+        "sha256": "d4a1af55ad5ce8436a6094814437ded79f996ae8bd27992882185b448af88f0b"
+      },
+      {
+        "path": "Config/DefaultGameUserSettings.ini",
+        "sha256": "284a01815fb01e164a3513dec45586f0502cddae4ddc13127540c7d647a0ad0a"
+      },
+      {
+        "path": "Config/DefaultInput.ini",
+        "sha256": "75ffc86ed6ac582a7f44a3e3b59e08d4bcc91a34adfb1337291a889af69fc0e5"
+      },
+      {
+        "path": "Content/Science/LunarWater/manifest.json",
+        "sha256": "9319ebd61843c0859ff94ae32871090f657164c7a535e3a04909d494a16ca01b"
+      },
+      {
+        "path": "Content/Science/LunarWater/study.json",
+        "sha256": "40db698b4244ee7f6f28fcb5aa44c7dd3e60177694b34cb18d8bc32a24981105"
+      },
+      {
+        "path": "Source/LunarRescue.Target.cs",
+        "sha256": "817e5565071eaada453d4be468724e3875396076d54a43f37ea341eeb7c3fd74"
+      },
+      {
+        "path": "Source/LunarRescue/ApolloData.h",
+        "sha256": "2f4efcca33687d18ff7d31b9be24c99b529d653c4843826432c24d5b195946eb"
+      },
+      {
+        "path": "Source/LunarRescue/LunarApollo.cpp",
+        "sha256": "d99f28f629201ac4c8fc1cb62b33ed6f56e316a2a78c800280b9ede713de984c"
+      },
+      {
+        "path": "Source/LunarRescue/LunarApolloChecks.cpp",
+        "sha256": "dc61e2a2d9b335b51fe8471519dce18380c33adb8f57f05fa364a1d96dadac73"
+      },
+      {
+        "path": "Source/LunarRescue/LunarApolloGuidance.cpp",
+        "sha256": "2950d3190c7a3bb8967e332f13322818b4df1f640f339dec5321e6866500ef08"
+      },
+      {
+        "path": "Source/LunarRescue/LunarApolloHUD.cpp",
+        "sha256": "b071459c9a3aa1050527d8050c77cb1a7242a7833230245dd195ad53062080ab"
+      },
+      {
+        "path": "Source/LunarRescue/LunarApolloRegression.cpp",
+        "sha256": "c95c47152cd9afe9eb6609cc16543241f80f16805d08983058859b842ac48cbf"
+      },
+      {
+        "path": "Source/LunarRescue/LunarApolloRegression.h",
+        "sha256": "1db27e04efd53d0226f896247689cdaf1b4442454684047c479aa0b6222b5afa"
+      },
+      {
+        "path": "Source/LunarRescue/LunarApolloSave.cpp",
+        "sha256": "790b29d6ea313fc3ed9b829558e777add2998a508b3d8a34597b50af24f1bdef"
+      },
+      {
+        "path": "Source/LunarRescue/LunarApolloSaveChecks.cpp",
+        "sha256": "0ceb16d2b51b0abccc5623f66f4f23e74820986f5c5152fe1feac842481376c9"
+      },
+      {
+        "path": "Source/LunarRescue/LunarApolloText.cpp",
+        "sha256": "2056058e8580f12e644686b4750d5194c376e2b406db53b58804c2482094100f"
+      },
+      {
+        "path": "Source/LunarRescue/LunarApolloText.h",
+        "sha256": "d32b3591d5012e317f9b8b18b58c21dbdbdc5ce263059c552bc236323a6a1ee9"
+      },
+      {
+        "path": "Source/LunarRescue/LunarApolloTools.cpp",
+        "sha256": "553cf03e3c4352fb7093d88bc407255e3c6aaac0ee5e6618f07c3113c95dac43"
+      },
+      {
+        "path": "Source/LunarRescue/LunarCargoFinale.cpp",
+        "sha256": "8ffde3474914ac79c6982a40da4807b6ce64834c47d7eca870a8f47fea04ae4c"
+      },
+      {
+        "path": "Source/LunarRescue/LunarCargoFinale.h",
+        "sha256": "8b6a82c0c9816e94c24d1514f0e8647e7b87ced5eb5040ae527806f18906b4aa"
+      },
+      {
+        "path": "Source/LunarRescue/LunarCarryChecks.cpp",
+        "sha256": "e897fbadc4fc215910324994853b8947007f0b96a3de2b31dec0a786729b5f87"
+      },
+      {
+        "path": "Source/LunarRescue/LunarCarryPresentation.cpp",
+        "sha256": "a17a9b771865356c505f45c415990bda2a8d137b1545776da2158b5d1406e0fb"
+      },
+      {
+        "path": "Source/LunarRescue/LunarCarryPresentation.h",
+        "sha256": "817a000c0e7f673cd7b2379025124c368d5977134917f66fd545f6ed4212df92"
+      },
+      {
+        "path": "Source/LunarRescue/LunarCheckpoint.cpp",
+        "sha256": "77c8aa4fc971fa2150d1fcf02c728609079a0ef24f3cb2ae2caa629c2a116f0b"
+      },
+      {
+        "path": "Source/LunarRescue/LunarCheckpoint.h",
+        "sha256": "1edbe1af86649fe13c4d83755aec6adceb3c668cf2a93d444b91db79fb7ef237"
+      },
+      {
+        "path": "Source/LunarRescue/LunarCrew.cpp",
+        "sha256": "bdafab5574d5cc814836285417e30bbdde9a7f0e85d092bc2965869c4fc8c9ae"
+      },
+      {
+        "path": "Source/LunarRescue/LunarCrew.h",
+        "sha256": "ce46901238a8cdfb7c9bf8c108897ab3a10b18e36669b2cad6b1690057ea751e"
+      },
+      {
+        "path": "Source/LunarRescue/LunarDebrief.cpp",
+        "sha256": "8f30f51a41a8d7026cc4f1878aa361ad8a40c117187f5d949c6d20ccffbe6ff0"
+      },
+      {
+        "path": "Source/LunarRescue/LunarDeparture.cpp",
+        "sha256": "5e27ecd6f7d4f1d83e6483bb3fe256dfec59ab7084544535df40c2f98cfff494"
+      },
+      {
+        "path": "Source/LunarRescue/LunarDeparture.h",
+        "sha256": "d53cc7c78d339f33818643aac31dfebea59a02a911322a61d84c8bd6db507a73"
+      },
+      {
+        "path": "Source/LunarRescue/LunarDepartureChecks.cpp",
+        "sha256": "6aa518d806970fd38cc57acf302c1256966f565f0dd9488f2f8593d00fdbbdae"
+      },
+      {
+        "path": "Source/LunarRescue/LunarDiagnostics.cpp",
+        "sha256": "2a8ada3984db804da89e562488a87a3b7bb8e1e557e776341495b0549933d974"
+      },
+      {
+        "path": "Source/LunarRescue/LunarDiagnostics.h",
+        "sha256": "38667a81c89c1456234511f138b24d4e004ca3e1b5a024fc5403def42ddb5075"
+      },
+      {
+        "path": "Source/LunarRescue/LunarDiagnosticsChecks.cpp",
+        "sha256": "dfd1214c0675eee1cbead34210805f519f27389b2944e36d15f0e4fa75ca1d54"
+      },
+      {
+        "path": "Source/LunarRescue/LunarEquipmentDetail.cpp",
+        "sha256": "bf5d7915eed1dc27363af8648d7b22e1a36435b8e60c3980d5cf82527bb16447"
+      },
+      {
+        "path": "Source/LunarRescue/LunarEquipmentDetail.h",
+        "sha256": "1871b38880b8671714d7ab8550432b71abdba38eab30dfdd9b49c832c1d838e8"
+      },
+      {
+        "path": "Source/LunarRescue/LunarExpedition.cpp",
+        "sha256": "26526b4347a154e763b02d4db5b3220b2a6e06986faf546f44b78f20b14914a2"
+      },
+      {
+        "path": "Source/LunarRescue/LunarExperienceChecks.cpp",
+        "sha256": "bc28085ef4091de5d48ab888d950a520d98b0e04f110ef6d61205099ab594634"
+      },
+      {
+        "path": "Source/LunarRescue/LunarFieldChecks.cpp",
+        "sha256": "ee8ebd0188521b79ff271e4dda10d47458e9114293c63669a98b8c8e88c2ec25"
+      },
+      {
+        "path": "Source/LunarRescue/LunarFieldIntegration.cpp",
+        "sha256": "0a04a594e2088bf316f6c1b945e0fb3e7cd28e03fa9ae4a366ee79c86ae50e97"
+      },
+      {
+        "path": "Source/LunarRescue/LunarFieldOperations.cpp",
+        "sha256": "b93a5a63676e4f748a5150b54869d3d28a20bbb4e0908a238d52637e60d034ff"
+      },
+      {
+        "path": "Source/LunarRescue/LunarFieldOperations.h",
+        "sha256": "9e10decb80b7ce918d65e8e6b1919c807f8195ee4bfc3f8a7c596d4e787cfc9a"
+      },
+      {
+        "path": "Source/LunarRescue/LunarFieldReview.cpp",
+        "sha256": "8c21e924718d148c5a3e6aa1dfde3fd97a6a0def229a35dc074cd643daaa98a1"
+      },
+      {
+        "path": "Source/LunarRescue/LunarFieldState.cpp",
+        "sha256": "474eaf49742201d82ef6d1c8fa7aebda2a9d43487b6d8629268b14f799a6bd9d"
+      },
+      {
+        "path": "Source/LunarRescue/LunarFieldwork.cpp",
+        "sha256": "6ba8cab3c57cc425d28e79ab6209173b7247e52f39d0a234ebdd0a2eccb54ef6"
+      },
+      {
+        "path": "Source/LunarRescue/LunarFieldworkChecks.cpp",
+        "sha256": "9259aa7021b851166b77bca716a9f15c69993cda57b0b0b67fec198824d5e211"
+      },
+      {
+        "path": "Source/LunarRescue/LunarFieldWorld.cpp",
+        "sha256": "72839232acb84a9cfe4b63e0b26d94c2455cc9fa160f951ba6b3c964dc55f73a"
+      },
+      {
+        "path": "Source/LunarRescue/LunarFlightHUD.cpp",
+        "sha256": "f1fdef9dd17ae80e2bff681a7bb70641cbd4ea71509e745ebc2d3af5f68e348f"
+      },
+      {
+        "path": "Source/LunarRescue/LunarFlightHUD.h",
+        "sha256": "37ea3bbcc53fd9eed17b78260dd99c956e480b5d219e8abbd6edc5f733b04b78"
+      },
+      {
+        "path": "Source/LunarRescue/LunarFootprints.cpp",
+        "sha256": "04d26c220b897b9621ea628383bd0495f9c0ecae8c834db2fc5e811b8ef8a0bc"
+      },
+      {
+        "path": "Source/LunarRescue/LunarFrontend.cpp",
+        "sha256": "ad40a715383b961937f220434969951f1b1cb147c9869c244b02158d4386b79f"
+      },
+      {
+        "path": "Source/LunarRescue/LunarGame.cpp",
+        "sha256": "a21a9bc271b5bdefd3229ab54c124e62f2d31d4e5ba7bbcbedd919560a632654"
+      },
+      {
+        "path": "Source/LunarRescue/LunarGame.h",
+        "sha256": "980b481d91b276920dd76037f55df89103a2195b531f99cd7e2ffcb77de5e83e"
+      },
+      {
+        "path": "Source/LunarRescue/LunarGameplayTaskChecks.cpp",
+        "sha256": "77bdfc4a9dfb61221d456413c5a7fdba622662c0cf63dd2d97d3e34f67936009"
+      },
+      {
+        "path": "Source/LunarRescue/LunarGameplayTaskReview.cpp",
+        "sha256": "35020cfc5724dba970d54d5363e6e2f295e801f50645273a27a72779602e6bc5"
+      },
+      {
+        "path": "Source/LunarRescue/LunarGuidanceChecks.cpp",
+        "sha256": "5dc18a3fb9c05bc1cd747910032bee3ac49603ac01e4e8add17deb2da31a6c2e"
+      },
+      {
+        "path": "Source/LunarRescue/LunarHudReferenceReview.cpp",
+        "sha256": "232c9ca00bd7c8417b2ba1f7c3a27a27916d622ad2ad600a0547d2e36fca4cf2"
+      },
+      {
+        "path": "Source/LunarRescue/LunarInterface.cpp",
+        "sha256": "5e8aaf778df913c5d19fe3be3127ccefb97f1fd0f59c53664d0fc866da0ca698"
+      },
+      {
+        "path": "Source/LunarRescue/LunarIntrepidCabin.cpp",
+        "sha256": "a3ddd69f8977e4a10d9a9c30c6b281fab4ecb490ca3a18481cd2a6aa1ccd3278"
+      },
+      {
+        "path": "Source/LunarRescue/LunarIntrepidCabin.h",
+        "sha256": "82c9a10a28523ed67f1c32a94929221da37e61bfec32f32c095c16b611ec300f"
+      },
+      {
+        "path": "Source/LunarRescue/LunarIntrepidCabinEditor.cpp",
+        "sha256": "3567af80e0e597b8650805ab6688b7290353afb2a083f42c0d321ead971b722c"
+      },
+      {
+        "path": "Source/LunarRescue/LunarIntrepidVisual.cpp",
+        "sha256": "10ca62eddfa5e7196a68d73e60ef03077dfabf3a87fe1741dab8d1e98472ee12"
+      },
+      {
+        "path": "Source/LunarRescue/LunarIntrepidVisual.h",
+        "sha256": "ff180c5489c760772feba328fdca2479c891f317d38d598034053157f0b02bce"
+      },
+      {
+        "path": "Source/LunarRescue/LunarIntrepidVisualChecks.cpp",
+        "sha256": "8c65bb33aa6286ecd71bd3821f01c641a38070f2dbbe25bb002c669c4e34566e"
+      },
+      {
+        "path": "Source/LunarRescue/LunarIntrepidVisualChecks.h",
+        "sha256": "fdc181f81d3bab981621cda132604de8eb22cd8cd760c987c2bb7125fb8106bc"
+      },
+      {
+        "path": "Source/LunarRescue/LunarIntro.h",
+        "sha256": "fbfe2e34ac486399df71154ca348baee002e14e5ce00fdab2ac1a52747ac8320"
+      },
+      {
+        "path": "Source/LunarRescue/LunarLander.cpp",
+        "sha256": "cbb43ee37bc69aaaf97b0a7c373cb2c011aa6fc98b6537853f4c5847d228eb1a"
+      },
+      {
+        "path": "Source/LunarRescue/LunarLearning.cpp",
+        "sha256": "e84f17e6d36f03ce1ddfca66fa15217e5142e8ae9bf0bbb59bdb6adc39f09275"
+      },
+      {
+        "path": "Source/LunarRescue/LunarLearning.h",
+        "sha256": "e4fcee1b3d235db47eb8cd5903308761c409da435da78db0e7d077e5c2bbaef5"
+      },
+      {
+        "path": "Source/LunarRescue/LunarLearningChecks.cpp",
+        "sha256": "e18e849b4421fa44591a289441ba92539ac54ce70b16ccb17006d37034ec84f1"
+      },
+      {
+        "path": "Source/LunarRescue/LunarLoading.cpp",
+        "sha256": "171e55add66f4cd84f419608873e082d43d79b22b77e4e729d1a6c487ed472b1"
+      },
+      {
+        "path": "Source/LunarRescue/LunarLoading.h",
+        "sha256": "52e21a01d8e57f0a9893c5da8af37bdb7e1dffc2db8f76a02672799a105b1cdb"
+      },
+      {
+        "path": "Source/LunarRescue/LunarLoadingTypography.cpp",
+        "sha256": "f330d07d81bf9e2a5fe760621ea4aa49f7bfe00a26db383164b1d8e1d46abfa5"
+      },
+      {
+        "path": "Source/LunarRescue/LunarLoadingTypography.h",
+        "sha256": "68155251cc2005bf9fd006f0d567d0bbc7cc3662f959442f1a33fa09015ecc5c"
+      },
+      {
+        "path": "Source/LunarRescue/LunarLoadingTypographyChecks.cpp",
+        "sha256": "e327c7b5138ff571ff168d7a49c033c1a2c036e3364e438d9cc232d671b3eb11"
+      },
+      {
+        "path": "Source/LunarRescue/LunarLoadingTypographyReview.cpp",
+        "sha256": "3a70d1a102fce45890a14d229739dbfcb6080edcf596d2745e82dd35c52c4b49"
+      },
+      {
+        "path": "Source/LunarRescue/LunarMissionCard.cpp",
+        "sha256": "ace4d418ec44c52a487be75cfd53e61bd15e83bcf8c94b8ac49b2361db1f86d2"
+      },
+      {
+        "path": "Source/LunarRescue/LunarMissionCard.h",
+        "sha256": "f7ba546c672ec1e70a9dddf6e65d3c8112f971c9e526113ccdcba8acff7b2c12"
+      },
+      {
+        "path": "Source/LunarRescue/LunarMissionSelectionChecks.cpp",
+        "sha256": "5cf7785b0e362cef19e86462f5aa8bc5adbaae115586998d9147e73374fde0ba"
+      },
+      {
+        "path": "Source/LunarRescue/LunarMissionSelectionReview.cpp",
+        "sha256": "9553ba0f2c14fe49c2a706e11a1d33c4eee78ca8123c6eacf43f9dc1f8f5a9d6"
+      },
+      {
+        "path": "Source/LunarRescue/LunarNasaPovChecks.cpp",
+        "sha256": "d45b05a87a9733c4e43730c5bd65b35cd60e2ea982836f7b31e96764f3c49f98"
+      },
+      {
+        "path": "Source/LunarRescue/LunarNasaPovReview.cpp",
+        "sha256": "01314e746238525bfbfd64216ea713a3d4c145278de34a391f97c862e97555ce"
+      },
+      {
+        "path": "Source/LunarRescue/LunarNasaUIChecks.cpp",
+        "sha256": "4a2012ea9f662c01be14bbb302e8cdf79f9c17bb8a16ba6e9f76c2ae1c93ed6b"
+      },
+      {
+        "path": "Source/LunarRescue/LunarNasaUIReview.cpp",
+        "sha256": "7bd7df67ba9f7e6f9b00164e72e2cf70b2ef8240a7dfeb6a5df417ca7b8c5345"
+      },
+      {
+        "path": "Source/LunarRescue/LunarOperationsPanel.cpp",
+        "sha256": "11a33f7c834a4cdc9f201b26141982b63ef10776ff1d793602403c758a149e27"
+      },
+      {
+        "path": "Source/LunarRescue/LunarOperationsPanel.h",
+        "sha256": "e55d1d07707b96e782e94d4cde9fbd445bb524d81fb6de614c9d3f88f02535e6"
+      },
+      {
+        "path": "Source/LunarRescue/LunarOperationsWork.cpp",
+        "sha256": "ad667cfe126155d15870e639b9c6a37cc40ea822fe985eedc50602f25ef09102"
+      },
+      {
+        "path": "Source/LunarRescue/LunarOptimizationChecks.cpp",
+        "sha256": "4e279f1f2c778a755e46c9e2811af4f2d490a8aa7fe76d08479545201c6b0afa"
+      },
+      {
+        "path": "Source/LunarRescue/LunarPanels.cpp",
+        "sha256": "f277152c248a16bc7557ac732b0dd7c3de8bb54b7d8a0823b796f477a3d5e00e"
+      },
+      {
+        "path": "Source/LunarRescue/LunarPanels.h",
+        "sha256": "9bd6d227b574e6fccaf0f4a2f78ca3bd4cda31b047d947508bbaf2bac6ebdccf"
+      },
+      {
+        "path": "Source/LunarRescue/LunarPauseMenu.cpp",
+        "sha256": "301775097de83ac8e3edcfbd66f030f2ef6274cf57d0756b6bf3827d8832262f"
+      },
+      {
+        "path": "Source/LunarRescue/LunarPauseMenu.h",
+        "sha256": "08aaf9f54dd70153c923c60e5becfad012ea743e0ab49abd4f33e101e7cd2d07"
+      },
+      {
+        "path": "Source/LunarRescue/LunarPhotos.cpp",
+        "sha256": "a7b705aa55e0167ef3c597e33d14c9e77e5eb23da2fe6e3445335ad01abe0f96"
+      },
+      {
+        "path": "Source/LunarRescue/LunarPhotos.h",
+        "sha256": "7aa2d2bf7a867f8cdd20bf2f2684b4105fc242ba5baaf0112b675bd3ccf306d6"
+      },
+      {
+        "path": "Source/LunarRescue/LunarPolishChecks.cpp",
+        "sha256": "eef2e08d21e778f7fab93255e5c30d2308d1f1a7982a6ca585f0475da6a3f2c0"
+      },
+      {
+        "path": "Source/LunarRescue/LunarPovMotion.h",
+        "sha256": "c0d8c2c53c492a5a024890b654b5edbce037e886901e054c953bc6d9c1be3319"
+      },
+      {
+        "path": "Source/LunarRescue/LunarPresentationChecks.cpp",
+        "sha256": "21f4080a80f1fb4d439ad11679a3aac40497db7eb899254923d426f76858316f"
+      },
+      {
+        "path": "Source/LunarRescue/LunarPresentationReview.cpp",
+        "sha256": "96824200e6dc43966e10280c1e02ab78a75e3075e350d03c656c575167443793"
+      },
+      {
+        "path": "Source/LunarRescue/LunarRescue.Build.cs",
+        "sha256": "c56c78550eddcdb2d539b6695248a378a41e7dab9a50cd86cf886eb5b436a0ed"
+      },
+      {
+        "path": "Source/LunarRescue/LunarRescue.cpp",
+        "sha256": "c6304777095ca424c8166184f9d2fcb53e4a3f26f07181dca28ddc992b71bb76"
+      },
+      {
+        "path": "Source/LunarRescue/LunarResearchPanel.cpp",
+        "sha256": "bc5386f0fd46a71013cee5f2cd8b6cb4ceb190e8e33126f5b91bd4de682f9296"
+      },
+      {
+        "path": "Source/LunarRescue/LunarRig.cpp",
+        "sha256": "3b3ead4f02f7e802cd3c43c1a2f31990123f2eaeb51288f6e57cdc23334d5cc8"
+      },
+      {
+        "path": "Source/LunarRescue/LunarSettings.cpp",
+        "sha256": "a6835693ad5b983c0cf7d2e02158a6f5e2ed07f7aa2870f1eb454bbb2120140d"
+      },
+      {
+        "path": "Source/LunarRescue/LunarSettings.h",
+        "sha256": "da1bfbf7a350d728d92a76d1d2410829dce34a9284ced8107a8bad99576f89d7"
+      },
+      {
+        "path": "Source/LunarRescue/LunarStrideRegression.cpp",
+        "sha256": "24c3271596247fa7cfb878d144ea98576401c26e278b6281892c5c87bbe07443"
+      },
+      {
+        "path": "Source/LunarRescue/LunarStrideRegression.h",
+        "sha256": "aa2ca731b7f13c8d9d41e8e6f1a38448b3624ecd6dff95f4d6019894e51e0cab"
+      },
+      {
+        "path": "Source/LunarRescue/LunarSuit.cpp",
+        "sha256": "c89e3cdf77028c478327b7b059c404fea4ab69c565effd24faad5976dd82cb05"
+      },
+      {
+        "path": "Source/LunarRescue/LunarSurface.cpp",
+        "sha256": "9ff4c7cd501344482336822f1385626c2bf4bc045722dd7d8ef038f2de8008a5"
+      },
+      {
+        "path": "Source/LunarRescue/LunarSurfaceVehicle.cpp",
+        "sha256": "062e3c4b4cc84c01f25df40376ac0fa80e50e6a36908f6fb4926a335b411f610"
+      },
+      {
+        "path": "Source/LunarRescue/LunarSurfaceVehicle.h",
+        "sha256": "dc6ac70fa755a0edb4295bbc31606e4e917b97a0ee0f2f0471ff474e4135cd2b"
+      },
+      {
+        "path": "Source/LunarRescue/LunarTrail.cpp",
+        "sha256": "ea7364c27a5f4724dfb01ec49325434d9d3e4a1c42b366d525d7fb204088b622"
+      },
+      {
+        "path": "Source/LunarRescue/LunarTrail.h",
+        "sha256": "6722b56820c7139159f81bc96d37a33a63af65c370df01aaa4de9546909f455b"
+      },
+      {
+        "path": "Source/LunarRescue/LunarTrailMap.cpp",
+        "sha256": "347707b060e4793e52f3236c21117bd6d471a57d5cf2825702d14596700aa9c8"
+      },
+      {
+        "path": "Source/LunarRescue/LunarTrailMap.h",
+        "sha256": "79c70a1895b771350c0ad45aa9c85400ca9d2df7a13f9d5bc4e7540173385b8c"
+      },
+      {
+        "path": "Source/LunarRescue/LunarVehicleChecks.cpp",
+        "sha256": "52821f2b3fc435d5108cbf4cd5b42b07e00a85bdffea9c62fe548fda174dedef"
+      },
+      {
+        "path": "Source/LunarRescue/LunarWaterChecks.cpp",
+        "sha256": "bf492a608dad9374fec6bdc859007daa932f5df4bb0f90db0dfe02153208f90a"
+      },
+      {
+        "path": "Source/LunarRescue/LunarWaterStudy.cpp",
+        "sha256": "bae602eb541cfbfaf78ddcdb653f7af596a2bad8f0e1ef05df7f1922ebb691f5"
+      },
+      {
+        "path": "Source/LunarRescue/LunarWaterStudy.h",
+        "sha256": "c7957efa78b331098a24a6b827bcab4a51bb3020f55414370b0ceee2daef4213"
+      },
+      {
+        "path": "Source/LunarRescue/LunarWireBoard.cpp",
+        "sha256": "8fbe845746e44d116a728aa47fe709487c5a349ce28e2a84feb440550eb18437"
+      },
+      {
+        "path": "Source/LunarRescue/LunarWireBoard.h",
+        "sha256": "c4cefdab2991bf46377426bbac89ba99b9f80a443820f92ad5a7bdea5862d64a"
+      },
+      {
+        "path": "Source/LunarRescue/LunarWorkVisuals.cpp",
+        "sha256": "7518f913ca6ea6ced58d73a52bb90f544a318eb2053427dbad9f45bd46616ce4"
+      },
+      {
+        "path": "Source/LunarRescueEditor.Target.cs",
+        "sha256": "10969b2c4ec5b2365e6ed7ac0eef12f5d97d6d5e60b08728608c6140a299c0b7"
+      }
+    ]
+  },
+  "packaged": false,
+  "review": true,
+  "rendered": true,
+  "human_playtest": false,
+  "performance_measurement": false,
+  "network_isolation_tested": false,
+  "width": 1280,
+  "height": 720,
+  "completed_utc": "2026-11-13T21:37:20.6249861Z"
+}

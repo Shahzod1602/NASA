@@ -70,7 +70,9 @@ FLunarFlightHUDState ULunarFlightHUD::ReadState(const ALunarGameMode* G,const AL
  R.ResourceWarning=R.BoundedResource&&Safe(G->Oxygen)<(G->Apollo?180.f:60.f);R.Warning=R.ResourceWarning?TEXT("LOW RESOURCE / RETURN TO LANDER"):R.BoundedResource?TEXT("Simplified mission resource"):TEXT("Untimed / explore at your own pace");
  R.Gravity=FString::Printf(TEXT("g   %.2f m/s²"),Safe(G->SurfaceGravity)/100.f);
  const float Duration=G->HoldDuration();R.Holding=G->Holding&&FMath::IsFinite(Duration)&&Duration>UE_SMALL_NUMBER;R.HoldFraction=HoldFraction(G);
- R.ShowGuide=G->Apollo?(G->ApolloGuideEnabled||R.Tool!=0):S->TutorialHints;R.GuideCaption=TEXT("FIELD GUIDE");
+ // Keep actual tool instructions and contextual interaction prompts. The
+ // redundant always-on field-guide card was removed in the Nov 13 feedback.
+ R.ShowGuide=G->Apollo&&(R.Tool!=0);R.GuideCaption=TEXT("FIELD GUIDE");
  if(G->Apollo){
   const int32 Step=FMath::Clamp(G->ApolloStep(),0,5);R.Stage=FString::Printf(TEXT("STAGE %d / 6"),Step+1);
   R.Objective=G->ApolloObjective();R.GuideTitle=G->ApolloInstruction();
@@ -127,6 +129,12 @@ FLunarFlightHUDState ULunarFlightHUD::ReadState(const ALunarGameMode* G,const AL
  if(!R.ShowGuide&&!R.Holding&&G->CanInteract()&&!R.GuideAction.IsEmpty()){R.ShowGuide=true;R.GuideCaption=TEXT("INTERACTION");R.GuideTitle.Empty();R.GuideBody.Empty();}
  if(R.DustAnswers)R.ShowGuide=false;
  if(R.Holding){R.ShowGuide=false;R.HoldTitle=G->Stage==ELunarStage::CollectData?TEXT("DOWNLOADING SCIENCE DATA"):G->Stage==ELunarStage::AlignRelay?TEXT("ALIGNING ORBITAL RELAY"):G->Stage==ELunarStage::RestorePower?TEXT("RESTARTING STATION"):TEXT("MISSION WORK IN PROGRESS");}
+ if(!R.Tool&&!R.Holding){
+  // A single actionable line stays with the objective. The large bottom
+  // card is reserved for tools whose click-by-click instructions are needed.
+  if(R.ShowGuide)R.InteractionPrompt=R.GuideAction;
+  R.ShowGuide=false;
+ }
  if(S->Subtitles&&G->RadioRemaining>0)R.Subtitle=G->Radio;
  const auto* Target=G->Apollo?G->ApolloGuidanceTarget():G->Target();
  if(IsValid(Target)&&P&&!R.DustAnswers){R.HasNavigation=true;R.NavigationWorld=Target->GetActorLocation()+FVector(0,0,70);R.NavigationDistance=FVector::Dist2D(P->GetActorLocation(),Target->GetActorLocation())/100.f;R.NavigationName=G->Apollo?G->ApolloSiteName():LegacyName(G);}
@@ -156,7 +164,8 @@ TSharedRef<SWidget> ULunarFlightHUD::RebuildWidget(){
  auto* Divider=WidgetTree->ConstructWidget<UBorder>();Divider->SetBrushColor(FLinearColor(.72f,.80f,.84f,.22f));auto* DividerSize=WidgetTree->ConstructWidget<USizeBox>();DividerSize->SetHeightOverride(1);DividerSize->SetWidthOverride(234);DividerSize->AddChild(Divider);Row(MissionStack,DividerSize,12);Cast<UVerticalBoxSlot>(DividerSize->Slot)->SetHorizontalAlignment(HAlign_Left);
  Row(MissionStack,ObjectiveLabel,5);Cast<UVerticalBoxSlot>(ObjectiveLabel->Slot)->SetPadding(FMargin(18,0,0,5));
  Row(MissionStack,SubtaskLabel,10);Cast<UVerticalBoxSlot>(SubtaskLabel->Slot)->SetPadding(FMargin(18,0,0,10));
- Row(MissionStack,CounterLabel,4);Cast<UVerticalBoxSlot>(CounterLabel->Slot)->SetPadding(FMargin(18,0,0,4));Row(MissionStack,NoticeLabel,0);
+ Row(MissionStack,CounterLabel,4);Cast<UVerticalBoxSlot>(CounterLabel->Slot)->SetPadding(FMargin(18,0,0,4));
+ InteractionLabel=MakeText(11,Cyan);Row(MissionStack,InteractionLabel,6);Row(MissionStack,NoticeLabel,0);
  MissionPanel=Panel(MissionStack,350,50,30,FVector2D::ZeroVector,false);
  auto* ResourceStack=Stack();ResourceCaption=MakeText(9,Cyan);ResourceLabel=MakeText(28,Cyan);GravityLabel=MakeText(10,Dim);WarningLabel=MakeText(10,Dim);OxygenBar=WidgetTree->ConstructWidget<UProgressBar>();OxygenBar->SetFillColorAndOpacity(Cyan);auto* BarSize=WidgetTree->ConstructWidget<USizeBox>();BarSize->SetHeightOverride(4);BarSize->AddChild(OxygenBar);
  Row(ResourceStack,ResourceCaption,3);Row(ResourceStack,ResourceLabel,8);Row(ResourceStack,BarSize,10);Row(ResourceStack,GravityLabel,4);Row(ResourceStack,WarningLabel,0);ResourcePanel=Panel(ResourceStack,170,1230,30,FVector2D(1,0),false);
@@ -177,6 +186,7 @@ void ULunarFlightHUD::Refresh(){
   for(int32 I=0;I<FontLabels.Num();++I){auto Font=FontLabels[I]->GetFont();Font.Size=FMath::RoundToInt(FontSizes[I]*(SubtitleFonts[I]?SubtitleScale:TextScale));FontLabels[I]->SetFont(Font);}CachedTextScale=TextScale;CachedSubtitleScale=SubtitleScale;LayoutDirty=true;}
  if(CachedOpacity!=S->HudOpacity){for(const auto& Face:Faces)if(Face)Face->SetBrushColor(FLinearColor(.008f,.014f,.025f,S->HudPanelAlpha(.52f,true)));CachedOpacity=S->HudOpacity;}
  LayoutDirty|=Show(Content,Current.Visible);if(!Current.Visible)return;
+ LayoutDirty|=Set(InteractionLabel,Current.InteractionPrompt);LayoutDirty|=Show(InteractionLabel,!Current.InteractionPrompt.IsEmpty());
  LayoutDirty|=Set(ExpeditionLabel,Current.Expedition);LayoutDirty|=Set(MissionLabel,Current.Mission);LayoutDirty|=Set(StageLabel,Current.Stage);LayoutDirty|=Set(ObjectiveLabel,Current.Objective);LayoutDirty|=Show(MissionPanel,!Current.DustAnswers);LayoutDirty|=Set(SubtaskLabel,Current.Subtask);LayoutDirty|=Set(CounterLabel,Current.Counter);LayoutDirty|=Set(NoticeLabel,Current.Notice);LayoutDirty|=Show(NoticeLabel,!Current.Notice.IsEmpty());
  LayoutDirty|=Set(ResourceCaption,Current.ResourceLabel);LayoutDirty|=Set(ResourceLabel,Current.ResourceTime);LayoutDirty|=Set(GravityLabel,Current.Gravity);LayoutDirty|=Set(WarningLabel,Current.Warning);WarningLabel->SetColorAndOpacity(Current.ResourceWarning?Gold:Dim);ResourceLabel->SetColorAndOpacity(Current.ResourceWarning?Gold:Cyan);LayoutDirty|=Show(WarningLabel,Current.ResourceWarning||!Current.BoundedResource);
  OxygenBar->SetPercent(Current.ResourceFraction);OxygenBar->SetFillColorAndOpacity(Current.ResourceWarning?Gold:Cyan);LayoutDirty|=Show(OxygenBar,Current.BoundedResource);

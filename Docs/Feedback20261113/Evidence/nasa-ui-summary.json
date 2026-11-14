@@ -1,0 +1,35 @@
+{
+  "Cases": [
+    {
+      "Case": "ui-apollo",
+      "Flag": "NasaUITest",
+      "Map": "/Game/Lunar/Maps/Apollo12",
+      "Assertions": 25,
+      "Failures": 0,
+      "Outcome": "passed"
+    },
+    {
+      "Case": "ui-selene",
+      "Flag": "NasaUITest",
+      "Map": "/Game/Lunar/Maps/MoonBase",
+      "Assertions": 31,
+      "Failures": 0,
+      "Outcome": "passed"
+    },
+    {
+      "Case": "ui-mars",
+      "Flag": "NasaUITest",
+      "Map": "/Game/Mars/Maps/MarsBase",
+      "Assertions": 29,
+      "Failures": 0,
+      "Outcome": "passed"
+    }
+  ],
+  "Executable": "D:\\LunarRescue\\Dist\\Apollo12\\Windows\\LunarRescue\\Binaries\\Win64\\LunarRescue.exe",
+  "ExecutableSha256": "953d5f4abaefaca3e13b60b468c9d24c5742371a87256bb5fb47471d6a6637b2",
+  "HumanPlaytest": false,
+  "Review": false,
+  "Width": 1280,
+  "Height": 720,
+  "CompletedAtUtc": "2026-11-13T21:57:29.8925032Z"
+}

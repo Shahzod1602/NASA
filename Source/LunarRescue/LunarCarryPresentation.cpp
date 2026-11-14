@@ -103,8 +103,10 @@ bool LunarCarryPresentation::ProjectViewBounds(const FBox& Bounds,const FTransfo
 bool LunarCarryPresentation::FitViewBounds(const FBox& Bounds,float Fov,float Aspect,FTransform& Relative){
  Relative=FTransform::Identity;double H=0,V=0;if(!LunarCarryPrivate::SourceBox(Bounds)||!LunarCarryPrivate::Frustum(Fov,Aspect,H,V))return false;
  const FVector E=Bounds.GetExtent();constexpr double Depth=58,Safe=.86;
- // Keep the item above the expanded 150% lower field guide, not behind it.
- const FVector Center(Depth,0,.10*Depth*V);
+ // Lower-centre carry framing keeps the horizon and crosshair readable while
+ // the opposed gloves follow the actual cell surface. It no longer reserves
+ // the screen centre for the retired duplicate field-guide card.
+ const FVector Center(Depth,0,-.34*Depth*V);
  // Conservative perspective bounds include source depth: the nearest corner,
  // rather than the source origin, determines both projected size and margins.
  double Scale=.23;

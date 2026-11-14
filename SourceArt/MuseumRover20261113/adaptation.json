@@ -1,0 +1,99 @@
+{
+  "source": {
+    "extras": {
+      "author": "Deutsches Museum | Digital (https://sketchfab.com/deutsches-museum)",
+      "license": "CC-BY-SA-4.0 (http://creativecommons.org/licenses/by-sa/4.0/)",
+      "source": "https://sketchfab.com/3d-models/mondfahrzeug-lunar-rover-acb3f8645a69493cb211a62b40d66aab",
+      "title": "Mondfahrzeug (Lunar Rover)"
+    },
+    "generator": "Sketchfab-15.37.0",
+    "version": "2.0"
+  },
+  "source_sha256": "f416182a410f98e562d50661ae408affa613e67cfd1e9af72e82a1c6d66fb19b",
+  "ground_y_m": 0.014132458716630936,
+  "geometry_triangles_preserved": true,
+  "coordinate_contract": "glTF metres; Unreal importer converts Y-up to Z-up centimetres",
+  "texture_max_dimension": 2048,
+  "derivative_license": "CC-BY-SA-4.0",
+  "parts": [
+    {
+      "name": "SM_MuseumRover_Body",
+      "triangles": 271486,
+      "sha256": "38c30e342626d5c7bb54a1defd6af950c11b9da6d3036ef92ec753871f31658d",
+      "bytes": 39881680,
+      "source_pivot_m": [
+        0.0,
+        0.014132458716630936,
+        0.0
+      ]
+    },
+    {
+      "name": "SM_MuseumRover_Wheel0",
+      "triangles": 47890,
+      "sha256": "dcf8d35a438864fc8903ac570bb2c4485a3aca7f068b84e51883ebec36ae7e4b",
+      "bytes": 6604140,
+      "source_pivot_m": [
+        0.9251545667648315,
+        0.3899807929992676,
+        -0.7528036832809448
+      ],
+      "contact_offset_cm": [
+        92.51545715332031,
+        -75.28036499023438,
+        0
+      ],
+      "radius_cm": 37.58481216430664
+    },
+    {
+      "name": "SM_MuseumRover_Wheel1",
+      "triangles": 47890,
+      "sha256": "96d4442c14bc19f4b18376d6b4751ffb7e35763e33c93bb97817a0ad93d79ff1",
+      "bytes": 6604296,
+      "source_pivot_m": [
+        0.9251531362533569,
+        0.389980673789978,
+        0.7655565738677979
+      ],
+      "contact_offset_cm": [
+        92.51531219482422,
+        76.55565643310547,
+        0
+      ],
+      "radius_cm": 37.58480453491211
+    },
+    {
+      "name": "SM_MuseumRover_Wheel2",
+      "triangles": 48425,
+      "sha256": "934aabc924a23c572a857cddebce63d9ec2929ce926fe106f2eb40cb535af3cc",
+      "bytes": 6623432,
+      "source_pivot_m": [
+        -1.0297768115997314,
+        0.38998064398765564,
+        -0.7528049349784851
+      ],
+      "contact_offset_cm": [
+        -102.9776840209961,
+        -75.2804946899414,
+        0
+      ],
+      "radius_cm": 37.584808349609375
+    },
+    {
+      "name": "SM_MuseumRover_Wheel3",
+      "triangles": 48425,
+      "sha256": "95f6a3a80eaeeaa67465b1c757be733223046482dbff392ac942ee922444d703",
+      "bytes": 6622520,
+      "source_pivot_m": [
+        -1.029778242111206,
+        0.3899804949760437,
+        0.7655545473098755
+      ],
+      "contact_offset_cm": [
+        -102.97782135009766,
+        76.55545806884766,
+        0
+      ],
+      "radius_cm": 37.58480453491211
+    }
+  ]
+}

@@ -1,0 +1,219 @@
+{
+  "schema_version": 2,
+  "published_release": false,
+  "verification_completed": true,
+  "generated_utc": "2026-11-14T03:01:16.609695+05:00",
+  "executable_sha256": "953d5f4abaefaca3e13b60b468c9d24c5742371a87256bb5fb47471d6a6637b2",
+  "base_git_commit": "1b3bd3716a2f38d138bb084ae89c10e7ad3f267c",
+  "source_worktree_dirty": true,
+  "assertion_executions": 2019,
+  "case_reports": 20,
+  "failures": 0,
+  "packaged_staged_pngs": 109,
+  "human_playtest": false,
+  "network_isolation_tested": false,
+  "owner_files_preserved_byte_exact": 53,
+  "suites": [
+    {
+      "suite": "field-native",
+      "source": "Reports/FieldOperations20261104/package-test-1280x720-20261114-025421-577",
+      "summary_sha256": "d2c5b813b783228efbb392825de688802ae2d86b80ce86e348ce4e89efd69373"
+    },
+    {
+      "suite": "gameplay-native",
+      "source": "Reports/Gameplay20261103/package-test-1280x720-20261114-025444-409",
+      "summary_sha256": "5ace4d54f5cda6d526acc4747ee6c6f8d2b69cb15576d138b626c7549b95cdcd"
+    },
+    {
+      "suite": "field-render",
+      "source": "Reports/FieldOperations20261104/package-review-1280x720-20261114-025503-001",
+      "summary_sha256": "12dee035e616ae1f98fcf6be1fff6d5eff9e6fab5de90c035225822d98cf3cc5"
+    },
+    {
+      "suite": "gameplay-render",
+      "source": "Reports/Gameplay20261103/package-review-1280x720-20261114-025635-842",
+      "summary_sha256": "d2ab266c2b72fb564a4c93f407dcfddda7572683710802b0dd1e3278eca453d6"
+    },
+    {
+      "suite": "nasa-ui",
+      "source": "Reports/NasaTasks20261101/package-test-1280x720-20261114-025711-803",
+      "summary_sha256": "85cd4bb03fa1430d9f106aa0c1f6f43faeae380ef12e9aef9c2ef5e248df0031"
+    }
+  ],
+  "cases": [
+    {
+      "case": "field-native-apollo",
+      "assertions": 220,
+      "failures": 0,
+      "report": "Docs/Feedback20261113/Evidence/field-native-apollo-checks.txt",
+      "sha256": "4c578a5bc4e11330758e898a1c08d453163975de375f65ebb87182122a6c8434"
+    },
+    {
+      "case": "field-native-mars",
+      "assertions": 226,
+      "failures": 0,
+      "report": "Docs/Feedback20261113/Evidence/field-native-mars-checks.txt",
+      "sha256": "fd56ed7f294dc8d8088d662792cfce9e1ae31f09febd459f5e3e1d8b59dd8bcc"
+    },
+    {
+      "case": "field-native-selene",
+      "assertions": 226,
+      "failures": 0,
+      "report": "Docs/Feedback20261113/Evidence/field-native-selene-checks.txt",
+      "sha256": "fd56ed7f294dc8d8088d662792cfce9e1ae31f09febd459f5e3e1d8b59dd8bcc"
+    },
+    {
+      "case": "gameplay-native-apollo",
+      "assertions": 237,
+      "failures": 0,
+      "report": "Docs/Feedback20261113/Evidence/gameplay-native-apollo-checks.txt",
+      "sha256": "2994232e9f192a6416f3897f8d9c7876c3b15086c5864fae1a8d64323160f6a7"
+    },
+    {
+      "case": "gameplay-native-mars",
+      "assertions": 183,
+      "failures": 0,
+      "report": "Docs/Feedback20261113/Evidence/gameplay-native-mars-checks.txt",
+      "sha256": "63d2b9f5d9599568a4d2ca83076248010a629c402b7d8ee824083679d1b50865"
+    },
+    {
+      "case": "gameplay-native-selene",
+      "assertions": 198,
+      "failures": 0,
+      "report": "Docs/Feedback20261113/Evidence/gameplay-native-selene-checks.txt",
+      "sha256": "908d79142653e83a06d3156d10c26a7f4aa37741270677d190537beca5a2adc8"
+    },
+    {
+      "case": "field-render-apollo",
+      "assertions": 78,
+      "failures": 0,
+      "report": "Docs/Feedback20261113/Evidence/field-render-apollo-checks.txt",
+      "sha256": "375299fa5445edccc4f6057df8f7dd5631d378db3d319ba57c138760e3775797"
+    },
+    {
+      "case": "field-render-mars",
+      "assertions": 89,
+      "failures": 0,
+      "report": "Docs/Feedback20261113/Evidence/field-render-mars-checks.txt",
+      "sha256": "d2fd7f5642eb49568b12ec7f9132a225ade5c115339612d511bc4f13f22fbe86"
+    },
+    {
+      "case": "field-render-selene",
+      "assertions": 89,
+      "failures": 0,
+      "report": "Docs/Feedback20261113/Evidence/field-render-selene-checks.txt",
+      "sha256": "d2fd7f5642eb49568b12ec7f9132a225ade5c115339612d511bc4f13f22fbe86"
+    },
+    {
+      "case": "gameplay-render-selene",
+      "assertions": 27,
+      "failures": 0,
+      "report": "Docs/Feedback20261113/Evidence/gameplay-render-selene-checks.txt",
+      "sha256": "29af3166bbedc45a9f2a373a8e66a79ab5e71e095c41041f2415afe665865ad5"
+    },
+    {
+      "case": "nasa-ui-ui-apollo",
+      "assertions": 25,
+      "failures": 0,
+      "report": "Docs/Feedback20261113/Evidence/nasa-ui-ui-apollo-checks.txt",
+      "sha256": "4d12778b00f8b07696184a347ae6252ecb468fd1d9fb20a2eabdc50d5b62ff00"
+    },
+    {
+      "case": "nasa-ui-ui-mars",
+      "assertions": 29,
+      "failures": 0,
+      "report": "Docs/Feedback20261113/Evidence/nasa-ui-ui-mars-checks.txt",
+      "sha256": "1a52d790e2b98407290214c391718712e48837b009f3426703964cfcdf863242"
+    },
+    {
+      "case": "nasa-ui-ui-selene",
+      "assertions": 31,
+      "failures": 0,
+      "report": "Docs/Feedback20261113/Evidence/nasa-ui-ui-selene-checks.txt",
+      "sha256": "b432f07d204574052738e9fb4ca66eeee0d0ff3124e1f241ae44af4eae1af354"
+    },
+    {
+      "case": "mission-selection",
+      "assertions": 66,
+      "failures": 0,
+      "report": "Docs/Feedback20261113/Evidence/mission-selection-checks.txt",
+      "sha256": "83bc6cdedccef4044e0dd3fcd9e082f374d2362501631f78ace79a7641541fc4"
+    },
+    {
+      "case": "regression-checks",
+      "assertions": 57,
+      "failures": 0,
+      "report": "Docs/Feedback20261113/Evidence/regression-checks-checks.txt",
+      "sha256": "1d8911bc084c6a7a1c2bb63b9fbebc6f33d1fe6ec51ae0d726d8ded7e9e7d44c"
+    },
+    {
+      "case": "regression-legacy-moon",
+      "assertions": 50,
+      "failures": 0,
+      "report": "Docs/Feedback20261113/Evidence/regression-legacy-moon-checks.txt",
+      "sha256": "6b4f590b824979b6e5dbaa629e5e4fc16fa4e2ec4d8050a432dbab8150846886"
+    },
+    {
+      "case": "regression-mars",
+      "assertions": 54,
+      "failures": 0,
+      "report": "Docs/Feedback20261113/Evidence/regression-mars-checks.txt",
+      "sha256": "fa5e80fd8a9073604fedda210da7ca12626bacbf5955d98d7302b97f53390de3"
+    },
+    {
+      "case": "regression-menu",
+      "assertions": 55,
+      "failures": 0,
+      "report": "Docs/Feedback20261113/Evidence/regression-menu-checks.txt",
+      "sha256": "11c6ab3438d78be5caeb4ef56d2c4426c6d5a2bc3de848e457cd31ed58cae9f9"
+    },
+    {
+      "case": "regression-suit",
+      "assertions": 32,
+      "failures": 0,
+      "report": "Docs/Feedback20261113/Evidence/regression-suit-checks.txt",
+      "sha256": "901df3df557c022d6624af6172f6cd46584b0324cbd46fa2d5de5654198f5a15"
+    },
+    {
+      "case": "regression-guidance",
+      "assertions": 47,
+      "failures": 0,
+      "report": "Docs/Feedback20261113/Evidence/regression-guidance-checks.txt",
+      "sha256": "d9a16b9f4f62acc93b7534b308edfa4e36b0d6c8966064d288b4110112c86ffa"
+    }
+  ],
+  "payloads": [
+    {
+      "path": "LunarRescue/Content/Paks/global.ucas",
+      "bytes": 3208672,
+      "sha256": "6a332811162c000ef5c91437f1896fc80c2768bea1823107207260ae7cdbb6fc"
+    },
+    {
+      "path": "LunarRescue/Content/Paks/global.utoc",
+      "bytes": 782,
+      "sha256": "d33c855b4ca7c3b520efef0b081bd0f1020d55399074e303a17add67b9e859da"
+    },
+    {
+      "path": "LunarRescue/Content/Paks/LunarRescue-Windows.pak",
+      "bytes": 10667216,
+      "sha256": "a9e2ebedef5e35a744b846702cee53582485181f948e16edf38862a5d29baeb2"
+    },
+    {
+      "path": "LunarRescue/Content/Paks/LunarRescue-Windows.ucas",
+      "bytes": 289277360,
+      "sha256": "d371f51f65f23037a3caf9a21ba245c43ae8e4cb4e93b32176d2547add5793c8"
+    },
+    {
+      "path": "LunarRescue/Content/Paks/LunarRescue-Windows.utoc",
+      "bytes": 288417,
+      "sha256": "b13728232ab0f69524a443825d9e5e6c13d5d732d04e4d44b7ac8d3aa12929ca"
+    }
+  ],
+  "performance_comparison": "Docs/Feedback20261113/Evidence/performance-comparison.json",
+  "verification_status": "Listed native and synthetic rendered checks passed. Human playtests, network isolation, sustained full-game and occupied-vehicle performance are not established.",
+  "packaged_evidence_root": "Credits",
+  "human_playtests": 0,
+  "network_disconnected_test_performed": false,
+  "total_staged_pngs": 109,
+  "competition_eligibility": "Not re-audited for this feedback release; no eligibility or NASA endorsement claim."
+}

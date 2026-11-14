@@ -1,0 +1,42 @@
+{
+  "utc": "2026-11-13T21:23:15.1273020Z",
+  "cpu": "AMD Ryzen 5 6600H with Radeon Graphics         ",
+  "adapters": [
+    "AMD RadeonT 660M",
+    "NVIDIA GeForce RTX 3050 Laptop GPU"
+  ],
+  "ram_bytes": 16312721408,
+  "process_peak_sampled_working_set_bytes": 675561472,
+  "renderer": "DX11 / rendered offscreen / 1280x720 / configured scalability",
+  "onscreen": false,
+  "gpu_samples": 3,
+  "gpu_telemetry_requested": true,
+  "diagnostic_commands": "",
+  "fps_cap": 0,
+  "quality": 1,
+  "field_operations_enabled": true,
+  "workload": "scripted opening walk with enabled parked support actors; no occupied driving/scanning",
+  "fast_stride": false,
+  "diagnostic_hide_skeletal_meshes": false,
+  "command_arguments": [
+    "/Game/Lunar/Maps/Apollo12",
+    "-game",
+    "-unattended",
+    "-ApolloWalkTest",
+    "-ApolloSaveProfile",
+    "-dx11",
+    "-ForceRes",
+    "-ResX=1280",
+    "-ResY=720",
+    "-nosound",
+    "-ExecCmds=\"t.MaxFPS 0,r.VSync 0\"",
+    "-csvCaptureFrames=2400",
+    "-csvGpuStats",
+    "-ExitAfterCsvProfiling",
+    "-abslog=\"D:\\LunarRescue\\Reports\\Performance\\feedback-baseline-v082-20261114\\capture.log\"",
+    "-RenderOffscreen",
+    "-ApolloQuality=1",
+    "-FieldOperationsProfile"
+  ],
+  "process_exit_code": 777003
+}

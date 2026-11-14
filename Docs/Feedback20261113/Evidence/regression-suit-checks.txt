@@ -1,0 +1,33 @@
+PASS Authored suit, gloves, helmet, pack and boots loaded
+PASS Imported first-person sleeve retains bounded tapered garment dimensions
+PASS Imported look-down thigh has shallow closures instead of projecting round caps
+PASS Forward input accelerates to normal 1.4 m/s stride
+PASS Shift accelerates to bounded fast stride
+PASS Strafe follows input and releasing Shift restores walking
+PASS Bounded EVA hop rises under lunar gravity
+PASS V exposes skinned suit and moves camera outside capsule
+PASS Pause freezes gait, movement and EVA clock
+PASS V restores stable helmet camera and skinned first-person hands
+PASS Hop returns safely to terrain
+PASS Visible walking leaves bounded bootprints
+PASS Field kit blocks capsule movement instead of clipping through suit
+PASS Tab input opens the field journal and pauses play
+PASS Escape input closes the journal and resumes play
+PASS Former L language shortcut leaves the game in English
+PASS Boot soles stay level on a flat collision fixture
+PASS Both boot soles align to a known 15-degree slope
+PASS Boot alignment follows combined uphill and side slopes
+PASS Rendered middle and little fingers retain different authored joint lengths
+PASS Cooked viewmodel bounds contain both posed gloves
+PASS Gripping bends the visible distal finger instead of leaving an open hand
+PASS Pause preserves the current glove grip pose
+PASS Pause freezes camera follow and the visible wrist pose
+PASS Presentation smoothing has matching 30 and 60 Hz responses
+PASS Invalid animation deltas cannot poison presentation filters
+PASS Hand motion Off suppresses landing hand bounce
+PASS Stopped gait settles without moving the gameplay capsule
+PASS Walking view keeps trouser closures behind the helmet camera without exposing torso caps
+PASS Close tool view restores physical hip drivers and keeps the waist hidden
+PASS Evidence photography still excludes first-person gloves
+PASS First-person gloves return after evidence photography
+RESULT: 0 failures

@@ -5,12 +5,17 @@
 #include "LunarSettings.h"
 #include "LunarSurfaceVehicle.h"
 #include "LunarFlightHUD.h"
+#include "LunarWireBoard.h"
 #include "Camera/CameraComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Blueprint/WidgetTree.h"
 #include "Components/ScrollBox.h"
 #include "Components/TextBlock.h"
 #include "Components/VerticalBox.h"
+#include "Components/ProgressBar.h"
+#include "Components/Image.h"
+#include "Components/ExpandableArea.h"
+#include "Materials/MaterialInstanceDynamic.h"
 #include "Dom/JsonObject.h"
 #include "Engine/World.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -28,7 +33,7 @@ namespace {
 struct FFieldReview {
  FString Folder,Report;
  TArray<TSharedPtr<FJsonValue>> Frames;
- int32 Step=0,Failed=0,ShotNumber=0;
+ int32 Step=0,Failed=0,ShotNumber=0,PreflightPreview=0,WirePreview=0;
  bool Finished=false,Waiting=false,FeedChecks=false,AwaitProgress=false,AwaitReady=false;
  double LastGameTime=0,StartedGameTime=0;
  float OriginalText=1,OriginalSubtitle=1;
@@ -56,7 +61,7 @@ void Finish(ALunarGameMode* G,FFieldReviewState S){
  Manifest->SetStringField(TEXT("description"),TEXT("Staged actual UMG operations panels. Preflight uses real button callbacks and component timer transitions driven by World::GetTimeSeconds deltas in a bounded review ticker, with a deliberate partial-progress freeze for its screenshot. Later mission phase, resource ledger, cable isolation and training cargo are explicitly seeded synthetic fixtures. Three added world frames use an actual stationary occupied rover, actual magnifier state aimed at a source-labelled cartridge, and a synthetic external sampler view. Their layout assertions validate the real flight HUD, not a nonexistent panel. No human mission completion, water detection, animation/performance result or driven-route result is claimed."));
  Manifest->SetStringField(TEXT("map"),G?UGameplayStatics::GetCurrentLevelName(G,true):FString());Manifest->SetArrayField(TEXT("frames"),S->Frames);Manifest->SetNumberField(TEXT("frame_count"),S->Frames.Num());
  FString Json;const auto Writer=TJsonWriterFactory<>::Create(&Json);const bool Serialized=FJsonSerializer::Serialize(Manifest,Writer);
- Check(S,S->Frames.Num()==20,TEXT("Exactly seventeen panel and three world frames were processed"));
+ Check(S,S->Frames.Num()==(G&&G->Apollo?26:28),TEXT("All preflight, panel, circuit-result and world frames were processed"));
  if(!Serialized||!FFileHelper::SaveStringToFile(Json,*(S->Folder/TEXT("field-operations-manifest.json"))))++S->Failed;
  S->Report+=FString::Printf(TEXT("RESULT: %d failures\n"),S->Failed);
  if(!FFileHelper::SaveStringToFile(S->Report,*(S->Folder/TEXT("field-operations-review-checks.txt"))))++S->Failed;
@@ -81,7 +86,7 @@ void Capture(ALunarGameMode* G,FFieldReviewState S,const FString& Name,bool Seed
   S->Screenshot=FScreenshotRequest::OnScreenshotRequestProcessed().AddWeakLambda(G,[G,S,Name,Seeded,ScrollEnd,Number](){
    if(S->Finished||!S->Waiting||Number!=S->ShotNumber)return;S->Waiting=false;auto* C=G->FieldOperations.Get();auto* UI=Panel(G);auto* P=C?C->Pilot():nullptr;auto* PC=UGameplayStatics::GetPlayerController(G,0);int32 Width=0,Height=0;if(PC)PC->GetViewportSize(Width,Height);FString Reason;
    bool Good=UI&&C&&P&&PC&&Width>0&&Height>0&&C->CanUsePanel(UI,false)&&UI->ValidateLayout(Reason);
-   if(UI&&UI->View==EFieldPanelView::Preflight)Good=Good&&!G->Paused&&G->Stage==ELunarStage::Briefing;
+   if(C&&C->Preparing)Good=Good&&!G->Paused&&G->Stage==ELunarStage::Briefing;
    else Good=Good&&G->Paused&&G->IsActive();
    if(Name==TEXT("preflight-checking150"))Good=Good&&C&&C->PendingCheck==0&&C->ActionProgress()>0&&C->ActionProgress()<1;
    if(Name==TEXT("preflight-ready150"))Good=Good&&C&&C->Prepared&&C->PreflightMask==15&&C->PendingCheck==INDEX_NONE;
@@ -119,25 +124,61 @@ void Next(ALunarGameMode* G,FFieldReviewState S){
  const int32 Index=S->Step++;auto* Settings=ULunarSettings::Get();
  if(Index==0){Settings->TextScale=Settings->SubtitleScale=1;Check(S,C->BeginPreflight(),TEXT("Actual preflight flow opens its owned unpaused operations panel"));Capture(G,S,TEXT("preflight100"));return;}
  if(Index==1){Settings->TextScale=Settings->SubtitleScale=1.5f;Capture(G,S,TEXT("preflight150"));return;}
- if(Index==2){Check(S,Click(G,TEXT("1 / Inspect suit seals"))&&C->PendingCheck==0,TEXT("Actual first suit-check button starts the component timer"));S->FeedChecks=S->AwaitProgress=true;return;}
+ if(Index==2){
+  // Capture the actual preflight tabs at both supported text scales. These
+  // read-only views retain unfinished checks and never seed mission progress.
+  if(S->PreflightPreview<6){
+   const int32 Preview=S->PreflightPreview++;--S->Step;Settings->TextScale=Settings->SubtitleScale=Preview>=3?1.5f:1.f;
+   if(Preview==0||Preview==4){Check(S,Click(G,TEXT("Map")),TEXT("Preflight map preview opens through its owned button"));Click(G,TEXT("Local mission map"));}
+   if(Preview==1||Preview==5)Check(S,Click(G,TEXT("Planet overview")),TEXT("Preflight globe preview uses the retained offline context material"));
+   if(Preview==2)Check(S,Click(G,TEXT("Inventory")),TEXT("Preflight backpack preview opens through its owned button"));
+   const TCHAR* Names[]={TEXT("preflight-map100"),TEXT("preflight-globe100"),TEXT("preflight-inventory100"),TEXT("preflight-inventory150"),TEXT("preflight-map150"),TEXT("preflight-globe150")};
+   Capture(G,S,Names[Preview]);return;
+  }
+  Check(S,Click(G,TEXT("Map"))&&Panel(G)->View==EFieldPanelView::Resources&&!C->CanUsePanel(Panel(G),true),TEXT("Preflight Map opens as a read-only page without starting gameplay"));
+  Check(S,Click(G,TEXT("Zoom +"))&&Panel(G)->OperationsMap&&Panel(G)->OperationsMap->ZoomFactor()>1,TEXT("Map zoom button changes the actual map viewport"));
+  Check(S,Click(G,TEXT("Reset map"))&&Panel(G)->OperationsMap&&Panel(G)->OperationsMap->ZoomFactor()==1,TEXT("Map reset restores a bounded overview"));
+  if(auto* UI=Panel(G))UI->ForceLayoutPrepass();
+  Check(S,Click(G,TEXT("Planet overview")),TEXT("Planet overview button uses the actual map page callback"));
+  auto* Map=Panel(G)?Panel(G)->OperationsMap.Get():nullptr;auto* Globe=Map&&Map->WidgetTree?Cast<UImage>(Map->WidgetTree->FindWidget(TEXT("PlanetContext"))):nullptr;auto* GlobeMaterial=Globe?Globe->GetDynamicMaterial():nullptr;
+  Check(S,Globe&&Globe->IsVisible()&&GlobeMaterial,TEXT("Offline NASA planet context uses a real retained material and texture"));
+  if(Map&&GlobeMaterial){const float BeforeYaw=GlobeMaterial->K2_GetScalarParameterValue(TEXT("Yaw"));Map->PanBy(FVector2D(.1,.05));Check(S,GlobeMaterial->K2_GetScalarParameterValue(TEXT("Yaw"))!=BeforeYaw,TEXT("Planet drag math updates the actual sphere material rotation"));}
+  Check(S,Click(G,TEXT("Local mission map"))&&Globe&&!Globe->IsVisible(),TEXT("Local map can be restored without changing mission state"));
+  Check(S,Click(G,TEXT("1. Lander"))&&C->WaypointIndex==0&&C->PreflightMask==0&&G->Stage==ELunarStage::Briefing,TEXT("Preflight location selection tracks a real point without completing checks or starting the mission"));
+  Check(S,Click(G,TEXT("Inventory"))&&Panel(G)->View==EFieldPanelView::Inventory&&!C->PerformAction(TEXT("Deposit")),TEXT("Preflight Inventory cannot award or deposit cargo"));
+  Check(S,Click(G,TEXT("Tools"))&&Click(G,TEXT("Optical magnifier"))&&!Click(G,TEXT("Equip magnifier"))&&C->CollectedMask==0,TEXT("Actual backpack filter and item selection preserve the scanner unlock and cargo guards"));
+  Check(S,Click(G,TEXT("All")),TEXT("Backpack All filter restores the actual available item cards"));
+  Check(S,Click(G,TEXT("EVA checks"))&&C->PreflightMask==0,TEXT("Returning to EVA checks preserves unfinished systems"));
+  Check(S,!Click(G,TEXT("Next /"))&&!Click(G,TEXT("Checks complete /")),TEXT("Next and Open Hatch remain disabled before the required checks"));
+  Check(S,Click(G,TEXT("1 / Inspect suit seals"))&&C->PendingCheck==0,TEXT("Actual first suit-check button starts the component timer"));S->FeedChecks=S->AwaitProgress=true;return;
+ }
  if(Index==3){S->FeedChecks=S->AwaitReady=true;return;}
  if(Index==4){
   if(P->ActivePanel)P->ClosePanel();ALunarDepartureScene::Abort(G);C->Preparing=false;G->Stage=G->Apollo?ELunarStage::ApolloCheckout:ELunarStage::FindModule;G->Paused=false;G->Journal=false;G->Holding=false;G->RadioRemaining=0;G->ApolloTool=0;
  }
  if(Index>=4&&Index<=15){
+  if(Index==12&&!G->Apollo&&S->WirePreview<2){
+   const int32 Preview=S->WirePreview++;--S->Step;
+   if(Preview==0){for(int32 Left=0;Left<C->WirePairs();++Left)if(!(C->WireMask&(1<<Left))){int32 Right=INDEX_NONE;for(int32 J=0;J<C->WirePairs();++J)if(C->WireLeftLabel(Left)==C->WireRightLabel(J))Right=J;Check(S,C->PerformAction(TEXT("WireLeft"),Left)&&C->PerformAction(TEXT("WireRight"),Right),TEXT("Remaining reference cables match through production authority"));}Check(S,C->WireComplete&&C->WirePendingCommit&&G->RepairStep==1,TEXT("Fully drawn cables remain isolated before Verify"));Capture(G,S,TEXT("wire-ready-to-verify150"),true);}
+   else{Check(S,Click(G,TEXT("Verify"))&&G->RepairStep==2&&!C->WirePendingCommit,TEXT("Actual Verify button applies exactly the native cable step"));Capture(G,S,TEXT("wire-online150"),true);}
+   return;
+  }
   const auto View=EFieldPanelView((Index-4)/2+1);const bool Large=(Index&1)!=0;Settings->TextScale=Settings->SubtitleScale=Large?1.5f:1.f;
   if(Index==6){Check(S,Click(G,TEXT("Confirm resource profile"))&&C->Briefed,TEXT("Actual briefing confirmation locks the gameplay budget"));C->ElapsedS=83.5f;C->WalkingDistanceM=35;C->VehicleDistanceM=112;C->VehicleTimeS=22.4f;C->UtilityCharge=FMath::Max(0.f,C->UtilityCapacity-2.1f);C->DataStoredMB=FMath::Min(.4f,C->DataCapacityMB);++C->Revision;}
   if(Index==8&&C->Vehicle){P->SetActorLocation(C->Vehicle->GetActorLocation()+FVector(0,-180,120),false,nullptr,ETeleportType::TeleportPhysics);FVector Eye;FRotator Aim;P->GetActorEyesViewPoint(Eye,Aim);if(auto* PC=UGameplayStatics::GetPlayerController(G,0))PC->SetControlRotation((C->Vehicle->GetActorLocation()-Eye).Rotation());}
-  if(Index==10&&!G->Apollo){G->Stage=ELunarStage::RestorePower;G->RepairStep=1;C->WireIsolated=true;C->WireComplete=C->WirePendingCommit=false;C->WireMask=0;C->WireLeft=INDEX_NONE;++C->Revision;}
+  if(Index==10&&!G->Apollo){G->Stage=ELunarStage::RestorePower;G->RepairStep=1;C->WireIsolated=false;C->WireComplete=C->WirePendingCommit=false;C->WireMask=0;C->WireLeft=INDEX_NONE;++C->Revision;}
   if(Index==12){C->ScannedMask=C->CollectedMask=3;C->DeliveredMask=1;C->CargoMassKG=C->TrainingPackageMassKG;C->LastPackage=1;++C->Revision;}
   if(Index==14){C->ScannedMask=7;C->SelectedPackage=2;++C->Revision;}
   Check(S,C->OpenPanel(View),FString::Printf(TEXT("Actual %s page opens or configures the owned panel"),ViewKey(View)));
   if(auto* UI=Panel(G))UI->Refresh(true);
+  if(Index==10&&!G->Apollo){bool Isolated=false;auto* PC=UGameplayStatics::GetPlayerController(G,0);if(G->PowerActor&&PC)for(const FVector Offset:{FVector(-220,0,75),FVector(0,-220,75),FVector(220,0,75),FVector(0,220,75)}){P->SetActorLocation(G->PowerActor->GetActorLocation()+Offset,false,nullptr,ETeleportType::TeleportPhysics);FVector Eye;FRotator Aim;P->GetActorEyesViewPoint(Eye,Aim);PC->SetControlRotation((G->PowerActor->GetActorLocation()-Eye).Rotation());if(Click(G,TEXT("Isolate training circuit"))){Isolated=true;break;}}Check(S,Isolated,TEXT("The actual isolate button requires a nearby visible mission panel before cable input"));}
   if(Index==4)GuardChecks(G,S);
   if(Index==9)Check(S,Click(G,TEXT("Inspect vehicle systems"))&&C->VehicleInspected&&C->ScannerUnlocked,TEXT("Actual nearby vehicle-inspection button unlocks the scanner"));
   if(Index==11&&!G->Apollo){
-   Check(S,Click(G,TEXT("SOURCE A"))&&C->WireLeft==0,TEXT("Actual source-port button selects the component port"));int32 Right=INDEX_NONE;for(int32 I=0;I<C->WirePairs();++I)if(C->WireRightLabel(I)==C->WireLeftLabel(0)){Right=I;break;}
-   const bool Clicked=Right!=INDEX_NONE&&Click(G,FString::Printf(TEXT("SOCKET %c"),TCHAR('A'+Right)));Check(S,Clicked&&(C->WireMask&1)!=0,TEXT("Actual matching-socket button verifies one seeded training connection"));Click(G,TEXT("SOURCE B"));
+   if(auto* UI=Panel(G)){TArray<UWidget*> Widgets;UI->WidgetTree->GetAllWidgets(Widgets);for(auto* W:Widgets)if(auto* Area=Cast<UExpandableArea>(W))Area->SetIsExpanded(true);UI->Refresh(true);Widgets.Reset();UI->WidgetTree->GetAllWidgets(Widgets);UExpandableArea* Retained=nullptr;for(auto* W:Widgets)if(auto* Area=Cast<UExpandableArea>(W))Retained=Area;Check(S,Retained&&Retained->GetIsExpanded(),TEXT("Keyboard/click alternatives remain expanded when cable state refreshes the page"));if(Retained)Retained->SetIsExpanded(false);}
+   ULunarWireBoard* Board=nullptr;if(auto* UI=Panel(G)){TArray<UWidget*> Widgets;UI->WidgetTree->GetAllWidgets(Widgets);for(auto* W:Widgets)if(auto* Found=Cast<ULunarWireBoard>(W)){Board=Found;break;}}
+   Check(S,Board&&Board->BeginCable(0)&&!Board->ReleaseCable(INDEX_NONE)&&C->WireMask==0,TEXT("Production cable drag can be cancelled outside a socket without awarding progress"));int32 Right=INDEX_NONE;for(int32 I=0;I<C->WirePairs();++I)if(C->WireRightLabel(I)==C->WireLeftLabel(0)){Right=I;break;}
+   Check(S,Board&&Board->BeginCable(0)&&Board->ReleaseCable(Right)&&(C->WireMask&1)!=0&&G->RepairStep==1,TEXT("Production cable release records a matching signal without applying the mission repair before Verify"));
   }
   Capture(G,S,FString(ViewKey(View))+(Large?TEXT("150"):TEXT("100")),true);return;
  }
@@ -168,10 +209,13 @@ void Pump(ALunarGameMode* G,FFieldReviewState S){
  if(S->Finished)return;const double Now=G->GetWorld()->GetTimeSeconds(),Delta=FMath::Clamp(Now-S->LastGameTime,0.,2.);S->LastGameTime=Now;if(Now-S->StartedGameTime>100){Check(S,false,TEXT("Bounded rendered review exceeded its world-time deadline"));Finish(G,S);return;}
  auto* C=G->FieldOperations.Get();if(!C){Check(S,false,TEXT("Operations component disappeared"));Finish(G,S);return;}
  if(S->FeedChecks)C->Advance(float(Delta));
- if(S->AwaitProgress&&C->PendingCheck==0&&C->ActionProgress()>=.35f){S->FeedChecks=S->AwaitProgress=false;Capture(G,S,TEXT("preflight-checking150"));return;}
+ if(S->AwaitProgress&&C->PendingCheck==0&&C->ActionProgress()>=.35f){
+  if(auto* UI=Panel(G)){UI->Refresh();const int32 Before=UI->PageGeneration();auto* Progress=UI->CheckProgress.Get();C->Advance(.01f);UI->Refresh();Check(S,UI->PageGeneration()==Before&&UI->CheckProgress==Progress&&Progress&&FMath::IsNearlyEqual(Progress->GetPercent(),C->ActionProgress(),.001f),TEXT("Progress updates in place without rebuilding the page or replacing its widgets"));}
+  S->FeedChecks=S->AwaitProgress=false;Capture(G,S,TEXT("preflight-checking150"));return;
+ }
  if(S->AwaitReady){
   if(C->Prepared){S->FeedChecks=S->AwaitReady=false;Check(S,C->PreflightMask==15&&C->PendingCheck==INDEX_NONE,TEXT("Four ordered real check callbacks complete through component game-time deltas"));Capture(G,S,TEXT("preflight-ready150"));return;}
-  if(C->PendingCheck==INDEX_NONE){if(auto* UI=Panel(G))UI->Refresh(true);const int32 CheckIndex=C->PreflightStep();Check(S,Click(G,FString::Printf(TEXT("%d /"),CheckIndex+1))&&C->PendingCheck==CheckIndex,FString::Printf(TEXT("Actual ordered suit-check button %d starts its timer"),CheckIndex+1));}
+  if(C->PendingCheck==INDEX_NONE){if(auto* UI=Panel(G))UI->Refresh(true);const int32 CheckIndex=C->PreflightStep();Check(S,Click(G,TEXT("Next /"))&&C->PreflightCursor==CheckIndex,TEXT("Actual Next button advances only after the previous 100% check"));Check(S,Click(G,FString::Printf(TEXT("%d /"),CheckIndex+1))&&C->PendingCheck==CheckIndex,FString::Printf(TEXT("Actual ordered suit-check button %d starts its timer"),CheckIndex+1));}
  }
 }
 }

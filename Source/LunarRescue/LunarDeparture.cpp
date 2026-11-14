@@ -58,13 +58,15 @@ bool ALunarDepartureScene::Initialize(ALunarGameMode* Mission){
  Player->GetPlayerViewPoint(FinalEye,FinalAim);
  if(FinalEye.ContainsNaN()||FinalAim.ContainsNaN()||!FMath::IsFinite(PreviousFOV))return false;
  FVector Facing=FinalAim.Vector();Facing.Z=0;
- if(IsValid(Mission->HomeActor)){const FVector Toward=Mission->HomeActor->GetActorLocation()-FinalEye;if(Toward.SizeSquared2D()>100)Facing=FVector(Toward.X,Toward.Y,0);}
  if(!Facing.Normalize())Facing=FVector::ForwardVector;
  const FRotator Heading(0,Facing.Rotation().Yaw,0);
- // The door faces the existing lander/return point. Its external-camera end is
- // the unchanged player's actual view, so no teleport or trail distance occurs.
+ // Frame the cabin from the unchanged player's actual surface view.
  SetActorRotation(Heading);SetActorLocation(FinalEye-Heading.RotateVector(FVector(0,0,160)));
  if(!BuildCabin())return false;
+ // Frame the cabin around the player's existing eye rather than flying a
+ // camera 5.2 m forward after the equipment check. Surface handover is exact.
+ TArray<USceneComponent*> CabinParts;GetComponents(CabinParts);
+ for(auto* Part:CabinParts)if(Part&&Part!=GetRootComponent()&&Part!=ShotCamera)Part->AddLocalOffset(FVector(520,0,0));
  auto* Movement=Astronaut->GetCharacterMovement();PreviousMoveMode=uint8(Movement->MovementMode);PreviousCustomMode=Movement->CustomMovementMode;PreviousMovementTick=Movement->IsComponentTickEnabled();PreviousVelocity=Movement->Velocity;
  Movement->StopMovementImmediately();Movement->DisableMovement();Movement->SetComponentTickEnabled(false);
  Astronaut->SetActorHiddenInGame(true);ShotCamera->SetFieldOfView(PreviousFOV);
@@ -109,11 +111,8 @@ bool ALunarDepartureScene::BuildCabin(){
 }
 void ALunarDepartureScene::Pose(){
  if(IsValid(Astronaut)&&Astronaut->Camera&&FMath::IsFinite(Astronaut->Camera->FieldOfView))ShotCamera->SetFieldOfView(Astronaut->Camera->FieldOfView);
- const float Door=HatchFraction();if(LeftDoor)LeftDoor->SetRelativeLocation(FVector(-80,-70-145*Door,126));if(RightDoor)RightDoor->SetRelativeLocation(FVector(-80,70+145*Door,126));
- const float T=Ease(Ratio(Elapsed-2.2f,6.6f));const FVector LocalEye=FMath::Lerp(FVector(-520,0,155),FVector(0,0,160),T)+FVector(0,FMath::Sin(T*PI)*6,FMath::Sin(T*PI)*2);
- ShotCamera->SetRelativeLocation(LocalEye);
- const FQuat CabinAim=GetActorQuat()*(FVector(80,0,155)-LocalEye).Rotation().Quaternion();const float Turn=Ease(Ratio(Elapsed-7.f,1.8f));
- ShotCamera->SetWorldRotation(FQuat::Slerp(CabinAim,FinalAim.Quaternion(),Turn).GetNormalized());
+ const float Door=HatchFraction();if(LeftDoor)LeftDoor->SetRelativeLocation(FVector(440,-70-145*Door,126));if(RightDoor)RightDoor->SetRelativeLocation(FVector(440,70+145*Door,126));
+ ShotCamera->SetWorldLocationAndRotation(FinalEye,FinalAim);
 }
 void ALunarDepartureScene::Tick(float Delta){Super::Tick(Delta);AdvancePresentation(Delta);}
 void ALunarDepartureScene::AdvancePresentation(float Delta){
@@ -124,12 +123,11 @@ void ALunarDepartureScene::AdvancePresentation(float Delta){
  Elapsed=FMath::Min(Duration,Elapsed+FMath::Min(Duration,Delta));Pose();if(Elapsed>=Duration)Finish(true);
 }
 float ALunarDepartureScene::Progress()const{return FMath::Clamp(Elapsed/Duration,0.f,1.f);}
-float ALunarDepartureScene::HatchFraction()const{return Ease(Ratio(Elapsed-1.7f,2.3f));}
+float ALunarDepartureScene::HatchFraction()const{return Ease(Ratio(Elapsed,.95f));}
 FString ALunarDepartureScene::Title()const{return IsValid(Game)?(Game->Apollo?TEXT("APOLLO 12 / SURFACE DEPARTURE"):Game->Mars?TEXT("ARES / SURFACE DEPARTURE"):TEXT("SELENE / SURFACE DEPARTURE")):TEXT("SURFACE DEPARTURE");}
 FString ALunarDepartureScene::Caption()const{
- if(Elapsed<1.7f)return TEXT("Cabin systems checked. Prepare for surface operations.");
- if(Elapsed<4.2f)return TEXT("Hatch opening. Keep the lander in sight.");
- if(Elapsed<8.8f)return TEXT("Leaving the authored transfer cabin. Follow your mission guide on the surface.");
+ if(Elapsed<.25f)return TEXT("Cabin systems checked. Prepare for surface operations.");
+ if(Elapsed<.95f)return TEXT("Hatch opening. Keep the lander in sight.");
  return TEXT("Surface handover complete. Your mission begins now.");
 }
 FString ALunarDepartureScene::Guide()const{

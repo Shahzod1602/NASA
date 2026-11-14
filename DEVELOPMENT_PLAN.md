@@ -249,3 +249,16 @@ Performance: raster/slope offline; bounded cached route samples; metadata per-fr
 ## Keyingi Mars bosqichi
 
 Oy stabil bo‘lgach resource, planner, telemetry va debriefni umumiy profil orqali Marsga qo‘llash. Mars uchun alohida rasmiy DEM va datum/unit/projection tekshiruvi; lunar LOLA yoki Moon atmosfera izohlarini ko‘chirmaslik. ARES relay ketma-ketligi regressiya testlarida qoladi.
+# Local feedback pass — 14 November 2026
+
+Fresh Windows candidate validation is complete: 2,019 assertion executions / zero FAIL across 20 case reports, with 109 staged PNGs. See `Docs/Feedback20261113/TEST_REPORT.md` for exact hashes, short performance comparison and exclusions. Native/synthetic checks do not replace human playtesting; the one candidate capture has a worse 1% low despite similar mean/p95. Telegram task replies and final summary 1225 were verified; this batch is unpublished.
+
+Implementation and acceptance evidence are tracked in [Docs/Feedback20261113](Docs/Feedback20261113/IMPLEMENTATION.md). Preserve the published v0.8.2 baseline and owner saves/photos/settings. Do not publish this batch without a separate instruction.
+
+Current local work includes ordered preflight, read-only planning/inventory, offline planet context, cable drag/Verify, model adaptations and terrain-supported authored structures. Native, rendered, packaged and performance results must be recorded separately; a passing build alone does not complete visual acceptance.
+
+Next priorities after this pass:
+
+1. Resolve Boburjon's later HUD-card clarification and obtain genuinely improved habitat/lander source models with explicit provenance before claiming those visuals were replaced.
+2. Run a short first-time-player study when participants become available. None are currently supplied; prepared forms and synthetic reviews are not human results.
+3. Extend traversal and vehicle performance coverage on uneven ground. The current swept kinematic rover is a gameplay approximation, not validated lunar dynamics.

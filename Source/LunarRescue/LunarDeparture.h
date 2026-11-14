@@ -17,7 +17,7 @@ UCLASS()
 class LUNARRESCUE_API ALunarDepartureScene : public AActor {
  GENERATED_BODY()
 public:
- static constexpr float Duration=9.4f;
+ static constexpr float Duration=1.4f;
  static constexpr float SkipDelay=.3f;
  static constexpr int32 MaxVisualComponents=48;
  ALunarDepartureScene();

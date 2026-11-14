@@ -60,6 +60,13 @@ void ALunarGameMode::BuildMoonExpedition() {
  }
  // Wheeled survey robot, suitable for the airless lunar setting.
  DroneActor=Site(FVector(5400,-350,0));DroneActor->Tags.Add(TEXT("MoonSurveyRobot"));
+ auto* Reference=LoadObject<UStaticMesh>(nullptr,TEXT("/Game/Lunar/Robots/Perseverance20261114/SM_NomadReference/StaticMeshes/SM_NomadReference.SM_NomadReference"));
+ if(Reference){
+  // NASA/JPL's Mars rover is visual reference for fictional NOMAD-7 only.
+  // Do not move the mission anchor, change rewards or imply a lunar history.
+  auto* Visual=NewObject<UStaticMeshComponent>(DroneActor);Visual->SetupAttachment(DroneActor->GetRootComponent());Visual->SetStaticMesh(Reference);Visual->SetMobility(EComponentMobility::Movable);Visual->SetCollisionEnabled(ECollisionEnabled::NoCollision);Visual->SetCanEverAffectNavigation(false);Visual->PrimaryComponentTick.bCanEverTick=false;
+  const FBox Bounds=Reference->GetBoundingBox();const FVector Center=Bounds.GetCenter();const float Scale=.7f;Visual->SetRelativeScale3D(FVector(Scale));Visual->SetRelativeLocation(FVector(-Center.X*Scale,-Center.Y*Scale,-55-Bounds.Min.Z*Scale));Visual->RegisterComponent();DroneActor->Tags.Add(TEXT("Lunar.NomadReference"));
+ }else{
  ExpeditionPart(DroneActor,TEXT("Cube"),TEXT("M_Ceramic"),FVector::ZeroVector,FVector(1.15,.7,.35));
  ExpeditionPart(DroneActor,TEXT("Cube"),TEXT("M_ThermalFoil"),FVector(0,0,25),FVector(.72,.6,.15));
  ExpeditionPart(DroneActor,TEXT("Cube"),TEXT("M_Solar"),FVector(0,0,40),FVector(1.65,1.25,.035));
@@ -69,6 +76,7 @@ void ALunarGameMode::BuildMoonExpedition() {
  ExpeditionPart(DroneActor,TEXT("Sphere"),TEXT("M_Warning"),FVector(-59,0,95),FVector(.1));
  ExpeditionPart(DroneActor,TEXT("Cylinder"),TEXT("M_Ceramic"),FVector(30,-55,5),FVector(.22,.22,.55));
  ExpeditionSign(DroneActor,TEXT("NOMAD-7 / MEMORY CORE"));
+ }
  BeaconActor=Site(FVector(5700,650,0));BeaconActor->Tags.Add(TEXT("MoonBeacon"));
  ExpeditionPart(BeaconActor,TEXT("Cylinder"),TEXT("M_Graphite"),FVector(0,0,-38),FVector(1.3,1.3,.3));
  ExpeditionPart(BeaconActor,TEXT("Cube"),TEXT("M_Ceramic"),FVector::ZeroVector,FVector(.65,.6,.7));

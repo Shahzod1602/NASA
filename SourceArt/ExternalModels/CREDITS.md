@@ -26,5 +26,9 @@ The Poly Haven ZIP files contain Blender meshes. Only their diffuse textures
 were used here, on existing procedural basalt meshes; the Blender geometry
 was not imported. The higher-polygon Mondfahrzeug rover download was not used.
 
+November 2026 clarification: that paragraph describes the original September
+import. The feedback pass now uses a separately credited supplied Mondfahrzeug
+for the Moon training vehicle; see [its current attribution and adaptation](../MuseumRover20261113/CREDITS.md). The original imported Lunokhod remains a separate scene prop.
+
 NASA media usage terms: https://www.nasa.gov/nasa-brand-center/images-and-media/
 NASA models are used as source material; the game does not claim NASA endorsement.

@@ -1,4 +1,4 @@
-"""Fourteen staged runtime equipment views; no map/asset saves or game-stage writes.
+"""Fifteen staged runtime equipment views; no map/asset saves or game-stage writes.
 
 Run in UnrealEditor -game with -EquipmentPythonReview. This uses the existing
 pawn CameraComponent because deferred runtime spawning is not exposed by the
@@ -20,7 +20,7 @@ DETAIL_TAG = "Lunar.EquipmentDetail"
 SHOT_NAMES = (
     "surveyor-overview", "surveyor-camera", "surveyor-scoop", "surveyor-cable",
     "alsep-seismometer", "alsep-central", "intrepid-wide", "intrepid-side-handles",
-    "selene-power-socket", "selene-hdu-contact", "selene-rover-wheel-axes", "selene-solar-underside",
+    "selene-power-socket", "selene-hdu-contact", "selene-rover-wheel-axes", "selene-solar-underside", "selene-nomad-reference",
     "ares-outpost", "ares-mesa-talus",
 )
 EXPECTED = {
@@ -182,24 +182,34 @@ class EquipmentReview:
         selected = None
         attempts = []
         original_collision = panel.get_collision_enabled()
+        envelopes = [(c,c.get_collision_enabled()) for c in actor.get_components_by_class(unreal.BoxComponent)
+                     if c.component_has_tag('Lunar.StructureCollision')]
         try:
             # This retained panel is normally NoCollision. A false trace in
             # that mode is not a visibility proof. Enable queries only in the
             # transient review world, then always restore the exact old mode.
             panel.set_collision_enabled(unreal.CollisionEnabled.QUERY_ONLY)
+            # Isolate the rendered source mesh from its invisible conservative
+            # gameplay obstacle envelope, which can be welded into root queries.
+            for collider,mode in envelopes:collider.set_collision_enabled(unreal.CollisionEnabled.NO_COLLISION)
             for sign in (1,-1):
                 eye = add(target, (normal.x*sign*350 + side.x*95,
                                    normal.y*sign*350 + side.y*95,
                                    normal.z*sign*350 + side.z*95 + 35))
                 ground = self.terrain_height(eye)
-                eye.z = max(eye.z, ground+130)
-                blocked = panel.line_trace_component(eye, target, True, False, False) is not None
-                attempts.append({"normal_sign":sign,"eye_cm":xyz(eye),"ground_z_cm":ground,"original_panel_occludes_target":blocked})
+                # Grounded panels need a staged crouched inspection eye below
+                # their underside. This is a visual fixture, not a standing
+                # player-clearance or human traversal claim.
+                eye.z = max(eye.z, ground+60)
+                result = panel.line_trace_component(eye, target, True, False, False)
+                blocked = result is not None
+                attempts.append({"normal_sign":sign,"eye_cm":xyz(eye),"ground_z_cm":ground,"original_panel_occludes_target":blocked,"trace_debug":str(result)[:1500]})
                 if not blocked:
                     selected = (eye, ground, sign)
                     break
         finally:
             panel.set_collision_enabled(original_collision)
+            for collider,mode in envelopes:collider.set_collision_enabled(mode)
         if panel.get_collision_enabled() != original_collision:
             raise RuntimeError("Transient panel collision mode was not restored")
         if selected is None:
@@ -340,11 +350,13 @@ class EquipmentReview:
             self.model_shot("selene-rover-wheel-axes", "Lunokhod", (-530, -380, 380), (0, -20, 95))
             if not self.requested_shots or "selene-solar-underside" in self.requested_shots:
                 self.solar_shot()
+            if not self.requested_shots or "selene-nomad-reference" in self.requested_shots:
+                self.model_shot("selene-nomad-reference", "SM_NomadReference", (-420, -390, 260), (0, 0, 90))
         else:
             self.subject("ares-outpost", self.tagged("Power"), (-890, -2900, 370), (810, -600, 90))
             if not self.requested_shots or "ares-mesa-talus" in self.requested_shots:
                 self.mesa_shot()
-        expected_count = {"Apollo12": 8, "MoonBase": 4, "MarsBase": 2}[self.map_name]
+        expected_count = {"Apollo12": 8, "MoonBase": 5, "MarsBase": 2}[self.map_name]
         if not self.requested_shots and len(self.shots) != expected_count:
             raise RuntimeError("Unexpected shot-plan count")
         if self.requested_shots:

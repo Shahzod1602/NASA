@@ -16,8 +16,13 @@ void ALunarCharacter::PoseSuitRig(){
  auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));if(!G)return;
  if(!SuitRig){
   auto Make=[&](const TCHAR* Path,USceneComponent* Parent){auto* C=NewObject<UPoseableMeshComponent>(this);C->SetupAttachment(Parent);C->SetSkeletalMesh(LoadObject<USkeletalMesh>(nullptr,Path));C->SetCollisionEnabled(ECollisionEnabled::NoCollision);C->SetOnlyOwnerSee(true);C->RegisterComponent();return C;};
-  SuitRig=Make(TEXT("/Game/Lunar/Suit/Rig/SK_A7L/SkeletalMeshes/SK_A7L.SK_A7L"),GetCapsuleComponent());
-  HandRig=Make(TEXT("/Game/Lunar/Suit/Rig/SK_A7L_Hands/SkeletalMeshes/SK_A7L_Hands.SK_A7L_Hands"),Camera);HandRig->SetCastShadow(false);
+  const TCHAR* BodyPath=TEXT("/Game/Lunar/Suit/Expedition20261113/SK_ExpeditionSuit/SkeletalMeshes/SK_ExpeditionSuit.SK_ExpeditionSuit");
+  const TCHAR* HandsPath=TEXT("/Game/Lunar/Suit/Expedition20261113/SK_ExpeditionHands/SkeletalMeshes/SK_ExpeditionHands.SK_ExpeditionHands");
+  // Both derivatives share the verified procedural skeleton contract. A partial
+  // import must not mix unrelated hand/body material and bind-pose sets.
+  const bool ExpeditionAvailable=LoadObject<USkeletalMesh>(nullptr,BodyPath)&&LoadObject<USkeletalMesh>(nullptr,HandsPath);
+  SuitRig=Make(ExpeditionAvailable?BodyPath:TEXT("/Game/Lunar/Suit/Rig/SK_A7L/SkeletalMeshes/SK_A7L.SK_A7L"),GetCapsuleComponent());
+  HandRig=Make(ExpeditionAvailable?HandsPath:TEXT("/Game/Lunar/Suit/Rig/SK_A7L_Hands/SkeletalMeshes/SK_A7L_Hands.SK_A7L_Hands"),Camera);HandRig->SetCastShadow(false);
   // The imported hands hang at x=6 in bind pose, but camera-space work poses
   // reach forward. Cooked builds otherwise frustum-cull the visible gloves.
   // A bounded, shadowless viewmodel envelope (cm); set once, no per-frame scan.

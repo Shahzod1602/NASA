@@ -87,15 +87,16 @@ void Next(ALunarGameMode* G,FTaskState S){
  if(Index<4){
   Cabin=true;if(Index==0){G->Stage=ELunarStage::Briefing;ALunarDepartureScene::Reset(G);auto* Scene=ALunarDepartureScene::Begin(G);if(Scene)Scene->SetActorTickEnabled(false);Name=TEXT("departure-cabin");}
   auto* Scene=G->DepartureScene.Get();if(!Scene){++S->Failed;Finish(G,S);return;}
-  if(Index==1){Settings->TextScale=Settings->SubtitleScale=1.5f;Scene->AdvancePresentation(4.4f);Name=TEXT("departure-hatch");}
+  if(Index==1){Settings->TextScale=Settings->SubtitleScale=1.5f;Scene->AdvancePresentation(.4f);Name=TEXT("departure-hatch");}
   if(Index==2){G->Paused=true;Scene->AdvancePresentation(2);Name=TEXT("departure-paused");}
-  if(Index==3){Scene->AdvancePresentation(4.3f);Name=TEXT("departure-near-surface");}
+  if(Index==3){Scene->AdvancePresentation(.65f);Name=TEXT("departure-near-surface");}
  }else if(Index==4&&!S->HandoverCaptured){
   Handover=true;S->HandoverCaptured=true;--S->Step;Name=TEXT("departure-handover");if(auto* Scene=G->DepartureScene.Get())Scene->AdvancePresentation(ALunarDepartureScene::Duration);P->UpdateSuit(0);LunarCarryPresentation::Update(P);
  }else{
   if(RawIndex>=4&&RawIndex<4+CarryCount){Carry=true;if(!LunarCarryPresentation::ApplyReviewFixture(G,RawIndex-4,Name)){++S->Failed;Finish(G,S);return;}P->WorkBlend=1;P->UpdateSuit(0);LunarCarryPresentation::ApplyReviewFixture(G,RawIndex-4,Name);if(!G->Apollo&&RawIndex==5){const int32 Variant=S->CellVariant++;if(Variant<3)--S->Step;if(Variant>=2)Settings->TextScale=Settings->SubtitleScale=1.5f;if(Variant==1){Name=TEXT("cell-fp45-hidden-control");HiddenControl=true;}else if(Variant==2)Name=TEXT("cell-fp45-text150");else if(Variant==3){Name=TEXT("cell-fp45-text150-hidden-control");HiddenControl=true;}if(HiddenControl)P->CarriedModule->SetVisibility(false);}}
-  else if(Index==8||Index==9){
-   CrewIndex=Index-8;Name=Index==8?TEXT("crew-pip-model"):TEXT("crew-mira-communicator");
+  else if(Index==8){G->Stage=G->Apollo?ELunarStage::ApolloCheckout:ELunarStage::FindModule;Panel=true;Name=TEXT("crew-notebook-guidance");P->OpenCrewNotebook();}
+  else if(Index==9){
+   CrewIndex=1;Name=TEXT("crew-mira-communicator");
    if(!G->CrewActors.IsValidIndex(CrewIndex)||!IsValid(G->CrewActors[CrewIndex])){++S->Failed;Finish(G,S);return;}
    auto* A=G->CrewActors[CrewIndex].Get();const FVector Focus=A->GetActorLocation()+A->GetActorUpVector()*(CrewIndex?120:67);
    P->ThirdPerson=false;P->Camera->bUsePawnControlRotation=false;P->Camera->SetFieldOfView(70);P->Camera->SetWorldLocation(Focus+A->GetActorForwardVector()*-240+FVector(0,0,45));P->Camera->SetWorldRotation((Focus-P->Camera->GetComponentLocation()).Rotation());

@@ -9,6 +9,7 @@ class UFieldOperationsComponent;
 class UTextBlock;
 class UScrollBox;
 class UTexture2D;
+class UProgressBar;
 class ULunarOperationsPanel;
 
 struct FLunarOperationsMapPoint {
@@ -26,14 +27,29 @@ public:
  void SetPoints(const TArray<FLunarOperationsMapPoint>& InPoints,UTexture2D* InTexture);
  bool IsOrbitalMap() const {return OrbitalMap;}
  int32 MarkerCount() const {return Points.Num();}
+ void ZoomBy(float Steps);
+ void PanBy(FVector2D Fraction);
+ void ResetView();
+ float ZoomFactor() const {return Zoom;}
+ bool IsPlanetOverview() const {return PlanetOverview;}
+ void SetPlanetOverview(bool Value);
 protected:
  virtual TSharedRef<SWidget> RebuildWidget() override;
  virtual int32 NativePaint(const FPaintArgs& Args,const FGeometry& Geometry,const FSlateRect& Culling,FSlateWindowElementList& Out,int32 Layer,const FWidgetStyle& Style,bool Enabled) const override;
+ virtual FReply NativeOnMouseWheel(const FGeometry& Geometry,const FPointerEvent& Event) override;
+ virtual FReply NativeOnMouseButtonDown(const FGeometry& Geometry,const FPointerEvent& Event) override;
+ virtual FReply NativeOnMouseButtonUp(const FGeometry& Geometry,const FPointerEvent& Event) override;
+ virtual FReply NativeOnMouseMove(const FGeometry& Geometry,const FPointerEvent& Event) override;
 private:
+ FBox2D ViewBounds() const;
  TArray<FLunarOperationsMapPoint> Points;
  UPROPERTY() TObjectPtr<UTexture2D> MapTexture;
  FBox2D Bounds=FBox2D(ForceInit);
  bool OrbitalMap=false;
+ float Zoom=1.f;
+ FVector2D Pan=FVector2D::ZeroVector;
+ bool Dragging=false;
+ bool PlanetOverview=false;
 };
 
 UCLASS()
@@ -61,6 +77,9 @@ public:
  UPROPERTY() TObjectPtr<UVerticalBox> OperationsBody;
  UPROPERTY() TObjectPtr<UScrollBox> OperationsScroll;
  UPROPERTY() TObjectPtr<ULunarOperationsMap> OperationsMap;
+ UPROPERTY() TObjectPtr<UProgressBar> CheckProgress;
+ UPROPERTY() TObjectPtr<UTextBlock> CheckProgressLabel;
+ int32 PageGeneration() const {return Generation;}
 protected:
  virtual TSharedRef<SWidget> RebuildWidget() override;
  virtual void NativeConstruct() override;
@@ -76,9 +95,14 @@ private:
  void Status(const FString& Name,const FString& Value,bool Good=true);
  void BuildPage();
  void BuildMap();
+ void BuildPreflight();
+ void BuildInventory();
+ void UpdateCheckProgress();
  void CloseOwnedPanel();
  float ContentWidth() const;
  int32 Generation=0;
+ int32 InventoryFilter=0,SelectedInventory=0;
+ UPROPERTY() TObjectPtr<ULunarOperationsMap> CachedMap;
  FString LastFingerprint;
  struct FAction {FName Name;int32 Argument=0;};
  TArray<FAction> Actions;

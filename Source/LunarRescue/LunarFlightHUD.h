@@ -22,7 +22,7 @@ struct FLunarFlightHUDState {
  float NavigationDistance=0;
  FString Expedition,Mission,Stage,Objective,Subtask,Counter;
  FString ResourceLabel,ResourceTime,Gravity,Warning;
- FString GuideCaption,GuideTitle,GuideBody,GuideAction,Notice,Subtitle;
+ FString GuideCaption,GuideTitle,GuideBody,GuideAction,InteractionPrompt,Notice,Subtitle;
  FString WorkKey,RouteKey,JournalKey,MoveKeys,NavigationName,HoldTitle,RouteHint;
 };
 
@@ -41,6 +41,7 @@ public:
  UPROPERTY() TObjectPtr<UTextBlock> GuideLabel;
  UPROPERTY() TObjectPtr<UTextBlock> SubtitleLabel;
  UPROPERTY() TObjectPtr<UTextBlock> CounterLabel;
+ UPROPERTY() TObjectPtr<UTextBlock> InteractionLabel;
 protected:
  virtual TSharedRef<SWidget> RebuildWidget() override;
  virtual void NativeTick(const FGeometry& Geometry,float DeltaTime) override;
