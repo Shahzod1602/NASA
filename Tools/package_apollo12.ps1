@@ -194,7 +194,7 @@ foreach($sourceNote in @('README.md','CREDITS.md','source-normal-recovery-report
 
 # Carry the November feedback asset attributions and reproducible adaptations
 # with the offline package; imported visuals are not a new NASA terrain dataset.
-foreach($feedbackAsset in @('ExpeditionSuit20261113','MuseumRover20261113','Perseverance20261114','PlanetContext20261114')){
+foreach($feedbackAsset in @('ExpeditionSuit20261113','MuseumRover20261113','Perseverance20261114','PlanetContext20261114','MissionIntro20261114','Startup20261114')){
  $feedbackSource=Join-Path $root ('SourceArt/'+$feedbackAsset)
  $feedbackDestination=Join-Path $credits ('SourceArt/'+$feedbackAsset)
  New-Item -ItemType Directory -Force -Path $feedbackDestination | Out-Null
@@ -203,7 +203,7 @@ foreach($feedbackAsset in @('ExpeditionSuit20261113','MuseumRover20261113','Pers
   if(Test-Path -LiteralPath $assetNotePath -PathType Leaf){Copy-Item -LiteralPath $assetNotePath -Destination $feedbackDestination}
  }
 }
-foreach($feedbackSet in @('Feedback20261113','HandPose20261114')){
+foreach($feedbackSet in @('Feedback20261113','HandPose20261114','Feedback20261114Evening','PublicRelease20261114')){
 $feedbackNotes=Join-Path $root ('Docs/'+$feedbackSet)
 if(Test-Path -LiteralPath $feedbackNotes -PathType Container){
  $feedbackTarget=Join-Path $credits ('Docs/'+$feedbackSet)

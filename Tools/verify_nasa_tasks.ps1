@@ -6,6 +6,7 @@ param(
  [switch]$Pov,
  [switch]$Learning,
  [switch]$Restart,
+ [switch]$PublicDistribution,
  [ValidateRange(640,3840)][int]$Width=1280,
  [ValidateRange(480,2160)][int]$Height=720
 )
@@ -58,6 +59,7 @@ $results=[Collections.Generic.List[object]]::new()
 foreach($case in $cases){
  $log=Join-Path $destination "$($case.Name).log"
  $arguments=@($case.Map,'-game','-unattended','-nosound',"-$($case.Flag)","-abslog=`"$log`"")
+ if($PublicDistribution){$arguments+='-PublicDistributionTest'}
  if(-not $Packaged){$arguments=@("`"$root\LunarRescue.uproject`"")+$arguments}
  if($Review){$arguments+=@('-dx11','-RenderOffscreen','-ForceRes',"-ResX=$Width","-ResY=$Height")}else{$arguments+='-nullrhi'}
  # Each case begins with the original engine settings. The test/review flags also

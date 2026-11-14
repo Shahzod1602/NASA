@@ -1,3 +1,4 @@
+#include "Misc/PackageName.h"
 #include "LunarOperationsPanel.h"
 #include "LunarGame.h"
 #include "LunarSettings.h"
@@ -10,6 +11,9 @@
 #include "Components/HorizontalBoxSlot.h"
 #include "Components/ExpandableArea.h"
 #include "Components/Image.h"
+#include "Components/Overlay.h"
+#include "Components/OverlaySlot.h"
+#include "Components/ButtonSlot.h"
 #include "Components/ProgressBar.h"
 #include "Components/ScrollBox.h"
 #include "Components/SizeBox.h"
@@ -71,7 +75,7 @@ TSharedRef<SWidget> ULunarOperationsMap::RebuildWidget(){
 }
 FBox2D ULunarOperationsMap::ViewBounds()const{const FVector2D Half=Bounds.GetSize()/(2*Zoom),Center=Bounds.GetCenter()+Pan;return FBox2D(Center-Half,Center+Half);}
 void ULunarOperationsMap::ZoomBy(float Steps){if(!FMath::IsFinite(Steps))return;Zoom=FMath::Clamp(Zoom*FMath::Pow(1.25f,FMath::Clamp(Steps,-8.f,8.f)),1.f,6.f);PanBy(FVector2D::ZeroVector);}
-void ULunarOperationsMap::PanBy(FVector2D Fraction){if(Fraction.ContainsNaN())return;if(PlanetVisible(this)){Pan+=Fraction*180;Pan.X=FMath::Fmod(Pan.X,360.);Pan.Y=FMath::Clamp(Pan.Y,-80.,80.);UpdatePlanet(this,Zoom,Pan);}else{Pan+=Fraction*Bounds.GetSize()/Zoom;const FVector2D Margin=Bounds.GetSize()*(1-1/Zoom)*.5;Pan.X=FMath::Clamp(Pan.X,-Margin.X,Margin.X);Pan.Y=FMath::Clamp(Pan.Y,-Margin.Y,Margin.Y);}InvalidateLayoutAndVolatility();}
+void ULunarOperationsMap::PanBy(FVector2D Fraction){if(Fraction.ContainsNaN())return;if(PlanetVisible(this)){Pan+=Fraction*180;Pan.X=FMath::Fmod(Pan.X,360.);Pan.Y=FMath::Fmod(Pan.Y,360.);UpdatePlanet(this,Zoom,Pan);}else{Pan+=Fraction*Bounds.GetSize()/Zoom;const FVector2D Margin=Bounds.GetSize()*(1-1/Zoom)*.5;Pan.X=FMath::Clamp(Pan.X,-Margin.X,Margin.X);Pan.Y=FMath::Clamp(Pan.Y,-Margin.Y,Margin.Y);}InvalidateLayoutAndVolatility();}
 void ULunarOperationsMap::ResetView(){Zoom=1;Pan=FVector2D::ZeroVector;UpdatePlanet(this,Zoom,Pan);InvalidateLayoutAndVolatility();}
 void ULunarOperationsMap::SetPlanetOverview(bool Value){PlanetOverview=Value;if(auto* Image=PlanetImage(this))Image->SetVisibility(Value?ESlateVisibility::HitTestInvisible:ESlateVisibility::Collapsed);ResetView();}
 FReply ULunarOperationsMap::NativeOnMouseWheel(const FGeometry&,const FPointerEvent& E){ZoomBy(E.GetWheelDelta());return FReply::Handled();}
@@ -161,6 +165,7 @@ void ULunarOperationsPanel::UpdateCheckProgress(){
  const int32 Step=FMath::Clamp(C->PreflightCursor,0,3);
  const float Progress=(C->PreflightMask&(1<<Step))?1.f:C->PendingCheck==Step?C->ActionProgress():0.f;
  CheckProgress->SetPercent(Progress);
+ for(int32 I=0;I<4;++I)if(auto* Bar=Cast<UProgressBar>(WidgetTree->FindWidget(FName(*FString::Printf(TEXT("EVAProgress%d_%d"),Generation,I)))))Bar->SetPercent((C->PreflightMask&(1<<I))?1.f:C->PendingCheck==I?C->ActionProgress():0.f);
  const FString Value=FString::Printf(TEXT("%d%% / %s"),FMath::FloorToInt(Progress*100.f+.001f),(C->PreflightMask&(1<<Step))?TEXT("COMPLETE"):C->PendingCheck==Step?TEXT("CHECKING"):TEXT("READY"));
  if(CheckProgressLabel->GetText().ToString()!=Value)CheckProgressLabel->SetText(FText::FromString(Value));
 }
@@ -180,19 +185,18 @@ void ULunarOperationsPanel::BuildPreflight(){
  if(Wide)if(auto* Portrait=LoadObject<UTexture2D>(nullptr,TEXT("/Game/Lunar/UI/Expedition20261114/SuitPreview.SuitPreview"))){auto* Picture=WidgetTree->ConstructWidget<UImage>();Picture->SetBrushFromTexture(Portrait);auto* Frame=WidgetTree->ConstructWidget<USizeBox>();Frame->SetWidthOverride(160);Frame->SetHeightOverride(240);Frame->SetContent(Picture);auto* FrameSlot=Overview->AddChildToVerticalBox(Frame);FrameSlot->SetHorizontalAlignment(HAlign_Center);FrameSlot->SetPadding(FMargin(4));}
  Add(Overview,Label(FString::Printf(TEXT("SYSTEM %02d / 04"),Step+1),19,OpsGold,LeftWidth),16);
  Add(Overview,Label(Help[Step],19,OpsInk,LeftWidth));
- Add(Overview,Label(TEXT("Complete the current check, then select Next. Your mission clock waits until surface handover."),15,OpsDim,LeftWidth),12);
+ Add(Overview,Label(TEXT("Select each unlocked check in order. Your mission clock waits until surface handover."),15,OpsDim,LeftWidth),12);
  Add(Overview,Label(TEXT("Training simulation / authored checks, not real suit measurements."),14,OpsDim,LeftWidth));
  Add(Checks,Label(TEXT("SUIT CHECKLIST"),23,OpsInk,RightWidth));
  for(int32 I=0;I<4;++I){
   const bool Done=(C->PreflightMask&(1<<I))!=0,Running=C->PendingCheck==I;
-  auto* B=Button(FString::Printf(TEXT("%d / %s / %s"),I+1,Names[I],Done?TEXT("[OK]"):Running?TEXT("CHECKING"):I==Step?TEXT("START"):TEXT("LOCKED")),TEXT("Check"),I,CanMutate&&!Done&&C->PendingCheck==INDEX_NONE&&I==Step,I==Step);
-  {auto PaddedStyle=B->GetStyle();PaddedStyle.NormalPadding=FMargin(12);PaddedStyle.PressedPadding=FMargin(12);B->SetStyle(PaddedStyle);}if(auto* T=Cast<UTextBlock>(B->GetContent())){T->SetWrapTextAt(RightWidth-28);if(Done)T->SetColorAndOpacity(OpsGreen);}Add(Checks,B,5);
+  auto* B=Button(FString::Printf(TEXT("%d / %s / %s"),I+1,Names[I],Done?TEXT("100% / COMPLETE"):Running?TEXT("CHECKING"):I==Step?TEXT("START"):TEXT("LOCKED")),TEXT("Check"),I,CanMutate&&!Done&&C->PendingCheck==INDEX_NONE&&I==Step,I==Step);
+  {auto PaddedStyle=B->GetStyle();PaddedStyle.NormalPadding=FMargin(12);PaddedStyle.PressedPadding=FMargin(12);B->SetStyle(PaddedStyle);}if(auto* T=Cast<UTextBlock>(B->GetContent())){T->SetWrapTextAt(RightWidth-28);if(Done)T->SetColorAndOpacity(OpsGreen);}Add(Checks,B,5);auto* Indicator=WidgetTree->ConstructWidget<UProgressBar>(UProgressBar::StaticClass(),FName(*FString::Printf(TEXT("EVAProgress%d_%d"),Generation,I)));Indicator->SetFillColorAndOpacity(OpsCyan);Indicator->SetPercent(Done?1.f:0.f);auto* IndicatorSize=WidgetTree->ConstructWidget<USizeBox>();IndicatorSize->SetHeightOverride(5);IndicatorSize->SetContent(Indicator);Add(Checks,IndicatorSize,1);
  }
  CheckProgress=WidgetTree->ConstructWidget<UProgressBar>();CheckProgress->SetFillColorAndOpacity(OpsCyan);
  auto* ProgressSize=WidgetTree->ConstructWidget<USizeBox>();ProgressSize->SetHeightOverride(9);ProgressSize->SetContent(CheckProgress);Add(Checks,ProgressSize,8);
  CheckProgressLabel=Label(TEXT("0% / READY"),15,OpsCyan,RightWidth);Add(Checks,CheckProgressLabel,3);
- const bool Done=(C->PreflightMask&(1<<Step))!=0;
- if(Step<3)Add(Checks,Button(TEXT("Next / continue to the next system"),TEXT("NextCheck"),0,CanMutate&&Done&&C->PendingCheck==INDEX_NONE,Done));
+
  Add(Checks,Button(TEXT("Checks complete / Open Hatch"),TEXT("Launch"),0,CanMutate&&C->Prepared&&C->PreflightMask==15&&C->PendingCheck==INDEX_NONE,C->Prepared),12);
  if(Wide){
   FSlateChildSize LeftSize(ESlateSizeRule::Fill);LeftSize.Value=.35f;FSlateChildSize RightSize(ESlateSizeRule::Fill);RightSize.Value=.65f;
@@ -204,18 +208,37 @@ void ULunarOperationsPanel::BuildPreflight(){
 void ULunarOperationsPanel::BuildInventory(){
  auto* C=Operations();if(!C)return;const auto Items=BagItems(C);if(!Items.IsValidIndex(SelectedInventory))SelectedInventory=0;
  const bool Wide=ContentWidth()>950&&OpsScale()<1.3f,CanMutate=C->CanUsePanel(this,true);
- Heading(TEXT("ASTRONAUT BACKPACK"));Note(TEXT("Select an item to inspect its actual mission state. No equipment or supplies are created by this screen."));
- auto* Filters=WidgetTree->ConstructWidget<UWrapBox>();Filters->SetInnerSlotPadding(FVector2D(8,5));const TCHAR* Categories[]={TEXT("All"),TEXT("Tools"),TEXT("Supplies"),TEXT("Samples")};for(int32 I=0;I<4;++I)Filters->AddChild(Button(Categories[I],TEXT("FilterItems"),I,true,InventoryFilter==I));Row(Filters);
- auto* Grid=WidgetTree->ConstructWidget<UWrapBox>();Grid->SetExplicitWrapSize(true);Grid->SetWrapSize(Wide?ContentWidth()*.6f-40:ContentWidth()-40);Grid->SetInnerSlotPadding(FVector2D(10,10));
- for(int32 I=0;I<Items.Num();++I){const auto& Item=Items[I];if(InventoryFilter&&Item.Category!=InventoryFilter)continue;auto* Cell=WidgetTree->ConstructWidget<USizeBox>();Cell->SetWidthOverride(Wide?ContentWidth()*.27f:ContentWidth()*.43f);Cell->SetMinDesiredHeight(88);auto* B=Button(FString::Printf(TEXT("%s\nQTY %d"),*Item.Name,Item.Quantity),TEXT("SelectItem"),I,true,SelectedInventory==I);{auto PaddedStyle=B->GetStyle();PaddedStyle.NormalPadding=FMargin(12);PaddedStyle.PressedPadding=FMargin(12);B->SetStyle(PaddedStyle);}if(auto* T=Cast<UTextBlock>(B->GetContent()))T->SetWrapTextAt((Wide?ContentWidth()*.27f:ContentWidth()*.43f)-28);Cell->SetContent(B);Grid->AddChild(Cell);}
- auto* Detail=WidgetTree->ConstructWidget<UVerticalBox>();const auto& Selected=Items[SelectedInventory];const float DetailWidth=Wide?ContentWidth()*.4f-64:ContentWidth()-64;
+ Heading(TEXT("INVENTORY"));Note(TEXT("Equipment and collected samples / actual mission state."));
+ auto* Atlas=FPackageName::DoesPackageExist(TEXT("/Game/Lunar/Frontend/Startup20261114/T_InventoryReference"))?LoadObject<UTexture2D>(nullptr,TEXT("/Game/Lunar/Frontend/Startup20261114/T_InventoryReference.T_InventoryReference")):nullptr;
+ // Reference art is unchanged. UVs exclude its baked labels and quantities;
+ // every interactive caption, quantity, lock and action comes from live state.
+ const FBox2D Regions[]={FBox2D(FVector2D(461,216),FVector2D(556,298)),FBox2D(FVector2D(236,217),FVector2D(328,297)),FBox2D(FVector2D(350,331),FVector2D(442,410)),FBox2D(FVector2D(236,334),FVector2D(332,410)),FBox2D(FVector2D(568,331),FVector2D(660,409)),FBox2D(FVector2D(697,216),FVector2D(782,300)),FBox2D(FVector2D(697,216),FVector2D(782,300)),FBox2D(FVector2D(697,216),FVector2D(782,300)),FBox2D(FVector2D(694,337),FVector2D(785,412))};
+ auto Icon=[&](int32 Index,float W,float H){auto* Image=WidgetTree->ConstructWidget<UImage>();if(Atlas&&Index>=0&&Index<UE_ARRAY_COUNT(Regions)){FSlateBrush Brush;Brush.SetResourceObject(Atlas);Brush.ImageSize=FVector2D(W,H);Brush.DrawAs=ESlateBrushDrawType::Image;Brush.SetUVRegion(FBox2D(Regions[Index].Min/FVector2D(1280,720),Regions[Index].Max/FVector2D(1280,720)));Image->SetBrush(Brush);}Image->SetVisibility(ESlateVisibility::HitTestInvisible);auto* Box=WidgetTree->ConstructWidget<USizeBox>();Box->SetWidthOverride(W);Box->SetHeightOverride(H);if(Atlas)Box->SetContent(Image);else {const TCHAR* Symbols[]={TEXT("TOOL"),TEXT("SCAN"),TEXT("PACK"),TEXT("CELL"),TEXT("DATA"),TEXT("01"),TEXT("02"),TEXT("03"),TEXT("ROCK")};auto* Symbol=Text(Symbols[FMath::Clamp(Index,0,8)],18,OpsCyan);Symbol->SetJustification(ETextJustify::Center);Box->SetContent(Symbol);}return Box;};
+ auto* InventoryColumns=WidgetTree->ConstructWidget<UHorizontalBox>();auto* Sidebar=WidgetTree->ConstructWidget<UVerticalBox>();
+ const TCHAR* Categories[]={TEXT("All"),TEXT("Tools"),TEXT("Supplies"),TEXT("Samples")};
+ for(int32 I=0;I<4;++I)Sidebar->AddChildToVerticalBox(Button(Categories[I],TEXT("FilterItems"),I,true,InventoryFilter==I))->SetPadding(FMargin(4,6));
+ if(Wide){auto* Side=WidgetTree->ConstructWidget<USizeBox>();Side->SetWidthOverride(135);Side->SetContent(Sidebar);InventoryColumns->AddChildToHorizontalBox(Side)->SetPadding(FMargin(0,0,14,0));}else Row(Sidebar);
+ const float GridWidth=Wide?(ContentWidth()-149)*.62f:ContentWidth()-40,CellWidth=(GridWidth-(Wide?48:24))/(Wide?4:2);
+ auto* Grid=WidgetTree->ConstructWidget<UWrapBox>();Grid->SetExplicitWrapSize(true);Grid->SetWrapSize(GridWidth);Grid->SetInnerSlotPadding(FVector2D(8,8));
+ for(int32 I=0;I<Items.Num();++I){const auto& Item=Items[I];if(InventoryFilter&&Item.Category!=InventoryFilter)continue;
+  auto* Cell=WidgetTree->ConstructWidget<USizeBox>();Cell->SetWidthOverride(CellWidth);Cell->SetHeightOverride(164*OpsScale());
+  auto* Layers=WidgetTree->ConstructWidget<UOverlay>();Cell->SetContent(Layers);
+  auto* B=Button(FString::Printf(TEXT("%s\nQTY %d"),*Item.Name,Item.Quantity),TEXT("SelectItem"),I,true,SelectedInventory==I);if(auto* CaptionLayout=Cast<UButtonSlot>(B->GetContent()->Slot))CaptionLayout->SetVerticalAlignment(VAlign_Bottom);
+  {auto Style=B->GetStyle();Style.NormalPadding=FMargin(8);Style.PressedPadding=FMargin(8);B->SetStyle(Style);}if(auto* T=Cast<UTextBlock>(B->GetContent()))T->SetWrapTextAt(CellWidth-16);
+  auto* ButtonSlot=Layers->AddChildToOverlay(B);ButtonSlot->SetHorizontalAlignment(HAlign_Fill);ButtonSlot->SetVerticalAlignment(VAlign_Fill);
+  auto* PictureSlot=Layers->AddChildToOverlay(Icon(I,84,72));PictureSlot->SetHorizontalAlignment(HAlign_Center);PictureSlot->SetVerticalAlignment(VAlign_Top);PictureSlot->SetPadding(FMargin(0,7,0,0));Grid->AddChild(Cell);
+ }
+ auto* Detail=WidgetTree->ConstructWidget<UVerticalBox>();const auto& Selected=Items[SelectedInventory];const float DetailWidth=Wide?(ContentWidth()-149)*.38f-32:ContentWidth()-64;
+ Detail->AddChildToVerticalBox(Icon(SelectedInventory,168,144))->SetHorizontalAlignment(HAlign_Center);
  auto Add=[&](const FString& Value,int32 Size,FLinearColor Color){auto* T=Text(Value,Size,Color);T->SetWrapTextAt(DetailWidth);Detail->AddChildToVerticalBox(T)->SetPadding(FMargin(12,8));};
  Add(Selected.Name,24,OpsInk);Add(Selected.State,17,OpsCyan);Add(FString::Printf(TEXT("QUANTITY / %d"),Selected.Quantity),15,OpsDim);Add(Selected.Description,17,OpsInk);
  if(!Selected.Use.IsNone())Detail->AddChildToVerticalBox(Button(Selected.Use==TEXT("UseScanner")?TEXT("Equip magnifier"):TEXT("Open current work tool"),Selected.Use,0,CanMutate&&Selected.Ready&&!C->Preparing));
  else Add(TEXT("INSPECT ONLY / use the existing mission controls or field board."),14,OpsDim);
- if(Wide){auto* Columns=WidgetTree->ConstructWidget<UHorizontalBox>();FSlateChildSize L(ESlateSizeRule::Fill);L.Value=.6f;FSlateChildSize R(ESlateSizeRule::Fill);R.Value=.4f;Columns->AddChildToHorizontalBox(Grid)->SetSize(L);Columns->AddChildToHorizontalBox(Detail)->SetSize(R);Row(Columns);}else{Row(Grid);Row(Detail);}
+ if(Wide){FSlateChildSize L(ESlateSizeRule::Fill);L.Value=.62f;FSlateChildSize R(ESlateSizeRule::Fill);R.Value=.38f;InventoryColumns->AddChildToHorizontalBox(Grid)->SetSize(L);InventoryColumns->AddChildToHorizontalBox(Detail)->SetSize(R);Row(InventoryColumns);}else{Row(Grid);Row(Detail);}
  Row(Button(TEXT("Deliver carried training packages"),TEXT("Deposit"),0,CanMutate&&(C->CollectedMask&~C->DeliveredMask)!=0));Row(Button(TEXT("Transmit stored training survey data"),TEXT("Transmit"),0,CanMutate&&C->DataStoredMB>0));
+ Note(TEXT("Equipment symbols / resource amounts and item states use live gameplay data."));
 }
+
 void ULunarOperationsPanel::BuildPage(){
  if(!OperationsBody||!WidgetTree)return;bool ExpandedHelp=false;TArray<UWidget*> PreviousWidgets;WidgetTree->GetAllWidgets(PreviousWidgets);for(auto* Widget:PreviousWidgets)if(auto* Area=Cast<UExpandableArea>(Widget))ExpandedHelp|=Area->GetIsExpanded();++Generation;Actions.Reset();OperationsBody->ClearChildren();OperationsMap=nullptr;CheckProgress=nullptr;CheckProgressLabel=nullptr;auto* C=Operations();
  const bool CircuitScreen=C&&View==EFieldPanelView::Wire&&C->Game()&&!C->Game()->Apollo;
@@ -275,7 +298,7 @@ void ULunarOperationsPanel::BuildPage(){
   Heading(TEXT("SAMPLE DATA / OBSERVE BEFORE RECORDING"));for(const auto& Line:C->InventoryLines())Row(Text(Line));Status(TEXT("SCANNER"),C->ScannerUnlocked?TEXT("AVAILABLE"):TEXT("FOLLOW THE FIELD TASK TO UNLOCK"),C->ScannerUnlocked);Note(TEXT("The world scanner uses the normal gameplay tool controls. This panel displays recorded results; opening it does not collect, scan, measure or award cargo."));
  }
  Row(Button(ShowSources?TEXT("Hide Science & Sources"):TEXT("Open Science & Sources"),TEXT("Sources"),0,true,ShowSources));if(ShowSources){Heading(TEXT("SCIENCE & SOURCES / MODEL LIMITS"));Row(Text(C->SourcesText(),16));}
- Note(C->Preparing?TEXT("Mission time has not started. A running suit check continues when you inspect Map or Inventory. Close / Esc / F1 returns to the cabin."):TEXT("This panel pauses the gameplay resource clock. Close / Esc / F1 returns to the mission. All resource coefficients are gameplay tuning."));
+ Note(C->Preparing?TEXT("Mission time has not started. A running suit check continues when you inspect Map or Inventory. Close / Esc / F1 returns to your current view."):TEXT("This panel pauses the gameplay resource clock. Close / Esc / F1 returns to the mission. All resource coefficients are gameplay tuning."));
 }
 bool ULunarOperationsPanel::ValidateLayout(FString& Reason)const{
  if(!OperationsBody||!OperationsScroll||!WidgetTree){Reason=TEXT("Operations panel is missing its scrollable body");return false;}

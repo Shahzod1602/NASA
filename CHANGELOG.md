@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.9.2 — public feedback preview — 2026-11-14
+
+- Refine Moon movement, rover driver/cameras and quiet boarding, two-hand cell grips, sequential EVA checks, backpack/map controls and SELENE support/collision details.
+- Provide original live text startup/equipment symbols; exclude unconfirmed reference-art textures and optional Moon video from public source and Windows distribution.
+- Preserve existing maps, owner data and independent Mars tuning. Publish as a separate feedback prerelease, with exact-build validation in Docs/PublicRelease20261114/PUBLIC_TEST_REPORT.md.
+
 ## v0.9.1 — palm and free-hand pose correction — 2026-11-14
 
 - Correct the expedition skin's palm/finger roll using longitudinal and transverse references; fit palm spread to its controller rather than twisting the glove sideways.
@@ -355,3 +361,29 @@ automated repeated executions, not human playtests; see TEST_REPORT.md.
 - Lower-centre power-cell carry framing; original mission interactions, rewards and cargo authority retained.
 - Terrain-tested base, solar and power-panel support placement; retired PIP and obsolete prototype/route decorations.
 - The duplicate lower HUD-card preference remains unconfirmed after a later “qolib tursin” follow-up; clarification was requested. This entry is local development, not a published release or human playtest result.
+
+
+## Development notes included in v0.9.2 - surface feedback, 2026-11-14
+
+- Share slower authored walk/fast-stride and hop tuning across Moon missions;
+  preserve takeoff horizontal momentum until landing. Mars tuning remains distinct.
+- Remove automatic cabin camera takeover from normal mission entry and preserve
+  saved-expedition authorization when reopening pending pre-EVA checks.
+- Replace SELENE's upright B-key instruction sign with a small service pad.
+- Add a seated suited rover driver, mouse orbit/cockpit free-look and V view toggle.
+  Keep stationary mudguards on the chassis and preserve source geometry.
+- Add side handles and matching first/third-person cell grip presentation.
+- Add optional post-loading Moon video playback with a held world clock,
+  completion handover, bounded wait and missing-file fallback. Source/permission
+  clearance is pending for the supplied video; it is not a public media release.
+
+### Additional local feedback candidate (14 November)
+- AstroKid startup reference and live spinner; immediate logo intro without a second fade from black.
+- Direct sequential pre-EVA checks, live per-check indicators and immediate System Connect dismissal after verification.
+- Backpack categories, illustrative equipment thumbnails and live item details; planet globe can rotate over its poles.
+- Direct eligible rover boarding; grounded SELENE antenna/status lamps, cell-bound locator cleanup and solid static Lunokhod obstacles.
+- Local Windows verification passed; see Docs/Feedback20261114Evening/TEST_REPORT.md. Partner logos and supplied intro-video redistribution remain unconfirmed; no public release is asserted.
+
+## v0.9.2 public feedback preview
+
+Distribute the Moon/Mars feedback fixes with original text startup/equipment symbols. Unconfirmed local reference art and Moon intro footage are omitted. Public package validation is documented separately from the earlier private reference-art candidate. This release does not replace or certify a competition submission.

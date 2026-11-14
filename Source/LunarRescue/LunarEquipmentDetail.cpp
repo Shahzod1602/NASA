@@ -1,4 +1,5 @@
 #include "LunarEquipmentDetail.h"
+#include "LunarSeleneProps.h"
 #include "LunarGame.h"
 #include "Components/InstancedStaticMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
@@ -257,7 +258,7 @@ void Surface(FBuilder& B){if(!B.Terrain)return;auto* G=B.Game;auto* A=G->GetWorl
 
 void LunarEquipmentDetail::Build(ALunarGameMode* G){
  if(!G||G->Menu||!G->GetWorld()||G->ActorHasTag(BuiltTag))return;
- FBuilder B(G);if(G->Apollo){Surveyor(B);for(TActorIterator<AStaticMeshActor> It(G->GetWorld());It;++It)if(It->ActorHasTag(TEXT("apollo.reference-lander")))Lander(B,*It);}else Rescue(B);Surface(B);G->Tags.Add(BuiltTag);
+ FBuilder B(G);if(G->Apollo){Surveyor(B);for(TActorIterator<AStaticMeshActor> It(G->GetWorld());It;++It)if(It->ActorHasTag(TEXT("apollo.reference-lander")))Lander(B,*It);}else Rescue(B);Surface(B);LunarSeleneProps::Build(G);G->Tags.Add(BuiltTag);
  UE_LOG(LogTemp,Display,TEXT("LUNAR_EQUIPMENT_DETAIL planet=%s batches=%d instances=%d cap_batches=%d cap_instances=%d missing=%d skipped=%d terrain_collision_unchanged=1 mission_anchors_unchanged=1"),G->Apollo?TEXT("APOLLO12"):G->Mars?TEXT("MARS"):TEXT("SELENE"),B.Batches.Num(),B.Instances,MaxComponents,MaxInstances,B.Missing,B.Skipped);
 }
 void LunarEquipmentDetail::AppendChecks(ALunarGameMode* G,FString& Report,int32& Failed){

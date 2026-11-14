@@ -1,3 +1,8 @@
+#include "Misc/PackageName.h"
+#include "Misc/CommandLine.h"
+#include "Misc/Parse.h"
+#include "Blueprint/WidgetTree.h"
+#include "Components/TextBlock.h"
 #include "LunarGame.h"
 #include "LunarPanels.h"
 #include "LunarPauseMenu.h"
@@ -42,13 +47,21 @@ void AimUI(ALunarGameMode* G,ALunarCharacter* P,AActor* Target){
 void ALunarGameMode::NasaIntroChecks(){
  auto Result=MakeShared<FNasaUIResult>();auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0));auto* Main=MainMenu.Get();
  Result->Check(Menu&&P&&Main&&ULunarSettings::IsAutomation(),TEXT("Intro test has an isolated home menu"));if(!Menu||!P||!Main||!ULunarSettings::IsAutomation()){FinishUI(this,Result,TEXT("nasa-intro-checks.txt"));return;}
- FLunarIntroState Model;Model.Begin();Result->Check(Model.Active&&Model.Elapsed==0&&Model.ImageAlpha()==0&&Model.LayerAlpha()==1,TEXT("Intro starts from black with a transparent illustration"));
+ FLunarIntroState Model;Model.Begin();Result->Check(Model.Active&&Model.Elapsed==0&&Model.ImageAlpha()==1&&Model.LayerAlpha()==1,TEXT("Intro begins with its fully visible illustration, avoiding a second black flash"));
  Model.Advance(-1);Model.Advance(std::numeric_limits<float>::quiet_NaN());Model.Advance(std::numeric_limits<float>::infinity());Result->Check(Model.Elapsed==0&&Model.Active,TEXT("Invalid intro deltas cannot advance or poison the presentation"));
- Model.Advance(FLunarIntroState::FadeIn);Result->Check(FMath::IsNearlyEqual(Model.ImageAlpha(),1.f)&&!Model.RevealingMenu(),TEXT("Illustration fades in fully before the menu reveal"));
+ Model.Advance(FLunarIntroState::FadeIn);Result->Check(FMath::IsNearlyEqual(Model.ImageAlpha(),1.f)&&!Model.RevealingMenu(),TEXT("Illustration remains visible before the bounded menu reveal"));
  Model.Advance(FLunarIntroState::Hold);Result->Check(Model.RevealingMenu()&&FMath::IsNearlyEqual(Model.LayerAlpha(),1.f),TEXT("Menu reveal begins only after the illustration hold"));
  Model.Advance(FLunarIntroState::FadeOut);Result->Check(!Model.Active&&FMath::IsNearlyEqual(Model.Elapsed,FLunarIntroState::Duration)&&FMath::IsNearlyZero(Model.LayerAlpha(),.0001f),TEXT("Intro reaches its bounded end without leaving a blocking black layer"));
  Model.Advance(100);Result->Check(FMath::IsNearlyEqual(Model.Elapsed,FLunarIntroState::Duration),TEXT("Finished intro cannot accumulate more presentation time"));
- Main->BeginIntro(true);Result->Check(Main->IsIntroActive()&&Main->IntroImage&&Main->IntroLayer&&Main->IntroImage->GetBrush().GetResourceObject(),TEXT("The actual startup layer owns a local illustration asset"));
+ Main->BeginIntro(true);auto* Wordmark=Main->WidgetTree?Cast<UTextBlock>(Main->WidgetTree->FindWidget(TEXT("PublicStartupWordmark"))):nullptr;
+ const bool LocalArt=Main->IntroImage&&Main->IntroImage->GetBrush().GetResourceObject()&&Main->IntroImage->GetBrush().GetResourceObject()->GetName()==TEXT("T_AstroKid")&&Main->IntroImage->GetRenderOpacity()==1;
+ const bool PublicText=Wordmark&&Wordmark->GetParent()==Main->IntroLayer&&Wordmark->IsVisible()&&Wordmark->GetText().ToString()==TEXT("AstroKid");
+ Result->Check(Main->IsIntroActive()&&Main->IntroLayer&&(LocalArt||PublicText),TEXT("Startup owns a visible original text wordmark or an explicitly supplied local illustration"));
+ if(FParse::Param(FCommandLine::Get(),TEXT("PublicDistributionTest"))){
+  Result->Check(PublicText&&!LocalArt&&!FPackageName::DoesPackageExist(TEXT("/Game/Lunar/Frontend/Startup20261114/T_AstroKid")),TEXT("Public package contains original startup text and no unconfirmed logo texture"));
+  Result->Check(!FPackageName::DoesPackageExist(TEXT("/Game/Lunar/Frontend/Startup20261114/T_InventoryReference")),TEXT("Public package contains no unconfirmed inventory-reference texture"));
+  Result->Check(IFileManager::Get().FileSize(*(FPaths::ProjectContentDir()/TEXT("Movies/MoonArrival.mp4")))<0,TEXT("Public package contains no unconfirmed optional movie"));
+ }
  const auto SavedCheckpoint=ApolloCachedCheckpoint;ApolloCachedCheckpoint=NewObject<UApolloCheckpoint>(this);
  P->ChooseMoon();P->ChooseMars();P->StartMission();Main->ExploreMoon();Main->ExploreMars();Main->ConfirmSelection();Main->Continue();P->ContinueMission();Main->Settings();P->OpenSettings();
  Result->Check(Menu&&!Main->MissionSelection&&!LunarLoading::IsBusy()&&!P->ActivePanel,TEXT("Intro blocks destination, Enter, Continue and settings entry points"));ApolloCachedCheckpoint=SavedCheckpoint;

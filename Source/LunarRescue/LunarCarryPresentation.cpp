@@ -15,6 +15,7 @@
 #include "GameFramework/PlayerController.h"
 #include "Kismet/GameplayStatics.h"
 #include "Materials/MaterialInterface.h"
+#include "Materials/MaterialInstanceDynamic.h"
 #include "UnrealClient.h"
 
 namespace LunarCarryPrivate {
@@ -61,6 +62,28 @@ void CarryReadability(ALunarCharacter* P,const ALunarGameMode* G,bool SuppressPh
   if(Upper){const FVector Shoulder(14,I?25.f:-25.f,-24),Elbow=P->Gloves[I*8]->GetRelativeLocation(),D=Elbow-Shoulder;
    if(!D.ContainsNaN()&&D.Size()>1&&D.Size()<35){Sleeve->SetRelativeLocation(Shoulder);Sleeve->SetRelativeRotation(FRotationMatrix::MakeFromX(D).Rotator());Sleeve->SetRelativeScale3D(FVector(D.Size()/28,1.025,1.025));}else Sleeve->SetVisibility(false);
   }
+ }
+}
+// Authored side handles; dimensions follow the retained cell's source frame.
+// Children inherit the same fit/visibility as their item, with no per-frame mesh work.
+void CellHandles(UStaticMeshComponent* Item,bool Visible){
+ if(!Item||!Item->GetStaticMesh())return;
+ TArray<USceneComponent*> Children;Item->GetChildrenComponents(false,Children);
+ bool Built=false;for(auto* Child:Children)if(Child->ComponentHasTag(TEXT("Lunar.CellHandle"))){Child->SetVisibility(Visible,true);Built=true;}
+ if(Built||!Visible)return;
+ const FBox B=Item->GetStaticMesh()->GetBoundingBox();const FVector C=B.GetCenter(),E=B.GetExtent();
+ auto* Cylinder=LoadObject<UStaticMesh>(nullptr,TEXT("/Engine/BasicShapes/Cylinder.Cylinder"));
+ auto Add=[&](FVector A,FVector Z,float Radius,const TCHAR* Grip){
+  auto* Part=NewObject<UStaticMeshComponent>(Item->GetOwner());Part->SetupAttachment(Item);Part->SetStaticMesh(Cylinder);
+  const FVector D=Z-A;Part->SetRelativeLocation((A+Z)*.5);Part->SetRelativeRotation(FRotationMatrix::MakeFromZ(D).ToQuat());Part->SetRelativeScale3D(FVector(Radius*2/100,Radius*2/100,D.Size()/100));
+  Part->SetCollisionEnabled(ECollisionEnabled::NoCollision);Part->SetCanEverAffectNavigation(false);Part->SetCastShadow(false);Part->SetOnlyOwnerSee(true);Part->SetReceivesDecals(false);Part->PrimaryComponentTick.bCanEverTick=false;
+  Part->ComponentTags.Add(TEXT("Lunar.CellHandle"));if(Grip)Part->ComponentTags.Add(FName(Grip));
+  if(auto* Base=LoadObject<UMaterialInterface>(nullptr,TEXT("/Engine/BasicShapes/BasicShapeMaterial.BasicShapeMaterial"))){auto* M=UMaterialInstanceDynamic::Create(Base,Part);M->SetVectorParameterValue(TEXT("Color"),FLinearColor(.09,.13,.16));Part->SetMaterial(0,M);}
+  Part->RegisterComponent();Part->SetVisibility(Visible);
+ };
+ for(int32 Side=0;Side<2;++Side){const float Sign=Side?1.f:-1.f;const FVector Mid(C.X-E.X*.12,C.Y+Sign*(E.Y+12),C.Z);const float Half=FMath::Min(31.,E.Z*.6);
+  Add(Mid-FVector(0,0,Half),Mid+FVector(0,0,Half),4,Side?TEXT("Lunar.CellHandle.Right"):TEXT("Lunar.CellHandle.Left"));
+  for(float H:{-Half,Half})Add(FVector(Mid.X,C.Y+Sign*E.Y*.85,Mid.Z+H),Mid+FVector(0,0,H),3,nullptr);
  }
 }
 const FName GripFrameTag(TEXT("Lunar.Carry.GripFrame"));
@@ -140,20 +163,11 @@ bool LunarCarryPresentation::GripPose(const ALunarCharacter* P,bool FirstPerson,
  const FBox B=Item->GetStaticMesh()->GetBoundingBox();if(!LunarCarryPrivate::SourceBox(B))return false;
  const FTransform Space=FirstPerson?P->Camera->GetComponentTransform():P->GetActorTransform();
  const FTransform Source=Item->GetComponentTransform().GetRelativeTransform(Space);
- // The retained battery has raised end bands: its outer AABB is not the
- // waist the gloves hold. The authored grip is at the source waist (0.715 of
- // outer Y radius), confirmed against the imported source geometry. Other
- // carried meshes use their own transformed side surfaces.
- const float Waist=Cell?.715f:1.f;const bool Pouch=Item->GetStaticMesh()->GetName()==TEXT("SM_SamplePouch");
- float PalmGap=2.35f;
- if(Cell){
-  PalmGap+=FMath::Clamp((float(Source.GetScale3D().GetAbsMax())-.2f)*28.5f,0.f,3.f);
-  // Keep the opposed thumb knuckle outside the central cell label at narrow
-  // visor FOVs. Actual finger-surface contact is independently checked.
-  if(FirstPerson)PalmGap+=1.2f;
- }
- else if(LunarCarryPrivate::CommittedPart(G)&&G->ApolloPackedPart==1)PalmGap=5.6f;
- const FVector ContactLocal(B.GetCenter().X-B.GetExtent().X*.12,B.GetCenter().Y+Sign*B.GetExtent().Y*Waist,B.GetCenter().Z-(Pouch?B.GetExtent().Z*.3:0));
+ // Cell palms wrap the added side-handle bars; other items keep their own surface grip.
+ const bool Pouch=Item->GetStaticMesh()->GetName()==TEXT("SM_SamplePouch");
+ float PalmGap=Cell?3.2f:2.35f;
+ if(!Cell&&LunarCarryPrivate::CommittedPart(G)&&G->ApolloPackedPart==1)PalmGap=5.6f;
+ const FVector ContactLocal(B.GetCenter().X-B.GetExtent().X*.12,B.GetCenter().Y+Sign*(Cell?B.GetExtent().Y+12:B.GetExtent().Y),B.GetCenter().Z-(Pouch?B.GetExtent().Z*.3:0));
  const FVector Normal=Source.GetRotation().RotateVector(FVector(0,Sign,0)).GetSafeNormal();
  const FVector Palm=Source.TransformPosition(ContactLocal)+Normal*PalmGap;
  const FRotator SolvedRotation=(Source.GetRotation()*FRotator(-8,-Sign*30,Sign*16).Quaternion()).Rotator();
@@ -185,14 +199,16 @@ void LunarCarryPresentation::Update(ALunarCharacter* P,bool SuppressPhoto){
   for(UStaticMeshComponent* C:{P->WorkTool.Get(),P->SamplePouch.Get(),P->WorkPayload.Get(),P->DrivenTube.Get(),P->PouchSeal.Get()})if(C)C->SetVisibility(false);
   for(auto& C:P->ToolJaws)if(C)C->SetVisibility(false);if(P->PouchLabel)P->PouchLabel->SetVisibility(false);
  }
+ LunarCarryPrivate::CellHandles(P->CarriedModule,false);LunarCarryPrivate::CellHandles(P->BodyCarryItem,false);
  if(!G)return;
  if(IsCellCarried(G)){
   if(P->CarriedModule&&P->CarriedModule->GetStaticMesh()&&ShouldShow(P,G,true,SuppressPhoto)){
-   FTransform Fit;if(FitViewBounds(P->CarriedModule->GetStaticMesh()->GetBoundingBox(),P->Camera->FieldOfView,LunarCarryPrivate::ViewAspect(P),Fit)){LunarCarryPrivate::ItemPose(P->CarriedModule,Fit);P->CarriedModule->SetVisibility(true);}
+   FTransform Fit;if(FitViewBounds(P->CarriedModule->GetStaticMesh()->GetBoundingBox(),P->Camera->FieldOfView,LunarCarryPrivate::ViewAspect(P),Fit)){Fit.AddToTranslation(FVector(0,0,-(1-FMath::Clamp(P->WorkBlend,0.f,1.f))*24));LunarCarryPrivate::ItemPose(P->CarriedModule,Fit);P->CarriedModule->SetVisibility(true);}
   }
   if(P->BodyCarryItem&&P->CarriedModule&&P->CarriedModule->GetStaticMesh()&&ShouldShow(P,G,false,SuppressPhoto)){
    LunarCarryPrivate::CopyAppearance(P->BodyCarryItem,P->CarriedModule);LunarCarryPrivate::BodyPose(P->BodyCarryItem,FVector(35,0,14),28,0);P->BodyCarryItem->SetVisibility(true);
   }
+  LunarCarryPrivate::CellHandles(P->CarriedModule,P->CarriedModule&&P->CarriedModule->IsVisible());LunarCarryPrivate::CellHandles(P->BodyCarryItem,P->BodyCarryItem&&P->BodyCarryItem->IsVisible());
   return;
  }
  if(!P->BodyCarryItem||!ShouldShow(P,G,false,SuppressPhoto))return;

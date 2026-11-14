@@ -1,0 +1,25 @@
+{
+  "title": "Team-supplied Moon arrival reference",
+  "original_author": "Unconfirmed",
+  "original_source_url": null,
+  "redistribution_permission": "Pending team confirmation; do not publish this binary",
+  "retrieved_date": "2026-11-14",
+  "local_file": "Content/Movies/MoonArrival.mp4",
+  "sha256": "6da19e1461a4de7d6b8b5d1129a46155ff6ea1abfeb8d65a59dc7b63e238380b",
+  "bytes": 3506824,
+  "duration_seconds": 30.04,
+  "width": 854,
+  "height": 480,
+  "fps": 24,
+  "video_codec": "H264 High yuv420p",
+  "audio_codec": "AAC stereo 32000 Hz",
+  "processing": "Unmodified copy; no upscale/transcode",
+  "missions": [
+    "Apollo12",
+    "MoonBase"
+  ],
+  "mars": "Not used: lunar scenery is inappropriate for Mars",
+  "public_distribution": {
+    "v0.9.2": "Reference binaries and imported reference textures excluded pending source/redistribution confirmation; metadata retained only."
+  }
+}

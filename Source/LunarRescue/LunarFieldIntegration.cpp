@@ -1,3 +1,4 @@
+#include "LunarSeleneProps.h"
 #include "LunarGame.h"
 #include "LunarFieldOperations.h"
 #include "LunarOperationsPanel.h"
@@ -6,10 +7,12 @@
 #include "LunarDeparture.h"
 #include "LunarSettings.h"
 #include "LunarLoading.h"
+#include "LunarMissionIntro.h"
 #include "Camera/CameraComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/TextRenderComponent.h"
 #include "Engine/StaticMeshActor.h"
 #include "Engine/StaticMesh.h"
 #include "EngineUtils.h"
@@ -37,8 +40,21 @@ void ALunarGameMode::ValidateFieldOperationsChecks(){
  if(Safe&&C&&C->Enabled&&P&&PC&&!Menu&&Stage==ELunarStage::Briefing){
   C->ValidateChecks(Check);
   {auto* Settings=ULunarSettings::Get();const auto BindingsBefore=Settings->Bindings;const FKey WorkBefore=Settings->Key(TEXT("Interact"));Check(!Settings->Rebind(TEXT("Interact"),EKeys::B)&&!Settings->Rebind(TEXT("Interact"),EKeys::G)&&Settings->Key(TEXT("Interact"))==WorkBefore,TEXT("Fixed board and scanner keys cannot also be rebound to a gameplay action"));Settings->Bindings.Add(TEXT("Interact"),EKeys::B);Check(Settings->Key(TEXT("Interact"))!=EKeys::B,TEXT("Legacy board-key binding falls back to its default"));Settings->Bindings.Add(TEXT("Interact"),EKeys::G);Check(Settings->Key(TEXT("Interact"))!=EKeys::G,TEXT("Legacy scanner-key binding falls back to its default"));Settings->Bindings=BindingsBefore;}
+  Check(LunarMissionIntro::Eligible(TEXT("Apollo12"),TEXT(""),true)&&LunarMissionIntro::Eligible(TEXT("MoonBase"),TEXT(""),true)&&!LunarMissionIntro::Eligible(TEXT("MarsBase"),TEXT(""),true)&&!LunarMissionIntro::Eligible(TEXT("Apollo12"),TEXT("ResumeApollo=1"),true)&&!LunarMissionIntro::Eligible(TEXT("Apollo12"),TEXT(""),false),TEXT("Moon intro applies to selected new Moon missions only; resumes menu and Mars never reuse lunar footage"));
+  P->FastStride=false;P->UpdateStrideSpeed();const float ExpectedWalk=Mars?320.f:140.f;const auto* Movement=P->GetCharacterMovement();Check(FMath::IsNearlyEqual(Movement->MaxWalkSpeed,ExpectedWalk)&& (Mars||FMath::IsNearlyEqual(Movement->JumpZVelocity,140.f)),TEXT("Destination movement uses deliberate Moon walk and hop settings while Mars retains its own tuning"));
+  if(!Mars){
+   TGuardValue<ELunarStage> JumpStage(Stage,Apollo?ELunarStage::ApolloCheckout:ELunarStage::FindModule);TGuardValue<bool> JumpBriefed(C->Briefed,true);
+   auto* Move=P->GetCharacterMovement();const FTransform BeforeJump=P->GetActorTransform();const FVector VelocityBefore=Move->Velocity;const EMovementMode ModeBefore=Move->MovementMode;
+   P->ConsumeMovementInputVector();P->SetActorLocation(BeforeJump.GetLocation()+FVector(0,0,600),false,nullptr,ETeleportType::TeleportPhysics);Move->SetMovementMode(MOVE_Falling);Move->Velocity=FVector(120,20,100);
+   P->Forward(-1);P->Right(1);Check(P->GetPendingMovementInputVector().IsNearlyZero()&&Move->AirControl==0&&Move->FallingLateralFriction==0&&Move->BrakingDecelerationFalling==0,TEXT("Moon movement controls contribute no airborne steering or artificial horizontal braking"));
+   Move->TickComponent(.05f,LEVELTICK_All,nullptr);Check(FMath::IsNearlyEqual(Move->Velocity.X,120.f,.05f)&&FMath::IsNearlyEqual(Move->Velocity.Y,20.f,.05f)&&Move->Velocity.Z<100&&Move->IsFalling(),TEXT("Actual airborne movement advances under lunar gravity while preserving takeoff horizontal momentum"));
+   P->SetActorTransform(BeforeJump,false,nullptr,ETeleportType::TeleportPhysics);Move->SetMovementMode(ModeBefore);Move->Velocity=VelocityBefore;P->LastStepPosition=P->GetActorLocation();Move->SetMovementMode(MOVE_Walking);P->Forward(1);Check(!P->GetPendingMovementInputVector().IsNearlyZero(),TEXT("Ground contact restores ordinary directional movement input"));P->ConsumeMovementInputVector();Move->SetMovementMode(ModeBefore);
+  }
+  if(!Apollo&&!Mars){TArray<UTextRenderComponent*> BoardText;if(C->ResourceBoard)C->ResourceBoard->GetComponents(BoardText);Check(C->ResourceBoard&&C->ResourceBoard->ActorHasTag(TEXT("Lunar.ServiceDock.NoInstructionBoard"))&&BoardText.IsEmpty(),TEXT("SELENE retains its low service anchor without the standing FIELD OPERATIONS instruction board"));}
   ApolloConfirmNew=false;DepartureAuthorizedNewRun=false;const float Before=Oxygen;
+  const auto StableTarget=PC->GetViewTarget();const FTransform StableCamera=P->Camera->GetComponentTransform(),StablePawn=P->GetActorTransform();const float StableFov=P->Camera->FieldOfView;
   StartMission();auto* Panel=Cast<ULunarOperationsPanel>(P->ActivePanel);
+  Check(!ALunarDepartureScene::Active(this)&&PC->GetViewTarget()==StableTarget&&P->Camera->GetComponentTransform().Equals(StableCamera,.001f),TEXT("Pre-EVA opens without spawning a cabin or taking over the player's camera"));
   Check(C->Preparing&&Panel&&Panel->View==EFieldPanelView::Preflight&&Stage==ELunarStage::Briefing,TEXT("Start enters dedicated pre-EVA checks rather than committing mission"));
   if(Panel){
    Check(C->CanUsePanel(Panel,true)&&!Paused,TEXT("Owned visible preflight panel accepts checks while mission clock remains briefing"));
@@ -50,17 +66,19 @@ void ALunarGameMode::ValidateFieldOperationsChecks(){
     C->Advance(.4f);Check((C->PreflightMask&(1<<I))==0,TEXT("Partial check time does not mark completion"));
     Paused=true;const float Remaining=C->ActionRemaining;C->Advance(5);Check(C->ActionRemaining==Remaining&&Oxygen==Before,TEXT("Pause freezes pending suit action and oxygen"));Paused=false;
     C->Advance(.7f);Check((C->PreflightMask&(1<<I))!=0&&C->PendingCheck==INDEX_NONE,TEXT("Elapsed authored check timer completes exactly one step"));
-    if(I<3)Check(C->PerformAction(TEXT("NextCheck")),TEXT("A completed system requires the explicit Next action before the next check"));
+    if(I<3)Check(C->PreflightCursor==I+1&&!C->PerformAction(TEXT("NextCheck")),TEXT("A completed check unlocks the next button directly without a Next action"));
    }
    Check(C->Prepared&&C->PreflightMask==15,TEXT("All four checks unlock hatch"));
    P->ClosePanel();const float SceneBefore=DepartureScene?DepartureScene->PresentationTime():0;C->Preparing=true;
    if(DepartureScene)DepartureScene->AdvancePresentation(20);ALunarDepartureScene::Skip(this);
    Check(Stage==ELunarStage::Briefing&&(!DepartureScene||DepartureScene->PresentationTime()==SceneBefore),TEXT("Closing checks and skip cannot bypass a pending EVA gate"));
-   P->StartMission();Panel=Cast<ULunarOperationsPanel>(P->ActivePanel);Check(Panel&&Panel->View==EFieldPanelView::Preflight,TEXT("Enter reopens pending training checks"));
+   const auto SavedStatus=ApolloSaveStatus;if(Apollo){ApolloSaveStatus=EApolloSaveStatus::Ready;DepartureAuthorizedNewRun=true;}
+   P->StartMission();Check(!Apollo||DepartureAuthorizedNewRun,TEXT("Reopening prepared pre-EVA preserves existing new-run authorization in the presence of a checkpoint"));ApolloSaveStatus=SavedStatus;Panel=Cast<ULunarOperationsPanel>(P->ActivePanel);Check(Panel&&Panel->View==EFieldPanelView::Preflight,TEXT("Enter reopens pending training checks"));
    Check(C->PerformAction(TEXT("Launch")),TEXT("Completed owned panel launches departure"));
    if(DepartureScene)DepartureScene->AdvancePresentation(ALunarDepartureScene::Duration);else CommitMissionStart();
    Panel=Cast<ULunarOperationsPanel>(P->ActivePanel);
    Check(IsActive()&&C->Prepared&&!C->Preparing&&C->Briefed&&!Panel&&!Paused,TEXT("Hatch handover starts surface play without an automatic resource modal"));
+   Check(!ALunarDepartureScene::Active(this)&&PC->GetViewTarget()==StableTarget&&P->Camera->GetComponentTransform().Equals(StableCamera,.001f)&&P->GetActorTransform().Equals(StablePawn,.001f)&&FMath::IsNearlyEqual(P->Camera->FieldOfView,StableFov),TEXT("Completed checks enter gameplay immediately with identical pawn camera and FOV"));
    Check(C->Difficulty==1&&C->UtilityCapacity==100&&C->DataCapacityMB==1.2f,TEXT("Direct handover locks the balanced authored budget"));
    const float Locked=Oxygen;const auto StartedStage=Stage;
    Check(C->OpenPanel(EFieldPanelView::Briefing),TEXT("The optional locked resource briefing remains readable"));
@@ -142,10 +160,11 @@ void ALunarGameMode::ValidateFieldOperationsChecks(){
     Check(C->PerformAction(TEXT("WireIsolate")),TEXT("Paused owned wire UI validates physical reach and isolates toy circuit"));
     for(int32 I=0;I<C->WirePairs();++I){int32 Match=INDEX_NONE;for(int32 J=0;J<C->WirePairs();++J)if(C->WireLeftLabel(I)==C->WireRightLabel(J))Match=J;Check(Match!=INDEX_NONE&&C->PerformAction(TEXT("WireLeft"),I)&&C->PerformAction(TEXT("WireRight"),Match),TEXT("Matching text identifiers connect through real UI action authority"));}
     Check(C->WireComplete&&C->WirePendingCommit&&RepairStep==1&&Paused&&P->ActivePanel,TEXT("Matching every cable keeps the power sequence isolated until explicit verification"));
-    Check(C->PerformAction(TEXT("WireVerify"))&&RepairStep==2&&!C->WirePendingCommit&&Paused&&P->ActivePanel&&!C->PerformAction(TEXT("WireVerify")),TEXT("Verify commits the existing cable step exactly once and retains the online result panel"));
+    Check(C->PerformAction(TEXT("WireVerify"))&&RepairStep==2&&!C->WirePendingCommit&&!Paused&&!P->ActivePanel&&!C->PerformAction(TEXT("WireVerify")),TEXT("Verify commits the cable exactly once and immediately closes its panel with confirmation"));
    }
   }
   if(P->ActivePanel)P->ClosePanel();
+  LunarSeleneProps::ValidateChecks(this,Check);
   ALunarSurfaceVehicle::ValidateChecks(this,Check);
   if(Apollo){
    Stage=ELunarStage::ApolloCheckout;ApolloStarted=true;ApolloRunId=FGuid::NewGuid();

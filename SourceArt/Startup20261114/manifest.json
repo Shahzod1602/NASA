@@ -1,0 +1,23 @@
+{
+  "name": "AstroKid Expeditions startup reference",
+  "received": "2026-11-14",
+  "source": "Team-supplied NASA Telegram group, message 1421",
+  "original_author": "Unconfirmed; original vector/PNG requested",
+  "sha256": "0d6143aa9c87a7c83ca60b6fda4d5494995a76d861267c6a5097e3c4c6894d4e",
+  "size": [
+    1280,
+    668
+  ],
+  "adaptation": "Original JPEG preserved. Runtime fit with black letterbox, live Slate spinner replaces the baked spinner area. NASA/partner montage 1422 is not imported or shipped pending confirmation.",
+  "scope": "Startup presentation only; technical project name remains LunarRescue.",
+  "endorsement": "No NASA endorsement or partnership is asserted.",
+  "inventory_reference": {
+    "source": "Team-provided reference, message 1395",
+    "sha256": "2673d2e25d375938c1467829f0352fb4953312a73f87defc225586a79098ebd5",
+    "role": "Unmodified reference atlas sampled only for illustrative equipment thumbnails; item states and quantities remain live gameplay data.",
+    "original_author": "Unconfirmed"
+  },
+  "public_distribution": {
+    "v0.9.2": "Reference binaries and imported reference textures excluded pending source/redistribution confirmation; metadata retained only."
+  }
+}

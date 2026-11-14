@@ -22,3 +22,11 @@ __pycache__/
 # Local test artifacts; verification notes stay in version control
 /Reports/*
 !/Reports/STORY_UPDATE.md
+
+# Team-supplied intro source/redistribution rights pending; local preview only.
+/Content/Movies/MoonArrival.mp4
+
+# Unconfirmed team-reference art remains local; public builds use original text symbols.
+/Content/Lunar/Frontend/Startup20261114/
+/SourceArt/Startup20261114/AstroKidReference.jpg
+/SourceArt/Startup20261114/InventoryReference.jpg

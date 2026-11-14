@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "completed_utc": "2026-11-14T17:14:14.230561+00:00",
+  "base_commit": "53dce53533ee00a25176c9b3a03e919503472016",
+  "source_uncommitted": true,
+  "published_release": false,
+  "executable_sha256": "7c7af4021b631dc5467bf08724cae34e589136f945ea71b74647c5c628923038",
+  "receipts": {
+    "rescue": {
+      "path": "Reports/Feedback20261114Evening/package-rescue-20261114-220507-814/run-summary.json",
+      "sha256": "d9b061979b8c10883290cc34317f5432d1f6faed1beebacfd437f0f6eadf0b4e",
+      "assertions": 126
+    },
+    "field": {
+      "path": "Reports/FieldOperations20261104/package-test-1280x720-20261114-220611-783/run-summary.json",
+      "sha256": "48d2ad0444251bbc0baa7e17d0e819a628fe463bff833a895bc3ea1503ca76b6",
+      "assertions": 744,
+      "source_fingerprint_sha256": "356dc571126463ba4e86a134a74434630409b0a3775fe75c4df0d3752c62a473"
+    },
+    "gameplay": {
+      "path": "Reports/Gameplay20261103/package-test-1280x720-20261114-220633-032/run-summary.json",
+      "sha256": "96460010808280e02e1795821ca5a50b60f2f6c671daf9066153ce91d40f5560",
+      "assertions": 618,
+      "source_fingerprint_sha256": "356dc571126463ba4e86a134a74434630409b0a3775fe75c4df0d3752c62a473"
+    },
+    "stride": {
+      "path": "Reports/TaskFixes20261106/package-stride-nullrhi-20261114-220652-134/run-summary.json",
+      "sha256": "16842723690d8846ad5ed11736b04e9ec77a6336f9c50499dc02c4a81252f895",
+      "assertions": 57,
+      "source_fingerprint_sha256": "356dc571126463ba4e86a134a74434630409b0a3775fe75c4df0d3752c62a473"
+    },
+    "field_render": {
+      "path": "Reports/FieldOperations20261104/package-review-1280x720-20261114-220744-549/run-summary.json",
+      "sha256": "2d85a15521b309a10eb3bb54b772eebba09dd37c869fced62339c69636519493",
+      "assertions": 105,
+      "source_fingerprint_sha256": "356dc571126463ba4e86a134a74434630409b0a3775fe75c4df0d3752c62a473"
+    },
+    "carry_render": {
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261114-220825-865/run-summary.json",
+      "sha256": "a7fe9e3a4db4a414fe0e5d31b61c09a20dd0061a5f955bd1b2c3f403da464ee6",
+      "assertions": 27,
+      "source_fingerprint_sha256": "356dc571126463ba4e86a134a74434630409b0a3775fe75c4df0d3752c62a473"
+    }
+  },
+  "source_fingerprint_sha256": "356dc571126463ba4e86a134a74434630409b0a3775fe75c4df0d3752c62a473",
+  "native_total_excluding_loading": 1623,
+  "selection_assertions": 66,
+  "startup_native_assertions": 12,
+  "startup_render_frames": 7,
+  "full_intro_seconds": [
+    30.241,
+    30.106
+  ],
+  "missing_intro_direct_entries": 2,
+  "integrity": {
+    "utc": "2026-11-14T17:14:14.230561+00:00",
+    "owner_files_checked": 53,
+    "owner_files_unchanged": true,
+    "owner_differences": [],
+    "maps": [
+      {
+        "path": "Content/Lunar/Maps/Apollo12.umap",
+        "head_lfs_sha256": "7cd63371b866a7914ad9bd178b109e217d57b9032c639e0e9ee4f6ac897569f4",
+        "actual_sha256": "7cd63371b866a7914ad9bd178b109e217d57b9032c639e0e9ee4f6ac897569f4",
+        "matched": true
+      },
+      {
+        "path": "Content/Lunar/Maps/MoonBase.umap",
+        "head_lfs_sha256": "ace03a8c6ad86b3b29c05dd5478b614cc11cefca0baeeb941065502c62134c0d",
+        "actual_sha256": "ace03a8c6ad86b3b29c05dd5478b614cc11cefca0baeeb941065502c62134c0d",
+        "matched": true
+      },
+      {
+        "path": "Content/Mars/Maps/MarsBase.umap",
+        "head_lfs_sha256": "d01d7605533777664a5dda974d09c4640a8a91e5830fe01b67198b54d1f7d4e4",
+        "actual_sha256": "d01d7605533777664a5dda974d09c4640a8a91e5830fe01b67198b54d1f7d4e4",
+        "matched": true
+      },
+      {
+        "path": "Content/Rescue/Maps/MissionSelect.umap",
+        "head_lfs_sha256": "9f098ec909532fa9284dd0e930ffeb055ccaf20acaa824123011fbbdb3c2dd25",
+        "actual_sha256": "9f098ec909532fa9284dd0e930ffeb055ccaf20acaa824123011fbbdb3c2dd25",
+        "matched": true
+      }
+    ],
+    "all_maps_match_head": true
+  },
+  "performance": {
+    "capture": "D:\\LunarRescue\\Reports\\Performance\\feedback-20261114-after-quiet\\capture.csv",
+    "captured_frames": 1200,
+    "warmup_frames_excluded": 600,
+    "sample_frames": 600,
+    "sample_seconds": 10.002473000000007,
+    "mean_fps": 59.98516566853017,
+    "one_percent_low_fps": 54.03326828328201,
+    "p95_frame_ms": 17.5618,
+    "p99_frame_ms": 17.9458,
+    "largest_frame_ms": 19.4242,
+    "method": "1% low = 1000 / mean frame ms of the slowest 1% of sampled frames",
+    "limitations": "Rendered offscreen opening route, normal delta time, 60 FPS cap; not a human playtest; captures alone do not validate presentation smoothness. VRAM is not inferred from zero DX11 CSV counters."
+  },
+  "human_playtests": 0,
+  "public_release_ready": false,
+  "pending": [
+    "Original video/art source and redistribution details",
+    "Factual NASA/partner montage confirmation",
+    "Human playtest and occupied-rover performance measurement"
+  ]
+}

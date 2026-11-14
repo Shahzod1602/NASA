@@ -33,3 +33,5 @@ SourceArt/IntrepidCabin20261111/Raw/*.glb filter=lfs diff=lfs merge=lfs -text
 SourceArt/ExpeditionSuit20261113/**/*.glb filter=lfs diff=lfs merge=lfs -text
 SourceArt/MuseumRover20261113/**/*.glb filter=lfs diff=lfs merge=lfs -text
 SourceArt/Perseverance20261114/**/*.glb filter=lfs diff=lfs merge=lfs -text
+
+Docs/Feedback20261114Evening/** -text -whitespace

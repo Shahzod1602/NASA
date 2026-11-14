@@ -48,7 +48,7 @@ void UFieldOperationsComponent::ResetNewRun(bool PreservePrepared){
 bool UFieldOperationsComponent::PreflightRequired()const{auto* G=Game();return Enabled&&G&&!G->Menu&&G->Stage==ELunarStage::Briefing&&!Prepared;}
 bool UFieldOperationsComponent::BeginPreflight(){
  auto* G=Game();if(!PreflightRequired()||G->Paused)return false;
- if(!Preparing){ResetNewRun(false);Preparing=true;BuildWorld();if(!ALunarDepartureScene::Begin(G)){Feedback=TEXT("Cabin presentation unavailable. The same authored checks remain available here.");}}
+ if(!Preparing){ResetNewRun(false);Preparing=true;BuildWorld();}
  OpenPanel(EFieldPanelView::Preflight);return true;
 }
 bool UFieldOperationsComponent::GateMissionStart(){if(!PreflightRequired())return false;BeginPreflight();return true;}
@@ -106,7 +106,7 @@ void UFieldOperationsComponent::Advance(float Delta){
  auto* G=Game();auto* P=Pilot();if(!Enabled||!G||!P||!FMath::IsFinite(Delta)||Delta<=0)return;
  if(G->Paused||G->Journal||LunarLoading::IsBusy()){CancelScanner();RefreshWorldVisibility();return;}
  if(Preparing&&G->Stage==ELunarStage::Briefing){
-  if(PendingCheck>=0&&PendingCheck<4&&ActionRemaining>0){ActionRemaining=FMath::Max(0.f,ActionRemaining-Delta);if(ActionRemaining==0){PreflightMask|=1<<PendingCheck;PendingCheck=INDEX_NONE;SpendCharge(.2f);Prepared=PreflightMask==15;Feedback=Prepared?TEXT("Four training checks complete. Open the hatch to begin departure."):TEXT("Training check recorded. Continue with the next suit control.");++Revision;}}
+  if(PendingCheck>=0&&PendingCheck<4&&ActionRemaining>0){ActionRemaining=FMath::Max(0.f,ActionRemaining-Delta);if(ActionRemaining==0){PreflightMask|=1<<PendingCheck;PendingCheck=INDEX_NONE;PreflightCursor=FMath::Min(PreflightStep(),3);SpendCharge(.2f);Prepared=PreflightMask==15;Feedback=Prepared?TEXT("Four training checks complete. Open the hatch to begin surface operations."):TEXT("Training check recorded. Continue with the next suit control.");++Revision;}}
   return;
  }
  if(!G->IsActive()){CancelScanner();return;}
@@ -134,7 +134,7 @@ bool UFieldOperationsComponent::PerformAction(FName Action,int32 Argument){
  }
  if(Action==TEXT("NextCheck"))return Panel->View==EFieldPanelView::Preflight&&ContinuePreflight();
  if(Action==TEXT("Launch")){
-  if(Panel->View!=EFieldPanelView::Preflight||!Preparing||G->Stage!=ELunarStage::Briefing||!Prepared||PendingCheck!=INDEX_NONE)return false;Preparing=false;P->ClosePanel();if(!ALunarDepartureScene::Active(G))G->StartMission();++Revision;return true;
+  if(Panel->View!=EFieldPanelView::Preflight||!Preparing||G->Stage!=ELunarStage::Briefing||!Prepared||PendingCheck!=INDEX_NONE)return false;Preparing=false;P->ClosePanel();G->CommitMissionStart();++Revision;return true;
  }
  if(Action==TEXT("Difficulty")){
   if(Panel->View!=EFieldPanelView::Briefing||Briefed||Argument<0||Argument>2)return false;Difficulty=Argument;Feedback=TEXT("Game difficulty selected. Review the resource budget, then confirm once.");++Revision;return true;
@@ -167,7 +167,7 @@ bool UFieldOperationsComponent::PerformAction(FName Action,int32 Argument){
  if(Action==TEXT("WireVerify")){
   if(Panel->View!=EFieldPanelView::Wire||!WireComplete||!WirePendingCommit||G->Apollo||G->Stage!=ELunarStage::RestorePower||G->RepairStep!=1||P->PanelWasPaused||!Visible(P,G->InteractionTarget(),G->InteractionReach(G->InteractionTarget())))return false;
   P->ClosePanel();if(!G->CanInteract())return false;G->Interact();if(G->RepairStep!=2)return false;
-  WirePendingCommit=false;Feedback=TEXT("Cable verified. Restart the station with the normal work control to restore power.");++Revision;OpenPanel(EFieldPanelView::Wire);return true;
+  WirePendingCommit=false;Feedback=TEXT("Cable verified. Restart the station with the normal work control to restore power.");++Revision;P->ClosePanel();G->Message(Feedback);return true;
  }
  if(Action==TEXT("WireReset")){
   if(Panel->View!=EFieldPanelView::Wire||WireComplete&&!WirePendingCommit)return false;WireMask=0;WireLeft=INDEX_NONE;WireIsolated=WireComplete=WirePendingCommit=false;Feedback=TEXT("Uncommitted toy connections reset.");++Revision;return true;
@@ -205,7 +205,7 @@ bool UFieldOperationsComponent::TryInteract(){
  if(Riding())return ALunarSurfaceVehicle::TryInteract(G);
  if(G->CanInteract()){CancelScanner();return false;}
  if(Visible(P,ResourceBoard,360))return OpenPanel(Briefed?EFieldPanelView::Resources:EFieldPanelView::Briefing);
- if(Vehicle&&Visible(P,Vehicle,500)){if(!VehicleInspected)return OpenPanel(EFieldPanelView::Vehicle);if(!Near(P,Vehicle,320)){G->Message(TEXT("Rover checked. Move within 3.2 m to board."));return true;}return ALunarSurfaceVehicle::TryInteract(G);}
+ if(Vehicle&&Visible(P,Vehicle,320)){const bool WasInspected=VehicleInspected,WasUnlocked=ScannerUnlocked;VehicleInspected=ScannerUnlocked=true;const bool Handled=ALunarSurfaceVehicle::TryInteract(G);if(Riding()){++Revision;return true;}VehicleInspected=WasInspected;ScannerUnlocked=WasUnlocked;return Handled;}
  const int32 Package=NearbyPackage(true);if(Package!=INDEX_NONE){
   if(CollectedMask&(1<<Package))return false;if(CargoMassKG+TrainingPackageMassKG>MaxCargoKg()+.001f){Feedback=TEXT("Training payload capacity reached. Return to the lander and deposit existing cartridges first.");G->Message(Feedback);++Revision;return true;}CollectedMask|=1<<Package;CargoMassKG=Bits(CollectedMask&~DeliveredMask)*TrainingPackageMassKG;LastPackage=Package;PackagePreviewSeconds=2.2f;
   if(SamplePackages.IsValidIndex(Package))SamplePackages[Package]->SetActorHiddenInGame(true);Feedback=TEXT("SIMULATED cartridge packed. Its remote LCROSS label is educational metadata, not a water detection here.");G->Message(Feedback);++Revision;if(G->Apollo)G->SaveApolloCheckpoint();return true;
@@ -226,7 +226,7 @@ FString UFieldOperationsComponent::Title(EFieldPanelView V)const{
  switch(V){case EFieldPanelView::Preflight:return TEXT("PRE-EVA / TRAINING CHECKS");case EFieldPanelView::Briefing:return TEXT("SURFACE MISSION / RESOURCE BRIEFING");case EFieldPanelView::Vehicle:return TEXT("TRAINING ROVER / INSPECTION");case EFieldPanelView::Wire:return TEXT("POWER INTERFACE / MATCH THE PORTS");case EFieldPanelView::Inventory:return TEXT("TRAINING CARGO / DELIVERY LOG");case EFieldPanelView::Sample:return TEXT("REMOTE WATER / SOURCE LABEL");default:return TEXT("FIELD OPERATIONS / RESOURCE BOARD");}
 }
 FString UFieldOperationsComponent::Instructions(EFieldPanelView V)const{
- if(V==EFieldPanelView::Preflight)return TEXT("Run the highlighted system check. At 100%, choose Next. Complete all four checks to open the hatch.");
+ if(V==EFieldPanelView::Preflight)return TEXT("Select each unlocked system check. Completion unlocks the next row. Finish all four to open the hatch.");
  if(Preparing&&V==EFieldPanelView::Resources)return TEXT("Choose a local waypoint or inspect the planet overview. Mission time has not started.");
  if(V==EFieldPanelView::Inventory)return TEXT("Inspect your equipment and collected items. Tools keep their normal mission requirements.");
  if(V==EFieldPanelView::Briefing)return TEXT("Choose a gameplay difficulty, inspect the forecast and confirm once. Budgets use authored tuning; Professional is a game label, not astronaut certification. Budget/finance is deferred.");

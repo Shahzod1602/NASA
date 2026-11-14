@@ -1,8 +1,8 @@
 """Preserve the credited museum rover and derive a body plus four wheel pivots.
 
-Geometry and UVs are retained. The source's three 'Wheels' material primitives
-are separated by their four disjoint spatial quadrants, without inventing
-geometry or changing the scan's design. Embedded textures are capped at 2K.
+Geometry and UVs are retained. Connected stationary mudguard shells in the
+shared Wheels material remain on the chassis; tire shells are separated into
+four spatial quadrants with measured circular tire pivots. Embedded textures are capped at 2K.
 """
 import argparse, copy, hashlib, io, json, struct, sys
 from pathlib import Path
@@ -48,14 +48,37 @@ for node in source['scenes'][source.get('scene',0)]['nodes']:walk(node,np.eye(4)
 
 all_positions=np.concatenate([values['POSITION'] for _,values,_ in parts])
 ground_y=float(all_positions[:,1].min())
+# The shared Wheels material also contains stationary orange mudguards.
+# Classify complete connected shells against the measured tire envelope; never
+# cut triangles or infer a moving part merely from its material name.
+def tire_faces(values,faces):
+ positions=values['POSITION'];_,inverse=np.unique(np.round(positions,5),axis=0,return_inverse=True)
+ indexed=inverse[faces];parent=list(range(int(inverse.max())+1))
+ def find(a):
+  while parent[a]!=a:parent[a]=parent[parent[a]];a=parent[a]
+  return a
+ for a,b,c in indexed:
+  a=find(int(a));b=find(int(b));c=find(int(c));parent[b]=a;parent[c]=a
+ labels=np.array([find(i) for i in range(len(parent))]);shell=labels[indexed[:,0]]
+ keep=np.ones(len(faces),dtype=bool)
+ for label in np.unique(shell):
+  mask=shell==label;points=positions[np.unique(faces[mask])]
+  centre_x=.942 if points[:,0].mean()>0 else -1.027
+  radial=np.hypot(points[:,0]-centre_x,points[:,1]-.3723)
+  if radial.max()>.365:keep[mask]=False
+ return keep
+
 groups=[[] for _ in range(5)]
+stationary_triangles=0
 for primitive,values,faces in parts:
  is_wheel=source['materials'][primitive['material']].get('name')=='Wheels'
  if not is_wheel:groups[0].append((primitive,values,faces));continue
- assigned=np.zeros(len(faces),dtype=np.uint8)
+ moving=tire_faces(values,faces)
+ if (~moving).any():groups[0].append((primitive,values,faces[~moving]));stationary_triangles+=int((~moving).sum())
+ assigned=(~moving).astype(np.uint8)
  for group,(x,z) in enumerate([(1,-1),(1,1),(-1,-1),(-1,1)],1):
   vertices=values['POSITION'][faces]
-  keep=(vertices[:,:,0]*x>0).all(axis=1)&(vertices[:,:,2]*z>0).all(axis=1)
+  keep=moving&(vertices[:,:,0]*x>0).all(axis=1)&(vertices[:,:,2]*z>0).all(axis=1)
   assert keep.any();assigned+=keep;groups[group].append((primitive,values,faces[keep]))
  assert (assigned==1).all(), 'A wheel triangle crosses quadrant boundaries; manual review required'
 
@@ -105,11 +128,11 @@ def make(name,group,origin):
 
 entries=[make('SM_MuseumRover_Body',groups[0],np.array([0,ground_y,0]))]
 for index,group in enumerate(groups[1:]):
- positions=np.concatenate([values['POSITION'][np.unique(faces)] for _,values,faces in group]);pivot=(positions.min(axis=0)+positions.max(axis=0))*.5
+ positions=np.concatenate([values['POSITION'][np.unique(faces)] for _,values,faces in group]);pivot=np.array([.942 if index<2 else -1.027,.3722925,-.774 if index%2==0 else .786])
  entry=make('SM_MuseumRover_Wheel'+str(index),group,pivot);entry['contact_offset_cm']=[float(pivot[0]*100),float(pivot[2]*100),0];entry['radius_cm']=float((positions[:,1].max()-positions[:,1].min())*50);entries.append(entry)
 assert sum(e['triangles'] for e in entries)==sum(len(faces) for _,_,faces in parts)
 original=output/'Raw'/args.source.name;original.parent.mkdir(parents=True,exist_ok=True)
 if original.exists():assert original.read_bytes()==raw
 else:original.write_bytes(raw)
-manifest={'source':source['asset'],'source_sha256':hashlib.sha256(raw).hexdigest(),'ground_y_m':ground_y,'geometry_triangles_preserved':True,'coordinate_contract':'glTF metres; Unreal importer converts Y-up to Z-up centimetres','texture_max_dimension':2048,'derivative_license':'CC-BY-SA-4.0','parts':entries}
+manifest={'source':source['asset'],'source_sha256':hashlib.sha256(raw).hexdigest(),'ground_y_m':ground_y,'geometry_triangles_preserved':True,'stationary_mudguard_triangles':stationary_triangles,'separation':'Connected shells outside measured tire circle stay attached to chassis; all source triangles retained','coordinate_contract':'glTF metres; Unreal importer converts Y-up to Z-up centimetres','texture_max_dimension':2048,'derivative_license':'CC-BY-SA-4.0','parts':entries}
 (output/'adaptation.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf-8');print(json.dumps(manifest,indent=2))

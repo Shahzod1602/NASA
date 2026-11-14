@@ -1,3 +1,4 @@
+#include "Misc/PackageName.h"
 #include "LunarPanels.h"
 #include "LunarSettings.h"
 #include "LunarGame.h"
@@ -185,9 +186,9 @@ TSharedRef<SWidget> ULunarMainMenu::RebuildWidget(){
  IntroLayer=WidgetTree->ConstructWidget<UCanvasPanel>();Place(C,IntroLayer,0,0,1280,720);
  Shade(WidgetTree,IntroLayer,0,0,1280,720,FLinearColor::Black);
  IntroImage=WidgetTree->ConstructWidget<UImage>();
- auto* IntroTexture=LoadObject<UTexture2D>(nullptr,TEXT("/Game/Lunar/Frontend/T_IntroReference.T_IntroReference"));
- if(IntroTexture){IntroImage->SetBrushFromTexture(IntroTexture);Place(IntroLayer,IntroImage,0,0,1280,720);}
- else{Place(IntroLayer,Label(WidgetTree,TEXT("L U N A R R E S C U E"),44),286,295,920,65);Place(IntroLayer,Label(WidgetTree,TEXT("E X P E D I T I O N S"),19,Dim),452,372,700,40);UE_LOG(LogTemp,Warning,TEXT("NASA_INTRO reference texture missing; authored text fallback"));}
+ auto* IntroTexture=FPackageName::DoesPackageExist(TEXT("/Game/Lunar/Frontend/Startup20261114/T_AstroKid"))?LoadObject<UTexture2D>(nullptr,TEXT("/Game/Lunar/Frontend/Startup20261114/T_AstroKid.T_AstroKid")):nullptr;
+ if(IntroTexture){IntroImage->SetBrushFromTexture(IntroTexture);Place(IntroLayer,IntroImage,0,26,1280,668);Shade(WidgetTree,IntroLayer,1136,606,64,64,FLinearColor::Black);}
+ else{auto* Wordmark=Label(WidgetTree,TEXT("AstroKid"),44);Wordmark->Rename(TEXT("PublicStartupWordmark"));Place(IntroLayer,Wordmark,500,295,640,85);Place(IntroLayer,Label(WidgetTree,TEXT("E X P E D I T I O N S"),19,Dim),452,372,700,60);UE_LOG(LogTemp,Display,TEXT("NASA_INTRO original text presentation; optional reference artwork absent"));}
  BeginIntro();
  if(FParse::Param(FCommandLine::Get(),TEXT("FrontendReview"))){
   FTimerHandle Handle;GetWorld()->GetTimerManager().SetTimer(Handle,FTimerDelegate::CreateWeakLambda(this,[this,Step=0]()mutable{
@@ -288,12 +289,12 @@ void ULunarMainMenu::BeginIntro(bool Force){
  if(IntroShownThisProcess&&!Force){IntroState.Elapsed=FLunarIntroState::Duration;IntroState.Active=false;IntroLayer->SetVisibility(ESlateVisibility::Collapsed);return;}
  IntroShownThisProcess=true;IntroState.Begin();MissionSelection=false;SelectedMission=INDEX_NONE;
  HomePage->SetVisibility(ESlateVisibility::Collapsed);SelectionPage->SetVisibility(ESlateVisibility::Collapsed);
- IntroLayer->SetVisibility(ESlateVisibility::Visible);IntroLayer->SetRenderOpacity(1);if(IntroImage)IntroImage->SetRenderOpacity(0);
+ IntroLayer->SetVisibility(ESlateVisibility::Visible);IntroLayer->SetRenderOpacity(1);if(IntroImage)IntroImage->SetRenderOpacity(1);
 }
 void ULunarMainMenu::AdvanceIntro(float Delta){
  if(!IntroState.Active)return;
  IntroState.Advance(Delta);
- if(IntroImage)IntroImage->SetRenderOpacity(IntroState.ImageAlpha());
+ if(IntroImage)IntroImage->SetRenderOpacity(1);
  IntroLayer->SetRenderOpacity(IntroState.LayerAlpha());
  if(IntroState.RevealingMenu())HomePage->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
  if(!IntroState.Active){IntroLayer->SetVisibility(ESlateVisibility::Collapsed);UE_LOG(LogTemp,Display,TEXT("NASA_INTRO completed before menu input enabled"));}

@@ -12,15 +12,17 @@
   "source_sha256": "f416182a410f98e562d50661ae408affa613e67cfd1e9af72e82a1c6d66fb19b",
   "ground_y_m": 0.014132458716630936,
   "geometry_triangles_preserved": true,
+  "stationary_mudguard_triangles": 12900,
+  "separation": "Connected shells outside measured tire circle stay attached to chassis; all source triangles retained",
   "coordinate_contract": "glTF metres; Unreal importer converts Y-up to Z-up centimetres",
   "texture_max_dimension": 2048,
   "derivative_license": "CC-BY-SA-4.0",
   "parts": [
     {
       "name": "SM_MuseumRover_Body",
-      "triangles": 271486,
-      "sha256": "38c30e342626d5c7bb54a1defd6af950c11b9da6d3036ef92ec753871f31658d",
-      "bytes": 39881680,
+      "triangles": 284386,
+      "sha256": "dab9e688d091976dc3a75c502779ae1128234a54d95944738265f4d8d807738f",
+      "bytes": 44527140,
       "source_pivot_m": [
         0.0,
         0.014132458716630936,
@@ -29,71 +31,71 @@
     },
     {
       "name": "SM_MuseumRover_Wheel0",
-      "triangles": 47890,
-      "sha256": "dcf8d35a438864fc8903ac570bb2c4485a3aca7f068b84e51883ebec36ae7e4b",
-      "bytes": 6604140,
+      "triangles": 44865,
+      "sha256": "d16e00c7a05e9f1d1e81332cb247e73377c089c4c519d207199047f52a5714d3",
+      "bytes": 6483076,
       "source_pivot_m": [
-        0.9251545667648315,
-        0.3899807929992676,
-        -0.7528036832809448
+        0.942,
+        0.3722925,
+        -0.774
       ],
       "contact_offset_cm": [
-        92.51545715332031,
-        -75.28036499023438,
+        94.19999999999999,
+        -77.4,
         0
       ],
-      "radius_cm": 37.58481216430664
+      "radius_cm": 35.81598663330078
     },
     {
       "name": "SM_MuseumRover_Wheel1",
-      "triangles": 47890,
-      "sha256": "96d4442c14bc19f4b18376d6b4751ffb7e35763e33c93bb97817a0ad93d79ff1",
-      "bytes": 6604296,
+      "triangles": 44865,
+      "sha256": "a0237e514d990f31e3b1a80c583bf69420a838c04eb6e07b4466bd899aee60b8",
+      "bytes": 6483348,
       "source_pivot_m": [
-        0.9251531362533569,
-        0.389980673789978,
-        0.7655565738677979
+        0.942,
+        0.3722925,
+        0.786
       ],
       "contact_offset_cm": [
-        92.51531219482422,
-        76.55565643310547,
+        94.19999999999999,
+        78.60000000000001,
         0
       ],
-      "radius_cm": 37.58480453491211
+      "radius_cm": 35.815982818603516
     },
     {
       "name": "SM_MuseumRover_Wheel2",
-      "triangles": 48425,
-      "sha256": "934aabc924a23c572a857cddebce63d9ec2929ce926fe106f2eb40cb535af3cc",
-      "bytes": 6623432,
+      "triangles": 45000,
+      "sha256": "b624e4a841a1b3b668276c3ee000b21f61e545d52fd8e6b55127465fefe07d22",
+      "bytes": 6488564,
       "source_pivot_m": [
-        -1.0297768115997314,
-        0.38998064398765564,
-        -0.7528049349784851
+        -1.027,
+        0.3722925,
+        -0.774
       ],
       "contact_offset_cm": [
-        -102.9776840209961,
-        -75.2804946899414,
+        -102.69999999999999,
+        -77.4,
         0
       ],
-      "radius_cm": 37.584808349609375
+      "radius_cm": 35.81598663330078
     },
     {
       "name": "SM_MuseumRover_Wheel3",
-      "triangles": 48425,
-      "sha256": "95f6a3a80eaeeaa67465b1c757be733223046482dbff392ac942ee922444d703",
-      "bytes": 6622520,
+      "triangles": 45000,
+      "sha256": "197d8d18ede2e55e139ab382417fefbf8bf7e66175eca678f0af4a3f972e50ec",
+      "bytes": 6489216,
       "source_pivot_m": [
-        -1.029778242111206,
-        0.3899804949760437,
-        0.7655545473098755
+        -1.027,
+        0.3722925,
+        0.786
       ],
       "contact_offset_cm": [
-        -102.97782135009766,
-        76.55545806884766,
+        -102.69999999999999,
+        78.60000000000001,
         0
       ],
-      "radius_cm": 37.58480453491211
+      "radius_cm": 35.815982818603516
     }
   ]
 }

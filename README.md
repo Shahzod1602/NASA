@@ -1,5 +1,13 @@
 # Lunar Rescue
 
+## v0.9.2 — Public Feedback Preview — 14 November 2026
+
+[Preview release](https://github.com/Shahzod1602/NASA/releases/tag/apollo12-v0.9.2) · [Download Windows ZIP](https://github.com/Shahzod1602/NASA/releases/download/apollo12-v0.9.2/LunarRescue-Windows-v0.9.2.zip).
+
+Extract the entire ZIP and run **Windows/LunarRescue.exe**. This preview refines Moon movement, rover driver/cameras and boarding, cell grips, sequential EVA checks, backpack/map controls and SELENE supports/collision while retaining Mars tuning. It uses original text startup/equipment symbols; unconfirmed new video/reference-art binaries and owner saves/photos/settings are excluded. This is a separate feedback prerelease, not a competition submission. [Exact public-build validation and limits](Docs/PublicRelease20261114/PUBLIC_TEST_REPORT.md).
+
+The dated development and earlier release notes below retain their original artifact-specific context.
+
 ## v0.9.1 — Hand Pose Fix — 14 November 2026
 
 [Windows release](https://github.com/Shahzod1602/NASA/releases/tag/apollo12-v0.9.1) · [Download Windows ZIP](https://github.com/Shahzod1602/NASA/releases/download/apollo12-v0.9.1/LunarRescue-Expeditions-v0.9.1-Windows.zip).
@@ -604,3 +612,28 @@ See [MARS_UPDATE.md](MARS_UPDATE.md) for implementation and measured standalone 
 
 The shared suit now has shaped garment joints, detailed gloves and tool-aligned
 first-person grips. Rebuild instructions and validation: [SUIT_REFINEMENT.md](SUIT_REFINEMENT.md).
+
+
+### Local surface feedback candidate — 14 November 2026
+
+The current working tree adds deliberate shared Moon movement (140/220 cm/s),
+no airborne steering on the Moon, stable pre-EVA entry, a small SELENE service
+pad in place of the instruction board, a seated rover driver with mouse free-look
+and **V** cockpit/follow switching, stationary rover mudguards and two-handled
+cell carrying. These are authored gameplay settings, not validated astronaut or
+vehicle physics. Mars retains its own movement tuning.
+
+New Moon mission selections can play an optional local `Content/Movies/MoonArrival.mp4`
+after loading. Resume/restart and Mars do not reuse lunar footage. Missing media
+permits direct mission entry. The team-supplied clip's original source and public
+redistribution permission are unconfirmed; the binary is excluded from Git and
+must not be added to a public release without clearance. A source checkout works
+with the graceful fallback. No new public release is implied by this working tree.
+
+See [surface feedback changes and actual validation](Docs/Feedback20261114Evening/TASKS_AND_CHANGES.md).
+
+The additional local feedback candidate includes AstroKid startup presentation, direct sequential EVA checks, immediate verified cable-panel dismissal, live backpack details and SELENE prop/collision repairs. See [implementation notes](Docs/Feedback20261114Evening/TASKS_AND_CHANGES.md) and [actual test status](Docs/Feedback20261114Evening/TEST_REPORT.md). This paragraph does not announce a published build.
+
+## Public feedback preview v0.9.2
+
+The public Windows preview and source branch are separate from any submitted competition artifact. Unconfirmed reference-art textures and the optional Moon video are excluded; original text presentation and equipment symbols work without them. See [public distribution scope](Docs/PublicRelease20261114/RELEASE_SCOPE.md) and the [exact-build test report](Docs/PublicRelease20261114/PUBLIC_TEST_REPORT.md). Owner saves/photos/settings are excluded from the download.

@@ -4,6 +4,7 @@
 #include "LunarPanels.h"
 #include "Camera/CameraComponent.h"
 #include "Components/BoxComponent.h"
+#include "Components/PoseableMeshComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Engine/StaticMesh.h"
@@ -28,7 +29,7 @@ void ALunarSurfaceVehicle::ValidateChecks(ALunarGameMode* G,TFunctionRef<void(bo
  if(IsRiding(G)){Check(false,TEXT("Vehicle tests begin on foot without disturbing an existing driver"));return;}
  const FTransform PawnBefore=P->GetActorTransform();const FRotator ControlBefore=PC->GetControlRotation();const bool HiddenBefore=P->IsHidden(),CollisionBefore=P->GetActorEnableCollision(),ThirdBefore=P->ThirdPerson;const float FovBefore=P->Camera->FieldOfView;
  const auto ModeBefore=P->GetCharacterMovement()->MovementMode;const bool TickBefore=P->GetCharacterMovement()->IsComponentTickEnabled();const float Oxygen=G->Oxygen;const uint8 Samples=G->SamplesCollected,Parts=G->ApolloParts;
- TGuardValue<bool> Enabled(C->Enabled,true),Preparing(C->Preparing,false),Prepared(C->Prepared,true),Briefed(C->Briefed,true),Inspected(C->VehicleInspected,false),Paused(G->Paused,false),Menu(G->Menu,false);
+ TGuardValue<bool> Enabled(C->Enabled,true),Preparing(C->Preparing,false),Prepared(C->Prepared,true),Briefed(C->Briefed,true),Inspected(C->VehicleInspected,false),Scanner(C->ScannerUnlocked,false),Paused(G->Paused,false),Menu(G->Menu,false);
  TGuardValue<ELunarStage> Stage(G->Stage,G->Apollo?ELunarStage::ApolloCheckout:ELunarStage::FindModule);
  // Keep the isolated battery internally valid even after a Professional (80 RU) briefing.
  TGuardValue<float> Capacity(C->UtilityCapacity,100),Charge(C->UtilityCharge,100),Meters(C->VehicleDistanceM,C->VehicleDistanceM),Seconds(C->VehicleTimeS,C->VehicleTimeS);
@@ -37,7 +38,7 @@ void ALunarSurfaceVehicle::ValidateChecks(ALunarGameMode* G,TFunctionRef<void(bo
  auto* V=Build(G);Check(V!=nullptr,TEXT("A bounded training rover finds real supported terrain near the mission base"));if(!V)return;
  const FTransform Parked=V->GetActorTransform();Check(Build(G)==V,TEXT("Repeated vehicle construction reuses one existing rover"));
  Check(V->Visuals.Num()<=MaxVisualComponents&&V->Wheels.Num()==4&&(V->MuseumRover?V->Hubs.IsEmpty():V->Hubs.Num()==4)&&!V->IsActorTickEnabled(),TEXT("Parked rover has four proper wheels and bounded visuals with no idle Tick"));
- Check(G->Mars?!V->MuseumRover:V->MuseumRover&&FMath::IsNearlyEqual(V->TireRadiusCm,37.5848f,.01f),TEXT("Moon loads the credited museum rover with measured source-wheel pivots; Mars retains its own vehicle"));
+ Check(G->Mars?!V->MuseumRover:V->MuseumRover&&FMath::IsNearlyEqual(V->TireRadiusCm,35.816f,.01f),TEXT("Moon loads the credited museum rover with measured source-wheel pivots; Mars retains its own vehicle"));
  bool BodyContained=!V->Visuals.IsEmpty()&&V->Visuals[0]&&V->Visuals[0]->GetStaticMesh();
  if(BodyContained){const FBox Bounds=V->Visuals[0]->GetStaticMesh()->GetBoundingBox();const FVector Extent=V->Hull->GetUnscaledBoxExtent();for(int32 Corner=0;Corner<8;++Corner){const FVector Local=V->Visuals[0]->GetRelativeTransform().TransformPosition(FVector(Corner&1?Bounds.Max.X:Bounds.Min.X,Corner&2?Bounds.Max.Y:Bounds.Min.Y,Corner&4?Bounds.Max.Z:Bounds.Min.Z));BodyContained&=FMath::Abs(Local.X)<=Extent.X+.1&&FMath::Abs(Local.Y)<=Extent.Y+.1&&FMath::Abs(Local.Z)<=Extent.Z+.1;}}
  Check(BodyContained,TEXT("The rendered rover body fits inside its swept collision hull using actual imported mesh bounds"));
@@ -61,20 +62,32 @@ void ALunarSurfaceVehicle::ValidateChecks(ALunarGameMode* G,TFunctionRef<void(bo
   Check(RejectedPawnOverlap&&NoParkingMutation,TEXT("A terrain-valid parked pose overlapping the on-foot player is rejected without moving either actor"));
  }
  Check(!V->CanEnter(),TEXT("Uninspected training rover cannot be driven"));
- C->VehicleInspected=true;
- Check(V->Enter()&&IsRiding(G)&&PC->GetPawn()==P&&PC->GetViewTarget()==V&&P->IsHidden()&&P->GetCharacterMovement()->MovementMode==MOVE_None,TEXT("Mounting keeps the existing possessed pawn in a hidden fixed seat and changes only the view target"));
+ PC->SetControlRotation((V->GetActorLocation()-P->Camera->GetComponentLocation()).Rotation());const bool WasScannerUnlocked=C->ScannerUnlocked;C->UtilityCharge=0;G->Interact();Check(!IsRiding(G)&&!C->VehicleInspected&&C->ScannerUnlocked==WasScannerUnlocked&&!P->ActivePanel,TEXT("Depleted-charge work-key boarding preserves readiness and never leaves a Vehicle Menu open"));C->UtilityCharge=100;const FString RadioBeforeBoarding=G->Radio;G->Interact();
+ Check(C->VehicleInspected&&C->ScannerUnlocked&&!P->ActivePanel&&G->Radio==RadioBeforeBoarding,TEXT("Actual work-key boarding enters directly without Vehicle Menu or an extra instruction radio panel"));
+ Check(IsRiding(G)&&PC->GetPawn()==P&&PC->GetViewTarget()==V&&P->IsHidden()&&P->GetCharacterMovement()->MovementMode==MOVE_None,TEXT("Mounting keeps the existing possessed pawn in a hidden fixed seat and changes only the view target"));
  if(V->IsOccupied()){
+  Check(V->Driver&&V->Driver->IsVisible()&&V->Driver->GetSkinnedAsset()&&!V->Driver->IsComponentTickEnabled(),TEXT("Occupied rover renders a seated skinned astronaut without a second possessed pawn or visual Tick"));
+  if(V->Driver){const FVector Hip=V->Driver->GetBoneLocationByName(TEXT("pelvis"),EBoneSpaces::WorldSpace),Knee=V->Driver->GetBoneLocationByName(TEXT("calf_l"),EBoneSpaces::WorldSpace);const FVector A=V->GetActorTransform().InverseTransformPosition(Hip),B=V->GetActorTransform().InverseTransformPosition(Knee);Check(B.X>A.X+25&&FMath::Abs(B.Z-A.Z)<20,TEXT("Rendered driver thighs extend forward in a seated pose rather than standing through the seat"));}
+  const FTransform OrbitStart=V->FollowCamera->GetComponentTransform();const float ResourceBeforeLook=C->UtilityCharge;
+  P->Turn(60);V->PoseCamera(0);Check(!V->FollowCamera->GetComponentTransform().Equals(OrbitStart)&&PC->GetViewTarget()==V&&C->UtilityCharge==ResourceBeforeLook,TEXT("Real mouse-yaw handler orbits the rover without changing drive state or charging RU"));
+  P->ToggleSuitView();Check(V->CockpitView&&P->ThirdPerson==ThirdBefore&&PC->GetPawn()==P,TEXT("Real V handler switches to cockpit eyes while retaining the on-foot view preference and possession"));
+  Check(V->Driver&&V->Driver->GetBoneTransformByName(TEXT("head"),EBoneSpaces::ComponentSpace).GetScale3D().IsNearlyZero(.001f),TEXT("Actual cockpit driver helmet is collapsed outside the eye view rather than occluding the camera"));
+  const FTransform Cockpit=V->FollowCamera->GetComponentTransform();P->Look(12);V->PoseCamera(0);Check(!V->FollowCamera->GetComponentTransform().Equals(Cockpit),TEXT("Cockpit mouse pitch looks around from fixed driver eye height"));
+  const FTransform FrozenLook=V->FollowCamera->GetComponentTransform();G->Paused=true;P->Turn(20);P->Look(20);P->ToggleSuitView();V->PoseCamera(0);Check(V->CockpitView&&V->FollowCamera->GetComponentTransform().Equals(FrozenLook),TEXT("Pause rejects rover mouse and V input without camera drift"));G->Paused=false;
+  P->ToggleSuitView();Check(V->Driver&&V->Driver->GetBoneTransformByName(TEXT("head"),EBoneSpaces::ComponentSpace).GetScale3D().Equals(FVector::OneVector,.001f),TEXT("Returning to follow view restores the rendered driver helmet"));V->ViewYaw=0;V->ViewPitch=-20;V->PoseCamera(0);
   Check(!V->RestoreParkedPose(Parked),TEXT("Parked-state restore cannot relocate an occupied rover"));
   const FVector SeatBefore=P->GetRootComponent()->GetRelativeLocation();
   const float BeforeMeters=C->VehicleDistanceM,BeforeCharge=C->UtilityCharge,Phase=V->WheelPhase;const FVector Start=V->GetActorLocation();const FVector Forward=V->GetActorForwardVector();
   auto* Barrier=LunarVehicleCheckPrivate::Wall(G->GetWorld(),Start+Forward*220,V->GetActorQuat(),FVector(14,250,180));
   Check(Barrier!=nullptr,TEXT("A real blocking-wall fixture exists for swept driving"));
+  const FTransform BodyPose=V->Visuals[0]->GetRelativeTransform();
   V->SetForward(1);for(int32 I=0;I<20;++I)V->Tick(.1f);
   const float Travel=C->VehicleDistanceM-BeforeMeters;const float Along=FVector::DotProduct(V->GetActorLocation()-Start,Forward);
   Check(Travel>0&&Along>0&&Along<90,TEXT("Rover moves continuously on terrain and stops before a real blocking wall"));
   const bool ExactDriveCost=FMath::IsNearlyEqual(BeforeCharge-C->UtilityCharge,Travel*C->DriveChargePerMeter,.0005f),WheelsMoved=V->WheelPhase!=Phase;
   if(!ExactDriveCost||!WheelsMoved)UE_LOG(LogTemp,Warning,TEXT("VEHICLE_DRIVE_CHECK capacity=%.9g before_charge=%.9g after_charge=%.9g travel_m=%.9g coefficient=%.9g expected_cost=%.9g actual_cost=%.9g wheel_before=%.9g wheel_after=%.9g"),C->UtilityCapacity,BeforeCharge,C->UtilityCharge,Travel,C->DriveChargePerMeter,Travel*C->DriveChargePerMeter,BeforeCharge-C->UtilityCharge,Phase,V->WheelPhase);
   Check(ExactDriveCost&&WheelsMoved,TEXT("Only actual swept travel consumes shared RU and rotates the wheels"));
+  Check(V->Visuals[0]->GetRelativeTransform().Equals(BodyPose)&&V->WheelPhase!=Phase,TEXT("Stationary chassis and mudguards retain their local pose while tire phase advances"));
   Check(P->GetAttachParentActor()==V&&P->GetRootComponent()->GetRelativeLocation().Equals(SeatBefore,.01f),TEXT("The original pawn remains at the moving seat without controller possession changes"));
   if(Barrier)Barrier->Destroy();
   const FTransform Frozen=V->GetActorTransform(),Camera=V->FollowCamera->GetComponentTransform();const float FrozenCharge=C->UtilityCharge,FrozenMeters=C->VehicleDistanceM;
@@ -88,6 +101,7 @@ void ALunarSurfaceVehicle::ValidateChecks(ALunarGameMode* G,TFunctionRef<void(bo
   Check(Cage&&!V->Exit(false)&&V->IsOccupied()&&PC->GetViewTarget()==V,TEXT("Blocked capsule exits keep the rider inside instead of placing them through a wall"));
   if(Cage)Cage->Destroy();
   Check(V->Exit(false)&&!IsRiding(G)&&PC->GetPawn()==P&&PC->GetViewTarget()==P&&P->IsHidden()==HiddenBefore&&P->GetActorEnableCollision()==CollisionBefore,TEXT("The driver can exit on foot at zero charge with original ownership visibility and collision restored"));
+  Check(!V->Driver||!V->Driver->IsVisible(),TEXT("Dismount hides the seated visual without leaking an extra astronaut"));
   Check(P->ThirdPerson==ThirdBefore&&FMath::IsNearlyEqual(P->Camera->FieldOfView,FovBefore)&&P->GetCharacterMovement()->MovementMode==ModeBefore,TEXT("Dismount restores previous view mode field of view and movement mode"));
   if(G->Apollo){
    const float NativeDistance=G->ApolloDistance,NativeElapsed=G->ApolloElapsed,NativeOxygen=G->Oxygen;

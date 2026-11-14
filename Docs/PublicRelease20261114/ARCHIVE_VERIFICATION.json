@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "verified_utc": "2026-11-14T17:56:42.033697+00:00",
+  "scope": "Clean public Windows copy before ZIP creation; final archive checksum is published as a separate .sha256 asset.",
+  "bootstrap_launch_exit": 0,
+  "clean_startup_assertions": 15,
+  "clean_startup_report_sha256": "ed4ff7b03caa4b0c788b2cbbd78bfc076700a75e11e229722fcb09cc8c665ae1",
+  "executable_sha256": "31d256ec1df385b711fb85e32f9f21bf8f4961075a7cd60bd58d9a57537d4867",
+  "public_runtime_content_checks_passed": true,
+  "owner_saved_data_included": false,
+  "excluded_directories": [
+    "Saved",
+    "Reports",
+    "Backups",
+    "Intermediate",
+    ".git"
+  ],
+  "excluded_media": [
+    "MoonArrival.mp4",
+    "AstroKidReference.jpg",
+    "InventoryReference.jpg",
+    "T_AstroKid",
+    "T_InventoryReference"
+  ],
+  "debug_symbols_included": false,
+  "package_containers": [
+    {
+      "path": "LunarRescue/Content/Paks/global.ucas",
+      "bytes": 3208672,
+      "sha256": "6a332811162c000ef5c91437f1896fc80c2768bea1823107207260ae7cdbb6fc"
+    },
+    {
+      "path": "LunarRescue/Content/Paks/global.utoc",
+      "bytes": 782,
+      "sha256": "d33c855b4ca7c3b520efef0b081bd0f1020d55399074e303a17add67b9e859da"
+    },
+    {
+      "path": "LunarRescue/Content/Paks/LunarRescue-Windows.pak",
+      "bytes": 10669268,
+      "sha256": "50beb7a722586c3e22af3dd838ede1ca5b7346fcd7a549087efa6a26e49fcd99"
+    },
+    {
+      "path": "LunarRescue/Content/Paks/LunarRescue-Windows.ucas",
+      "bytes": 323433360,
+      "sha256": "8c99f546f428a324bdc7995afb49744f71df09d2db9df59db237357a763a9355"
+    },
+    {
+      "path": "LunarRescue/Content/Paks/LunarRescue-Windows.utoc",
+      "bytes": 307201,
+      "sha256": "b774349112e9acb01a1c332cf6d76af78227a051b081e4a748d5729cc43dfb35"
+    }
+  ],
+  "human_playtest": false,
+  "network_isolation_tested": false
+}

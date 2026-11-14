@@ -5,7 +5,7 @@ import unreal as u
 
 root=Path(u.Paths.project_dir()).resolve()
 manifest=json.loads((root/'SourceArt/MuseumRover20261113/adaptation.json').read_text())
-destination='/Game/Lunar/Vehicles/Museum20261113'
+destination='/Game/Lunar/Vehicles/Museum20261114'
 subsystem=u.get_editor_subsystem(u.StaticMeshEditorSubsystem) or u.get_default_object(u.StaticMeshEditorSubsystem)
 wheel_material=None
 for part in manifest['parts']:

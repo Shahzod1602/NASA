@@ -172,3 +172,23 @@ The blue glass cards, mission picker and input flow are authored project UI impl
 The cable board, drag presentation, preflight pages, resource-flow changes and terrain-tested authored supports were implemented with OpenAI Codex assistance. Telegram screenshots/videos informed the requested interaction; they are not distributed game artwork.
 
 Credited model and image sources: [LasquetiSpice astronaut](SourceArt/ExpeditionSuit20261113/CREDITS.md), [Deutsches Museum lunar rover](SourceArt/MuseumRover20261113/CREDITS.md), [NASA/JPL Perseverance reference](SourceArt/Perseverance20261114/CREDITS.md), and [NASA planet context](SourceArt/PlanetContext20261114/CREDITS.md). Each source retains its own usage terms; see its unchanged raw file, provenance manifest and description of adaptations.
+
+
+### Surface feedback candidate - 14 November 2026
+
+The corrected rover uses the existing credited Deutsches Museum | Digital
+CC BY-SA 4.0 model and retains all source triangles; see
+[adaptation credits](SourceArt/MuseumRover20261113/CREDITS.md).
+The seated astronaut reuses the credited LasquetiSpice CC BY 4.0 adaptation.
+The controller pose, small training control bar and side-handle placement are
+OpenAI Codex-assisted authored gameplay work, separate from NASA measurements.
+
+The optional team-supplied Moon introduction has unconfirmed original authorship
+and redistribution permission. Its local checksum/format record is in
+[the intro manifest](SourceArt/MissionIntro20261114/manifest.json).
+No NASA archive provenance, endorsement or identity is claimed. The binary remains
+excluded from Git and is not cleared for public redistribution.
+
+Startup and inventory reference provenance: [SourceArt/Startup20261114/CREDITS.md](SourceArt/Startup20261114/CREDITS.md). Team-provided reference JPEGs remain unchanged; original authors/editable logo sources requested. Live UI and runtime prop/collision adjustments used AI coding assistance. NASA/partner montage is excluded pending factual confirmation.
+
+Public v0.9.2 distribution excludes the new unconfirmed startup/inventory reference images, their imported textures and the optional Moon video. Fallback wordmarks and equipment symbols are original UI text/code, implemented with AI coding assistance. See Docs/PublicRelease20261114/RELEASE_SCOPE.md. Verified model and dataset attribution remains applicable.

@@ -1,0 +1,211 @@
+{
+  "schema_version": 1,
+  "scope": "Public v0.9.2 feedback preview; not a competition submission",
+  "started_utc": "2026-11-14T17:47:39.397542+00:00",
+  "completed_utc": "2026-11-14T17:55:48.9889322Z",
+  "base_commit": "53dce53533ee00a25176c9b3a03e919503472016",
+  "executable_sha256": "31d256ec1df385b711fb85e32f9f21bf8f4961075a7cd60bd58d9a57537d4867",
+  "source_fingerprint_sha256": "b9275648ea22c5875490e1a5416b5170f9f015e2ea187b401a61145447b98059",
+  "native_assertions_excluding_loading": 1626,
+  "selection_assertions": 66,
+  "public_startup_assertions": 15,
+  "rendered_pngs": 75,
+  "missing_optional_movie_direct_entries": 2,
+  "proofs": {
+    "rescue": {
+      "path": "Reports/Feedback20261114Evening/package-rescue-20261114-225007-209/run-summary.json",
+      "sha256": "43da739298b358fcd020cbd1be0ad7f32b3099864ecf599d16bd31adc8cc91b5",
+      "assertions": 126,
+      "cases": [
+        {
+          "name": "selene-primary",
+          "assertions": 50
+        },
+        {
+          "name": "mars-primary",
+          "assertions": 54
+        },
+        {
+          "name": "selene-recorder",
+          "assertions": 3
+        },
+        {
+          "name": "selene-recorder-fallback",
+          "assertions": 3
+        },
+        {
+          "name": "mars-movement",
+          "assertions": 13
+        },
+        {
+          "name": "mars-recorder",
+          "assertions": 3
+        }
+      ]
+    },
+    "field": {
+      "path": "Reports/FieldOperations20261104/package-test-1280x720-20261114-225109-919/run-summary.json",
+      "sha256": "97d27d12e1bbb057fa8ebffda46899715bb7b04c794c882243785029cedd651d",
+      "assertions": 744,
+      "cases": [
+        {
+          "assertions": 240,
+          "frames": 0
+        },
+        {
+          "assertions": 261,
+          "frames": 0
+        },
+        {
+          "assertions": 243,
+          "frames": 0
+        }
+      ]
+    },
+    "gameplay": {
+      "path": "Reports/Gameplay20261103/package-test-1280x720-20261114-225128-860/run-summary.json",
+      "sha256": "f987ee34bdd323e85ad2ecc0133661ca4e768cfee5f132d8839f5bef66bb99c6",
+      "assertions": 618,
+      "cases": [
+        {
+          "assertions": 237,
+          "frames": 0
+        },
+        {
+          "assertions": 198,
+          "frames": 0
+        },
+        {
+          "assertions": 183,
+          "frames": 0
+        }
+      ]
+    },
+    "stride": {
+      "path": "Reports/TaskFixes20261106/package-stride-nullrhi-20261114-225147-785/run-summary.json",
+      "sha256": "c7b0fbeb379d6b04f119eebec69d7ef46ad650f6c5c7e2f1ba83742385fadcc6",
+      "assertions": 57,
+      "cases": [
+        {
+          "name": "stride-apollo",
+          "assertions": 19
+        },
+        {
+          "name": "stride-selene",
+          "assertions": 19
+        },
+        {
+          "name": "stride-mars",
+          "assertions": 19
+        }
+      ]
+    },
+    "field_render": {
+      "path": "Reports/FieldOperations20261104/package-review-1280x720-20261114-225239-698/run-summary.json",
+      "sha256": "444e3d57ddc412d96cc8d8bc8c202e2229f2a3259913d0f80381973610ebd3d8",
+      "assertions": 105,
+      "cases": [
+        {
+          "assertions": 105,
+          "frames": 41
+        }
+      ]
+    },
+    "carry_render": {
+      "path": "Reports/Gameplay20261103/package-review-1280x720-20261114-225320-838/run-summary.json",
+      "sha256": "d61e938f8a906f675a1280287990da7c6241510d822f1a5dc18c22e74630ff8f",
+      "assertions": 27,
+      "cases": [
+        {
+          "assertions": 27,
+          "frames": 27
+        }
+      ]
+    },
+    "startup": {
+      "path": "Reports/NasaTasks20261101/package-test-1280x720-20261114-225233-505/run-summary.json",
+      "sha256": "52299eee0384d1f82b2c72479290814e13bea224c1ec675160cc560ac909b157",
+      "cases": [
+        {
+          "Case": "intro",
+          "Flag": "NasaIntroTest",
+          "Map": "/Game/Rescue/Maps/MissionSelect",
+          "Assertions": 15,
+          "Failures": 0,
+          "Outcome": "passed"
+        }
+      ]
+    },
+    "startup_render": {
+      "path": "Reports/NasaTasks20261101/package-review-1280x720-20261114-225356-547/run-summary.json",
+      "sha256": "b4dc842b32719bd33e84e4d4d0487e09b39dd6f93eabb078ffb1dea994ab56fa",
+      "cases": [
+        {
+          "Case": "intro",
+          "Flag": "NasaUIReview",
+          "Map": "/Game/Rescue/Maps/MissionSelect",
+          "Frames": 7,
+          "Outcome": "passed",
+          "Synthetic": true,
+          "HumanPlaytest": false,
+          "PerformanceMeasurement": false
+        }
+      ]
+    },
+    "model_data": {
+      "path": "Reports/Feedback20261113/model-data-checks.json",
+      "sha256": "2f6b470ee2d130651a6f5858dfe21d3b3a32a353c839dc086c1196139a91aa16",
+      "scope": "Static derivative/rig verification; not runtime rendering"
+    }
+  },
+  "performance": {
+    "capture": "D:\\LunarRescue\\Reports\\Performance\\public-v092-final\\capture.csv",
+    "captured_frames": 1200,
+    "warmup_frames_excluded": 600,
+    "sample_frames": 600,
+    "sample_seconds": 10.000869499999999,
+    "mean_fps": 59.994783453578705,
+    "one_percent_low_fps": 54.4957148202913,
+    "p95_frame_ms": 17.2378,
+    "p99_frame_ms": 17.639,
+    "largest_frame_ms": 19.1881,
+    "method": "1% low = 1000 / mean frame ms of the slowest 1% of sampled frames",
+    "limitations": "Rendered offscreen opening route, normal delta time, 60 FPS cap; not a human playtest; captures alone do not validate presentation smoothness. VRAM is not inferred from zero DX11 CSV counters."
+  },
+  "sampled_peak_working_set_bytes": 664518656,
+  "source_maps": [
+    {
+      "path": "Content/Lunar/Maps/Apollo12.umap",
+      "sha256": "7cd63371b866a7914ad9bd178b109e217d57b9032c639e0e9ee4f6ac897569f4"
+    },
+    {
+      "path": "Content/Lunar/Maps/MoonBase.umap",
+      "sha256": "ace03a8c6ad86b3b29c05dd5478b614cc11cefca0baeeb941065502c62134c0d"
+    },
+    {
+      "path": "Content/Mars/Maps/MarsBase.umap",
+      "sha256": "d01d7605533777664a5dda974d09c4640a8a91e5830fe01b67198b54d1f7d4e4"
+    },
+    {
+      "path": "Content/Rescue/Maps/MissionSelect.umap",
+      "sha256": "9f098ec909532fa9284dd0e930ffeb055ccaf20acaa824123011fbbdb3c2dd25"
+    }
+  ],
+  "preserved_owner_files": 53,
+  "human_playtests": 0,
+  "network_isolation_tested": false,
+  "excluded_public_media": [
+    "MoonArrival.mp4",
+    "T_AstroKid",
+    "T_InventoryReference",
+    "AstroKidReference.jpg",
+    "InventoryReference.jpg"
+  ],
+  "limitations": [
+    "No new human playtest participants",
+    "Occupied driving/scanning performance unmeasured",
+    "No 1080p visual review in this batch",
+    "No audible human review",
+    "Competition submission and eligibility not verified"
+  ]
+}

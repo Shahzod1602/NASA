@@ -62,6 +62,14 @@ for part in manifest['parts']:
   pos=array(doc,binary,primitive['attributes']['POSITION']);faces=array(doc,binary,primitive['indices']).reshape(-1,3)
   assert np.isfinite(pos).all() and faces.max()<len(pos);triangles+=len(faces)
  assert triangles==part['triangles']
+ if 'Wheel' in part['name']:
+  for primitive in doc['meshes'][0]['primitives']:
+   pos=array(doc,binary,primitive['attributes']['POSITION'])
+   assert np.hypot(pos[:,0],pos[:,1]).max()<=.3651, 'Stationary mudguard outside tire circle must not spin'
+  assert abs(part['radius_cm']-35.81599)<.001, 'Only tire diameter controls contact and spin'
+ else:
+  stationary=sum(len(array(doc,binary,p['indices']))//3 for p in doc['meshes'][0]['primitives'] if doc['materials'][p['material']].get('name')=='Wheels')
+  assert stationary==manifest['stationary_mudguard_triangles']==12900, 'Retain mudguards in chassis geometry'
  results.append({'asset':part['name'],'triangles':triangles,'finite_positions':True,'indices_in_range':True,'sha256_verified':True})
 nomad=root/'SourceArt/Perseverance20261114/Derived/SM_NomadReference.glb'
 if nomad.is_file():

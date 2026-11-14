@@ -10,6 +10,7 @@ class UBoxComponent;
 class UCameraComponent;
 class UStaticMeshComponent;
 class UStaticMesh;
+class UPoseableMeshComponent;
 
 UCLASS()
 class LUNARRESCUE_API ALunarSurfaceVehicle : public AActor {
@@ -23,6 +24,9 @@ public:
  static void Abort(ALunarGameMode* Game);
  void SetForward(float Value);
  void SetSteer(float Value);
+ void RotateView(float Yaw,float Pitch);
+ void ToggleView();
+ bool IsCockpitView() const {return CockpitView;}
  float GetSpeedMps() const {return ActualSpeedMps;}
  float DistanceM() const {return TravelMeters;}
  bool IsOccupied() const;
@@ -48,6 +52,7 @@ private:
  UPROPERTY() TArray<TObjectPtr<UStaticMeshComponent>> Visuals;
  UPROPERTY() TArray<TObjectPtr<UStaticMeshComponent>> Wheels;
  UPROPERTY() TArray<TObjectPtr<UStaticMeshComponent>> Hubs;
+ UPROPERTY() TObjectPtr<UPoseableMeshComponent> Driver;
  UPROPERTY() TObjectPtr<ALunarGameMode> Mission;
  UPROPERTY() TObjectPtr<UFieldOperationsComponent> Operations;
  UPROPERTY() TObjectPtr<ALunarCharacter> Rider;
@@ -59,7 +64,9 @@ private:
  float PreviousFov=85,Throttle=0,Steering=0,SpeedCm=0,ActualSpeedMps=0,WheelPhase=0,TravelMeters=0;
  uint8 PreviousMoveMode=0,PreviousCustomMode=0;
  bool PreviousHidden=false,PreviousCollision=true,PreviousMoveTick=true,PreviousThird=false,PreviousCameraControl=true,Occupied=false,Ending=false;
- bool MuseumRover=false;
+ bool MuseumRover=false,CockpitView=false;
+ float ViewYaw=0,ViewPitch=-20;
+ void PoseDriver();
  float TireRadiusCm=34.f;
  FVector ContactOffset[4]={FVector(85,-84,0),FVector(85,84,0),FVector(-85,-84,0),FVector(-85,84,0)};
  FString Notice;

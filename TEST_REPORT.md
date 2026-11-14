@@ -1,5 +1,9 @@
 # Test reports
 
+## Public feedback preview v0.9.2 — 2026-11-14
+
+See [public Windows validation](Docs/PublicRelease20261114/PUBLIC_TEST_REPORT.md), [exact-build evidence](Docs/PublicRelease20261114/VALIDATION_EVIDENCE.json) and [clean-copy receipt](Docs/PublicRelease20261114/ARCHIVE_VERIFICATION.json). These supersede no historical artifact: prior reports below retain their original scope. Unconfirmed new media and owner data are excluded from the public download.
+
 ## Local hand-pose correction — 14 November 2026
 
 [Docs/HandPose20261114/TEST_REPORT.md](Docs/HandPose20261114/TEST_REPORT.md) records the new palm-roll and duplicate-sleeve correction. Its executable/payloads are separate from v0.9.0. The historical 2,019-assertion result below is not certification of this new local build.

@@ -71,9 +71,17 @@ void UFieldOperationsComponent::BuildWorld(){
  FSupportBuilder B(this);if(!B.Ready()){UE_LOG(LogTemp,Warning,TEXT("FIELD_OPERATIONS missing retained terrain/material. Main mission remains available; no fallback measured terrain created."));return;}
  if(!IsValid(ResourceBoard)){
   ResourceBoard=B.Actor(G->HomeActor->GetActorLocation()+FVector(720,-520,0),TEXT("Field.ResourceBoard"));auto* A=ResourceBoard.Get();
+  if(!G->Apollo&&!G->Mars){
+   // Retain the exact service anchor/interaction rules and hotkey, without
+   // the standing instruction display. A small dock marks the service point.
+   B.Box(A,FVector(0,0,5),FVector(90,65,10),1);
+   for(int32 I=0;I<4;++I)B.Box(A,FVector(-24+16*I,0,11),FVector(8,24,2),3);
+   A->Tags.Add(TEXT("Lunar.ServiceDock.NoInstructionBoard"));
+  }else{
   B.Box(A,FVector(0,0,5),FVector(90,65,10),1);B.Rod(A,FVector(0,0,10),FVector(0,0,120),5);B.Box(A,FVector(0,0,175),FVector(20,170,115));B.Box(A,FVector(-12,0,175),FVector(3,156,101),1);
   for(int32 I=0;I<4;++I)B.Box(A,FVector(-14,-60+40*I,135),FVector(3,22,5),3);
   B.Text(A,TEXT("FIELD OPERATIONS"),FVector(-16,0,205),12);B.Text(A,TEXT("B / RESOURCES + MAP"),FVector(-16,0,178),8);B.Text(A,TEXT("GAMEPLAY MODEL"),FVector(-16,0,153),6);
+  }
  }
  Vehicle=ALunarSurfaceVehicle::Build(G);
  if(Vehicle&&!HasVehicleHomePose){VehicleHomePose=Vehicle->GetActorTransform();HasVehicleHomePose=true;}

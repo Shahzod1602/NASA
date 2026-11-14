@@ -1,3 +1,4 @@
+#include "LunarSeleneProps.h"
 #include "UObject/Package.h"
 #include "LunarGame.h"
 #include "LunarStrideRegression.h"
@@ -163,10 +164,10 @@ void ALunarCharacter::SetupPlayerInputComponent(UInputComponent* I) {
  I->BindKey(EKeys::LeftAlt,IE_Released,this,&ALunarCharacter::EndSuitOrbit);
  I->BindAction("Zoom",IE_Pressed,this,&ALunarCharacter::ZoomVisor);
 }
-void ALunarCharacter::Forward(float V) { auto* G=Mission(this);if(G&&G->FieldOperations&&G->FieldOperations->Enabled&&G->IsActive()&&!G->FieldOperations->Briefed)return;if(ALunarSurfaceVehicle::IsRiding(G)){G->FieldOperations->Vehicle->SetForward(V);return;} if(G&&G->IsActive()&&!G->Paused&&G->ApolloTool<=1&&!ActivePanel) AddMovementInput(FRotationMatrix(FRotator(0,GetControlRotation().Yaw,0)).GetUnitAxis(EAxis::X),V); }
-void ALunarCharacter::Right(float V) { auto* G=Mission(this);if(G&&G->FieldOperations&&G->FieldOperations->Enabled&&G->IsActive()&&!G->FieldOperations->Briefed)return;if(ALunarSurfaceVehicle::IsRiding(G)){G->FieldOperations->Vehicle->SetSteer(V);return;} if(G&&G->IsActive()&&!G->Paused&&G->ApolloTool<=1&&!ActivePanel) AddMovementInput(FRotationMatrix(FRotator(0,GetControlRotation().Yaw,0)).GetUnitAxis(EAxis::Y),V); }
-void ALunarCharacter::Turn(float V) { auto* G=Mission(this); if(!G||G->Menu||G->Paused||ActivePanel||ALunarSurfaceVehicle::IsRiding(G)||ALunarCargoFinale::Active(G)||ALunarDepartureScene::Active(G))return;if(G->ApolloTool==2||G->ApolloTool==3){G->ApolloToolAxis(V,0);return;}if(G->ApolloTool>1)return;AddControllerYawInput(V*ULunarSettings::Get()->Sensitivity*Camera->FieldOfView/85.f); }
-void ALunarCharacter::Look(float V) { auto* G=Mission(this); if(!G||G->Menu||G->Paused||ActivePanel||ALunarSurfaceVehicle::IsRiding(G)||ALunarCargoFinale::Active(G)||ALunarDepartureScene::Active(G))return;if(G->ApolloTool==2||G->ApolloTool==3){G->ApolloToolAxis(0,V);return;}if(G->ApolloTool>1)return;AddControllerPitchInput(V*ULunarSettings::Get()->Sensitivity*(ULunarSettings::Get()->InvertY?-1.f:1.f)*Camera->FieldOfView/85.f); }
+void ALunarCharacter::Forward(float V) { auto* G=Mission(this);if(G&&G->FieldOperations&&G->FieldOperations->Enabled&&G->IsActive()&&!G->FieldOperations->Briefed)return;if(ALunarSurfaceVehicle::IsRiding(G)){G->FieldOperations->Vehicle->SetForward(V);return;} if(G&&G->IsActive()&&!G->Paused&&G->ApolloTool<=1&&!ActivePanel&&(G->Mars||!GetCharacterMovement()->IsFalling())) AddMovementInput(FRotationMatrix(FRotator(0,GetControlRotation().Yaw,0)).GetUnitAxis(EAxis::X),V); }
+void ALunarCharacter::Right(float V) { auto* G=Mission(this);if(G&&G->FieldOperations&&G->FieldOperations->Enabled&&G->IsActive()&&!G->FieldOperations->Briefed)return;if(ALunarSurfaceVehicle::IsRiding(G)){G->FieldOperations->Vehicle->SetSteer(V);return;} if(G&&G->IsActive()&&!G->Paused&&G->ApolloTool<=1&&!ActivePanel&&(G->Mars||!GetCharacterMovement()->IsFalling())) AddMovementInput(FRotationMatrix(FRotator(0,GetControlRotation().Yaw,0)).GetUnitAxis(EAxis::Y),V); }
+void ALunarCharacter::Turn(float V) { auto* G=Mission(this); if(!G||G->Menu||G->Paused||ActivePanel||ALunarCargoFinale::Active(G)||ALunarDepartureScene::Active(G))return;if(ALunarSurfaceVehicle::IsRiding(G)){G->FieldOperations->Vehicle->RotateView(V*ULunarSettings::Get()->Sensitivity*2.5f,0);return;}if(G->ApolloTool==2||G->ApolloTool==3){G->ApolloToolAxis(V,0);return;}if(G->ApolloTool>1)return;AddControllerYawInput(V*ULunarSettings::Get()->Sensitivity*Camera->FieldOfView/85.f); }
+void ALunarCharacter::Look(float V) { auto* G=Mission(this); if(!G||G->Menu||G->Paused||ActivePanel||ALunarCargoFinale::Active(G)||ALunarDepartureScene::Active(G))return;if(ALunarSurfaceVehicle::IsRiding(G)){G->FieldOperations->Vehicle->RotateView(0,V*ULunarSettings::Get()->Sensitivity*(ULunarSettings::Get()->InvertY?2.5f:-2.5f));return;}if(G->ApolloTool==2||G->ApolloTool==3){G->ApolloToolAxis(0,V);return;}if(G->ApolloTool>1)return;AddControllerPitchInput(V*ULunarSettings::Get()->Sensitivity*(ULunarSettings::Get()->InvertY?-1.f:1.f)*Camera->FieldOfView/85.f); }
 void ALunarCharacter::ZoomVisor() { auto* G=Mission(this);if(ALunarSurfaceVehicle::IsRiding(G)||(G&&G->FieldOperations&&G->FieldOperations->ScannerActive))return;if(G&&G->IsActive()&&!G->Paused&&!G->ApolloTool&&!ActivePanel) {if(ThirdPerson)ToggleSuitView();Camera->SetFieldOfView(Camera->FieldOfView<60?ULunarSettings::Get()->FieldOfView:18.f);} }
 void ALunarCharacter::Leap() { auto* G=Mission(this);if(G&&G->FieldOperations&&G->FieldOperations->Enabled&&G->IsActive()&&!G->FieldOperations->Briefed)return;if(ALunarSurfaceVehicle::IsRiding(G))return; if(G&&G->IsActive()&&!G->Paused&&!G->ApolloTool&&!ActivePanel) Jump(); }
 void ALunarCharacter::Interact() { if(auto* G=Mission(this)) G->Interact(); }
@@ -248,7 +249,7 @@ void ALunarGameMode::BeginPlay() {
  Apollo=Map==TEXT("Apollo12");
  SurfaceGravity=Mars?371.f:162.f;OxygenCapacity=480.f;Oxygen=OxygenCapacity;
  GetWorld()->GetWorldSettings()->bGlobalGravitySet=true;GetWorld()->GetWorldSettings()->GlobalGravityZ=-SurfaceGravity;
- if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0)))P->GetCharacterMovement()->JumpZVelocity=Mars?340.f:230.f;
+ if(auto* P=Cast<ALunarCharacter>(UGameplayStatics::GetPlayerPawn(this,0)))P->GetCharacterMovement()->JumpZVelocity=Mars?340.f:140.f;
  IFileManager::Get().MakeDirectory(*(FPaths::ProjectDir()/TEXT("Reports")),true);
  if(FParse::Param(FCommandLine::Get(),TEXT("LunarMenuTest"))||FParse::Param(FCommandLine::Get(),TEXT("LoadingTest"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,this,&ALunarGameMode::TravelCheck,3,false);}
  if(Menu&&FParse::Param(FCommandLine::Get(),TEXT("LunarReview"))){FTimerHandle H;GetWorldTimerManager().SetTimer(H,[this](){FScreenshotRequest::RequestScreenshot(ReportPath(TEXT("mission-select.png")),true,false);FTimerHandle End;GetWorldTimerManager().SetTimer(End,[](){FPlatformMisc::RequestExitWithStatus(false,0);},3,false);},8,false);}
@@ -390,11 +391,15 @@ void ALunarGameMode::AdvanceTime(float D) {
 }
 void ALunarGameMode::StartMission(){
  if(Menu||Paused||Stage!=ELunarStage::Briefing||ALunarDepartureScene::Active(this))return;
+ // Reopening pending checks must preserve the previously confirmed new-run decision.
+ if(FieldOperations&&FieldOperations->Preparing){FieldOperations->OpenPanel(EFieldPanelView::Preflight);return;}
  // Preserve the existing saved-expedition confirmation before showing any intro.
  if(Apollo&&!ApolloConfirmNew&&ApolloSaveStatus!=EApolloSaveStatus::Missing){StartApollo(false);return;}
  DepartureAuthorizedNewRun=ApolloConfirmNew;ApolloConfirmNew=false;
  if(FieldOperations&&FieldOperations->GateMissionStart())return;
- if((!ULunarSettings::IsAutomation()||FParse::Param(FCommandLine::Get(),TEXT("ForceDepartureIntro")))&&ALunarDepartureScene::Begin(this)){UpdateAudioPause();return;}
+ // The old cabin actor remains an explicit automation fixture. Normal play
+ // commits the prepared mission immediately without a camera takeover.
+ if(ULunarSettings::IsAutomation()&&FParse::Param(FCommandLine::Get(),TEXT("ForceDepartureIntro"))&&ALunarDepartureScene::Begin(this)){UpdateAudioPause();return;}
  CommitMissionStart();
 }
 void ALunarGameMode::CommitMissionStart(){
@@ -514,7 +519,8 @@ void ALunarGameMode::BuildStoryProps() {
   Connector->AttachToComponent(PowerCable,FAttachmentTransformRules::KeepWorldTransform);
   PowerCable->SetVisibility(false,true);
  }
- // The optional recorder sits on a low survey ledge: a lunar jump reaches its top.
+ // Authored recorder obstacle: 40 cm on Moon fits the 60.5 cm tuned hop.
+ // Mars retains its original 90 cm ledge. Neither changes measured terrain.
  FVector Site(Mars?18600:6200,0,0);FHitResult Ground;FCollisionQueryParams Q;Q.bTraceComplex=true;
  for(TActorIterator<AActor> It(GetWorld());It;++It) {
   auto* Mesh=It->FindComponentByClass<UStaticMeshComponent>();
@@ -532,13 +538,14 @@ void ALunarGameMode::BuildStoryProps() {
  Rock->SetStaticMesh(LedgeMesh);
  Rock->SetMaterial(0,LoadObject<UMaterialInterface>(nullptr,Mars?TEXT("/Game/Mars/Materials/M_MarsRegolith.M_MarsRegolith"):TEXT("/Game/Lunar/V3/Materials/M_LunarRegolith.M_LunarRegolith")));
  const FBox Bounds=Rock->GetStaticMesh()->GetBoundingBox();
- const FVector RockScale=FVector(400,400,140)/Bounds.GetSize();
+ const float LedgeHeight=Mars?140.f:90.f;const float LedgeTop=LedgeHeight-50.f;
+ const FVector RockScale=FVector(400,400,LedgeHeight)/Bounds.GetSize();
  Rock->SetCollisionProfileName(TEXT("BlockAll"));Rock->RegisterComponent();
  Ledge->SetActorLocation(Site+FVector(0,0,-50-Bounds.Min.Z*RockScale.Z));Rock->SetWorldScale3D(RockScale);
  RecorderActor=GetWorld()->SpawnActor<AActor>();auto* Recorder=NewObject<UStaticMeshComponent>(RecorderActor);RecorderActor->SetRootComponent(Recorder);
  Recorder->SetStaticMesh(LoadObject<UStaticMesh>(nullptr,TEXT("/Game/Lunar/Imported/ScienceTerminal/ScienceTerminal.ScienceTerminal")));
- Recorder->SetCollisionEnabled(ECollisionEnabled::NoCollision);Recorder->RegisterComponent();RecorderActor->SetActorLocation(Site+FVector(0,0,95));Recorder->SetWorldScale3D(FVector(.42));
- Make(TEXT("/Engine/BasicShapes/Cylinder.Cylinder"),TEXT("/Game/Lunar/Materials/M_Signal.M_Signal"),Site+FVector(110,0,165),FVector(.055,.055,1.5));
+ Recorder->SetCollisionEnabled(ECollisionEnabled::NoCollision);Recorder->RegisterComponent();RecorderActor->SetActorLocation(Site+FVector(0,0,LedgeTop+5));Recorder->SetWorldScale3D(FVector(.42));
+ Make(TEXT("/Engine/BasicShapes/Cylinder.Cylinder"),TEXT("/Game/Lunar/Materials/M_Signal.M_Signal"),Site+FVector(110,0,LedgeTop+75),FVector(.055,.055,1.5));
 }
 float ALunarGameMode::HoldDuration() const {
  if(Apollo)return ApolloHoldDuration();
@@ -605,7 +612,7 @@ void ALunarGameMode::Interact() {
  if(Stage==ELunarStage::ActivateBeacon){LockBeacon();return;}
  if(HoldDuration()>0) {Holding=true;HoldProgress=0;HeldTarget=InteractionTarget();return;}
  switch(Stage) {
- case ELunarStage::FindModule: ModuleActor->SetActorHiddenInGame(true);ModuleActor->SetActorEnableCollision(false);Stage=ELunarStage::RestorePower;Message("MODULE SECURED. Install it in the station's external power port.");break;
+ case ELunarStage::FindModule: LunarSeleneProps::ModulePickedUp(this);ModuleActor->SetActorHiddenInGame(true);ModuleActor->SetActorEnableCollision(false);Stage=ELunarStage::RestorePower;Message("MODULE SECURED. Install it in the station's external power port.");break;
  case ELunarStage::RestorePower:
   if(RepairStep==0) {RepairStep=1;if(InstalledModule)InstalledModule->SetVisibility(true);Message("CELL SEATED. Connect the orange power cable.");}
   else if(RepairStep==1) {RepairStep=2;if(PowerCable)PowerCable->SetVisibility(true,true);Message("CABLE CONNECTED. Hold {Interact} to restart the station.");}
@@ -990,9 +997,9 @@ void ALunarGameMode::LedgeCheck() {
   FVector Approach=RecorderActor->GetActorLocation()+FVector(-310,0,0);FHitResult Hit;FCollisionQueryParams Q;Q.AddIgnoredActor(P);Q.bTraceComplex=true;
   if(GetWorld()->LineTraceSingleByChannel(Hit,Approach+FVector(0,0,1000),Approach-FVector(0,0,1000),ECC_Visibility,Q))Approach.Z=Hit.ImpactPoint.Z+90;
   P->SetActorLocation(Approach,false,nullptr,ETeleportType::TeleportPhysics);P->GetCharacterMovement()->StopMovementImmediately();PC->SetControlRotation(FRotator(0,0,0));
- } else if(MovementPhase==1) {Input(EKeys::SpaceBar,IE_Pressed);Input(EKeys::W,IE_Pressed);}
- else if(MovementPhase==2) {Input(EKeys::W,IE_Released);Input(EKeys::SpaceBar,IE_Released);Input(EKeys::S,IE_Pressed);}
- else if(MovementPhase==3) {Input(EKeys::S,IE_Released);}
+ } else if(MovementPhase==1) {if(Mars)Input(EKeys::SpaceBar,IE_Pressed);Input(EKeys::W,IE_Pressed);}
+ else if(MovementPhase==2) {if(!Mars)Input(EKeys::SpaceBar,IE_Pressed);else{Input(EKeys::W,IE_Released);Input(EKeys::SpaceBar,IE_Released);Input(EKeys::S,IE_Pressed);}}
+ else if(MovementPhase==3) {Input(EKeys::S,IE_Released);if(!Mars){Input(EKeys::W,IE_Released);Input(EKeys::SpaceBar,IE_Released);}}
  else if(MovementPhase==4) {
   FVector Eye;FRotator Rot;P->GetActorEyesViewPoint(Eye,Rot);PC->SetControlRotation((RecorderActor->GetActorLocation()-Eye).Rotation());
   const bool Grounded=P->GetCharacterMovement()->IsMovingOnGround();const bool Reach=CanInteract();Interact();AdvanceInteraction(2.1f);

@@ -151,6 +151,15 @@ bool ProtectedFaceClear(ALunarCharacter* P,float Aspect){
 }
 bool RenderedFingerContact(ALunarCharacter* P,UStaticMeshComponent* Item,bool FirstPerson,float MaximumGap=3.f){
  auto* Rig=P?(FirstPerson?P->HandRig.Get():P->SuitRig.Get()):nullptr;if(!Rig||!Item||!Item->GetStaticMesh()){UE_LOG(LogTemp,Warning,TEXT("CARRY_DIAG contact unavailable view=%d rig=%d item=%d mesh=%d"),FirstPerson,Rig!=nullptr,Item!=nullptr,Item&&Item->GetStaticMesh()!=nullptr);return false;}
+ if(LunarCarryPresentation::IsCellCarried(Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(P)))){
+  TArray<USceneComponent*> Children;Item->GetChildrenComponents(false,Children);bool Good=true;
+  for(int32 Side=0;Side<2;++Side){UStaticMeshComponent* Bar=nullptr;const FName Tag(Side?TEXT("Lunar.CellHandle.Right"):TEXT("Lunar.CellHandle.Left"));for(auto* Child:Children)if(Child->ComponentHasTag(Tag))Bar=Cast<UStaticMeshComponent>(Child);
+   if(!Bar||!Bar->IsVisible()||!Bar->GetStaticMesh()){Good=false;continue;}
+   FCarrySurfaceProbe Handle(P,Bar);bool Contact=false,Penetrating=false;int32 Probed=0;
+   for(int32 Finger=0;Finger<5;++Finger){double Gap=0;const FName Bone(*FString::Printf(TEXT("tip%d_%s"),Finger,Side?TEXT("r"):TEXT("l")));if(Handle.SignedGap(Rig->GetBoneLocationByName(Bone,EBoneSpaces::WorldSpace),Gap)){++Probed;Contact|=Gap<=MaximumGap;Penetrating|=Gap< -1.5;}}
+   if(Probed!=5||!Contact||Penetrating){Good=false;UE_LOG(LogTemp,Warning,TEXT("CELL_HANDLE_CONTACT view=%d side=%d probed=%d contact=%d penetration=%d"),FirstPerson,Side,Probed,Contact,Penetrating);}
+  }return Good;
+ }
  const FString MeshPath=Item->GetStaticMesh()->GetPathName();
  const bool OpenCloth=MeshPath==TEXT("/Game/Lunar/Apollo12/Tools/SM_SamplePouch.SM_SamplePouch");
  const bool SignedGrip=MeshPath==TEXT("/Engine/BasicShapes/Cube.Cube")||MeshPath==TEXT("/Engine/BasicShapes/Cylinder.Cylinder")||MeshPath==TEXT("/Game/Lunar/Imported/PowerCell/PowerCell.PowerCell")||MeshPath==TEXT("/Game/Lunar/Apollo12/Tools/SM_DriveTube.SM_DriveTube");

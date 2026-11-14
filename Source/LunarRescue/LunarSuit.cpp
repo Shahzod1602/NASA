@@ -93,8 +93,10 @@ void ALunarCharacter::UpdateStrideSpeed(){
  if(!CanFastStride())FastStride=false;
  // Authored movement rates, not physiological EVA limits. Rescue previously
  // changed only the pose flag on Shift, leaving MaxWalkSpeed at 320 cm/s.
- Move->MaxWalkSpeed=G&&G->Apollo?(FastStride?220.f:140.f):(FastStride?500.f:320.f);
- if(G&&G->Apollo){Move->MaxAcceleration=420;Move->BrakingDecelerationWalking=650;Move->GroundFriction=6;Move->AirControl=.12f;}
+ // Shared Moon tuning: SELENE previously used the much faster Mars rates.
+ // These are deliberate game settings, not measured spacesuit performance.
+ Move->MaxWalkSpeed=G&&!G->Mars?(FastStride?220.f:140.f):(FastStride?500.f:320.f);
+ if(G&&!G->Mars){Move->MaxAcceleration=420;Move->BrakingDecelerationWalking=650;Move->GroundFriction=6;Move->AirControl=0;Move->FallingLateralFriction=0;Move->BrakingDecelerationFalling=0;Move->JumpZVelocity=140;}
 }
 void ALunarCharacter::BeginFastStride(){if(!CanFastStride())return;FastStride=ULunarSettings::Get()->ToggleSprint?!FastStride:true;UpdateStrideSpeed();}
 void ALunarCharacter::EndFastStride(){if(!ULunarSettings::Get()->ToggleSprint)FastStride=false;UpdateStrideSpeed();}
@@ -103,7 +105,7 @@ void ALunarCharacter::EndSuitOrbit(){SuitOrbit=false;}
 void ALunarCharacter::ToggleSuitView(){
  if(auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));ALunarCargoFinale::Active(G)||ALunarDepartureScene::Active(G))return;
  auto* G=Cast<ALunarGameMode>(UGameplayStatics::GetGameMode(this));if(!G||G->Menu||G->Journal||G->ApolloTool||ActivePanel)return;
- if(ALunarSurfaceVehicle::IsRiding(G))return;
+ if(ALunarSurfaceVehicle::IsRiding(G)){G->FieldOperations->Vehicle->ToggleView();return;}
  if(G->FieldOperations)G->FieldOperations->CancelScanner();
  ThirdPerson=!ThirdPerson;Camera->bUsePawnControlRotation=!ThirdPerson;Camera->SetFieldOfView(ULunarSettings::Get()->FieldOfView);
  if(!ThirdPerson){Camera->SetRelativeLocation(FVector(0,0,68));Camera->SetRelativeRotation(FRotator::ZeroRotator);}
@@ -229,7 +231,7 @@ void ALunarCharacter::UpdateSuit(float D){
   if(ThirdPerson&&LunarCarryPresentation::GripPose(this,false,Side,Wrist,BodyGripRotation))BodyGripFrame=&BodyGripRotation;
   FVector Elbow=Joint(Shoulder,Wrist,28,24,FVector(0,Side,-.4f));Limb(SuitArms[S*9],Shoulder,Elbow,28);
   Hand(SuitArms,S*9,Elbow,Wrist,Side,BodyGripFrame?1.f:WorkBlend,true,BodyGripFrame);
-  const float Sway=HandMotion?FMath::Sin(Phase)*1.1f*GaitBlend*(1-Rest):0.f;
+ const float Sway=HandMotion?FMath::Sin(Phase)*1.1f*GaitBlend*(1-Rest):0.f;
   FVector ViewElbow(8,Side*25,-28),ViewWrist(36+WorkBlend*3+Sway,Side*(20-WorkBlend*10),-15+FMath::Abs(Sway)*.35f-(HandMotion?LandBlend:0.f));
   if(G&&(G->ApolloTool==1||G->ApolloTool==4||G->ApolloTool==5||G->ApolloTool==6)){ViewElbow=FVector(7,Side*24,-28);ViewWrist=FVector(35,Side*10,-15);}
   // Free hands settle below the helmet before disappearing on a downward

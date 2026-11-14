@@ -4,6 +4,7 @@
 #include "LunarDeparture.h"
 #include "LunarCargoFinale.h"
 #include "LunarLoading.h"
+#include "Components/PoseableMeshComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/BoxComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -61,12 +62,16 @@ UStaticMeshComponent* ALunarSurfaceVehicle::Shape(UStaticMesh* Mesh,FVector P,FV
 }
 bool ALunarSurfaceVehicle::BuildVisuals(){
  if(Mission&&!Mission->Mars){
-  const FString Folder=TEXT("/Game/Lunar/Vehicles/Museum20261113/");TArray<UStaticMesh*> Imported;
+  const FString Folder=TEXT("/Game/Lunar/Vehicles/Museum20261114/");TArray<UStaticMesh*> Imported;
   for(int32 I=-1;I<4;++I){const FString Name=I<0?TEXT("SM_MuseumRover_Body"):FString::Printf(TEXT("SM_MuseumRover_Wheel%d"),I);Imported.Add(LoadObject<UStaticMesh>(nullptr,*(Folder+Name+TEXT("/StaticMeshes/")+Name+TEXT(".")+Name)));}
   if(!Imported.Contains(nullptr)){
-   MuseumRover=true;TireRadiusCm=37.5848f;Hull->SetBoxExtent(FVector(166,93,86));
-   ContactOffset[0]=FVector(92.5155,-75.2804,0);ContactOffset[1]=FVector(92.5153,76.5557,0);ContactOffset[2]=FVector(-102.9777,-75.2805,0);ContactOffset[3]=FVector(-102.9778,76.5555,0);
+   MuseumRover=true;TireRadiusCm=35.816f;Hull->SetBoxExtent(FVector(166,93,86));
+   ContactOffset[0]=FVector(94.2,-77.4,0);ContactOffset[1]=FVector(94.2,78.6,0);ContactOffset[2]=FVector(-102.7,-77.4,0);ContactOffset[3]=FVector(-102.7,78.6,0);
    for(int32 I=0;I<Imported.Num();++I){auto* C=NewObject<UStaticMeshComponent>(this);C->SetupAttachment(Hull);C->SetMobility(EComponentMobility::Movable);C->SetStaticMesh(Imported[I]);C->SetRelativeLocation(I==0?FVector(0,0,-LunarSurfaceVehiclePrivate::RideHeight):ContactOffset[I-1]+FVector(0,0,-LunarSurfaceVehiclePrivate::RideHeight+TireRadiusCm));C->SetCollisionEnabled(ECollisionEnabled::NoCollision);C->SetGenerateOverlapEvents(false);C->SetCanEverAffectNavigation(false);C->PrimaryComponentTick.bCanEverTick=false;C->RegisterComponent();Visuals.Add(C);if(I>0)Wheels.Add(C);}
+   // Authored training control bar, placed within reach of the seated driver.
+   auto* ControlMesh=LoadObject<UStaticMesh>(nullptr,TEXT("/Engine/BasicShapes/Cube.Cube"));
+   Shape(ControlMesh,FVector(-4,-31,5),FVector(3,29,3),FLinearColor(.12,.15,.17));
+   for(float Side:{-1.f,1.f})Shape(ControlMesh,FVector(-4,-31+Side*12,9),FVector(3,3,9),FLinearColor(.04,.05,.06));
    UE_LOG(LogTemp,Display,TEXT("MUSEUM_ROVER body=1 source_wheels=4 source_design_preserved=1 authored_kinematic_drive=1"));return true;
   }
  }
@@ -126,8 +131,9 @@ bool ALunarSurfaceVehicle::Enter(){
  auto* Move=P->GetCharacterMovement();PreviousMoveMode=uint8(Move->MovementMode);PreviousCustomMode=Move->CustomMovementMode;PreviousMoveTick=Move->IsComponentTickEnabled();PreviousVelocity=Move->Velocity;PreviousHidden=P->IsHidden();PreviousCollision=P->GetActorEnableCollision();
  Move->StopMovementImmediately();Move->DisableMovement();Move->SetComponentTickEnabled(false);P->SetActorEnableCollision(false);Hull->IgnoreActorWhenMoving(P,true);P->GetCapsuleComponent()->IgnoreActorWhenMoving(this,true);
  P->AttachToActor(this,FAttachmentTransformRules::KeepWorldTransform);P->SetActorRelativeLocation(LunarSurfaceVehiclePrivate::Seat);P->SetActorRelativeRotation(FRotator::ZeroRotator);P->SetActorHiddenInGame(true);
- Occupied=true;Throttle=Steering=SpeedCm=ActualSpeedMps=0;Notice.Empty();FollowCamera->SetFieldOfView(FMath::Clamp(PreviousFov,60.f,110.f));PoseCamera(0);PC->SetViewTarget(this);SetActorTickEnabled(true);
- Mission->Message(TEXT("TRAINING ROVER: movement keys drive and steer. {Interact}: stop and exit. This is a simplified fictional vehicle."));return true;
+ Occupied=true;CockpitView=false;ViewYaw=0;ViewPitch=-20;PoseDriver();Throttle=Steering=SpeedCm=ActualSpeedMps=0;Notice.Empty();FollowCamera->SetFieldOfView(FMath::Clamp(PreviousFov,60.f,110.f));PoseCamera(0);PC->SetViewTarget(this);SetActorTickEnabled(true);
+ // Boarding is immediate and quiet. Controls remain available in pause/help.
+ return true;
 }
 void ALunarSurfaceVehicle::SetForward(float V){Throttle=FMath::IsFinite(V)?FMath::Clamp(V,-1.f,1.f):0;}
 void ALunarSurfaceVehicle::SetSteer(float V){Steering=FMath::IsFinite(V)?FMath::Clamp(V,-1.f,1.f):0;}
@@ -162,9 +168,24 @@ void ALunarSurfaceVehicle::PoseWheels(const FGroundPose& Ground,float SignedCm){
   if(Hubs.IsValidIndex(I)&&Hubs[I]){Hubs[I]->SetWorldLocation(Centre+GetActorRightVector()*(I%2?11.f:-11.f));Hubs[I]->SetRelativeRotation(Local);}
  }
 }
+void ALunarSurfaceVehicle::RotateView(float Yaw,float Pitch){
+ if(!IsOccupied()||!Mission||Mission->Paused||Rider->ActivePanel||!Mission->IsActive()||!FMath::IsFinite(Yaw)||!FMath::IsFinite(Pitch))return;
+ ViewYaw=FMath::UnwindDegrees(ViewYaw+Yaw);ViewPitch=FMath::Clamp(ViewPitch+Pitch,-75.f,75.f);
+ if(CockpitView)ViewYaw=FMath::Clamp(ViewYaw,-145.f,145.f);
+}
+void ALunarSurfaceVehicle::ToggleView(){
+ if(!IsOccupied()||!Mission||Mission->Paused||Rider->ActivePanel||!Mission->IsActive())return;
+ CockpitView=!CockpitView;ViewYaw=0;ViewPitch=CockpitView?0:-20;PoseDriver();PoseCamera(0);
+}
 void ALunarSurfaceVehicle::PoseCamera(float D){
- const FVector Target=GetActorLocation()+GetActorUpVector()*60;
- FVector Desired=GetActorTransform().TransformPosition(FVector(-450,85,230));FHitResult Hit;FCollisionQueryParams Q(SCENE_QUERY_STAT(TrainingRoverCamera),false);Q.AddIgnoredActor(this);if(IsValid(Rider))Q.AddIgnoredActor(Rider);
+ if(CockpitView){
+  const FVector Eye=MuseumRover?FVector(-26,-31,52):FVector(-22,0,117);
+  FollowCamera->SetWorldLocation(GetActorTransform().TransformPosition(Eye));
+  FollowCamera->SetWorldRotation(GetActorQuat()*FRotator(ViewPitch,ViewYaw,0).Quaternion());return;
+ }
+ const FVector Target=GetActorLocation()+GetActorUpVector()*35;
+ const FVector Offset=-FRotator(ViewPitch,ViewYaw,0).Vector()*485;
+ FVector Desired=Target+GetActorQuat().RotateVector(Offset);FHitResult Hit;FCollisionQueryParams Q(SCENE_QUERY_STAT(TrainingRoverCamera),false);Q.AddIgnoredActor(this);if(IsValid(Rider))Q.AddIgnoredActor(Rider);
  if(GetWorld()->SweepSingleByChannel(Hit,Target,Desired,FQuat::Identity,ECC_Camera,FCollisionShape::MakeSphere(12),Q))Desired=Hit.Location;
  FollowCamera->SetWorldLocation(D>0?FMath::VInterpTo(FollowCamera->GetComponentLocation(),Desired,D,10):Desired);FollowCamera->SetWorldRotation((Target-FollowCamera->GetComponentLocation()).Rotation());
 }
@@ -196,7 +217,7 @@ void ALunarSurfaceVehicle::RestoreRider(const FVector* ExitPosition){
  auto* P=Rider.Get();if(!IsValid(P)){Occupied=false;Rider=nullptr;return;}auto* PC=Cast<APlayerController>(P->GetController());
  P->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);if(ExitPosition)P->SetActorLocation(*ExitPosition,false,nullptr,ETeleportType::None);
  P->SetActorRotation(FRotator(0,PreviousControl.Yaw,0));P->ThirdPerson=PreviousThird;P->Camera->bUsePawnControlRotation=PreviousCameraControl;P->Camera->SetRelativeTransform(PreviousCamera);P->Camera->SetFieldOfView(PreviousFov);
- P->SetActorHiddenInGame(PreviousHidden);P->SetActorEnableCollision(PreviousCollision);
+ P->SetActorHiddenInGame(PreviousHidden);P->SetActorEnableCollision(PreviousCollision);if(P->SuitRig)P->SuitRig->bCastHiddenShadow=true;
  if(auto* Move=P->GetCharacterMovement()){Move->SetMovementMode(EMovementMode(PreviousMoveMode),PreviousCustomMode);Move->StopMovementImmediately();Move->SetComponentTickEnabled(PreviousMoveTick&&(!IsValid(Mission)||!Mission->Paused));}
  Hull->IgnoreActorWhenMoving(P,false);
  // A forced transition may have no external exit. Never teleport to the old
@@ -206,7 +227,7 @@ void ALunarSurfaceVehicle::RestoreRider(const FVector* ExitPosition){
  // Dismount is a validated placement, not an on-foot route segment.
  if(IsValid(Mission)&&Mission->Apollo){Mission->ApolloLastPosition=P->GetActorLocation();Mission->ApolloTrailPendingBreak=true;}
  if(PC){PC->SetControlRotation(PreviousControl);if(PC->GetViewTarget()==this){AActor* View=PreviousViewTarget.Get();if(!IsValid(View))View=P;PC->SetViewTarget(View);}}
- Occupied=false;Rider=nullptr;Throttle=Steering=SpeedCm=ActualSpeedMps=0;SetActorTickEnabled(RecoveryPawn.IsValid()&&!Ending);
+ if(Driver)Driver->SetVisibility(false);Occupied=false;Rider=nullptr;Throttle=Steering=SpeedCm=ActualSpeedMps=0;SetActorTickEnabled(RecoveryPawn.IsValid()&&!Ending);
 }
 bool ALunarSurfaceVehicle::Exit(bool Force){
  if(!IsOccupied()){Occupied=false;SetActorTickEnabled(RecoveryPawn.IsValid());return true;}

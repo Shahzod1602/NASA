@@ -39,7 +39,7 @@ struct FStrideRun:public TSharedFromThis<FStrideRun> {
    auto* F=G->GetWorld()->SpawnActor<AStaticMeshActor>();Floor=F;auto* Mesh=F?F->GetStaticMeshComponent():nullptr;auto* Cube=LoadObject<UStaticMesh>(nullptr,TEXT("/Engine/BasicShapes/Cube.Cube"));Check(F&&Mesh&&Cube,TEXT("Flat collision fixture actor component and cube asset are available"));if(!F||!Mesh||!Cube){Finish();return;}Mesh->SetMobility(EComponentMobility::Movable);Mesh->SetStaticMesh(Cube);Mesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);Mesh->SetCollisionResponseToAllChannels(ECR_Block);F->SetActorLocation(FVector(0,0,29900));F->SetActorScale3D(FVector(100,100,.2f));
    P->SetActorLocation(FVector(0,0,30002),false,nullptr,ETeleportType::TeleportPhysics);Move->StopMovementImmediately();Move->SetMovementMode(MOVE_Walking);P->FastStride=false;Settings->ToggleSprint=false;Settings->Apply(P,false);P->UpdateStrideSpeed();
    G->ApolloTimed=true;G->Oxygen=360;G->OxygenCapacity=480;PC->SetControlRotation(FRotator::ZeroRotator);PC->SetInputMode(FInputModeGameOnly());PC->SetIgnoreMoveInput(false);PC->SetIgnoreLookInput(false);
-   Walk=G->Apollo?140.f:320.f;Fast=G->Apollo?220.f:500.f;
+   Walk=G->Mars?320.f:140.f;Fast=G->Mars?500.f:220.f;
    Check(FMath::IsNearlyEqual(Move->MaxWalkSpeed,Walk),TEXT("Normal speed uses mission-specific centimetres per second"));Key(EKeys::W,IE_Pressed);
   }else if(Phase==1){
    Check(Move->IsMovingOnGround()&&P->GetVelocity().Size2D()>Walk*.8f&&P->GetVelocity().Size2D()<Walk*1.1f,TEXT("Real W input reaches walking speed on a flat collision fixture"));Before=P->GetActorLocation();OxygenBefore=G->Oxygen;TimeBefore=G->GetWorld()->GetTimeSeconds();Key(EKeys::LeftShift,IE_Pressed);
