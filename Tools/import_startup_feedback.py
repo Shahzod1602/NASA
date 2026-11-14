@@ -1,15 +1,23 @@
-"""Optional local reference-art importer. Public builds do not require these files."""
+"""Import team-authorized demo illustrations without modifying any map."""
 from pathlib import Path
 import unreal as u
 root=Path(u.Paths.project_dir())
-for name,filename in [('T_AstroKid','AstroKidReference.jpg'),('T_InventoryReference','InventoryReference.jpg')]:
-    source=root/'SourceArt/Startup20261114'/filename
+items=[
+ ('T_AstroKid','Startup20261114/AstroKidReference.jpg','Startup20261114'),
+ ('T_InventoryReference','Startup20261114/InventoryReference.jpg','Startup20261114'),
+ ('T_PreflightCabin','AuthorizedMedia20261115/PreflightCabin.png','Demo20261115'),
+ ('T_PreflightReference','AuthorizedMedia20261115/PreflightReference.jpg','Demo20261115'),
+ ('T_Acknowledgements','AuthorizedMedia20261115/IntroAcknowledgements.jpg','Demo20261115'),
+]
+for name,filename,folder in items:
+    source=root/'SourceArt'/filename
     if not source.is_file():
         u.log('OPTIONAL_REFERENCE_SKIPPED '+filename+'; public text presentation remains available')
         continue
-    asset='/Game/Lunar/Frontend/Startup20261114/'+name
+    destination='/Game/Lunar/Frontend/'+folder
+    asset=destination+'/'+name
     if not u.EditorAssetLibrary.does_asset_exist(asset):
-        task=u.AssetImportTask();task.filename=str(source);task.destination_path='/Game/Lunar/Frontend/Startup20261114';task.destination_name=name;task.automated=task.save=True;task.replace_existing=False
+        task=u.AssetImportTask();task.filename=str(source);task.destination_path=destination;task.destination_name=name;task.automated=task.save=True;task.replace_existing=False
         u.AssetToolsHelpers.get_asset_tools().import_asset_tasks([task])
     texture=u.load_asset(asset)
     assert isinstance(texture,u.Texture2D)

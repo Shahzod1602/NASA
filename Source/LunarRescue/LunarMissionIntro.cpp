@@ -9,6 +9,8 @@
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
 #include "Widgets/SLeafWidget.h"
+#include "Styling/CoreStyle.h"
+#include "Rendering/DrawElements.h"
 #include <atomic>
 
 namespace {
@@ -18,7 +20,11 @@ public:
  SLATE_BEGIN_ARGS(SLunarIntroGuard) {} SLATE_END_ARGS()
  void Construct(const FArguments&,TSharedRef<FIntroProgress,ESPMode::ThreadSafe> InState,IGameMoviePlayer* InPlayer,double InStart){State=InState;Player=InPlayer;Start=InStart;SetCanTick(true);SetVisibility(EVisibility::HitTestInvisible);}
  virtual FVector2D ComputeDesiredSize(float)const override{return FVector2D(1280,720);}
- virtual int32 OnPaint(const FPaintArgs&,const FGeometry&,const FSlateRect&,FSlateWindowElementList&,int32 Layer,const FWidgetStyle&,bool)const override{return Layer;}
+ virtual int32 OnPaint(const FPaintArgs&,const FGeometry& G,const FSlateRect&,FSlateWindowElementList& Out,int32 Layer,const FWidgetStyle&,bool)const override{
+  const FVector2D Size=G.GetLocalSize();const FVector2D At(0,FMath::Max(0.f,float(Size.Y)-38.f));
+  FSlateDrawElement::MakeBox(Out,Layer,G.ToPaintGeometry(FVector2D(Size.X,38),FSlateLayoutTransform(At)),FCoreStyle::Get().GetBrush(TEXT("WhiteBrush")),ESlateDrawEffect::None,FLinearColor(0,0,0,.76f));
+  FSlateDrawElement::MakeText(Out,Layer+1,G.ToPaintGeometry(FVector2D(Size.X-32,30),FSlateLayoutTransform(At+FVector2D(16,8))),TEXT("AI-generated lunar cinematic / fictional portrayal"),FCoreStyle::GetDefaultFontStyle("Regular",16),ESlateDrawEffect::None,FLinearColor(.92f,.95f,.98f));return Layer+2;
+ }
  virtual void Tick(const FGeometry&,double,float)override{
   ++State->SlateTicks;
   // Slate still ticks while the world is held. Stop on the game thread only;

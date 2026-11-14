@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.9.3 — Moon/Mars feedback demo — 2026-11-15
+
+- Record the user’s Higgsfield team-creation/use authorization and restore the original startup/inventory art plus Moon cinematic.
+- Replace the plain training panel with an illustrated cabin, charcoal checklist, real per-check progress/state, compact navigation and a cyan-blue Open hatch action.
+- Identify the supplied cinematic as AI-generated fictional material; keep actual planetary data provenance separate.
+- Extend rendered checks to exercise the real hatch callback and require the restored background and enabled blue launch state.
+- Display the complete team acknowledgement plate after initial loading; retain the separate startup artwork and a readable provenance caption.
+- Share expedition navigation and charcoal presentation across EVA, preparation Map and Inventory; begin preparation Map on the offline rotatable planet.
+- Add optional historical Apollo and fictional SELENE/ARES hardware roles/specifications, without changing resources or mission progress.
+- Audit accessible NASA-group written tasks and supplied documents, preserving explicit scope decisions and unanswered model/preference questions.
+
 ## v0.9.2 — public feedback preview — 2026-11-14
 
 - Refine Moon movement, rover driver/cameras and quiet boarding, two-hand cell grips, sequential EVA checks, backpack/map controls and SELENE support/collision details.

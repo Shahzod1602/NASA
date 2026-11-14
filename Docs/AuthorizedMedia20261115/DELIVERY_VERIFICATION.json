@@ -1,0 +1,24 @@
+{
+  "archive": {
+    "archive": "D:\\LunarRescue\\Dist\\AuthorizedDemo20261115\\LunarRescue-Authorized-Demo-Windows.zip",
+    "bytes": 527349942,
+    "sha256": "deeb70eb4cd19d663083f1ff012c26dd30b4d06687d61dae396a45291bb28340",
+    "members": 656,
+    "crc_passed": true,
+    "executable_sha256": "59fc0a1544dd440f0caf3b03e16cd7724d32f3d0e1092398f7f73ef72d9a375f",
+    "cinematic_sha256": "6da19e1461a4de7d6b8b5d1129a46155ff6ea1abfeb8d65a59dc7b63e238380b",
+    "player_saved_data_included": false
+  },
+  "clean_extracted_launch": {
+    "bootstrap_exit": 0,
+    "assertions": 16,
+    "executable_sha256": "59fc0a1544dd440f0caf3b03e16cd7724d32f3d0e1092398f7f73ef72d9a375f",
+    "new_data_generated_only_after_extraction": true,
+    "human_playtest": false,
+    "network_isolation_tested": false,
+    "verified_utc": "2026-11-14T20:47:23.2590960Z"
+  },
+  "historical_v092_archive_unchanged": true,
+  "required_authorized_media_present": true,
+  "saved_or_test_reports_in_archive": false
+}

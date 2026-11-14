@@ -89,7 +89,7 @@ void PrepareUIReview(ALunarGameMode* G,FUIReviewState State){
   switch(State->Step++){
    case 0:Main->BeginIntro(true);Main->AdvanceIntro(.20f);Name=TEXT("intro-fade-in");Delay=.001f;break;
    case 1:Main->BeginIntro(true);Main->AdvanceIntro(.90f);Name=TEXT("intro-illustration");Delay=.001f;break;
-   case 2:Main->BeginIntro(true);Main->AdvanceIntro(1.90f);Name=TEXT("intro-menu-reveal");Delay=.001f;break;
+   case 2:Main->BeginIntro(true);Main->AdvanceIntro(FLunarIntroState::Hold+FLunarIntroState::FadeOut*.5f);Name=TEXT("intro-menu-reveal");Delay=.001f;break;
    case 3:Main->AdvanceIntro(10);Name=TEXT("home-five-glass-actions");break;
    case 4:if(!MoveToCard(Main->ExtraHomeCards[0])){EndUIReview(G,State,false);return;}Name=TEXT("home-settings-hover");Delay=.35f;break;
    case 5:Main->ExtraHomeCards[0]->Button->OnUnhovered.Broadcast();if(!MoveToCard(Main->ExtraHomeCards[1])){EndUIReview(G,State,false);return;}Name=TEXT("home-exit-hover");Delay=.35f;break;

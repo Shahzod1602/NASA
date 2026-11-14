@@ -7,10 +7,12 @@ param(
  [switch]$Learning,
  [switch]$Restart,
  [switch]$PublicDistribution,
+ [switch]$TeamMediaDemo,
  [ValidateRange(640,3840)][int]$Width=1280,
  [ValidateRange(480,2160)][int]$Height=720
 )
 $ErrorActionPreference='Stop'
+if($TeamMediaDemo -and $PublicDistribution){throw 'Select the authorized-media demo or historical text-only public distribution, not both'}
 $root=Split-Path $PSScriptRoot -Parent
 $projectRoot=if($Packaged){Join-Path $root 'Dist\Apollo12\Windows\LunarRescue'}else{$root}
 $editor=if($Review){'UnrealEditor.exe'}else{'UnrealEditor-Cmd.exe'}
@@ -60,6 +62,7 @@ foreach($case in $cases){
  $log=Join-Path $destination "$($case.Name).log"
  $arguments=@($case.Map,'-game','-unattended','-nosound',"-$($case.Flag)","-abslog=`"$log`"")
  if($PublicDistribution){$arguments+='-PublicDistributionTest'}
+ if($TeamMediaDemo){$arguments+='-TeamMediaDemoTest'}
  if(-not $Packaged){$arguments=@("`"$root\LunarRescue.uproject`"")+$arguments}
  if($Review){$arguments+=@('-dx11','-RenderOffscreen','-ForceRes',"-ResX=$Width","-ResY=$Height")}else{$arguments+='-nullrhi'}
  # Each case begins with the original engine settings. The test/review flags also

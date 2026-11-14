@@ -42,6 +42,9 @@ void UFieldOperationsComponent::ValidateChecks(TFunctionRef<void(bool,const TCHA
  G->Paused=G->Journal=G->Holding=false;G->Stage=ELunarStage::Briefing;G->OxygenCapacity=Base;G->Oxygen=FMath::Min(73.f,Base);
  F->Enabled=F->Preparing=true;F->BaseMissionCapacity=Base;F->DataCapacityMB=4;
  const float PreflightOxygen=G->Oxygen;
+ const FString Hardware=F->SourcesText();
+ Check(G->Apollo?(Hardware.Contains(TEXT("SA-507"))&&Hardware.Contains(TEXT("CSM-108"))&&Hardware.Contains(TEXT("LM-6"))):Hardware.Contains(G->Mars?TEXT("MISSION HARDWARE / ARES"):TEXT("MISSION HARDWARE / SELENE")),TEXT("Hardware guide identifies the selected mission and its actual reference equipment"));
+ Check(Hardware.Contains(TEXT("fictional"))&&G->Oxygen==PreflightOxygen&&F->PreflightMask==0,TEXT("Reading hardware sources distinguishes authored rules and never advances EVA or refills resources"));
  Check(!F->ContinuePreflight()&&F->PreflightCursor==0,TEXT("Next cannot skip an unfinished system"));
  Check(!F->BeginCheck(1)&&F->PendingCheck==INDEX_NONE&&F->PreflightMask==0,TEXT("EVA checks reject skipping the first unfinished system"));
  Check(F->BeginCheck(0)&&F->PendingCheck==0,TEXT("The first ordered EVA check starts without opening a viewport panel"));

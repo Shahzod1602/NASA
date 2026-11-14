@@ -130,13 +130,14 @@ void Next(ALunarGameMode* G,FFieldReviewState S){
   // read-only views retain unfinished checks and never seed mission progress.
   if(S->PreflightPreview<6){
    const int32 Preview=S->PreflightPreview++;--S->Step;Settings->TextScale=Settings->SubtitleScale=Preview>=3?1.5f:1.f;
-   if(Preview==0||Preview==4){Check(S,Click(G,TEXT("Map")),TEXT("Preflight map preview opens through its owned button"));Click(G,TEXT("Local mission map"));}
+   if(Preview==0||Preview==4){Check(S,Click(G,TEXT("Map")),TEXT("Preflight map preview opens through its owned button"));if(Preview==0){auto* M=Panel(G)->OperationsMap.Get();auto* I=M&&M->WidgetTree?Cast<UImage>(M->WidgetTree->FindWidget(TEXT("PlanetContext"))):nullptr;Check(S,I&&I->IsVisible(),TEXT("First preflight Map opens directly on the offline rotatable planet"));}Click(G,TEXT("Local mission map"));}
    if(Preview==1||Preview==5)Check(S,Click(G,TEXT("Planet overview")),TEXT("Preflight globe preview uses the retained offline context material"));
    if(Preview==2)Check(S,Click(G,TEXT("Inventory")),TEXT("Preflight backpack preview opens through its owned button"));
    const TCHAR* Names[]={TEXT("preflight-map100"),TEXT("preflight-globe100"),TEXT("preflight-inventory100"),TEXT("preflight-inventory150"),TEXT("preflight-map150"),TEXT("preflight-globe150")};
    Capture(G,S,Names[Preview]);return;
   }
   Check(S,Click(G,TEXT("Map"))&&Panel(G)->View==EFieldPanelView::Resources&&!C->CanUsePanel(Panel(G),true),TEXT("Preflight Map opens as a read-only page without starting gameplay"));
+  Check(S,Click(G,TEXT("Local mission map")),TEXT("Local-map zoom checks explicitly select the local mission view"));
   Check(S,Click(G,TEXT("Zoom +"))&&Panel(G)->OperationsMap&&Panel(G)->OperationsMap->ZoomFactor()>1,TEXT("Map zoom button changes the actual map viewport"));
   Check(S,Click(G,TEXT("Reset map"))&&Panel(G)->OperationsMap&&Panel(G)->OperationsMap->ZoomFactor()==1,TEXT("Map reset restores a bounded overview"));
   if(auto* UI=Panel(G))UI->ForceLayoutPrepass();
@@ -150,12 +151,14 @@ void Next(ALunarGameMode* G,FFieldReviewState S){
   Check(S,Click(G,TEXT("Tools"))&&Click(G,TEXT("Optical magnifier"))&&!Click(G,TEXT("Equip magnifier"))&&C->CollectedMask==0,TEXT("Actual backpack filter and item selection preserve the scanner unlock and cargo guards"));
   Check(S,Click(G,TEXT("All")),TEXT("Backpack All filter restores the actual available item cards"));
   Check(S,Click(G,TEXT("EVA checks"))&&C->PreflightMask==0,TEXT("Returning to EVA checks preserves unfinished systems"));
-  Check(S,!Click(G,TEXT("Next /"))&&!Click(G,TEXT("Checks complete /")),TEXT("Next and Open Hatch remain disabled before the required checks"));
-  Check(S,Click(G,TEXT("1 / Inspect suit seals"))&&C->PendingCheck==0,TEXT("Actual first suit-check button starts the component timer"));S->FeedChecks=S->AwaitProgress=true;return;
+  auto* Hatch=FindButton(Panel(G),TEXT("Open hatch"));Check(S,Hatch&&!Hatch->GetIsEnabled()&&!Click(G,TEXT("Next /"))&&!Click(G,TEXT("Open hatch")),TEXT("The actual Open hatch control remains disabled and no Next control exists before completion"));
+  auto* Backdrop=Panel(G)&&Panel(G)->WidgetTree?Cast<UImage>(Panel(G)->WidgetTree->FindWidget(TEXT("PreflightBackdrop"))):nullptr;Check(S,Backdrop&&Backdrop->IsVisible()&&Backdrop->GetBrush().GetResourceObject(),TEXT("Pre-EVA uses the restored clean cabin illustration behind live UMG controls"));
+  Check(S,Click(G,TEXT("1 / Suit seals"))&&C->PendingCheck==0,TEXT("Actual first suit-check button starts the component timer"));S->FeedChecks=S->AwaitProgress=true;return;
  }
  if(Index==3){S->FeedChecks=S->AwaitReady=true;return;}
  if(Index==4){
-  if(P->ActivePanel)P->ClosePanel();ALunarDepartureScene::Abort(G);C->Preparing=false;G->Stage=G->Apollo?ELunarStage::ApolloCheckout:ELunarStage::FindModule;G->Paused=false;G->Journal=false;G->Holding=false;G->RadioRemaining=0;G->ApolloTool=0;
+  Check(S,Click(G,TEXT("Open hatch"))&&!C->Preparing&&!P->ActivePanel&&!G->Paused,TEXT("The actual Open hatch callback closes preparation and enters the selected mission"));
+  if(P->ActivePanel)P->ClosePanel();ALunarDepartureScene::Abort(G);C->Preparing=false;G->Stage=G->Apollo?ELunarStage::ApolloCheckout:ELunarStage::FindModule;G->Paused=false;G->Journal=false;G->Holding=false;G->RadioRemaining=0;G->ApolloTool=0;C->Briefed=false;C->Difficulty=1;
  }
  if(Index>=4&&Index<=15){
   if(Index==12&&!G->Apollo&&S->WirePreview<2){
@@ -230,7 +233,7 @@ void Pump(ALunarGameMode* G,FFieldReviewState S){
   S->FeedChecks=S->AwaitProgress=false;Capture(G,S,TEXT("preflight-checking150"));return;
  }
  if(S->AwaitReady){
-  if(C->Prepared){S->FeedChecks=S->AwaitReady=false;Check(S,C->PreflightMask==15&&C->PendingCheck==INDEX_NONE,TEXT("Four ordered real check callbacks complete through component game-time deltas"));Capture(G,S,TEXT("preflight-ready150"));return;}
+  if(C->Prepared){S->FeedChecks=S->AwaitReady=false;if(auto* UI=Panel(G))UI->Refresh(true);Check(S,C->PreflightMask==15&&C->PendingCheck==INDEX_NONE,TEXT("Four ordered real check callbacks complete through component game-time deltas"));auto* Hatch=FindButton(Panel(G),TEXT("Open hatch"));const FLinearColor Color=Hatch?Hatch->GetStyle().Normal.TintColor.GetSpecifiedColor():FLinearColor::Black;Check(S,Hatch&&Hatch->GetIsEnabled()&&Color.R<.3f&&Color.G>.7f&&Color.B>.7f,TEXT("All four completed checks enable the actual cyan-blue Open hatch button"));Capture(G,S,TEXT("preflight-ready150"));return;}
   if(C->PendingCheck==INDEX_NONE){if(auto* UI=Panel(G))UI->Refresh(true);const int32 CheckIndex=C->PreflightStep();Check(S,!FindButton(Panel(G),TEXT("Next /"))&&C->PreflightCursor==CheckIndex,TEXT("Next completed system is directly clickable and no Next button exists"));Check(S,Click(G,FString::Printf(TEXT("%d /"),CheckIndex+1))&&C->PendingCheck==CheckIndex,FString::Printf(TEXT("Actual ordered suit-check button %d starts its timer"),CheckIndex+1));}
  }
 }

@@ -1,5 +1,21 @@
 # Lunar Rescue
 
+## Current Moon/Mars task audit — 15 November 2026
+
+The latest work adds the full team acknowledgement intro, matching expedition
+panels and optional mission-hardware information. See the [task ledger](Docs/FullTaskAudit20261115/TASK_LEDGER.md)
+and [current verification status](Docs/FullTaskAudit20261115/TEST_REPORT.md).
+
+[v0.9.3 Windows demo](https://github.com/Shahzod1602/NASA/releases/tag/apollo12-v0.9.3).
+Extract the complete ZIP and run **Windows/LunarRescue.exe**. Exact validation:
+1,634 native assertion executions and 118 fresh packaged review PNGs; no human
+playtest of this build is claimed. This feedback demo is separate from prior
+competition artifacts and does not claim NASA endorsement.
+
+## Authorized media demo — 15 November 2026 (earlier local candidate)
+
+The user confirmed team creation with Higgsfield and authorized the supplied demo media. Startup/inventory art and the full supplied Moon introduction are restored. A clean AI-generated cabin background supports a redesigned live Pre-EVA checklist with sequential checks, in-place progress and a blue Open hatch control. See [implementation and exact current test status](Docs/AuthorizedMedia20261115/TEST_REPORT.md). The existing v0.9.2 archive below is unchanged.
+
 ## v0.9.2 — Public Feedback Preview — 14 November 2026
 
 [Preview release](https://github.com/Shahzod1602/NASA/releases/tag/apollo12-v0.9.2) · [Download Windows ZIP](https://github.com/Shahzod1602/NASA/releases/download/apollo12-v0.9.2/LunarRescue-Windows-v0.9.2.zip).
@@ -625,10 +641,11 @@ vehicle physics. Mars retains its own movement tuning.
 
 New Moon mission selections can play an optional local `Content/Movies/MoonArrival.mp4`
 after loading. Resume/restart and Mars do not reuse lunar footage. Missing media
-permits direct mission entry. The team-supplied clip's original source and public
-redistribution permission are unconfirmed; the binary is excluded from Git and
-must not be added to a public release without clearance. A source checkout works
-with the graceful fallback. No new public release is implied by this working tree.
+permits direct mission entry. On 15 November the owner confirmed the supplied
+images/video were team-created with Higgsfield and authorized their use in this
+demo. The working tree now includes the clip and provenance; this is a fictional
+AI-generated portrayal, not NASA archival footage. No new public release is
+implied by the working tree alone.
 
 See [surface feedback changes and actual validation](Docs/Feedback20261114Evening/TASKS_AND_CHANGES.md).
 
@@ -637,3 +654,17 @@ The additional local feedback candidate includes AstroKid startup presentation, 
 ## Public feedback preview v0.9.2
 
 The public Windows preview and source branch are separate from any submitted competition artifact. Unconfirmed reference-art textures and the optional Moon video are excluded; original text presentation and equipment symbols work without them. See [public distribution scope](Docs/PublicRelease20261114/RELEASE_SCOPE.md) and the [exact-build test report](Docs/PublicRelease20261114/PUBLIC_TEST_REPORT.md). Owner saves/photos/settings are excluded from the download.
+
+## Current Moon/Mars demo audit — 15 November
+
+The current demo adds the full team-provided acknowledgement plate after initial
+loading, shared EVA/Map/Inventory styling, an offline planet overview on the
+preparation Map tab, and optional mission-specific hardware information. Open
+**Mission hardware** or **Science & Sources** to read equipment roles and the
+boundary between historical references and fictional game rules. Map/Inventory
+do not skip checks or award cargo.
+
+See the [complete written-task ledger](Docs/FullTaskAudit20261115/TASK_LEDGER.md)
+and [separate competition note](Docs/FullTaskAudit20261115/COMPETITION_NOTE.md).
+OXYGEN/rocket and Mission Designer are deferred by the owner. Alternative supplied
+3D models await source information; existing credited NASA models remain in use.

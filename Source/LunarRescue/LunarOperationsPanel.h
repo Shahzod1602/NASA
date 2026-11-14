@@ -96,6 +96,8 @@ private:
  void BuildPage();
  void BuildMap();
  void BuildPreflight();
+ void BuildExpeditionHeader();
+ void BuildExpeditionFooter();
  void BuildInventory();
  void UpdateCheckProgress();
  void CloseOwnedPanel();

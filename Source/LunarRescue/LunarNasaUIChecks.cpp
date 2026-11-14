@@ -54,13 +54,21 @@ void ALunarGameMode::NasaIntroChecks(){
  Model.Advance(FLunarIntroState::FadeOut);Result->Check(!Model.Active&&FMath::IsNearlyEqual(Model.Elapsed,FLunarIntroState::Duration)&&FMath::IsNearlyZero(Model.LayerAlpha(),.0001f),TEXT("Intro reaches its bounded end without leaving a blocking black layer"));
  Model.Advance(100);Result->Check(FMath::IsNearlyEqual(Model.Elapsed,FLunarIntroState::Duration),TEXT("Finished intro cannot accumulate more presentation time"));
  Main->BeginIntro(true);auto* Wordmark=Main->WidgetTree?Cast<UTextBlock>(Main->WidgetTree->FindWidget(TEXT("PublicStartupWordmark"))):nullptr;
- const bool LocalArt=Main->IntroImage&&Main->IntroImage->GetBrush().GetResourceObject()&&Main->IntroImage->GetBrush().GetResourceObject()->GetName()==TEXT("T_AstroKid")&&Main->IntroImage->GetRenderOpacity()==1;
+ const auto* IntroResource=Main->IntroImage?Main->IntroImage->GetBrush().GetResourceObject():nullptr;
+ const bool LocalArt=IntroResource&&(IntroResource->GetName()==TEXT("T_AstroKid")||IntroResource->GetName()==TEXT("T_Acknowledgements"))&&Main->IntroImage->GetRenderOpacity()==1;
  const bool PublicText=Wordmark&&Wordmark->GetParent()==Main->IntroLayer&&Wordmark->IsVisible()&&Wordmark->GetText().ToString()==TEXT("AstroKid");
  Result->Check(Main->IsIntroActive()&&Main->IntroLayer&&(LocalArt||PublicText),TEXT("Startup owns a visible original text wordmark or an explicitly supplied local illustration"));
  if(FParse::Param(FCommandLine::Get(),TEXT("PublicDistributionTest"))){
   Result->Check(PublicText&&!LocalArt&&!FPackageName::DoesPackageExist(TEXT("/Game/Lunar/Frontend/Startup20261114/T_AstroKid")),TEXT("Public package contains original startup text and no unconfirmed logo texture"));
   Result->Check(!FPackageName::DoesPackageExist(TEXT("/Game/Lunar/Frontend/Startup20261114/T_InventoryReference")),TEXT("Public package contains no unconfirmed inventory-reference texture"));
   Result->Check(IFileManager::Get().FileSize(*(FPaths::ProjectContentDir()/TEXT("Movies/MoonArrival.mp4")))<0,TEXT("Public package contains no unconfirmed optional movie"));
+ }
+ if(FParse::Param(FCommandLine::Get(),TEXT("TeamMediaDemoTest"))){
+  Result->Check(LocalArt&&!PublicText&&Main->IntroImage->GetBrush().GetResourceObject()->GetName()==TEXT("T_Acknowledgements"),TEXT("Authorized demo shows the full team acknowledgement plate after loading"));
+  Result->Check(FPackageName::DoesPackageExist(TEXT("/Game/Lunar/Frontend/Startup20261114/T_AstroKid")),TEXT("Initial loading retains the distinct supplied AstroKid startup artwork"));
+  Result->Check(FPackageName::DoesPackageExist(TEXT("/Game/Lunar/Frontend/Startup20261114/T_InventoryReference")),TEXT("Authorized demo stages the inventory illustration atlas"));
+  Result->Check(FPackageName::DoesPackageExist(TEXT("/Game/Lunar/Frontend/Demo20261115/T_PreflightCabin"))&&FPackageName::DoesPackageExist(TEXT("/Game/Lunar/Frontend/Demo20261115/T_PreflightReference")),TEXT("Authorized demo stages the clean cabin and checklist icon source"));
+  Result->Check(IFileManager::Get().FileSize(*(FPaths::ProjectContentDir()/TEXT("Movies/MoonArrival.mp4")))==3506824,TEXT("Authorized demo includes the complete unmodified supplied cinematic"));
  }
  const auto SavedCheckpoint=ApolloCachedCheckpoint;ApolloCachedCheckpoint=NewObject<UApolloCheckpoint>(this);
  P->ChooseMoon();P->ChooseMars();P->StartMission();Main->ExploreMoon();Main->ExploreMars();Main->ConfirmSelection();Main->Continue();P->ContinueMission();Main->Settings();P->OpenSettings();
@@ -72,7 +80,7 @@ void ALunarGameMode::NasaIntroChecks(){
   auto* Clone=CreateWidget<ULunarMainMenu>(UGameplayStatics::GetPlayerController(this,0));if(Clone)Clone->TakeWidget();
   Result->Check(Clone&&!Clone->IsIntroActive(),TEXT("Rebuilding a menu in the same process does not replay the launch intro"));
   FinishUI(this,Result,TEXT("nasa-intro-checks.txt"));
- }),2.8f,false);
+ }),FLunarIntroState::Duration+.5f,false);
 }
 
 void ALunarGameMode::NasaUIChecks(){

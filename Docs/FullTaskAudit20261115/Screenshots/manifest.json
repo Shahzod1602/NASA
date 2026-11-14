@@ -1,0 +1,43 @@
+{
+  "executable_sha256": "76fb953cbd2263cd3f41e023e59ddaa778ee3a4b2b1ddb4770cd84bff0927d78",
+  "kind": "Actual Unreal Engine captures with explicit automated mission fixtures; no postprocessing",
+  "human_playtest": false,
+  "generated_marketing_render": false,
+  "files": [
+    {
+      "file": "preflight.png",
+      "source_receipt_folder": "Reports/FieldOperations20261104/package-review-1280x720-20261115-031940-271/selene",
+      "sha256": "9ab4f8080af7009362bbb2da7b85be8d8febd4a66a2fa3490eb8a5339740b9b4"
+    },
+    {
+      "file": "inventory.png",
+      "source_receipt_folder": "Reports/FieldOperations20261104/package-review-1280x720-20261115-031940-271/selene",
+      "sha256": "b2cd339ae20b9af223bdab0ca5f7e1171fc34500ab05163243c01c97b1cc37ef"
+    },
+    {
+      "file": "mission-map.png",
+      "source_receipt_folder": "Reports/FieldOperations20261104/package-review-1280x720-20261115-031940-271/selene",
+      "sha256": "f9d2492d3adc32b630a41bc3d813042d85ba1d7d43b36b48dda1f50bbb3185c1"
+    },
+    {
+      "file": "intro.png",
+      "source_receipt_folder": "Reports/NasaTasks20261101/package-review-1280x720-20261115-032059-776/intro",
+      "sha256": "b0b3305ff4fec1d0c1c2cb8f6b95e7b3a424b2f483fcd1b2c385982f7977ae75"
+    },
+    {
+      "file": "selene-gameplay.png",
+      "source_receipt_folder": "Reports/FieldOperations20261104/package-review-1280x720-20261115-031940-271/selene",
+      "sha256": "821fca463056f4ef3ef17b5c1363f88c976323bac359fe61a743a95b967ce694"
+    },
+    {
+      "file": "apollo-rover.png",
+      "source_receipt_folder": "Reports/FieldOperations20261104/package-review-1280x720-20261115-032409-387/apollo",
+      "sha256": "973c6efecf8e4a3d9b076ca992de3bc4ce3881f2a7356e9e0b730df67b337854"
+    },
+    {
+      "file": "apollo-equipment.png",
+      "source_receipt_folder": "Reports/FieldOperations20261104/package-review-1280x720-20261115-032409-387/apollo",
+      "sha256": "398f0fb91f6977320ca3a08fc0b8e50cf369a8b1605011ec42fbe371b9d2e009"
+    }
+  ]
+}

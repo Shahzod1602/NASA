@@ -1,0 +1,20 @@
+{
+  "release_tag": "apollo12-v0.9.3",
+  "archive_filename": "LunarRescue-Windows-v0.9.3.zip",
+  "archive_bytes": 537259546,
+  "archive_sha256": "66b786d728af4adccba748bda27ca1d3166c6f03f121e148ab0dd33cb7a6023a",
+  "members": 677,
+  "crc_passed": true,
+  "player_saved_data_included": false,
+  "clean_launch": {
+    "bootstrap_exit": 0,
+    "assertions": 17,
+    "executable_sha256": "76fb953cbd2263cd3f41e023e59ddaa778ee3a4b2b1ddb4770cd84bff0927d78",
+    "new_data_generated_only_after_extraction": true,
+    "human_playtest": false,
+    "network_isolation_tested": false,
+    "verified_utc": "2026-11-14T22:30:19.2308139Z"
+  },
+  "source_fingerprint_sha256": "aa319dc99a0ce83a29b04a5e6225711c692e192f45892195605497ded4302835",
+  "prior_v092_zip_sha256": "8a009961edf520c029aa0f6ac2a681c3024ccb7f0046f7b33596cdb3b46b427e"
+}

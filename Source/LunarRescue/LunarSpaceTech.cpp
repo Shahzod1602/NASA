@@ -1,0 +1,17 @@
+#include "LunarSpaceTech.h"
+#include "LunarGame.h"
+
+FString LunarSpaceTech::ForMission(const ALunarGameMode* Game){
+ const FString Historical=TEXT("MISSION HARDWARE / APOLLO 12\n\n")
+  TEXT("SATURN V / SA-507\nRole: launch vehicle for Apollo 12. Specification: three-stage Saturn V configuration. Its job was launch and departure, not lunar surface driving.\n\n")
+  TEXT("COMMAND AND SERVICE MODULE / CSM-108 / YANKEE CLIPPER\nRole: crew transport and lunar-orbit operations. Richard Gordon remained in the orbiter while the landing crew explored the surface.\n\n")
+  TEXT("LUNAR MODULE / LM-6 / INTREPID\nRole: surface landing and ascent. Two-stage lander for the two-person landing crew, Charles Conrad and Alan Bean. The game's visible reference mesh is artistic, not a measured Intrepid reconstruction.\n\n")
+  TEXT("SURVEYOR 3\nRole: earlier robotic lunar lander and Apollo 12's hardware-retrieval target. Returned components allowed scientists to examine exposure to the lunar environment.\n\n")
+  TEXT("Historical source: NASA, Apollo 12 mission summary\nhttps://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_12a_Summary.htm\n\n");
+ if(Game&&Game->Apollo)return Historical+TEXT("TRAINING ROVER / FICTIONAL EXTENSION\nApollo 12 did not carry a lunar rover. The game's drivable museum-model deployment is a modern authored exercise, separate from the historical hardware above. Mass, charge and instrument controls are game rules, not specifications for the flown spacecraft.\n");
+ const bool Mars=Game&&Game->Mars;
+ return FString(Mars?TEXT("MISSION HARDWARE / ARES / FICTIONAL MARS EXPEDITION\n\n"):TEXT("MISSION HARDWARE / SELENE / FICTIONAL MOON EXPEDITION\n\n"))+
+  (Mars?TEXT("ARES STATION\nRole: restore power and recover survey data. Specification: three authored repair steps using a replacement cell, a cable connection and restart. This is a fictional game station.\n\nORBITAL RELAY\nRole: restore the mission's communication link before returning. Alignment tolerances are game tuning, not a real flight antenna specification.\n\nTRAINING VEHICLE / SEV-INSPIRED\nRole: optional surface transport with limited game charge. NASA's Space Exploration Vehicle is the visual concept reference; this Mars deployment is fictional.\nhttps://science.nasa.gov/3d-resources/space-exploration-vehicle/\n\n"):
+        TEXT("SELENE STATION\nRole: recover a power cell, reconnect the cable and restart the research station. Specification: three authored repair stages; all resource capacities are game tuning.\n\nTRAINING ROVER / MUSEUM VISUAL\nRole: optional surface transport. The adapted Deutsches Museum model has four visual wheel assemblies; the controller uses bounded kinematic movement, not flight-certified dynamics.\n\nNOMAD-7 / FICTIONAL COMMUNICATOR\nRole: mission interaction and guidance. It uses a NASA/JPL Perseverance visual reference. The real Perseverance is a Mars rover; it did not visit the Moon.\nhttps://science.nasa.gov/3d-resources/mars-2020-perseverance-rover/\n\n"))+
+  TEXT("POWER CELL AND DATA BUFFER\nRole: support the current repair/science tasks. Charge is measured in authored resource units and storage in gameplay MB. No inventory item grants a fictional oxygen refill.\n\nHistorical Apollo hardware is covered separately in the Apollo 12 expedition. None of these fictional station specifications imply NASA endorsement or a real spacecraft design.\n");
+}

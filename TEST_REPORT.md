@@ -1,5 +1,13 @@
 # Test reports
 
+## Current Moon/Mars task audit — 15 November 2026
+
+See [this batch's actual verification status](Docs/FullTaskAudit20261115/TEST_REPORT.md) and [task coverage/exceptions](Docs/FullTaskAudit20261115/TASK_LEDGER.md). The separate prior authorized-media receipt below does not certify the newer intro/map/inventory/hardware changes.
+
+## Authorized media demo — 15 November 2026
+
+The current demo restores the team-authorized images/cinematic and redesigns Pre-EVA checks. See [its separate exact-build validation](Docs/AuthorizedMedia20261115/TEST_REPORT.md). Earlier release reports below retain their original artifact-specific scope.
+
 ## Public feedback preview v0.9.2 — 2026-11-14
 
 See [public Windows validation](Docs/PublicRelease20261114/PUBLIC_TEST_REPORT.md), [exact-build evidence](Docs/PublicRelease20261114/VALIDATION_EVIDENCE.json) and [clean-copy receipt](Docs/PublicRelease20261114/ARCHIVE_VERIFICATION.json). These supersede no historical artifact: prior reports below retain their original scope. Unconfirmed new media and owner data are excluded from the public download.

@@ -1,0 +1,35 @@
+{
+  "authorization": {
+    "confirmed_local_date": "2026-11-15",
+    "declared_creator": "LunarRescue team",
+    "creation_tool": "Higgsfield (user declaration)",
+    "scope": "User expressly authorized all supplied images/videos for this own-project demo",
+    "independent_ownership_verification": false,
+    "scientific_role": "AI-generated illustration/cinematic, not NASA archive footage or measured planetary data",
+    "endorsement": "No NASA or other institutional affiliation is asserted"
+  },
+  "assets": [
+    {
+      "path": "PreflightCabin.png",
+      "sha256": "2a04fe929cd15a3c3f6df57a5c8649e8819dfdc96b0860848c2a279d08f7df1f",
+      "bytes": 1882952
+    },
+    {
+      "path": "PreflightReference.jpg",
+      "sha256": "d41a0fdc800ce437f1ae79d366d22cbed65c783cf4f73e92d91ed27db746391c",
+      "bytes": 107731
+    },
+    {
+      "path": "TeamArtworkReference.jpg",
+      "sha256": "da5d385d6a8ba26b1a55d1c74d5821ef19142fc2f46e8170ab5d0b161e3dac91",
+      "bytes": 54079
+    },
+    {
+      "path": "IntroAcknowledgements.jpg",
+      "sha256": "da5d385d6a8ba26b1a55d1c74d5821ef19142fc2f46e8170ab5d0b161e3dac91",
+      "bytes": 54079
+    }
+  ],
+  "preflight_background": "OpenAI built-in imagegen edit of team-owned reference-1392; all baked interface text/controls removed; no measurements or historical identity claim",
+  "raw_team_artwork": "Reference 1422 now displayed after initial loading as team-provided AI-generated acknowledgements. Team statement in 1497 is recorded, not independently certified as institutional partnership."
+}

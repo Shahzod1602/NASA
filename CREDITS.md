@@ -192,3 +192,10 @@ excluded from Git and is not cleared for public redistribution.
 Startup and inventory reference provenance: [SourceArt/Startup20261114/CREDITS.md](SourceArt/Startup20261114/CREDITS.md). Team-provided reference JPEGs remain unchanged; original authors/editable logo sources requested. Live UI and runtime prop/collision adjustments used AI coding assistance. NASA/partner montage is excluded pending factual confirmation.
 
 Public v0.9.2 distribution excludes the new unconfirmed startup/inventory reference images, their imported textures and the optional Moon video. Fallback wordmarks and equipment symbols are original UI text/code, implemented with AI coding assistance. See Docs/PublicRelease20261114/RELEASE_SCOPE.md. Verified model and dataset attribution remains applicable.
+
+## Team-authorized demo media — 15 November 2026
+
+The user confirmed team creation with Higgsfield and authorized the supplied images/videos in this project demo. Current notices: [startup/inventory](SourceArt/Startup20261114/CREDITS.md), [lunar cinematic](SourceArt/MissionIntro20261114/CREDITS.md), and [Pre-EVA cabin/reference art](SourceArt/AuthorizedMedia20261115/CREDITS.md). The clean background uses OpenAI built-in imagegen editing; the original reference remains unmodified. These are authored AI-generated visuals, separate from NASA measurements and existing 3D model licenses. Historical v0.9.2 exclusion notes above describe that unchanged archive.
+# Current demo acknowledgements and hardware guide
+
+The full supplied intro plate is displayed as team-provided acknowledgements with an AI-generated artwork caption. See SourceArt/AuthorizedMedia20261115/CREDITS.md and its hashed manifest. Team declarations are recorded without independently certifying NASA endorsement. Read-only Apollo hardware information cites the NASA Apollo 12 mission summary; fictional SELENE/ARES equipment and gameplay capacities remain labelled separately. The alternative outpost/FBX downloads have not been added to the distributable while their source questions remain unanswered.

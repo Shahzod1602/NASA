@@ -1,0 +1,24 @@
+{
+  "scope": "Metadata inspection only; not imported or redistributed",
+  "selene_outpost": {
+    "sha256": "822390fed3582f55178d561fc5306b72397eaa2986584adaff0c885131c2e4ad",
+    "bytes": 22723740,
+    "generator": "Khronos glTF Blender I/O v5.0.21",
+    "meshes": 225,
+    "materials": 24,
+    "embedded_images": 21,
+    "indexed_triangle_count": 382362,
+    "copyright": null,
+    "source_or_license_embedded": false
+  },
+  "apollo_zip": {
+    "sha256": "d62a1ec380da33c7aca9400e9f74afd0573e7ae4cfd31ff08ba877df36dcd20a",
+    "members": [
+      "source/LunarModel-OneBillionth.fbx",
+      "textures/texture_lem_flag.png",
+      "textures/texture_lem_unitedstates.png"
+    ],
+    "license_file": false
+  },
+  "integration_decision": "Retain existing credited NASA HDU and Apollo LM assets while source/license questions 1504 and 1505 are unanswered. Model completeness, scale, collisions and appearance have not been tested in Unreal for these supplied alternatives."
+}

@@ -186,8 +186,10 @@ TSharedRef<SWidget> ULunarMainMenu::RebuildWidget(){
  IntroLayer=WidgetTree->ConstructWidget<UCanvasPanel>();Place(C,IntroLayer,0,0,1280,720);
  Shade(WidgetTree,IntroLayer,0,0,1280,720,FLinearColor::Black);
  IntroImage=WidgetTree->ConstructWidget<UImage>();
- auto* IntroTexture=FPackageName::DoesPackageExist(TEXT("/Game/Lunar/Frontend/Startup20261114/T_AstroKid"))?LoadObject<UTexture2D>(nullptr,TEXT("/Game/Lunar/Frontend/Startup20261114/T_AstroKid.T_AstroKid")):nullptr;
- if(IntroTexture){IntroImage->SetBrushFromTexture(IntroTexture);Place(IntroLayer,IntroImage,0,26,1280,668);Shade(WidgetTree,IntroLayer,1136,606,64,64,FLinearColor::Black);}
+ const bool Acknowledgements=FPackageName::DoesPackageExist(TEXT("/Game/Lunar/Frontend/Demo20261115/T_Acknowledgements"));
+ const TCHAR* IntroPath=Acknowledgements?TEXT("/Game/Lunar/Frontend/Demo20261115/T_Acknowledgements.T_Acknowledgements"):TEXT("/Game/Lunar/Frontend/Startup20261114/T_AstroKid.T_AstroKid");
+ auto* IntroTexture=Acknowledgements||FPackageName::DoesPackageExist(TEXT("/Game/Lunar/Frontend/Startup20261114/T_AstroKid"))?LoadObject<UTexture2D>(nullptr,IntroPath):nullptr;
+ if(IntroTexture){IntroImage->SetBrushFromTexture(IntroTexture);if(Acknowledgements){const float Fit=FMath::Min(1280.f/IntroTexture->GetSizeX(),720.f/IntroTexture->GetSizeY());const float W=IntroTexture->GetSizeX()*Fit,H=IntroTexture->GetSizeY()*Fit;Place(IntroLayer,IntroImage,(1280-W)*.5f,(720-H)*.5f,W,H);Place(IntroLayer,Label(WidgetTree,TEXT("AI-generated demo artwork / team-provided acknowledgements"),11,Dim),34,695,1120,20);}else{Place(IntroLayer,IntroImage,0,26,1280,668);Shade(WidgetTree,IntroLayer,1136,606,64,64,FLinearColor::Black);}}
  else{auto* Wordmark=Label(WidgetTree,TEXT("AstroKid"),44);Wordmark->Rename(TEXT("PublicStartupWordmark"));Place(IntroLayer,Wordmark,500,295,640,85);Place(IntroLayer,Label(WidgetTree,TEXT("E X P E D I T I O N S"),19,Dim),452,372,700,60);UE_LOG(LogTemp,Display,TEXT("NASA_INTRO original text presentation; optional reference artwork absent"));}
  BeginIntro();
  if(FParse::Param(FCommandLine::Get(),TEXT("FrontendReview"))){

@@ -203,7 +203,7 @@ foreach($feedbackAsset in @('ExpeditionSuit20261113','MuseumRover20261113','Pers
   if(Test-Path -LiteralPath $assetNotePath -PathType Leaf){Copy-Item -LiteralPath $assetNotePath -Destination $feedbackDestination}
  }
 }
-foreach($feedbackSet in @('Feedback20261113','HandPose20261114','Feedback20261114Evening','PublicRelease20261114')){
+foreach($feedbackSet in @('Feedback20261113','HandPose20261114','Feedback20261114Evening','PublicRelease20261114','AuthorizedMedia20261115','FullTaskAudit20261115')){
 $feedbackNotes=Join-Path $root ('Docs/'+$feedbackSet)
 if(Test-Path -LiteralPath $feedbackNotes -PathType Container){
  $feedbackTarget=Join-Path $credits ('Docs/'+$feedbackSet)
@@ -215,4 +215,12 @@ if(Test-Path -LiteralPath $feedbackNotes -PathType Container){
   Copy-Item -LiteralPath $noteFile.FullName -Destination $noteDestination
  }
 }
+}
+
+# Bundle the current team-media declaration and generated-art provenance.
+foreach($mediaSet in @('Startup20261114','MissionIntro20261114','AuthorizedMedia20261115')){
+ $mediaSource=Join-Path $root ('SourceArt/'+$mediaSet)
+ $mediaTarget=Join-Path $credits $mediaSet
+ New-Item -ItemType Directory -Force -Path $mediaTarget | Out-Null
+ Get-ChildItem -LiteralPath $mediaSource -File | Where-Object {$_.Extension -in @('.md','.json','.txt','.jpg','.png')} | Copy-Item -Destination $mediaTarget
 }

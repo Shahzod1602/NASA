@@ -2,22 +2,32 @@
   "name": "AstroKid Expeditions startup reference",
   "received": "2026-11-14",
   "source": "Team-supplied NASA Telegram group, message 1421",
-  "original_author": "Unconfirmed; original vector/PNG requested",
+  "original_author": "LunarRescue team, AI-generated with Higgsfield (user declaration, 2026-11-15)",
   "sha256": "0d6143aa9c87a7c83ca60b6fda4d5494995a76d861267c6a5097e3c4c6894d4e",
   "size": [
     1280,
     668
   ],
-  "adaptation": "Original JPEG preserved. Runtime fit with black letterbox, live Slate spinner replaces the baked spinner area. NASA/partner montage 1422 is not imported or shipped pending confirmation.",
+  "adaptation": "Unmodified supplied JPEGs; live spinner and live gameplay quantities. Partner artwork is a visual reference, not an affiliation claim.",
   "scope": "Startup presentation only; technical project name remains LunarRescue.",
   "endorsement": "No NASA endorsement or partnership is asserted.",
   "inventory_reference": {
     "source": "Team-provided reference, message 1395",
     "sha256": "2673d2e25d375938c1467829f0352fb4953312a73f87defc225586a79098ebd5",
     "role": "Unmodified reference atlas sampled only for illustrative equipment thumbnails; item states and quantities remain live gameplay data.",
-    "original_author": "Unconfirmed"
+    "original_author": "LunarRescue team, AI-generated with Higgsfield (user declaration, 2026-11-15)"
   },
   "public_distribution": {
     "v0.9.2": "Reference binaries and imported reference textures excluded pending source/redistribution confirmation; metadata retained only."
-  }
+  },
+  "user_authorization": {
+    "confirmed_local_date": "2026-11-15",
+    "declared_creator": "LunarRescue team",
+    "creation_tool": "Higgsfield (user declaration)",
+    "scope": "User expressly authorized all supplied images/videos for this own-project demo",
+    "independent_ownership_verification": false,
+    "scientific_role": "AI-generated illustration/cinematic, not NASA archive footage or measured planetary data",
+    "endorsement": "No NASA or other institutional affiliation is asserted"
+  },
+  "demo_distribution": "Authorized by user on 2026-11-15; v0.9.2 historical public archive remains unchanged"
 }

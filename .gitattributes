@@ -35,3 +35,10 @@ SourceArt/MuseumRover20261113/**/*.glb filter=lfs diff=lfs merge=lfs -text
 SourceArt/Perseverance20261114/**/*.glb filter=lfs diff=lfs merge=lfs -text
 
 Docs/Feedback20261114Evening/** -text -whitespace
+
+# Team-authorized generated demo cinematics.
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+
+# Dated demo evidence keeps the bytes used by its verification receipts.
+Docs/AuthorizedMedia20261115/** -text -whitespace
+Docs/FullTaskAudit20261115/** -text -whitespace

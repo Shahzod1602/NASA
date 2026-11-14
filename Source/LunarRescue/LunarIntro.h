@@ -4,7 +4,7 @@
 // Authored UI timing, independent of mission resources. A new world does not
 // replay the process-start intro; the menu owns that single-launch decision.
 struct FLunarIntroState {
- static constexpr float FadeIn=0.f,Hold=1.1f,FadeOut=.65f,Duration=1.75f;
+ static constexpr float FadeIn=0.f,Hold=2.2f,FadeOut=.65f,Duration=Hold+FadeOut;
  float Elapsed=0;
  bool Active=false;
  void Begin(){Elapsed=0;Active=true;}

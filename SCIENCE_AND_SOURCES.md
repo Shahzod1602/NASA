@@ -287,3 +287,15 @@ The Moon training rover uses a [Deutsches Museum model](SourceArt/MuseumRover202
 Fictional SELENE's NOMAD-7 uses the official [NASA/JPL Perseverance model](SourceArt/Perseverance20261114/CREDITS.md) as visual reference while retaining the original game memory-recovery objective. Perseverance is a Mars mission and did not visit the Moon. This use is not historical Apollo equipment, evidence of a real lunar experiment or NASA endorsement. The source's materials, UVs and geometry remain documented separately from gameplay rewards and story.
 
 The four pre-EVA checks and isolated cable matching exercise are authored educational game rules. They do not measure a real suit or teach an operational electrical repair procedure. The **Verify** action applies only the existing cable step; the station still requires its normal restart interaction.
+
+## Demo illustrations and lunar cinematic (15 November 2026)
+
+The team-confirmed Higgsfield artwork/video and the cleaned Pre-EVA cabin are AI-generated illustrative material. The supplied Neil Armstrong portrayal is fictional and is labelled as such during playback; it is not attributed as NASA archive footage or evidence of a real event. Checklist durations/indicators are authored gameplay, not live suit measurements. These assets do not replace, modify or validate the retained planetary datasets. See SourceArt/AuthorizedMedia20261115/CREDITS.md and SourceArt/MissionIntro20261114/manifest.json for provenance.
+
+The optional **Mission hardware** guide identifies Apollo 12's SA-507 Saturn V,
+CSM-108 Yankee Clipper, LM-6 Intrepid and Surveyor 3 using the [NASA Apollo 12
+mission summary](https://www.nasa.gov/wp-content/uploads/static/history/SP-4029/Apollo_12a_Summary.htm).
+Its short hardware roles are historical context, separate from the artistic
+reference meshes and authored training rover. SELENE/ARES equipment capacities,
+relay tolerances and repair steps are explicitly fictional gameplay rules. No
+new measurement, NASA design certification or astronaut-safety claim is added.
