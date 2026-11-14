@@ -21,7 +21,9 @@ Docs/IntrepidVisual20261111/** -text -whitespace
 Docs/IntrepidCabin20261111/** -text -whitespace
 Docs/Releases/apollo12-v0.8.2/** -text -whitespace
 Docs/Feedback20261113/** -text -whitespace
+Docs/HandPose20261114/** -text -whitespace
 Docs/Releases/apollo12-v0.9.0/** -text -whitespace
+Docs/Releases/apollo12-v0.9.1/** -text -whitespace
 
 # Retain source-model recovery inputs and checksums exactly.
 SourceArt/IntrepidCabin20261111/** -text -whitespace

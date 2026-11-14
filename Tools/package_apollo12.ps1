@@ -203,9 +203,10 @@ foreach($feedbackAsset in @('ExpeditionSuit20261113','MuseumRover20261113','Pers
   if(Test-Path -LiteralPath $assetNotePath -PathType Leaf){Copy-Item -LiteralPath $assetNotePath -Destination $feedbackDestination}
  }
 }
-$feedbackNotes=Join-Path $root 'Docs/Feedback20261113'
+foreach($feedbackSet in @('Feedback20261113','HandPose20261114')){
+$feedbackNotes=Join-Path $root ('Docs/'+$feedbackSet)
 if(Test-Path -LiteralPath $feedbackNotes -PathType Container){
- $feedbackTarget=Join-Path $credits 'Docs/Feedback20261113'
+ $feedbackTarget=Join-Path $credits ('Docs/'+$feedbackSet)
  foreach($noteFile in Get-ChildItem -LiteralPath $feedbackNotes -File -Recurse | Where-Object {$_.Extension -in @('.md','.json','.txt','.png')}){
   if($noteFile.Attributes -band [IO.FileAttributes]::ReparsePoint){throw 'Feedback notes copy refuses linked files'}
   $noteRelative=$noteFile.FullName.Substring($feedbackNotes.Length).TrimStart([char[]]'\/')
@@ -213,4 +214,5 @@ if(Test-Path -LiteralPath $feedbackNotes -PathType Container){
   New-Item -ItemType Directory -Force -Path (Split-Path $noteDestination -Parent) | Out-Null
   Copy-Item -LiteralPath $noteFile.FullName -Destination $noteDestination
  }
+}
 }

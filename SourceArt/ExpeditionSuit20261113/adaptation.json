@@ -4,11 +4,25 @@
   "source_bones": 91,
   "gameplay_bones": 36,
   "arm_segment_endpoints_fit": true,
+  "palm_frames": [
+    {
+      "side": "l",
+      "previous_roll_error_degrees": 84.34997678068575,
+      "corrected_roll_error_degrees": 0.0,
+      "palm_width_scale": 0.7121409225189289
+    },
+    {
+      "side": "r",
+      "previous_roll_error_degrees": 84.35299644310409,
+      "corrected_roll_error_degrees": 0.0,
+      "palm_width_scale": 0.7121329545634033
+    }
+  ],
   "outputs": [
     {
       "file": "SourceArt/ExpeditionSuit20261113/Derived/SK_ExpeditionSuit.glb",
       "bytes": 31434748,
-      "sha256": "6908b00eaeccf02998faab9966623852c07bb98049ca6c4778b845a839d84c33",
+      "sha256": "278762a2f8f3ff0e7a00c8e3d03a233b788ed9005e9f4965f66db0591bf3ccc3",
       "triangles": 58312,
       "bones": 36,
       "materials": 3
@@ -16,7 +30,7 @@
     {
       "file": "SourceArt/ExpeditionSuit20261113/Derived/SK_ExpeditionHands.glb",
       "bytes": 20458724,
-      "sha256": "b2b7302fc0ddad2cff21181de578fefdbf02a8e46774c61b5afe638ab744c2af",
+      "sha256": "fcf4ca279c00b5731487ef55b94fc67b7839ee8cbe5afcc50f4c628964019fad",
       "triangles": 7444,
       "bones": 36,
       "materials": 3

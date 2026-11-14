@@ -23,4 +23,11 @@ for name in ('SK_ExpeditionSuit','SK_ExpeditionHands'):
             u.EditorAssetLibrary.save_loaded_asset(asset,only_if_is_dirty=False)
     if len(meshes)!=1:raise RuntimeError('Expected one derivative skeletal mesh: '+str(meshes))
     u.log('EXPEDITION_IMPORTED '+str(meshes))
+# Both view/body skins use the same source surfaces and material instances.
+body=u.EditorAssetLibrary.load_asset(destination+'/SK_ExpeditionSuit/SkeletalMeshes/SK_ExpeditionSuit')
+hands=u.EditorAssetLibrary.load_asset(destination+'/SK_ExpeditionHands/SkeletalMeshes/SK_ExpeditionHands')
+materials={str(s.get_editor_property('material_slot_name')):s.get_editor_property('material_interface') for s in body.get_editor_property('materials')}
+slots=hands.get_editor_property('materials')
+for slot in slots:slot.set_editor_property('material_interface',materials[str(slot.get_editor_property('material_slot_name'))])
+hands.set_editor_property('materials',slots);u.EditorAssetLibrary.save_loaded_asset(hands,only_if_is_dirty=False)
 u.log('EXPEDITION_IMPORT_COMPLETE')

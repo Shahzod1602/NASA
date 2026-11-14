@@ -1,0 +1,32 @@
+PASS Free downward inspection hides hands while required task hands stay available
+PASS Free-hand lowering has a bounded transition before hiding
+PASS Gesture progress rejects zero, negative and non-finite resource inputs
+PASS Soil motion starts at its measured contact and ends at the camera carry point
+PASS Soil presentation has a shallow dig followed by a lifted arc
+PASS Cargo carry arcs settle exactly into their existing compartments
+PASS Rendered first-person hands and forearms are hidden during free look-down
+PASS Free look-down retains boots and legs without exposing a waist cap
+PASS First-person hands return when the player looks ahead
+PASS The expedition forearm skin is rendered without overlapping legacy proxy sleeves in the free-hand pose
+PASS The actual 12032 site opens the soil scoop rather than sample tongs
+PASS First scoop input enters step 2/2 without falsely recording the sample
+PASS Exact soil step 2/2 omits near-cut thigh proxies and retains task hands at supported FOV
+PASS Work-camera body hiding preserves the separate full-body shadow rig
+PASS Exact soil step 2/2 omits near-cut thigh proxies and retains task hands at supported FOV
+PASS Work-camera body hiding preserves the separate full-body shadow rig
+PASS Exact soil step 2/2 omits near-cut thigh proxies and retains task hands at supported FOV
+PASS Work-camera body hiding preserves the separate full-body shadow rig
+PASS Work-camera and hand presentation do not move the capsule or alter mission resources/cargo
+PASS A soil lift changes the actual rendered tool path and keeps the soil payload visible
+PASS The moving soil tool and right palm share the same grip frame
+PASS Packed preview begins with an open pouch and a visible deposit
+PASS The actual preview seals after deposit rather than hiding both actions at once
+PASS Actual sealed pouch lowers a positive bounded distance without changing cargo or resources
+PASS Pause freezes preview hands and camera instead of advancing presentation
+PASS Expired preview stows the actual pouch and payload without granting cargo or spending resources
+PASS Both actual first-person HandRig wrist bones follow their camera-transformed cell grips
+PASS Power-cell carry has a visible fitted item and a palm on its actual source-side grip
+PASS Mars science work extends the right index while the other fingers remain curved
+PASS Mars antenna alignment has a distinct two-hand turning pose
+PASS Pause also freezes the Mars progress-driven hand gesture
+RESULT: 0 failures

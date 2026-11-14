@@ -1,0 +1,31 @@
+{
+  "Cases": [
+    {
+      "Case": "pov-moon",
+      "Flag": "NasaPovReview",
+      "Map": "/Game/Lunar/Maps/Apollo12",
+      "Frames": 18,
+      "Outcome": "passed",
+      "Synthetic": true,
+      "HumanPlaytest": false,
+      "PerformanceMeasurement": false
+    },
+    {
+      "Case": "pov-mars",
+      "Flag": "NasaPovReview",
+      "Map": "/Game/Mars/Maps/MarsBase",
+      "Frames": 6,
+      "Outcome": "passed",
+      "Synthetic": true,
+      "HumanPlaytest": false,
+      "PerformanceMeasurement": false
+    }
+  ],
+  "Executable": "D:\\LunarRescue\\Dist\\Apollo12\\Windows\\LunarRescue\\Binaries\\Win64\\LunarRescue.exe",
+  "ExecutableSha256": "092b2b025a25920ed26521b99050c2ed01ab40a06aa783a5e0f8f6d48287b55c",
+  "HumanPlaytest": false,
+  "Review": true,
+  "Width": 1280,
+  "Height": 720,
+  "CompletedAtUtc": "2026-11-14T06:21:16.0060996Z"
+}

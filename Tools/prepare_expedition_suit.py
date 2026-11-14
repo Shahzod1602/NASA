@@ -59,6 +59,13 @@ def align(a,b):
     k=np.array([[0,-v[2],v[1]],[v[2],0,-v[0]],[-v[1],v[0],0]])
     return np.eye(3)+k+k@k/max(1e-9,1+c)
 
+def frame(primary,lateral):
+    """A direction alone cannot determine the roll of a palm or finger."""
+    x=unit(primary);y=unit(lateral-x*np.dot(x,lateral))
+    result=np.stack([x,y,np.cross(x,y)],axis=1)
+    assert np.allclose(result.T@result,np.eye(3),atol=1e-8) and np.linalg.det(result)>.99999
+    return result
+
 skin=doc['skins'][0]
 joint_nodes=skin['joints']
 bind=np.linalg.inv(read(skin['inverseBindMatrices']).reshape(-1,4,4).transpose(0,2,1))
@@ -107,6 +114,7 @@ for side in ('l','r'):
         child_direction[f'tip{digit}_{side}']=f'tip{digit}_{side}'
 rotations={}
 stretches={}
+palm_checks=[]
 for name in target_names:
     child=child_direction[name]
     if child==name:
@@ -121,6 +129,26 @@ for name in target_names:
         target_axis=target_positions[target_names.index(child)]-target_positions[target_names.index(name)]
         ratio=np.linalg.norm(target_axis)/np.linalg.norm(source_axis);assert .2<ratio<4
         direction=unit(source_axis);stretches[name]+=(ratio-1)*np.outer(direction,direction)
+        if name.startswith(('hand_','finger')):
+            side=name[-1]
+            source_lateral=source_frame[original_for['finger0_'+side]]-source_frame[original_for['finger3_'+side]]
+            target_lateral=target_positions[target_names.index('finger0_'+side)]-target_positions[target_names.index('finger3_'+side)]
+            source_basis=frame(source_axis,source_lateral);target_basis=frame(target_axis,target_lateral)
+            old_lateral=rotations[name]@source_basis[:,1]
+            rotations[name]=target_basis@source_basis.T
+            if name.startswith('hand_'):
+                # Fit the same palm's length and MCP spread, preserving depth.
+                # The small shear accounts for the non-orthogonal source spread.
+                sl=source_basis.T@source_lateral;tl=target_basis.T@target_lateral
+                fit=np.eye(3);fit[0,0]=ratio;fit[1,1]=tl[1]/sl[1]
+                fit[0,1]=(tl[0]-ratio*sl[0])/sl[1]
+                assert .2<fit[1,1]<4 and np.linalg.det(fit)>0
+                stretches[name]=source_basis@fit@source_basis.T
+                after=rotations[name]@source_basis[:,1]
+                before_angle=float(np.degrees(np.arccos(np.clip(np.dot(old_lateral,target_basis[:,1]),-1,1))))
+                after_angle=float(np.degrees(np.arccos(np.clip(np.dot(after,target_basis[:,1]),-1,1))))
+                assert after_angle<.001
+                palm_checks.append(dict(side=side,previous_roll_error_degrees=before_angle,corrected_roll_error_degrees=after_angle,palm_width_scale=float(fit[1,1])))
 
 # Helper/twist segments inherit their closest explicitly mapped ancestor.
 joint_map=[]
@@ -257,7 +285,7 @@ if original.exists():assert original.read_bytes()==source
 else:original.write_bytes(source)
 results=[write('SK_ExpeditionSuit',False),write('SK_ExpeditionHands',True)]
 (out/'adaptation.json').write_text(json.dumps(dict(source_sha256=expected,uniform_source_scale=scale,
-    source_bones=len(joint_nodes),gameplay_bones=len(legacy),arm_segment_endpoints_fit=True,outputs=results,
+    source_bones=len(joint_nodes),gameplay_bones=len(legacy),arm_segment_endpoints_fit=True,palm_frames=palm_checks,outputs=results,
     limits=['Authored bind-pose adaptation; not a historical Apollo A7L reconstruction.',
             'Original floating animation retained only in unchanged Raw source.',
             'Helper weights folded to nearest mapped ancestor; deformation needs rendered review.',

@@ -1,0 +1,102 @@
+{
+  "schema_version": 2,
+  "scope": "Local palm-roll and duplicate-forearm correction with selected regressions",
+  "published_release": false,
+  "verification_completed": true,
+  "generated_utc": "2026-11-14T11:23:34.604256+05:00",
+  "executable_sha256": "092b2b025a25920ed26521b99050c2ed01ab40a06aa783a5e0f8f6d48287b55c",
+  "base_git_commit": "c9f966fe3d5d3167318a48f22c2804df7fd18ce8",
+  "source_worktree_dirty": true,
+  "assertion_executions": 765,
+  "case_reports": 7,
+  "failures": 0,
+  "packaged_staged_pngs": 51,
+  "cases": [
+    {
+      "case": "pov",
+      "assertions": 31,
+      "failures": 0,
+      "report": "Docs/HandPose20261114/Evidence/pov-checks.txt",
+      "sha256": "bfec2b48e53d374a7f48941df4eed7dccaac0d6eb25b6657fb881e39bc919983"
+    },
+    {
+      "case": "gameplay-apollo",
+      "assertions": 237,
+      "failures": 0,
+      "report": "Docs/HandPose20261114/Evidence/gameplay-apollo-checks.txt",
+      "sha256": "2994232e9f192a6416f3897f8d9c7876c3b15086c5864fae1a8d64323160f6a7"
+    },
+    {
+      "case": "gameplay-selene",
+      "assertions": 198,
+      "failures": 0,
+      "report": "Docs/HandPose20261114/Evidence/gameplay-selene-checks.txt",
+      "sha256": "908d79142653e83a06d3156d10c26a7f4aa37741270677d190537beca5a2adc8"
+    },
+    {
+      "case": "gameplay-mars",
+      "assertions": 183,
+      "failures": 0,
+      "report": "Docs/HandPose20261114/Evidence/gameplay-mars-checks.txt",
+      "sha256": "63d2b9f5d9599568a4d2ca83076248010a629c402b7d8ee824083679d1b50865"
+    },
+    {
+      "case": "carry-render",
+      "assertions": 27,
+      "failures": 0,
+      "report": "Docs/HandPose20261114/Evidence/carry-render-checks.txt",
+      "sha256": "29af3166bbedc45a9f2a373a8e66a79ab5e71e095c41041f2415afe665865ad5"
+    },
+    {
+      "case": "apollo",
+      "assertions": 57,
+      "failures": 0,
+      "report": "Docs/HandPose20261114/Evidence/apollo-checks.txt",
+      "sha256": "1d8911bc084c6a7a1c2bb63b9fbebc6f33d1fe6ec51ae0d726d8ded7e9e7d44c"
+    },
+    {
+      "case": "suit",
+      "assertions": 32,
+      "failures": 0,
+      "report": "Docs/HandPose20261114/Evidence/suit-checks.txt",
+      "sha256": "901df3df557c022d6624af6172f6cd46584b0324cbd46fa2d5de5654198f5a15"
+    }
+  ],
+  "payloads": [
+    {
+      "path": "LunarRescue/Content/Paks/global.ucas",
+      "sha256": "6a332811162c000ef5c91437f1896fc80c2768bea1823107207260ae7cdbb6fc",
+      "bytes": 3208672
+    },
+    {
+      "path": "LunarRescue/Content/Paks/global.utoc",
+      "sha256": "d33c855b4ca7c3b520efef0b081bd0f1020d55399074e303a17add67b9e859da",
+      "bytes": 782
+    },
+    {
+      "path": "LunarRescue/Content/Paks/LunarRescue-Windows.pak",
+      "sha256": "a9e2ebedef5e35a744b846702cee53582485181f948e16edf38862a5d29baeb2",
+      "bytes": 10667216
+    },
+    {
+      "path": "LunarRescue/Content/Paks/LunarRescue-Windows.ucas",
+      "sha256": "8cc8acb162ad447d2b2599c55ea50f23e7ee2bdcba369a25d01b332b077eec2a",
+      "bytes": 289277776
+    },
+    {
+      "path": "LunarRescue/Content/Paks/LunarRescue-Windows.utoc",
+      "sha256": "bf151d4047308785c1067189c7f5f8f55787ba067c6e3c69286e90da527890df",
+      "bytes": 288417
+    }
+  ],
+  "owner_files_preserved_byte_exact": 53,
+  "human_playtest": false,
+  "network_isolation_tested": false,
+  "performance_measurement": false,
+  "packaged_evidence_root": "Credits",
+  "verification_status": "Listed hand-pose/carry/gameplay/suit checks passed. Historical v0.9.0 and its 2019 total refer to a different executable and assets.",
+  "human_playtests": 0,
+  "network_disconnected_test_performed": false,
+  "total_staged_pngs": 51,
+  "competition_eligibility": "No new eligibility or NASA endorsement claim; not re-audited for this patch."
+}

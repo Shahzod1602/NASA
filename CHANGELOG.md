@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.9.1 — palm and free-hand pose correction — 2026-11-14
+
+- Correct the expedition skin's palm/finger roll using longitudinal and transverse references; fit palm spread to its controller rather than twisting the glove sideways.
+- Hide overlapping legacy forearm surfaces while the new skin is active; retain their pose guides and original fallback.
+- Add a real-skin palm-envelope regression, proxy-overlap assertion and free-hand FOV/lowering review frames. See Docs/HandPose20261114/TEST_REPORT.md for exact verification status. The published v0.9.0 archive is unchanged.
+- Package the corrected EXE/assets as v0.9.1 with 765 selected assertion executions / zero FAIL, 51 staged PNGs and separately preserved compile/test provenance. See Docs/Releases/apollo12-v0.9.1/RELEASE_NOTES.md.
+
 ## v0.9.0 — EVA, equipment and exploration — 2026-11-14
 
 - Package ordered pre-EVA checks, working Map/Inventory, offline NASA colour globe and retained progress updates.

@@ -90,6 +90,9 @@ void Prepare(ALunarGameMode* G,FPovState State){
    case 12:G->ApolloPackedPreviewRemaining=0;G->Stage=ELunarStage::Won;G->SamplesCollected=G->ApolloParts=7;ALunarCargoFinale::Begin(G);if(G->CargoFinale)G->CargoFinale->AdvancePresentation(.65f);Name=TEXT("cargo-approach");break;
    case 13:if(G->CargoFinale)G->CargoFinale->AdvancePresentation(2.3f);Name=TEXT("cargo-middle");break;
    case 14:if(G->CargoFinale)G->CargoFinale->AdvancePresentation(3.1f);Name=TEXT("cargo-settled");break;
+   case 15:ALunarCargoFinale::Reset(G);G->StartApollo(true);P->ThirdPerson=false;P->Camera->bUsePawnControlRotation=true;PC->SetControlRotation(FRotator::ZeroRotator);P->Camera->SetWorldRotation(PC->GetControlRotation());P->Camera->SetFieldOfView(70);Name=TEXT("moon-free-hands-fov70");break;
+   case 16:P->Camera->SetFieldOfView(110);Name=TEXT("moon-free-hands-fov110");break;
+   case 17:P->Camera->SetFieldOfView(85);PC->SetControlRotation(FRotator(-35,0,0));P->Camera->SetWorldRotation(PC->GetControlRotation());Name=TEXT("moon-free-hands-lowering");break;
    default:End(G,State,true);return;
   }
  }

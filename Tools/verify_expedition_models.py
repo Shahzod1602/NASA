@@ -24,7 +24,7 @@ for name in ('SK_ExpeditionSuit','SK_ExpeditionHands'):
  for bone in legacy:
   expected=np.array([bone['position'][0],bone['position'][2],bone['position'][1]])/100
   assert np.allclose(positions[names.index(bone['name'])],expected,atol=1e-5),bone['name']
- triangles=vertices=0;degenerate=0
+ triangles=vertices=0;degenerate=0;palm_points={'l':[],'r':[]};palm_envelopes={}
  for mesh in doc['meshes']:
   for primitive in mesh['primitives']:
    attrs=primitive['attributes'];p=array(doc,binary,attrs['POSITION']);n=array(doc,binary,attrs['NORMAL']);w=array(doc,binary,attrs['WEIGHTS_0']);j=array(doc,binary,attrs['JOINTS_0']);f=array(doc,binary,primitive['indices']).reshape(-1,3)
@@ -36,9 +36,21 @@ for name in ('SK_ExpeditionSuit','SK_ExpeditionHands'):
     assert p[:,1].min()>-1.05 and p[:,1].max()<1.05, 'Torso/accessory weights must not stretch to the global root'
    cross=np.cross(p[f[:,1]]-p[f[:,0]],p[f[:,2]]-p[f[:,0]]);degenerate+=int((np.linalg.norm(cross,axis=1)<1e-10).sum())
    triangles+=len(f);vertices+=len(p)
+   if name=='SK_ExpeditionHands':
+    for side in ('l','r'):
+     palm_weight=np.sum((j==names.index('hand_'+side))*w,axis=1)
+     palm_points[side].extend(p[palm_weight>.8])
  assert triangles==(58312 if name=='SK_ExpeditionSuit' else 7444) and degenerate==0
  assert not doc.get('animations'), 'Floating source clip must not become ground locomotion'
- results.append({'asset':name,'vertices':vertices,'triangles':triangles,'finite_attributes':True,'normalized_weights':True,'legacy_bone_contract':True,'derivative_degenerate_triangles':degenerate})
+ if name=='SK_ExpeditionHands':
+  for side,points in palm_points.items():
+   assert len(points)>50
+   span=np.quantile(points,.95,axis=0)-np.quantile(points,.05,axis=0)
+   # Asset-specific glove envelope: in this Y-up bind frame Z is across the
+   # palm and X is its depth. The old rolled palm has breadth/depth ~0.75.
+   assert span[2]/span[0]>.95, ('Palm was rolled sideways in bind adaptation',side,span.tolist())
+   palm_envelopes[side]=float(span[2]/span[0])
+ results.append({'asset':name,'vertices':vertices,'triangles':triangles,'finite_attributes':True,'normalized_weights':True,'legacy_bone_contract':True,'derivative_degenerate_triangles':degenerate,'palm_breadth_depth_ratio':palm_envelopes})
 
 manifest=json.loads((root/'SourceArt/MuseumRover20261113/adaptation.json').read_text())
 assert len(manifest['parts'])==5

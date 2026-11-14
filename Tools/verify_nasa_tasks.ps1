@@ -35,7 +35,7 @@ if($Review){
   $cases.Add([pscustomobject]@{Name="ui-$($map.Label)";Map=$map.Map;Flag='NasaUIReview';ReviewFolder="ui-$($map.Label)";Manifest='ui-manifest.json';Expected=$uiFrames})
  }}
  if($Pov){
-  $moonFrames=@('moon-lookdown-fov70','moon-lookdown-fov85','moon-lookdown-fov110','moon-free-hands','soil-step2-fov85','soil-step2-fov70','soil-step2-fov110','soil-dig-motion','soil-lift-motion','soil-deposit','soil-seal','soil-lower','cargo-approach','cargo-middle','cargo-settled')
+  $moonFrames=@('moon-lookdown-fov70','moon-lookdown-fov85','moon-lookdown-fov110','moon-free-hands','soil-step2-fov85','soil-step2-fov70','soil-step2-fov110','soil-dig-motion','soil-lift-motion','soil-deposit','soil-seal','soil-lower','cargo-approach','cargo-middle','cargo-settled','moon-free-hands-fov70','moon-free-hands-fov110','moon-free-hands-lowering')
   $marsFrames=@('mars-cell-carry','mars-station-restart','mars-science-download','mars-relay-alignment','mars-recorder','mars-free-lookdown')
   $cases.Add([pscustomobject]@{Name='pov-moon';Map=$maps[0].Map;Flag='NasaPovReview';ReviewFolder='pov-moon';Manifest='pov-manifest.json';Expected=$moonFrames})
   $cases.Add([pscustomobject]@{Name='pov-mars';Map=$maps[2].Map;Flag='NasaPovReview';ReviewFolder='pov-mars';Manifest='pov-manifest.json';Expected=$marsFrames})

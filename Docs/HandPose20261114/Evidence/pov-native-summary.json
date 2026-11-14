@@ -1,0 +1,19 @@
+{
+  "Cases": [
+    {
+      "Case": "pov",
+      "Flag": "NasaPovTest",
+      "Map": "/Game/Lunar/Maps/Apollo12",
+      "Assertions": 31,
+      "Failures": 0,
+      "Outcome": "passed"
+    }
+  ],
+  "Executable": "D:\\LunarRescue\\Dist\\Apollo12\\Windows\\LunarRescue\\Binaries\\Win64\\LunarRescue.exe",
+  "ExecutableSha256": "092b2b025a25920ed26521b99050c2ed01ab40a06aa783a5e0f8f6d48287b55c",
+  "HumanPlaytest": false,
+  "Review": false,
+  "Width": 1280,
+  "Height": 720,
+  "CompletedAtUtc": "2026-11-14T06:20:21.2695074Z"
+}

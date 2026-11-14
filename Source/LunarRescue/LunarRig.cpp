@@ -53,7 +53,10 @@ void ALunarCharacter::PoseSuitRig(){
  if(!SuitRig->GetSkinnedAsset()||!HandRig->GetSkinnedAsset())return;
  // The carry view retains the skinned forearms/hands. Its duplicate cloth
  // forearm proxies must not sit over the same silhouette at narrow FOV.
- for(const auto& C:SuitArms){C->SetVisibility(false);C->SetCastShadow(false);}for(int I=0;I<Gloves.Num();++I)Gloves[I]->SetVisibility((I==0||I==8)&&Show&&ViewHands&&!CarryCell);
+ const bool LegacyForearms=HandRig->GetSkinnedAsset()->GetName()!=TEXT("SK_ExpeditionHands");
+ // The expedition skin already includes both forearms. The legacy proxy
+ // sleeves are pose guides only and must not overlap that rendered surface.
+ for(const auto& C:SuitArms){C->SetVisibility(false);C->SetCastShadow(false);}for(int I=0;I<Gloves.Num();++I)Gloves[I]->SetVisibility(LegacyForearms&&(I==0||I==8)&&Show&&ViewHands&&!CarryCell);
  for(const auto& C:SuitBody)C->SetCastShadow(false);SuitRig->bCastHiddenShadow=true;
  if(ThirdPerson)for(const auto& C:SuitBody)C->SetVisibility(false,true);
  auto Set=[&](UPoseableMeshComponent* C,const FString& Name,FVector P,FQuat R=FQuat::Identity){

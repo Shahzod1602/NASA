@@ -1,5 +1,19 @@
 # Lunar Rescue
 
+## v0.9.1 — Hand Pose Fix — 14 November 2026
+
+[Windows release](https://github.com/Shahzod1602/NASA/releases/tag/apollo12-v0.9.1) · [Download Windows ZIP](https://github.com/Shahzod1602/NASA/releases/download/apollo12-v0.9.1/LunarRescue-Expeditions-v0.9.1-Windows.zip).
+
+Fixes the sideways palm/finger adaptation and overlapping legacy forearms reported in v0.9.0. Extract the entire ZIP and run **LunarRescue.exe**; Unreal Editor is not required. Exact patch verification: **765 C++ PASS executions / zero FAIL in seven reports, 51 staged PNGs**. These are selected repeated automated checks, not human playtests. [Release notes and limits](Docs/Releases/apollo12-v0.9.1/RELEASE_NOTES.md).
+
+The dated local notes below retain their original pre-publication context. Compile-time dirty provenance and the reviewed release source commit are recorded separately.
+
+## Local hand-pose correction — 14 November 2026 (unreleased)
+
+The working tree corrects the expedition skin's sideways palm/finger adaptation and removes overlapping legacy forearm surfaces. See [exact cause, before/after frames and verification](Docs/HandPose20261114/TEST_REPORT.md). This is separate from the published v0.9.0 below; its Windows ZIP still contains the original free-hand defect.
+
+The corrected local Windows package is `Dist/Apollo12/Windows/LunarRescue.exe`: 765 selected packaged assertion executions / zero FAIL in seven reports, 51 staged PNGs, EXE `092b2b025a25…`. This is an unpublished patch; the earlier 2,019 total belongs to the original v0.9.0 executable.
+
 ## v0.9.0 — EVA, Equipment and Exploration — 14 November 2026
 
 [Windows release](https://github.com/Shahzod1602/NASA/releases/tag/apollo12-v0.9.0) · [Download Windows ZIP](https://github.com/Shahzod1602/NASA/releases/download/apollo12-v0.9.0/LunarRescue-Expeditions-v0.9.0-Windows.zip).

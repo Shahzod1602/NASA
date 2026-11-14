@@ -1,0 +1,47 @@
+{
+  "source_sha256": "6008551be3e7f9668b73d2cfb12c1c7499db6e432303210f753791873f5c861d",
+  "uniform_source_scale": 0.007540505013289717,
+  "source_bones": 91,
+  "gameplay_bones": 36,
+  "arm_segment_endpoints_fit": true,
+  "palm_frames": [
+    {
+      "side": "l",
+      "previous_roll_error_degrees": 84.34997678068575,
+      "corrected_roll_error_degrees": 0.0,
+      "palm_width_scale": 0.7121409225189289
+    },
+    {
+      "side": "r",
+      "previous_roll_error_degrees": 84.35299644310409,
+      "corrected_roll_error_degrees": 0.0,
+      "palm_width_scale": 0.7121329545634033
+    }
+  ],
+  "outputs": [
+    {
+      "file": "SourceArt/ExpeditionSuit20261113/Derived/SK_ExpeditionSuit.glb",
+      "bytes": 31434748,
+      "sha256": "278762a2f8f3ff0e7a00c8e3d03a233b788ed9005e9f4965f66db0591bf3ccc3",
+      "triangles": 58312,
+      "bones": 36,
+      "materials": 3
+    },
+    {
+      "file": "SourceArt/ExpeditionSuit20261113/Derived/SK_ExpeditionHands.glb",
+      "bytes": 20458724,
+      "sha256": "fcf4ca279c00b5731487ef55b94fc67b7839ee8cbe5afcc50f4c628964019fad",
+      "triangles": 7444,
+      "bones": 36,
+      "materials": 3
+    }
+  ],
+  "limits": [
+    "Authored bind-pose adaptation; not a historical Apollo A7L reconstruction.",
+    "Original floating animation retained only in unchanged Raw source.",
+    "Helper weights folded to nearest mapped ancestor; deformation needs rendered review.",
+    "Legacy specular/glossiness adapted to core metallic/roughness after rendered colour failure.",
+    "Base colour/normal UVs preserved; authored metallic=0 and roughness=max(0.12,1-source glossiness).",
+    "Embedded images capped at 2K."
+  ]
+}

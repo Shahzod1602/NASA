@@ -1,5 +1,9 @@
 # Test reports
 
+## Local hand-pose correction — 14 November 2026
+
+[Docs/HandPose20261114/TEST_REPORT.md](Docs/HandPose20261114/TEST_REPORT.md) records the new palm-roll and duplicate-sleeve correction. Its executable/payloads are separate from v0.9.0. The historical 2,019-assertion result below is not certification of this new local build.
+
 ## Local feedback development — 14 November 2026
 
 Current unpublished work is documented in [Docs/Feedback20261113/TEST_REPORT.md](Docs/Feedback20261113/TEST_REPORT.md). That record distinguishes exact Editor snapshots, the fresh package validation, synthetic graphical fixtures, performance captures and unrun human/network-isolation checks. The historical release results below apply to their original executable and payloads.

@@ -4,6 +4,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/PoseableMeshComponent.h"
+#include "Engine/SkeletalMesh.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "Kismet/GameplayStatics.h"
@@ -30,6 +31,8 @@ void ALunarGameMode::NasaPovChecks(){
   Check(P->SuitBody[6]->IsVisible()&&P->SuitBody[9]->IsVisible()&&!P->SuitBody[0]->IsVisible()&&!P->SuitBody[1]->IsVisible(),TEXT("Free look-down retains boots and legs without exposing a waist cap"));
   PC->SetControlRotation(FRotator::ZeroRotator);P->Camera->SetWorldRotation(PC->GetControlRotation());P->UpdateSuit(0);
   Check(P->HandRig->IsVisible(),TEXT("First-person hands return when the player looks ahead"));
+  if(P->HandRig->GetSkinnedAsset()&&P->HandRig->GetSkinnedAsset()->GetName()==TEXT("SK_ExpeditionHands"))
+   Check(!P->Gloves[0]->IsVisible()&&!P->Gloves[8]->IsVisible(),TEXT("The expedition forearm skin is rendered without overlapping legacy proxy sleeves in the free-hand pose"));
   Stage=ELunarStage::ApolloSamples;ApolloPhotos=2;
   P->SetActorLocation(SampleActors[1]->GetActorLocation()+FVector(-170,0,50));FVector Eye;FRotator Aim;P->GetActorEyesViewPoint(Eye,Aim);PC->SetControlRotation((SampleActors[1]->GetActorLocation()-Eye).Rotation());
   const bool Opened=OpenApolloTool();Check(Opened&&ApolloTool==4&&SelectedSample==1,TEXT("The actual 12032 site opens the soil scoop rather than sample tongs"));

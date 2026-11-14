@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "kind": "paired_carried_cell_render_contribution",
+  "passed": true,
+  "synthetic": true,
+  "human_playtest": false,
+  "performance_measurement": false,
+  "semantic_segmentation": false,
+  "metric": "fraction of central-ROI pixels with max absolute RGB channel difference > threshold",
+  "delta_threshold": 24,
+  "minimum_changed_fraction": 0.12,
+  "central_fraction": 0.6,
+  "limitations": "Measures rendered contribution between staged cell-visible/hidden pairs. It does not identify object pixels semantically, prove natural hand anatomy, or measure FPS. Scene/camera/hands must be held constant by the capture harness; only the available manifest ROI, text-scale and FOV fields are checked here.",
+  "pairs": [
+    {
+      "shown": "cell-fp45-lookdown",
+      "control": "cell-fp45-hidden-control",
+      "passed": true,
+      "text_scale": 1.0,
+      "fov_checks": {
+        "fov": 45.0
+      },
+      "fov_checked": true,
+      "cell_region_uv": [
+        0.426803,
+        0.518008,
+        0.573197,
+        0.84016
+      ],
+      "central_region_uv": [
+        0.4560818,
+        0.5824384,
+        0.5439182,
+        0.7757296
+      ],
+      "central_region_pixels": [
+        583,
+        419,
+        697,
+        559
+      ],
+      "image_size": [
+        1280,
+        720
+      ],
+      "changed_pixels": 7275,
+      "roi_pixels": 15960,
+      "changed_fraction": 0.4558270676691729,
+      "shown_sha256": "e0ac7cf760f0c6f26f85f724823e0e8db403ca70e4650e66f730c5df318770cd",
+      "control_sha256": "5ffcb016ef4dec9d5db15605be7f2feb49ca97f16b61776a3aa98d1305ae1be6"
+    },
+    {
+      "shown": "cell-fp45-text150",
+      "control": "cell-fp45-text150-hidden-control",
+      "passed": true,
+      "text_scale": 1.5,
+      "fov_checks": {
+        "fov": 45.0
+      },
+      "fov_checked": true,
+      "cell_region_uv": [
+        0.426803,
+        0.518008,
+        0.573197,
+        0.84016
+      ],
+      "central_region_uv": [
+        0.4560818,
+        0.5824384,
+        0.5439182,
+        0.7757296
+      ],
+      "central_region_pixels": [
+        583,
+        419,
+        697,
+        559
+      ],
+      "image_size": [
+        1280,
+        720
+      ],
+      "changed_pixels": 7182,
+      "roi_pixels": 15960,
+      "changed_fraction": 0.45,
+      "shown_sha256": "931b40f60dbf2c19b8ffb52b1dffa3a7fa025f31baaec3d9e3e2223ee9a4a35c",
+      "control_sha256": "8f312deabf34d38b4070dfc7d7c21b14cca447af14177d8f6bf423b6088748b9"
+    }
+  ],
+  "checked_utc": "2026-11-14T06:22:11.658933+00:00",
+  "manifest_sha256": "2486558edb4997364a0c990660561a34cbbca1d0929e3fe15ca3088955e1a30e"
+}
