@@ -1,0 +1,43 @@
+{
+  "release_url": "https://github.com/Shahzod1602/NASA/releases/tag/apollo12-v0.9.3",
+  "published_at": "2026-11-14T22:34:21Z",
+  "release_is_prerelease": true,
+  "source_tag_commit": "d00d737b827414f5abfae04268b2f3b7fbb2ddb7",
+  "download_url": "https://github.com/Shahzod1602/NASA/releases/download/apollo12-v0.9.3/LunarRescue-Windows-v0.9.3.zip",
+  "archive_bytes": 537259546,
+  "github_archive_sha256": "66b786d728af4adccba748bda27ca1d3166c6f03f121e148ab0dd33cb7a6023a",
+  "github_digest_matches_locally_validated_archive": true,
+  "compiled_input_fingerprint_verified_after_commit": true,
+  "source_fingerprint_sha256": "aa319dc99a0ce83a29b04a5e6225711c692e192f45892195605497ded4302835",
+  "prior_v092_github_digest_unchanged": true,
+  "telegram": {
+    "destination": "Authorized NASA project group",
+    "verified_task_replies": [
+      {
+        "task_message_id": 1422,
+        "posted_message_id": 1511,
+        "readback_verified": true
+      },
+      {
+        "task_message_id": 1099,
+        "posted_message_id": 1512,
+        "readback_verified": true
+      },
+      {
+        "task_message_id": 1500,
+        "posted_message_id": 1513,
+        "readback_verified": true
+      }
+    ],
+    "screenshot_album_first_message_id": 1514,
+    "screenshot_album_files": 7,
+    "album_readback_verified": true
+  },
+  "verified_utc": "2026-11-14T22:40:20.035284+00:00",
+  "scope_exceptions": [
+    "Two alternative model source/license questions unanswered",
+    "Conflicting FIELD GUIDE preference awaits clarification",
+    "No human playtest or human audible review",
+    "Competition eligibility remains unconfirmed"
+  ]
+}

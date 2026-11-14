@@ -40,8 +40,8 @@ Fourteen voice/video notes were downloaded on a bounded retry and processed loca
 | 1415, 1416 | Lunokhod prop capsule collision | Existing sweep/collision fixes retained; rescue tests |
 | 1417–1419 | Mast/red light floating | Existing terrain/roof-supported placement and mounted port light retained |
 | 1422, 1489, 1497 | Full supplied intro plate after initial loading | Previously only retained in Credits; now separate cooked T_Acknowledgements, aspect-fit intro and team-provided/AI caption; startup checks distinguish both textures |
-| 1474 | Real gameplay screenshots for presentation | Deliver actual fresh engine captures, identify scripted fixtures; never label them human playtests |
-| 1500 | Updated GitHub project link | Delivery must identify the exact tested feedback build; old v0.9.2 is not silently overwritten |
+| 1474 | Real gameplay screenshots for presentation | Seven unmodified current-build engine captures delivered to the authorized group (album 1514–1520); scripted fixtures identified; originals and provenance in Screenshots/ |
+| 1500 | Updated GitHub project link | v0.9.3 source and Windows ZIP published; reply 1513 verified by readback; GitHub ZIP digest matches local CRC/clean-launch-verified archive; old v0.9.2 unchanged |
 
 ## Explicit backlog and non-code work
 
@@ -54,3 +54,5 @@ Fourteen voice/video notes were downloaded on a bounded retry and processed loca
 ## Closure rules
 
 Code-complete is distinct from build-tested, packaged, published and human-approved. See TEST_REPORT.md in this folder for this batch's actual checks. Unanswered model provenance, ambiguous FIELD GUIDE preference and unavailable voice content remain explicit exceptions; they are not concealed by an “all tasks done” claim.
+
+Delivery is complete for the implemented demo changes: source tag `apollo12-v0.9.3` points to `d00d737b827414f5abfae04268b2f3b7fbb2ddb7`; the Windows archive and checksum are published. Completion replies for intro/hardware/download requests and the screenshot album were sent through the local Telegram MCP and verified by readback. See DELIVERY_VERIFICATION.json. No new game mode or competition submission is implied.
